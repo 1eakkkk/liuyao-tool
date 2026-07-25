@@ -3,7 +3,7 @@
 # 🏮 六爻排盘 · 自动纳甲（纯前端开源版）
 
 > 🔮 一个无需后端、纯 HTML + CSS + JavaScript 编写的简易六爻自动排盘工具。严格按照传统火珠林纳甲法编写。
-> 🚀 **在线体验：**(体验点这里) [https://1eakkkk.github.io/liuyao-tool/]
+> 🚀 **在线体验：**[点此立刻试用](https://1eakkkk.github.io/liuyao-tool/)
 
 ## ✨ 功能特点
 - **0依赖**：纯前端，一个 HTML 文件搞定。
