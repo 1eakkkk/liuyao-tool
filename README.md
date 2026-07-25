@@ -24,3 +24,8 @@ HTML5、CSS3、原生 JavaScript（无第三方库）。
 MIT License（免费、可商用、随意修改，保留原作者署名即可）。
 
 💬 交流与反馈：如果你用这个工具测出了疑惑的卦象，或者觉得这个工具有什么能改进的地方，欢迎加我微信 / 私信我，我会尽量抽空解答。
+<p align="center">
+  <img src="8.1之前群二维码.jpg" alt="微信交流群二维码" width="180" style="border-radius: 8px;">
+  <br>
+  <em>扫码添加微信，交流易学心得</em>
+</p>
