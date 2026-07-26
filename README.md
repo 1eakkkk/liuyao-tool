@@ -6,14 +6,10 @@
 
 ## 📸 界面预览
 
-<!-- 截图放在 assets/ 目录，建议三张：
-  1. assets/screenshot-plate.png    起卦排盘页（有一卦排好的表格，世应/空亡/动爻都可见）
-  2. assets/screenshot-ai.png       AI 解读结果（问题 + 解读文字 + token统计）
-  3. assets/screenshot-basics.png   基础知识页（五行生克轮盘或八卦卡片）
-截完取消下面三行的注释即可 -->
-<!-- ![起卦排盘](assets/screenshot-plate.png) -->
-<!-- ![AI 解读](assets/screenshot-ai.png) -->
-<!-- ![基础知识](assets/screenshot-basics.png) -->
+
+[起卦排盘](assets/screenshot-plate.png)
+[AI 解读](assets/screenshot-ai.png)
+[基础知识](assets/screenshot-basics.png)
 
 ## 🚀 下载 / 使用地址
 
@@ -103,8 +99,7 @@
 - **提 Bug / 功能建议**：优先走 [GitHub Issues](https://github.com/1eakkkk/liuyao-tool/issues)——描述清楚"做了什么操作、期望什么、实际发生什么"，最好带截图
 - **易学交流**：可扫码进微信群（二维码定期更新，如已过期请在 Issues 里说一声）
 
-<!-- 群二维码建议放到 assets/wechat-group-qr.jpg，定期替换同名文件即可，README 不用改 -->
-<!-- ![微信交流群](assets/wechat-group-qr.jpg) -->
+[微信交流群](assets/wechat-group-qr.jpg)
 
 ---
 
