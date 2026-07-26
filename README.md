@@ -7,9 +7,9 @@
 ## 📸 界面预览
 
 
-[起卦排盘](assets/screenshot-plate.png)
-[AI 解读](assets/screenshot-ai.png)
-[基础知识](assets/screenshot-basics.png)
+![起卦排盘](assets/screenshot-plate.png)
+![AI 解读](assets/screenshot-ai.png)
+![基础知识](assets/screenshot-basics.png)
 
 ## 🚀 下载 / 使用地址
 
@@ -99,7 +99,7 @@
 - **提 Bug / 功能建议**：优先走 [GitHub Issues](https://github.com/1eakkkk/liuyao-tool/issues)——描述清楚"做了什么操作、期望什么、实际发生什么"，最好带截图
 - **易学交流**：可扫码进微信群（二维码定期更新，如已过期请在 Issues 里说一声）
 
-[微信交流群](assets/wechat-group-qr.jpg)
+![微信交流群](assets/wechat-group-qr.jpg)
 
 ---
 
