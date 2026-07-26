@@ -171,6 +171,21 @@ table.ref tr:hover td{color:var(--paper);background:#221f16;}
   background:var(--panel-2);border:1px solid #3a3222;border-radius:4px;
   padding:9px 12px;
 }
+.cast-mode-toggle{display:flex;gap:8px;margin-bottom:16px;}
+.mode-btn{
+  flex:1;padding:9px 6px;border:1px solid #4a4128;border-radius:4px;
+  background:var(--panel-2);color:var(--text-mid);
+  font-family:'Noto Serif SC',serif;font-size:13px;cursor:pointer;transition:.2s;
+}
+.mode-btn:hover{color:var(--paper);}
+.mode-btn.active{background:var(--vermilion);color:var(--paper);border-color:var(--vermilion);}
+.manual-lines{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.manual-line-row{display:flex;align-items:center;gap:10px;}
+.manual-line-row label{flex:none;width:40px;font-size:13px;color:var(--text-mid);margin-bottom:0;}
+.manual-line-row select{
+  flex:1;background:var(--panel-2);color:var(--text-lo);
+  border:1px solid #4a4128;border-radius:4px;padding:8px;font-size:13px;
+}
 .coin-log b{color:var(--paper);font-weight:500;}
 .coin-dot{
   width:16px;height:16px;border-radius:50%;
@@ -352,6 +367,21 @@ table.ref tr:hover td{color:var(--paper);background:#221f16;}
   display:flex;align-items:center;justify-content:center;line-height:1;
 }
 .help-fab:hover{color:var(--paper);border-color:var(--brass);}
+
+/* ---------- 通用确认弹层（替代原生 confirm()） ---------- */
+.confirm-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.72);
+  display:flex;align-items:center;justify-content:center;z-index:1000;
+  padding:20px;
+}
+.confirm-card{
+  background:var(--panel);border:1px solid #3a3222;border-radius:10px;
+  max-width:400px;width:100%;padding:24px 22px;
+  animation:toast-in .2s ease;
+}
+.confirm-card h3{margin:0 0 12px;color:var(--paper);font-size:17px;font-family:'Noto Serif SC',serif;}
+.confirm-msg{font-size:14px;color:var(--text-mid);line-height:1.7;white-space:pre-line;}
+.confirm-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px;flex-wrap:wrap;}
 </style>
 </head>
 <body>
@@ -363,22 +393,33 @@ table.ref tr:hover td{color:var(--paper);background:#221f16;}
     <h3>怎么用这个工具</h3>
     <div class="onboard-step">
       <div class="num">1</div>
-      <div class="txt">切到 <b>起卦排盘</b> 标签页，日柱已经自动帮你选好今天的干支了，不用管，直接点 <b>摇卦</b> 起一卦。</div>
+      <div class="txt">先摇一卦感受一下：切到 <b>起卦排盘</b> 标签页，日柱已经帮你选好今天的了，不用管。直接点 <b>摇卦</b>，像抛硬币一样自动摇出六爻——这一步不花钱、不用注册任何东西，纯网页自己算的。（如果你更信自己现实里摇的铜钱结果，也可以切到旁边"线下摇卦"，把自己摇到的结果手动填进去。）</div>
     </div>
     <div class="onboard-step">
       <div class="num">2</div>
-      <div class="txt">下滑到 <b>AI 解卦</b> 区块，点一次 <b>设置</b>，填入你自己的 <b>DeepSeek API Key</b>（没有的话去 platform.deepseek.com 注册获取一个，按使用量计费），点"保存Key"。</div>
+      <div class="txt">想让 AI 帮你解读这一卦，需要一张"通行证"——<b>DeepSeek API Key</b>。说白了就是你自己去 DeepSeek 网站注册的一个身份凭证，让这个网页能替你去问一句 AI、拿到回答，每问一次扣一点点小钱（通常几分钱到几毛钱一次，很便宜，用多少扣多少，不用你多充）。</div>
     </div>
     <div class="onboard-step">
       <div class="num">3</div>
-      <div class="txt">写下你想问的问题，点 <b>AI 解读</b>。如果还没摇卦，会自动帮你先摇一卦再解读，不用担心顺序。</div>
+      <div class="txt">怎么弄到这张 Key：打开 <b>platform.deepseek.com</b>，手机号就能注册，随便充一点钱（比如5块钱够用很久）；在网站的"API keys"页面新建一个 Key、复制下来。回到这个页面，下滑到 <b>AI 解卦</b> 区块，点一次 <b>设置</b>，把复制的 Key 粘贴进去，点"保存Key"——一次性的，以后不用再弄。</div>
     </div>
     <div class="onboard-step">
       <div class="num">4</div>
-      <div class="txt">Key 只存在你这台设备本地，不会上传。想了解六爻的基础知识和断卦方法，切到另外两个标签页看看。</div>
+      <div class="txt">都弄好之后，<b>先写下你想问的问题</b>，再点 <b>AI 解读</b> 就行——会自动帮你摇卦并解读，一步到位；之后想问新的事，直接改问题再点一次就够了。Key 只存在你这台设备本地，不会上传。想了解六爻的基础知识（世应、六亲、空亡这些词到底啥意思），切到另外两个标签页看看，从头讲起。</div>
     </div>
     <div class="onboard-actions">
       <button class="ai-btn ghost" id="onboardCloseBtn">知道了</button>
+    </div>
+  </div>
+</div>
+
+<div class="confirm-overlay" id="confirmOverlay" style="display:none;">
+  <div class="confirm-card">
+    <h3 id="confirmTitle">确认</h3>
+    <div class="confirm-msg" id="confirmMsg"></div>
+    <div class="confirm-actions">
+      <button class="ai-btn ghost" id="confirmCancelBtn">取消</button>
+      <button class="ai-btn" id="confirmOkBtn">确定</button>
     </div>
   </div>
 </div>
@@ -496,25 +537,45 @@ table.ref tr:hover td{color:var(--paper);background:#221f16;}
 <div class="panel" id="caster">
   <section class="block">
     <h2>摇卦 · 自动排盘</h2>
-    <p class="desc">用三枚"铜钱"起卦：一次三个正反面，从初爻摇到上爻。系统会自动判断阴阳、老少（变爻），并按纳甲口诀装上干支五行，再配好六神。</p>
+    <p class="desc">用三枚"铜钱"起卦：一次三个正反面，从初爻摇到上爻。系统会自动判断阴阳、老少（变爻），并按纳甲口诀装上干支五行，再配好六神。如果不放心网页随机数，也可以切到"线下摇卦"，把你自己现实中摇出的结果手动填进来——排盘照样自动生成，之后 AI 解读也会知道这卦是你亲自摇的，不是系统随机生成的。</p>
 
     <div class="caster-box">
       <div class="caster-controls">
         <label for="dayGanzhi">起卦日的干支（六十甲子，用于起六神、算空亡）</label>
         <select id="dayGanzhi"></select>
-        <button class="cast-btn" id="castBtn">摇卦</button>
-        <div class="coin-log" id="coinLog"></div>
+
+        <div class="cast-mode-toggle" id="castModeToggle">
+          <button type="button" class="mode-btn active" data-mode="system">系统摇卦</button>
+          <button type="button" class="mode-btn" data-mode="manual">线下摇卦 · 手动填入</button>
+        </div>
+
+        <div id="systemCastPanel">
+          <button class="cast-btn" id="castBtn">摇卦</button>
+          <div class="coin-log" id="coinLog"></div>
+        </div>
+
+        <div id="manualCastPanel" style="display:none;">
+          <div class="manual-lines" id="manualLines"></div>
+          <button class="cast-btn" id="manualCastBtn">生成排盘</button>
+        </div>
       </div>
       <div class="plate" id="plateWrap">
-        <div class="placeholder">选好日柱，点击"摇卦"，从初爻开始生成六爻</div>
+        <div class="placeholder">选好日柱和摇卦方式，从初爻开始生成六爻</div>
       </div>
     </div>
-    <p class="desc" style="margin-top:14px;">世应、六亲已按八宫卦生成规则自动推出；空亡按日柱所在的"旬"标出。卦名（如"地天泰"）本工具不显示，用"XX宫·X世卦"配合上下卦名称查找即可，等你摇熟了这些坐标，再去对卦名会很快。</p>
+    <p class="desc" style="margin-top:14px;">世应、六亲已按八宫卦生成规则自动推出；空亡按日柱所在的"旬"标出。</p>
+    <p class="desc">按传统规矩，一事不问二卦：同一个问题只摇一次，问题没换就不能重摇——想再摇，先在下面把问题换成一件新的事。短时间内也不建议连续摇太多卦，10 分钟内最多摇 3 次。</p>
+    <p class="desc">另外几条老规矩也顺带提一句：别在大喜大怒、心浮气躁的时候乱测，也别单纯当好玩测着玩，念不专卦不应，测出来的参考价值不大；卦是用来"决疑"的，一件事已经拍板定了、没有回旋余地，再占意义也不大。</p>
+  </section>
+
+  <section class="block">
+    <h2>问卦须知</h2>
+    <p class="desc">传统上占卦师也有条不成文的规矩：不轻断生死寿数——"我还能活多久""什么时候死"这类问题，一是这种判断本身风险极高、容易断错，二是怕给提问的人带来不必要的心理暗示，所以这里也不会生成这类回答。如果这背后是身体健康或者情绪上的真实担忧，更建议找医生或者信得过的人聊聊，比找一个网页工具靠谱。</p>
   </section>
 
   <section class="block">
     <h2>AI 解卦</h2>
-    <p class="desc">日柱已经自动帮你选好今天的了，写下想问的事情直接点"AI 解读"就行——如果还没摇卦，会自动帮你先摇一卦再解读。AI 会结合排盘数据（六亲、世应、空亡、日柱旺衰）给出一段解读。需要你自己的 DeepSeek API Key，只存在你这台设备的浏览器里，不会上传到别的地方。</p>
+    <p class="desc">日柱已经自动帮你选好今天的了，写下想问的事情直接点"AI 解读"就行——会自动帮你摇卦并解读，一步到位；换了新问题再点，会自动重新起一卦。问题没换就不会重摇（一事不问二卦），再点只是拿同一卦重新生成解读。AI 会结合排盘数据（六亲、世应、空亡、日柱旺衰）给出一段解读。需要你自己的 DeepSeek API Key，只存在你这台设备的浏览器里，不会上传到别的地方。</p>
     <div class="ai-box">
       <div class="ai-stats" id="aiStats"></div>
       <textarea id="questionInput" placeholder="想问的问题，比如：最近想跳槽，合不合适"></textarea>
@@ -530,7 +591,7 @@ table.ref tr:hover td{color:var(--paper);background:#221f16;}
           <div>
             <label for="apiKeyInput">DeepSeek API Key（存在本机浏览器 localStorage，不上传）</label>
             <input type="password" id="apiKeyInput" placeholder="sk-xxxxxxxxxxxxxxxx" autocomplete="off">
-            <div class="ai-key-hint">保存后这里只显示打了码的 Key，无法从框里再复制出明文；要换一个的话，先点"清除 Key"再重新粘贴。 · <a class="ai-key-link" href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">没有 Key？去 DeepSeek 平台领取 →</a></div>
+            <div class="ai-key-hint">保存后仅显示打码值，无法复制明文；换Key请先点"清除 Key"。 · <a class="ai-key-link" href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">没有Key？去DeepSeek领取 →</a></div>
           </div>
           <button class="ai-btn ghost" id="saveKeyBtn">保存 Key</button>
           <button class="ai-btn ghost" id="clearKeyBtn">清除 Key</button>
@@ -562,6 +623,7 @@ table.ref tr:hover td{color:var(--paper);background:#221f16;}
       <div class="ai-meta" id="aiMeta"></div>
       <div class="ai-row" id="copyRow" style="display:none;margin-top:6px;">
         <button class="ai-btn ghost" id="copyResultBtn">复制结果</button>
+        <button class="ai-btn ghost" id="clearResultBtn" title="清空这条解读结果">清空</button>
       </div>
     </div>
   </section>
@@ -792,6 +854,17 @@ const PALACE_SEEDS = [
 ];
 const STEP_TYPES = ['八纯','一世','二世','三世','四世','五世','游魂','归魂'];
 const STEP_WORLD = [6,1,2,3,4,5,4,3];
+// 八宫64卦标准卦名，顺序与 STEP_TYPES 对齐（八纯→一世→...→游魂→归魂）
+const GUA_NAME_TABLE = {
+  '乾': ['乾为天','天风姤','天山遁','天地否','风地观','山地剥','火地晋','火天大有'],
+  '兑': ['兑为泽','泽水困','泽地萃','泽山咸','水山蹇','地山谦','雷山小过','雷泽归妹'],
+  '离': ['离为火','火山旅','火风鼎','火水未济','山水蒙','风水涣','天水讼','天火同人'],
+  '震': ['震为雷','雷地豫','雷水解','雷风恒','地风升','水风井','泽风大过','泽雷随'],
+  '巽': ['巽为风','风天小畜','风火家人','风雷益','天雷无妄','火雷噬嗑','山雷颐','山风蛊'],
+  '坎': ['坎为水','水泽节','水雷屯','水火既济','泽火革','雷火丰','地火明夷','地水师'],
+  '艮': ['艮为山','山火贲','山天大畜','山泽损','火泽睽','天泽履','风泽中孚','风山渐'],
+  '坤': ['坤为地','地雷复','地泽临','地天泰','雷天大壮','泽天夬','水天需','水地比'],
+};
 const EIGHT_PALACE_MAP = {};
 function b2s(arr){return arr.join('');}
 PALACE_SEEDS.forEach(seed=>{
@@ -811,7 +884,7 @@ PALACE_SEEDS.forEach(seed=>{
     const key = b2s(s.lower)+b2s(s.upper);
     const world = STEP_WORLD[i];
     const response = ((world+3-1)%6)+1;
-    EIGHT_PALACE_MAP[key] = {palace:seed.name+'宫', element:seed.el, type:STEP_TYPES[i], world, response};
+    EIGHT_PALACE_MAP[key] = {palace:seed.name+'宫', element:seed.el, type:STEP_TYPES[i], world, response, name:GUA_NAME_TABLE[seed.name][i]};
   });
 });
 
@@ -844,6 +917,81 @@ function getTodayJiaziIndex(date = new Date()){
   return ((daysSinceEpoch + OFFSET) % 60 + 60) % 60;
 }
 dayGanzhiSelect.value = String(getTodayJiaziIndex());
+
+/* ==================================================================
+   生死寿数类问题过滤 —— 呼应传统占卦规矩"不轻断生死寿数"：
+   这类判断风险高、容易断错，也怕给提问的人带来不必要的心理暗示，
+   命中关键词就不生成解读，而不是靠 AI 自己去把握分寸。
+   ================================================================== */
+const LIFESPAN_KEYWORDS = [
+  '还能活多久', '还能活几年', '还能活几天', '还能活多长时间',
+  '寿命还有', '寿命有多长', '阳寿', '大限',
+  '什么时候死', '啥时候死', '哪天死', '几岁死', '死期',
+  '还有多久死', '还能撑多久', '命还有多久',
+];
+function isLifespanQuestion(text){
+  return LIFESPAN_KEYWORDS.some(kw => text.includes(kw));
+}
+
+/* ==================================================================
+   摇卦前置校验 —— 呼应传统六爻两条基本规矩：
+   1)"一事不问二卦"：同一件事只起一次卦，反复摇卦骗自己的结果不算数
+   2) 短时间内不宜连续摇很多卦（心诚则灵），做一个简单的频率限制
+   ================================================================== */
+const LS_KEY_CAST_LOG = 'liuyao_cast_log';
+const CAST_COOLDOWN_WINDOW_MS = 10 * 60 * 1000; // 10 分钟窗口
+const CAST_COOLDOWN_MAX = 3;                    // 窗口内最多摇 3 次
+
+function loadCastLog(){
+  try{ return JSON.parse(localStorage.getItem(LS_KEY_CAST_LOG) || '[]'); }
+  catch(e){ return []; }
+}
+function pruneCastLog(log){
+  const now = Date.now();
+  return log.filter(ts => now - ts < CAST_COOLDOWN_WINDOW_MS);
+}
+function logCastEvent(){
+  const log = pruneCastLog(loadCastLog());
+  log.push(Date.now());
+  localStorage.setItem(LS_KEY_CAST_LOG, JSON.stringify(log));
+}
+function castsRemainingInWindow(){
+  return Math.max(CAST_COOLDOWN_MAX - pruneCastLog(loadCastLog()).length, 0);
+}
+
+// 问题文字归一化：只用于"是不是同一个问题"的判断，
+// 忽略空白和末尾标点，避免用户补个问号、多敲个空格就被判成新问题而重摇重扣费。
+function normQuestion(s){
+  return String(s || '').replace(/\s+/g, '').replace(/[。．.!！?？~～、，,]+$/, '');
+}
+function isSameQuestion(a, b){
+  return normQuestion(a) === normQuestion(b);
+}
+
+// 摇卦前统一走这个校验：频率限制 + 一事一挂硬性规矩。
+// 通过则记一次摇卦事件并返回 true；不通过则给提示并返回 false。
+// 规矩：同一个问题只能摇一卦，问题没换就不允许重摇（没有确认弹窗，直接拦住）；
+//       想再摇，先把输入框里的问题换成一件新的事。
+async function guardBeforeCast(){
+  if(castsRemainingInWindow() <= 0){
+    showToast('短时间内已经摇太多次了，心诚则灵，稍等一会再摇（10 分钟内最多 3 次）', 'error', 4500);
+    return false;
+  }
+  if(window.lastCastData){
+    const qEl = document.getElementById('questionInput');
+    const currentQuestion = qEl ? qEl.value.trim() : '';
+    if(currentQuestion === ''){
+      showToast('上一卦还在。按"一事不问二卦"的规矩，想再摇，先在"AI 解卦"的输入框里写上要问的新问题', 'error', 4500);
+      return false;
+    }
+    if(isSameQuestion(currentQuestion, window.lastCastQuestion || '')){
+      showToast('一事不问二卦：这个问题已经摇过卦了，直接看上一卦就行。想问别的，先把问题换成一件新的事', 'error', 4500);
+      return false;
+    }
+  }
+  logCastEvent();
+  return true;
+}
 
 /* ---------------- caster ---------------- */
 const castBtn = document.getElementById('castBtn');
@@ -887,9 +1035,87 @@ function performCast(){
   });
 }
 
-castBtn.addEventListener('click', ()=>{ performCast(); });
+castBtn.addEventListener('click', async ()=>{
+  if(!(await guardBeforeCast())) return;
+  performCast();
+});
 
-function renderPlate(lines){
+/* ---------------- 线下摇卦 · 手动填入 ---------------- */
+const castModeToggle = document.getElementById('castModeToggle');
+const systemCastPanel = document.getElementById('systemCastPanel');
+const manualCastPanel = document.getElementById('manualCastPanel');
+const manualLinesWrap = document.getElementById('manualLines');
+const manualCastBtn = document.getElementById('manualCastBtn');
+
+let castMode = 'system'; // 'system' | 'manual'
+
+const MANUAL_LINE_LABELS = ['初爻','二爻','三爻','四爻','五爻','上爻'];
+const MANUAL_LINE_OPTIONS = [
+  { value: '7', label: '少阳（阳，不变）' },
+  { value: '8', label: '少阴（阴，不变）' },
+  { value: '9', label: '老阳（阳，动 ○）' },
+  { value: '6', label: '老阴（阴，动 ✕）' },
+];
+
+// 生成六行手动选择器：三枚铜钱正面记3、反面记2，三枚之和 6/7/8/9
+// 对应 老阴(6,动)/少阳(7)/少阴(8)/老阳(9,动)，跟现实摇钱结果一一对应，
+// 用户只要照着自己现实摇出的老少阴阳选就行，不用换算铜钱正反数。
+function buildManualLinesUI(){
+  manualLinesWrap.innerHTML = MANUAL_LINE_LABELS.map((label, idx) => `
+    <div class="manual-line-row">
+      <label for="manualLine${idx}">${label}</label>
+      <select id="manualLine${idx}">
+        ${MANUAL_LINE_OPTIONS.map(o => `<option value="${o.value}">${o.label}</option>`).join('')}
+      </select>
+    </div>
+  `).join('');
+}
+buildManualLinesUI();
+
+castModeToggle.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.mode-btn');
+  if(!btn) return;
+  castMode = btn.dataset.mode;
+  [...castModeToggle.querySelectorAll('.mode-btn')].forEach(b => b.classList.toggle('active', b === btn));
+  systemCastPanel.style.display = castMode === 'system' ? '' : 'none';
+  manualCastPanel.style.display = castMode === 'manual' ? '' : 'none';
+});
+
+function lineFromSum(sum){
+  const yang = (sum === 7 || sum === 9);
+  const moving = (sum === 6 || sum === 9);
+  return { sum, coins: [], yang, moving };
+}
+
+function performManualCast(isCorrection){
+  const lines = [];
+  for(let i = 0; i < 6; i++){
+    const sel = document.getElementById(`manualLine${i}`);
+    lines.push(lineFromSum(parseInt(sel.value, 10)));
+  }
+  coinLog.innerHTML = ''; // 清掉上一次系统摇卦残留的铜钱记录，避免和手动排盘混淆
+  renderPlate(lines, 'manual');
+  showToast(isCorrection
+    ? '已按修正后的录入重新排盘（修正填错的爻不算重新起卦，不占摇卦次数）'
+    : '已按你手动填入的结果排盘，AI 解读会知道这是你亲自摇的卦', 'success');
+}
+
+manualCastBtn.addEventListener('click', async ()=>{
+  // 修正录入的特例：上一卦本来就是手动填的、问题也没换，
+  // 说明大概率是填错了某一爻想改——现实中的摇卦只发生了一次，
+  // 重新生成排盘只是数据修正，不算重新起卦，不走频率限制、不被"一事一挂"拦。
+  const currentQuestion = questionInput ? questionInput.value.trim() : '';
+  const sameQuestion = window.lastCastData &&
+    (currentQuestion === '' || isSameQuestion(currentQuestion, window.lastCastQuestion || ''));
+  if(window.lastCastData && window.lastCastData.source === 'manual' && sameQuestion){
+    performManualCast(true);
+    return;
+  }
+  if(!(await guardBeforeCast())) return;
+  performManualCast(false);
+});
+
+function renderPlate(lines, source='system'){
   const lowerKey = lines.slice(0,3).map(l=>l.yang?'1':'0').join('');
   const upperKey = lines.slice(3,6).map(l=>l.yang?'1':'0').join('');
   const lower = TRIGRAM_BY_KEY[lowerKey];
@@ -942,23 +1168,43 @@ function renderPlate(lines){
   const lowerUpperText = `下卦：${lower.sym} ${lower.name}　上卦：${upper.sym} ${upper.name}`;
   const dayKongText = `日柱：${day.label}　空亡：${kongBranches.join('、')}`;
 
+  // ---- 卦名 / 变卦（纯展示用，不写入喂给AI的字段，不影响AI的排盘读取与推断）----
+  const guaName = palaceInfo.name;
+  const hasMoving = lines.some(l => l.moving);
+  let bianGuaName = null;
+  if(hasMoving){
+    const bianLowerKey = lines.slice(0,3).map(l => (l.moving ? !l.yang : l.yang) ? '1':'0').join('');
+    const bianUpperKey = lines.slice(3,6).map(l => (l.moving ? !l.yang : l.yang) ? '1':'0').join('');
+    const bianInfo = EIGHT_PALACE_MAP[bianLowerKey+bianUpperKey];
+    bianGuaName = bianInfo ? bianInfo.name : null;
+  }
+  const guaNameRowText = `本卦：<b>${guaName}</b>` + (bianGuaName ? `　→　变卦：<b>${bianGuaName}</b>` : '');
+
   plateWrap.innerHTML = `
     <table>
       <thead><tr><th>爻位</th><th>六亲</th><th>六神</th><th>卦画</th><th>纳甲</th><th>五行</th><th>状态</th></tr></thead>
       <tbody>${rowsHtml}</tbody>
     </table>
     <div class="gua-name-row">
+      <div>${guaNameRowText}</div>
       <div>${palaceText}</div>
       <div>${lowerUpperText.replace('下卦：','下卦：<b>').replace('　上卦：','</b>　上卦：<b>')+'</b>'}</div>
       <div>日柱：<b>${day.label}</b>　空亡：${kongBranches.join('、')}</div>
     </div>`;
 
-  // 存一份结构化数据供"AI解卦"区域使用
+  // 存一份结构化数据供"AI解卦"区域使用（字段与之前完全一致，guaName/bianGuaName不参与AI输入，仅供页面展示）
   window.lastCastData = {
     ganzhi: day.label,
     palaceText, lowerUpperText, dayKongText,
     lines: structuredLines,
+    guaName, bianGuaName,
+    source, // 'system'=网页随机摇卦 / 'manual'=用户线下摇卦手动填入
   };
+  // 同步记一下这次摇卦时输入框里的问题文字和摇卦时间，
+  // 供下次摇卦时判断是不是换了新问题、以及空问题的卦能否被后写的问题"认领"
+  const qEl = document.getElementById('questionInput');
+  window.lastCastQuestion = qEl ? qEl.value.trim() : '';
+  window.lastCastTime = Date.now();
   // 每次重新摇卦，之前的AI解读结果就过期了，清掉避免误导
   const oldResult = document.getElementById('aiResult');
   const oldMeta = document.getElementById('aiMeta');
@@ -982,6 +1228,45 @@ function showToast(message, type = 'info', duration = 3200){
     el.classList.add('fade-out');
     setTimeout(()=>el.remove(), 260);
   }, duration);
+}
+
+/* ==================================================================
+   通用确认弹层 —— 替代原生 confirm()，风格跟页面其他弹层统一。
+   用法：const ok = await showConfirm('文字…', {title, okText, cancelText});
+   ================================================================== */
+const confirmOverlay = document.getElementById('confirmOverlay');
+const confirmTitle = document.getElementById('confirmTitle');
+const confirmMsg = document.getElementById('confirmMsg');
+const confirmOkBtn = document.getElementById('confirmOkBtn');
+const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+
+function showConfirm(message, opts = {}){
+  const { title = '确认', okText = '确定', cancelText = '取消' } = opts;
+  return new Promise(resolve=>{
+    confirmTitle.textContent = title;
+    confirmMsg.textContent = message;
+    confirmOkBtn.textContent = okText;
+    confirmCancelBtn.textContent = cancelText;
+    confirmOverlay.style.display = 'flex';
+
+    function cleanup(result){
+      confirmOverlay.style.display = 'none';
+      confirmOkBtn.removeEventListener('click', onOk);
+      confirmCancelBtn.removeEventListener('click', onCancel);
+      confirmOverlay.removeEventListener('click', onOverlayClick);
+      document.removeEventListener('keydown', onKeydown);
+      resolve(result);
+    }
+    function onOk(){ cleanup(true); }
+    function onCancel(){ cleanup(false); }
+    function onOverlayClick(e){ if(e.target === confirmOverlay) cleanup(false); }
+    function onKeydown(e){ if(e.key === 'Escape') cleanup(false); }
+
+    confirmOkBtn.addEventListener('click', onOk);
+    confirmCancelBtn.addEventListener('click', onCancel);
+    confirmOverlay.addEventListener('click', onOverlayClick);
+    document.addEventListener('keydown', onKeydown);
+  });
 }
 
 /* ==================================================================
@@ -1128,8 +1413,8 @@ ${styleBlock}
    直接输出可以原样展示的纯文本内容
 5. 只输出回复正文本身，不要输出任何前言、解释或标注
 
-请严格以《滴天髓》《子平真诠》《穷通宝鉴》《三命通会》《渊海子平》为主要依据，
-凡古籍无据者，不妄断，禁止套话与迎合，只输出最有命理依据、应象最强、可验证性最高的结论。`;
+请严格以《火珠林》《黄金策》《卜筮正宗》《增删卜易》《易冒》等六爻纳甲典籍的断法为主要依据，
+凡卦理无据者，不妄断，禁止套话与迎合，只输出最有卦理依据、应象最强、可验证性最高的结论。`;
 }
 
 // ---- 对应 cast_and_extract.py: format_for_ai ----
@@ -1142,7 +1427,10 @@ function formatCastDataForAI(castData){
     if(ln.是否空亡) tag += '【空亡】';
     return `${ln.爻位}: 六亲=${ln.六亲}, 六神=${ln.六神}, 纳甲=${ln.纳甲}, 五行=${ln.五行}, 状态=${ln.状态}${tag}`;
   }).join('\n');
-  return `${castData.palaceText}\n${castData.lowerUpperText}\n${castData.dayKongText}\n\n` +
+  const sourceText = castData.source === 'manual'
+    ? '起卦方式：提问者本人现实中线下摇卦（铜钱或其他方式），结果由本人手动录入系统，六爻老少阴阳均为真实所得，并非网页随机生成。'
+    : '起卦方式：网页系统随机摇卦生成。';
+  return `${sourceText}\n${castData.palaceText}\n${castData.lowerUpperText}\n${castData.dayKongText}\n\n` +
     `各爻明细（从初爻到上爻，六亲/世应/空亡已由系统自动标注）：\n${linesText}`;
 }
 
@@ -1220,6 +1508,7 @@ const aiMeta = document.getElementById('aiMeta');
 const aiStats = document.getElementById('aiStats');
 const copyRow = document.getElementById('copyRow');
 const copyResultBtn = document.getElementById('copyResultBtn');
+const clearResultBtn = document.getElementById('clearResultBtn');
 
 const toggleSettingsBtn = document.getElementById('toggleSettingsBtn');
 const aiSettings = document.getElementById('aiSettings');
@@ -1343,9 +1632,12 @@ historyList.addEventListener('click', (e)=>{
   }
 });
 
-clearHistoryBtn.addEventListener('click', ()=>{
+clearHistoryBtn.addEventListener('click', async ()=>{
   if(!loadHistory().length) return;
-  if(!confirm('确定清空全部历史记录和累计统计吗？此操作不可撤销。')) return;
+  const ok = await showConfirm('确定清空全部历史记录和累计统计吗？此操作不可撤销。', {
+    title: '清空历史记录', okText: '清空', cancelText: '取消'
+  });
+  if(!ok) return;
   saveHistory([]);
   renderHistory();
   showToast('历史记录已清空');
@@ -1366,13 +1658,25 @@ copyResultBtn.addEventListener('click', ()=>{
   navigator.clipboard.writeText(aiResult.textContent).then(()=>{
     copyResultBtn.textContent = '已复制';
     setTimeout(()=>{ copyResultBtn.textContent = '复制结果'; }, 1500);
+  }).catch(()=>{
+    showToast('自动复制没成功（可能是浏览器权限限制），请长按文字手动复制', 'error');
   });
+});
+
+clearResultBtn.addEventListener('click', ()=>{
+  aiResult.textContent = '';
+  aiMeta.textContent = '';
+  copyRow.style.display = 'none';
 });
 
 interpretBtn.addEventListener('click', async ()=>{
   const question = questionInput.value.trim();
   if(!question){
     showToast('先写一下想问的问题', 'error');
+    return;
+  }
+  if(isLifespanQuestion(question)){
+    showToast('传统上卦师不轻断生死寿数，这类问题这里不会生成解读——如果是身体或者情绪上的真实担忧，更建议找医生或者信得过的人聊聊', 'error', 6000);
     return;
   }
   if(!loadApiKey()){
@@ -1383,16 +1687,43 @@ interpretBtn.addEventListener('click', async ()=>{
   }
 
   interpretBtn.disabled = true;
+  // 解读进行中锁住两个摇卦入口，防止中途换卦导致"旧卦的解读显示在新卦下面"的错位
+  castBtn.disabled = true;
+  manualCastBtn.disabled = true;
   aiResult.textContent = '';
   aiMeta.textContent = '';
   copyRow.style.display = 'none';
 
   try{
-    // 还没摇过卦就自动帮你摇一卦（日柱已经自动选好今天的了），不用手动分两步操作
-    if(!window.lastCastData){
+    // 如果已经摇过一卦、但摇的时候问题框还是空的（先摇卦、后写问题的顺序），
+    // 就把当前问题"认领"给这一卦——这卦就是为这个问题摇的，不重摇、不多扣次数。
+    // 只认领 10 分钟内摇的卦：放太久的空问题旧卦（比如页面开着忘了）不认领，直接重摇新卦。
+    const ADOPT_WINDOW_MS = 10 * 60 * 1000;
+    if(window.lastCastData && !(window.lastCastQuestion || '').trim()
+       && (Date.now() - (window.lastCastTime || 0)) <= ADOPT_WINDOW_MS){
+      window.lastCastQuestion = question;
+    }
+    // 判断是否要重新起卦：要么根本没摇过卦，要么问题跟上次摇卦时不一样——
+    // 换了新问题，按规矩不能拿旧卦硬解，得重新起一卦（自动摇，不弹确认窗）。
+    // 对比忽略空白与末尾标点，改个标点不算换问题。
+    const questionChanged = !!window.lastCastData && !isSameQuestion(question, window.lastCastQuestion || '');
+    if(!window.lastCastData || questionChanged){
+      if(castMode === 'manual'){
+        const msg = questionChanged
+          ? '问题换了，按规矩得重新起一卦——去"线下摇卦"里重新填一次结果，再点"生成排盘"'
+          : '请先在"线下摇卦"里填好六爻结果，点"生成排盘"再解读';
+        showToast(msg, 'error', 4000);
+        interpretBtn.disabled = false;
+        return;
+      }
+      if(!(await guardBeforeCast())){
+        interpretBtn.disabled = false;
+        return;
+      }
       aiStatus.textContent = '正在自动摇卦…';
-      showToast('还没摇卦，先帮你自动摇一卦');
+      showToast(questionChanged ? '换了新问题，先帮你重新摇一卦' : '还没摇卦，先帮你自动摇一卦');
       await performCast();
+      castBtn.disabled = true; // performCast 结束会解锁摇卦按钮，这里重新锁住直到本次解读完成
     }
 
     aiStatus.textContent = '正在调用 DeepSeek 生成解卦回复…';
@@ -1427,6 +1758,8 @@ interpretBtn.addEventListener('click', async ()=>{
     showToast(msg, 'error', 5000);
   }finally{
     interpretBtn.disabled = false;
+    castBtn.disabled = false;
+    manualCastBtn.disabled = false;
   }
 });
 </script>
