@@ -1,11 +1,37 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+<!-- ==================================================================
+  六爻入门 · 单文件架构总览（供想读懂/修改本项目的开发者）
+
+  整个项目就这一个 HTML 文件，从上到下分三大区，各区开头都有同款横幅注释：
+    ① style 样式区 …… 全部样式，按页面区块分小节
+    ② body 结构区  …… 页面结构：弹层 → 头图 → 导航 → 三个标签页面板
+    ③ script 逻辑区 …… 全部逻辑，在文件末尾，分小节详见该区开头的目录
+
+  想改什么去哪找（最常动的几个地方）：
+    · 排盘核心算法（纳甲/八宫/世应/六亲/空亡）→ script 里 "najia data" 到 "60 jiazi" 各节
+    · 摇卦规则（一事一挂/频率限制）→ script 里 "摇卦前置校验" 一节
+    · AI 提示词与解卦风格 → script 里 "AI 解卦" 区的 SHOP_INFO / REPLY_STYLE_PRESETS / buildSystemPrompt
+    · DeepSeek 模型与计费单价 → script 里 DEEPSEEK_MODEL / PRICE_TABLE
+    · 页面文案（教程/规矩说明/FAQ 式描述）→ body 区对应面板的 <p class="desc">
+
+  设计约束：刻意保持零依赖、零构建、单文件，改完拖进 Cloudflare Pages 即上线；
+  提 PR 时请维持这一约束，勿引入打包工具或拆分文件。
+================================================================== -->
 <head>
 <meta charset="UTF-8">
 <title>六爻入门 · 纳甲排盘与断卦速查</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23181611'/%3E%3Cpath d='M16,1 A7.5,7.5 0 0,1 16,16 A7.5,7.5 0 0,0 16,31 A15,15 0 0,0 16,1 Z' fill='%23ece4d0'/%3E%3Ccircle cx='16' cy='8.5' r='2.2' fill='%23181611'/%3E%3Ccircle cx='16' cy='23.5' r='2.2' fill='%23ece4d0'/%3E%3Ccircle cx='16' cy='16' r='15' fill='none' stroke='%23a8391f' stroke-width='1.2'/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <style>
+/* ==================================================================
+  ① 样式区地图（按出现顺序）：
+  基础变量与全局 → HERO 头图 → NAV 导航 → bagua grid 八卦卡片
+  → wuxing wheel 五行轮盘 → table 通用表格 → caster 起卦排盘
+  → duan gua guide 断卦指南列表 → AI 解卦 → 累计统计条 → 历史记录面板
+  → toast 提示 → 新手教程弹层 → 通用确认弹层
+  配色统一走 :root 里的 CSS 变量（墨/纸/朱砂/黄铜/青玉），改主题色只动这里。
+================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap');
 
 :root{
@@ -386,6 +412,14 @@ table.ref tr:hover td{color:var(--paper);background:#221f16;}
 </head>
 <body>
 
+<!-- ==================================================================
+  ② 页面结构区地图（按出现顺序）：
+  toastWrap 提示容器 → onboardOverlay 新手教程弹层 → confirmOverlay 通用确认弹层
+  → hero 头图 → nav.tabs 导航（三个标签 + "?"帮助按钮）
+  → main：#basics 基础知识 / #caster 起卦排盘与AI解卦 / #guide 断卦入门 三个面板
+  面板切换靠 .panel.active 类，逻辑在 script 区 "tabs" 一节。
+================================================================== -->
+
 <div id="toastWrap"></div>
 
 <div class="onboard-overlay" id="onboardOverlay" style="display:none;">
@@ -743,6 +777,32 @@ table.ref tr:hover td{color:var(--paper);background:#221f16;}
 <div class="note">六爻入门 · 内容整理自传统火珠林纳甲体系，供学习参考</div>
 
 <script>
+/* ==================================================================
+  ③ 逻辑区目录（按出现顺序，各节都有同款横幅注释可搜索跳转）：
+
+  【界面基础】
+  tabs 标签切换 → bagua grid 八卦卡片渲染 → wuxing wheel 五行轮盘交互
+
+  【排盘核心（纯数据与算法，与界面无关，最值得测试的部分）】
+  najia data 纳甲表/地支五行/六神 → eight-palace 八宫64卦生成（世应位）
+  → six relatives 六亲判定 → 60 jiazi / kongwang 六十甲子与空亡
+  → getTodayJiaziIndex 今日日柱推算
+
+  【摇卦规则与流程】
+  生死寿数问题过滤 → 摇卦前置校验（一事一挂 + 10分钟频率限制，normQuestion 问题归一化）
+  → caster 系统摇卦 → 线下摇卦手动填入（含"修正录入不算重摇"特例）
+  → renderPlate 排盘渲染与结构化数据（lastCastData/lastCastQuestion/lastCastTime）
+
+  【通用UI】
+  Toast 提示 → 通用确认弹层 showConfirm → 新手教程弹层
+
+  【AI 解卦】
+  SHOP_INFO 角色设定 / REPLY_STYLE_PRESETS 回复风格 / PRICE_TABLE 计费单价（峰谷）
+  → localStorage 键管理（Key/风格/历史）→ stripMarkdown → buildSystemPrompt 系统提示词
+  → formatCastDataForAI 排盘转文本 → interpretWithDeepSeek 调用API与计费估算
+  → UI绑定：Key打码管理 / 历史记录与累计统计 / interpretBtn 主流程
+    （主流程含：问题认领10分钟时效 → 判断是否重摇 → 调AI → 写历史）
+================================================================== */
 /* ---------------- tabs ---------------- */
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
