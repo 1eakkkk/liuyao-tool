@@ -3,6 +3,11 @@
 > 🔮 输入你的问题，自动起卦排盘，AI 生成白话解读，几秒钟获得一段卦象参考。
 > 网页、安卓、Windows 桌面三端都能用，同一套逻辑，随时同步更新。
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/db92d435-1502-4241-a857-65ef65bb5661" width="440" alt="六爻自动排盘结果，含六亲、六神、纳甲、五行、世应、空亡与本卦变卦">
+  <img src="https://github.com/user-attachments/assets/61cfdf7c-3c7d-493f-af93-35d4e1dc62aa" width="440" alt="AI结合排盘数据生成的六爻解卦回复示例">
+</p>
+
 ## 🚀 下载 / 使用地址
 
 | 平台 | 地址 | 说明 |
