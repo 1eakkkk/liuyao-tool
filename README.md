@@ -9,6 +9,8 @@
 ![起卦排盘](assets/screenshot-plate.png)
 ![AI 解卦](assets/screenshot-ai.png)
 ![基础知识](assets/screenshot-basics.png)
+**新增**
+![提示词输出](assets/screenshot-prompt_output.png)
 
 ## 🚀 下载 / 使用地址
 
