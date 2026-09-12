@@ -11,7 +11,7 @@
   想改什么去哪找（最常动的几个地方）：
     · 排盘核心算法（纳甲/八宫/世应/六亲/空亡）→ script 里 "najia data" 到 "60 jiazi" 各节
     · 摇卦规则（一事一挂/频率限制）→ script 里 "摇卦前置校验" 一节
-    · AI 提示词与解卦风格 → script 里 "AI 解卦" 区的 SHOP_INFO / REPLY_STYLE_PRESETS / buildSystemPrompt
+    · AI 提示词与解卦风格 → script 里 "AI 解卦" 区的 ROLE_PRESETS / REPLY_STYLE_PRESETS / buildSystemPrompt
     · DeepSeek 模型与计费单价 → script 里 LS_KEY_MODEL(模型选择) / PRICE_TABLES(分模型单价)
     · "输出提示词"（不经本站API Key，导出纯文本提示词给用户自行粘贴去其他AI）→ script 里 buildExportPromptText
     · 页面文案（教程/规矩说明/FAQ 式描述）→ body 区对应面板的 <p class="desc">
@@ -57,6 +57,16 @@ html{overflow-anchor:none;}
   --paper-dim:#ddd2b6;
   --panel:#211d17;
   --panel-2:#2a251d;
+  /* ---------- 边框色：原来 #3a3222 / #4a4128 / #33301f 这三个颜色全站直接写死引用
+     （分别34处/加上头图bagua-ring里的SVG描边共37处），跟其它颜色（哪怕只用一次的
+     六神专用色）都进了变量不一致。提炼成三档变量，按实际用途取名，方便区分：
+     --border 用在卡片/面板/头图这类"容器外框"；--border-soft 更亮一档，用在
+     输入框/下拉框/按钮描边这类"可交互控件"；--border-faint 最暗一档，用在
+     卡片内部的分割线（表格行线、设置项之间的横线）而不是外框。只是把散落各处的
+     同一个值收拢到一起，不改变任何一处的实际显示颜色。 ---------- */
+  --border:#3a3222;
+  --border-soft:#4a4128;
+  --border-faint:#33301f;
   --vermilion:#a8391f;
   --vermilion-bright:#c8481f;
   /* --vermilion-bright 实测拿来做文字（墨色背景上约3.8:1）低于WCAG AA正文要求的4.5:1，
@@ -66,7 +76,19 @@ html{overflow-anchor:none;}
   --vermilion-text:#e65f34;
   --brass:#b8944f;
   --brass-dim:#8a7142;
+  /* --brass-bright：交互控件（按钮填充/激活态）专用的提亮版黄铜色，用来把"可点击的
+     控件"和"朱砂＝数据状态/警示"这两类语义彻底分开——朱砂只留给动爻高亮、报错、
+     警告文字这些"提醒你注意"的场景，常规按钮/激活的标签页一律走黄铜这一路，
+     两种颜色各司其职，朱砂出现时才真正显眼。深色文字（--ink）压在这个亮度的
+     黄铜底色上对比度约6.4:1，过AA。 */
+  --brass-bright:#cda866;
   --jade:#4f7a63;
+  /* ---------- 六神专用色（仅供排盘表格/卡片里六神名字前的小色块用，纯装饰性提示，
+     不参与判断逻辑）：青龙走--jade、朱雀走--vermilion-bright、勾陈走--brass，
+     这三个沿用已有变量；螣蛇、玄武现有色板里没有贴切的选项，这里单独开两个，
+     只在 .spirit-dot 里用，不影响其它任何地方。 ---------- */
+  --spirit-tengshe:#7d5a78;
+  --spirit-xuanwu:#33465a;
   --text-lo:#eee6d4;
   --text-mid:#c9bd9f;
   --text-dim:#8d8367;
@@ -77,12 +99,25 @@ html{overflow-anchor:none;}
   --text-dim-sm:#a0977d;
   /* ---------- 字号刻度：全站小于18px的UI文字统一走这6档，
      不再各处随手写字面量。挑一档最贴近语义的用，不新增新字号。 ---------- */
-  --fs-1:11.5px;  /* 极小：徽标·时间戳·极次要的小字注解 */
-  --fs-2:12.5px;  /* 小：表单标签·说明提示·状态/统计文字 */
-  --fs-3:13.5px;  /* 常规控件：下拉框/输入框取值·紧凑表格与列表 */
-  --fs-4:14.5px;  /* 正文：说明段落·AI解读正文·多行文本框·弹层正文 */
-  --fs-5:16px;    /* 强调：小标题/副标题级的强调文字 */
-  --fs-accent:15px; /* 主操作按钮 + 少量强调标记（导航tab、AI解读、起卦按钮等）*/
+  /* 整体上调一档（原11.5/12.5/13.5/14.5/16/15），信息密度不变，但长时间阅读
+     排盘表格、AI解读正文时更松快一些。 */
+  --fs-1:12.5px;  /* 极小：徽标·时间戳·极次要的小字注解 */
+  --fs-2:13.5px;  /* 小：表单标签·说明提示·状态/统计文字 */
+  --fs-3:14.5px;  /* 常规控件：下拉框/输入框取值·紧凑表格与列表 */
+  --fs-4:15.5px;  /* 正文：说明段落·AI解读正文·多行文本框·弹层正文 */
+  --fs-5:17px;    /* 强调：小标题/副标题级的强调文字 */
+  --fs-accent:16px; /* 主操作按钮 + 少量强调标记（导航tab、AI解读、起卦按钮等）*/
+}
+/* ---------- 卡片层次感 ----------
+   面板/卡片/表格背景之前统一用同一个纯色 --panel，颜色变量分了panel/panel-2
+   两档，但视觉上大片同色块紧挨着堆叠，长页面滚下来观感比较扁平、一块接一块
+   不太分得清谁在"上层"。这里给常用的卡片类容器统一加一圈细微投影+顶部一条
+   若隐若现的高光，不改背景色本身，只增加"这是一块浮起来的卡片"的暗示，
+   多个卡片叠着看的时候能分出前后层次，不再是纯色块拼接。 */
+.caster-box, .gua-card, .coin-log, .history-item, .ai-stats,
+.wx-legend .row, .onboard-card, .confirm-card, .ai-result,
+.prompt-output-box, .guide-list li, table.ref{
+  box-shadow:0 4px 16px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
 }
 *{box-sizing:border-box;}
 html{overflow-x:hidden;}
@@ -95,6 +130,12 @@ body{
   margin:0;
   overflow-x:hidden;
   background:
+    /* 极细的纸纹颗粒（feTurbulence生成，透明度烘焙在SVG自身的alpha通道里，
+       约0.05），叠在原来的墨色径向渐变最上层——之前配色变量特意分了paper/ink
+       两套名字，但视觉上全程是纯色色块，没有一点"纸"的质地。这层颗粒不影响
+       任何文字对比度（alpha极低），只在大片纯色区域滚动时增加一点点肌理，
+       不再是死板的平涂色块。 */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.93 0 0 0 0 0.89 0 0 0 0 0.78 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat,
     radial-gradient(1200px 700px at 50% -10%, #2a2419 0%, var(--ink) 60%),
     var(--ink);
   color:var(--text-lo);
@@ -109,7 +150,23 @@ h1,h2,h3,.serif{font-family:'Noto Serif SC',serif;}
   padding:76px 24px 56px;
   text-align:center;
   overflow:hidden;
-  border-bottom:1px solid #3a3222;
+  border-bottom:1px solid var(--border);
+}
+/* 头图原来是"小标签→大标题→副标题→八卦徽"四段纯居中堆叠，规规矩矩但略显常规。
+   这里在最底层铺两圈极淡的同心圆（不额外加DOM，用::before，天然画在其它内容
+   下面），让标题文字视觉上"坐"在一张更大的太极星盘里，而不是孤零零一段文字
+   后面再接一个独立的徽章图案，呼应下面bagua-ring但不抢文字的风头。 */
+.hero::before{
+  content:'';
+  position:absolute;
+  top:38%;left:50%;
+  width:640px;height:640px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:
+    radial-gradient(circle at center, transparent 0 219px, rgba(184,148,79,.07) 220px 221px, transparent 222px),
+    radial-gradient(circle at center, transparent 0 289px, rgba(184,148,79,.045) 290px 291px, transparent 292px);
+  pointer-events:none;
 }
 .hero .eyebrow{
   letter-spacing:.35em;
@@ -131,9 +188,21 @@ h1,h2,h3,.serif{font-family:'Noto Serif SC',serif;}
   margin:0 auto;
 }
 .bagua-ring{
-  width:190px;height:190px;margin:30px auto 0;position:relative;
+  width:190px;height:190px;margin:20px auto 0;position:relative;
 }
-.bagua-ring svg{width:100%;height:100%;}
+/* 徽章背后加一圈朱砂暖光晕：::before在文档流里排在svg前面，默认绘制顺序天然
+   垫在下面，不需要额外z-index。让太极徽看起来像是"嵌在光里"而不是贴在纯黑
+   背景上的一张扁平贴纸，跟上面.hero::before的同心圆呼应，标题区不再是三段
+   互不相干的堆叠，而是有一点前后层次。 */
+.bagua-ring::before{
+  content:'';
+  position:absolute;
+  inset:-30px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(168,57,31,.16), transparent 70%);
+  pointer-events:none;
+}
+.bagua-ring svg{width:100%;height:100%;position:relative;}
 .badge-spin{transform-origin:100px 100px;animation:spin 140s linear infinite;}
 @media (prefers-reduced-motion: reduce){.badge-spin{animation:none;}}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -145,20 +214,32 @@ h1,h2,h3,.serif{font-family:'Noto Serif SC',serif;}
   background:rgba(24,22,17,.92);
   backdrop-filter:blur(6px);
   padding:12px 52px;
-  border-bottom:1px solid #3a3222;
+  border-bottom:1px solid var(--border);
   flex-wrap:wrap;
 }
 .tab-btn{
   font-family:'Noto Serif SC',serif;
   background:none;border:1px solid transparent;
   color:var(--text-mid);
-  padding:9px 20px;border-radius:3px;
+  /* 圆角原来单独写的3px，跟同属"小型控件"这一档的按钮/输入框/下拉框（清一色4px）
+     对不上——排查全站圆角取值后发现这是唯一一个跟自己所在的档位脱节的值，
+     其余"大容器"(8px)/"卡片"(6px)/"弹层"(10px)几档本身已经是一套有梯度的
+     体系，不需要额外合并，这里只改这一处对齐即可。 */
+  padding:9px 20px;border-radius:4px;
   cursor:pointer;font-size:var(--fs-accent);letter-spacing:.05em;
   transition:.2s;
+  /* 四个tab之前纯靠文字标题区分板块，视觉上比较同质。这里给每个tab配一个
+     极简线条小图标（内容见对应<button>里的内联svg），图标用currentColor，
+     跟随文字颜色（含hover/active态）自动变化，不用额外维护图标专属配色。 */
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
 }
+.tab-icon{width:15px;height:15px;flex:none;}
 .tab-btn:hover{color:var(--paper);}
 .tab-btn.active{
-  color:var(--vermilion-text);
+  /* 原来用朱砂做激活态文字色，跟"摇卦"按钮、动爻高亮撞成一个颜色，朱砂就不再
+     稀有。导航切换属于常规交互控件，改走黄铜这一路，朱砂留给真正需要被优先
+     看到的数据状态（动爻/报错/警告）。 */
+  color:var(--brass);
   border-color:var(--brass-dim);
   background:var(--panel);
 }
@@ -200,9 +281,14 @@ section.block-collapse.open > .block-collapse-body{display:block;animation:fade 
 section.block-collapse.open{margin-bottom:56px;border-bottom:none;padding-bottom:0;}
 
 /* ---------- bagua grid ---------- */
-.gua-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;}
+/* 原来用 auto-fit 自适应列数，容器够宽时一行能塞下6张，8张卡片就变成"6+2"——
+   第二行右边空出4个卡片的位置，头重脚轻。这里改成固定列数：宽屏4列（2行×4，
+   正好整除8张），窄屏（跟全站其它断点一致，见下面@media 640px）改2列（4行×2，
+   同样整除），不管容器宽度怎么变，8张卡片永远刚好分完，不会再出现某一行只放
+   一两张、右边一截空白的情况。 */
+.gua-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
 .gua-card{
-  background:var(--panel);border:1px solid #3a3222;border-radius:6px;
+  background:var(--panel);border:1px solid var(--border);border-radius:6px;
   padding:16px 12px;text-align:center;
 }
 .gua-card .sym{font-size:34px;color:var(--brass);line-height:1;}
@@ -213,7 +299,9 @@ section.block-collapse.open{margin-bottom:56px;border-bottom:none;padding-bottom
 .wuxing-wrap{display:flex;flex-wrap:wrap;gap:32px;align-items:center;justify-content:center;}
 .wuxing-svg{width:280px;height:280px;flex:none;}
 .wx-node{cursor:pointer;}
-.wx-node circle{fill:var(--panel);stroke:#4a4128;stroke-width:1.5;transition:.2s;}
+.wx-node:focus-visible circle{stroke:var(--vermilion-bright);stroke-width:2.5;}
+.wx-node:focus{outline:none;}
+.wx-node circle{fill:var(--panel);stroke:var(--border-soft);stroke-width:1.5;transition:.2s;}
 .wx-node text{fill:var(--text-lo);font-size:16px;font-family:'Noto Serif SC',serif;pointer-events:none;}
 .wx-node.active circle{fill:var(--vermilion);stroke:var(--vermilion-bright);}
 .wx-arrow{stroke:#544a2e;stroke-width:1.6;fill:none;marker-end:url(#arrow);opacity:.55;}
@@ -225,14 +313,16 @@ section.block-collapse.open{margin-bottom:56px;border-bottom:none;padding-bottom
 
 /* ---------- table generic ---------- */
 table.ref{width:100%;border-collapse:collapse;font-size:var(--fs-3);}
-table.ref th,table.ref td{padding:8px 10px;border-bottom:1px solid #33301f;text-align:center;}
+table.ref th,table.ref td{padding:8px 10px;border-bottom:1px solid var(--border-faint);text-align:center;}
 table.ref th{color:var(--brass);font-weight:500;background:#221f16;}
 table.ref td{color:var(--text-mid);}
 table.ref tr:hover td{color:var(--paper);background:#221f16;}
-/* 列比较多的参考表（比如12地支、6列的旺相休囚死）在窄屏下用 width:100% 硬挤会把每列
+/* 列比较多的参考表（比如6列的旺相休囚死）在窄屏下用 width:100% 硬挤会把每列
    压得看不清，这里改成横向滚动兜底：宽屏下 min-width 反正比容器窄，视觉上还是撑满
    width:100%；容器一旦比 min-width 窄（手机上常见），就交给 .ref-scroll 横向滚动，
-   而不是继续挤压列宽。窄表格（2-3列，靠文字自动换行）不需要这个处理，没加这两个类。 */
+   而不是继续挤压列宽。窄表格（2-3列，靠文字自动换行）不需要这个处理，没加这两个类。
+   原来12列的地支五行表也走这套横滑方案，后来拆成两张6列子表上下堆叠，
+   不再需要横向滚动，改动见下方"天干地支"区块。 */
 .ref-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:14px;}
 table.ref.ref-wide{min-width:480px;}
 /* 光靠 overflow-x:auto 本身不够显眼——手机浏览器的滚动条大多细到几乎看不见，
@@ -240,20 +330,78 @@ table.ref.ref-wide{min-width:480px;}
    没意识到还能横滑看剩下的列。这里补一行小字提示，只在会真的触发横滑的
    窄屏（跟.ref-wide触发横滑的断点对齐）下出现，宽屏本来就能整张摊开，不需要这行提示。 */
 .scroll-hint{display:none;font-size:var(--fs-1);color:var(--text-dim-sm);text-align:right;margin:-6px 2px 8px;}
+/* ---------- table.ref 卡片化：多行 key-value 结构的参考表在窄屏下改用
+   一行一卡片，跟 .plate-cards（排盘结果卡片）是同一套视觉语言。
+   单行 colspan 铺满的表（十天干/六合/六冲）本来就没套 .ref-scroll——
+   colspan 里的文字窄屏下自然换行，没有横滑摩擦，这里也不套卡片化。
+   地支五行原本是13列矩阵，套着 .ref-scroll 横滑；它是"一对一简单映射"，
+   拆成12张卡片密度太低、纵向滚动成本比横滑更大，改成拆两张6列子表
+   上下堆叠（见下方"天干地支"区块），同样不用卡片化，也不再需要横滑。 ---------- */
+@media (max-width:640px){
+  table.ref.ref-cards{display:block;width:100%;}
+  table.ref.ref-cards thead{display:none;}
+  table.ref.ref-cards tbody{display:block;}
+  table.ref.ref-cards tr{
+    display:block;
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:10px 12px;
+    margin-bottom:8px;
+    box-shadow:0 4px 16px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
+  }
+  table.ref.ref-cards tr:last-child{margin-bottom:0;}
+  table.ref.ref-cards th,
+  table.ref.ref-cards td{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    text-align:left;
+    padding:5px 0;
+    border-bottom:none;
+    color:var(--text-mid);
+    font-size:var(--fs-3);
+    background:transparent;
+  }
+  /* data-th 是每格对应的表头文字，用 ::before 补在左边充当"字段名" */
+  table.ref.ref-cards th[data-th]::before,
+  table.ref.ref-cards td[data-th]::before{
+    content:attr(data-th);
+    color:var(--brass);
+    font-weight:500;
+    flex:none;
+  }
+  /* 每行第一格当卡片标题用：字号提一档、加下分割线 */
+  table.ref.ref-cards tr > :first-child{
+    font-family:'Noto Serif SC',serif;
+    color:var(--paper);
+    font-size:var(--fs-4);
+    border-bottom:1px solid var(--border-faint);
+    margin-bottom:4px;
+    padding-bottom:8px;
+  }
+  table.ref.ref-cards tr > :first-child::before{content:none;}
+  /* 卡片化之后不再需要横滑，原来包在外面的 .ref-scroll 直接失效即可，
+     前面配套的"左右滑动"提示文字也跟着一起隐藏，避免文字和实际交互对不上。 */
+  .ref-scroll:has(table.ref-cards){overflow-x:visible;}
+  .scroll-hint:has(+ .ref-scroll table.ref-cards){display:none;}
+  table.ref.ref-cards.ref-wide{min-width:0;}
+}
 @media (max-width:640px){
   .scroll-hint{display:block;}
 }
 
 /* ---------- caster ---------- */
 .caster-box{
-  background:var(--panel);border:1px solid #3a3222;border-radius:8px;
+  background:var(--panel);border:1px solid var(--border);border-radius:8px;
   padding:24px;display:flex;flex-wrap:wrap;gap:28px;
 }
 .caster-controls{flex:1;min-width:220px;}
 .caster-controls label{display:block;font-size:var(--fs-2);color:var(--text-mid);margin-bottom:6px;}
 .caster-controls select{
   width:100%;background:var(--panel-2);color:var(--text-lo);
-  border:1px solid #4a4128;border-radius:4px;padding:9px;font-size:var(--fs-3);margin-bottom:18px;
+  border:1px solid var(--border-soft);border-radius:4px;padding:9px;font-size:var(--fs-3);margin-bottom:18px;
 }
 .day-lookup-row{
   display:flex;align-items:center;gap:8px;margin:-10px 0 18px;
@@ -263,22 +411,34 @@ table.ref.ref-wide{min-width:480px;}
 }
 .day-lookup-row input[type="date"]{
   flex:1;min-width:0;background:var(--panel-2);color:var(--text-lo);
-  border:1px solid #4a4128;border-radius:4px;padding:7px 8px;font-size:var(--fs-2);
+  border:1px solid var(--border-soft);border-radius:4px;padding:7px 8px;font-size:var(--fs-2);
   font-family:'Noto Sans SC',sans-serif;color-scheme:dark;
 }
 .cast-btn{
+  /* 主操作按钮统一改用黄铜填充+墨色文字（原来是朱砂填充），朱砂只留给动爻、
+     报错这类"数据状态"，按钮这类常规交互控件不再跟它抢注意力。深色文字压在
+     这个亮度的黄铜底色上是特意选的组合，对比度比原来的浅色文字压朱砂更高。 */
   width:100%;padding:13px;border:none;border-radius:4px;
-  background:var(--vermilion);color:var(--paper);
+  background:var(--brass);color:var(--ink);
   font-family:'Noto Serif SC',serif;font-size:var(--fs-accent);letter-spacing:.08em;
   cursor:pointer;transition:.2s;
 }
-.cast-btn:hover{background:var(--vermilion-bright);}
+.cast-btn:hover{background:var(--brass-bright);}
 .cast-btn:disabled{opacity:.5;cursor:default;}
+/* 次要/跳转类按钮：外观上跟主操作按钮（同样满宽、同样字体）区分开来，用描边
+   代替实心填充，视觉权重明显更轻——"去 AI 解卦"这类"跳到下一步"的引导按钮
+   用这个，不再跟真正的"摇卦"主按钮撞成同一个颜色同一个分量，一眼就能看出
+   谁是这个面板里真正要点的那个按钮。 */
+.cast-btn.outline{
+  background:none;color:var(--brass);
+  border:1px solid var(--brass-dim);
+}
+.cast-btn.outline:hover{background:var(--panel-2);border-color:var(--brass);color:var(--paper);}
 .coin-log{
   margin-top:14px;min-height:22px;
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;
   font-size:var(--fs-2);color:var(--text-mid);
-  background:var(--panel-2);border:1px solid #3a3222;border-radius:4px;
+  background:var(--panel-2);border:1px solid var(--border);border-radius:4px;
   padding:9px 12px;
 }
 /* 摇卦前这个容器是真·空标签（innerHTML===''），但因为有 min-height+边框+背景色，
@@ -288,12 +448,24 @@ table.ref.ref-wide{min-width:480px;}
 .coin-log:empty{display:none;}
 .cast-mode-toggle{display:flex;gap:8px;margin-bottom:16px;}
 .mode-btn{
-  flex:1;padding:9px 6px;border:1px solid #4a4128;border-radius:4px;
+  flex:1;padding:9px 6px;border:1px solid var(--border-soft);border-left:3px solid transparent;border-radius:4px;
   background:var(--panel-2);color:var(--text-mid);
   font-family:'Noto Serif SC',serif;font-size:var(--fs-3);cursor:pointer;transition:.2s;
 }
 .mode-btn:hover{color:var(--paper);}
-.mode-btn.active{background:var(--vermilion);color:var(--paper);border-color:var(--vermilion);}
+/* 原来这里直接抄"摇卦"主按钮同款的黄铜实心填充做激活态，但实心色块在别处
+   （.cast-btn等主操作按钮）通常表示"这是要点下去执行操作的按钮"；这里其实只是
+   "现在处于哪个模式"的选中反馈，跟"点了会做事"不是一回事，两处用同一种视觉语言
+   容易让人产生错误预期。这里改成半透明黄铜底色+左侧一道竖线，跟主操作按钮的
+   实心填充明显区分开，比导航栏纯描边的选中态又更醒目一点（这两个按钮间距紧，
+   纯描边不够抓眼）。base状态先占一条透明的左边框占位，选中时只切换颜色不改
+   宽度，避免切换模式时按钮内文字跟着轻微跳一下。 */
+.mode-btn.active{
+  background:rgba(184,148,79,.14);
+  color:var(--brass);
+  border-color:var(--brass-dim);
+  border-left-color:var(--brass);
+}
 .cast-quota-hint{font-size:var(--fs-1);color:var(--text-dim-sm);margin:-6px 0 14px;}
 .cast-quota-hint.cast-quota-warn{color:var(--vermilion-text);}
 .manual-lines{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
@@ -301,7 +473,7 @@ table.ref.ref-wide{min-width:480px;}
 .manual-line-row label{flex:none;width:40px;font-size:var(--fs-2);color:var(--text-mid);margin-bottom:0;}
 .manual-line-row select{
   flex:1;background:var(--panel-2);color:var(--text-lo);
-  border:1px solid #4a4128;border-radius:4px;padding:8px;font-size:var(--fs-3);
+  border:1px solid var(--border-soft);border-radius:4px;padding:8px;font-size:var(--fs-3);
 }
 .coin-log b{color:var(--paper);font-weight:500;}
 .coin-dot{
@@ -310,26 +482,74 @@ table.ref.ref-wide{min-width:480px;}
   font-size:10px;border:1px solid var(--brass-dim);color:var(--brass);flex:none;
 }
 .coin-dot.head{background:var(--brass-dim);color:var(--ink);}
-.coin-log .sum{color:var(--text-dim);}
+.coin-log .sum{color:var(--text-dim-sm);}
 
 .plate{flex:1.4;min-width:280px;overflow-x:auto;}
 .plate table{width:100%;border-collapse:collapse;font-size:var(--fs-3);}
-.plate th{color:var(--brass);font-weight:500;padding:6px 4px;border-bottom:1px solid #4a4128;}
+.plate th{color:var(--brass);font-weight:500;padding:6px 4px;border-bottom:1px solid var(--border-soft);}
 .plate td{padding:7px 4px;text-align:center;border-bottom:1px solid #2c2818;color:var(--text-mid);}
 .plate td.line-graphic{padding:9px 4px;}
-/* "变出"列是表格最后一列（td:last-child），内容比其它列长（干支+五行+六亲拼在一起，
-   如"丙戌(土)子孙"），窄屏下列宽不够时唯独这一列会换行，把它所在的那一行(通常是动爻行)
-   撑得比其它单行的行高明显高一截，视觉节奏被打断。这里窄屏下给它单独降一档字号缓解换行，
-   同时不管换不换行都统一预留两行的高度——因为表格行高取决于同一行里最高的那个单元格，
-   给"变出"这一列的每一行都固定这个高度，等于让所有行（不只是真的换行的那一行）都统一
-   按两行高度显示，行与行之间就不会再有的高有的矮。 */
+/* 原来这里只给"变出"这一列（内容最长，如"丙戌(土)子孙"）在窄屏下单独降字号、
+   预留两行高度，想缓解它换行撑高行高的问题。实测发现窄屏下真正的问题比这大得多：
+   8列表格宽度被压缩到每列没几像素时，不止"变出"，全部列的中文都会被挤成单字换行、
+   逐字竖排堆叠，单元格高度暴涨到200-300px，整张表滚动起来极长——这是"8列表格"这个
+   形态本身在窄屏下撑不住，不是靠给某一列单独调字号、插两个断行点能根治的。
+   这里窄屏下改成把<table>整个换成下面的"每爻一张卡片"布局（.plate-cards），
+   表格形态留给放得下的宽屏，窄屏不再硬挤。 */
+/* ---------- 移动端排盘卡片：一爻一张卡片，格式抄的是本文件"历史记录"展开态里
+   逐爻摘要那套已经验证过、在窄屏下依然横排不会拆成单字竖排的写法（历史记录用的
+   是 .history-line-row），宽屏下不显示（display:none，交给上面的<table>），
+   窄屏下由下面那条媒体查询切换成 flex 显示。renderPlate() / renderPlateFromCastData()
+   共用同一份拼图函数 buildPlateCardsHtml()（定义在 script 区，历史记录渲染函数附近）。
+   注意：这条基础规则必须写在下面的媒体查询之前——两条规则选择器优先级相同，
+   级联顺序按源码先后决定，写在后面的无条件声明会永远盖过前面媒体查询里的值，
+   之前的顺序反了导致这套卡片布局从未生效过。 ---------- */
+.plate-cards{display:none;flex-direction:column;gap:8px;margin-bottom:4px;}
 @media (max-width:640px){
-  .plate td:last-child{
-    font-size:var(--fs-2);
-    line-height:1.3;
-    min-height:calc(1.3em * 2);
-  }
+  .plate table{display:none;}
+  .plate-cards{display:flex;}
 }
+.plate-card{
+  background:var(--panel-2);border:1px solid var(--border);border-radius:6px;
+  padding:9px 12px;
+}
+.plate-card.moving{border-color:var(--vermilion-bright);}
+.plate-card-row{
+  display:grid;grid-template-columns:34px 1fr 1fr;gap:2px 10px;
+  font-size:var(--fs-3);color:var(--text-mid);align-items:baseline;
+}
+.plate-card.moving .plate-card-row{color:var(--vermilion-text);}
+.plate-card-pos{color:var(--brass);font-weight:500;}
+.plate-card-tag{color:var(--vermilion-text);margin-left:3px;}
+.plate-card-extra{margin-top:4px;font-size:var(--fs-2);color:var(--text-dim-sm);}
+/* ---------- 排盘图例：极简的一行小字，摇卦结果区顶部提示"红色代表动爻"，
+   跟五行生克板块里已有的图例卡片是同一个思路——第一次看的人不用自己猜朱砂色
+   到底是什么意思。<table>和.plate-cards两种布局（宽屏/窄屏）都用得到，
+   由JS里的PLATE_LEGEND_HTML常量统一插入，不用为两种布局各写一遍。 ---------- */
+.plate-legend{
+  display:flex;align-items:center;gap:6px;
+  font-size:var(--fs-1);color:var(--text-dim-sm);
+  margin-bottom:10px;
+}
+.plate-legend-swatch{
+  width:10px;height:10px;border-radius:2px;flex:none;
+  background:var(--vermilion-bright);
+}
+/* ---------- 六神色块：排盘表格/卡片里六神名字前的一个小圆点，六种颜色分别对应
+   青龙(木/--jade)、朱雀(火/--vermilion-bright)、勾陈(土/--brass)、螣蛇(--spirit-tengshe)、
+   白虎(金，近纸白，配一圈细边框避免在浅色区域糊成一片)、玄武(水/--spirit-xuanwu，同样配边框)。
+   纯粹是扫读表格时的颜色辅助定位，不代表吉凶，不影响判断逻辑；具体用哪个类由JS里
+   spiritDotHtml()按六神名字挑，四处渲染（宽屏表格/窄屏卡片/复原态/历史记录）共用。 ---------- */
+.spirit-dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  margin-right:4px;flex:none;vertical-align:middle;
+}
+.spirit-dot.qinglong{background:var(--jade);}
+.spirit-dot.zhuque{background:var(--vermilion-bright);}
+.spirit-dot.gouchen{background:var(--brass);}
+.spirit-dot.tengshe{background:var(--spirit-tengshe);}
+.spirit-dot.baihu{background:var(--paper);border:1px solid var(--brass-dim);}
+.spirit-dot.xuanwu{background:var(--spirit-xuanwu);border:1px solid var(--text-dim);}
 /* 配合上面JS里"变出"文案拆出的三个最小语义单元：每段自己不换行，段与段之间靠零宽空格
    (\u200B)提供断行机会——平时紧挨着显示没有可见空隙，只在窄屏真放不下时才在这几个点断开，
    且不会断在"(土)"这种括号中间，也不会因为单段太长逼出整表横向滚动。 */
@@ -349,6 +569,7 @@ table.ref.ref-wide{min-width:480px;}
 /* 公历/农历那一行强制单独占一整行（flex-basis:100%让flex-wrap在它后面另起一行），
    这样年柱/月柱那一项永远排在日期下面，不会因为屏幕宽窄跟日期挤在同一行、顺序对不上。 */
 .gua-date-row{flex-basis:100%;justify-content:center;display:flex;}
+.gua-trend-row{flex-basis:100%;justify-content:center;display:flex;font-size:var(--fs-3);color:var(--text-dim-sm);text-align:center;}
 
 /* ---------- 卦象爻画图：本卦/变卦并排的六爻堆叠图，起卦排盘区和历史记录回看都用得到，
    比逐行读表格里的"状态"和"变出"两列更直观——一眼就能看出整卦长什么样、变在哪一爻 ---------- */
@@ -368,6 +589,18 @@ table.ref.ref-wide{min-width:480px;}
 .gd-line.moving .gd-bar-full,
 .gd-line.moving .gd-bar-half{background:var(--vermilion-bright);}
 .gua-diagram-arrow{color:var(--brass);font-size:18px;}
+
+/* ---------- 线下摇卦·手动填入的实时预览：配合下面 JS 里 change 监听 + renderManualPreview()。
+   复用上面这套 gd-bar/gd-line 画法，只是多了一种"这一爻还没选"的占位态——虚线框、不画
+   阴阳，画风上明显跟"已经选好"的实线/断线区分开；六爻里选一个就实时补一行，选满六爻
+   直接换成跟"生成排盘"完全一样的 buildGuaDiagramHtml() 产出（含世应、卦名、变卦），
+   而不是自己另起一套简化画法——保证"实时预览"和"正式结果"这两处长得一模一样，
+   不会出现选的时候是一种画风、点了生成排盘之后卦画又变了样的割裂感。 ---------- */
+.manual-preview-partial,.manual-preview-complete{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.manual-preview-hint{font-size:var(--fs-2);color:var(--text-mid);text-align:center;}
+.gd-bar-pending{position:absolute;inset:0;border-radius:1px;border:1px dashed var(--text-dim);}
+.gd-line.pending .gd-mark,
+.gd-line.pending .gd-tag{color:var(--text-dim);}
 /* 历史记录卡片里空间更窄，同一份卦象图缩小一号显示 */
 .history-cast .gua-diagram{margin:8px 0;gap:10px;}
 .history-cast .gua-diagram-label{font-size:var(--fs-1);}
@@ -382,7 +615,33 @@ table.ref.ref-wide{min-width:480px;}
    （摇卦前 / 摇卦中）这一种情况下，让.plate临时变成flex居中容器，把提示文字纵向也居中；
    一旦排盘表格渲染出来，.plate里多了<table>等其它子元素，这条选择器不再命中，
    自动恢复默认布局，不影响表格本身的横向滚动。 */
-.plate:has(> .placeholder){display:flex;align-items:center;justify-content:center;min-height:220px;}
+/* 手动填入的实时预览（.manual-preview-partial/.manual-preview-complete）跟.placeholder一样，
+   摇卦前都会作为.plate唯一的子元素出现，蹭同一条居中规则，不用再单独写一遍。 */
+.plate:has(> .placeholder),
+.plate:has(> .manual-preview-partial),
+.plate:has(> .manual-preview-complete){display:flex;align-items:center;justify-content:center;min-height:220px;}
+/* ---------- "摇卦中…"加载态：铜钱翻转小动效 ----------
+   原来这里点摇卦后就是纯文字"摇卦中…"居中挂着，持续约1.56秒（6次setInterval，
+   每爻260ms），全站唯一一个"每次摇卦都会看到、但完全没做质感"的状态，跟前面
+   给头图/卡片/按钮都加了层次感的思路不搭。这里加三枚小铜钱，样式复用下面
+   coinLog真实摇卦结果用的.coin-dot同一套配色（黄铜描边+墨色底），错开延迟
+   循环播放一个"竖直压扁再复原"的动画，模拟铜钱翻转时侧面一闪而过的样子——
+   跟真实算法"三枚铜钱摇一爻"的设定对应得上，成本很低但触发频率最高。 */
+.cast-loading-coins{display:flex;gap:12px;justify-content:center;margin-bottom:14px;}
+.cast-loading-coin{
+  width:18px;height:18px;border-radius:50%;
+  border:1px solid var(--brass-dim);background:var(--panel-2);
+  animation:coin-flip 1.05s ease-in-out infinite;
+}
+.cast-loading-coin:nth-child(2){animation-delay:.15s;}
+.cast-loading-coin:nth-child(3){animation-delay:.3s;}
+@keyframes coin-flip{
+  0%,100%{transform:scaleX(1);background:var(--panel-2);}
+  50%{transform:scaleX(.15);background:var(--brass-dim);}
+}
+@media (prefers-reduced-motion: reduce){
+  .cast-loading-coin{animation:none;}
+}
 
 /* ---------- duan gua guide ---------- */
 .guide-list{list-style:none;padding:0;margin:0;counter-reset:g;}
@@ -399,18 +658,18 @@ table.ref.ref-wide{min-width:480px;}
 .guide-list p{margin:6px 0 0;color:var(--text-mid);font-size:var(--fs-4);}
 
 .note{
-  font-size:var(--fs-2);color:var(--text-dim);border-top:1px solid #33301f;
+  font-size:var(--fs-2);color:var(--text-dim);border-top:1px solid var(--border-faint);
   margin-top:60px;padding-top:20px;text-align:center;
 }
 
 /* ---------- AI 解卦 ---------- */
 .ai-box{
-  background:var(--panel);border:1px solid #3a3222;border-radius:8px;
+  background:var(--panel);border:1px solid var(--border);border-radius:8px;
   padding:24px;margin-top:20px;
 }
 .ai-box textarea{
   width:100%;background:var(--panel-2);color:var(--text-lo);
-  border:1px solid #4a4128;border-radius:4px;padding:10px;font-size:var(--fs-4);
+  border:1px solid var(--border-soft);border-radius:4px;padding:10px;font-size:var(--fs-4);
   line-height:1.6;font-family:inherit;resize:vertical;min-height:64px;margin-bottom:12px;
   overflow:hidden; /* 部分移动端 WebKit（比如 iOS 上的 Edge/Safari）在占位文字换行超出
     textarea 可视高度时，不会像普通内容那样老老实实被裁掉，会整段文字糊出边框外，
@@ -432,22 +691,34 @@ table.ref.ref-wide{min-width:480px;}
 .char-counter.near-limit{color:var(--vermilion-text);}
 .ai-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
 .ai-btn{
+  /* 同 .cast-btn：主按钮统一走黄铜，朱砂让给下面 .ai-btn.stop（真的要提醒
+     "这是个会中断当前操作的按钮"）和数据状态用。 */
   padding:11px 22px;border:none;border-radius:4px;
-  background:var(--vermilion);color:var(--paper);
+  background:var(--brass);color:var(--ink);
   font-family:'Noto Serif SC',serif;font-size:var(--fs-accent);letter-spacing:.06em;
   cursor:pointer;transition:.2s;
 }
-.ai-btn:hover{background:var(--vermilion-bright);}
+.ai-btn:hover{background:var(--brass-bright);}
 .ai-btn:disabled{opacity:.5;cursor:default;}
 .ai-btn.ghost{
   background:none;border:1px solid var(--brass-dim);color:var(--text-mid);
   font-family:'Noto Sans SC',sans-serif;font-size:var(--fs-3);padding:9px 16px;
+  /* 设置/历史记录/输出提示词等按钮在移动端密集堆叠在同一行，实测渲染高度
+     约 41px，低于 44px 的通用触控热区建议值；这里用 min-height 兜底到 44px，
+     不改变桌面端视觉（宽屏下按钮本来就不会挤在一起，多出来的高度不明显）。 */
+  min-height:44px;box-sizing:border-box;
 }
 .ai-btn.ghost:hover{color:var(--paper);border-color:var(--brass);}
 .ai-status{font-size:var(--fs-2);color:var(--text-dim);margin-left:2px;}
+.current-cast-status{
+  font-size:var(--fs-3);color:var(--text-mid);
+  background:var(--panel-2);border:1px solid var(--border);border-left:3px solid var(--brass-dim);
+  border-radius:4px;padding:8px 12px;margin-bottom:12px;
+}
+.current-cast-status b{color:var(--paper);font-weight:500;}
 .ai-result{
   margin-top:16px;white-space:pre-wrap;line-height:1.85;font-size:var(--fs-4);
-  color:var(--text-lo);background:var(--panel-2);border:1px solid #3a3222;
+  color:var(--text-lo);background:var(--panel-2);border:1px solid var(--border);
   border-radius:6px;padding:16px 18px;min-height:40px;
 }
 .ai-result:empty{display:none;}
@@ -467,21 +738,21 @@ table.ref.ref-wide{min-width:480px;}
 .history-item-tag{font-size:var(--fs-1);color:var(--text-dim-sm);border:1px solid var(--brass);border-radius:8px;padding:1px 6px;margin-left:6px;}
 .ai-meta{font-size:var(--fs-2);color:var(--text-dim);margin-top:8px;}
 .ai-settings{
-  margin-top:16px;padding-top:16px;border-top:1px solid #33301f;
+  margin-top:16px;padding-top:16px;border-top:1px solid var(--border-faint);
   display:none;flex-direction:column;
 }
 .ai-settings.open{display:flex;}
 
 /* ---------- 设置分组卡片：把原来一整条堆着的表单元素按主题分块，减少视觉混乱 ---------- */
 .settings-group{
-  background:var(--panel-2);border:1px solid #3a3222;border-radius:6px;
+  background:var(--panel-2);border:1px solid var(--border);border-radius:6px;
   padding:14px 16px;margin-bottom:14px;
 }
 .settings-group:last-child{margin-bottom:0;}
 .settings-group-title{
   font-family:'Noto Serif SC',serif;font-size:var(--fs-4);color:var(--brass);
   letter-spacing:.03em;margin-bottom:12px;padding-bottom:8px;
-  border-bottom:1px solid #3a3222;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;
 }
 .settings-field{margin-bottom:14px;}
 .settings-field:last-child{margin-bottom:0;}
@@ -493,13 +764,13 @@ table.ref.ref-wide{min-width:480px;}
 }
 .settings-group.collapsible .collapse-hint::after{content:'展开 ▾';}
 .settings-group.collapsible.open .collapse-hint::after{content:'收起 ▴';}
-.settings-group.collapsible .settings-group-body{display:none;padding-top:14px;margin-top:12px;border-top:1px solid #3a3222;}
+.settings-group.collapsible .settings-group-body{display:none;padding-top:14px;margin-top:12px;border-top:1px solid var(--border);}
 .settings-group.collapsible.open .settings-group-body{display:block;animation:fade .25s ease;}
 
 .ai-settings label{font-size:var(--fs-2);color:var(--text-mid);display:block;margin-bottom:5px;}
 .ai-settings input.key-input,.ai-settings select{
   width:100%;background:var(--panel-2);color:var(--text-lo);
-  border:1px solid #4a4128;border-radius:4px;padding:8px 10px;font-size:var(--fs-3);
+  border:1px solid var(--border-soft);border-radius:4px;padding:8px 10px;font-size:var(--fs-3);
 }
 /* 未锁定（正在输入/粘贴新Key）时用 -webkit-text-security 做视觉打码，
    而不是用 type="password"——微信/部分安卓内置浏览器会屏蔽 password 输入框的粘贴，
@@ -528,14 +799,14 @@ table.ref.ref-wide{min-width:480px;}
 
 /* ---------- 提示词导出：不经本站API Key，把完整提示词以纯文本形式展示，供复制去其他AI软件 ---------- */
 .prompt-output-box{
-  margin-top:16px;background:var(--panel-2);border:1px solid #3a3222;border-radius:6px;
+  margin-top:16px;background:var(--panel-2);border:1px solid var(--border);border-radius:6px;
   padding:14px 16px;
 }
 .prompt-output-box > .ai-status{display:block;margin-bottom:8px;color:var(--jade);}
 .prompt-followup-tip{font-size:var(--fs-1);color:var(--text-dim-sm);margin:0 0 10px;line-height:1.5;}
 .prompt-output-text{
   width:100%;min-height:180px;background:var(--panel);color:var(--text-lo);
-  border:1px solid #4a4128;border-radius:4px;padding:10px;font-size:var(--fs-3);
+  border:1px solid var(--border-soft);border-radius:4px;padding:10px;font-size:var(--fs-3);
   line-height:1.6;font-family:inherit;resize:vertical;white-space:pre-wrap;
 }
 /* "输出提示词"下面的备用工具（整理格式 / 换软件带上下文追问）：默认折叠，只留一行入口。
@@ -545,7 +816,7 @@ table.ref.ref-wide{min-width:480px;}
 .prompt-extra-toggle{
   cursor:pointer;user-select:none;
   display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:10px 14px;background:var(--panel-2);border:1px solid #3a3222;border-radius:6px;
+  padding:10px 14px;background:var(--panel-2);border:1px solid var(--border);border-radius:6px;
   font-size:var(--fs-3);color:var(--text-mid);
 }
 .prompt-extra-toggle:hover{color:var(--paper);}
@@ -562,7 +833,7 @@ table.ref.ref-wide{min-width:480px;}
 .price-override-grid span{font-size:var(--fs-2);color:var(--text-dim);}
 .price-override-grid input{
   background:var(--panel-2);color:var(--text-lo);
-  border:1px solid #4a4128;border-radius:4px;padding:7px 8px;font-size:var(--fs-3);
+  border:1px solid var(--border-soft);border-radius:4px;padding:7px 8px;font-size:var(--fs-3);
 }
 
 .ai-btn.stop{
@@ -577,19 +848,30 @@ table.ref.ref-wide{min-width:480px;}
 /* ---------- 累计统计条 ---------- */
 .ai-stats{
   font-size:var(--fs-2);color:var(--text-mid);margin-bottom:14px;padding:10px 14px;
-  background:var(--panel-2);border:1px solid #33301f;border-radius:6px;
+  background:var(--panel-2);border:1px solid var(--border-faint);border-radius:6px;
 }
 .ai-stats b{color:var(--brass);font-weight:500;}
 .ai-stats:empty{display:none;}
 
 /* ---------- 历史记录面板 ---------- */
 .history-panel{
-  margin-top:16px;padding-top:16px;border-top:1px solid #33301f;
+  margin-top:16px;padding-top:16px;border-top:1px solid var(--border-faint);
   display:none;flex-direction:column;gap:10px;
 }
 .history-panel.open{display:flex;}
 .history-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
-.history-empty{color:var(--text-dim);font-size:var(--fs-3);padding:10px 0;}
+/* 原来这里就是一行灰字"还没有解读记录"，跟页面其它空白/等待场景（头图、摇卦加载态）
+   讲究氛围的风格比起来朴素不少。这里加一个太极线稿小图标，呼应头图.bagua-ring里那个
+   太极徽的视觉语言，但改成纯线条描边（不填色），分量比头图轻很多，只是给这块空状态
+   添一点"讲究"，不是重新做一个装饰重点。 */
+.history-empty{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--text-dim);font-size:var(--fs-3);padding:24px 0;
+}
+.history-empty-icon{width:38px;height:38px;opacity:.7;}
+.history-empty-icon circle,
+.history-empty-icon path{fill:none;stroke:var(--brass-dim);stroke-width:1.4;}
+.history-empty-icon .eye{stroke-width:1.2;}
 /* 原来这里限死 max-height:420px + overflow-y:auto，做成了一个"面板里嵌一个小滚动条"的样子——
    展开某一条的详细信息（本卦/变卦/干支/逐爻明细）时，内容一旦超过420px就被这个内层滚动条裁掉，
    跟着整页一起截图只能截到这一小块，看不全，还得在这个小框里单独再滚一次。
@@ -597,7 +879,7 @@ table.ref.ref-wide{min-width:480px;}
    展开哪一条，那一条的完整内容就都摆在页面上，一次性截屏/长截图就能截全。*/
 .history-list{display:flex;flex-direction:column;gap:8px;}
 .history-item{
-  background:var(--panel-2);border:1px solid #3a3222;border-radius:6px;padding:10px 12px;
+  background:var(--panel-2);border:1px solid var(--border);border-radius:6px;padding:10px 12px;
 }
 .history-item-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;cursor:pointer;}
 .history-item-q{font-size:var(--fs-3);color:var(--paper);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
@@ -605,12 +887,12 @@ table.ref.ref-wide{min-width:480px;}
 .history-item-meta{font-size:var(--fs-1);color:var(--text-dim-sm);margin-top:4px;}
 .history-item-body{
   margin-top:8px;white-space:pre-wrap;line-height:1.85;font-size:var(--fs-4);color:var(--text-lo);
-  display:none;border-top:1px solid #33301f;padding-top:8px;
+  display:none;border-top:1px solid var(--border-faint);padding-top:8px;
 }
 .history-item.expanded .history-item-body{display:block;}
 /* 历史记录里的排盘快照（卦名/变卦/世应/六爻明细等），展开某条记录时排在问答上方 */
 .history-cast{
-  margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed #33301f;
+  margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--border-faint);
   font-size:var(--fs-2);color:var(--text-mid);line-height:1.7;white-space:normal;
 }
 .history-cast-head b{color:var(--vermilion-text);}
@@ -661,7 +943,7 @@ table.ref.ref-wide{min-width:480px;}
    内容较长需要滚动时，"知道了"按钮始终留在卡片底部可见，不会跟内容一起被卷走，
    避免手机上一次快速下滑就直接划到按钮、内容还没读完就点了关闭。 */
 .onboard-card{
-  background:var(--panel);border:1px solid #3a3222;border-radius:10px;
+  background:var(--panel);border:1px solid var(--border);border-radius:10px;
   max-width:480px;width:100%;max-height:86vh;
   display:flex;flex-direction:column;overflow:hidden;
 }
@@ -679,7 +961,7 @@ table.ref.ref-wide{min-width:480px;}
 .onboard-step .txt b{color:var(--paper);font-weight:500;}
 .onboard-actions{
   display:flex;justify-content:flex-end;gap:10px;flex:none;
-  padding:14px 26px 22px;border-top:1px solid #3a3222;
+  padding:14px 26px 22px;border-top:1px solid var(--border);
 }
 /* 底部渐隐遮罩：贴在可滚动内容区（.onboard-scroll）底部，用渐变把最后一行文字虚化，
    暗示"下面还没读完"，比干巴巴的滚动条更容易被注意到。它是绝对定位在.onboard-scroll
@@ -711,7 +993,7 @@ table.ref.ref-wide{min-width:480px;}
   padding:20px;
 }
 .confirm-card{
-  background:var(--panel);border:1px solid #3a3222;border-radius:10px;
+  background:var(--panel);border:1px solid var(--border);border-radius:10px;
   max-width:400px;width:100%;padding:24px 22px;
   animation:toast-in .2s ease;
 }
@@ -736,19 +1018,42 @@ table.ref.ref-wide{min-width:480px;}
   .ai-settings select{
     font-size:16px;
   }
-  /* 移动端"?"帮助按钮不再靠 position:absolute 悬浮在 .tabs 容器正中——那样一旦四个
-     tab 换行成"3+1"两行，纵向居中（top:50%）就会卡在两行中间，跟哪一行都对不上
-     （原来两侧各留52px正是为了给这个悬浮按钮腾位置）。这里窄屏下把 .help-fab 改成
-     position:static，让它跟四个tab一样作为普通flex子项参与同一次换行：不管最后
-     落在第一行还是单独占一行，纵向都是跟同一行的tab对齐，不会再悬空错位。
-     改成这样后 .tabs 也不必再为悬浮按钮预留右侧留白，两侧可以收窄，把空间还给
-     四个tab按钮；触控目标也顺手从30px加大到34px，原来在手机上点着略紧。 */
-  .tabs{padding:10px 12px;}
-  .tab-btn{padding:9px 14px;}
-  .help-fab{
-    position:static;top:auto;right:auto;transform:none;
-    width:34px;height:34px;font-size:15px;
+  /* 导航在这版之前的方案："?"帮助按钮跟四个tab一起走flex+wrap自然换行，纵向
+     好歹能跟同一行对齐，但四个tab按文字宽度换行经常挤成"3+1"——最后一个tab
+     独占一整行，看着孤零零地跟"?"按钮凑一堆，跟上面三个tab摆在一起的整齐感
+     不一致。这里改成2×2网格：四个tab永远整齐分两行两列，不管激活哪一个、
+     文字多宽，两行都是满的，不会再出现"1+3"这种一边空一边挤的观感。
+     "?"帮助按钮则彻底跳出tab的排列逻辑，固定悬浮在导航条右上角——两者各管
+     各的，互不挤占对方的位置。 */
+  .tabs{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:8px;padding:10px 44px 10px 12px;
   }
+  .tab-btn{padding:9px 14px;text-align:center;}
+  /* 桌面端"黄铜细边框+同色文字"的激活态已经够用，但手机端2×2网格里四个格子
+     间距很紧，"当前在哪个标签页"主要靠一圈很细的描边传达，在强调"零依赖"的
+     深色系背景上，细描边跟周围暗色对比拉不开，快速扫一眼不够醒目。这里只在
+     窄屏下给激活态叠一层极淡的黄铜色背景填充（桌面端保持原样不动），描边还留着，
+     背景色+描边双重提示，比单靠一圈细线好认得多。 */
+  .tab-btn.active{
+    background:rgba(184,148,79,.18);
+  }
+  .help-fab{
+    position:absolute;top:10px;right:10px;transform:none;
+    width:32px;height:32px;font-size:14px;
+  }
+  /* 八卦卡片同样的"整除性"问题：宽屏4列在窄屏下改2列（4行×2），依然刚好整除8张，
+     不会出现最后一行只剩一张、旁边空一大截的情况。 */
+  .gua-grid{grid-template-columns:repeat(2,1fr);}
+  /* AI解卦面板"输出提示词/设置/历史记录"这几个按钮，之前纯靠flex-wrap按文字宽度
+     自然换行——按钮数量还会随"是否已填Key"“是否正在生成”动态增减（3个/4个/5个都
+     可能），用固定列数的网格没法保证不出现"最后一个按钮落单、旁边空一截"，跟
+     导航2×2那种"数量固定"的场景不是一回事。这里索性窄屏下改成纵向堆满整行宽度：
+     不管当下显示几个按钮，每个都单独占一整行，永远不会有"某个按钮只占一半、
+     另一半空着"的情况，比硬凑一个网格列数更稳妥。 */
+  .ai-row{flex-direction:column;align-items:stretch;}
+  .ai-row .ai-btn{width:100%;}
+  .ai-row .ai-status{margin-left:0;text-align:center;}
 }
 </style>
 </head>
@@ -773,7 +1078,7 @@ table.ref.ref-wide{min-width:480px;}
       <h3 id="onboardTitle">怎么用这个工具</h3>
       <div class="onboard-step">
         <div class="num">1</div>
-        <div class="txt">先摇一卦感受一下：切到 <b>起卦排盘</b> 标签页，日柱已经帮你选好今天的了，不用管。直接点 <b>摇卦</b>，像抛硬币一样自动摇出六爻——这一步不花钱、不用注册任何东西，纯网页自己算的。（如果你更信自己现实里摇的铜钱结果，也可以切到旁边"线下摇卦"，把自己摇到的结果手动填进去。）</div>
+        <div class="txt">先摇一卦感受一下：切到 <b>起卦排盘</b> 标签页，日柱已经帮你选好今天的了，不用管。直接点 <b>摇卦</b>，像抛硬币一样自动摇出六爻——这一步不花钱、不用注册任何东西，纯网页自己算的。（如果你更信自己现实里摇的铜钱结果，也可以切到旁边"线下摇卦"，把自己摇到的结果手动填进去——选的时候右边会同步画出卦来。）</div>
       </div>
       <div class="onboard-step">
         <div class="num">2</div>
@@ -781,7 +1086,7 @@ table.ref.ref-wide{min-width:480px;}
       </div>
       <div class="onboard-step">
         <div class="num">3</div>
-        <div class="txt">怎么弄到这张 Key：打开 <b>platform.deepseek.com</b>，手机号就能注册，随便充一点钱（比如5块钱够用很久）；在网站的"API keys"页面新建一个 Key、复制下来。回到这个页面，下滑到 <b>AI 解卦</b> 区块，点一次 <b>设置</b>，把复制的 Key 粘贴进去，点"保存Key"——一次性的，以后不用再弄。</div>
+        <div class="txt">怎么弄到这张 Key：打开 <b>platform.deepseek.com</b>，手机号就能注册，随便充一点钱（比如5块钱够用很久）；在网站的"API keys"页面新建一个 Key、复制下来。回到这个页面，下滑到 <b>AI 解卦</b> 区块，点一次 <b>设置</b>，把复制的 Key 粘贴进去，点"保存 Key"——一次性的，以后不用再弄。</div>
       </div>
       <div class="onboard-step">
         <div class="num">4</div>
@@ -809,13 +1114,13 @@ table.ref.ref-wide{min-width:480px;}
 <div class="hero">
   <div class="eyebrow">火珠林 · 京房纳甲</div>
   <h1>六爻入门</h1>
-  <p class="sub">从阴阳、五行、八卦讲起，到摇卦排盘、自动纳甲配六神 —— 一个网页把六爻的骨架搭起来。</p>
+  <p class="sub">从阴阳、五行、八卦讲起，到起卦排盘、自动纳甲配六神 —— 一个网页把六爻的骨架搭起来。</p>
   <div class="bagua-ring" aria-hidden="true">
     <svg viewBox="0 0 200 200">
-      <circle cx="100" cy="100" r="96" fill="none" stroke="#3a3222" stroke-width="1"/>
+      <circle cx="100" cy="100" r="96" fill="none" stroke="var(--border)" stroke-width="1"/>
       <g class="badge-spin">
-        <circle cx="100" cy="100" r="86" fill="none" stroke="#4a4128" stroke-width="1" stroke-dasharray="1 5"/>
-        <circle cx="100" cy="100" r="80" fill="none" stroke="#4a4128" stroke-width="1" stroke-dasharray="1 5"/>
+        <circle cx="100" cy="100" r="86" fill="none" stroke="var(--border-soft)" stroke-width="1" stroke-dasharray="1 5"/>
+        <circle cx="100" cy="100" r="80" fill="none" stroke="var(--border-soft)" stroke-width="1" stroke-dasharray="1 5"/>
       </g>
       <g font-family="serif" font-size="21" fill="#b8944f" text-anchor="middle" dominant-baseline="central">
         <text x="100" y="27">☰</text><text x="152" y="49">☱</text>
@@ -834,11 +1139,18 @@ table.ref.ref-wide{min-width:480px;}
   </div>
 </div>
 
+<!-- 四个tab之前全靠文字标题区分板块，视觉上比较同质（都是同一种深色按钮堆叠）。
+     这里给每个tab配一个极简线条小图标，只是加一点"这一页跟那一页不一样"的记忆点，
+     不改配色体系——图标stroke都用currentColor，颜色完全跟随文字（含hover/active态）：
+     基础知识=太极两仪线稿，起卦排盘=铜钱纹样（呼应摇卦用的三枚铜钱），
+     断卦入门=蓍草束线稿（呼应古法用蓍草起卦的另一支），AI解卦=一个简单的四角星火花，
+     代表"洞见/解读"。四个svg都加了aria-hidden+focusable="false"，屏幕阅读器和Tab键
+     只会读到/停在按钮本身的文字上，不会把装饰性图标当成一个额外的可交互元素。 -->
 <nav class="tabs" role="tablist" aria-label="页面导航">
-  <button class="tab-btn active" data-tab="basics" role="tab" id="tabbtn-basics" aria-selected="true" aria-controls="basics" tabindex="0">基础知识</button>
-  <button class="tab-btn" data-tab="caster" role="tab" id="tabbtn-caster" aria-selected="false" aria-controls="caster" tabindex="-1">起卦排盘</button>
-  <button class="tab-btn" data-tab="guide" role="tab" id="tabbtn-guide" aria-selected="false" aria-controls="guide" tabindex="-1">断卦入门</button>
-  <button class="tab-btn" data-tab="ai" role="tab" id="tabbtn-ai" aria-selected="false" aria-controls="ai" tabindex="-1">AI解卦</button>
+  <button class="tab-btn active" data-tab="basics" role="tab" id="tabbtn-basics" aria-selected="true" aria-controls="basics" tabindex="0"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.3"/><path d="M8 1.7c1.74 0 3.15 1.41 3.15 3.15S9.74 8 8 8s-3.15 1.41-3.15 3.15S6.26 14.3 8 14.3" stroke-linecap="round"/><circle cx="8" cy="4.85" r="0.55" fill="currentColor" stroke="none"/><circle cx="8" cy="11.15" r="0.55" fill="currentColor" stroke="none"/></svg>基础知识</button>
+  <button class="tab-btn" data-tab="caster" role="tab" id="tabbtn-caster" aria-selected="false" aria-controls="caster" tabindex="-1"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true" focusable="false"><circle cx="6" cy="9.6" r="4.6"/><rect x="4.7" y="8.3" width="2.6" height="2.6"/><circle cx="10.6" cy="5.3" r="4.6"/><rect x="9.3" y="4" width="2.6" height="2.6"/></svg>起卦排盘</button>
+  <button class="tab-btn" data-tab="guide" role="tab" id="tabbtn-guide" aria-selected="false" aria-controls="guide" tabindex="-1"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 14.5L3.3 2.3"/><path d="M6.6 14.5L6.3 1.7"/><path d="M9.4 14.5L9.7 1.7"/><path d="M12 14.5L12.7 2.3"/><path d="M2.2 9.8h11.6" stroke-width="0.9"/></svg>断卦入门</button>
+  <button class="tab-btn" data-tab="ai" role="tab" id="tabbtn-ai" aria-selected="false" aria-controls="ai" tabindex="-1"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 1.5c0.4 2.6 1.3 4.4 2.9 5.6 1.6 1.2 2.6 1.5 3.6 1.9-1 0.4-2 0.7-3.6 1.9-1.6 1.2-2.5 3-2.9 5.6-0.4-2.6-1.3-4.4-2.9-5.6C3.5 9.7 2.5 9.4 1.5 9c1-0.4 2-0.7 3.6-1.9C6.7 5.9 7.6 4.1 8 1.5z"/></svg>AI 解卦</button>
   <button class="help-fab" id="helpFab" title="使用教程" aria-label="使用教程">?</button>
 </nav>
 
@@ -878,25 +1190,30 @@ table.ref.ref-wide{min-width:480px;}
     <table class="ref" style="margin-bottom:14px;">
       <tr><th>十天干</th><td colspan="10">甲　乙　丙　丁　戊　己　庚　辛　壬　癸</td></tr>
     </table>
-    <div class="scroll-hint">← 左右滑动查看完整表格 →</div>
-    <div class="ref-scroll"><table class="ref ref-wide">
-      <thead><tr><th>地支</th><th>子</th><th>丑</th><th>寅</th><th>卯</th><th>辰</th><th>巳</th><th>午</th><th>未</th><th>申</th><th>酉</th><th>戌</th><th>亥</th></tr></thead>
-      <tbody><tr><th>五行</th><td>水</td><td>土</td><td>木</td><td>木</td><td>土</td><td>火</td><td>火</td><td>土</td><td>金</td><td>金</td><td>土</td><td>水</td></tr></tbody>
-    </table></div>
+    <!-- 原为13列矩阵（ref-scroll ref-wide），窄屏需横滑；拆成两张6列子表上下堆叠后
+         每张都能落在安全区内，不再需要横向滚动，也无需引入 ref-cards 的卡片视觉重量。 -->
+    <table class="ref" style="margin-bottom:2px;">
+      <thead><tr><th>地支</th><th>子</th><th>丑</th><th>寅</th><th>卯</th><th>辰</th><th>巳</th></tr></thead>
+      <tbody><tr><th>五行</th><td>水</td><td>土</td><td>木</td><td>木</td><td>土</td><td>火</td></tr></tbody>
+    </table>
+    <table class="ref">
+      <thead><tr><th>地支</th><th>午</th><th>未</th><th>申</th><th>酉</th><th>戌</th><th>亥</th></tr></thead>
+      <tbody><tr><th>五行</th><td>火</td><td>土</td><td>金</td><td>金</td><td>土</td><td>水</td></tr></tbody>
+    </table>
   </section>
 
   <section class="block">
     <h2>六神</h2>
     <p class="desc">六神按起卦当天的天干起排，从初爻开始向上依次循环，用来辅助判断事情的性质（喜庆、口舌、疑虑、缠绕、阻力、暗昧等），不是吉凶本身。</p>
-    <table class="ref">
+    <table class="ref ref-cards">
       <thead><tr><th>日干</th><th>初爻起</th><th>顺序（初→上）</th></tr></thead>
       <tbody>
-        <tr><td>甲、乙日</td><td>青龙</td><td>青龙 朱雀 勾陈 螣蛇 白虎 玄武</td></tr>
-        <tr><td>丙、丁日</td><td>朱雀</td><td>朱雀 勾陈 螣蛇 白虎 玄武 青龙</td></tr>
-        <tr><td>戊日</td><td>勾陈</td><td>勾陈 螣蛇 白虎 玄武 青龙 朱雀</td></tr>
-        <tr><td>己日</td><td>螣蛇</td><td>螣蛇 白虎 玄武 青龙 朱雀 勾陈</td></tr>
-        <tr><td>庚、辛日</td><td>白虎</td><td>白虎 玄武 青龙 朱雀 勾陈 螣蛇</td></tr>
-        <tr><td>壬、癸日</td><td>玄武</td><td>玄武 青龙 朱雀 勾陈 螣蛇 白虎</td></tr>
+        <tr><td data-th="日干">甲、乙日</td><td data-th="初爻起">青龙</td><td data-th="顺序（初→上）">青龙 朱雀 勾陈 螣蛇 白虎 玄武</td></tr>
+        <tr><td data-th="日干">丙、丁日</td><td data-th="初爻起">朱雀</td><td data-th="顺序（初→上）">朱雀 勾陈 螣蛇 白虎 玄武 青龙</td></tr>
+        <tr><td data-th="日干">戊日</td><td data-th="初爻起">勾陈</td><td data-th="顺序（初→上）">勾陈 螣蛇 白虎 玄武 青龙 朱雀</td></tr>
+        <tr><td data-th="日干">己日</td><td data-th="初爻起">螣蛇</td><td data-th="顺序（初→上）">螣蛇 白虎 玄武 青龙 朱雀 勾陈</td></tr>
+        <tr><td data-th="日干">庚、辛日</td><td data-th="初爻起">白虎</td><td data-th="顺序（初→上）">白虎 玄武 青龙 朱雀 勾陈 螣蛇</td></tr>
+        <tr><td data-th="日干">壬、癸日</td><td data-th="初爻起">玄武</td><td data-th="顺序（初→上）">玄武 青龙 朱雀 勾陈 螣蛇 白虎</td></tr>
       </tbody>
     </table>
   </section>
@@ -905,12 +1222,12 @@ table.ref.ref-wide{min-width:480px;}
     <h2>起卦方法</h2>
     <div class="block-collapse-body">
     <p class="desc">六爻纳甲法最常见的起卦方式是"摇钱法"，也就是本工具"起卦排盘"标签页做的事：三枚铜钱一次摇出一爻，六次摇完六爻。除此之外还有几种常见变体，原理相通，只是取数方式不同：</p>
-    <table class="ref">
+    <table class="ref ref-cards">
       <thead><tr><th>方法</th><th>做法</th></tr></thead>
       <tbody>
-        <tr><td>摇钱法（本工具用的）</td><td>三枚铜钱正反面记数，六次摇出六爻</td></tr>
-        <tr><td>报数起卦</td><td>随口说出两个数分别除以8取余得上下卦，再用总数除以6取余定动爻，多用于突发一念、不方便摇钱的场合</td></tr>
-        <tr><td>米卦、字卦等</td><td>用抓米粒数、写字笔画数等方式取数，原理和报数法一样，只是取数的载体不同</td></tr>
+        <tr><td data-th="方法">摇钱法（本工具用的）</td><td data-th="做法">三枚铜钱正反面记数，六次摇出六爻</td></tr>
+        <tr><td data-th="方法">报数起卦</td><td data-th="做法">随口说出两个数分别除以8取余得上下卦，再用总数除以6取余定动爻，多用于突发一念、不方便摇钱的场合</td></tr>
+        <tr><td data-th="方法">米卦、字卦等</td><td data-th="做法">用抓米粒数、写字笔画数等方式取数，原理和报数法一样，只是取数的载体不同</td></tr>
       </tbody>
     </table>
     <p class="desc" style="margin-top:10px;">要注意一点：民间常说的"梅花易数"也是靠时间、数字起卦，但那是另一套独立的分析体系——不纳甲、不排六亲六神，而是用"体卦、用卦"的生克来断卦，跟本工具讲的六爻纳甲法是两条不同的路子，虽然都以《周易》为源头，学习时别混在一起。</p>
@@ -936,7 +1253,7 @@ table.ref.ref-wide{min-width:480px;}
 
         <div class="cast-mode-toggle" id="castModeToggle">
           <button type="button" class="mode-btn active" data-mode="system">系统摇卦</button>
-          <button type="button" class="mode-btn" data-mode="manual">线下摇卦 · 手动填入</button>
+          <button type="button" class="mode-btn" data-mode="manual">线下摇卦</button>
         </div>
 
         <!-- 摇卦频率配额（10分钟内最多3次）常驻提示：之前只有点击被拦下时才弹toast告知，
@@ -964,15 +1281,15 @@ table.ref.ref-wide{min-width:480px;}
     <h2>起卦规矩 · 使用说明</h2>
     <div class="block-collapse-body">
     <p class="desc">世应、六亲已按八宫卦生成规则自动推出；空亡按日柱所在的"旬"标出。排盘结果下方还会同时列出年柱、月柱、时柱（按起卦这一刻的系统时间自动算出，不用手动填），方便对照查看。</p>
-    <p class="desc">按传统规矩，一事不问二卦：同一个问题只摇一次，问题没换就不能重摇——想再摇，先在下面把问题换成一件新的事。短时间内也不建议连续摇太多卦，10 分钟内最多摇 3 次。</p>
+    <p class="desc">按传统规矩，一事不问二卦：同一件事只摇一次。上一卦还在时再点"摇卦"/"生成排盘"，会弹窗确认是否要另起新卦——确认之后会清空上一卦的记录（连同问题框里的文字）再重新摇。短时间内也不建议连续摇太多卦，10 分钟内最多摇 3 次。</p>
     <p class="desc">另外几条老规矩也顺带提一句：别在大喜大怒、心浮气躁的时候乱测，也别单纯当好玩测着玩，念不专卦不应，测出来的参考价值不大；卦是用来"决疑"的，一件事已经拍板定了、没有回旋余地，再占意义也不大。</p>
     </div>
   </section>
 
   <section class="block">
     <h2>下一步：AI 解卦</h2>
-    <p class="desc">排盘生成好之后，去"AI解卦"标签页写下想问的事情，会自动带着当前这卦一起解读。</p>
-    <button class="cast-btn" id="gotoAiTabBtn" type="button">去 AI 解卦 →</button>
+    <p class="desc">排盘生成好之后，去"AI 解卦"标签页写下想问的事情，会自动带着当前这卦一起解读。</p>
+    <button class="cast-btn outline" id="gotoAiTabBtn" type="button">去 AI 解卦 →</button>
   </section>
 
   <section class="block block-collapse">
@@ -1002,17 +1319,17 @@ table.ref.ref-wide{min-width:480px;}
     <h2>用神速查</h2>
     <div class="block-collapse-body">
     <p class="desc">测什么事，就盯住卦里对应的这个六亲看它的旺衰生克。</p>
-    <table class="ref">
+    <table class="ref ref-cards">
       <thead><tr><th>所测之事</th><th>用神</th><th>备注</th></tr></thead>
       <tbody>
-        <tr><td>求财、生意</td><td>妻财</td><td>财爻旺相、不被日月刑克为好</td></tr>
-        <tr><td>婚姻</td><td>男测看妻财 · 女测看官鬼</td><td>同时看世应是否相生相合</td></tr>
-        <tr><td>疾病</td><td>官鬼（病）· 父母（药、医）</td><td>官鬼旺表示病重，子孙旺主吉（子孙克官鬼）</td></tr>
-        <tr><td>考试、求职、官运</td><td>官鬼</td><td>官鬼旺相、生世为宜</td></tr>
-        <tr><td>子女、晚辈</td><td>子孙</td><td>子孙爻代表后代、也代表福气与消灾之神</td></tr>
-        <tr><td>父母、长辈、房产、合同文书</td><td>父母</td><td>父母爻也主辛劳、忧虑</td></tr>
-        <tr><td>兄弟、朋友、合伙人</td><td>兄弟</td><td>兄弟旺常主破财、争抢</td></tr>
-        <tr><td>出行、诉讼</td><td>视具体所问再定</td><td>出行看世爻安稳与否，诉讼看官鬼与世应</td></tr>
+        <tr><td data-th="所测之事">求财、生意</td><td data-th="用神">妻财</td><td data-th="备注">财爻旺相、不被日月刑克为好</td></tr>
+        <tr><td data-th="所测之事">婚姻</td><td data-th="用神">男测看妻财 · 女测看官鬼</td><td data-th="备注">同时看世应是否相生相合</td></tr>
+        <tr><td data-th="所测之事">疾病</td><td data-th="用神">官鬼（病）· 父母（药、医）</td><td data-th="备注">官鬼旺表示病重，子孙旺主吉（子孙克官鬼）</td></tr>
+        <tr><td data-th="所测之事">考试、求职、官运</td><td data-th="用神">官鬼</td><td data-th="备注">官鬼旺相、生世为宜</td></tr>
+        <tr><td data-th="所测之事">子女、晚辈</td><td data-th="用神">子孙</td><td data-th="备注">子孙爻代表后代、也代表福气与消灾之神</td></tr>
+        <tr><td data-th="所测之事">父母、长辈、房产、合同文书</td><td data-th="用神">父母</td><td data-th="备注">父母爻也主辛劳、忧虑</td></tr>
+        <tr><td data-th="所测之事">兄弟、朋友、合伙人</td><td data-th="用神">兄弟</td><td data-th="备注">兄弟旺常主破财、争抢</td></tr>
+        <tr><td data-th="所测之事">出行、诉讼</td><td data-th="用神">视具体所问再定</td><td data-th="备注">出行看世爻安稳与否，诉讼看官鬼与世应</td></tr>
       </tbody>
     </table>
     </div>
@@ -1023,14 +1340,14 @@ table.ref.ref-wide{min-width:480px;}
     <div class="block-collapse-body">
     <p class="desc">用神的五行在当前月份是旺是衰，看这张表就知道大方向。旺、相为得力；休、囚、死为不得力，需要日辰再生扶才行。</p>
     <div class="scroll-hint">← 左右滑动查看完整表格 →</div>
-    <div class="ref-scroll"><table class="ref ref-wide">
+    <div class="ref-scroll"><table class="ref ref-wide ref-cards">
       <thead><tr><th>月令</th><th>旺</th><th>相</th><th>休</th><th>囚</th><th>死</th></tr></thead>
       <tbody>
-        <tr><td>春（寅卯月）</td><td>木</td><td>火</td><td>水</td><td>金</td><td>土</td></tr>
-        <tr><td>夏（巳午月）</td><td>火</td><td>土</td><td>木</td><td>水</td><td>金</td></tr>
-        <tr><td>秋（申酉月）</td><td>金</td><td>水</td><td>土</td><td>火</td><td>木</td></tr>
-        <tr><td>冬（亥子月）</td><td>水</td><td>木</td><td>金</td><td>土</td><td>火</td></tr>
-        <tr><td>四季月（辰戌丑未月）</td><td>土</td><td>金</td><td>火</td><td>木</td><td>水</td></tr>
+        <tr><td data-th="月令">春（寅卯月）</td><td data-th="旺">木</td><td data-th="相">火</td><td data-th="休">水</td><td data-th="囚">金</td><td data-th="死">土</td></tr>
+        <tr><td data-th="月令">夏（巳午月）</td><td data-th="旺">火</td><td data-th="相">土</td><td data-th="休">木</td><td data-th="囚">水</td><td data-th="死">金</td></tr>
+        <tr><td data-th="月令">秋（申酉月）</td><td data-th="旺">金</td><td data-th="相">水</td><td data-th="休">土</td><td data-th="囚">火</td><td data-th="死">木</td></tr>
+        <tr><td data-th="月令">冬（亥子月）</td><td data-th="旺">水</td><td data-th="相">木</td><td data-th="休">金</td><td data-th="囚">土</td><td data-th="死">火</td></tr>
+        <tr><td data-th="月令">四季月（辰戌丑未月）</td><td data-th="旺">土</td><td data-th="相">金</td><td data-th="休">火</td><td data-th="囚">木</td><td data-th="死">水</td></tr>
       </tbody>
     </table></div>
     </div>
@@ -1066,17 +1383,17 @@ table.ref.ref-wide{min-width:480px;}
   <section class="block block-collapse">
     <h2>常用术语速查</h2>
     <div class="block-collapse-body">
-    <table class="ref">
+    <table class="ref ref-cards">
       <thead><tr><th>术语</th><th>含义</th></tr></thead>
       <tbody>
-        <tr><td>本卦 / 变卦</td><td>摇出来的原始卦为本卦；有动爻时，动爻阴阳互变后组成的新卦为变卦</td></tr>
-        <tr><td>动爻 / 变爻</td><td>摇出老阳、老阴的那一爻，是卦中变化的信号，往往是事情的转折点</td></tr>
-        <tr><td>世爻 / 应爻</td><td>世爻代表求测人自己；应爻代表对方、对手或所测之事</td></tr>
-        <tr><td>用神</td><td>根据所问之事选定的、这一卦里要重点分析的那个六亲</td></tr>
-        <tr><td>元神 / 忌神</td><td>生助用神的六亲为元神（帮手）；克制用神的六亲为忌神（阻力）</td></tr>
-        <tr><td>飞神 / 伏神</td><td>卦中实际排出的爻为飞神；六亲不全时从本宫首卦借来补位的爻为伏神</td></tr>
-        <tr><td>月建 / 日辰</td><td>起卦当月的地支为月建，当日的地支为日辰，两者是判断爻位旺衰最重要的两把尺子</td></tr>
-        <tr><td>旬空（空亡）</td><td>爻的地支落在当天所属"旬"的空亡地支上，力量暂时打折</td></tr>
+        <tr><td data-th="术语">本卦 / 变卦</td><td data-th="含义">摇出来的原始卦为本卦；有动爻时，动爻阴阳互变后组成的新卦为变卦</td></tr>
+        <tr><td data-th="术语">动爻 / 变爻</td><td data-th="含义">摇出老阳、老阴的那一爻，是卦中变化的信号，往往是事情的转折点</td></tr>
+        <tr><td data-th="术语">世爻 / 应爻</td><td data-th="含义">世爻代表求测人自己；应爻代表对方、对手或所测之事</td></tr>
+        <tr><td data-th="术语">用神</td><td data-th="含义">根据所问之事选定的、这一卦里要重点分析的那个六亲</td></tr>
+        <tr><td data-th="术语">元神 / 忌神</td><td data-th="含义">生助用神的六亲为元神（帮手）；克制用神的六亲为忌神（阻力）</td></tr>
+        <tr><td data-th="术语">飞神 / 伏神</td><td data-th="含义">卦中实际排出的爻为飞神；六亲不全时从本宫首卦借来补位的爻为伏神</td></tr>
+        <tr><td data-th="术语">月建 / 日辰</td><td data-th="含义">起卦当月的地支为月建，当日的地支为日辰，两者是判断爻位旺衰最重要的两把尺子</td></tr>
+        <tr><td data-th="术语">旬空（空亡）</td><td data-th="含义">爻的地支落在当天所属"旬"的空亡地支上，力量暂时打折</td></tr>
       </tbody>
     </table>
     </div>
@@ -1086,16 +1403,16 @@ table.ref.ref-wide{min-width:480px;}
     <h2>参考古籍</h2>
     <div class="block-collapse-body">
     <p class="desc">六爻纳甲这套方法不是凭空来的，历代累积下不少专著，有兴趣深入可以顺着这个脉络找原书或今人注本来读：</p>
-    <table class="ref">
+    <table class="ref ref-cards">
       <thead><tr><th>典籍</th><th>大致定位</th></tr></thead>
       <tbody>
-        <tr><td>《周易》（易经）</td><td>六十四卦、卦爻辞的源头，六爻占法最终都建立在这套符号系统上</td></tr>
-        <tr><td>《京氏易传》（旧题西汉·京房）</td><td>相传纳甲、八宫、世应、飞伏等理论体系由此奠基，是纳甲筮法的理论源头</td></tr>
-        <tr><td>《火珠林》（旧题麻衣道者 / 托名京房）</td><td>现存最早的以钱代蓍、纳甲配六亲断卦的专著，"火珠林法"因此得名，是六爻纳甲实操的直接源头</td></tr>
-        <tr><td>《黄金策》（相传明·刘伯温，作者存疑）</td><td>六爻断卦口诀歌赋的重要来源，后被收入《卜筮正宗》</td></tr>
-        <tr><td>《卜筮正宗》（清·王洪绪）</td><td>集大成之作，体系完整、案例丰富，是后世学六爻最常用的入门到进阶教材之一</td></tr>
-        <tr><td>《增删卜易》（清·野鹤老人）</td><td>另一部重要实战典籍，以真实占例多、讲解直白著称</td></tr>
-        <tr><td>《易冒》（清·程良玉）</td><td>清代六爻另一部代表性著作，理论与案例并重</td></tr>
+        <tr><td data-th="典籍">《周易》（易经）</td><td data-th="大致定位">六十四卦、卦爻辞的源头，六爻占法最终都建立在这套符号系统上</td></tr>
+        <tr><td data-th="典籍">《京氏易传》（旧题西汉·京房）</td><td data-th="大致定位">相传纳甲、八宫、世应、飞伏等理论体系由此奠基，是纳甲筮法的理论源头</td></tr>
+        <tr><td data-th="典籍">《火珠林》（旧题麻衣道者 / 托名京房）</td><td data-th="大致定位">现存最早的以钱代蓍、纳甲配六亲断卦的专著，"火珠林法"因此得名，是六爻纳甲实操的直接源头</td></tr>
+        <tr><td data-th="典籍">《黄金策》（相传明·刘伯温，作者存疑）</td><td data-th="大致定位">六爻断卦口诀歌赋的重要来源，后被收入《卜筮正宗》</td></tr>
+        <tr><td data-th="典籍">《卜筮正宗》（清·王洪绪）</td><td data-th="大致定位">集大成之作，体系完整、案例丰富，是后世学六爻最常用的入门到进阶教材之一</td></tr>
+        <tr><td data-th="典籍">《增删卜易》（清·野鹤老人）</td><td data-th="大致定位">另一部重要实战典籍，以真实占例多、讲解直白著称</td></tr>
+        <tr><td data-th="典籍">《易冒》（清·程良玉）</td><td data-th="大致定位">清代六爻另一部代表性著作，理论与案例并重</td></tr>
       </tbody>
     </table>
     <p class="desc" style="margin-top:10px;">部分作者归属在学界仍有争议（比如《黄金策》托名刘伯温的说法就流传已久但缺乏定论），列出来是给你一个查阅方向，具体考据以严谨的今人校注本为准。</p>
@@ -1112,7 +1429,12 @@ table.ref.ref-wide{min-width:480px;}
 <div class="panel" id="ai" role="tabpanel" aria-labelledby="tabbtn-ai" tabindex="0">
   <section class="block">
     <h2>AI 解卦</h2>
-    <p class="desc">在文本框内写下想问的事情：填了 DeepSeek Key 的话，点"AI 解读"直接在本页面拿到解卦回复；没填 Key、或者想用别的AI软件解卦，就点"输出提示词"——网页照样自动摇卦、排卦、装卦，只是最后一步给你一段可以直接复制的完整提示词，粘贴去任意AI聊天软件发送即可。</p>
+    <p class="desc">在文本框内写下想问的事情：填了 DeepSeek API Key 的话，点"AI 解读"直接在本页面拿到解卦回复；没填 Key、或者想用别的AI软件解卦，就点"输出提示词"——网页照样自动摇卦、排卦、装卦，只是最后一步给你一段可以直接复制的完整提示词，粘贴去任意AI聊天软件发送即可。</p>
+    <!-- 排盘数据虽然一直存在内存里的 window.lastCastData，但跳转过来之后界面上
+         完全看不出来——用户点"AI 解读"之前只能凭记忆或信任系统。这里补一条
+         轻量状态提示，有 lastCastData 就渲染当前是哪一卦，没有就不显示，
+         成本很低，不用重新实现一份排盘表格。 -->
+    <div class="current-cast-status" id="currentCastStatus" style="display:none;"></div>
     <div class="ai-box">
       <div class="ai-stats" id="aiStats"></div>
       <textarea id="questionInput" maxlength="500" placeholder="想问的问题，比如：最近想跳槽，合不合适"></textarea>
@@ -1121,8 +1443,8 @@ table.ref.ref-wide{min-width:480px;}
         <button class="ai-btn" id="interpretBtn">AI 解读</button>
         <button class="ai-btn ghost" id="promptBtn">输出提示词</button>
         <button class="ai-btn stop" id="stopGenBtn" style="display:none;">停止生成</button>
-        <button class="ai-btn ghost" id="toggleSettingsBtn">设置</button>
-        <button class="ai-btn ghost" id="toggleHistoryBtn">历史记录</button>
+        <button class="ai-btn ghost" id="toggleSettingsBtn" aria-expanded="false" aria-controls="aiSettings">设置</button>
+        <button class="ai-btn ghost" id="toggleHistoryBtn" aria-expanded="false" aria-controls="historyPanel">历史记录</button>
         <span class="ai-status" id="aiStatus"></span>
       </div>
 
@@ -1153,11 +1475,14 @@ table.ref.ref-wide{min-width:480px;}
         </div>
         <div class="prompt-extra-body">
 
-          <!-- 贴回矫正：对方AI原样吐出来的回复，本站没法像"AI解读"那样自动跑 stripMarkdown/annotateShichen
-               两道清洗，只能让用户把回复贴回来在本地跑一遍同样的清洗函数——不产生任何网络请求和费用，
-               纯前端字符串处理，复用的就是"AI解读"清洗回复用的那两个函数，保证两条路径最终看到的格式一致。 -->
+          <!-- 贴回矫正：对方AI原样吐出来的回复，本站没法像"AI解读"那样自动跑 stripMarkdown/annotateShichen/
+               annotateGanzhiDay 三道清洗，只能让用户把回复贴回来在本地跑一遍同样的清洗函数——不产生任何
+               网络请求和费用，纯前端字符串处理，复用的就是"AI解读"清洗回复用的那三个函数，保证两条路径
+               最终看到的格式一致。三道里 annotateGanzhiDay 这道尤其不能漏提：导出的提示词第8条规则明确
+               告诉对方AI"干支日期换算不用你管、系统会自动补上"，这个承诺只有用户走了这一步才会兑现，
+               如果说明文案只提前两道清洗，用户很容易看不出这步还兜着这层作用，顺手跳过。 -->
           <div class="prompt-output-box" id="promptCleanupBox">
-            <span class="ai-status">对方AI的回复贴到这里，帮你顺手清掉Markdown符号、给时辰补上现代时间括注</span>
+            <span class="ai-status">对方AI的回复贴到这里，帮你顺手清掉Markdown符号、给时辰补上现代时间括注、把提到的干支日换算成具体日期</span>
             <textarea id="cleanupInputText" class="prompt-output-text" placeholder="把对方AI回复的原文粘贴到这里…"></textarea>
             <div class="ai-row" style="margin-top:8px;">
               <button class="ai-btn ghost" id="cleanupRunBtn">整理格式</button>
@@ -1225,8 +1550,8 @@ table.ref.ref-wide{min-width:480px;}
           <div class="settings-field">
             <label for="styleSelect">回复风格（字数与展开程度）</label>
             <select id="styleSelect">
-              <option value="brief">精简（100-200字）</option>
-              <option value="deep">深究（400-600字·展开分析）</option>
+              <option value="brief">精简（300-400字）</option>
+              <option value="deep">深究（700-800字·展开分析）</option>
               <option value="custom">自定义</option>
             </select>
           </div>
@@ -1283,7 +1608,15 @@ table.ref.ref-wide{min-width:480px;}
           <span class="ai-status">共 <span id="historyCount">0</span> 条</span>
           <button class="ai-btn ghost" id="clearHistoryBtn">清空历史</button>
         </div>
-        <div class="history-empty" id="historyEmpty">还没有解读记录</div>
+        <div class="history-empty" id="historyEmpty">
+          <svg class="history-empty-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="27"/>
+            <path d="M32,5 A13.5,13.5 0 0,1 32,32 A13.5,13.5 0 0,0 32,59"/>
+            <circle class="eye" cx="32" cy="18.5" r="3"/>
+            <circle class="eye" cx="32" cy="45.5" r="3"/>
+          </svg>
+          <div>还没有解读记录</div>
+        </div>
         <div class="history-list" id="historyList"></div>
       </div>
 
@@ -1337,7 +1670,7 @@ table.ref.ref-wide{min-width:480px;}
   关闭后焦点还原）→ 新手教程弹层（打开自动聚焦"知道了"，Esc/点击遮罩关闭）
 
   【AI 解卦】
-  SHOP_INFO 角色设定 / REPLY_STYLE_PRESETS 回复风格 / PRICE_TABLES 计费单价（分模型）
+  ROLE_PRESETS 角色设定 / REPLY_STYLE_PRESETS 回复风格 / PRICE_TABLES 计费单价（分模型）
   → localStorage 键管理（Key/风格/历史）→ stripMarkdown → buildSystemPrompt 系统提示词
   → formatCastDataForAI 排盘转文本 → buildExportPromptText 提示词导出文本（不经API Key）
   → interpretWithDeepSeek 调用API与计费估算
@@ -1366,6 +1699,22 @@ document.querySelectorAll('.settings-group.collapsible').forEach(group=>{
    鼠标点击的视觉效果和之前完全一样，这里只是把底层语义和键盘可达性补上。
    ---------------- */
 const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
+// 供 AI 面板顶部状态条使用：有 window.lastCastData 就显示"当前排盘：卦名 · 日柱"，
+// 没有（还没摇过卦，或者数据被清空）就隐藏整条，不占位置。挂在 window 上是因为
+// 摇卦/复原历史卦等多处写 window.lastCastData 的代码分散在文件后面，
+// 那几处会直接调用 window.updateCurrentCastStatus() 同步这条状态。
+window.updateCurrentCastStatus = function(){
+  const box = document.getElementById('currentCastStatus');
+  if(!box) return;
+  const d = window.lastCastData;
+  if(d && d.guaName){
+    const bianText = d.bianGuaName && d.bianGuaName !== d.guaName ? `（变 ${d.bianGuaName}）` : '';
+    box.innerHTML = `当前排盘：<b>${d.guaName}</b>${bianText} · ${d.ganzhi || ''}日`;
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+};
 function switchTab(tabName){
   tabButtons.forEach(b=>{
     const active = b.dataset.tab === tabName;
@@ -1374,6 +1723,7 @@ function switchTab(tabName){
     b.tabIndex = active ? 0 : -1;
   });
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id === tabName));
+  if(tabName === 'ai') window.updateCurrentCastStatus();
 }
 tabButtons.forEach((btn, i)=>{
   btn.addEventListener('click',()=> switchTab(btn.dataset.tab));
@@ -1445,23 +1795,32 @@ function arcPath(a,b,cx,cy,bend,shrink){
 }
 WX.forEach(w=>{
   const p=pos[w];
-  svgHtml += `<g class="wx-node" data-el="${w}" transform="translate(${p.x},${p.y})">
+  svgHtml += `<g class="wx-node" data-el="${w}" tabindex="0" role="button" aria-label="查看${w}的生克关系" transform="translate(${p.x},${p.y})">
     <circle r="22"/><text x="0" y="6" text-anchor="middle">${w}</text></g>`;
 });
 svg.insertAdjacentHTML('beforeend', svgHtml);
+function activateWxNode(node){
+  const el = node.dataset.el;
+  document.querySelectorAll('.wx-node').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.wx-arrow').forEach(a=>a.classList.remove('hl'));
+  node.classList.add('active');
+  document.querySelectorAll(`.wx-arrow[data-from="${el}"]`).forEach(a=>a.classList.add('hl'));
+  document.querySelectorAll(`.wx-arrow[data-to="${el}"]`).forEach(a=>a.classList.add('hl'));
+  const genTo = SHENG[el], genBy = Object.keys(SHENG).find(k=>SHENG[k]===el);
+  const keTo = KE[el], keBy = Object.keys(KE).find(k=>KE[k]===el);
+  document.getElementById('wxInfo').innerHTML =
+    `<b>${el}</b> 生 ${genTo}　·　${genBy} 生 <b>${el}</b><br>
+     <b>${el}</b> 克 ${keTo}　·　${keBy} 克 <b>${el}</b>`;
+}
 svg.querySelectorAll('.wx-node').forEach(node=>{
-  node.addEventListener('click',()=>{
-    const el = node.dataset.el;
-    document.querySelectorAll('.wx-node').forEach(n=>n.classList.remove('active'));
-    document.querySelectorAll('.wx-arrow').forEach(a=>a.classList.remove('hl'));
-    node.classList.add('active');
-    document.querySelectorAll(`.wx-arrow[data-from="${el}"]`).forEach(a=>a.classList.add('hl'));
-    document.querySelectorAll(`.wx-arrow[data-to="${el}"]`).forEach(a=>a.classList.add('hl'));
-    const genTo = SHENG[el], genBy = Object.keys(SHENG).find(k=>SHENG[k]===el);
-    const keTo = KE[el], keBy = Object.keys(KE).find(k=>KE[k]===el);
-    document.getElementById('wxInfo').innerHTML =
-      `<b>${el}</b> 生 ${genTo}　·　${genBy} 生 <b>${el}</b><br>
-       <b>${el}</b> 克 ${keTo}　·　${keBy} 克 <b>${el}</b>`;
+  node.addEventListener('click',()=>activateWxNode(node));
+  // 键盘用户（Tab 聚焦 + Enter/空格触发）之前完全摸不到这个交互，纯 click 监听
+  // 覆盖不到键盘操作，这里补上 keydown 处理，跟鼠标/触屏走同一套 activateWxNode 逻辑。
+  node.addEventListener('keydown',(e)=>{
+    if(e.key==='Enter' || e.key===' ' || e.key==='Spacebar'){
+      e.preventDefault();
+      activateWxNode(node);
+    }
   });
 });
 
@@ -1478,6 +1837,15 @@ const NAJIA = {
 };
 const BRANCH_EL = {'子':'水','丑':'土','寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土','申':'金','酉':'金','戌':'土','亥':'水'};
 const SIX_SPIRITS = ['青龙','朱雀','勾陈','螣蛇','白虎','玄武'];
+// 六神→CSS类名的映射，配合CSS里的 .spirit-dot 系列规则，给排盘表格/卡片里的六神名字
+// 前面加一个小色块，方便扫读时快速定位（纯装饰，不影响任何判断逻辑）。四处渲染
+// （renderPlate表格/buildPlateCardsHtml卡片/renderPlateFromCastData复原态/historyCastHtml历史记录）
+// 共用这一份，spirit不在映射表里（理论上不会发生，六神固定六个）时返回空字符串，不出色块也不报错。
+const SPIRIT_CLASS = {'青龙':'qinglong','朱雀':'zhuque','勾陈':'gouchen','螣蛇':'tengshe','白虎':'baihu','玄武':'xuanwu'};
+function spiritDotHtml(spirit){
+  const cls = SPIRIT_CLASS[spirit];
+  return cls ? `<span class="spirit-dot ${cls}" aria-hidden="true"></span>` : '';
+}
 const TRIGRAM_BY_KEY = {};
 BAGUA.forEach(g=>TRIGRAM_BY_KEY[g.key]=g);
 
@@ -1536,6 +1904,93 @@ function sixRelative(lineEl, palaceEl){
   if(KE[lineEl]===palaceEl) return '官鬼';
   if(KE[palaceEl]===lineEl) return '妻财';
   return '－';
+}
+
+/* ---------------- 进神/退神（爻辰进退） ----------------
+   之前这个判断完全交给AI自己现算（本爻地支变成变爻地支，是"进"还是"退"），但这其实是
+   一道有唯一正确答案的计算题，不该留给AI凭训练时的零散记忆去现推——历代纳甲典籍
+   （《卜筮正宗》《增删卜易》等）说法一致的，只有四组同五行、地支顺行相邻的固定地支对：
+   寅→卯（木）、巳→午（火）、申→酉（金）、亥→子（水）是"进神"，反过来变是"退神"。
+   辰戌丑未（土）之间怎么算进退，各家说法不一、没有公认唯一答案，这里不强行给出判断，
+   统一留空——宁可让这一项在没有把握时空着交给AI用回头生克去谈，也不要把一个本身有
+   流派分歧的东西包装成"确定性结论"喂给AI，那样反而会制造新一类看似有据、实则立不住的
+   计算错误。 ---------------- */
+const JIN_SHEN_PAIRS = {'寅':'卯', '巳':'午', '申':'酉', '亥':'子'}; // 本爻地支→变爻地支 命中即为"进神"
+const TUI_SHEN_PAIRS = {'卯':'寅', '午':'巳', '酉':'申', '子':'亥'}; // 本爻地支→变爻地支 命中即为"退神"
+function computeJinTuiShen(fromBranch, toBranch){
+  if(!fromBranch || !toBranch || fromBranch === toBranch) return '';
+  if(JIN_SHEN_PAIRS[fromBranch] === toBranch) return '进神';
+  if(TUI_SHEN_PAIRS[fromBranch] === toBranch) return '退神';
+  return ''; // 五行不同、或土行内部变化：不属于标准进退神对，不判定
+}
+
+/* ---------------- 月令旺衰 / 日辰合冲 / 回头生克 / 世应生克 / 飞神伏神生克 ----------------
+   这几项跟上面的进退神是同一类东西：给定"五行生克"这套纯数学关系，答案唯一、没有流派
+   分歧，此前却一直是甩给AI在断卦时自己心算——AI凭训练时的零散记忆现算月令旺衰、
+   现套六合六冲表，容易出现同一张排盘这次说"旺"、下次说"衰"的前后不一致，也没法排查
+   到底是卦理判断错了还是纯粹算错了这道计算题。这里补上代码计算，AI只管拿现成结论用。
+
+   刻意不算的两类，跟进退神在辰戌丑未组合时留空是同一个道理：
+   1. 合/冲对旺衰到底是"利好"还是"利空"——合有牵绊安稳、也有绊住不动两种解读，
+      冲有暗动、也有冲散两种解读，历代说法本身就不是单一方向，这属于需要结合语境
+      判断的部分，这里只客观标出"有没有合/冲"这个事实，不越界替AI下结论。
+   2. 用神该选哪个六亲——依赖对问题文本的语义理解，是判断题不是计算题，继续交给AI。
+   ---------------------------------------------------------------------------------- */
+const SEASON_BY_BRANCH = {
+  '寅':'春','卯':'春','巳':'夏','午':'夏','申':'秋','酉':'秋','亥':'冬','子':'冬',
+  '辰':'四季','戌':'四季','丑':'四季','未':'四季',
+};
+const YUELING_TABLE = {
+  '春': {'木':'旺','火':'相','水':'休','金':'囚','土':'死'},
+  '夏': {'火':'旺','土':'相','木':'休','水':'囚','金':'死'},
+  '秋': {'金':'旺','水':'相','土':'休','火':'囚','木':'死'},
+  '冬': {'水':'旺','木':'相','金':'休','土':'囚','火':'死'},
+  '四季':{'土':'旺','金':'相','火':'休','木':'囚','水':'死'},
+};
+// 月令旺衰：只看"月建地支属于哪个季节"+"这一爻的五行"两个输入，跟断卦参考表里
+// 给人/给AI看的那份旺相休囚死表是同一套数据，这里做成可以直接查表返回的函数。
+function getYuelingState(monthBranch, element){
+  const season = SEASON_BY_BRANCH[monthBranch];
+  return (season && YUELING_TABLE[season][element]) || '';
+}
+const LIUHE_PAIR = {'子':'丑','丑':'子','寅':'亥','亥':'寅','卯':'戌','戌':'卯','辰':'酉','酉':'辰','巳':'申','申':'巳','午':'未','未':'午'};
+const LIUCHONG_PAIR = {'子':'午','午':'子','丑':'未','未':'丑','寅':'申','申':'寅','卯':'酉','酉':'卯','辰':'戌','戌':'辰','巳':'亥','亥':'巳'};
+function getDayRelation(lineBranch, dayBranch){
+  if(!lineBranch || !dayBranch) return '';
+  if(LIUHE_PAIR[lineBranch] === dayBranch) return '日辰合';
+  if(LIUCHONG_PAIR[lineBranch] === dayBranch) return '日辰冲';
+  return '';
+}
+// 回头生/回头克：动爻变出的五行反过来生或克本爻原来的五行，双方都是排盘里现成的
+// 五行字段，直接套五行生克表比对，跟旺衰/合冲那种需要额外语境判断的东西不是一回事。
+function getHuitouRelation(lineEl, bianEl){
+  if(!lineEl || !bianEl || lineEl === bianEl) return '';
+  if(SHENG[bianEl] === lineEl) return '回头生';
+  if(KE[bianEl] === lineEl) return '回头克';
+  return '';
+}
+// 世应生克：世爻代表求测人自己，应爻代表对方/所测之事，两者五行间的生克关系，
+// 是判断"这件事/这段关系"走向的通用维度，不依赖具体问题选的是哪个用神。
+function getShiYingRelation(shiEl, yingEl){
+  if(!shiEl || !yingEl) return '';
+  if(shiEl === yingEl) return '世应比和';
+  if(SHENG[shiEl] === yingEl) return '世生应';
+  if(SHENG[yingEl] === shiEl) return '应生世';
+  if(KE[shiEl] === yingEl) return '世克应';
+  if(KE[yingEl] === shiEl) return '应克世';
+  return '';
+}
+// 飞神对伏神的生克：伏神能不能"出伏"发挥作用，历代说法还涉及月破/空亡/逢冲等更复杂
+// 且各家不完全一致的条件（跟进退神在辰戌丑未组合时留空是同一道理），这里只判定
+// "飞神生/克伏神"这一层纯五行关系，不越界替AI判定"是否出伏"这类有分歧的结论。
+function getFeishenFushenRelation(feishenEl, fushenEl){
+  if(!feishenEl || !fushenEl) return '';
+  if(feishenEl === fushenEl) return '飞伏比和';
+  if(SHENG[feishenEl] === fushenEl) return '飞神生伏神';
+  if(SHENG[fushenEl] === feishenEl) return '伏神生飞神';
+  if(KE[feishenEl] === fushenEl) return '飞神克伏神';
+  if(KE[fushenEl] === feishenEl) return '伏神克飞神';
+  return '';
 }
 
 /* ---------------- 60 jiazi / kongwang ---------------- */
@@ -1831,6 +2286,50 @@ function structLineToDiagram(ln){
   };
 }
 
+// ---- 排盘结果顶部的极简图例：解释"卦画/纳甲/状态/变出"这几列里为什么会有一整行
+// 变成朱砂色（动爻所在行——卦画的爻线、纳甲干支、变出内容都会一起变红）。第一次看的人
+// 不一定能马上反应过来这个颜色和上面五行轮盘里的"朱砂=当前选中"是不是一回事、具体代表
+// 什么，而五行生克那个板块反而专门做了图例卡片，唯独这里没有。<table>版和.plate-cards
+// 移动端卡片版共用同一份图例，插在两种布局最上面，不用为每种布局各写一遍。 ----
+const PLATE_LEGEND_HTML = '<div class="plate-legend"><span class="plate-legend-swatch"></span>红色 = 动爻（老阳/老阴，这一爻会变，对照"变出"看它变成了什么）</div>';
+
+// ---- 排盘表格的"移动端卡片"版本：renderPlate() / renderPlateFromCastData() 共用，
+// 配合CSS里 .plate-cards 的媒体查询，专门解决窄屏下8列<table>被压缩到每列没几像素、
+// 中文逐字换行变成单字竖排的问题（详见CSS里 .plate-cards 上面那条注释）。
+// 做法直接照抄本文件"历史记录"展开态里逐爻摘要（.history-line-row）已经验证过的写法：
+// 一爻一张卡片，卡片内部用grid横排"爻位/六亲六神/纳甲五行状态+标记"，宽度不够时
+// 整段文字自然换行到下一行，而不会被塞进一个死宽的表格列里逐字拆开；伏神、变出这两项
+// 内容较长、只有部分爻才有，改成卡片下方单独一行小字，不再挤进同一个网格列里。
+// lines：结构化爻数据数组，顺序为初爻(1爻)→上爻(6爻)——renderPlate()里
+// structuredLines.reverse()之后的顺序，或者castData.lines存下来的顺序，两处一致。
+function buildPlateCardsHtml(lines){
+  if(!Array.isArray(lines)) return '';
+  return lines.slice().reverse().map(ln => { // 6爻卡片在上、1爻在下，跟<table>的显示顺序保持一致
+    let tag = '';
+    if(ln.是否世爻) tag += '世';
+    if(ln.是否应爻) tag += '应';
+    if(ln.是否动爻) tag += '动';
+    if(ln.是否空亡) tag += '空';
+    const tagHtml = tag ? `<span class="plate-card-tag">${tag}</span>` : '';
+    const fushenHtml = ln.伏神六亲
+      ? `<div class="plate-card-extra">伏神：${ln.伏神六亲} ${ln.伏神纳甲}(${ln.伏神五行})${ln.伏神与飞神关系 ? '　'+ln.伏神与飞神关系 : ''}</div>` : '';
+    const bianHtml = (ln.是否动爻 && ln.变纳甲)
+      ? `<div class="plate-card-extra">变出：${ln.变纳甲}(${ln.变五行})${ln.变六亲}${ln.进退神 ? '　'+ln.进退神 : ''}${ln.回头 ? '　'+ln.回头 : ''}</div>` : '';
+    // 月令/日辰关系：老数据（这次更新前保存的历史记录/未刷新完的会话）没有这两个字段，
+    // 都是空字符串，下面两个变量就是空的，不会多出一行"undefined"。
+    const yuelingDayHtml = (ln.月令 || ln.日辰关系)
+      ? `<div class="plate-card-extra">${ln.月令 ? '月令：'+ln.月令 : ''}${(ln.月令 && ln.日辰关系) ? '　' : ''}${ln.日辰关系 || ''}</div>` : '';
+    return `<div class="plate-card${ln.是否动爻 ? ' moving' : ''}">
+      <div class="plate-card-row">
+        <span class="plate-card-pos">${ln.爻位}</span>
+        <span>${ln.六亲}·${spiritDotHtml(ln.六神)}${ln.六神}</span>
+        <span>${ln.纳甲}${ln.五行}·${ln.状态}${tagHtml}</span>
+      </div>
+      ${yuelingDayHtml}${fushenHtml}${bianHtml}
+    </div>`;
+  }).join('');
+}
+
 /* ==================================================================
    生死寿数类问题过滤 —— 呼应传统占卦规矩"不轻断生死寿数"：
    这类判断风险高、容易断错，也怕给提问的人带来不必要的心理暗示，
@@ -1927,8 +2426,8 @@ function renderCastQuota(){
   if(!el) return;
   const remaining = castsRemainingInWindow();
   el.textContent = remaining > 0
-    ? `本窗口（10分钟）内还可摇 ${remaining} 次`
-    : `已达上限：10分钟内最多摇3次，稍等窗口过去再摇`;
+    ? `本窗口（10 分钟）内还可摇 ${remaining} 次`
+    : `已达上限：10 分钟内最多摇 3 次，稍等窗口过去再摇`;
   el.classList.toggle('cast-quota-warn', remaining <= 0);
 }
 
@@ -1941,25 +2440,49 @@ function isSameQuestion(a, b){
   return normQuestion(a) === normQuestion(b);
 }
 
-// 摇卦前统一走这个校验：频率限制 + 一事一挂硬性规矩。
-// 通过则记一次摇卦事件并返回 true；不通过则给提示并返回 false。
-// 规矩：同一个问题只能摇一卦，问题没换就不允许重摇（没有确认弹窗，直接拦住）；
-//       想再摇，先把输入框里的问题换成一件新的事。
-async function guardBeforeCast(){
+// 摇卦前统一走这个校验：频率限制 + 一事一挂规矩。
+// 通过则记一次摇卦事件并返回 true；不通过则返回 false（各调用方自行决定要不要再给提示）。
+//
+// 规矩：同一件事不重复起卦。但"摇卦"按钮本身不像"AI 解读"/"输出提示词"那两条路径——
+// 它不一定绑定问题文字（可以先摇卦、后写问题，甚至压根不写问题），所以这里不能照抄那两条
+// 路径"比较新旧问题文字是否相同"的判断，只能用一个不依赖文字内容的信号：上一卦是否还在。
+// 于是改成跟那两处一致的"确认式"体验——弹窗问用户是否要另起一卦，而不是像以前那样只要
+// 输入框空着/文字没变就直接硬拦、不给走。
+//
+// opts.skipCastConfirm：供"AI 解读"/"输出提示词"这两个调用方使用——它们在调用这里之前，
+// 已经自己弹过一次"是同一件事，还是换新事了？"的确认框，判断出确实要重新起卦了，
+// 这里就不用再问第二遍，只需要跟着把状态清干净、正常走频率限制+记录这一次摇卦事件。
+async function guardBeforeCast(opts = {}){
+  const { skipCastConfirm = false } = opts;
   if(castsRemainingInWindow() <= 0){
     showToast('短时间内已经摇太多次了，心诚则灵，稍等一会再摇（10 分钟内最多 3 次）', 'error', 4500);
     return false;
   }
   if(window.lastCastData){
-    const qEl = document.getElementById('questionInput');
-    const currentQuestion = qEl ? qEl.value.trim() : '';
-    if(currentQuestion === ''){
-      showToast('上一卦还在。按"一事不问二卦"的规矩，想再摇，先在"AI 解卦"的输入框里写上要问的新问题', 'error', 4500);
-      return false;
+    if(!skipCastConfirm){
+      const wantsNewCast = await showConfirm(
+        '上一卦还在。按"一事不问二卦"的规矩，同一件事不重复起卦——你是否需要再次起卦？',
+        { title: '再次起卦？', okText: '是，重新起卦', cancelText: '不用了' }
+      );
+      if(!wantsNewCast) return false;
     }
-    if(isSameQuestion(currentQuestion, window.lastCastQuestion || '')){
-      showToast('一事不问二卦：这个问题已经摇过卦了，直接看上一卦就行。想问别的，先把问题换成一件新的事', 'error', 4500);
-      return false;
+    // 不管是刚刚用户点了"是，重新起卦"，还是调用方自己那套"换新事了"确认框已经问过一遍、
+    // 传 skipCastConfirm 跳过了这里的重复确认——只要确定要重新起卦，就要把跟"上一卦"绑定的
+    // 状态一并清掉。这一步是专门补的：以前"清空"按钮只清了 AI 对话相关的状态
+    // （currentConversation 等），没碰 window.lastCastData / lastCastQuestion，
+    // 导致用户就算把问题框里的字删光，这两个变量依然停在"上一卦"的值上，一摇卦立刻又撞上
+    // 同一条拦截逻辑——不清掉这两个变量，这条老毛病换个壳还会再犯一次。
+    window.lastCastData = null;
+    window.lastCastQuestion = '';
+    if(!skipCastConfirm){
+      // 只有"摇卦"/"生成排盘"这种不一定跟问题绑定、可以直接重摇的场景，才顺手清空问题框
+      // （呼应罗士程的建议：点另一卦的同时直接消去这里的文本）；"AI 解读"/"输出提示词"走
+      // skipCastConfirm 这条分支时，输入框里的文字就是用户马上要问的新问题，不能跟着清掉。
+      const qEl = document.getElementById('questionInput');
+      if(qEl){
+        qEl.value = '';
+        qEl.dispatchEvent(new Event('input'));
+      }
     }
   }
   logCastEvent();
@@ -2000,7 +2523,14 @@ function performCast(){
     castBtn.disabled = true;
     const lines = [];
     let i = 0;
-    plateWrap.innerHTML = '<div class="placeholder">摇卦中…</div>';
+    plateWrap.innerHTML = `<div class="placeholder">
+      <div class="cast-loading-coins">
+        <span class="cast-loading-coin"></span>
+        <span class="cast-loading-coin"></span>
+        <span class="cast-loading-coin"></span>
+      </div>
+      <div>摇卦中…</div>
+    </div>`;
     const timer = setInterval(()=>{
       const r = tossLine();
       lines.push(r);
@@ -2061,6 +2591,13 @@ const MANUAL_LINE_OPTIONS = [
   { value: '6', label: '老阴（阴，动 ✕）' },
 ];
 
+// 六个下拉框各自默认停在第一个选项（少阳），如果只看select.value，没碰过的下拉框
+// 和"用户明确选了少阳"两种情况没法区分——会导致刚切到手动模式、什么都还没选，
+// 右边预览就已经"看起来选满了六爻"，跟"选到第几爻就画到第几爻"的初衷矛盾。
+// 这里额外拿一个数组单独记"这一爻有没有被手动碰过"，只在change事件里置true，
+// 不随select本身的默认值联动，从而准确区分"没选"和"选了少阳"。
+const manualLineTouched = [false, false, false, false, false, false];
+
 // 生成六行手动选择器：三枚铜钱正面记3、反面记2，三枚之和 6/7/8/9
 // 对应 老阴(6,动)/少阳(7)/少阴(8)/老阳(9,动)，跟现实摇钱结果一一对应，
 // 用户只要照着自己现实摇出的老少阴阳选就行，不用换算铜钱正反数。
@@ -2073,6 +2610,17 @@ function buildManualLinesUI(){
       </select>
     </div>
   `).join('');
+  // 接上change事件：每改一爻的阴阳老少，标记这一爻"已选"，并在当前正处于手动模式时
+  // 实时重画右边的预览卦画（见 renderManualPreview）——不用等点了"生成排盘"才第一次
+  // 看到卦长什么样。只在castMode==='manual'时才重画：这几个select本身在系统摇卦模式下
+  // 是display:none隐藏的，正常用户点不到、也就不会触发change，这层判断只是双保险，
+  // 防止将来别处万一用程序化方式（.value=...后手动dispatchEvent）改动它们时误触发。
+  for(let idx = 0; idx < 6; idx++){
+    document.getElementById(`manualLine${idx}`).addEventListener('change', ()=>{
+      manualLineTouched[idx] = true;
+      if(castMode === 'manual') renderManualPreview();
+    });
+  }
 }
 buildManualLinesUI();
 
@@ -2083,12 +2631,87 @@ castModeToggle.addEventListener('click', (e)=>{
   [...castModeToggle.querySelectorAll('.mode-btn')].forEach(b => b.classList.toggle('active', b === btn));
   systemCastPanel.style.display = castMode === 'system' ? '' : 'none';
   manualCastPanel.style.display = castMode === 'manual' ? '' : 'none';
+  // 切到"线下摇卦"时顺手刷新一次预览——但只在右边此刻还没有一份"摇卦/生成排盘"摇出来的
+  // 真实结果时才刷（判断依据：.plate下唯一的子元素还是最初的占位提示文字，或者就是
+  // 我们自己这份预览本身）。如果右边正摆着一份真实结果，说明用户是切过去核对/对比的，
+  // 不该被一次单纯的切标签页动作顶掉；真要重填，用户改动某一个下拉框（上面的change
+  // 监听）就会顶替它，那才是"我要重新填一次"的明确信号。
+  if(castMode === 'manual' && plateWrap.querySelector('.placeholder, .manual-preview-partial, .manual-preview-complete')){
+    renderManualPreview();
+  }
 });
 
 function lineFromSum(sum){
   const yang = (sum === 7 || sum === 9);
   const moving = (sum === 6 || sum === 9);
   return { sum, coins: [], yang, moving };
+}
+
+// ---- 手动填入面板的实时预览：只依赖manualLineTouched+六个select当前值，不碰
+// window.lastCastData，跟"生成排盘"那条正式落盘的流程完全分开，纯展示、可以
+// 随便重画，不会误触发摇卦次数配额或者覆盖掉AI解读要用的排盘数据。 ----
+function renderManualPreview(){
+  const touchedCount = manualLineTouched.filter(Boolean).length;
+  const sums = [];
+  for(let i = 0; i < 6; i++){
+    sums.push(parseInt(document.getElementById(`manualLine${i}`).value, 10));
+  }
+
+  if(touchedCount === 6){
+    // 六爻已经全部选过：换算成正式排盘同款的{yang,moving,isWorld,isResponse}，
+    // 直接调用跟"生成排盘"共用的buildGuaDiagramHtml()——查宫位、世应爻位、变卦
+    // 卦名这几步照抄renderPlate()里的算法，保证这里画出来的图跟点一下"生成排盘"
+    // 之后看到的正式卦画一模一样，不是另一套简化画风。
+    const lines = sums.map(lineFromSum);
+    const lowerKey = lines.slice(0,3).map(l=>l.yang?'1':'0').join('');
+    const upperKey = lines.slice(3,6).map(l=>l.yang?'1':'0').join('');
+    const palaceInfo = EIGHT_PALACE_MAP[lowerKey+upperKey];
+    const hasMoving = lines.some(l => l.moving);
+    const bianLowerKey = lines.slice(0,3).map(l => (l.moving ? !l.yang : l.yang) ? '1':'0').join('');
+    const bianUpperKey = lines.slice(3,6).map(l => (l.moving ? !l.yang : l.yang) ? '1':'0').join('');
+    const bianInfo = hasMoving ? EIGHT_PALACE_MAP[bianLowerKey+bianUpperKey] : null;
+    const diagramLines = lines.map((l, idx) => ({
+      yang: l.yang,
+      moving: l.moving,
+      isWorld: (idx+1) === palaceInfo.world,
+      isResponse: (idx+1) === palaceInfo.response,
+    }));
+    plateWrap.innerHTML = `<div class="manual-preview-complete">
+      <div class="manual-preview-hint">六爻已选满，卦画预览如下（点"生成排盘"查看完整纳甲六亲）</div>
+      ${buildGuaDiagramHtml(diagramLines, palaceInfo.name, bianInfo ? bianInfo.name : null)}
+    </div>`;
+    return;
+  }
+
+  // 还没选满：逐行画骨架，已选的爻正常画阴阳线，没选的爻画虚线占位——不去猜一个默认值，
+  // 免得用户还没碰过的爻看着像"已经选好是少阳"。位置标签（初/二/三/四/五/上）先顶替正式
+  // 结果里"世/应"那个位置，世应要等六爻齐了、查出宫位之后才有意义，选不全的时候强行算
+  // 没有意义。
+  const rows = [];
+  for(let pos = 5; pos >= 0; pos--){ // 6爻画最上、1爻画最下，跟传统卦画自下而上的顺序一致
+    const posLabel = MANUAL_LINE_LABELS[pos][0];
+    if(manualLineTouched[pos]){
+      const l = lineFromSum(sums[pos]);
+      const bar = l.yang
+        ? `<span class="gd-bar-full"></span>`
+        : `<span class="gd-bar-half gd-bar-left"></span><span class="gd-bar-half gd-bar-right"></span>`;
+      const mark = l.moving ? (l.yang ? '○' : '✕') : '';
+      rows.push(`<div class="gd-line${l.moving ? ' moving' : ''}">
+        <span class="gd-bar">${bar}</span><span class="gd-mark">${mark}</span><span class="gd-tag">${posLabel}</span>
+      </div>`);
+    }else{
+      rows.push(`<div class="gd-line pending">
+        <span class="gd-bar"><span class="gd-bar-pending"></span></span><span class="gd-mark">·</span><span class="gd-tag">${posLabel}</span>
+      </div>`);
+    }
+  }
+  const hint = touchedCount === 0
+    ? '左边选好一爻的阴阳老少，这里就实时画出对应的爻线'
+    : `已选 ${touchedCount}/6 爻，继续往下选，卦画会跟着往上长`;
+  plateWrap.innerHTML = `<div class="manual-preview-partial">
+    <div class="manual-preview-hint">${hint}</div>
+    <div class="gua-diagram-lines">${rows.join('')}</div>
+  </div>`;
 }
 
 function performManualCast(isCorrection){
@@ -2176,6 +2799,10 @@ function renderPlate(lines, source='system'){
   // 伏神要先知道"当前卦六爻实际六亲的完整集合"才能判断缺了哪个，所以不能再像原来那样
   // 边算边从上往下拼字符串，得先算完整卦六爻再统一比对。----
   const ALL_LIUQIN = ['父母','兄弟','子孙','妻财','官鬼'];
+  // 月建、日辰的地支——月令旺衰只看季节（由月建地支决定），日辰合冲只看地支本身，
+  // 两者都已经在上面算好的ymh/day里现成拿到，不需要另外反查。
+  const monthBranch = ymh.monthLabel.slice(-1);
+  const dayBranch = day.label.slice(-1);
   const lineData = [];
   for(let pos=0; pos<6; pos++){
     const l = lines[pos];
@@ -2190,20 +2817,26 @@ function renderPlate(lines, source='system'){
     const isWorld = lineNum === palaceInfo.world;
     const isResponse = lineNum === palaceInfo.response;
     const isKong = kongBranches.includes(branch);
+    // 月令旺衰/日辰合冲：见 getYuelingState/getDayRelation 上方注释，纯查表型计算，
+    // 跟六亲、纳甲一样属于"有唯一答案、代码直接算好给AI"的部分。
+    const yueling = getYuelingState(monthBranch, branchEl);
+    const dayRelation = getDayRelation(branch, dayBranch);
 
     // 动爻变出的干支/六亲：只有动爻才有。这一爻变了之后，它所在的那组（上卦或下卦）
     // 三根线的阴阳组合变成了另一个八卦（bianLowerTrig/bianUpperTrig），要按新八卦
     // 同一爻位的纳甲表去查变出来的干支；但六亲判断的锚点仍是"本卦"的宫五行不换——
     // 变爻六亲说的是"这个位置的六亲变成了什么"，参照系还是本卦，不重新按变卦的宫论。
-    let bianGanzhi = '', bianBranchEl = '', bianLiuqin = '';
+    let bianGanzhi = '', bianBranchEl = '', bianLiuqin = '', jinTuiShen = '', huitou = '';
     if(l.moving && bianInfo){
       const bianTrig = isLower ? bianLowerTrig : bianUpperTrig;
       bianGanzhi = isLower ? NAJIA[bianTrig.name].inner[pos] : NAJIA[bianTrig.name].outer[pos-3];
       bianBranchEl = BRANCH_EL[bianGanzhi[1]];
       bianLiuqin = sixRelative(bianBranchEl, palaceInfo.element);
+      jinTuiShen = computeJinTuiShen(branch, bianGanzhi[1]); // 进退神预计算，见 computeJinTuiShen 上方注释
+      huitou = getHuitouRelation(branchEl, bianBranchEl); // 回头生克预计算，见 getHuitouRelation 上方注释
     }
 
-    lineData.push({ pos, lineNum, l, stem, branch, branchEl, spirit, liuqin, isWorld, isResponse, isKong, bianGanzhi, bianBranchEl, bianLiuqin });
+    lineData.push({ pos, lineNum, l, stem, branch, branchEl, spirit, liuqin, isWorld, isResponse, isKong, bianGanzhi, bianBranchEl, bianLiuqin, jinTuiShen, huitou, yueling, dayRelation });
   }
 
   const presentLiuqin = new Set(lineData.map(d => d.liuqin));
@@ -2211,13 +2844,23 @@ function renderPlate(lines, source='system'){
   lineData.forEach(d => {
     const pureAtPos = pureLiuqinByPos[d.pos];
     d.fushen = missingLiuqin.includes(pureAtPos.liuqin) ? pureAtPos : null;
+    // 飞神（本爻）对伏神的生克关系，见 getFeishenFushenRelation 上方注释。
+    if(d.fushen){
+      d.fushen.feishenRelation = getFeishenFushenRelation(d.branchEl, d.fushen.branchEl);
+    }
   });
+  // 世应生克：世爻/应爻各自是哪一条，palaceInfo.world/response已经标出，这里直接找到
+  // 对应的lineData取五行来比对，不依赖具体问的是哪件事、选的是哪个用神。
+  const shiLineData = lineData.find(d => d.isWorld);
+  const yingLineData = lineData.find(d => d.isResponse);
+  const shiYingRelation = (shiLineData && yingLineData)
+    ? getShiYingRelation(shiLineData.branchEl, yingLineData.branchEl) : '';
 
   let rowsHtml = '';
   const structuredLines = []; // lineNum 6→1，末尾统一反转成 1→6 供AI使用
   for(let pos=5; pos>=0; pos--){ // display top(6) to bottom(1)
     const d = lineData[pos];
-    const { l, lineNum, stem, branch, branchEl, spirit, liuqin, isWorld, isResponse, isKong, bianGanzhi, bianBranchEl, bianLiuqin, fushen } = d;
+    const { l, lineNum, stem, branch, branchEl, spirit, liuqin, isWorld, isResponse, isKong, bianGanzhi, bianBranchEl, bianLiuqin, jinTuiShen, huitou, yueling, dayRelation, fushen } = d;
     const bar = l.yang ? '<span class="full"></span>' : '<span class="half left"></span><span class="half right"></span>';
     const mark = l.moving ? (l.yang?'○':'✕') : '';
     const graphic = `<span class="yao"><span class="yao-bar">${bar}</span><span class="yao-mark">${mark}</span></span>`;
@@ -2240,7 +2883,7 @@ function renderPlate(lines, source='system'){
       <td>${lineNum}爻</td>
       <td>${liuqin}</td>
       <td class="fushen-cell">${fushenText}</td>
-      <td>${spirit}</td>
+      <td>${spiritDotHtml(spirit)}${spirit}</td>
       <td class="line-graphic">${graphic}</td>
       <td>${stem}${branch}${posTag}</td>
       <td>${branchEl}</td>
@@ -2253,29 +2896,69 @@ function renderPlate(lines, source='system'){
       是否动爻: l.moving, 是否世爻: isWorld, 是否应爻: isResponse, 是否空亡: isKong,
       变纳甲: l.moving ? bianGanzhi : '', 变五行: l.moving ? bianBranchEl : '', 变六亲: l.moving ? bianLiuqin : '',
       伏神六亲: fushen ? fushen.liuqin : '', 伏神纳甲: fushen ? fushen.ganzhi : '', 伏神五行: fushen ? fushen.branchEl : '',
+      月令: yueling || '', 日辰关系: dayRelation || '',
+      回头: l.moving ? (huitou || '') : '',
+      // 进退神：computeJinTuiShen 早就在上面算好存进了jinTuiShen变量，但此前一直漏了拼进
+      // structuredLines——等于伏神/回头生克之前那次同样的疏漏又在进退神这里重演了一遍：
+      // AI提示词明明告诉AI"进退神已经算好直接标注给你、不用自己重算"，实际数据里却根本
+      // 没有这个字段，AI要么看不到、要么只能靠本爻变爻地支自己现猜，跟最初设计
+      // computeJinTuiShen就是为了不让AI自己心算这道题的初衷正好相反。这里补上，跟回头字段
+      // 同样只在动爻才有值。
+      进退神: l.moving ? (jinTuiShen || '') : '',
+      伏神与飞神关系: fushen ? (fushen.feishenRelation || '') : '',
     });
   }
   structuredLines.reverse(); // 变成初爻→上爻，跟AI提示词的阅读顺序一致
 
+  // ---- 整体旺衰气象摘要：不针对具体某个用神（用神选择依赖对问题文本的语义理解，
+  // 是AI的判断题，代码不该越俎代庖去猜），只客观统计"当令得力(旺/相)"与"当令减力
+  // (休/囚/死)"的爻数、动爻里"回头生"与"回头克"的个数——这两类是唯一、没有分歧的
+  // 五行数学关系，用来给AI（以及用户）一个证据层面的收敛度参考：这一卦整体是偏旺、
+  // 偏衰，还是旺衰参半、需要仔细看用神；不越界替AI下"吉凶"结论。
+  const yuelingStrongCount = lineData.filter(d => d.yueling === '旺' || d.yueling === '相').length;
+  const yuelingWeakCount = lineData.filter(d => d.yueling === '休' || d.yueling === '囚' || d.yueling === '死').length;
+  const huitouShengCount = lineData.filter(d => d.huitou === '回头生').length;
+  const huitouKeCount = lineData.filter(d => d.huitou === '回头克').length;
+  let overallTrendText = `当令得力(旺/相)${yuelingStrongCount}爻、当令减力(休/囚/死)${yuelingWeakCount}爻`;
+  if(huitouShengCount || huitouKeCount){
+    overallTrendText += `；动爻回头生${huitouShengCount}个、回头克${huitouKeCount}个`;
+  }
+  if(shiYingRelation){
+    overallTrendText += `；世应：${shiYingRelation}`;
+  }
+  const strongLean = yuelingStrongCount - yuelingWeakCount;
+  if(Math.abs(strongLean) >= 3){
+    overallTrendText += strongLean > 0 ? '——整体当令气象偏旺，迹象比较集中' : '——整体当令气象偏弱，迹象比较集中';
+  } else {
+    overallTrendText += '——当令得力与减力的爻数相当，旺衰不算悬殊，具体判断还要结合用神细看';
+  }
+
   const palaceText = `${palaceInfo.palace} · ${palaceInfo.type}卦（本宫五行：${palaceInfo.element}）`;
   const lowerUpperText = `下卦：${lower.sym} ${lower.name}　上卦：${upper.sym} ${upper.name}`;
   const dayKongText = `日柱：${day.label}　空亡：${kongBranches.join('、')}`;
+  // 本卦/变卦的名字已经在卦画上方的分栏标签里各显示一次（buildGuaDiagramHtml 里的
+  // gua-diagram-label），中间还有箭头表示"变成"的关系，不需要在下面这一行再合并重复一遍。
+  // guaNameRowText 只在 diagramHtml 因某种原因没渲染出来时才当兜底文案用。
   const guaNameRowText = `本卦：<b>${guaName}</b>` + (bianGuaName ? `　→　变卦：<b>${bianGuaName}</b>` : '');
   const diagramHtml = buildGuaDiagramHtml(structuredLines.map(structLineToDiagram), guaName, bianGuaName);
+  const plateCardsHtml = buildPlateCardsHtml(structuredLines);
 
   plateWrap.innerHTML = `
+    ${PLATE_LEGEND_HTML}
     <table>
       <thead><tr><th>爻位</th><th>六亲</th><th>伏神</th><th>六神</th><th>卦画</th><th>纳甲</th><th>五行</th><th>状态</th><th>变出</th></tr></thead>
       <tbody>${rowsHtml}</tbody>
     </table>
+    <div class="plate-cards">${plateCardsHtml}</div>
     ${diagramHtml}
     <div class="gua-name-row">
-      <div>${guaNameRowText}</div>
+      ${diagramHtml ? '' : `<div>${guaNameRowText}</div>`}
       <div>${palaceText}</div>
       <div>${lowerUpperText.replace('下卦：','下卦：<b>').replace('　上卦：','</b>　上卦：<b>')+'</b>'}</div>
       <div class="gua-date-row">${boldDateHtml(dateText)}</div>
       <div>${boldPillarsHtml(fourPillarsText)}</div>
       <div>${boldPillarsHtml(kongText)}</div>
+      <div class="gua-trend-row">证据速览：${overallTrendText}</div>
     </div>`;
   replayFadeIn(plateWrap);
 
@@ -2284,7 +2967,8 @@ function renderPlate(lines, source='system'){
   // 供还没升级过的老代码路径兜底读取；dateText是这次新加的公历/农历日期显示文本；
   // castAnchorY/M/D是"干支日→实际日期"换算要用的起卦锚点，跟上面算年月时柱用的是同一个now
   // （复盘历史卦时是knownCastDate反查到的那天，不是"今天"），只存Y/M/D三个数字、不存时分秒，
-  // 应期换算只关心日历上的哪一天，跟起卦具体几点几分无关）
+  // 应期换算只关心日历上的哪一天，跟起卦具体几点几分无关；overallTrendText是这次新增的
+  // "证据速览"摘要，见上方注释，不判定吉凶，只给月令旺衰/回头生克/世应生克的收敛度参考）
   window.lastCastData = {
     ganzhi: day.label,
     yearGanzhi: ymh.yearLabel, monthGanzhi: ymh.monthLabel, hourGanzhi: ymh.hourLabel,
@@ -2294,7 +2978,9 @@ function renderPlate(lines, source='system'){
     guaName, bianGuaName,
     source, // 'system'=网页随机摇卦 / 'manual'=用户线下摇卦手动填入
     castAnchorY: now.getFullYear(), castAnchorM: now.getMonth()+1, castAnchorD: now.getDate(),
+    overallTrendText,
   };
+  if(window.updateCurrentCastStatus) window.updateCurrentCastStatus();
   // 同步记一下这次摇卦时输入框里的问题文字和摇卦时间，
   // 供下次摇卦时判断是不是换了新问题、以及空问题的卦能否被后写的问题"认领"
   const qEl = document.getElementById('questionInput');
@@ -2351,7 +3037,7 @@ function renderPlateFromCastData(castData, question, castTime){
     return `<tr class="${ln.是否动爻?'moving':''}">
       <td>${ln.爻位}</td>
       <td>${ln.六亲}</td>
-      <td>${ln.六神}</td>
+      <td>${spiritDotHtml(ln.六神)}${ln.六神}</td>
       <td class="line-graphic">${graphic}</td>
       <td>${ln.纳甲}${posTag}</td>
       <td>${ln.五行}</td>
@@ -2359,6 +3045,8 @@ function renderPlateFromCastData(castData, question, castTime){
     </tr>`;
   }).join('');
 
+  // 同上：本卦/变卦名字已经在下面 diagramHtml 的分栏标签里出现过一次，guaNameRowText
+  // 只在 diagramHtml 为空（比如老会话没存全 lines）时才当兜底文案显示，避免重复。
   const guaNameRowText = `本卦：<b>${castData.guaName||''}</b>` + (castData.bianGuaName ? `　→　变卦：<b>${castData.bianGuaName}</b>` : '');
   const lowerUpperText = (castData.lowerUpperText || '')
     .replace('下卦：','下卦：<b>').replace('　上卦：','</b>　上卦：<b>') + '</b>';
@@ -2368,19 +3056,23 @@ function renderPlateFromCastData(castData, question, castTime){
   const diagramHtml = (Array.isArray(castData.lines) && castData.lines.length === 6)
     ? buildGuaDiagramHtml(castData.lines.map(structLineToDiagram), castData.guaName, castData.bianGuaName)
     : '';
+  const plateCardsHtml = buildPlateCardsHtml(castData.lines);
 
   plateWrap.innerHTML = `
+    ${PLATE_LEGEND_HTML}
     <table>
       <thead><tr><th>爻位</th><th>六亲</th><th>六神</th><th>卦画</th><th>纳甲</th><th>五行</th><th>状态</th></tr></thead>
       <tbody>${rowsHtml}</tbody>
     </table>
+    <div class="plate-cards">${plateCardsHtml}</div>
     ${diagramHtml}
     <div class="gua-name-row">
-      <div>${guaNameRowText}</div>
+      ${diagramHtml ? '' : `<div>${guaNameRowText}</div>`}
       <div>${castData.palaceText || ''}</div>
       <div>${lowerUpperText}</div>
       ${resumeDateText ? `<div class="gua-date-row">${boldDateHtml(resumeDateText)}</div>` : ''}
       <div>${dayKongHtml}</div>
+      ${castData.overallTrendText ? `<div class="gua-trend-row">证据速览：${castData.overallTrendText}</div>` : ''}
     </div>
     <div class="placeholder" style="padding:10px 0 0;font-size:var(--fs-2);">（以上是刷新前留存的排盘，对应下面正在续接的追问）</div>`;
   replayFadeIn(plateWrap);
@@ -2388,6 +3080,7 @@ function renderPlateFromCastData(castData, question, castTime){
   window.lastCastData = castData;
   window.lastCastQuestion = question || '';
   window.lastCastTime = castTime || Date.now();
+  if(window.updateCurrentCastStatus) window.updateCurrentCastStatus();
 }
 
 /* ==================================================================
@@ -2574,11 +3267,11 @@ const ROLE_PRESETS = {
 尤其擅长把卦理落到"接下来会怎么走""什么时候""要注意什么"这种能实际用上的判断上，不停留在空泛的吉凶定性。
 
 性格与说话习惯：
-- 不绕弯子、不堆套话，想清楚了再说，一句话能讲明白的不说两句；
-- 遇到吉的卦不刻意讨好，遇到不利的卦也不回避，该怎么断就怎么断，宁可话说得直一点，也不含糊其辞两头讨好；
-- 对自己的判断有底气，敢给明确结论，不靠"仅供参考""建议理性看待"这类套话来给自己留后路；
-- 偶尔会用"这一爻""这个用神"之类贴近排盘原文的说法，让人一听就知道判断是从卦上实打实推出来的，不是泛泛而谈；
-- 有分寸感：该提醒的风险直说，但不恐吓、不夸大，也不会为了显得"神"而故弄玄虚、卖关子。
+- 不绕弯子、不堆套话，一句话能讲明白的不说两句；
+- 吉卦不刻意讨好，凶卦不回避，该怎么断就怎么断，不含糊其辞两头讨好；
+- 胜负走势之外的具体数字、或卦理本身够不着的细节，直接说明这一步的局限，不回避、也不硬编数字撑场面；
+- 常用"这一爻""这个用神"之类贴近排盘原文的说法，让判断听得出是从卦上实打实推出来的；
+- 该提醒的风险直说，但不恐吓、不夸大，不为了显得"神"而故弄玄虚、卖关子。
 `.trim(),
   sharp: `
 角色：断卦极快极准、惜字如金的六爻纳甲卜者
@@ -2641,6 +3334,36 @@ function currentRoleInfo(){
   return ROLE_PRESETS[choice] || ROLE_PRESETS.classic;
 }
 
+// ---- 语气/格式示范（One-Shot）：目前只给 classic 人设配了一份示范，用来对齐语气、
+// 篇幅、时辰括注和干支日的写法。这段解卦正文用的是"地泽临，二爻动，变地雷复"这一卦例，
+// 卦名推演（坤宫二世卦）、纳甲干支（丁卯/庚寅，按京房纳甲口诀逐爻核对）、六亲归属
+// （坤宫属土，卯寅木克土定为官鬼）、进退神（卯化寅为退神）、空亡（癸亥日属甲寅旬，
+// 旬空子丑）、十二长生用词（亥为水旺本气而非水之长生，避免与长生位混淆）都已按纳甲/
+// 八宫世应/空亡这几套规则手工逐条重新推导过一遍，彼此自洽、没有发现矛盾。
+// 但这终究是拿一套形式规则自洽性做的核对，不等于真懂六爻实战的人从断卦逻辑、取象
+// 是否精当的角度审过——涉及的又是求职跳槽这种会被当真用来做决定的问题，正式启用前，
+// 最好还是找懂行的人再过一遍，并观察一段时间效果，再考虑要不要给其余人设各配一份。
+// 如果暂时不想用这份示范，把 ROLE_ONE_SHOT_EXAMPLES 里对应的 key 删掉或清空即可，
+// currentOneShotExample() 会自动回退成空字符串，不影响 buildSystemPrompt 其余部分。
+const ROLE_ONE_SHOT_EXAMPLES = {
+  classic: `
+你问的这桩求职跳槽事，卦起地泽临，二爻老阳发动，变出地雷复。
+
+测前程用官鬼爻做用神。二爻官鬼卯木正好持世且自身发动，说明对方意向明确，这纸邀约能落地。丁酉月金旺本克世爻卯木，好在临癸亥日，亥水生扶世爻，绝处逢生，短期内必有正式通知。
+
+病根在变爻：卯木动而化出庚寅木，同属木却由进转退，是标准的化退神。官鬼化退，世爻随之化退，意味着事情表面定得下来，一入职后劲不足——或是待遇打折，或是核心业务实权仍握在旧人手里，给你的只是虚衔。
+
+故此卦走向清楚：去能去成，但先甘后苦、进锐退速，难有长久展拓。
+
+甲寅日寅卯时（3-7点）间会见分晓，届时务必逐条核对薪酬与权责，条件落差太大宁可另寻良机，不必勉强。
+`.trim(),
+};
+function currentOneShotExample(){
+  const choice = loadRoleChoice();
+  if(choice === 'custom') return '';
+  return ROLE_ONE_SHOT_EXAMPLES[choice] || '';
+}
+
 // ---- 人设的展示短名 + 一句话说明，跟 ROLE_PRESETS 分开单独维护 ----
 // 短名（ROLE_LABELS）主要给"历史记录"标注用：以前历史记录不存当次用的是哪个人设，
 // 人设从三档加到六档之后这个问题更明显——回看一条通篇黑话/说书腔的旧记录，
@@ -2670,11 +3393,18 @@ const ROLE_HINTS = {
 function currentRoleLabel(){
   return ROLE_LABELS[loadRoleChoice()] || ROLE_LABELS.classic;
 }
+// 历史记录只存了 roleLabel 这四个字（"自定义人设"），没存当时具体填的文字——如果之后
+// 用户把"设置"里的自定义人设文字改了或清空了，回头翻旧记录就完全看不出当时到底是按
+// 什么规则断的。appendHistory时额外调这个函数存一份快照：只有当前正是custom档才有内容，
+// 内置六档不需要（它们的文字是代码里固定的，不会变，标签本身就够用）。
+function currentRoleCustomSnapshot(){
+  return loadRoleChoice() === 'custom' ? loadCustomRole().trim() : '';
+}
 
 const REPLY_STYLE_PRESETS = {
   brief: `
 语气：亲切、专业、不啰嗦，像懂行的卜者当面跟你说话，不是在写讲义，不要有"作为AI"这类表述。
-篇幅控制在100-200字，按这个顺序说：
+篇幅控制在300-400字，按这个顺序说：
 ① 先给明确的判断——这件事大方向是吉是凶、走向如何，别绕弯子；
 ② 用一两句话点出这个判断是从哪个六亲、哪里的旺衰生克看出来的，不用展开完整推演过程；
 ③ 最后给一句能落地的建议或提醒。
@@ -2688,7 +3418,7 @@ const REPLY_STYLE_PRESETS = {
 ③ 结合动爻和变卦，事情接下来会怎么走、有没有转折点；
 ④ 明确的吉凶结论和具体可执行的建议——该提醒什么风险、该抓住什么时机，都点出来。
 每一步判断都落在具体的爻、干支或五行上，让人能对照排盘看懂"为什么这么断"，不要说"运势不错"这种没有依据的空话。
-篇幅400-600字左右，写到位即可，不必为凑字数堆废话；自然口语化，允许分段展开，但不用分点符号、不用小标题。
+篇幅700-800字左右，写到位即可，不必为凑字数堆废话；自然口语化，允许分段展开，但不用分点符号、不用小标题。
 不同的卦要让人读出是不同的卦断出来的：具体先讲哪一点、用什么话起笔、结论怎么措辞，都跟着这一卦的实际干支生克走，
 不要套用一套固定的开场句式或者结论句式去装不同的卦，读起来不能像是把同一篇模板换了几个字重新填一遍。
 `.trim(),
@@ -2700,7 +3430,10 @@ const EFFORT_PRESETS = {
   max:  { reasoning_effort: 'max',  max_tokens: 32000 },
 };
 
-const SAFETY_BASELINE = `涉及命理解读内容，务必认真对待、给出实质判断，不要含糊敷衍、不要各种"可能""或许"来回摇摆，但仍要遵守上面的篇幅与语气要求。`;
+const SAFETY_BASELINE = `涉及命理解读内容，务必认真对待、给出实质判断，不要含糊敷衍、不要在能给出判断的地方
+各种"可能""或许"来回摇摆；但如果问题本身已经超出六爻纳甲能验证的范围（比如精确比分、
+具体数字），如实说明这一步的方法论边界，这不算含糊敷衍。仍要遵守上面的篇幅与语气要求，
+且不能与【核心原则】中固定下来的依据相矛盾。`;
 
 const DEEPSEEK_BASE_URL = 'https://api.deepseek.com';
 
@@ -2866,6 +3599,10 @@ const REPLY_STYLE_LABELS = {
 function currentReplyStyleLabel(){
   return REPLY_STYLE_LABELS[loadStyleChoice()] || REPLY_STYLE_LABELS.brief;
 }
+// 同 currentRoleCustomSnapshot()，只有当前正是custom档才有内容。
+function currentStyleCustomSnapshot(){
+  return loadStyleChoice() === 'custom' ? loadCustomStyle().trim() : '';
+}
 
 // ---- 十二时辰 → 现代计时对照，用于给AI回复里出现的"xx时"自动追加时间范围括注
 // （比如"酉时"自动变成"酉时（17-19点）"）。很多人对十二时辰不熟，加个括注更好懂。
@@ -2950,6 +3687,14 @@ function stripMarkdown(text){
 }
 
 // ---- 对应 ai_interpret.py: build_system_prompt ----
+// 注：函数体里的【断卦参考表】（用神速查/世应元神忌神/旺相休囚死/六合六冲）内容上
+// 抄自"断卦指南"标签页里给人看的同名表格（body区"用神速查""旺相休囚死（按月令）"
+// "合、冲对照""常用术语速查"这几个 section），之前只写给人看、没喂给AI，AI只能
+// 凭自己训练时记的命理知识现算，容易和页面教的东西对不上、也容易在细节上出错。
+// 这里补一份文字版塞进系统提示词。这两处目前是分别维护的两份文字（页面是静态HTML
+// 表格，这里是拼进提示词的字符串），不是同一个数据源自动生成的——以后如果要改
+// 其中任何一张表的内容（比如某个用神对应关系写错了、旺相休囚死表要调整），记得
+// 两边都改一下，不然会出现"页面教的和AI断的对不上"的新一轮不一致。
 function buildSystemPrompt(){
   const replyStyle = currentReplyStyle();
   const styleBlock = replyStyle ? `${replyStyle}\n${SAFETY_BASELINE}` : SAFETY_BASELINE;
@@ -2962,10 +3707,92 @@ ${currentRoleInfo()}
 【回复风格与分寸要求】
 ${styleBlock}
 
-用户会给你一次摇卦排盘的结构化数据，系统已经自动算好了：本卦所属的八宫及世应位置
-（比如"坎宫·二世卦"）、下卦上卦卦名、年月日时四柱干支与空亡地支，以及每一爻的六亲、六神、
-纳甲干支、五行、动爻/世爻/应爻标注；动爻还额外给出了"变出"（变爻变成的干支、五行、六亲），
-六亲不全的爻位还可能带"伏神"（伏神六亲、干支、五行）。这些都不需要你重新推算，直接采信即可。
+用户会给你一次起卦排盘的结构化数据，系统已经自动算好了：本卦所属的八宫及世应位置
+（比如"坎宫·二世卦"）、本卦与变卦各自的六十四卦标准卦名（比如本卦"地水师"，有动爻时还会
+给出变卦卦名，比如"水火既济"）、下卦上卦卦名、年月日时四柱干支与空亡地支，以及每一爻的
+六亲、六神、纳甲干支、五行、动爻/世爻/应爻标注、这一爻按月令的旺衰状态（旺/相/休/囚/死）、
+这一爻是否与日辰构成"合"或"冲"；动爻还额外给出了"变出"（变爻变成的干支、五行、六亲）以及
+是否"回头生/回头克"（变爻反过来生或克本爻），六亲不全的爻位还可能带"伏神"（伏神六亲、
+干支、五行），并标出飞神（本爻）对伏神是生是克。数据末尾还有一段"证据速览"，是系统按
+全卦月令旺衰、动爻回头生克、世应生克关系算出的整体收敛度参考——这些字段该怎么用、
+要不要你重新核算，见下面【核心原则】。
+
+【断卦参考表】
+下面几张表是背景知识，帮你理解上面各字段的含义、以及"用神该选哪个"这道仍然需要你判断的
+题——月令旺衰、日辰合冲这两项已经按这几张表的规则由系统直接标注在每一爻上了，不需要你
+再逐爻对着表格心算一遍；用神对应关系没有被系统预判（这依赖对问题文本的语义理解，是你的
+职责），仍要你结合问题类型自己选定：
+
+用神速查（先按问的事情类型选用神，再看这个六亲本身的旺衰生克）：
+求财/生意→妻财；婚姻，男测看妻财、女测看官鬼，同时看世应是否相生相合；
+疾病→官鬼代表病、父母代表药和医（官鬼旺表示病重，子孙旺主吉，因子孙克官鬼）；
+考试/求职/官运→官鬼；子女/晚辈→子孙；父母/长辈/房产/合同文书→父母；
+兄弟/朋友/合伙人→兄弟（兄弟旺常主破财、争抢）；出行看世爻是否安稳，诉讼看官鬼与世应。
+
+世应与元神忌神：世爻代表求测人自己，应爻代表对方、对手，或所测之事本身——世应之间是否
+相生相合，直接反映这件事/这段关系的走向，姻缘、合伙、诉讼这类"涉及对方"的问题尤其要看
+这一层，不能只看用神自己的旺衰。生助用神的六亲是元神（帮手），克制用神的六亲是忌神（阻力）。
+
+旺相休囚死（按月令判断用神/元神/忌神的五行力量强弱；旺、相为得力，休、囚、死为不得力，
+需要日辰再生扶才行）：
+春（寅卯月）：木旺 火相 水休 金囚 土死；夏（巳午月）：火旺 土相 木休 水囚 金死；
+秋（申酉月）：金旺 水相 土休 火囚 木死；冬（亥子月）：水旺 木相 金休 土囚 火死；
+四季月（辰戌丑未月）：土旺 金相 火休 木囚 水死。
+
+六合：子丑合　寅亥合　卯戌合　辰酉合　巳申合　午未合
+六冲：子午冲　丑未冲　寅申冲　卯酉冲　辰戌冲　巳亥冲
+（日辰与某一爻构成"合"或"冲"，数据里对应爻会直接标"日辰合"/"日辰冲"，不用你再核对地支；
+但合、冲对这一爻到底是好是坏，历代说法本身就不是单一方向——合主牵绊、稳定，有时反而是
+"绊住不动"；冲主动荡、离散，也可能是"暗动"——这一层解读需要结合旺衰和所测之事判断，
+是你的职责，系统不会替你下定论。）
+
+【核心原则：结论必须能被复核，且不重复推算已经算好的数据】
+卦名、纳甲干支、六亲配属、进退神、伏神信息、每一爻的月令旺衰（旺/相/休/囚/死）、是否与
+日辰构成合冲、动爻是否回头生/回头克、飞神对伏神是生是克——这些都是有唯一正确答案的
+计算题，已经在【排盘数据】里由代码算好直接标注给你（进退神留空的辰戌丑未组合，是因为
+这一步没有公认唯一答案，不必强行判定），你不需要、也不应该自己重新推算或质疑这些数据，
+直接采信即可；用神该选哪个六亲、合冲对这一爻究竟是利是弊、旺衰强弱怎么打分、吉凶趋势
+怎么措辞、给什么建议——这些没有唯一答案、需要经验判断的，才是你的职责所在。不要把
+该交给数据的部分自己现算，也不要把该自己判断的部分说得好像有唯一标准答案。
+
+数据末尾的"证据速览"是系统按月令旺衰、回头生克、世应生克这几项确定性关系汇总出的
+收敛度参考（比如当令得力与减力的爻数是否悬殊、世应是生是克），不是吉凶结论，也没有
+覆盖用神本身的旺衰——但可以作为你判断"这次给出的吉凶把握有多大"时的一个参照：如果
+"证据速览"显示的整体气象和你选定的用神旺衰方向一致，属于多项迹象互相印证，可以在回复
+里坦然表达判断把握较高；如果两者方向不一致，或者证据速览本身显示旺衰参半，如实告诉
+对方这一卦的迹象不算特别集中、仅供参考，不要为了显得笃定就把有分歧的地方抹平。
+
+在正式作答前，先在心里想清楚（不输出给用户），并让最终回复的措辞与之完全对应：
+1. 本次问题的用神是哪个六亲——对照【断卦参考表】里的用神速查，结合求财/姻缘/事业等
+   问题类型选定；
+2. 用神/世爻当前的旺衰状态——直接读取数据里已标好的"月令"字段（旺/相/休/囚/死），
+   再看有没有"日辰关系"（合/冲），日辰的作用不弱于月令，《卜筮正宗》称日辰为
+   "六爻之主宰"；如果问题涉及"对方"（姻缘对象、合伙人、官司对手等），再结合数据里
+   标好的"世应"关系（世生应/应生世/世克应/应克世/比和）判断这段关系的走向；
+3. 决定吉凶走向的关键那一条生克/动变关系是什么——动爻已经标注好"变出"信息和进退神，
+   是否"回头生/回头克"也直接标在数据里，不用你自己比对五行；本卦缺某个六亲时看有没有
+   "伏神"，数据里标出的"飞神生伏神/飞神克伏神"告诉你伏神是否被飞神生扶，至于是否
+   "出伏"这种更细的时机条件历代说法不一，可以结合语境谈，但不要跳过伏神直接说
+   "用神不上卦无法判断"。
+这三点一旦想清楚，就是这一卦这次对话里固定不变的依据，后续如何应对用户的追问或反驳，
+见下一节【关于"结果好像不符"的情况】。
+
+【关于"结果好像不符"的情况】
+如果用户反馈实际结果与你之前的判断不一致，不要因为用户情绪、语气强硬或反复追问，
+就临时更换用神、反转旺衰判断，或者声称"上一轮漏看了某一爻"——这份卦理依据从第一次
+给出后就已经固定，后续任何一轮回应都必须与之保持一致。遇到这种反馈，坦然说明即可：
+卦象推演的是气数消长、胜负走向的大概率倾向，不是对每一个现实细节的精确锁定，
+竞技与人事中都存在卦理之外的现实变数；把这一层不卑不亢地讲清楚，不要为了平息对方
+情绪就掉头附和对方想要的结论。
+
+【关于比分、名次等精确数值类问题】
+六爻纳甲的生克旺衰体系，历代典籍主要用于判断胜负走向、趋势强弱、事情进退，
+没有从卦象直接推导精确比分/名次/具体数字的传统方法。遇到这类问题：
+- 可以按卦理给出胜负判断、大致走势（比如先弱后强、险胜、稳赢、大概率不利等）；
+- 如果对方追问具体数字，明确告诉对方这一步已经超出卦理本身能验证的范围，是基于
+  卦象走势做的推测性延伸，不作为确定性结论；
+- 不要为了显得"有本事算出数字"，去编造一套听起来有卦理依据、实际上典籍中并无此法
+  的推导过程（包括把精确比分换个包装说成"净胜球区间""差数论"之类，本质还是一样）。
 
 请你：
 1. 解卦之前先弄清楚提问者问题里的关键词到底指的是什么，尤其警惕看起来像常见词组、实际是专有名词
@@ -2974,33 +3801,40 @@ ${styleBlock}
    （比如像是某个具体名字但你没见过），就按提问者给出的上下文场景（工作/项目/游戏/团队等）去理解，
    不要顺着字面意思滑到一个不相关的场景（比如把问的是某个项目的走向，理解成了个人生活作息安排），
    这一步理解错了，后面卦理讲得再细也是文不对题
-2. 结合动爻的"变出"信息推出变卦的走向，判断是否构成化进神/化退神、回头生（变爻生本爻）、
-   回头克（变爻克本爻）等常见变爻关系，这是断吉凶转折的关键，不要只停留在"哪一爻动了"
-3. 如果本卦缺某个六亲（用神恰好不上卦），看有没有带"伏神"的爻位：伏神能否被飞神生扶、
-   有没有"出伏"的条件，直接影响这一步的判断能不能成立，不要跳过伏神直接说"用神不上卦无法判断"
-4. 结合提问者的问题（求财/姻缘/事业等）判断这一卦要重点看哪个六亲（用神），
-   并结合月柱、日柱干支、空亡做出旺衰、生克的判断——月建定旺相休囚死的季节基调（提纲），
-   日辰则对每一爻直接产生冲、合、生、克、扶、抑等具体作用，《卜筮正宗》称日辰为
-   "六爻之主宰"，判断力道不亚于月建甚至更直接，不要把日辰当成次要的辅助项
-5. 用卜者的口吻，给出一段解卦回复，必须包含明确的吉凶/走向判断，不要只描述卦象现象却不下结论
-6. 绝对不要使用任何 Markdown 语法（不要 **加粗**、不要 # 标题、不要 - 列表符号），
+2. 用卜者的口吻，给出一段解卦回复，必须包含明确的吉凶/走向判断，不要只描述卦象现象却不下结论；
+   可以在开头很自然地提一句这一卦叫什么（本卦XX，若有动爻可带上变卦XX），但不要生硬地报菜名式
+   罗列，也不必每次都提
+3. 绝对不要使用任何 Markdown 语法（不要 **加粗**、不要 # 标题、不要 - 列表符号），
    直接输出可以原样展示的纯文本内容
-7. ${buildShichenRuleText()}
-8. ${buildGanzhiDayRuleText()}
-9. 只输出回复正文本身，不要输出任何前言、解释或标注
-10. 追问场景的特别规则：如果收到的是"追问"内容，先自己判断一下这次追问是不是还在问同一件事
+4. ${buildShichenRuleText()}
+5. ${buildGanzhiDayRuleText()}
+6. 只输出回复正文本身，不要输出任何前言、解释或标注
+7. 追问场景的特别规则：如果收到的是"追问"内容，先自己判断一下这次追问是不是还在问同一件事
    （只是换个问法、追问某个细节、想问得更深）——如果明显换成了另一件不相关的事
    （比如最初问的是求职跳槽，追问却突然问感情、健康，或别的完全不相关的新事），
    不要硬套着当前这一卦继续解读。按"一事不问二卦"的老规矩，不同的事该分开起卦、分开断。
    这种情况下，直接明确告诉提问者"这已经是另一件事了，按规矩得重新起一卦"，不用展开具体解卦内容。
    如果确实还是原来那件事的延伸细节，才照常结合卦理正常作答。
-11. 提问者的问题原文里如果带着具体细节（具体的人、具体的事、具体的时间点、已经发生的进展、
+   如果用户是对上一次的判断提出异议、或反馈结果和现实对不上，按【关于"结果好像不符"
+   的情况】一节处理。
+8. 提问者的问题原文里如果带着具体细节（具体的人、具体的事、具体的时间点、已经发生的进展、
     纠结的具体选项等），解卦时要扣住这些细节去说，让人一眼看出这段回复是冲着这一次的具体处境写的，
     而不是换个问同类问题的人也能原样套用的泛泛而谈（比如笼统的"求财顺利""姻缘可成"这类不落地的判断）；
     如果问题本身写得笼统、没给出具体细节，就如实按卦理给出判断，不要为了显得"贴合"而自己编造对方没提过的情节。
 
-请严格以《火珠林》《黄金策》《卜筮正宗》《增删卜易》《易冒》等六爻纳甲典籍的断法为主要依据，
-凡卦理无据者，不妄断，禁止套话与迎合，只输出最有卦理依据、应象最强、可验证性最高的结论。`;
+请按纳甲六爻的通行实战方法断卦，凡卦理无据者，不妄断，禁止套话与迎合，
+只输出最有卦理依据、应象最强、可验证性最高的结论。
+${(() => {
+  const example = currentOneShotExample();
+  if(!example) return '';
+  return `
+
+【语气节奏参考——另一次问卦的示范文本，只学格式和语气，不可挪用其中具体判断】
+下面这段不是本次这一卦的数据和结论，只用来对齐语气、篇幅、时辰括注和干支日的写法；
+真正作答时必须完全依据本次实际给到的排盘数据重新推演，不能照搬其中任何具体判断或措辞：
+
+${example}`;
+})()}`;
 }
 
 // ---- 对应 cast_and_extract.py: format_for_ai ----
@@ -3008,6 +3842,16 @@ ${styleBlock}
 // 早就算好、存在 castData.lines 每一条里、排盘表里也已经显示，但这里之前漏了拼进发给AI的
 // 文本——AI拿到的排盘数据里完全没有这两块信息，等于伏神、化进退神、回头生克这些依赖它们的
 // 判断AI根本无从分析。这里补上，动爻额外带上"变出"，六亲不全时额外带上"伏神"。
+//
+// 后续追加：月令旺衰（月令）、日辰合冲（日辰关系）、回头生克（回头）、飞神对伏神的生克
+// （伏神与飞神关系）——这几项此前AI要自己套着【断卦参考表】里的旺相休囚死表/六合六冲表
+// 现算，现在改成代码直接算好标注，AI不用再心算这道计算题，只管拿来判断吉凶措辞。
+// 再后续追加：进退神（进退神）——computeJinTuiShen早就算好了，但一直漏了拼进这里，导致
+// 提示词里说"进退神已经算好标注给你"其实是句空话，AI要么看不到、要么只能自己心算，
+// 跟当初做computeJinTuiShen就是为了不让AI心算这道题的初衷正好相反，这次一并补上。
+// 老数据（这次更新前保存的历史记录/未刷新完的会话）没有这几个字段，`ln.月令`等取到的是
+// undefined，下面用 `|| ''` 兜底成空字符串，不会输出"undefined"，只是那几项标注缺失。
+// castData.overallTrendText同理：新算的卦才有，没有就不拼这一段，不强行补数据。
 function formatCastDataForAI(castData){
   const linesText = castData.lines.map(ln => {
     let tag = '';
@@ -3016,15 +3860,27 @@ function formatCastDataForAI(castData){
     if(ln.是否应爻) tag += '【应爻】';
     if(ln.是否空亡) tag += '【空亡】';
     let extra = '';
+    if(ln.月令) extra += `, 月令=${ln.月令}`;
+    if(ln.日辰关系) extra += `, 日辰=${ln.日辰关系}`;
     if(ln.是否动爻 && ln.变纳甲) extra += `, 变出=${ln.变纳甲}(${ln.变五行})${ln.变六亲}`;
+    if(ln.是否动爻 && ln.进退神) extra += `, ${ln.进退神}`;
+    if(ln.是否动爻 && ln.回头) extra += `, ${ln.回头}`;
     if(ln.伏神六亲) extra += `, 伏神=${ln.伏神六亲} ${ln.伏神纳甲}(${ln.伏神五行})`;
+    if(ln.伏神与飞神关系) extra += `(${ln.伏神与飞神关系})`;
     return `${ln.爻位}: 六亲=${ln.六亲}, 六神=${ln.六神}, 纳甲=${ln.纳甲}, 五行=${ln.五行}, 状态=${ln.状态}${tag}${extra}`;
   }).join('\n');
   const sourceText = castData.source === 'manual'
     ? '起卦方式：提问者本人现实中线下摇卦（铜钱或其他方式），结果由本人手动录入系统，六爻老少阴阳均为真实所得，并非网页随机生成。'
     : '起卦方式：网页系统随机摇卦生成。';
-  return `${sourceText}\n${castData.palaceText}\n${castData.lowerUpperText}\n${pillarsAndKongText(castData)}\n\n` +
-    `各爻明细（从初爻到上爻，六亲/世应/空亡已由系统自动标注）：\n${linesText}`;
+  // 卦名（本卦/变卦的六十四卦标准卦名，如"地水师""水火既济"）：之前只在页面上展示、
+  // 没有拼进发给AI的文本里，AI拿到的只有"坎宫·二世卦"这类宫位信息和拆开的上下卦（坎/坤），
+  // 从没见过合起来的完整卦名。六爻断卦的主要依据确实是六亲/世应/纳甲/动变而不是卦名本身，
+  // 但卦名是解卦回复里"这一卦是什么卦"的常规交代，古籍（比如"地水师"卦辞、大象）也常按卦名
+  // 整体取象，缺了这行AI就只能回避不提、或者自己瞎编一个卦名，都不合适，这里补上。
+  const guaNameText = `本卦：${castData.guaName || ''}` + (castData.bianGuaName ? `　变卦：${castData.bianGuaName}` : '');
+  const trendText = castData.overallTrendText ? `\n\n证据速览（月令旺衰/回头生克/世应生克的收敛度参考，不是吉凶结论）：${castData.overallTrendText}` : '';
+  return `${sourceText}\n${guaNameText}\n${castData.palaceText}\n${castData.lowerUpperText}\n${pillarsAndKongText(castData)}\n\n` +
+    `各爻明细（从初爻到上爻，六亲/世应/空亡已由系统自动标注）：\n${linesText}${trendText}`;
 }
 
 // ---- 提示词导出（对应"输出提示词"按钮）：不经本站配置的DeepSeek API Key，
@@ -3048,11 +3904,15 @@ function formatCastDataForAI(castData){
 // 不然遇到对方没开搜索/没有搜索能力的情况，一句硬邦邦的"请联网核实"反而会诱导模型编一个
 // 假装查证过的过程，比不提这件事更糟。
 const EXPORT_SEARCH_HINT = `
-【关于联网核实，仅当你自己具备可调用的联网搜索工具时适用，不具备就跳过这条】
-提问里如果出现某个看起来像常见词组、但你吃不准具体所指的专有名词（游戏名、产品名、公司名、人名等），
-如果你自己能调用联网搜索工具，可以先搜索确认一下它实际指什么，再结合卦理作答；
-如果你不具备联网能力，或者当前没有开启联网搜索，就按提问者给出的上下文场景去理解，
-不要假装自己搜索或核实过，更不要编造一个查证过程或查证结果出来。
+【关于联网核实，仅当你自己具备可调用的联网搜索工具时适用】
+遇到吃不准的专有名词（人名/产品名/公司名等），有搜索能力就先搜索确认再结合卦理作答；没有就按
+提问者给出的场景理解，不要假装搜索或查证过。解卦正文里不主动声明"已核实"，除非某个词有两种
+完全不搭边、会让断卦方向反过来的理解，才需要一句话请对方确认。若提问者事后追问你是否联网核实
+过，必须先如实说清楚有没有（用了/没这能力或没触发），再接着用卜者口吻往下说，不能用"意不诚
+不占"之类卦理说法回避这个事实问题。
+遇到近期会有公开确定结果的具体数字（比分、开奖号、点位等），断语依然干脆，但重心放在"哪一方
+占优、走势如何"这类卦理判断上；要给具体数字时用"卦上落的数是……"，不用"结果一定是……"这种
+担保式断言——即使确实搜到了真实数据，也不能把"资料是真的"偷换成"这个数字有把握"，这是两回事。
 `.trim();
 
 function buildExportPromptText(question, castDataText){
@@ -3069,7 +3929,7 @@ function buildExportPromptText(question, castDataText){
 // ---- 追问提示词导出（对应"生成追问提示词"按钮）：导出路径没有 currentConversation 那套多轮
 // 上下文，没法像 followUpWithDeepSeek 那样自动带历史、自动判断"这条追问是不是还在问同一件事"。
 // 这里让用户把上一轮对方AI的回复（可以直接是"贴回矫正"清洗后的结果）和这次追问内容交回来，
-// 重新拼一段带着原排盘数据、上一轮问答、以及第7条"一事不问二卦"规则的完整提示词，当作独立的
+// 重新拼一段带着原排盘数据、上一轮问答、以及"追问场景的特别规则"（一事不问二卦）的完整提示词，当作独立的
 // 新一条消息发给对方AI——规则能不能被遵守依然只能看对方AI自觉，但至少规则文本不会像现在这样
 // 直接消失。
 function buildExportFollowUpPromptText(question, castDataText, priorAnswerText, followUpText){
@@ -3081,7 +3941,7 @@ function buildExportFollowUpPromptText(question, castDataText, priorAnswerText, 
     `提问者最初问的是：${question}\n你（卜者）之前的回复是：\n${priorAnswerText}\n` +
     `======== 之前问答结束 ========\n\n` +
     `提问者现在追问：${followUpText}\n\n` +
-    `请先按上面规则第9条判断这是否还是同一件事的延伸追问，再决定是否继续解读；` +
+    `请先按上面"追问场景的特别规则"（一事不问二卦）判断这是否还是同一件事的延伸追问，再决定是否继续解读；` +
     `其余格式要求（不要前言、不要Markdown、不要提及AI、时辰要带现代时间括注、不要自行编造干支日对应的公历日期）依然适用，` +
     `不要输出任何前言、开场白或免责声明，直接从正文开始。`;
 }
@@ -3418,6 +4278,7 @@ function buildHistoryCastSnapshot(castData){
     bianGuaName: castData.bianGuaName,
     source: castData.source,
     lines: castData.lines,
+    overallTrendText: castData.overallTrendText,
   };
 }
 
@@ -3448,7 +4309,7 @@ function historyCastHtml(cast, ts){
     const tagHtml = tag ? `<span class="history-line-tag">${escapeHtml(tag)}</span>` : '';
     return `<div class="history-line-row">
       <span class="history-line-pos">${escapeHtml(ln.爻位||'')}</span>
-      <span>${escapeHtml(ln.六亲||'')}·${escapeHtml(ln.六神||'')}</span>
+      <span>${escapeHtml(ln.六亲||'')}·${spiritDotHtml(ln.六神)}${escapeHtml(ln.六神||'')}</span>
       <span>${escapeHtml(ln.纳甲||'')}${escapeHtml(ln.五行||'')}·${escapeHtml(ln.状态||'')}${tagHtml}</span>
     </div>`;
   }).join('');
@@ -3464,6 +4325,7 @@ function historyCastHtml(cast, ts){
     ${dateHtml ? `<div class="history-cast-head">${dateHtml}</div>` : ''}
     <div class="history-cast-head">${pillarsKongHtml}</div>
     <div class="history-cast-lines">${linesRows}</div>
+    ${cast.overallTrendText ? `<div class="history-cast-head">证据速览：${escapeHtml(cast.overallTrendText)}</div>` : ''}
   </div>`;
 }
 
@@ -3713,6 +4575,7 @@ modelSelect.addEventListener('change', ()=>{
 
 toggleSettingsBtn.addEventListener('click', ()=>{
   aiSettings.classList.toggle('open');
+  toggleSettingsBtn.setAttribute('aria-expanded', aiSettings.classList.contains('open') ? 'true' : 'false');
 });
 
 saveKeyBtn.addEventListener('click', ()=>{
@@ -3763,7 +4626,7 @@ function renderStats(){
 function renderHistory(){
   const list = loadHistory().slice().reverse(); // 最新的在最上面
   historyCount.textContent = list.length;
-  historyEmpty.style.display = list.length ? 'none' : 'block';
+  historyEmpty.style.display = list.length ? 'none' : 'flex';
   historyList.innerHTML = list.map(r => {
     const turns = historyTurnsOf(r);
     const roundCount = turns.filter(t=>t.role==='assistant').length;
@@ -3787,6 +4650,15 @@ function renderHistory(){
       : `token共${r.totalTokens||0} · 约¥${(r.costYuan||0).toFixed(4)}`;
     const metaText = configLabel ? `${baseMetaText} · ${configLabel}` : baseMetaText;
     const questionHtml = `<div class="history-turn history-turn-user history-q-top"><b>问：</b>${escapeHtml(firstQuestion)}</div>`;
+    // roleCustomText/styleCustomText 是这次改动新加的字段，只有"当时选的正是自定义档"才会
+    // 有内容——存的是那一刻"设置"里自定义人设/风格文本框的原文快照。之前只存了"自定义人设"
+    // 这四个字的标签，用户后来改动或清空设置面板里的自定义文字后，旧记录就再也看不出当时
+    // 具体写的是什么、没法准确复现那次到底按什么规则断的；现在把原文一并存进快照。
+    // 老记录（这次改动之前生成的）没有这两个字段，下面兼容处理成空字符串，不额外显示。
+    const customConfigParts = [];
+    if(r.roleCustomText) customConfigParts.push(`<div class="history-turn history-custom-config"><b>当时的自定义人设：</b>${escapeHtml(r.roleCustomText)}</div>`);
+    if(r.styleCustomText) customConfigParts.push(`<div class="history-turn history-custom-config"><b>当时的自定义风格：</b>${escapeHtml(r.styleCustomText)}</div>`);
+    const customConfigHtml = customConfigParts.join('');
     return `
     <div class="history-item" data-id="${r.id}">
       <div class="history-item-head" data-action="toggle">
@@ -3795,7 +4667,7 @@ function renderHistory(){
         <span class="history-item-time">${formatTime(r.ts)}</span>
       </div>
       <div class="history-item-meta">${metaText}</div>
-      <div class="history-item-body">${questionHtml}${historyCastHtml(r.cast, r.ts)}${restTurnsHtml}</div>
+      <div class="history-item-body">${questionHtml}${customConfigHtml}${historyCastHtml(r.cast, r.ts)}${restTurnsHtml}</div>
       <button class="history-item-del" data-action="delete">删除这条</button>
     </div>
   `;
@@ -3809,6 +4681,7 @@ function escapeHtml(s){
 
 toggleHistoryBtn.addEventListener('click', ()=>{
   historyPanel.classList.toggle('open');
+  toggleHistoryBtn.setAttribute('aria-expanded', historyPanel.classList.contains('open') ? 'true' : 'false');
   if(historyPanel.classList.contains('open')) renderHistory();
 });
 
@@ -4001,9 +4874,9 @@ closePromptBtn.addEventListener('click', ()=>{
 // 用法与页面里其它折叠区块（block-collapse / settings-group.collapsible）一致。
 promptExtraToggle.addEventListener('click', ()=> promptExtraTools.classList.toggle('open'));
 
-// ---- 贴回矫正：把对方AI回复原文本地跑一遍 stripMarkdown + annotateShichen，
-// 不发任何网络请求，纯字符串处理，复用"AI 解读"清洗回复用的同一对函数，保证
-// 两条路径最终展示给用户的格式风格一致。 ----
+// ---- 贴回矫正：把对方AI回复原文本地跑一遍 stripMarkdown + annotateShichen + annotateGanzhiDay，
+// 不发任何网络请求，纯字符串处理，复用"AI 解读"清洗回复用的同一套函数，保证
+// 两条路径最终展示给用户的格式风格一致（干支日换算成具体日期也在这一步一并做掉）。 ----
 cleanupRunBtn.addEventListener('click', ()=>{
   const raw = cleanupInputText.value;
   if(!raw.trim()){
@@ -4135,7 +5008,10 @@ interpretBtn.addEventListener('click', async ()=>{
         interpretBtn.disabled = false;
         return;
       }
-      if(!(await guardBeforeCast())){
+      // 这里如果 window.lastCastData 还在，说明能走到这一步是因为上面 questionChanged 分支里
+      // 用户已经在"是同一件事，还是换新事了？"那个确认框里点过"换新事了，重摇"——
+      // 已经问过一遍了，传 skipCastConfirm 避免 guardBeforeCast() 里再弹一次重复的确认框。
+      if(!(await guardBeforeCast({ skipCastConfirm: true }))){
         interpretBtn.disabled = false;
         return;
       }
@@ -4201,6 +5077,8 @@ interpretBtn.addEventListener('click', async ()=>{
         isPeak: result.isPeak,
         roleLabel: currentRoleLabel(),
         styleLabel: currentReplyStyleLabel(),
+        roleCustomText: currentRoleCustomSnapshot(),
+        styleCustomText: currentStyleCustomSnapshot(),
       });
       renderStats();
       if(historyPanel.classList.contains('open')) renderHistory();
@@ -4289,7 +5167,9 @@ promptBtn.addEventListener('click', async ()=>{
         showToast(msg, 'error', 4000);
         return;
       }
-      if(!(await guardBeforeCast())){
+      // 同上（interpretBtn 那边一致）：能走到这一步说明 questionChanged 分支里用户已经确认过
+      // "换新事了，重摇"，这里跳过 guardBeforeCast() 里那次会重复的确认框。
+      if(!(await guardBeforeCast({ skipCastConfirm: true }))){
         return;
       }
       showToast(questionChanged ? '换了新问题，先帮你重新摇一卦' : '还没摇卦，先帮你自动摇一卦');
@@ -4316,6 +5196,8 @@ promptBtn.addEventListener('click', async ()=>{
         cast: buildHistoryCastSnapshot(window.lastCastData),
         roleLabel: currentRoleLabel(),
         styleLabel: currentReplyStyleLabel(),
+        roleCustomText: currentRoleCustomSnapshot(),
+        styleCustomText: currentStyleCustomSnapshot(),
       });
       renderStats();
       if(historyPanel.classList.contains('open')) renderHistory();
