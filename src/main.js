@@ -1,3 +1,10 @@
+import { LS_KEY_CAST_LOG, CAST_COOLDOWN_WINDOW_MS, CAST_COOLDOWN_MAX, loadCastLog, pruneCastLog, notifyQuota, configureQuotaNotifications, logCastEvent, castsRemainingInWindow } from './storage/cast-log.js';
+import { LS_KEY_ACTIVE_CONVO, saveActiveConversation, loadActiveConversationFromStorage, clearActiveConversationStorage } from './storage/conversation.js';
+import { LS_KEY_HISTORY, HISTORY_MAX, loadHistory, saveHistory, appendHistory, LS_KEY_LIFETIME_STATS, loadLifetimeStats, addLifetimeUsage, clearLifetimeStats, historyTurnsOf, buildHistoryCastSnapshot } from './storage/history.js';
+import { LS_KEY_ROLE, LS_KEY_CUSTOM_ROLE, loadRoleChoice, saveRoleChoice, loadCustomRole, saveCustomRole, LS_KEY_MODEL, loadModelChoice, saveModelChoice, LS_KEY_PRICE_OVERRIDE, loadPriceOverride, savePriceOverride, clearPriceOverride, LS_KEY_API, LS_KEY_STYLE, LS_KEY_CUSTOM_STYLE, LS_KEY_EFFORT, loadApiKey, saveApiKey, clearApiKey, loadStyleChoice, saveStyleChoice, loadCustomStyle, saveCustomStyle, loadEffortChoice, saveEffortChoice } from './storage/settings.js';
+import { notifyStorage, configureStorageNotifications, safeGetItem, safeSetItem, safeRemoveItem } from './storage/local.js';
+import { state } from './app/state.js';
+import { ROLE_PRESETS, ROLE_ONE_SHOT_EXAMPLES, ROLE_LABELS, ROLE_HINTS, REPLY_STYLE_PRESETS, EFFORT_PRESETS, SAFETY_BASELINE, DEEPSEEK_BASE_URL, PRICE_TABLES, REPLY_STYLE_LABELS, SHICHEN_HOUR_MAP, JIAZI60_LABELS_REGEX, EXPORT_SEARCH_HINT } from './ai/config.js';
 import { calculateCast } from './core/casting.js';
 import { createCoinWorld, advanceCoinWorld, lineFromSum } from './core/physics.js';
 import { getTodayJiaziIndex, findNextDateForGanzhiIndex, julianDay, sunApparentLongitude, getSolarMonthBranch, getYearPillar, getMonthPillar, hourBranchOf, getHourPillar, buildYearMonthHourPillars, formatGregorianText, lunarDayCn, getLunarDateText, buildDateDisplayText } from './core/ganzhi.js';
@@ -114,16 +121,16 @@ WX.forEach((w,i)=>{
   const a = -Math.PI/2 + i*(2*Math.PI/5);
   pos[w] = {x:cx+R*Math.cos(a), y:cy+R*Math.sin(a)};
 });
-let svgHtml = '';
+
 // sheng arrows (outer pentagon, i -> i+1)
 WX.forEach((w,i)=>{
   const a=pos[w], b=pos[WX[(i+1)%5]];
-  svgHtml += `<path class="wx-arrow sheng" data-from="${w}" data-to="${WX[(i+1)%5]}" d="${arcPath(a,b,cx,cy,26)}"/>`;
+  state.svgHtml += `<path class="wx-arrow sheng" data-from="${w}" data-to="${WX[(i+1)%5]}" d="${arcPath(a,b,cx,cy,26)}"/>`;
 });
 // ke arrows (inner star, i -> i+2)
 WX.forEach((w,i)=>{
   const a=pos[w], b=pos[WX[(i+2)%5]];
-  svgHtml += `<path class="wx-arrow ke" data-from="${w}" data-to="${WX[(i+2)%5]}" d="${arcPath(a,b,cx,cy,-14,0.72)}"/>`;
+  state.svgHtml += `<path class="wx-arrow ke" data-from="${w}" data-to="${WX[(i+2)%5]}" d="${arcPath(a,b,cx,cy,-14,0.72)}"/>`;
 });
 function arcPath(a,b,cx,cy,bend,shrink){
   shrink = shrink||0.85;
@@ -137,10 +144,10 @@ function arcPath(a,b,cx,cy,bend,shrink){
 }
 WX.forEach(w=>{
   const p=pos[w];
-  svgHtml += `<g class="wx-node" data-el="${w}" tabindex="0" role="button" aria-label="查看${w}的生克关系" transform="translate(${p.x},${p.y})">
+  state.svgHtml += `<g class="wx-node" data-el="${w}" tabindex="0" role="button" aria-label="查看${w}的生克关系" transform="translate(${p.x},${p.y})">
     <circle r="22"/><text x="0" y="6" text-anchor="middle">${w}</text></g>`;
 });
-svg.insertAdjacentHTML('beforeend', svgHtml);
+svg.insertAdjacentHTML('beforeend', state.svgHtml);
 function activateWxNode(node){
   const el = node.dataset.el;
   document.querySelectorAll('.wx-node').forEach(n=>n.classList.remove('active'));
@@ -180,9 +187,9 @@ dayGanzhiSelect.value = String(getTodayJiaziIndex());
 // 只要用户之后没有手动去改日柱下拉框，这个关联就一直有效；一旦手动改了下拉框
 // （见下面dayGanzhiSelect的change监听），就清空退回"现在"——因为单选一个干支
 // 本身是模糊的（六十天一轮回，没法反推唯一对应哪一天），没法再关联到具体日期。
-let knownCastDate = null;
-let daySelectionMode = 'auto';
-dayGanzhiSelect.addEventListener('change', ()=>{knownCastDate=null;daySelectionMode='manual';document.getElementById('dayLookupDate').value='';document.getElementById('dayLookupTime').value='';});
+
+
+dayGanzhiSelect.addEventListener('change', ()=>{state.knownCastDate=null;state.daySelectionMode='manual';document.getElementById('dayLookupDate').value='';document.getElementById('dayLookupTime').value='';});
 
 // ---- 按公历日期反查日柱：想复盘某个历史案例（比如书上的老案例、以前手动摇的卦）
 // 之前只能自己心算六十甲子再去下拉框里找，这里加个日期选择器，选完直接调用上面已有的
@@ -193,30 +200,30 @@ const dayLookupDateInput = document.getElementById('dayLookupDate');
 if(dayLookupDateInput){
   dayLookupDateInput.addEventListener('change', ()=>{
     const v = dayLookupDateInput.value; // "YYYY-MM-DD"
-    if(!v){knownCastDate=null;daySelectionMode='auto';dayGanzhiSelect.value=String(getTodayJiaziIndex());return;}
+    if(!v){state.knownCastDate=null;state.daySelectionMode='auto';dayGanzhiSelect.value=String(getTodayJiaziIndex());return;}
     const [y,m,d] = v.split('-').map(Number);
     if(!y || !m || !d) return;
     const picked = new Date(y, m-1, d); // 按本地日历日期算，跟getTodayJiaziIndex(new Date())默认走同一套时区口径
     // 用JS赋值.value不会触发上面dayGanzhiSelect的'change'监听（那个监听只认用户手动在下拉框里
     // 选选项这种真实交互），所以这里设置knownCastDate不会被自己刚改的下拉框清空。
     dayGanzhiSelect.value = String(getTodayJiaziIndex(picked));
-    knownCastDate = picked; daySelectionMode='date';
-    const time=document.getElementById('dayLookupTime').value;if(time){const [h,min]=time.split(':').map(Number);knownCastDate.setHours(h,min);}
+    state.knownCastDate = picked; state.daySelectionMode='date';
+    const time=document.getElementById('dayLookupTime').value;if(time){const [h,min]=time.split(':').map(Number);state.knownCastDate.setHours(h,min);}
     showToast(`已按 ${v} 反查并选中日柱：${JIAZI60[getTodayJiaziIndex(picked)].label}`);
   });
 }
 
 document.getElementById('dayLookupTime').addEventListener('change',()=>{
-  if(knownCastDate){const [h,m]=(document.getElementById('dayLookupTime').value||'00:00').split(':').map(Number);knownCastDate.setHours(h,m,0,0);}
+  if(state.knownCastDate){const [h,m]=(document.getElementById('dayLookupTime').value||'00:00').split(':').map(Number);state.knownCastDate.setHours(h,m,0,0);}
 });
 // Browser local civil time; day changes at 00:00. No true-solar-time correction.
 function resolveCastCalendar(){
-  const now=knownCastDate ? new Date(knownCastDate) : new Date();
-  if(daySelectionMode==='auto')dayGanzhiSelect.value=String(getTodayJiaziIndex(now));
+  const now=state.knownCastDate ? new Date(state.knownCastDate) : new Date();
+  if(state.daySelectionMode==='auto')dayGanzhiSelect.value=String(getTodayJiaziIndex(now));
   const day=JIAZI60[Number(dayGanzhiSelect.value)];
-  if(daySelectionMode==='manual')return {now,day,ymh:{yearLabel:'未指定',monthLabel:'未指定',hourLabel:'未指定'},dateText:'公历日期未指定（仅录入日柱）'};
+  if(state.daySelectionMode==='manual')return {now,day,ymh:{yearLabel:'未指定',monthLabel:'未指定',hourLabel:'未指定'},dateText:'公历日期未指定（仅录入日柱）'};
   const ymh=buildYearMonthHourPillars(day.stem,now);
-  if(knownCastDate&&!document.getElementById('dayLookupTime').value){
+  if(state.knownCastDate&&!document.getElementById('dayLookupTime').value){
     ymh.hourLabel='未指定';
     const end=new Date(now);end.setHours(23,59,59,999);
     const last=buildYearMonthHourPillars(day.stem,end);
@@ -361,69 +368,6 @@ function isLifespanQuestion(text){
   if(LIFESPAN_NON_HUMAN_HINTS.some(kw => text.includes(kw))) return false;
   return true;
 }
-
-/* ==================================================================
-   安全本地存储写入 —— localStorage.setItem/removeItem 在隐私模式受限、
-   存储被浏览器/企业策略/隐私扩展禁用、或容量超限等场景下会抛异常。这类
-   异常发生在普通 addEventListener 回调里不会崩页面（只会打到控制台），
-   但后果是用户以为设置保存了、实际上悄悄没保存——尤其是 API Key 这种
-   "填一次以后不用再管"的场景，用户看到界面显示"已保存"，刷新后才发现
-   丢了，会很困惑且毫无提示。这里统一包一层，失败时用已有的 toast 系统
-   告诉用户，不再是"看起来保存了、其实没有"。
-   下面所有用户直接触发的设置写入（摇卦频率日志、新手教程已读标记、人设/
-   模型/回复风格/努力程度选择、单价覆盖、API Key、历史记录、终身统计）
-   都改走这两个函数。
-   例外：saveActiveConversation/clearActiveConversationStorage（当前会话
-   自动存档，见对应小节）刻意不走这一层——那是刷新页面用的后台自动存档，
-   原作者已经明确设计为"静默失败即可，不影响当前这次问答本身"，不需要用
-   toast 打扰用户，这里保留原设计判断，没有改动那两个函数。
-   ================================================================== */
-function safeGetItem(key){try{return localStorage.getItem(key);}catch(e){return null;}}
-function safeSetItem(key, val){
-  try{
-    localStorage.setItem(key, val);
-    return true;
-  }catch(e){
-    showToast(`设置没能保存到本地（${(e && e.message) || '存储失败'}），可能是隐私模式或存储空间限制`, 'error');
-    return false;
-  }
-}
-function safeRemoveItem(key){
-  try{
-    localStorage.removeItem(key);
-    return true;
-  }catch(e){
-    showToast(`清除本地设置失败（${(e && e.message) || '存储失败'}），可能是隐私模式限制`, 'error');
-    return false;
-  }
-}
-
-/* ==================================================================
-   摇卦前置校验 —— 呼应传统六爻两条基本规矩：
-   1)"一事不问二卦"：同一件事只起一次卦，反复摇卦骗自己的结果不算数
-   2) 短时间内不宜连续摇很多卦（心诚则灵），做一个简单的频率限制
-   ================================================================== */
-const LS_KEY_CAST_LOG = 'liuyao_cast_log';
-const CAST_COOLDOWN_WINDOW_MS = 10 * 60 * 1000; // 10 分钟窗口
-const CAST_COOLDOWN_MAX = 3;                    // 窗口内最多摇 3 次
-
-function loadCastLog(){
-  try{ const v=JSON.parse(safeGetItem(LS_KEY_CAST_LOG) || '[]'); return Array.isArray(v)?v.filter(t=>Number.isFinite(t)&&t<=Date.now()):[]; }
-  catch(e){ return []; }
-}
-function pruneCastLog(log){
-  const now = Date.now();
-  return log.filter(ts => now - ts < CAST_COOLDOWN_WINDOW_MS);
-}
-function logCastEvent(){
-  const log = pruneCastLog(loadCastLog());
-  log.push(Date.now());
-  safeSetItem(LS_KEY_CAST_LOG, JSON.stringify(log));
-  renderCastQuota(); // 每次真正占用一次摇卦名额，顺手刷新一下常驻的"还剩几次"提示
-}
-function castsRemainingInWindow(){
-  return Math.max(CAST_COOLDOWN_MAX - pruneCastLog(loadCastLog()).length, 0);
-}
 // 常驻显示"10分钟窗口内还能摇几次"，不用等点击被拦下才知道有这个限制。
 // 用 getElementById 现查而不是顶层 const，是因为这个函数在DOM元素定义之前就已经声明，
 // 调用时（页面初始化/每次摇卦后）DOM早就ready了，没有先后顺序问题。
@@ -478,9 +422,9 @@ async function guardBeforeCast(opts = {}){
     // （currentConversation 等），没碰 window.lastCastData / lastCastQuestion，
     // 导致用户就算把问题框里的字删光，这两个变量依然停在"上一卦"的值上，一摇卦立刻又撞上
     // 同一条拦截逻辑——不清掉这两个变量，这条老毛病换个壳还会再犯一次。
-    if(castMode === 'manual' && !background) window.lastCastData = null;
-    if(castMode === 'manual' && !background) window.lastCastQuestion = '';
-    if(!skipCastConfirm && castMode === 'manual' && !background){
+    if(state.castMode === 'manual' && !background) window.lastCastData = null;
+    if(state.castMode === 'manual' && !background) window.lastCastQuestion = '';
+    if(!skipCastConfirm && state.castMode === 'manual' && !background){
       // 只有"摇卦"/"生成排盘"这种不一定跟问题绑定、可以直接重摇的场景，才顺手清空问题框
       // （呼应罗士程的建议：点另一卦的同时直接消去这里的文本）；"AI 解读"/"输出提示词"走
       // skipCastConfirm 这条分支时，输入框里的文字就是用户马上要问的新问题，不能跟着清掉。
@@ -491,7 +435,7 @@ async function guardBeforeCast(opts = {}){
       }
     }
   }
-  if(castMode === 'manual' && !background) logCastEvent();
+  if(state.castMode === 'manual' && !background) logCastEvent();
   return true;
 }
 
@@ -678,7 +622,7 @@ const manualCastPanel = document.getElementById('manualCastPanel');
 const manualLinesWrap = document.getElementById('manualLines');
 const manualCastBtn = document.getElementById('manualCastBtn');
 
-let castMode = 'system'; // 'system' | 'manual'
+ // 'system' | 'manual'
 
 const MANUAL_LINE_LABELS = ['初爻','二爻','三爻','四爻','五爻','上爻'];
 const MANUAL_LINE_OPTIONS = [
@@ -715,7 +659,7 @@ function buildManualLinesUI(){
   for(let idx = 0; idx < 6; idx++){
     document.getElementById(`manualLine${idx}`).addEventListener('change', ()=>{
       manualLineTouched[idx] = true;
-      if(castMode === 'manual') renderManualPreview();
+      if(state.castMode === 'manual') renderManualPreview();
     });
   }
 }
@@ -724,16 +668,16 @@ buildManualLinesUI();
 castModeToggle.addEventListener('click', (e)=>{
   const btn = e.target.closest('.mode-btn');
   if(!btn) return;
-  castMode = btn.dataset.mode;
+  state.castMode = btn.dataset.mode;
   [...castModeToggle.querySelectorAll('.mode-btn')].forEach(b => b.classList.toggle('active', b === btn));
-  systemCastPanel.style.display = castMode === 'system' ? '' : 'none';
-  manualCastPanel.style.display = castMode === 'manual' ? '' : 'none';
+  systemCastPanel.style.display = state.castMode === 'system' ? '' : 'none';
+  manualCastPanel.style.display = state.castMode === 'manual' ? '' : 'none';
   // 切到"线下摇卦"时顺手刷新一次预览——但只在右边此刻还没有一份"摇卦/生成排盘"摇出来的
   // 真实结果时才刷（判断依据：.plate下唯一的子元素还是最初的占位提示文字，或者就是
   // 我们自己这份预览本身）。如果右边正摆着一份真实结果，说明用户是切过去核对/对比的，
   // 不该被一次单纯的切标签页动作顶掉；真要重填，用户改动某一个下拉框（上面的change
   // 监听）就会顶替它，那才是"我要重新填一次"的明确信号。
-  if(castMode === 'manual' && plateWrap.querySelector('.placeholder, .manual-preview-partial, .manual-preview-complete')){
+  if(state.castMode === 'manual' && plateWrap.querySelector('.placeholder, .manual-preview-partial, .manual-preview-complete')){
     renderManualPreview();
   }
 });
@@ -844,7 +788,7 @@ manualCastBtn.addEventListener('click', async ()=>{
 });
 
 function renderPlate(lines, source='system'){
-  const {cast,lineData} = calculateCast(lines,source,resolveCastCalendar(),daySelectionMode);
+  const {cast,lineData} = calculateCast(lines,source,resolveCastCalendar(),state.daySelectionMode);
   const {lines:structuredLines,guaName,bianGuaName,palaceText,lowerUpperText,dateText,fourPillarsText,kongText,overallTrendText} = cast;
   let rowsHtml = '';
   for(let pos=5; pos>=0; pos--){ // display top(6) to bottom(1)
@@ -938,8 +882,8 @@ function renderPlate(lines, source='system'){
   // 换了新卦这三个框和 lastExportCastText/lastExportQuestion 全部过期，必须一起清掉，
   // 否则会出现提示词框还停在旧卦、或者"生成追问提示词"悄悄拼进旧卦数据的错位。
   if(typeof hidePromptExportBoxes === 'function'){ hidePromptExportBoxes(); }
-  if(typeof lastExportCastText !== 'undefined'){ lastExportCastText = null; }
-  if(typeof lastExportQuestion !== 'undefined'){ lastExportQuestion = null; }
+  if(typeof state.lastExportCastText !== 'undefined'){ state.lastExportCastText = null; }
+  if(typeof state.lastExportQuestion !== 'undefined'){ state.lastExportQuestion = null; }
 }
 
 // ---- 从已保存的结构化排盘数据（不是原始摇出的六个铜钱结果）重建排盘表格 ----
@@ -1081,7 +1025,7 @@ const confirmCancelBtn = document.getElementById('confirmCancelBtn');
 // 监听器——用户看到的是第二个弹层的文字，但点一下"确定"会同时把两个 Promise 都 resolve(true)，
 // 相当于用户没看到、也没确认过的第一个决定被顺带"点头"了。这里用一条 Promise 链把
 // showConfirm 的调用强制排队、同一时间只弹一个，从根上避免这种串线。
-let confirmChain = Promise.resolve();
+
 function showConfirm(message, opts = {}){
   const { title = '确认', okText = '确定', cancelText = '取消' } = opts;
   const run = () => new Promise(resolve=>{
@@ -1121,8 +1065,8 @@ function showConfirm(message, opts = {}){
   });
   // 排到当前链的后面：不管前一个弹层是"确定"还是"取消"结束，都等它彻底 cleanup() 完了、
   // 弹层关掉之后，才轮到这一次的 run() 真正弹出来，两次调用之间不会共享 DOM/监听器。
-  const result = confirmChain.then(run);
-  confirmChain = result.catch(()=>{}); // 保底：万一某次 run() 异常，也不能让后面排队的永远卡住
+  const result = state.confirmChain.then(run);
+  state.confirmChain = result.catch(()=>{}); // 保底：万一某次 run() 异常，也不能让后面排队的永远卡住
   return result;
 }
 
@@ -1135,7 +1079,7 @@ const onboardCloseBtn = document.getElementById('onboardCloseBtn');
 const helpFab = document.getElementById('helpFab');
 const onboardScroll = document.getElementById('onboardScroll');
 const onboardFade = document.getElementById('onboardFade');
-let onboardPreviouslyFocused = null;
+
 
 // 内容区滚动到底（或者内容本来就没超过可视高度）时，把底部渐隐提示淡出——
 // 已经没有更多内容可看了，不用再暗示"下面还有"。留2px余量，避免小数像素误差导致
@@ -1156,7 +1100,7 @@ function onOnboardOverlayClick(e){
   if(e.target === onboardOverlay) closeOnboard();
 }
 function openOnboard(){
-  onboardPreviouslyFocused = document.activeElement;
+  state.onboardPreviouslyFocused = document.activeElement;
   onboardOverlay.style.display = 'flex';
   if(onboardScroll){ onboardScroll.scrollTop = 0; }
   updateOnboardFade();
@@ -1168,10 +1112,10 @@ function closeOnboard(){
   onboardOverlay.style.display = 'none';
   document.removeEventListener('keydown', onOnboardKeydown);
   onboardOverlay.removeEventListener('click', onOnboardOverlayClick);
-  if(onboardPreviouslyFocused && typeof onboardPreviouslyFocused.focus === 'function'){
-    onboardPreviouslyFocused.focus();
+  if(state.onboardPreviouslyFocused && typeof state.onboardPreviouslyFocused.focus === 'function'){
+    state.onboardPreviouslyFocused.focus();
   }
-  onboardPreviouslyFocused = null;
+  state.onboardPreviouslyFocused = null;
 }
 
 if(!safeGetItem(ONBOARD_KEY)){
@@ -1188,144 +1132,16 @@ if(onboardScroll){
   // 跟着重新算一次，不然提示可能在不该出现的时候还留着。
   window.addEventListener('resize', updateOnboardFade);
 }
-
-/* ==================================================================
-   AI 解卦 —— 对应桌面版 config.py / settings.py / ai_interpret.py
-   全部逻辑跑在浏览器里，Key 存 localStorage，不经过任何自建后端。
-   ================================================================== */
-
-// ---- 对应 config.py ----
-const ROLE_PRESETS = {
-  classic: `
-角色：精通六爻纳甲的卜者
-背景：手上摸爻断卦多年，走的是纳甲这一路的实战断法，靠的是卦理和干支生克，不是安慰话术堆出来的场面功夫。
-擅长方向：六爻起卦、姻缘、财运、事业、考试仕途、择日等各种大小事，
-尤其擅长把卦理落到"接下来会怎么走""什么时候""要注意什么"这种能实际用上的判断上，不停留在空泛的吉凶定性。
-
-性格与说话习惯：
-- 不绕弯子、不堆套话，一句话能讲明白的不说两句；
-- 吉卦不刻意讨好，凶卦不回避，该怎么断就怎么断，不含糊其辞两头讨好；
-- 胜负走势之外的具体数字、或卦理本身够不着的细节，直接说明这一步的局限，不回避、也不硬编数字撑场面；
-- 常用"这一爻""这个用神"之类贴近排盘原文的说法，让判断听得出是从卦上实打实推出来的；
-- 该提醒的风险直说，但不恐吓、不夸大，不为了显得"神"而故弄玄虚、卖关子。
-`.trim(),
-  sharp: `
-角色：断卦极快极准、惜字如金的六爻纳甲卜者
-擅长方向：六爻起卦、姻缘、财运、事业、考试仕途、择日等各种大小事。
-性格与说话习惯：
-- 不铺垫、不寒暄，一开口就是重点，能一句话说完的判断绝不拆成两句；
-- 吉凶明明白白，不打太极，问什么答什么，不主动扩展没被问到的方面；
-- 语气冷静克制，不带情绪起伏，像是见惯了各种卦、什么都断过的老手，不会因为卦不好就多说安慰话。
-`.trim(),
-  warm: `
-角色：亲切耐心的六爻纳甲卜者
-擅长方向：六爻起卦、姻缘、财运、事业、考试仕途、择日等各种大小事。
-性格与说话习惯：
-- 说话温和，像在跟熟识的朋友聊天，会顾及提问者的情绪，但不会为了顺耳而扭曲判断本身；
-- 断得直，但语气上会多一分体谅：遇到不利的卦，先把道理讲清楚，再给能让人踏实下来的具体建议；
-- 不刻意渲染吉凶去博眼球，也不为了让人安心而夸大好的一面，尽量让人听完既明白怎么回事，又不至于太焦虑。
-`.trim(),
-  plain: `
-角色：不爱掉书袋、专说人话的六爻卜者
-背景：断卦几十年，早就懒得端着"卜者"架子甩术语，习惯拿菜市场、麻将桌、开车走路、炒菜种地这些谁都懂的日常场景打比方，把卦理直接"翻译"成大白话讲给人听。
-擅长方向：六爻起卦、姻缘、财运、事业、考试仕途、择日等各种大小事。
-性格与说话习惯：
-- 张口就是大白话，尽量不甩术语；万一用到一个专门词，立刻拿大白话把它兜住，比如"这个用神，说白了就是这件事里的主角，好比炒菜里那块肉，肉不新鲜，别的配料再好这道菜也白搭"；
-- 爱打比方，且比方紧贴老百姓过日子的场景——买菜、坐公交、打麻将、修车、种地，怎么接地气怎么来，但比方是拿来讲清楚卦理的，不是为了逗乐凑数：每打一个比方，后面都得能指回具体是哪一爻、哪个干支在起作用，让人听完不光乐了，还真明白了道理；
-- 语气像楼下摆摊多年的老师傅，唠嗑感强，偶尔带点"哎呦""你听我这么跟你说"这类口头禅，但唠归唠，该收住的地方立刻收住，不东拉西扯；
-- 好懂不等于好糊弄：吉是吉，凶是凶，比喻用得再花，底下那句判断必须是从卦上实打实推出来的，不能为了让人听着舒坦，就把话说得含糊两可、和稀泥。
-`.trim(),
-  bluff: `
-角色：排场十足、气场拉满的六爻卜者，说话带着说书先生的范儿
-背景：走的是江湖摆摊、庙口设坛那一路的排场，惊堂木一拍先声夺人，好像什么都瞒不过这双眼——但这份"唬人"的本事，唬的是气场和铺陈的手法，不是编瞎话；排场底下那句吉凶断语，句句都是从卦爻上真刀真枪推出来的。
-擅长方向：六爻起卦、姻缘、财运、事业、考试仕途、择日等各种大小事。
-性格与说话习惯：
-- 开口先声夺人，爱用排比、感叹、悬念铺陈那一套说书腔调（"你且听我细细道来——""这一卦，非同小可""老夫掐指一算，便知端的"），把气氛先撑起来，营造"神机妙算"的排场；
-- 喜欢把干支、六亲、动爻这些正经术语包装成戏文一样的说法，比如把用神说成"这局戏里的主角"，把动爻说成"棋盘上落下的那颗关键子"，铺陈够了火候，再一锤定音甩出结论；
-- 语气抑扬顿挫、有捧有压，遇上吉卦敢拍着胸脯说"这是天时地利都占全了"，遇上凶卦也敢一声长叹"此局凶险，不可不防"，不藏着掖着，不吞吞吐吐；
-- 排场是嘴上功夫，卦理是压箱底的真本事：无论前面铺陈得多热闹，落到具体判断时，必须清清楚楚点出是哪一爻、哪个六亲、什么旺衰生克撑起这个结论——听着唬人，查起来经得住对——只扯排场不给实据，那是江湖骗子的路数，不是这一门的路数。
-`.trim(),
-  cryptic: `
-角色：惯用半文半白、行话黑话夹杂着讲卦的卜者，说话云山雾罩，像是不肯把话说透
-背景：这一路子不爱直讲，惯用易家自己的黑话切口和半文言腔调，一句话里文白夹杂、隐语迭出，让人得琢磨半天才咂摸出味儿来——但云雾缭绕的只是措辞，藏在字里行间的仍是能对着卦爻验证的实断，不是故弄玄虚的空话。
-擅长方向：六爻起卦、姻缘、财运、事业、考试仕途、择日等各种大小事。
-性格与说话习惯：
-- 说话文白夹杂，好用"但见""此爻""应在""岂料""殊不知"这类半文言连接词，句子结构也刻意拗一拗，不说大白话、不直来直去；
-- 偏爱易家切口式的说法去指代六亲生克，比如把"月建生用神"说成"提纲照拂、得月气相扶"，把"日辰冲克"说成"日辰一冲，根基便动"，术语用得密，寻常人得多咂摸两遍才懂；
-- 惯用隐语、留白、欲言又止的腔调制造"深不可测"的味道，先绕一圈典故或卦理渊源，把节奏放慢、把话说得曲折，但这只是嘴上的姿态——"按下不表"是暂时卖个关子，不是真的不说，最后必须把吉凶结论清清楚楚点破，不许拿"天机不可泄露""此事难言""恕不能明说"这类话当挡箭牌，绕到最后却什么实质判断都没落地；
-- 云雾是裹在外面的壳，内核不能空：任何一句让人"看不懂"的黑话，拆开都必须能落回具体是哪一爻在动、哪个六亲当令、哪支干支生克——这层文言黑话是包装，不是拿来蒙混过关、逃避给出可验证判断的挡箭牌；该断的吉凶、该点的爻位干支，一个都不能少；欲言又止可以体现在过程的节奏和措辞上，但落到最后一句结论，吉是吉、凶是凶，必须明明白白说透，不许真把结论本身也"留白"掉。
-`.trim(),
-};
-
-// ---- 人设选择：存 localStorage，读取时优先用用户选的，没选过就用 classic 默认档 ----
-const LS_KEY_ROLE = 'liuyao_role_choice';       // 'classic' | 'sharp' | 'warm' | 'plain' | 'bluff' | 'cryptic' | 'custom'
-const LS_KEY_CUSTOM_ROLE = 'liuyao_custom_role';
-function loadRoleChoice(){ return safeGetItem(LS_KEY_ROLE) || 'classic'; }
-function saveRoleChoice(v){ safeSetItem(LS_KEY_ROLE, v); }
-function loadCustomRole(){ return safeGetItem(LS_KEY_CUSTOM_ROLE) || ''; }
-function saveCustomRole(v){ safeSetItem(LS_KEY_CUSTOM_ROLE, v); }
 function currentRoleInfo(){
   const choice = loadRoleChoice();
   if(choice === 'custom') return loadCustomRole().trim() || ROLE_PRESETS.classic;
   return ROLE_PRESETS[choice] || ROLE_PRESETS.classic;
 }
-
-// ---- 语气/格式示范（One-Shot）：目前只给 classic 人设配了一份示范，用来对齐语气、
-// 篇幅、时辰括注和干支日的写法。这段解卦正文用的是"地泽临，二爻动，变地雷复"这一卦例，
-// 卦名推演（坤宫二世卦）、纳甲干支（丁卯/庚寅，按京房纳甲口诀逐爻核对）、六亲归属
-// （坤宫属土，卯寅木克土定为官鬼）、进退神（卯化寅为退神）、空亡（癸亥日属甲寅旬，
-// 旬空子丑）、十二长生用词（亥为水旺本气而非水之长生，避免与长生位混淆）都已按纳甲/
-// 八宫世应/空亡这几套规则手工逐条重新推导过一遍，彼此自洽、没有发现矛盾。
-// 但这终究是拿一套形式规则自洽性做的核对，不等于真懂六爻实战的人从断卦逻辑、取象
-// 是否精当的角度审过——涉及的又是求职跳槽这种会被当真用来做决定的问题，正式启用前，
-// 最好还是找懂行的人再过一遍，并观察一段时间效果，再考虑要不要给其余人设各配一份。
-// 如果暂时不想用这份示范，把 ROLE_ONE_SHOT_EXAMPLES 里对应的 key 删掉或清空即可，
-// currentOneShotExample() 会自动回退成空字符串，不影响 buildSystemPrompt 其余部分。
-const ROLE_ONE_SHOT_EXAMPLES = {
-  classic: `
-你问的这桩求职跳槽事，卦起地泽临，二爻老阳发动，变出地雷复。
-
-测前程用官鬼爻做用神。二爻官鬼卯木正好持世且自身发动，说明对方意向明确，这纸邀约能落地。丁酉月金旺本克世爻卯木，好在临癸亥日，亥水生扶世爻，绝处逢生，短期内必有正式通知。
-
-病根在变爻：卯木动而化出庚寅木，同属木却由进转退，是标准的化退神。官鬼化退，世爻随之化退，意味着事情表面定得下来，一入职后劲不足——或是待遇打折，或是核心业务实权仍握在旧人手里，给你的只是虚衔。
-
-故此卦走向清楚：去能去成，但先甘后苦、进锐退速，难有长久展拓。
-
-甲寅日寅卯时（3-7点）间会见分晓，届时务必逐条核对薪酬与权责，条件落差太大宁可另寻良机，不必勉强。
-`.trim(),
-};
 function currentOneShotExample(){
   const choice = loadRoleChoice();
   if(choice === 'custom') return '';
   return ROLE_ONE_SHOT_EXAMPLES[choice] || '';
 }
-
-// ---- 人设的展示短名 + 一句话说明，跟 ROLE_PRESETS 分开单独维护 ----
-// 短名（ROLE_LABELS）主要给"历史记录"标注用：以前历史记录不存当次用的是哪个人设，
-// 人设从三档加到六档之后这个问题更明显——回看一条通篇黑话/说书腔的旧记录，
-// 光凭正文完全猜不出当时选的是哪一档，容易被误当成AI瞎跑偏。appendHistory时把这里
-// 取到的短名存进记录，renderHistory再读出来标一下，跟正文内容脱钩，就算以后
-// ROLE_PRESETS里的人设描述文字改了，旧记录标注的还是当时选的那个档位名字，不会跟着变。
-// 一句话说明（ROLE_HINTS）给设置面板下拉框用：六个人设光看"说书先生排场""半文言黑话"
-// 这种名字，选之前不一定能准确预期是什么味道，选中后在下面展示一行说明。
-const ROLE_LABELS = {
-  classic: '沉稳直断',
-  sharp: '犀利简练',
-  warm: '温和体贴',
-  plain: '大白话唠嗑',
-  bluff: '说书先生排场',
-  cryptic: '半文言黑话',
-  custom: '自定义人设',
-};
-const ROLE_HINTS = {
-  classic: '不绕弯子、不堆套话，想清楚了直接给判断，语气沉稳有底气。',
-  sharp: '不铺垫不寒暄，一开口就是重点，问什么答什么。',
-  warm: '语气温和像跟熟人聊天，断得照样直，只是多一分体谅。',
-  plain: '拿菜市场、麻将桌这类日常场景打比方讲卦理，好懂不糊弄。',
-  bluff: '说书先生排场，排比悬念铺陈拉满，铺够了火候再一锤定音。',
-  cryptic: '半文言黑话，隐语留白、云山雾罩，但结论照样点透。',
-  custom: '按你下面填的说明来，想要什么味道自己写。',
-};
 function currentRoleLabel(){
   return ROLE_LABELS[loadRoleChoice()] || ROLE_LABELS.classic;
 }
@@ -1335,80 +1151,6 @@ function currentRoleLabel(){
 // 内置六档不需要（它们的文字是代码里固定的，不会变，标签本身就够用）。
 function currentRoleCustomSnapshot(){
   return loadRoleChoice() === 'custom' ? loadCustomRole().trim() : '';
-}
-
-const REPLY_STYLE_PRESETS = {
-  brief: `
-语气：亲切、专业、不啰嗦，像懂行的卜者当面跟你说话，不是在写讲义，不要有"作为AI"这类表述。
-篇幅控制在300-400字，按这个顺序说：
-① 先给明确的判断——这件事大方向是吉是凶、走向如何，别绕弯子；
-② 用一两句话点出这个判断是从哪个六亲、哪里的旺衰生克看出来的，不用展开完整推演过程；
-③ 最后给一句能落地的建议或提醒。
-只抓住最关键的一条线讲透，不用追求面面俱到；自然口语化，不分点、不加粗、不用小标题。
-`.trim(),
-  deep: `
-语气：亲切、专业，像懂行的卜者当面细说，不要有"作为AI"这类表述。
-下面这几件事要说清楚，但不用死卡着编号顺序讲、也不用每次都用相同的句式开头：
-① 这一卦用哪个六亲做用神、为什么选它；
-② 这个用神在当前月令、日辰下是旺是衰，有没有被生被克、逢合逢冲；
-③ 结合动爻和变卦，事情接下来会怎么走、有没有转折点；
-④ 明确的吉凶结论和具体可执行的建议——该提醒什么风险、该抓住什么时机，都点出来。
-每一步判断都落在具体的爻、干支或五行上，让人能对照排盘看懂"为什么这么断"，不要说"运势不错"这种没有依据的空话。
-篇幅700-800字左右，写到位即可，不必为凑字数堆废话；自然口语化，允许分段展开，但不用分点符号、不用小标题。
-不同的卦要让人读出是不同的卦断出来的：具体先讲哪一点、用什么话起笔、结论怎么措辞，都跟着这一卦的实际干支生克走，
-不要套用一套固定的开场句式或者结论句式去装不同的卦，读起来不能像是把同一篇模板换了几个字重新填一遍。
-`.trim(),
-};
-
-// 推理档位：控制 AI 后台想多深、token 上限多少（跟上面"回复风格"管的字数/语气是两码事）
-const EFFORT_PRESETS = {
-  high: { reasoning_effort: 'high', max_tokens: 12000 },
-  max:  { reasoning_effort: 'max',  max_tokens: 32000 },
-};
-
-const SAFETY_BASELINE = `涉及命理解读内容，务必认真对待、给出实质判断，不要含糊敷衍、不要在能给出判断的地方
-各种"可能""或许"来回摇摆；但如果问题本身已经超出六爻纳甲能验证的范围（比如精确比分、
-具体数字），如实说明这一步的方法论边界，这不算含糊敷衍。仍要遵守上面的篇幅与语气要求，
-且不能与【核心原则】中固定下来的依据相矛盾。`;
-
-const DEEPSEEK_BASE_URL = 'https://api.deepseek.com';
-
-// ---- 模型选择：'deepseek-flash' | 'deepseek-v4-pro'，存 localStorage，默认走 Flash ----
-// V4-Pro 正式版（V4-Pro-0813）已于 2026-08-13 GA，但 Flash 依然便宜得多（约1/3价），
-// 日常问卦精度够用，所以默认继续给 Flash；想要更准的解读可以在设置里手动切到 Pro。
-const LS_KEY_MODEL = 'liuyao_deepseek_model';
-function loadModelChoice(){const v=safeGetItem(LS_KEY_MODEL);return v==='deepseek-v4-pro'?v:'deepseek-flash';}
-function saveModelChoice(v){ safeSetItem(LS_KEY_MODEL, v); }
-
-// 元/百万 tokens，2026-09-15 核对官方定价。Flash 已升级 V4.1，旧 id 会路由到新模型。
-// https://api-docs.deepseek.com/zh-cn/quick_start/pricing/
-// 周一至周五北京时间 9–12、14–18 为高峰，其余时段半价；用户覆盖价仍优先。
-const PRICE_TABLES = {
-  'deepseek-flash': {
-    offpeak: { hit: 0.02,  miss: 1, output: 4 },
-    peak:    { hit: 0.04,  miss: 2, output: 8 },
-  },
-  'deepseek-v4-pro': {
-    offpeak: { hit: 0.15,  miss: 4.5, output: 13.5 },
-    peak:    { hit: 0.30,  miss: 9,   output: 27   },
-  },
-};
-
-// ---- 计价单价隐患兜底：DeepSeek 调价不会报错、只会让上面 PRICE_TABLES 悄悄算错账，
-// 这里允许用户在"设置"里手动填入新单价覆盖内置默认值，存在 localStorage，读取时优先生效。
-// 只覆盖用户真正填了的字段，没填的字段继续吃内置默认值，避免半填一半清零。
-const LS_KEY_PRICE_OVERRIDE = 'liuyao_price_override';
-function loadPriceOverride(){
-  try{
-    const raw = JSON.parse(safeGetItem(LS_KEY_PRICE_OVERRIDE) || 'null');
-    return (raw && typeof raw === 'object') ? raw : null;
-  }catch(e){ return null; }
-}
-function savePriceOverride(partial){
-  safeSetItem(LS_KEY_PRICE_OVERRIDE, JSON.stringify(partial));
-}
-function clearPriceOverride(){
-  safeRemoveItem(LS_KEY_PRICE_OVERRIDE);
 }
 function effectivePriceTable(){
   const base = PRICE_TABLES[loadModelChoice()] || PRICE_TABLES['deepseek-flash'];
@@ -1430,84 +1172,11 @@ function isBeijingPeakHour(date){
   if(beijingDay === 0 || beijingDay === 6) return false; // 周末全天按闲时算：2026-08-23起生效的规则（见上方PRICE_TABLES注释），不是从最初的峰谷定价就有
   return (beijingHour >= 9 && beijingHour < 12) || (beijingHour >= 14 && beijingHour < 18);
 }
-
-// ---- 对应 settings.py（本地存储）----
-const LS_KEY_API = 'liuyao_deepseek_api_key';
-const LS_KEY_STYLE = 'liuyao_reply_style';       // 'brief' | 'deep' | 'custom'
-const LS_KEY_CUSTOM_STYLE = 'liuyao_custom_style';
-const LS_KEY_EFFORT = 'liuyao_reply_effort';     // 'high' | 'max'
-const LS_KEY_HISTORY = 'liuyao_interpret_history';
-const HISTORY_MAX = 200;
-
-function loadApiKey(){ return safeGetItem(LS_KEY_API) || ''; }
-function saveApiKey(k){ safeSetItem(LS_KEY_API, k); }
-function clearApiKey(){ safeRemoveItem(LS_KEY_API); }
 function maskApiKey(k){
   if(!k) return '';
   if(k.length <= 8) return '•'.repeat(k.length);
   return k.slice(0,3) + '•'.repeat(Math.max(k.length - 7, 4)) + k.slice(-4);
 }
-
-function loadHistory(){
-  try{ const v=JSON.parse(safeGetItem(LS_KEY_HISTORY) || '[]'); return Array.isArray(v)?v.filter(r=>r&&typeof r==='object'):[]; }
-  catch(e){ return []; }
-}
-function saveHistory(list){
-  safeSetItem(LS_KEY_HISTORY, JSON.stringify(list.slice(-HISTORY_MAX)));
-}
-function appendHistory(record){
-  const list = loadHistory();
-  list.push(record);
-  saveHistory(list);
-  return list;
-}
-
-// ---- 终身累计消费统计：跟"历史记录列表"完全脱钩，不受 HISTORY_MAX 裁剪影响 ----
-// 背景：renderStats() 原来直接从 loadHistory() 现算总花费/总token——但历史记录超过
-// HISTORY_MAX(200) 条后，saveHistory() 会静默裁掉最老的记录，连带着那些记录的
-// costYuan/totalTokens 也从"累计"里消失，导致界面上显示的金额会随着历史被裁剪而"缩水"，
-// 跟用户实际花掉的钱对不上。这里单独开一个不参与裁剪的计数器，只在每次真正拿到完整
-// token用量（callDeepSeekRaw 成功返回、非中断请求）时累加一次，从此不再依赖历史记录
-// 还剩几条，是真正意义上"从第一次用到现在"的总额。
-const LS_KEY_LIFETIME_STATS = 'liuyao_lifetime_stats';
-function loadLifetimeStats(){
-  try{
-    const raw = JSON.parse(safeGetItem(LS_KEY_LIFETIME_STATS) || 'null');
-    if(raw && typeof raw === 'object'){
-      return { cost: raw.cost || 0, tokens: raw.tokens || 0 };
-    }
-  }catch(e){}
-  // 终身计数器从没被写过（比如这个功能是后加的，用户手里已经攒了一批老历史记录）：
-  // 从现有历史记录里补算一次初始值再写回去，避免顶部统计和下面历史列表的数字对不上、
-  // 显得"明明有历史记录，顶部却是0"。之后每次新解读走 addLifetimeUsage() 正常往上加，
-  // 不会重复计入这次补算的部分。
-  try{
-    const hist = loadHistory();
-    let cost = 0, tokens = 0;
-    hist.forEach(r=>{ cost += (r.costYuan||0); tokens += (r.totalTokens||0); });
-    const seeded = { cost, tokens };
-    safeSetItem(LS_KEY_LIFETIME_STATS, JSON.stringify(seeded));
-    return seeded;
-  }catch(e){}
-  return { cost: 0, tokens: 0 };
-}
-function addLifetimeUsage(costYuan, totalTokens){
-  if(!costYuan && !totalTokens) return; // 中断请求两个值都是0，不用为此写一次空操作
-  const cur = loadLifetimeStats();
-  cur.cost += (costYuan || 0);
-  cur.tokens += (totalTokens || 0);
-  safeSetItem(LS_KEY_LIFETIME_STATS, JSON.stringify(cur));
-}
-function clearLifetimeStats(){
-  safeRemoveItem(LS_KEY_LIFETIME_STATS);
-}
-
-function loadStyleChoice(){ return safeGetItem(LS_KEY_STYLE) || 'brief'; }
-function saveStyleChoice(v){ safeSetItem(LS_KEY_STYLE, v); }
-function loadCustomStyle(){ return safeGetItem(LS_KEY_CUSTOM_STYLE) || ''; }
-function saveCustomStyle(v){ safeSetItem(LS_KEY_CUSTOM_STYLE, v); }
-function loadEffortChoice(){ return safeGetItem(LS_KEY_EFFORT) || 'max'; }
-function saveEffortChoice(v){ safeSetItem(LS_KEY_EFFORT, v); }
 function currentEffortPreset(){ return EFFORT_PRESETS[loadEffortChoice()] || EFFORT_PRESETS.max; }
 
 function currentReplyStyle(){
@@ -1515,13 +1184,6 @@ function currentReplyStyle(){
   if(choice === 'custom') return loadCustomStyle().trim();
   return REPLY_STYLE_PRESETS[choice] || REPLY_STYLE_PRESETS.brief;
 }
-
-// ---- 回复风格的展示短名，跟上面 ROLE_LABELS 同一个用途：给历史记录标注当次用的哪档风格 ----
-const REPLY_STYLE_LABELS = {
-  brief: '精简',
-  deep: '深究',
-  custom: '自定义风格',
-};
 function currentReplyStyleLabel(){
   return REPLY_STYLE_LABELS[loadStyleChoice()] || REPLY_STYLE_LABELS.brief;
 }
@@ -1529,33 +1191,12 @@ function currentReplyStyleLabel(){
 function currentStyleCustomSnapshot(){
   return loadStyleChoice() === 'custom' ? loadCustomStyle().trim() : '';
 }
-
-// ---- 十二时辰 → 现代计时对照，用于给AI回复里出现的"xx时"自动追加时间范围括注
-// （比如"酉时"自动变成"酉时（17-19点）"）。很多人对十二时辰不熟，加个括注更好懂。
-// 用正则在客户端做，不指望AI自己记得每次都标，更保险；用了负向先行断言(?!（)防止
-// 重复处理同一段文字时被annotate两遍（万一以后哪里不小心调用了两次）。
-const SHICHEN_HOUR_MAP = {
-  '子': '23-1点', '丑': '1-3点',  '寅': '3-5点',  '卯': '5-7点',
-  '辰': '7-9点',  '巳': '9-11点', '午': '11-13点', '未': '13-15点',
-  '申': '15-17点','酉': '17-19点','戌': '19-21点', '亥': '21-23点',
-};
 function annotateShichen(text){
   return text.replace(/([子丑寅卯辰巳午未申酉戌亥])时(?!（)/g, (matched, branch) => {
     const range = SHICHEN_HOUR_MAP[branch];
     return range ? `${matched}（${range}）` : matched;
   });
 }
-
-// ---- 干支日 → 实际公历日期自动标注（比如"丙戌日"自动变成"丙戌日（8月17日）"）。
-// 跟上面annotateShichen同一个思路，但原因不同：十二时辰只是个固定对照表，AI背下来照抄
-// 基本不会错；"从起卦日往后数下一个丙戌日是几号"是六十甲子模运算，AI心算极不可靠——
-// 间隔一长就容易算错，还照样一本正经甩出一个日期，看着煞有介事，其实是编的，比不算更容易被当真。
-// 所以断卦该应在哪个干支，仍然是AI自己按卦理判断的本职工作，不用管；换算成具体哪天完全
-// 交给代码，用跟"今日日柱""按公历日期反查日柱"同一份getTodayJiaziIndex()逐天试算，
-// 保证不会算错。正则直接用JIAZI60的60个合法干支组合做交替匹配（而不是"任意天干+任意地支"），
-// 天然排除掉"甲丑"这种六十甲子里根本不存在的非法组合，不会误标注。
-// 同样用负向先行断言(?!（)防止重复处理时被annotate两遍。
-const JIAZI60_LABELS_REGEX = new RegExp('(' + JIAZI60.map(d => d.label).join('|') + ')日(?!（)', 'g');
 function annotateGanzhiDay(text){
   const castData = window.lastCastData;
   // 没有起卦锚点（还没摇过卦，或者老会话数据缺这个字段又没能在恢复时补上）就没法换算，原样返回，
@@ -1809,38 +1450,6 @@ function formatCastDataForAI(castData){
     `各爻明细（从初爻到上爻，六亲/世应/空亡已由系统自动标注）：\n${linesText}${trendText}`;
 }
 
-// ---- 提示词导出（对应"输出提示词"按钮）：不经本站配置的DeepSeek API Key，
-// 把 system 提示词（人设+回复风格，来自 buildSystemPrompt）和这一次的 user 提示词
-// （排盘数据+问题，拼法与 interpretWithDeepSeek 里发给DeepSeek的user消息完全一致）
-// 合并成一段人可读的纯文本，供用户复制后粘贴去豆包/Kimi/ChatGPT等任意AI软件的对话框里直接发送。
-// 因为直接调用的是 buildSystemPrompt()，"设置"里选的人设/回复风格改了，这里导出的文本也会跟着变，
-// 不会出现"设置选了A、导出的提示词却还是B"的对不上情况。
-//
-// 和直接调API相比，这段文本会被当成"一整条用户消息"发给对方AI，没有系统角色加持，服从度天然打折扣：
-// 有些模型会先来一句"好的，我来扮演一位六爻卜者"之类的开场白，或者中途插一句"这只是传统文化娱乐"
-// 的免责声明——这是目标AI自己的对齐/风格决定的，提示词写得再细也没法100%杜绝，但可以靠排版技巧
-// 提高它照办的概率：用"========"分隔符把"规则"和"数据"分成两个独立可辨认的区块，并在结尾把
-// "不要前言、不要Markdown"这条最容易被无视的规则再强调一遍（很多模型对靠后的指令权重更高）。
-// ---- 仅供导出文本使用的"联网核实"提示：不放进 buildSystemPrompt，因为那是直连API共用的——
-// 本站直连的DeepSeek Chat Completions接口没有挂载搜索工具，写了也是让模型对着不存在的能力自己编。
-// 但导出的这段文本是给用户复制去豆包/Kimi/DeepSeek官方App/ChatGPT这类"消费级聊天产品"用的，
-// 这些产品的对话框旁边通常自带一个"联网搜索"开关（挂的是真搜索工具），用户如果在对方界面上把
-// 这个开关打开，提示词里提醒它"必要时搜索"就是真的能触发的，所以只在这两个导出函数里加。
-// 措辞刻意留了"仅当你自己有这个能力时"的限定，并且明确说"没有就别装"——
-// 不然遇到对方没开搜索/没有搜索能力的情况，一句硬邦邦的"请联网核实"反而会诱导模型编一个
-// 假装查证过的过程，比不提这件事更糟。
-const EXPORT_SEARCH_HINT = `
-【关于联网核实，仅当你自己具备可调用的联网搜索工具时适用】
-遇到吃不准的专有名词（人名/产品名/公司名等），有搜索能力就先搜索确认再结合卦理作答；没有就按
-提问者给出的场景理解，不要假装搜索或查证过。解卦正文里不主动声明"已核实"，除非某个词有两种
-完全不搭边、会让断卦方向反过来的理解，才需要一句话请对方确认。若提问者事后追问你是否联网核实
-过，必须先如实说清楚有没有（用了/没这能力或没触发），再接着用卜者口吻往下说，不能用"意不诚
-不占"之类卦理说法回避这个事实问题。
-遇到近期会有公开确定结果的具体数字（比分、开奖号、点位等），断语依然干脆，但重心放在"哪一方
-占优、走势如何"这类卦理判断上；要给具体数字时用"卦上落的数是……"，不用"结果一定是……"这种
-担保式断言——即使确实搜到了真实数据，也不能把"资料是真的"偷换成"这个数字有把握"，这是两回事。
-`.trim();
-
 function buildExportPromptText(question, castDataText){
   return `======== 角色设定与回复规则（务必严格遵守，且不要在回复中提及或复述本段说明本身）========\n` +
     `${buildSystemPrompt()}\n\n${EXPORT_SEARCH_HINT}\n` +
@@ -1872,55 +1481,9 @@ function buildExportFollowUpPromptText(question, castDataText, priorAnswerText, 
     `不要输出任何前言、开场白或免责声明，直接从正文开始。`;
 }
 
-// ---- 对话状态：当前这一卦的多轮解读上下文（首次解读 + 若干次追问）----
-// 结构：{ messages: [{role,content}, ...], turns: [{role:'user'|'assistant', text, ts}], cumTokens, cumCost }
-// 会同步持久化进 localStorage（见下面 saveActiveConversation），所以刷新页面后能接着追问；
-// 换卦/换问题/手动清空时会调用 resetConversation() 把内存和存储一起清掉。
-let currentConversation = null;
-// 当前这一卦对应的历史记录条目id——首次解读时生成，追问时用它去更新同一条历史记录，
-// 而不是每追问一次就在历史里新开一条不相关的记录。
-let currentHistorySessionId = null;
-
-// ---- 当前会话的持久化：只存"这一条正在进行中的会话"，跟下面的 liuyao_interpret_history（历史列表）是两回事。
-// 存的是完整 messages（含系统提示词、排盘数据），所以体积比历史记录里单条记录大不少，
-// 但只保留最新这一条（不是每卦都存），换卦/清空时会清掉，不会无限堆积。
-// 这一对函数刻意不套用上面的 safeSetItem/safeRemoveItem（统一 toast 提示）——
-// 这是刷新页面用的后台自动存档，不是用户主动点保存的设置项，失败了用户当下也做不了
-// 什么，弹个 toast 打断反而没必要；下面 catch 里"静默失败即可"是有意的设计选择，
-// 以后改动这两个函数时不要顺手把它们也换成 safeSetItem。
-const LS_KEY_ACTIVE_CONVO = 'liuyao_active_conversation';
-function saveActiveConversation(){
-  if(!currentConversation) return;
-  try{
-    localStorage.setItem(LS_KEY_ACTIVE_CONVO, JSON.stringify({
-      conversation: currentConversation,
-      sessionId: currentHistorySessionId,
-      // 连排盘本身也存一份快照，不然刷新恢复对话后排盘表是空的，
-      // 而且下次点"AI 解读"会因为 lastCastData 为空而悄悄重新摇一卦。
-      castData: window.lastCastData || null,
-      castQuestion: window.lastCastQuestion || '',
-      castTime: window.lastCastTime || null,
-      savedAt: Date.now(),
-    }));
-  }catch(e){
-    // 比如 localStorage 满了/被禁用，静默失败即可——不影响当前这次问答本身，只是刷新后没法恢复
-  }
-}
-function loadActiveConversationFromStorage(){
-  try{ return JSON.parse(safeGetItem(LS_KEY_ACTIVE_CONVO) || 'null'); }
-  catch(e){ return null; }
-}
-function clearActiveConversationStorage(){
-  try{
-    localStorage.removeItem(LS_KEY_ACTIVE_CONVO);
-  }catch(e){
-    // 同上（见 saveActiveConversation 的 catch）：静默失败即可，不影响当前这次操作本身
-  }
-}
-
 function resetConversation(){
-  currentConversation = null;
-  currentHistorySessionId = null;
+  state.currentConversation = null;
+  state.currentHistorySessionId = null;
   followUpBox.style.display = 'none';
   followUpInput.value = '';
   followUpInput.dispatchEvent(new Event('input')); // 同步触发一次，让字数计数器跟着归零
@@ -2090,7 +1653,7 @@ async function interpretWithDeepSeek(question, castDataText, onDelta, signal){
       `排盘数据：\n${castDataText}\n\n提问者的问题是：${question}\n\n请结合以上排盘数据给出解卦回复。` },
   ];
   const result = await callDeepSeekRaw(messages, onDelta, signal);
-  currentConversation = {
+  state.currentConversation = {
     messages: [...messages, { role: 'assistant', content: result.text }],
     turns: [
       { role: 'user', text: question, ts: Date.now() },
@@ -2105,7 +1668,7 @@ async function interpretWithDeepSeek(question, castDataText, onDelta, signal){
 
 // ---- 追问：把新的一句用户输入接到已有 messages 后面，整段历史一起发给AI，不是每次都从头起卦 ----
 async function followUpWithDeepSeek(followUpText, onDelta, signal){
-  if(!currentConversation){
+  if(!state.currentConversation){
     throw new Error('还没有可以追问的解读，先点一次"AI 解读"。');
   }
   const followUpContent =
@@ -2115,13 +1678,13 @@ async function followUpWithDeepSeek(followUpText, onDelta, signal){
   // 重新生成一份系统提示词，替换掉 currentConversation.messages[0] 里那条旧的，
   // 对话历史（用户问/AI答的具体轮次）不受影响，变的只是这条system指令本身。
   const freshSystemMessage = { role: 'system', content: buildSystemPrompt() };
-  const messages = [freshSystemMessage, ...currentConversation.messages.slice(1), { role: 'user', content: followUpContent }];
+  const messages = [freshSystemMessage, ...state.currentConversation.messages.slice(1), { role: 'user', content: followUpContent }];
   const result = await callDeepSeekRaw(messages, onDelta, signal);
-  currentConversation.messages = [...messages, { role: 'assistant', content: result.text }];
-  currentConversation.turns.push({ role: 'user', text: followUpText, ts: Date.now() });
-  currentConversation.turns.push({ role: 'assistant', text: result.text, ts: Date.now(), interrupted: !!result.interrupted });
-  currentConversation.cumTokens += result.totalTokens;
-  currentConversation.cumCost += result.costYuan;
+  state.currentConversation.messages = [...messages, { role: 'assistant', content: result.text }];
+  state.currentConversation.turns.push({ role: 'user', text: followUpText, ts: Date.now() });
+  state.currentConversation.turns.push({ role: 'assistant', text: result.text, ts: Date.now(), interrupted: !!result.interrupted });
+  state.currentConversation.cumTokens += result.totalTokens;
+  state.currentConversation.cumCost += result.costYuan;
   saveActiveConversation();
   return result;
 }
@@ -2134,14 +1697,14 @@ function turnHtml(t){
 
 // ---- 把当前会话已经落定的完整往返渲染出来（不含正在流式输出、还没完成的那一条）----
 function renderConversation(){
-  if(!currentConversation){ aiResult.textContent = ''; return; }
-  aiResult.innerHTML = currentConversation.turns.map(turnHtml).join('');
+  if(!state.currentConversation){ aiResult.textContent = ''; return; }
+  aiResult.innerHTML = state.currentConversation.turns.map(turnHtml).join('');
 }
 
 // ---- 流式文字真正开始吐之前（模型还在思考/推理阶段）调用：显示"正在思考中…Ns"，
 // 秒数跳字跳动，比干等着一个空光标看着更有反馈感。等第一个delta到了就切到 renderLive。----
 function renderThinking(questionText, seconds){
-  const settledHtml = currentConversation ? currentConversation.turns.map(turnHtml).join('') : '';
+  const settledHtml = state.currentConversation ? state.currentConversation.turns.map(turnHtml).join('') : '';
   const liveHtml = `<div class="convo-turn convo-assistant convo-live convo-thinking"><b>答：</b><span class="thinking-dots">正在思考中…</span><span class="thinking-seconds">${seconds}s</span></div>`;
   aiResult.innerHTML = settledHtml + turnHtml({ role: 'user', text: questionText }) + liveHtml;
   aiResult.scrollTop = aiResult.scrollHeight;
@@ -2168,7 +1731,7 @@ function withThinkingIndicator(questionText, onDelta){
 
 // ---- 流式输出过程中调用：已落定的历史轮次 + 这一问 + 正在打字的实时答案，末尾带个闪烁光标 ----
 function renderLive(questionText, liveAnswerText){
-  const settledHtml = currentConversation ? currentConversation.turns.map(turnHtml).join('') : '';
+  const settledHtml = state.currentConversation ? state.currentConversation.turns.map(turnHtml).join('') : '';
   const liveHtml = `<div class="convo-turn convo-assistant convo-live"><b>答：</b>${escapeHtml(annotateGanzhiDay(annotateShichen(liveAnswerText)))}<span class="convo-cursor">▍</span></div>`;
   aiResult.innerHTML = settledHtml + turnHtml({ role: 'user', text: questionText }) + liveHtml;
   aiResult.scrollTop = aiResult.scrollHeight;
@@ -2184,42 +1747,6 @@ function updateHistorySession(sessionId, patch){
   list[idx] = { ...list[idx], ...patch };
   saveHistory(list);
   return true;
-}
-function historyTurnsOf(record){
-  if(Array.isArray(record.turns)) return record.turns;
-  // type==='prompt'（"输出提示词"那条路径写的历史）没有AI回复，只有问题本身，
-  // 不能套老记录那条兼容分支——那样会拼出一条 text=undefined 的空"答"块。
-  if(record.type === 'prompt') return [ { role: 'user', text: record.question, ts: record.ts } ];
-  return [ { role: 'user', text: record.question, ts: record.ts },
-        { role: 'assistant', text: record.text, ts: record.ts } ];
-}
-
-// ---- 历史记录里的排盘快照：只挑排盘本身的几个关键结构化字段存下来——卦名/变卦、宫位、
-// 上下卦、日柱空亡、逐爻明细（六亲/六神/纳甲/五行/状态/世应空亡动标记）——不存"输出提示词"
-// 按钮生成的那一整段人设+回复风格+格式规则的长文本：那段是讲给AI听的"提示词"，不是卦本身
-// 的信息，塞进历史记录里既占地方、回看时也没有意义。这份快照两条写历史的路径共用同一个函数，
-// 保证"AI 解读"和"输出提示词"两条历史记录里看到的排盘信息格式一致。
-function buildHistoryCastSnapshot(castData){
-  if(!castData || !Array.isArray(castData.lines)) return null;
-  return {
-    ganzhi: castData.ganzhi,
-    yearGanzhi: castData.yearGanzhi,
-    monthGanzhi: castData.monthGanzhi,
-    hourGanzhi: castData.hourGanzhi,
-    fourPillarsText: castData.fourPillarsText,
-    kongText: castData.kongText,
-    dateText: castData.dateText,
-    palaceText: castData.palaceText,
-    lowerUpperText: castData.lowerUpperText,
-    dayKongText: castData.dayKongText,
-    guaName: castData.guaName,
-    bianGuaName: castData.bianGuaName,
-    source: castData.source,
-    rulesVersion: castData.rulesVersion, coinConvention: castData.coinConvention,
-    castAnchorY: castData.castAnchorY, castAnchorM: castData.castAnchorM, castAnchorD: castData.castAnchorD,
-    lines: castData.lines,
-    overallTrendText: castData.overallTrendText,
-  };
 }
 
 // ---- 把排盘快照渲染成历史记录展开后排在最上面的一小块摘要，格式贴近网上解卦博主发帖时
@@ -2307,8 +1834,8 @@ const followUpExportCopyRow = document.getElementById('followUpExportCopyRow');
 const copyFollowUpExportBtn = document.getElementById('copyFollowUpExportBtn');
 // 记住"输出提示词"最近一次用的排盘文本和问题，供"生成追问提示词"复用——
 // 导出路径没有 currentConversation 那套多轮状态，只能靠这两个变量单独记一份。
-let lastExportCastText = null;
-let lastExportQuestion = null;
+
+
 const followUpBox = document.getElementById('followUpBox');
 const followUpInput = document.getElementById('followUpInput');
 const followUpCharCounter = document.getElementById('followUpCharCounter');
@@ -2357,12 +1884,12 @@ function hidePromptExportBoxes(){
 
 // ---- 停止生成：同一时间只会有一个流式请求在跑（解读和追问互相锁定按钮），
 // 所以一个 AbortController + 一个共用的停止按钮就够用了。 ----
-let activeAbortController = null;
+
 function showStopBtn(){ stopGenBtn.style.display = 'inline-flex'; }
 function hideStopBtn(){ stopGenBtn.style.display = 'none'; }
 stopGenBtn.addEventListener('click', ()=>{
-  if(activeAbortController){
-    activeAbortController.abort();
+  if(state.activeAbortController){
+    state.activeAbortController.abort();
     stopGenBtn.disabled = true; // 点一下就禁用，避免中断过程中重复点击
   }
 });
@@ -2693,8 +2220,8 @@ window.addEventListener('storage', (e)=>{
 (function restoreActiveConversation(){
   const saved = loadActiveConversationFromStorage();
   if(!saved || !saved.conversation || !Array.isArray(saved.conversation.turns) || !saved.conversation.turns.length) return;
-  currentConversation = saved.conversation;
-  currentHistorySessionId = saved.sessionId || null;
+  state.currentConversation = saved.conversation;
+  state.currentHistorySessionId = saved.sessionId || null;
   // 把当时的排盘也一起恢复出来：既让用户能看到这次对话对应的是哪一卦，
   // 也避免 window.lastCastData 空着导致下次点"AI 解读"时被误判成"没摇过卦"而悄悄重摇。
   if(saved.castData){
@@ -2702,7 +2229,7 @@ window.addEventListener('storage', (e)=>{
   }
   renderConversation();
   aiMeta.textContent =
-    `（已从上次未结束的会话恢复，累计约¥${(currentConversation.cumCost||0).toFixed(4)}，仅供参考，以DeepSeek账单为准）`;
+    `（已从上次未结束的会话恢复，累计约¥${(state.currentConversation.cumCost||0).toFixed(4)}，仅供参考，以DeepSeek账单为准）`;
   copyRow.style.display = 'flex';
   followUpBox.style.display = 'flex';
 })();
@@ -2747,7 +2274,7 @@ function copyTextToClipboard(text){
 }
 
 copyResultBtn.addEventListener('click', ()=>{
-  const turns = currentConversation?.turns || [];
+  const turns = state.currentConversation?.turns || [];
   const lastAnswer = [...turns].reverse().find(t => t.role === 'assistant');
   const textToCopy = lastAnswer ? lastAnswer.text : aiResult.textContent;
   copyTextToClipboard(textToCopy).then(()=>{
@@ -2761,7 +2288,7 @@ copyResultBtn.addEventListener('click', ()=>{
 // ---- 复制全部对话：把首次解读 + 所有追问轮次按"问/答"顺序拼成一段文字一起复制，
 // 不再只有最后一条回复——追问多轮之后想整段留档/转发的场景就靠这个。 ----
 copyAllBtn.addEventListener('click', ()=>{
-  const turns = currentConversation?.turns || [];
+  const turns = state.currentConversation?.turns || [];
   const textToCopy = turns.length
     ? turns.map(t => `${t.role === 'user' ? '问' : '答'}：${t.text}`).join('\n\n')
     : aiResult.textContent;
@@ -2850,11 +2377,11 @@ followUpExportBtn.addEventListener('click', ()=>{
     showToast('先把对方AI上一轮的回复粘贴到上面"整理格式"里', 'error');
     return;
   }
-  if(!lastExportCastText || !lastExportQuestion){
+  if(!state.lastExportCastText || !state.lastExportQuestion){
     showToast('请先点一次"输出提示词"生成初次提示词', 'error');
     return;
   }
-  followUpExportOutput.value = buildExportFollowUpPromptText(lastExportQuestion, lastExportCastText, priorAnswerText, followUpText);
+  followUpExportOutput.value = buildExportFollowUpPromptText(state.lastExportQuestion, state.lastExportCastText, priorAnswerText, followUpText);
   followUpExportOutput.style.display = 'block';
   followUpExportCopyRow.style.display = 'flex';
 });
@@ -2967,9 +2494,9 @@ interpretBtn.addEventListener('click', async (event)=>{
     // null，后续追问会拿着这个 null 去 updateHistorySession() 找记录，永远找不到匹配项，
     // 追问内容就悄悄没能存进历史（且不会报错提示），历史记录里就只剩最初那一问一答，
     // 后面继续追问的内容全部看不到。
-    currentHistorySessionId = Date.now();
+    state.currentHistorySessionId = Date.now();
     const controller = new AbortController();
-    activeAbortController = controller;
+    state.activeAbortController = controller;
     stopGenBtn.disabled = false;
     showStopBtn();
     const thinking = withThinkingIndicator(question, (delta, fullSoFar)=>{
@@ -2982,7 +2509,7 @@ interpretBtn.addEventListener('click', async (event)=>{
       result = await interpretWithDeepSeek(question, castText, thinking.onDelta, controller.signal);
     }finally{
       thinking.stop(); // 保底：万一中途出错/被中断，没等到第一个delta，也要把跳秒计时器停掉
-      activeAbortController = null;
+      state.activeAbortController = null;
       hideStopBtn();
     }
     renderConversation();
@@ -2998,14 +2525,14 @@ interpretBtn.addEventListener('click', async (event)=>{
     // 不该把下面"完成"的状态和提示覆盖成报错，让用户误以为这次白问了、回去重新问一遍。
     try{
       appendHistory({
-        id: currentHistorySessionId,
-        ts: currentHistorySessionId,
+        id: state.currentHistorySessionId,
+        ts: state.currentHistorySessionId,
         type: 'ai',
         question,
         cast: buildHistoryCastSnapshot(window.lastCastData),
-        turns: currentConversation.turns.slice(),
-        totalTokens: currentConversation.cumTokens,
-        costYuan: currentConversation.cumCost,
+        turns: state.currentConversation.turns.slice(),
+        totalTokens: state.currentConversation.cumTokens,
+        costYuan: state.currentConversation.cumCost,
         isPeak: result.isPeak,
         ...requestConfig,
       });
@@ -3101,8 +2628,8 @@ promptBtn.addEventListener('click', async (event)=>{
     }
 
     const castText = formatCastDataForAI(window.lastCastData);
-    lastExportCastText = castText;
-    lastExportQuestion = question;
+    state.lastExportCastText = castText;
+    state.lastExportQuestion = question;
     showPromptOutput(buildExportPromptText(question, castText));
     aiStatus.textContent = '提示词已生成';
     showToast('提示词已生成，复制后可以粘贴去其他AI软件解卦', 'success');
@@ -3151,7 +2678,7 @@ followUpBtn.addEventListener('click', async ()=>{
     showToast('传统上卦师不轻断生死寿数，这类问题这里不会生成解读——如果是身体或者情绪上的真实担忧，更建议找医生或者信得过的人聊聊', 'error', 6000);
     return;
   }
-  if(!currentConversation){
+  if(!state.currentConversation){
     showToast('还没有可以追问的解读，先点一次"AI 解读"', 'error');
     return;
   }
@@ -3181,7 +2708,7 @@ followUpBtn.addEventListener('click', async ()=>{
     // 追问的实时预览要接在"已经落定的对话"后面，renderLive/renderThinking内部本来就会先铺settled turns，
     // 但此时followUpWithDeepSeek还没把这轮user文本push进turns，所以这里传的questionText就是followUpText本身。
     const controller = new AbortController();
-    activeAbortController = controller;
+    state.activeAbortController = controller;
     stopGenBtn.disabled = false;
     showStopBtn();
     const thinking = withThinkingIndicator(followUpText, (delta, fullSoFar)=>{
@@ -3192,7 +2719,7 @@ followUpBtn.addEventListener('click', async ()=>{
       result = await followUpWithDeepSeek(followUpText, thinking.onDelta, controller.signal);
     }finally{
       thinking.stop();
-      activeAbortController = null;
+      state.activeAbortController = null;
       hideStopBtn();
     }
     followUpInput.value = '';
@@ -3206,10 +2733,10 @@ followUpBtn.addEventListener('click', async ()=>{
     // 同上，单独包一层try/catch：追问的回复此时已经拿到并渲染出来、followUpStatus也已经
     // 设成"完成"了，写历史失败不该被外层catch覆盖成报错状态。
     try{
-      const updated = updateHistorySession(currentHistorySessionId, {
-        turns: currentConversation.turns.slice(),
-        totalTokens: currentConversation.cumTokens,
-        costYuan: currentConversation.cumCost,
+      const updated = updateHistorySession(state.currentHistorySessionId, {
+        turns: state.currentConversation.turns.slice(),
+        totalTokens: state.currentConversation.cumTokens,
+        costYuan: state.currentConversation.cumCost,
         isPeak: result.isPeak,
       });
       if(updated){
@@ -3234,4 +2761,8 @@ followUpBtn.addEventListener('click', async ()=>{
 });
 
 export {renderPlate,lineFromSum,formatCastDataForAI,buildExportPromptText,buildHistoryCastSnapshot};
-export function setTestCalendar(date){knownCastDate=date;daySelectionMode="date";}
+export function setTestCalendar(date){state.knownCastDate=date;state.daySelectionMode="date";}
+
+configureStorageNotifications(showToast);
+
+configureQuotaNotifications(renderCastQuota);
