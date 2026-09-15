@@ -1,0 +1,20 @@
+{
+  "name": "liuyao-tool",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24.15.0" },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run",
+    "test:baseline": "node --test tests/regression/baseline.test.cjs"
+  },
+  "devDependencies": {
+    "vite": "8.3.0",
+    "vitest": "5.0.0",
+    "jsdom": "30.0.1",
+    "playwright": "1.63.0"
+  }
+}
