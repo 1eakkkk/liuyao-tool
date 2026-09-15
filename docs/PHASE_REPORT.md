@@ -30,5 +30,6 @@
 - 浏览器：开发版和 dist 在 1280／390 两个尺寸与原页对比；模拟 API 首次解读、追问、刷新恢复的请求正文、对话 HTML、恢复卦盘 HTML 完全一致，页面错误为零。截图尺寸一致、最大色彩通道差异不超过 2／255（含移动尺寸重复捕获中的合成波动）。
 - 兼容性：13 个原 key 保留，旧记录不在启动时覆盖；新磁盘快照保留旧字段供回滚，内存仅 Canonical。ES2020 构建，相对资源路径，保留原 Cannon 经典脚本；不支持 randomUUID 的环境有仅用于卦盘标识的回退。
 - 线上源比较：直接 HTTP 读取成功；当次线上文件与权威原文件仅相差 Cloudflare Insights beacon 注入。GitHub 旧版本仍不是本轮基线。
-- 风险：加法兼容快照增加本地存储占用，已验证超限时保留原值；真实 API、真实 Android／Windows 壳尚未测试。Cloudflare 登录过期，Preview 未部署；不能将本地测试称作全部 DoD 完成。
-- 下一步：恢复 Cloudflare 登录、核实 Pages 项目后仅部署 `refactor/v2` Preview，完成真实三端与 API 人工验收。完成这些门槛前不合并、不进入 Phase 3。
+- 风险：加法兼容快照增加本地存储占用，已验证超限时保留原值；真实 API、真实 Android／Windows 壳尚未测试。Preview 未部署；不能将本地测试称作全部 DoD 完成。
+- 用户后续确认：Wrangler 已重新登录，但 Dashboard 的 `liuyao`（`gua.1eak.cool`）不在 Pages 项目列表中。部署类型未知；按用户要求暂时跳过 Preview，不执行 Pages 部署或覆盖生产。此前对 `liuyao.1eak.cool` 的读取只代表方案中的旧地址源比较。
+- 下一步：先人工检查本地重构；后续确认 Cloudflare 部署类型，再决定独立 Preview 方式，完成真实三端与 API 验收。完成这些门槛前不合并、不进入 Phase 3。

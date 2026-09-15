@@ -15,30 +15,30 @@ npm run test:browser
 
 浏览器测试默认使用本机 Edge；可设置 `BROWSER_CHANNEL` 使用其他已安装的 Playwright channel。测试只用合成 API Key 与拦截响应，不调用付费接口。
 
-## Cloudflare Pages
+## 静态构建设置（供部署类型确认后使用）
 
 - 构建命令：`npm run build`
 - 输出目录：`dist`
 - Node 版本：24.18.0
-- Preview 分支：`refactor/v2`
-- 生产分支保持原有配置，不指向重构分支。
+- 开发分支：`refactor/v2`
+- 生产设置保持不变。
 
-本轮检查发现本机 Wrangler 已安装，但登录令牌过期且无法刷新。需用户在本机 `wrangler login` 后确认现有 Pages 项目名称，方能针对正确项目部署 Preview。
+## Cloudflare 当前状态（用户确认）
 
-登录后先用 `wrangler pages project list` 核实项目及生产分支，再部署：
+- Wrangler 已由用户重新登录，账号正常。
+- Dashboard 项目名：`liuyao`，绑定域名：`gua.1eak.cool`。
+- 该项目不在 `wrangler pages project list` 中；用户以前通过 Dashboard 拖动文件部署。
+- **部署类型尚未确认，不能假设它是 Pages。**
+- 用户明确要求本轮跳过 Cloudflare Preview。没有执行 `wrangler pages deploy`，没有覆盖生产环境。
 
-```sh
-wrangler pages deploy dist --project-name <已核实的项目名> --branch refactor/v2
-```
-
-部署前须确认该项目生产分支不是 `refactor/v2`。不能把本地 `vite preview` 当作 Cloudflare Preview 完成。
+后续先核实 Dashboard 资源的实际部署类型，再选择对应的独立预览方式。不能把本地 `vite preview` 当作 Cloudflare Preview 完成，也不能直接上传当前 `dist` 覆盖现有生产资源。
 
 ## 发布前人工验收
 
 - Preview 上实际摇卦、逐次／连续投币、取消、手动修正、日期／时辰选择。
 - 真实 DeepSeek Key 的首次解读、追问、停止、刷新恢复、费用显示。
 - 当前 Android／Windows App 壳加载 Preview，确认资源路径、CSP、ES Module 和联网行为。仓库没有这两个壳的源码，本轮不能据网页测试推断其版本兼容。
-- 与冻结的权威主文件对比；线上站点可能仍是用户指出的落后版本，差异须注明来源，不以旧线上覆盖权威文件。
+- 与冻结的权威主文件对比；旧 GitHub HTML 不是基线。本轮曾读取方案中的 `liuyao.1eak.cool`，该次源比较不代表新确认的 `gua.1eak.cool` 的生产验收。
 - 用户人工确认后方可考虑后续阶段／合并；本轮不进入 Phase 3。
 
 ## 回滚
