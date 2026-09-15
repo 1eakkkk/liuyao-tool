@@ -1,3 +1,14 @@
+import { turnHtml, renderConversation, renderThinking, withThinkingIndicator, renderLive, hidePromptExportBoxes, showStopBtn, hideStopBtn, showPromptOutput } from './ui/ai-view.js';
+import { updateApiKeyStatus, refreshPriceOverridePlaceholders, fillPriceOverrideInputs, lockApiKeyInput, unlockApiKeyInput } from './ui/settings.js';
+import { showToast, getFocusableIn, trapTabKey, showConfirm, ONBOARD_KEY, updateOnboardFade, onOnboardKeydown, onOnboardOverlayClick, openOnboard, closeOnboard } from './ui/dialogs.js';
+import { spiritDotHtml, boldDateHtml, boldPillarsHtml, replayFadeIn, maskApiKey, bindCharCounter, formatTime, escapeHtml, copyTextToClipboard } from './ui/helpers.js';
+import { svg, dayGanzhiSelect, dayLookupDateInput, castBtn, plateWrap, coinLog, castModeToggle, systemCastPanel, manualCastPanel, manualLinesWrap, manualCastBtn, toastWrap, confirmOverlay, confirmTitle, confirmMsg, confirmOkBtn, confirmCancelBtn, onboardOverlay, onboardCloseBtn, helpFab, onboardScroll, onboardFade, questionInput, questionCharCounter, interpretBtn, aiStatus, aiResult, aiMeta, aiStats, copyRow, copyResultBtn, copyAllBtn, clearResultBtn, promptBtn, promptOutputBox, promptOutputText, copyPromptBtn, closePromptBtn, promptExtraTools, promptExtraToggle, cleanupInputText, cleanupOutputText, cleanupRunBtn, cleanupCopyRow, copyCleanupBtn, followUpExportInput, followUpExportOutput, followUpExportBtn, followUpExportCopyRow, copyFollowUpExportBtn, followUpBox, followUpInput, followUpCharCounter, followUpBtn, followUpStatus, stopGenBtn, toggleSettingsBtn, aiSettings, apiKeyInput, apiKeyStatus, saveKeyBtn, clearKeyBtn, styleSelect, customStyleWrap, customStyleInput, roleSelect, roleHint, customRoleWrap, customRoleInput, effortSelect, modelSelect, priceHit, priceMiss, priceOutput, savePriceOverrideBtn, resetPriceOverrideBtn, gotoAiTabBtn, toggleHistoryBtn, historyPanel, historyList, historyEmpty, historyCount, clearHistoryBtn } from './ui/dom.js';
+import { interpretWithDeepSeek, followUpWithDeepSeek } from './ai/interpreter.js';
+import { pillarsAndKongText, formatCastDataForAI } from './ai/formatter.js';
+import { callDeepSeekRaw, resultUsageText, buildInterruptedResult } from './ai/client.js';
+import { buildSystemPrompt, buildExportPromptText, buildExportFollowUpPromptText } from './ai/prompt-builder.js';
+import { annotateShichen, annotateGanzhiDay, buildShichenRuleText, buildGanzhiDayRuleText, stripMarkdown } from './ai/text.js';
+import { currentRoleInfo, currentOneShotExample, currentRoleLabel, currentRoleCustomSnapshot, effectivePriceTable, isBeijingPeakHour, currentEffortPreset, currentReplyStyle, currentReplyStyleLabel, currentStyleCustomSnapshot } from './ai/preferences.js';
 import { LS_KEY_CAST_LOG, CAST_COOLDOWN_WINDOW_MS, CAST_COOLDOWN_MAX, loadCastLog, pruneCastLog, notifyQuota, configureQuotaNotifications, logCastEvent, castsRemainingInWindow } from './storage/cast-log.js';
 import { LS_KEY_ACTIVE_CONVO, saveActiveConversation, loadActiveConversationFromStorage, clearActiveConversationStorage } from './storage/conversation.js';
 import { LS_KEY_HISTORY, HISTORY_MAX, loadHistory, saveHistory, appendHistory, LS_KEY_LIFETIME_STATS, loadLifetimeStats, addLifetimeUsage, clearLifetimeStats, historyTurnsOf, buildHistoryCastSnapshot } from './storage/history.js';
@@ -114,7 +125,6 @@ document.getElementById('baguaGrid').innerHTML = BAGUA.map(g=>`
     <div class="name">${g.name}　·　${g.el}</div>
     <div class="meta">${g.meta}</div>
   </div>`).join('');
-const svg = document.getElementById('wuxingSvg');
 const cx=140, cy=140, R=95;
 const pos = {};
 WX.forEach((w,i)=>{
@@ -172,11 +182,6 @@ svg.querySelectorAll('.wx-node').forEach(node=>{
     }
   });
 });
-function spiritDotHtml(spirit){
-  const cls = SPIRIT_CLASS[spirit];
-  return cls ? `<span class="spirit-dot ${cls}" aria-hidden="true"></span>` : '';
-}
-const dayGanzhiSelect = document.getElementById('dayGanzhi');
 dayGanzhiSelect.innerHTML = JIAZI60.map((d,i)=>`<option value="${i}">${d.label}</option>`).join('');
 dayGanzhiSelect.value = String(getTodayJiaziIndex());
 
@@ -190,13 +195,6 @@ dayGanzhiSelect.value = String(getTodayJiaziIndex());
 
 
 dayGanzhiSelect.addEventListener('change', ()=>{state.knownCastDate=null;state.daySelectionMode='manual';document.getElementById('dayLookupDate').value='';document.getElementById('dayLookupTime').value='';});
-
-// ---- 按公历日期反查日柱：想复盘某个历史案例（比如书上的老案例、以前手动摇的卦）
-// 之前只能自己心算六十甲子再去下拉框里找，这里加个日期选择器，选完直接调用上面已有的
-// getTodayJiaziIndex(date) 反推那天的日柱下标，自动帮下拉框选中，不用再手动数。
-// 只负责"选中"，不自动触发摇卦/生成排盘——选完日柱后用户仍按原来的流程点"摇卦"或
-// "生成排盘"，跟直接手动在下拉框里选一样，不额外改变其他状态。
-const dayLookupDateInput = document.getElementById('dayLookupDate');
 if(dayLookupDateInput){
   dayLookupDateInput.addEventListener('change', ()=>{
     const v = dayLookupDateInput.value; // "YYYY-MM-DD"
@@ -231,28 +229,6 @@ function resolveCastCalendar(){
     if(last.monthLabel!==ymh.monthLabel)ymh.monthLabel='交节日待定';
   }
   return {now,day,ymh,dateText:buildDateDisplayText(now)};
-}
-// 跟 boldPillarsHtml 同一个思路，把"公历：X"“农历：X”里"："后面的值部分加粗。
-function boldDateHtml(text){
-  return String(text||'').replace(/(公历|农历)：([^\s　]+)/g, '$1：<b>$2</b>');
-}
-// ---- 拼出"年柱 月柱 日柱 时柱 + 空亡"这一整行展示/喂给AI用的文本：排盘区展示、AI提示词拼接、
-// 历史记录快照三处共用同一份拼接逻辑，避免各处各写一套顺序或文案，越改越不一致。
-// 兼容老数据：这次改版之前存的历史记录、或刷新页面后从localStorage续接的castData，
-// 只有 dayKongText（日柱+空亡两项），没有年月时三柱，这里直接返回 dayKongText 原样，不强行拼凑。
-function pillarsAndKongText(castData){
-  if(!castData) return '';
-  if(castData.fourPillarsText){
-    return castData.kongText ? `${castData.fourPillarsText}　${castData.kongText}` : castData.fourPillarsText;
-  }
-  return castData.dayKongText || '';
-}
-// 把"年柱：X"这类文本里，每个"XX柱：值"和"空亡：值"的"值"部分加粗，供排盘区、历史记录展示复用，
-// 不用各处各写一遍加粗规则。用正则按"标签：值"的固定格式匹配，不依赖调用方传入的具体是哪几柱。
-function boldPillarsHtml(text){
-  return String(text||'')
-    .replace(/(年柱|月柱|日柱|时柱)：([^\s　]+)/g, '$1：<b>$2</b>')
-    .replace(/空亡：(.+)$/, '空亡：<b>$1</b>');
 }
 
 // ---- 卦象爻画图：把六爻的阴阳/动爻/世应画成"从下往上六道爻线"的直观图形，本卦一列，
@@ -438,21 +414,6 @@ async function guardBeforeCast(opts = {}){
   if(state.castMode === 'manual' && !background) logCastEvent();
   return true;
 }
-
-/* ---------------- caster ---------------- */
-const castBtn = document.getElementById('castBtn');
-const plateWrap = document.getElementById('plateWrap');
-const coinLog = document.getElementById('coinLog');
-
-// 排盘表每次重新渲染（摇卦完成/手动生成/历史记录回看）都要重新播一遍跟标签切换
-// 同款的淡入动效，而不是硬切出现。同一个元素反复扣同一个class浏览器不会重放
-// CSS动画，这里先移除class、强制触发一次回流（读一下offsetWidth），再加回去，
-// 让每次调用都能重新触发 .fade-in 对应的 fade 关键帧。
-function replayFadeIn(el){
-  el.classList.remove('fade-in');
-  void el.offsetWidth;
-  el.classList.add('fade-in');
-}
 function commitPhysicsCast(lines){
   renderPlate(lines,'physics');logCastEvent();
   coinLog.textContent=lines.map((l,i)=>`${['初','二','三','四','五','上'][i]}爻 ${l.coins.join('')} · ${l.sum}`).join(' ｜ ');
@@ -614,13 +575,6 @@ castBtn.addEventListener('click', async ()=>{
     clearResultBtn.disabled = false;
   }
 });
-
-/* ---------------- 线下摇卦 · 手动填入 ---------------- */
-const castModeToggle = document.getElementById('castModeToggle');
-const systemCastPanel = document.getElementById('systemCastPanel');
-const manualCastPanel = document.getElementById('manualCastPanel');
-const manualLinesWrap = document.getElementById('manualLines');
-const manualCastBtn = document.getElementById('manualCastBtn');
 
  // 'system' | 'manual'
 
@@ -963,161 +917,6 @@ function renderPlateFromCastData(castData, question, castTime){
   if(window.updateCurrentCastStatus) window.updateCurrentCastStatus();
 }
 
-/* ==================================================================
-   Toast 弹窗提示 —— 状态/成功/错误提示都走这里，比小字更显眼，
-   手机App里尤其需要，不然一行小灰字很容易被忽略掉。
-   ================================================================== */
-const toastWrap = document.getElementById('toastWrap');
-function showToast(message, type = 'info', duration = 3200){
-  const el = document.createElement('div');
-  el.className = `toast ${type === 'error' ? 'error' : (type === 'success' ? 'success' : '')}`;
-  el.textContent = message;
-  toastWrap.appendChild(el);
-  setTimeout(()=>{
-    el.classList.add('fade-out');
-    setTimeout(()=>el.remove(), 260);
-  }, duration);
-}
-
-/* ==================================================================
-   弹层焦点管理工具 —— showConfirm 和新手教程弹层共用：
-   1) 打开时记住当前聚焦的元素，关闭时把焦点还给它，键盘/屏幕阅读器用户
-      不会在弹层关闭后"焦点丢失"、要重新从页面顶部摸索去找回来；
-   2) Tab / Shift+Tab 在弹层内部循环，不会漏到背后页面——原生 <dialog> 的
-      showModal() 会自带这个行为，但这两个弹层是普通 div 实现的（要兼容
-      旧一点的浏览器，且样式/动画已经写好了，不想为了原生对话框推翻重来），
-      所以手动补上同样效果。
-   ================================================================== */
-function getFocusableIn(container){
-  return Array.from(container.querySelectorAll(
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  )).filter(el => !el.disabled && el.offsetParent !== null);
-}
-function trapTabKey(container, e){
-  if(e.key !== 'Tab') return;
-  const focusable = getFocusableIn(container);
-  if(!focusable.length) return;
-  const first = focusable[0];
-  const last = focusable[focusable.length - 1];
-  if(e.shiftKey && document.activeElement === first){
-    e.preventDefault();
-    last.focus();
-  }else if(!e.shiftKey && document.activeElement === last){
-    e.preventDefault();
-    first.focus();
-  }
-}
-
-/* ==================================================================
-   通用确认弹层 —— 替代原生 confirm()，风格跟页面其他弹层统一。
-   用法：const ok = await showConfirm('文字…', {title, okText, cancelText});
-   ================================================================== */
-const confirmOverlay = document.getElementById('confirmOverlay');
-const confirmTitle = document.getElementById('confirmTitle');
-const confirmMsg = document.getElementById('confirmMsg');
-const confirmOkBtn = document.getElementById('confirmOkBtn');
-const confirmCancelBtn = document.getElementById('confirmCancelBtn');
-
-// 这个弹层是全局单例（复用同一套 confirmOverlay/confirmTitle/…DOM），本身没有"排队"能力：
-// 如果在第一次 showConfirm() 还没等到用户点击时，别的入口（目前已知的是"清空历史"按钮，
-// 它没有被"AI 解读"/"输出提示词"那几个流程锁住）又调用了一次 showConfirm()，两次调用会
-// 共用同一颗"确定"按钮，第二次调用的文案会静默覆盖掉第一次的、并在同一批按钮上再叠一套
-// 监听器——用户看到的是第二个弹层的文字，但点一下"确定"会同时把两个 Promise 都 resolve(true)，
-// 相当于用户没看到、也没确认过的第一个决定被顺带"点头"了。这里用一条 Promise 链把
-// showConfirm 的调用强制排队、同一时间只弹一个，从根上避免这种串线。
-
-function showConfirm(message, opts = {}){
-  const { title = '确认', okText = '确定', cancelText = '取消' } = opts;
-  const run = () => new Promise(resolve=>{
-    const previouslyFocused = document.activeElement;
-    confirmTitle.textContent = title;
-    confirmMsg.textContent = message;
-    confirmOkBtn.textContent = okText;
-    confirmCancelBtn.textContent = cancelText;
-    confirmOverlay.style.display = 'flex';
-    // 默认焦点给"取消"而不是"确定"：这个弹层大多用在"清空历史"这类不可逆操作上，
-    // 键盘用户如果是习惯性按了个Tab+Enter或者手滑碰到回车，落在"取消"上更安全。
-    confirmCancelBtn.focus();
-
-    function cleanup(result){
-      confirmOverlay.style.display = 'none';
-      confirmOkBtn.removeEventListener('click', onOk);
-      confirmCancelBtn.removeEventListener('click', onCancel);
-      confirmOverlay.removeEventListener('click', onOverlayClick);
-      document.removeEventListener('keydown', onKeydown);
-      if(previouslyFocused && typeof previouslyFocused.focus === 'function'){
-        previouslyFocused.focus();
-      }
-      resolve(result);
-    }
-    function onOk(){ cleanup(true); }
-    function onCancel(){ cleanup(false); }
-    function onOverlayClick(e){ if(e.target === confirmOverlay) cleanup(false); }
-    function onKeydown(e){
-      if(e.key === 'Escape'){ cleanup(false); return; }
-      trapTabKey(confirmOverlay, e);
-    }
-
-    confirmOkBtn.addEventListener('click', onOk);
-    confirmCancelBtn.addEventListener('click', onCancel);
-    confirmOverlay.addEventListener('click', onOverlayClick);
-    document.addEventListener('keydown', onKeydown);
-  });
-  // 排到当前链的后面：不管前一个弹层是"确定"还是"取消"结束，都等它彻底 cleanup() 完了、
-  // 弹层关掉之后，才轮到这一次的 run() 真正弹出来，两次调用之间不会共享 DOM/监听器。
-  const result = state.confirmChain.then(run);
-  state.confirmChain = result.catch(()=>{}); // 保底：万一某次 run() 异常，也不能让后面排队的永远卡住
-  return result;
-}
-
-/* ==================================================================
-   新手教程弹层 —— 第一次打开自动弹，之后可以点导航栏的"?"随时重看
-   ================================================================== */
-const ONBOARD_KEY = 'liuyao_onboarded';
-const onboardOverlay = document.getElementById('onboardOverlay');
-const onboardCloseBtn = document.getElementById('onboardCloseBtn');
-const helpFab = document.getElementById('helpFab');
-const onboardScroll = document.getElementById('onboardScroll');
-const onboardFade = document.getElementById('onboardFade');
-
-
-// 内容区滚动到底（或者内容本来就没超过可视高度）时，把底部渐隐提示淡出——
-// 已经没有更多内容可看了，不用再暗示"下面还有"。留2px余量，避免小数像素误差导致
-// 明明到底了却因为0.3px的差距还残留一点提示。
-function updateOnboardFade(){
-  if(!onboardScroll || !onboardFade) return;
-  const remaining = onboardScroll.scrollHeight - onboardScroll.scrollTop - onboardScroll.clientHeight;
-  onboardFade.classList.toggle('hidden', remaining <= 2);
-}
-function onOnboardKeydown(e){
-  if(e.key === 'Escape'){ closeOnboard(); return; }
-  trapTabKey(onboardOverlay, e);
-}
-// 点遮罩关闭：跟 confirmOverlay 的 onOverlayClick 是同一个思路——click 事件会冒泡，
-// 只有直接点在遮罩本身（不是卡片或卡片内内容）时 e.target 才等于 onboardOverlay，
-// 借此把"点卡片外的空白区域"和"点卡片内任意地方"区分开。
-function onOnboardOverlayClick(e){
-  if(e.target === onboardOverlay) closeOnboard();
-}
-function openOnboard(){
-  state.onboardPreviouslyFocused = document.activeElement;
-  onboardOverlay.style.display = 'flex';
-  if(onboardScroll){ onboardScroll.scrollTop = 0; }
-  updateOnboardFade();
-  onboardCloseBtn.focus();
-  document.addEventListener('keydown', onOnboardKeydown);
-  onboardOverlay.addEventListener('click', onOnboardOverlayClick);
-}
-function closeOnboard(){
-  onboardOverlay.style.display = 'none';
-  document.removeEventListener('keydown', onOnboardKeydown);
-  onboardOverlay.removeEventListener('click', onOnboardOverlayClick);
-  if(state.onboardPreviouslyFocused && typeof state.onboardPreviouslyFocused.focus === 'function'){
-    state.onboardPreviouslyFocused.focus();
-  }
-  state.onboardPreviouslyFocused = null;
-}
-
 if(!safeGetItem(ONBOARD_KEY)){
   openOnboard();
 }
@@ -1132,354 +931,6 @@ if(onboardScroll){
   // 跟着重新算一次，不然提示可能在不该出现的时候还留着。
   window.addEventListener('resize', updateOnboardFade);
 }
-function currentRoleInfo(){
-  const choice = loadRoleChoice();
-  if(choice === 'custom') return loadCustomRole().trim() || ROLE_PRESETS.classic;
-  return ROLE_PRESETS[choice] || ROLE_PRESETS.classic;
-}
-function currentOneShotExample(){
-  const choice = loadRoleChoice();
-  if(choice === 'custom') return '';
-  return ROLE_ONE_SHOT_EXAMPLES[choice] || '';
-}
-function currentRoleLabel(){
-  return ROLE_LABELS[loadRoleChoice()] || ROLE_LABELS.classic;
-}
-// 历史记录只存了 roleLabel 这四个字（"自定义人设"），没存当时具体填的文字——如果之后
-// 用户把"设置"里的自定义人设文字改了或清空了，回头翻旧记录就完全看不出当时到底是按
-// 什么规则断的。appendHistory时额外调这个函数存一份快照：只有当前正是custom档才有内容，
-// 内置六档不需要（它们的文字是代码里固定的，不会变，标签本身就够用）。
-function currentRoleCustomSnapshot(){
-  return loadRoleChoice() === 'custom' ? loadCustomRole().trim() : '';
-}
-function effectivePriceTable(){
-  const base = PRICE_TABLES[loadModelChoice()] || PRICE_TABLES['deepseek-flash'];
-  const o = loadPriceOverride();
-  if(!o) return base;
-  return {
-    offpeak: { ...base.offpeak, ...(o.offpeak || {}) },
-    peak:    { ...base.peak,    ...(o.peak    || {}) },
-  };
-}
-
-function isBeijingPeakHour(date){
-  date = date || new Date();
-  // 直接在UTC时间戳上加8小时再取"UTC字段"，等价于读出北京时间的年月日时——
-  // 这样跨零点/跨周末换算星期几时不会出错（单纯 (getUTCHours()+8)%24 只能算出小时，算不出星期）。
-  const beijingShifted = new Date(date.getTime() + 8 * 3600 * 1000);
-  const beijingDay = beijingShifted.getUTCDay(); // 0=周日 … 6=周六
-  const beijingHour = beijingShifted.getUTCHours();
-  if(beijingDay === 0 || beijingDay === 6) return false; // 周末全天按闲时算：2026-08-23起生效的规则（见上方PRICE_TABLES注释），不是从最初的峰谷定价就有
-  return (beijingHour >= 9 && beijingHour < 12) || (beijingHour >= 14 && beijingHour < 18);
-}
-function maskApiKey(k){
-  if(!k) return '';
-  if(k.length <= 8) return '•'.repeat(k.length);
-  return k.slice(0,3) + '•'.repeat(Math.max(k.length - 7, 4)) + k.slice(-4);
-}
-function currentEffortPreset(){ return EFFORT_PRESETS[loadEffortChoice()] || EFFORT_PRESETS.max; }
-
-function currentReplyStyle(){
-  const choice = loadStyleChoice();
-  if(choice === 'custom') return loadCustomStyle().trim();
-  return REPLY_STYLE_PRESETS[choice] || REPLY_STYLE_PRESETS.brief;
-}
-function currentReplyStyleLabel(){
-  return REPLY_STYLE_LABELS[loadStyleChoice()] || REPLY_STYLE_LABELS.brief;
-}
-// 同 currentRoleCustomSnapshot()，只有当前正是custom档才有内容。
-function currentStyleCustomSnapshot(){
-  return loadStyleChoice() === 'custom' ? loadCustomStyle().trim() : '';
-}
-function annotateShichen(text){
-  return text.replace(/([子丑寅卯辰巳午未申酉戌亥])时(?!（)/g, (matched, branch) => {
-    const range = SHICHEN_HOUR_MAP[branch];
-    return range ? `${matched}（${range}）` : matched;
-  });
-}
-function annotateGanzhiDay(text){
-  const castData = window.lastCastData;
-  // 没有起卦锚点（还没摇过卦，或者老会话数据缺这个字段又没能在恢复时补上）就没法换算，原样返回，
-  // 不强行拿"今天"瞎凑——那样算出来的日期跟这一卦的真实应期毫无关系，比不标更误导人。
-  if(!castData || !castData.castAnchorY) return text;
-  const anchorDate = new Date(castData.castAnchorY, castData.castAnchorM - 1, castData.castAnchorD);
-  return text.replace(JIAZI60_LABELS_REGEX, (matched, label) => {
-    const targetIndex = JIAZI60_INDEX_BY_LABEL[label];
-    const hit = findNextDateForGanzhiIndex(anchorDate, targetIndex);
-    if(!hit) return matched;
-    const dateStr = (hit.getFullYear() === anchorDate.getFullYear())
-      ? `${hit.getMonth()+1}月${hit.getDate()}日`
-      : `${hit.getFullYear()}年${hit.getMonth()+1}月${hit.getDate()}日`;
-    return `${matched}（${dateStr}）`;
-  });
-}
-
-// ---- 把"时辰要带现代小时括注"这条规则从纯客户端后处理，上移一份到系统提示词里让AI自己输出。
-// 背景：这条规则原来只活在 annotateShichen() 里，"AI 解读"路径靠这道后处理兜底还能看到括注，
-// 但"输出提示词"路径（buildExportPromptText）没有任何后处理，AI 不知道这条规则的话，括注
-// 就会直接消失。这里直接复用 SHICHEN_HOUR_MAP 生成对照表文本塞进规则里，两条路径都能覆盖，
-// 且对照表只有这一份数据源，不会因为手动抄一遍而和 annotateShichen 的映射表逐渐抄漏、抄错。
-function buildShichenRuleText(){
-  const pairs = Object.entries(SHICHEN_HOUR_MAP).map(([branch, range]) => `${branch}时（${range}）`).join('、');
-  return `文中每次出现十二时辰（子丑寅卯辰巳午未申酉戌亥+"时"），一律在其后用中文括号标注对应的现代24小时制时间区间，对照如下：${pairs}。`;
-}
-
-// ---- 干支日的规则跟时辰正好相反：时辰是个固定对照表，AI照抄基本不会错，所以上面
-// buildShichenRuleText是"请你标注"；但干支日对应哪个具体公历日期，是从起卦日开始的
-// 六十甲子模运算，AI心算极不可靠，间隔一长就容易错，还照样一本正经甩出一个日期——
-// 所以这条规则反过来是"不要自己算、不要自己编"，把这件事完全留给本地代码
-// （annotateGanzhiDay）去做。这条规则还有一个本地代码逻辑上必须依赖它的理由：
-// annotateGanzhiDay判断"是否已经标注过"用的办法是看干支后面是不是已经跟着一个中文括号，
-// 如果AI自己先编了一个（哪怕是错的）日期塞进括号里，本地代码会误以为"已经标注过了"而跳过、
-// 不会去覆盖修正——这条禁止规则同时也是在保护本地换算不被AI自己的错误猜测顶替掉。
-function buildGanzhiDayRuleText(){
-  return `文中提到具体的干支日（如"丙戌日""甲子日"）时，只需要照常给出这个干支本身，` +
-    `绝对不要自己换算、推测或编造它对应的具体公历日期，也不要在干支后面自行加中文括号标注日期——` +
-    `干支到公历日期的换算需要精确的六十甲子模运算，你很容易算错却看不出来，这部分完全由系统的本地代码在你的回复之后自动算好并追加，不用你操心，也不许你抢先编一个。`;
-}
-
-// ---- 对应 ai_interpret.py: strip_markdown ----
-function stripMarkdown(text){
-  return text
-    .replace(/^#{1,6}\s*/gm, '')
-    .replace(/\*\*(.*?)\*\*/g, '$1')
-    .replace(/\*(.*?)\*/g, '$1')
-    .replace(/__(.*?)__/g, '$1')
-    .replace(/`(.*?)`/g, '$1')
-    .replace(/^\s*[-*+]\s+/gm, '· ')
-    .replace(/^\s*\d+\.\s+/gm, '')
-    .replace(/^\s*>\s?/gm, '')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
-}
-
-// ---- 对应 ai_interpret.py: build_system_prompt ----
-// 注：函数体里的【断卦参考表】（用神速查/世应元神忌神/旺相休囚死/六合六冲）内容上
-// 抄自"断卦指南"标签页里给人看的同名表格（body区"用神速查""旺相休囚死（按月令）"
-// "合、冲对照""常用术语速查"这几个 section），之前只写给人看、没喂给AI，AI只能
-// 凭自己训练时记的命理知识现算，容易和页面教的东西对不上、也容易在细节上出错。
-// 这里补一份文字版塞进系统提示词。这两处目前是分别维护的两份文字（页面是静态HTML
-// 表格，这里是拼进提示词的字符串），不是同一个数据源自动生成的——以后如果要改
-// 其中任何一张表的内容（比如某个用神对应关系写错了、旺相休囚死表要调整），记得
-// 两边都改一下，不然会出现"页面教的和AI断的对不上"的新一轮不一致。
-function buildSystemPrompt(){
-  const replyStyle = currentReplyStyle();
-  const styleBlock = replyStyle ? `${replyStyle}\n${SAFETY_BASELINE}` : SAFETY_BASELINE;
-  return `你是一位精通六爻纳甲的卜者本人，正在给来问卦的人做解卦回复。
-不要提及自己是AI或语言模型，始终以卜者第一人称说话。
-
-【角色设定】
-${currentRoleInfo()}
-
-【回复风格与分寸要求】
-${styleBlock}
-
-用户会给你一次起卦排盘的结构化数据，系统已经自动算好了：本卦所属的八宫及世应位置
-（比如"坎宫·二世卦"）、本卦与变卦各自的六十四卦标准卦名（比如本卦"地水师"，有动爻时还会
-给出变卦卦名，比如"水火既济"）、下卦上卦卦名、年月日时四柱干支与空亡地支，以及每一爻的
-六亲、六神、纳甲干支、五行、动爻/世爻/应爻标注、这一爻按月令的旺衰状态（旺/相/休/囚/死）、
-这一爻是否与日辰构成"合"或"冲"；动爻还额外给出了"变出"（变爻变成的干支、五行、六亲）以及
-是否"回头生/回头克"（变爻反过来生或克本爻），六亲不全的爻位还可能带"伏神"（伏神六亲、
-干支、五行），并标出飞神（本爻）对伏神是生是克。数据末尾还有一段"证据速览"，是系统按
-全卦月令旺衰、动爻回头生克、世应生克关系算出的整体收敛度参考——这些字段该怎么用、
-要不要你重新核算，见下面【核心原则】。
-
-【断卦参考表】
-下面几张表是背景知识，帮你理解上面各字段的含义、以及"用神该选哪个"这道仍然需要你判断的
-题——月令旺衰、日辰合冲这两项已经按这几张表的规则由系统直接标注在每一爻上了，不需要你
-再逐爻对着表格心算一遍；用神对应关系没有被系统预判（这依赖对问题文本的语义理解，是你的
-职责），仍要你结合问题类型自己选定：
-
-用神速查（先按问的事情类型选用神，再看这个六亲本身的旺衰生克）：
-求财/生意→妻财；婚姻，男测看妻财、女测看官鬼，同时看世应是否相生相合；
-疾病→官鬼代表病、父母代表药和医（官鬼旺表示病重，子孙旺主吉，因子孙克官鬼）；
-考试/求职/官运→官鬼；子女/晚辈→子孙；父母/长辈/房产/合同文书→父母；
-兄弟/朋友/合伙人→兄弟（兄弟旺常主破财、争抢）；出行看世爻是否安稳，诉讼看官鬼与世应。
-
-世应与元神忌神：世爻代表求测人自己，应爻代表对方、对手，或所测之事本身——世应之间是否
-相生相合，直接反映这件事/这段关系的走向，姻缘、合伙、诉讼这类"涉及对方"的问题尤其要看
-这一层，不能只看用神自己的旺衰。生助用神的六亲是元神（帮手），克制用神的六亲是忌神（阻力）。
-
-旺相休囚死（按月令判断用神/元神/忌神的五行力量强弱；旺、相为得力，休、囚、死为不得力，
-需要日辰再生扶才行）：
-春（寅卯月）：木旺 火相 水休 金囚 土死；夏（巳午月）：火旺 土相 木休 水囚 金死；
-秋（申酉月）：金旺 水相 土休 火囚 木死；冬（亥子月）：水旺 木相 金休 土囚 火死；
-四季月（辰戌丑未月）：土旺 金相 火休 木囚 水死。
-
-六合：子丑合　寅亥合　卯戌合　辰酉合　巳申合　午未合
-六冲：子午冲　丑未冲　寅申冲　卯酉冲　辰戌冲　巳亥冲
-（日辰与某一爻构成"合"或"冲"，数据里对应爻会直接标"日辰合"/"日辰冲"，不用你再核对地支；
-但合、冲对这一爻到底是好是坏，历代说法本身就不是单一方向——合主牵绊、稳定，有时反而是
-"绊住不动"；冲主动荡、离散，也可能是"暗动"——这一层解读需要结合旺衰和所测之事判断，
-是你的职责，系统不会替你下定论。）
-
-【核心原则：结论必须能被复核，且不重复推算已经算好的数据】
-卦名、纳甲干支、六亲配属、进退神、伏神信息、每一爻的月令旺衰（旺/相/休/囚/死）、是否与
-日辰构成合冲、动爻是否回头生/回头克、飞神对伏神是生是克——已按本工具口径计算。
-进退神采用《增删卜易》列举的七组进神及逆向退神；空白不等于存在相反结论。
-月令是季节五行简表，不等于综合旺衰。年月时柱未指定或交节日待定时，不得补造。
-优先引用已给数据；发现明确矛盾应指出，不能强行解释。用神该选哪个六亲、合冲对这一爻究竟是利是弊、旺衰强弱怎么打分、吉凶趋势
-怎么措辞、给什么建议——这些没有唯一答案、需要经验判断的，才是你的职责所在。不要把
-该交给数据的部分自己现算，也不要把该自己判断的部分说得好像有唯一标准答案。
-
-数据末尾的"证据速览"是系统按月令旺衰、回头生克、世应生克这几项确定性关系汇总出的
-收敛度参考（比如当令得力与减力的爻数是否悬殊、世应是生是克），不是吉凶结论，也没有
-覆盖用神本身的旺衰——但可以作为你判断"这次给出的吉凶把握有多大"时的一个参照：如果
-"证据速览"显示的整体气象和你选定的用神旺衰方向一致，属于多项迹象互相印证，可以在回复
-里坦然表达判断把握较高；如果两者方向不一致，或者证据速览本身显示旺衰参半，如实告诉
-对方这一卦的迹象不算特别集中、仅供参考，不要为了显得笃定就把有分歧的地方抹平。
-
-在正式作答前，先在心里想清楚（不输出给用户），并让最终回复的措辞与之完全对应：
-1. 本次问题的用神是哪个六亲——对照【断卦参考表】里的用神速查，结合求财/姻缘/事业等
-   问题类型选定；
-2. 用神/世爻当前的旺衰状态——直接读取数据里已标好的"月令"字段（旺/相/休/囚/死），
-   再看有没有"日辰关系"（合/冲），日辰的作用不弱于月令，《卜筮正宗》称日辰为
-   "六爻之主宰"；如果问题涉及"对方"（姻缘对象、合伙人、官司对手等），再结合数据里
-   标好的"世应"关系（世生应/应生世/世克应/应克世/比和）判断这段关系的走向；
-3. 决定吉凶走向的关键那一条生克/动变关系是什么——动爻已经标注好"变出"信息和进退神，
-   是否"回头生/回头克"也直接标在数据里，不用你自己比对五行；本卦缺某个六亲时看有没有
-   "伏神"，数据里标出的"飞神生伏神/飞神克伏神"告诉你伏神是否被飞神生扶，至于是否
-   "出伏"这种更细的时机条件历代说法不一，可以结合语境谈，但不要跳过伏神直接说
-   "用神不上卦无法判断"。
-这三点一旦想清楚，就是这一卦这次对话里固定不变的依据，后续如何应对用户的追问或反驳，
-见下一节【关于"结果好像不符"的情况】。
-
-【关于"结果好像不符"的情况】
-如果用户反馈实际结果与你之前的判断不一致，不要因为用户情绪、语气强硬或反复追问，
-就临时更换用神、反转旺衰判断，或者声称"上一轮漏看了某一爻"——这份卦理依据从第一次
-给出后就已经固定，后续任何一轮回应都必须与之保持一致。遇到这种反馈，坦然说明即可：
-卦象推演的是气数消长、胜负走向的大概率倾向，不是对每一个现实细节的精确锁定，
-竞技与人事中都存在卦理之外的现实变数；把这一层不卑不亢地讲清楚，不要为了平息对方
-情绪就掉头附和对方想要的结论。
-
-【关于比分、名次等精确数值类问题】
-六爻纳甲的生克旺衰体系，历代典籍主要用于判断胜负走向、趋势强弱、事情进退，
-没有从卦象直接推导精确比分/名次/具体数字的传统方法。遇到这类问题：
-- 可以按卦理给出胜负判断、大致走势（比如先弱后强、险胜、稳赢、大概率不利等）；
-- 如果对方追问具体数字，明确告诉对方这一步已经超出卦理本身能验证的范围，是基于
-  卦象走势做的推测性延伸，不作为确定性结论；
-- 不要为了显得"有本事算出数字"，去编造一套听起来有卦理依据、实际上典籍中并无此法
-  的推导过程（包括把精确比分换个包装说成"净胜球区间""差数论"之类，本质还是一样）。
-
-请你：
-1. 解卦之前先弄清楚提问者问题里的关键词到底指的是什么，尤其警惕看起来像常见词组、实际是专有名词
-   （游戏名、产品名、公司/品牌名、人名、地名等）的情况——比如问题提到的名字本身带着"明日""来年""XX之后"
-   这类字面上像时间状语的词，很可能只是一个游戏或产品的名字，不是真的在说时间；判断不准的信息
-   （比如像是某个具体名字但你没见过），就按提问者给出的上下文场景（工作/项目/游戏/团队等）去理解，
-   不要顺着字面意思滑到一个不相关的场景（比如把问的是某个项目的走向，理解成了个人生活作息安排），
-   这一步理解错了，后面卦理讲得再细也是文不对题
-2. 用卜者的口吻，给出一段解卦回复，必须包含明确的吉凶/走向判断，不要只描述卦象现象却不下结论；
-   可以在开头很自然地提一句这一卦叫什么（本卦XX，若有动爻可带上变卦XX），但不要生硬地报菜名式
-   罗列，也不必每次都提
-3. 绝对不要使用任何 Markdown 语法（不要 **加粗**、不要 # 标题、不要 - 列表符号），
-   直接输出可以原样展示的纯文本内容
-4. ${buildShichenRuleText()}
-5. ${buildGanzhiDayRuleText()}
-6. 只输出回复正文本身，不要输出任何前言、解释或标注
-7. 追问场景的特别规则：如果收到的是"追问"内容，先自己判断一下这次追问是不是还在问同一件事
-   （只是换个问法、追问某个细节、想问得更深）——如果明显换成了另一件不相关的事
-   （比如最初问的是求职跳槽，追问却突然问感情、健康，或别的完全不相关的新事），
-   不要硬套着当前这一卦继续解读。按"一事不问二卦"的老规矩，不同的事该分开起卦、分开断。
-   这种情况下，直接明确告诉提问者"这已经是另一件事了，按规矩得重新起一卦"，不用展开具体解卦内容。
-   如果确实还是原来那件事的延伸细节，才照常结合卦理正常作答。
-   如果用户是对上一次的判断提出异议、或反馈结果和现实对不上，按【关于"结果好像不符"
-   的情况】一节处理。
-8. 提问者的问题原文里如果带着具体细节（具体的人、具体的事、具体的时间点、已经发生的进展、
-    纠结的具体选项等），解卦时要扣住这些细节去说，让人一眼看出这段回复是冲着这一次的具体处境写的，
-    而不是换个问同类问题的人也能原样套用的泛泛而谈（比如笼统的"求财顺利""姻缘可成"这类不落地的判断）；
-    如果问题本身写得笼统、没给出具体细节，就如实按卦理给出判断，不要为了显得"贴合"而自己编造对方没提过的情节。
-
-请按纳甲六爻的通行实战方法断卦，凡卦理无据者，不妄断，禁止套话与迎合，
-只输出最有卦理依据、应象最强、可验证性最高的结论。
-${(() => {
-  const example = currentOneShotExample();
-  if(!example) return '';
-  return `
-
-【语气节奏参考——另一次问卦的示范文本，只学格式和语气，不可挪用其中具体判断】
-下面这段不是本次这一卦的数据和结论，只用来对齐语气、篇幅、时辰括注和干支日的写法；
-真正作答时必须完全依据本次实际给到的排盘数据重新推演，不能照搬其中任何具体判断或措辞：
-
-${example}`;
-})()}`;
-}
-
-// ---- 对应 cast_and_extract.py: format_for_ai ----
-// 注：伏神（伏神六亲/伏神纳甲/伏神五行）和动爻变出的干支/六亲（变纳甲/变五行/变六亲）
-// 早就算好、存在 castData.lines 每一条里、排盘表里也已经显示，但这里之前漏了拼进发给AI的
-// 文本——AI拿到的排盘数据里完全没有这两块信息，等于伏神、化进退神、回头生克这些依赖它们的
-// 判断AI根本无从分析。这里补上，动爻额外带上"变出"，六亲不全时额外带上"伏神"。
-//
-// 后续追加：月令旺衰（月令）、日辰合冲（日辰关系）、回头生克（回头）、飞神对伏神的生克
-// （伏神与飞神关系）——这几项此前AI要自己套着【断卦参考表】里的旺相休囚死表/六合六冲表
-// 现算，现在改成代码直接算好标注，AI不用再心算这道计算题，只管拿来判断吉凶措辞。
-// 再后续追加：进退神（进退神）——computeJinTuiShen早就算好了，但一直漏了拼进这里，导致
-// 提示词里说"进退神已经算好标注给你"其实是句空话，AI要么看不到、要么只能自己心算，
-// 跟当初做computeJinTuiShen就是为了不让AI心算这道题的初衷正好相反，这次一并补上。
-// 老数据（这次更新前保存的历史记录/未刷新完的会话）没有这几个字段，`ln.月令`等取到的是
-// undefined，下面用 `|| ''` 兜底成空字符串，不会输出"undefined"，只是那几项标注缺失。
-// castData.overallTrendText同理：新算的卦才有，没有就不拼这一段，不强行补数据。
-function formatCastDataForAI(castData){
-  const linesText = castData.lines.map(ln => {
-    let tag = '';
-    if(ln.是否动爻) tag += '【动爻】';
-    if(ln.是否世爻) tag += '【世爻】';
-    if(ln.是否应爻) tag += '【应爻】';
-    if(ln.是否空亡) tag += '【空亡】';
-    let extra = '';
-    if(ln.月令) extra += `, 月令=${ln.月令}`;
-    if(ln.日辰关系) extra += `, 日辰=${ln.日辰关系}`;
-    if(ln.是否动爻 && ln.变纳甲) extra += `, 变出=${ln.变纳甲}(${ln.变五行})${ln.变六亲}`;
-    if(ln.是否动爻 && ln.进退神) extra += `, ${ln.进退神}`;
-    if(ln.是否动爻 && ln.回头) extra += `, ${ln.回头}`;
-    if(ln.伏神六亲) extra += `, 伏神=${ln.伏神六亲} ${ln.伏神纳甲}(${ln.伏神五行})`;
-    if(ln.伏神与飞神关系) extra += `(${ln.伏神与飞神关系})`;
-    return `${ln.爻位}: 六亲=${ln.六亲}, 六神=${ln.六神}, 纳甲=${ln.纳甲}, 五行=${ln.五行}, 状态=${ln.状态}${tag}${extra}`;
-  }).join('\n');
-  const sourceText = castData.source === 'manual'
-    ? '起卦方式：提问者本人现实中线下摇卦（铜钱或其他方式），结果由本人手动录入系统，六爻老少阴阳均为真实所得，并非网页随机生成。'
-    : castData.source === 'physics' ? '起卦方式：由用户操作驱动的网页刚体物理模拟，读取铜钱落地姿态，连续投掷六次；并非现实铜钱或随机数取值。' : '起卦方式：旧版网页随机摇卦生成。';
-  // 卦名（本卦/变卦的六十四卦标准卦名，如"地水师""水火既济"）：之前只在页面上展示、
-  // 没有拼进发给AI的文本里，AI拿到的只有"坎宫·二世卦"这类宫位信息和拆开的上下卦（坎/坤），
-  // 从没见过合起来的完整卦名。六爻断卦的主要依据确实是六亲/世应/纳甲/动变而不是卦名本身，
-  // 但卦名是解卦回复里"这一卦是什么卦"的常规交代，古籍（比如"地水师"卦辞、大象）也常按卦名
-  // 整体取象，缺了这行AI就只能回避不提、或者自己瞎编一个卦名，都不合适，这里补上。
-  const guaNameText = `本卦：${castData.guaName || ''}` + (castData.bianGuaName ? `　变卦：${castData.bianGuaName}` : '');
-  const trendText = castData.overallTrendText ? `\n\n证据速览（月令旺衰/回头生克/世应生克的收敛度参考，不是吉凶结论）：${castData.overallTrendText}` : '';
-  return `${sourceText}\n${guaNameText}\n${castData.palaceText}\n${castData.lowerUpperText}\n${pillarsAndKongText(castData)}\n\n` +
-    `各爻明细（从初爻到上爻，六亲/世应/空亡已由系统自动标注）：\n${linesText}${trendText}`;
-}
-
-function buildExportPromptText(question, castDataText){
-  return `======== 角色设定与回复规则（务必严格遵守，且不要在回复中提及或复述本段说明本身）========\n` +
-    `${buildSystemPrompt()}\n\n${EXPORT_SEARCH_HINT}\n` +
-    `======== 角色设定与回复规则结束 ========\n\n` +
-    `======== 本次排盘数据与提问 ========\n` +
-    `排盘数据：\n${castDataText}\n\n提问者的问题是：${question}\n` +
-    `======== 数据与提问结束 ========\n\n` +
-    `请严格依据以上排盘数据给出解卦回复。再次强调：不要输出任何前言、开场白、自我介绍或免责声明，` +
-    `不要提及自己是AI或语言模型，不要使用任何Markdown语法，直接从解卦正文本身开始输出。`;
-}
-
-// ---- 追问提示词导出（对应"生成追问提示词"按钮）：导出路径没有 currentConversation 那套多轮
-// 上下文，没法像 followUpWithDeepSeek 那样自动带历史、自动判断"这条追问是不是还在问同一件事"。
-// 这里让用户把上一轮对方AI的回复（可以直接是"贴回矫正"清洗后的结果）和这次追问内容交回来，
-// 重新拼一段带着原排盘数据、上一轮问答、以及"追问场景的特别规则"（一事不问二卦）的完整提示词，当作独立的
-// 新一条消息发给对方AI——规则能不能被遵守依然只能看对方AI自觉，但至少规则文本不会像现在这样
-// 直接消失。
-function buildExportFollowUpPromptText(question, castDataText, priorAnswerText, followUpText){
-  return `======== 角色设定与回复规则（务必严格遵守，且不要在回复中提及或复述本段说明本身）========\n` +
-    `${buildSystemPrompt()}\n\n${EXPORT_SEARCH_HINT}\n` +
-    `======== 角色设定与回复规则结束 ========\n\n` +
-    `======== 本次排盘数据 ========\n${castDataText}\n======== 排盘数据结束 ========\n\n` +
-    `======== 之前的问答（供你判断这次追问是否还是同一件事）========\n` +
-    `提问者最初问的是：${question}\n你（卜者）之前的回复是：\n${priorAnswerText}\n` +
-    `======== 之前问答结束 ========\n\n` +
-    `提问者现在追问：${followUpText}\n\n` +
-    `请先按上面"追问场景的特别规则"（一事不问二卦）判断这是否还是同一件事的延伸追问，再决定是否继续解读；` +
-    `其余格式要求（不要前言、不要Markdown、不要提及AI、时辰要带现代时间括注、不要自行编造干支日对应的公历日期）依然适用，` +
-    `不要输出任何前言、开场白或免责声明，直接从正文开始。`;
-}
 
 function resetConversation(){
   state.currentConversation = null;
@@ -1489,252 +940,6 @@ function resetConversation(){
   followUpInput.dispatchEvent(new Event('input')); // 同步触发一次，让字数计数器跟着归零
   followUpStatus.textContent = '';
   clearActiveConversationStorage();
-}
-
-// ---- 对应 ai_interpret.py: interpret() 里真正打DeepSeek接口那一段，首次解读和追问共用 ----
-// 用SSE流式输出：onDelta(deltaText, fullRawTextSoFar) 每收到一小段文字就回调一次，供UI实时刷新。
-// 不传onDelta也能正常用（等价于非流式），返回值形状不变。
-// signal: 可选的 AbortSignal，用户点"停止生成"或者页面要中断请求时传入——
-// 无论是用户主动停止、还是网络中途断线导致 reader.read() 抛错，都不再把已经吃进来的部分文字
-// 跟着错误一起丢掉，而是保留下来当作这次的最终答案（打上"未完成"标记），这两种情况处理逻辑是通用的。
-async function callDeepSeekRaw(messages, onDelta, signal){
-  const apiKey = loadApiKey();
-  if(!apiKey){
-    throw new Error('还没有配置 DeepSeek API Key，点右上角"设置"填一下。');
-  }
-
-  const startTime = Date.now();
-  const requestIsPeak = isBeijingPeakHour();
-  const requestPrice = {...(requestIsPeak ? effectivePriceTable().peak : effectivePriceTable().offpeak)};
-  let response;
-  try{
-    response = await fetch(`${DEEPSEEK_BASE_URL}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: loadModelChoice(),
-        max_tokens: currentEffortPreset().max_tokens,
-        thinking: { type: 'enabled' },
-        reasoning_effort: currentEffortPreset().reasoning_effort,
-        messages,
-        stream: true,
-        stream_options: { include_usage: true }, // 让最后一个chunk带上usage，不然流式模式下拿不到token数
-      }),
-      signal,
-    });
-  }catch(e){
-    if(e?.name === 'AbortError'){
-      // 请求还没收到任何响应就被停止了（比如网速慢、刚点完就手动停止），没有任何文字可保留
-      return buildInterruptedResult('', startTime, 'user');
-    }
-    throw new Error('连不上 DeepSeek 服务器，检查一下网络连接，或者稍后再试一次。');
-  }
-
-  if(!response.ok){
-    if(response.status === 401){
-      throw new Error('DeepSeek API Key 不对或者已经失效，去"设置"里重新填一下。');
-    }
-    if(response.status === 429){
-      throw new Error('请求太频繁，或者 DeepSeek 账户余额不足，去 DeepSeek 后台查一下余额，或者稍等一下再试。');
-    }
-    let detail = '';
-    try{ detail = (await response.json()).error?.message || ''; }catch(e){}
-    throw new Error(`DeepSeek 接口返回了错误（状态码${response.status}）：${detail}`);
-  }
-
-  // ---- 读SSE流：每行"data: {...}"是一个chunk，收集delta.content，最后一个chunk带usage ----
-  const reader = response.body.getReader();
-  const decoder = new TextDecoder('utf-8');
-  let buffer = '';
-  let rawText = '';
-  let usage = null;
-  let sawDone = false;
-  let finishReason = null;
-  let interruptReason = null; // null=正常读完 | 'user'=手动停止 | 'network'=读流中途出错(断线等)
-
-  while(true){
-    let chunk;
-    try{
-      chunk = await reader.read();
-    }catch(e){
-      // reader.read() 中途抛错：可能是手动abort，也可能是网络断线——
-      // 不管哪种，已经吃进来的 rawText 都留着，不再跟着这个错误一起被丢弃。
-      interruptReason = (signal && signal.aborted) ? 'user' : 'network';
-      break;
-    }
-    const { done, value } = chunk;
-    if(done) break;
-    buffer += decoder.decode(value, { stream: true });
-    const lines = buffer.split('\n');
-    buffer = lines.pop(); // 最后一段可能是不完整的一行，留到下一轮再拼
-
-    for(const line of lines){
-      const trimmed = line.trim();
-      if(!trimmed.startsWith('data:')) continue;
-      const payload = trimmed.slice(5).trim();
-      if(payload === '[DONE]'){sawDone=true;continue;}
-      let json;
-      try{ json = JSON.parse(payload); }catch(e){ continue; }
-      if(json.choices?.[0]?.finish_reason) finishReason=json.choices[0].finish_reason;
-      const delta = json.choices?.[0]?.delta?.content;
-      if(delta){
-        rawText += delta;
-        if(onDelta) onDelta(delta, rawText);
-      }
-      if(json.usage) usage = json.usage;
-    }
-  }
-
-  if(!sawDone || finishReason !== 'stop') interruptReason = interruptReason || (finishReason === 'length' ? 'limit' : 'network');
-  if(interruptReason && !usage){
-    return buildInterruptedResult(rawText, startTime, interruptReason);
-  }
-
-  const elapsedSeconds = (Date.now() - startTime) / 1000;
-  const cleanText = annotateGanzhiDay(annotateShichen(stripMarkdown(rawText)));
-
-  usage = usage || {};
-  const promptTokens = usage.prompt_tokens || 0;
-  const completionTokens = usage.completion_tokens || 0;
-  const totalTokens = usage.total_tokens || (promptTokens + completionTokens);
-  const cacheHitTokens = usage.prompt_cache_hit_tokens || 0;
-  const cacheMissTokens = usage.prompt_cache_miss_tokens || Math.max(promptTokens - cacheHitTokens, 0);
-
-  const isPeak = requestIsPeak;
-  const price = requestPrice;
-  const costYuan = (cacheHitTokens / 1e6) * price.hit
-                  + (cacheMissTokens / 1e6) * price.miss
-                  + (completionTokens / 1e6) * price.output;
-
-  // 拿到完整token用量的成功请求才计入终身累计——这里是"AI解读"和"追问"两条路径唯一的共同出口，
-  // 只在这一处累加就能同时覆盖两边，不用在各自的调用方各写一遍、也不会漏记或重复记。
-  addLifetimeUsage(costYuan, totalTokens);
-
-  const partial = interruptReason ? buildInterruptedResult(rawText,startTime,interruptReason) : {};
-  return { ...partial, text:interruptReason?partial.text:cleanText, elapsedSeconds, promptTokens, completionTokens, totalTokens, costYuan, isPeak, interrupted:!!interruptReason, usageKnown:true };
-}
-
-// ---- 停止生成/网络中断的兜底结果：已流出的部分文字当作最终答案，token/费用统计不完整（没等到最后一个
-// 带usage的chunk），所以这里费用按0算、并且标注清楚"未完成"，不能假装是完整解读的账单。 ----
-function resultUsageText(result){
-  const state=result.interrupted?({user:'已停止',limit:'达到长度上限',network:'网络中断'}[result.interruptReason]||'未完成'):'完成';
-  const usage=result.interrupted&&!result.usageKnown?'用量未收全，费用未知（零值不代表免费）':`token共${result.totalTokens} · 约¥${result.costYuan.toFixed(4)}`;
-  return `${state} · 耗时 ${result.elapsedSeconds.toFixed(1)}s · ${usage} · 以 DeepSeek 账单为准`;
-}
-function buildInterruptedResult(rawText, startTime, reason){
-  const elapsedSeconds = (Date.now() - startTime) / 1000;
-  const cleanText = annotateGanzhiDay(annotateShichen(stripMarkdown(rawText)));
-  const suffix = reason === 'user'
-    ? '\n\n【用户手动停止生成，以上为已输出的部分内容】'
-    : reason === 'limit' ? '\n\n【达到输出长度上限，以上内容未完整生成】' : '\n\n【网络中断，以上为已生成的部分内容，后续内容未完成】';
-  const text = cleanText ? (cleanText + suffix) : (reason === 'user' ? '（还没来得及生成内容就被停止了）' : reason === 'limit' ? '（达到输出长度上限，未收到正文）' : '（网络中断，还没收到任何内容）');
-  return {
-    text,
-    elapsedSeconds,
-    promptTokens: 0,
-    completionTokens: 0,
-    totalTokens: 0,
-    costYuan: 0,
-    isPeak: isBeijingPeakHour(),
-    interrupted: true,
-    interruptReason: reason,
-  };
-}
-
-// ---- 首次解读：建立本次会话的消息数组，并把结果存进 currentConversation 供后续追问续接 ----
-// signal: 传给 callDeepSeekRaw，用于支持"停止生成"中途打断请求。
-async function interpretWithDeepSeek(question, castDataText, onDelta, signal){
-  const messages = [
-    { role: 'system', content: buildSystemPrompt() },
-    { role: 'user', content:
-      `排盘数据：\n${castDataText}\n\n提问者的问题是：${question}\n\n请结合以上排盘数据给出解卦回复。` },
-  ];
-  const result = await callDeepSeekRaw(messages, onDelta, signal);
-  state.currentConversation = {
-    messages: [...messages, { role: 'assistant', content: result.text }],
-    turns: [
-      { role: 'user', text: question, ts: Date.now() },
-      { role: 'assistant', text: result.text, ts: Date.now(), interrupted: !!result.interrupted },
-    ],
-    cumTokens: result.totalTokens,
-    cumCost: result.costYuan,
-  };
-  saveActiveConversation();
-  return result;
-}
-
-// ---- 追问：把新的一句用户输入接到已有 messages 后面，整段历史一起发给AI，不是每次都从头起卦 ----
-async function followUpWithDeepSeek(followUpText, onDelta, signal){
-  if(!state.currentConversation){
-    throw new Error('还没有可以追问的解读，先点一次"AI 解读"。');
-  }
-  const followUpContent =
-    `追问：${followUpText}\n\n（请按系统设定里的追问规则，先判断这条追问是不是还在问同一件事，再决定要不要正常展开解读。）`;
-  // 追问要跟随"当前"的回复风格设置，不能锁死在首次解读那一刻的风格——
-  // 用户很可能中途去"设置"里把风格从深究换成精简（或反过来），这里每次追问都
-  // 重新生成一份系统提示词，替换掉 currentConversation.messages[0] 里那条旧的，
-  // 对话历史（用户问/AI答的具体轮次）不受影响，变的只是这条system指令本身。
-  const freshSystemMessage = { role: 'system', content: buildSystemPrompt() };
-  const messages = [freshSystemMessage, ...state.currentConversation.messages.slice(1), { role: 'user', content: followUpContent }];
-  const result = await callDeepSeekRaw(messages, onDelta, signal);
-  state.currentConversation.messages = [...messages, { role: 'assistant', content: result.text }];
-  state.currentConversation.turns.push({ role: 'user', text: followUpText, ts: Date.now() });
-  state.currentConversation.turns.push({ role: 'assistant', text: result.text, ts: Date.now(), interrupted: !!result.interrupted });
-  state.currentConversation.cumTokens += result.totalTokens;
-  state.currentConversation.cumCost += result.costYuan;
-  saveActiveConversation();
-  return result;
-}
-
-// ---- 单条问答轮次渲染成一个块，首次解读/追问/正在流式输出中的临时块都共用这一个函数 ----
-function turnHtml(t){
-  const cls = `convo-turn convo-${t.role}${t.interrupted ? ' interrupted' : ''}`;
-  return `<div class="${cls}"><b>${t.role === 'user' ? '问' : '答'}：</b>${escapeHtml(t.text)}</div>`;
-}
-
-// ---- 把当前会话已经落定的完整往返渲染出来（不含正在流式输出、还没完成的那一条）----
-function renderConversation(){
-  if(!state.currentConversation){ aiResult.textContent = ''; return; }
-  aiResult.innerHTML = state.currentConversation.turns.map(turnHtml).join('');
-}
-
-// ---- 流式文字真正开始吐之前（模型还在思考/推理阶段）调用：显示"正在思考中…Ns"，
-// 秒数跳字跳动，比干等着一个空光标看着更有反馈感。等第一个delta到了就切到 renderLive。----
-function renderThinking(questionText, seconds){
-  const settledHtml = state.currentConversation ? state.currentConversation.turns.map(turnHtml).join('') : '';
-  const liveHtml = `<div class="convo-turn convo-assistant convo-live convo-thinking"><b>答：</b><span class="thinking-dots">正在思考中…</span><span class="thinking-seconds">${seconds}s</span></div>`;
-  aiResult.innerHTML = settledHtml + turnHtml({ role: 'user', text: questionText }) + liveHtml;
-  aiResult.scrollTop = aiResult.scrollHeight;
-}
-
-// ---- 把"思考中跳秒计时"包装进 onDelta 回调里：调用后立刻显示"正在思考中…0s"并开始跳秒，
-// 收到第一个真正的文字delta时自动停表、切换成正常的流式渲染。解读和追问共用这一个包装。
-// 用法：const { onDelta, stop } = withThinkingIndicator(questionText, realOnDelta); ... 结束/出错时调用 stop()。
-function withThinkingIndicator(questionText, onDelta){
-  renderThinking(questionText, 0);
-  const startTime = Date.now();
-  let ticking = true;
-  const timer = setInterval(()=>{
-    if(!ticking) return;
-    renderThinking(questionText, Math.floor((Date.now() - startTime) / 1000));
-  }, 1000);
-  const stop = () => { if(ticking){ ticking = false; clearInterval(timer); } };
-  const wrappedOnDelta = (delta, fullSoFar) => {
-    stop(); // 第一个字来了，思考阶段结束
-    onDelta(delta, fullSoFar);
-  };
-  return { onDelta: wrappedOnDelta, stop };
-}
-
-// ---- 流式输出过程中调用：已落定的历史轮次 + 这一问 + 正在打字的实时答案，末尾带个闪烁光标 ----
-function renderLive(questionText, liveAnswerText){
-  const settledHtml = state.currentConversation ? state.currentConversation.turns.map(turnHtml).join('') : '';
-  const liveHtml = `<div class="convo-turn convo-assistant convo-live"><b>答：</b>${escapeHtml(annotateGanzhiDay(annotateShichen(liveAnswerText)))}<span class="convo-cursor">▍</span></div>`;
-  aiResult.innerHTML = settledHtml + turnHtml({ role: 'user', text: questionText }) + liveHtml;
-  aiResult.scrollTop = aiResult.scrollHeight;
 }
 
 // ---- 历史记录持久化：一次摇卦对应一整条"会话"记录，首次解读建条，之后每次追问更新同一条 ----
@@ -1795,166 +1000,14 @@ function historyCastHtml(cast, ts){
     ${cast.overallTrendText ? `<div class="history-cast-head">证据速览：${escapeHtml(cast.overallTrendText)}</div>` : ''}
   </div>`;
 }
-
-// ---- UI 绑定 ----
-const questionInput = document.getElementById('questionInput');
-const questionCharCounter = document.getElementById('questionCharCounter');
-const interpretBtn = document.getElementById('interpretBtn');
-const aiStatus = document.getElementById('aiStatus');
-const aiResult = document.getElementById('aiResult');
-const aiMeta = document.getElementById('aiMeta');
-const aiStats = document.getElementById('aiStats');
-const copyRow = document.getElementById('copyRow');
-const copyResultBtn = document.getElementById('copyResultBtn');
-const copyAllBtn = document.getElementById('copyAllBtn');
-const clearResultBtn = document.getElementById('clearResultBtn');
-// ---- 提示词导出（不经API Key）相关元素 ----
-const promptBtn = document.getElementById('promptBtn');
-const promptOutputBox = document.getElementById('promptOutputBox');
-const promptOutputText = document.getElementById('promptOutputText');
-const copyPromptBtn = document.getElementById('copyPromptBtn');
-const closePromptBtn = document.getElementById('closePromptBtn');
-// ---- 备用工具折叠容器（整理格式/追问提示词收在里面，默认折叠） ----
-const promptExtraTools = document.getElementById('promptExtraTools');
-const promptExtraToggle = document.getElementById('promptExtraToggle');
-// ---- 贴回矫正（本地清洗对方AI回复，不经网络）相关元素 ----
-// （外层 promptCleanupBox 这个包裹div本身不再需要单独控制显隐——它跟着 promptExtraTools
-// 折叠容器一起显示，这里只取里面真正要读写的几个子元素）
-const cleanupInputText = document.getElementById('cleanupInputText');
-const cleanupOutputText = document.getElementById('cleanupOutputText');
-const cleanupRunBtn = document.getElementById('cleanupRunBtn');
-const cleanupCopyRow = document.getElementById('cleanupCopyRow');
-const copyCleanupBtn = document.getElementById('copyCleanupBtn');
-// ---- 追问提示词导出相关元素 ----
-// （外层 promptFollowupExportBox 同理，显隐交给 promptExtraTools，这里只取要读写的子元素）
-const followUpExportInput = document.getElementById('followUpExportInput');
-const followUpExportOutput = document.getElementById('followUpExportOutput');
-const followUpExportBtn = document.getElementById('followUpExportBtn');
-const followUpExportCopyRow = document.getElementById('followUpExportCopyRow');
-const copyFollowUpExportBtn = document.getElementById('copyFollowUpExportBtn');
-// 记住"输出提示词"最近一次用的排盘文本和问题，供"生成追问提示词"复用——
-// 导出路径没有 currentConversation 那套多轮状态，只能靠这两个变量单独记一份。
-
-
-const followUpBox = document.getElementById('followUpBox');
-const followUpInput = document.getElementById('followUpInput');
-const followUpCharCounter = document.getElementById('followUpCharCounter');
-const followUpBtn = document.getElementById('followUpBtn');
-const followUpStatus = document.getElementById('followUpStatus');
-const stopGenBtn = document.getElementById('stopGenBtn');
-
-// ---- 提问框/追问框字数计数：跟 textarea 上的 maxlength="500" 配套，输入过程中就能
-// 看到还剩多少字，不用等真被浏览器硬截断才发现写多了；快到上限（剩余<=20字）时
-// 变朱砂色提醒一下。程序化清空这两个输入框的几处（清空回复/重置会话/追问发送后）
-// 都手动 dispatchEvent(new Event('input')) 了一次，所以这里只用管用户真实敲键盘的情况。
-function bindCharCounter(textareaEl, counterEl, max){
-  const update = () => {
-    const len = textareaEl.value.length;
-    counterEl.textContent = `${len} / ${max} 字`;
-    counterEl.classList.toggle('near-limit', max - len <= 20);
-  };
-  textareaEl.addEventListener('input', update);
-  update();
-}
 bindCharCounter(questionInput, questionCharCounter, 500);
 bindCharCounter(followUpInput, followUpCharCounter, 500);
-
-// ---- 收起"输出提示词"这一整套（主提示词/贴回矫正/追问提示词三个框），并把跟"上一次输出提示词"
-// 绑定的 lastExportCastText/lastExportQuestion 一并作废。用在两个场景：
-// 1) renderPlate() 里——一旦真的重新起了一卦，这三个框和这两个变量就全部过期了，
-//    不清掉的话会出现"排盘已经是新卦，提示词框还停在旧卦"（错位）或者"生成追问提示词
-//    时悄悄用了上一卦的数据"（内容错误）。
-// 2) interpretBtn 点击时——即便这次没有触发重摇（同一件事继续问），只是切去"AI解读"这条
-//    路径，也应该把"输出提示词"那一屏收起来，避免两条路径的结果区同屏叠着，分不清该看哪个。
-//    这种情况下不强制清空 lastExportCastText/lastExportQuestion（卦没变，数据仍然有效），
-//    真正的作废只交给 renderPlate() 在"确实重摇了"的时候去做。
-function hidePromptExportBoxes(){
-  promptOutputBox.style.display = 'none';
-  promptExtraTools.style.display = 'none';
-  promptExtraTools.classList.remove('open'); // 下次重新弹出时重新从折叠态开始，不记住上次展没展开
-  cleanupInputText.value = '';
-  cleanupOutputText.value = '';
-  cleanupOutputText.style.display = 'none';
-  cleanupCopyRow.style.display = 'none';
-  followUpExportInput.value = '';
-  followUpExportOutput.value = '';
-  followUpExportOutput.style.display = 'none';
-  followUpExportCopyRow.style.display = 'none';
-}
-
-// ---- 停止生成：同一时间只会有一个流式请求在跑（解读和追问互相锁定按钮），
-// 所以一个 AbortController + 一个共用的停止按钮就够用了。 ----
-
-function showStopBtn(){ stopGenBtn.style.display = 'inline-flex'; }
-function hideStopBtn(){ stopGenBtn.style.display = 'none'; }
 stopGenBtn.addEventListener('click', ()=>{
   if(state.activeAbortController){
     state.activeAbortController.abort();
     stopGenBtn.disabled = true; // 点一下就禁用，避免中断过程中重复点击
   }
 });
-
-const toggleSettingsBtn = document.getElementById('toggleSettingsBtn');
-const aiSettings = document.getElementById('aiSettings');
-const apiKeyInput = document.getElementById('apiKeyInput');
-const apiKeyStatus = document.getElementById('apiKeyStatus');
-const saveKeyBtn = document.getElementById('saveKeyBtn');
-const clearKeyBtn = document.getElementById('clearKeyBtn');
-const styleSelect = document.getElementById('styleSelect');
-const customStyleWrap = document.getElementById('customStyleWrap');
-const customStyleInput = document.getElementById('customStyleInput');
-const roleSelect = document.getElementById('roleSelect');
-const roleHint = document.getElementById('roleHint');
-const customRoleWrap = document.getElementById('customRoleWrap');
-const customRoleInput = document.getElementById('customRoleInput');
-const effortSelect = document.getElementById('effortSelect');
-const modelSelect = document.getElementById('modelSelect');
-
-// ---- Key 状态徽标：不用点开输入框，一眼就知道当前有没有存过 Key ----
-// 同时联动"AI 解读"按钮的显隐：填了Key才出现"AI解读"（调本站配置的API直接解卦），
-// 没填Key时只保留"输出提示词"（导出文本去别的AI软件问）；这里统一改这一处，
-// saveKeyBtn/clearKeyBtn/页面初始化三处都会调用到本函数，不用在三处分别加显隐判断。
-function updateApiKeyStatus(){
-  const has = !!loadApiKey();
-  apiKeyStatus.textContent = has ? '● 已设置' : '○ 未设置';
-  apiKeyStatus.classList.toggle('has-key', has);
-  apiKeyStatus.classList.toggle('no-key', !has);
-  interpretBtn.style.display = has ? '' : 'none';
-  // 没填Key时"AI 解读"整个隐藏，"输出提示词"是这个状态下唯一走得通的路径，
-  // 不该继续顶着描边的次要按钮样式（那样这一屏就没有一个实心主按钮，找不到"从哪下手"）。
-  // 这里让它跟着有没有Key切换：没Key时摘掉.ghost、升级成实心主按钮；填了Key后
-  // "AI 解读"重新出现当主按钮，"输出提示词"退回描边样式，避免两个同权重主按钮并排。
-  promptBtn.classList.toggle('ghost', has);
-}
-
-
-// ---- 计价单价覆盖：3个输入框（缓存命中/未命中/输出），留空的字段用内置默认值。
-// 官方目前是峰谷两档计费、高峰固定是闲时的2倍，但这里UI仍只留一份输入，图省事——
-// 填的就当"闲时"单价，保存时按 ×2 自动换算出高峰单价，一起写进 {offpeak,peak} 结构
-// （跟 effectivePriceTable() 保持一致）。如果官方以后把峰谷倍率从2倍改成别的数，
-// 或者干脆取消峰谷价，这里的 ×2 换算要跟着改。 ----
-const priceHit = document.getElementById('priceHit');
-const priceMiss = document.getElementById('priceMiss');
-const priceOutput = document.getElementById('priceOutput');
-const savePriceOverrideBtn = document.getElementById('savePriceOverrideBtn');
-const resetPriceOverrideBtn = document.getElementById('resetPriceOverrideBtn');
-
-// ---- 价格覆盖输入框的占位数字（灰字提示"不填的话会用这个默认值"）要跟着当前选中的模型走，
-// 不然切换模型后这里还显示旧模型的单价，容易让人误以为默认值没变。 ----
-function refreshPriceOverridePlaceholders(){
-  const base = PRICE_TABLES[loadModelChoice()] || PRICE_TABLES['deepseek-flash'];
-  priceHit.placeholder = base.offpeak.hit;
-  priceMiss.placeholder = base.offpeak.miss;
-  priceOutput.placeholder = base.offpeak.output;
-}
-function fillPriceOverrideInputs(){
-  const o = loadPriceOverride() || {};
-  // 输入框回显的是"闲时"单价那一份；peak是保存时按×2自动换算出来的，不用单独读回显
-  priceHit.value = (o.offpeak && o.offpeak.hit != null) ? o.offpeak.hit : '';
-  priceMiss.value = (o.offpeak && o.offpeak.miss != null) ? o.offpeak.miss : '';
-  priceOutput.value = (o.offpeak && o.offpeak.output != null) ? o.offpeak.output : '';
-  refreshPriceOverridePlaceholders();
-}
 fillPriceOverrideInputs();
 
 savePriceOverrideBtn.addEventListener('click', ()=>{
@@ -1981,29 +1034,8 @@ resetPriceOverrideBtn.addEventListener('click', ()=>{
   fillPriceOverrideInputs();
   showToast('已恢复内置默认单价');
 });
-
-const gotoAiTabBtn = document.getElementById('gotoAiTabBtn');
 if(gotoAiTabBtn){
   gotoAiTabBtn.addEventListener('click', ()=> switchTab('ai'));
-}
-
-const toggleHistoryBtn = document.getElementById('toggleHistoryBtn');
-const historyPanel = document.getElementById('historyPanel');
-const historyList = document.getElementById('historyList');
-const historyEmpty = document.getElementById('historyEmpty');
-const historyCount = document.getElementById('historyCount');
-const clearHistoryBtn = document.getElementById('clearHistoryBtn');
-
-// ---- Key 输入框：保存后只显示打码值，防止在框内复制出明文 ----
-function lockApiKeyInput(rawKey){
-  apiKeyInput.value = maskApiKey(rawKey);
-  apiKeyInput.readOnly = true;
-  apiKeyInput.classList.add('masked');
-}
-function unlockApiKeyInput(){
-  apiKeyInput.value = '';
-  apiKeyInput.readOnly = false;
-  apiKeyInput.classList.remove('masked');
 }
 ['copy','cut','contextmenu'].forEach(evt=>{
   apiKeyInput.addEventListener(evt, e=>{
@@ -2065,13 +1097,6 @@ clearKeyBtn.addEventListener('click', ()=>{
   apiKeyInput.focus();
   showToast('Key 已清除，可以重新粘贴新的了');
 });
-
-// ---- 历史记录 & 累计统计 ----
-function formatTime(ts){
-  const d = new Date(ts);
-  const pad = n => String(n).padStart(2,'0');
-  return `${d.getMonth()+1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
 
 function renderStats(){
   const list = loadHistory();
@@ -2140,10 +1165,6 @@ function renderHistory(){
   `;
   }).join('');
   renderStats();
-}
-
-function escapeHtml(s){
-  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
 toggleHistoryBtn.addEventListener('click', ()=>{
@@ -2243,36 +1264,6 @@ customStyleInput.addEventListener('input', ()=>{
   saveCustomStyle(customStyleInput.value);
 });
 
-// ---- 统一的"复制到剪贴板"封装：全站5个复制按钮共用这一个函数，不再各写一遍 ----
-// 优先用 navigator.clipboard.writeText；但这个API不保证存在——部分受限WebView
-// （比如某些App内嵌浏览器）里 navigator.clipboard 本身就是 undefined，直接调用
-// 会同步抛TypeError，根本走不到后面的 .catch()，之前的写法在这类环境里连
-// "复制没成功"的提示都弹不出来，用户只会看到点了没反应。这里做一层兜底：
-// 不存在时退回旧式 document.execCommand('copy')（造一个临时textarea选中文字执行复制），
-// 两条路都失败，调用方的 .catch() 才会被触发、走到"请长按手动复制"的提示。
-function copyTextToClipboard(text){
-  if(navigator.clipboard && typeof navigator.clipboard.writeText === 'function'){
-    return navigator.clipboard.writeText(text);
-  }
-  return new Promise((resolve, reject)=>{
-    try{
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.top = '-9999px';
-      ta.style.left = '-9999px';
-      document.body.appendChild(ta);
-      ta.focus();
-      ta.select();
-      const ok = document.execCommand('copy');
-      document.body.removeChild(ta);
-      ok ? resolve() : reject(new Error('execCommand复制失败'));
-    }catch(e){
-      reject(e);
-    }
-  });
-}
-
 copyResultBtn.addEventListener('click', ()=>{
   const turns = state.currentConversation?.turns || [];
   const lastAnswer = [...turns].reverse().find(t => t.role === 'assistant');
@@ -2308,19 +1299,6 @@ clearResultBtn.addEventListener('click', ()=>{
   questionInput.value = ''; // 答案清空的同时把提问框也清掉，避免刷新后"问题还在、答案没了"的错觉
   questionInput.dispatchEvent(new Event('input')); // 同步触发一次，让字数计数器跟着归零
 });
-
-// ---- 提示词导出结果的显示/复制/收起：和上面"复制最新回复"是同一套复制手法，
-// 只是复制的对象换成 promptOutputText 这个只读文本框里的完整提示词。 ----
-function showPromptOutput(text){
-  promptOutputText.value = text;
-  promptOutputBox.style.display = 'block';
-  // "贴回矫正"和"生成追问提示词"这两步只在少数场景才用得上（换个AI软件接着问、
-  // 对方AI没有上下文记忆、想把这次问答也存一份在本站）——多数人复制主提示词发出去后
-  // 会直接在对方AI那边接着聊，所以这里只露出折叠起来的入口，不强行展开占地方。
-  promptExtraTools.style.display = 'block';
-  promptExtraTools.classList.remove('open');
-  promptOutputBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
 
 copyPromptBtn.addEventListener('click', ()=>{
   copyTextToClipboard(promptOutputText.value).then(()=>{
