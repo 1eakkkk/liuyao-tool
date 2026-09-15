@@ -9,7 +9,10 @@ beforeAll(async () => {
   localStorage.setItem('liuyao_onboarded', '1');
   window.scrollTo = () => {};
   HTMLElement.prototype.scrollIntoView = () => {};
-  app = await import('../../src/main.js');
+  await import('../../src/main.js');
+  app = { ...await import('../../src/ui/casting-view.js'), ...await import('../../src/core/physics.js'), ...await import('../../src/ai/formatter.js'), ...await import('../../src/ai/prompt-builder.js'), ...await import('../../src/storage/history.js') };
+  const {state} = await import('../../src/app/state.js');
+  app.setTestCalendar = date => { state.knownCastDate = date; state.daySelectionMode = 'date'; };
 });
 afterAll(() => { vi.clearAllTimers(); vi.useRealTimers(); });
 for (const fixture of fixtures) {
