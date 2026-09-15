@@ -1,0 +1,1034 @@
+
+/* ==================================================================
+  ① 样式区地图（按出现顺序）：
+  基础变量与全局 → HERO 头图 → NAV 导航 → bagua grid 八卦卡片
+  → wuxing wheel 五行轮盘 → table 通用表格 → caster 起卦排盘
+  → duan gua guide 断卦指南列表 → AI 解卦 → 累计统计条 → 历史记录面板
+  → toast 提示 → 新手教程弹层 → 通用确认弹层
+  配色统一走 :root 里的 CSS 变量（墨/纸/朱砂/黄铜/青玉），改主题色只动这里。
+================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+/* 与上面 <script> 里的滚动恢复修复配套：关掉 CSS 的"滚动锚定"（scroll anchoring）。
+   否则字体/图片异步加载导致上方内容高度变化时，浏览器会自动帮你"追着内容跳"，
+   也会造成打开页面后位置莫名往下窜的现象。@import 必须放在最前面，所以这条挪到它后面。 */
+html{overflow-anchor:none;}
+
+:root{
+  --ink:#181611;
+  --paper:#ece4d0;
+  --paper-dim:#ddd2b6;
+  --panel:#211d17;
+  --panel-2:#2a251d;
+  /* ---------- 边框色：原来 #3a3222 / #4a4128 / #33301f 这三个颜色全站直接写死引用
+     （分别34处/加上头图bagua-ring里的SVG描边共37处），跟其它颜色（哪怕只用一次的
+     六神专用色）都进了变量不一致。提炼成三档变量，按实际用途取名，方便区分：
+     --border 用在卡片/面板/头图这类"容器外框"；--border-soft 更亮一档，用在
+     输入框/下拉框/按钮描边这类"可交互控件"；--border-faint 最暗一档，用在
+     卡片内部的分割线（表格行线、设置项之间的横线）而不是外框。只是把散落各处的
+     同一个值收拢到一起，不改变任何一处的实际显示颜色。 ---------- */
+  --border:#3a3222;
+  --border-soft:#4a4128;
+  --border-faint:#33301f;
+  --vermilion:#a8391f;
+  --vermilion-bright:#c8481f;
+  /* --vermilion-bright 实测拿来做文字（墨色背景上约3.8:1）低于WCAG AA正文要求的4.5:1，
+     做边框/背景点缀没问题，但激活态标签文字、动爻行文字这类"文字用朱砂"的场景改用
+     这一档：同色相基础上提亮+提饱和度，对 --ink 约5.2:1、对 --panel 约4.8:1，两处
+     常见背景下都过AA。只换文字色值，边框/背景/SVG描边等装饰性用法不受影响。 */
+  --vermilion-text:#e65f34;
+  --brass:#b8944f;
+  --brass-dim:#8a7142;
+  /* --brass-bright：交互控件（按钮填充/激活态）专用的提亮版黄铜色，用来把"可点击的
+     控件"和"朱砂＝数据状态/警示"这两类语义彻底分开——朱砂只留给动爻高亮、报错、
+     警告文字这些"提醒你注意"的场景，常规按钮/激活的标签页一律走黄铜这一路，
+     两种颜色各司其职，朱砂出现时才真正显眼。深色文字（--ink）压在这个亮度的
+     黄铜底色上对比度约6.4:1，过AA。 */
+  --brass-bright:#cda866;
+  --jade:#4f7a63;
+  /* ---------- 六神专用色（仅供排盘表格/卡片里六神名字前的小色块用，纯装饰性提示，
+     不参与判断逻辑）：青龙走--jade、朱雀走--vermilion-bright、勾陈走--brass，
+     这三个沿用已有变量；螣蛇、玄武现有色板里没有贴切的选项，这里单独开两个，
+     只在 .spirit-dot 里用，不影响其它任何地方。 ---------- */
+  --spirit-tengshe:#7d5a78;
+  --spirit-xuanwu:#33465a;
+  --text-lo:#eee6d4;
+  --text-mid:#c9bd9f;
+  --text-dim:#8d8367;
+  /* --text-dim 配合最小号 --fs-1 用时（历史记录时间戳等）对比度约4.45:1，卡在及格线边缘，
+     小字号又不显眼，容易看不清。这里单独给"极小字号+text-dim"这个组合出一档提亮版，
+     对 --ink 约6.2:1、对 --panel 约5.8:1，只用在 --fs-1 这一档，不影响其它字号仍用
+     --text-dim 的正文/说明文字。 */
+  --text-dim-sm:#a0977d;
+  /* ---------- 字号刻度：全站小于18px的UI文字统一走这6档，
+     不再各处随手写字面量。挑一档最贴近语义的用，不新增新字号。 ---------- */
+  /* 整体上调一档（原11.5/12.5/13.5/14.5/16/15），信息密度不变，但长时间阅读
+     排盘表格、AI解读正文时更松快一些。 */
+  --fs-1:12.5px;  /* 极小：徽标·时间戳·极次要的小字注解 */
+  --fs-2:13.5px;  /* 小：表单标签·说明提示·状态/统计文字 */
+  --fs-3:14.5px;  /* 常规控件：下拉框/输入框取值·紧凑表格与列表 */
+  --fs-4:15.5px;  /* 正文：说明段落·AI解读正文·多行文本框·弹层正文 */
+  --fs-5:17px;    /* 强调：小标题/副标题级的强调文字 */
+  --fs-accent:16px; /* 主操作按钮 + 少量强调标记（导航tab、AI解读、起卦按钮等）*/
+}
+/* ---------- 卡片层次感 ----------
+   面板/卡片/表格背景之前统一用同一个纯色 --panel，颜色变量分了panel/panel-2
+   两档，但视觉上大片同色块紧挨着堆叠，长页面滚下来观感比较扁平、一块接一块
+   不太分得清谁在"上层"。这里给常用的卡片类容器统一加一圈细微投影+顶部一条
+   若隐若现的高光，不改背景色本身，只增加"这是一块浮起来的卡片"的暗示，
+   多个卡片叠着看的时候能分出前后层次，不再是纯色块拼接。 */
+.caster-box, .gua-card, .coin-log, .history-item, .ai-stats,
+.wx-legend .row, .onboard-card, .confirm-card, .ai-result,
+.prompt-output-box, .guide-list li, table.ref{
+  box-shadow:0 4px 16px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
+}
+*{box-sizing:border-box;}
+html{overflow-x:hidden;}
+/* 关掉手机浏览器"双击某处自动放大"这个手势——不是靠viewport的user-scalable=no
+   （那样会连累双指缩放，对视力不好的用户不友好，之前特意保留了），而是用
+   touch-action:manipulation：它只取消双击/双指快速点击触发的缩放和一些延迟，
+   浏览器原生的双指捏合缩放（pinch-zoom）不受影响，两不误。 */
+html,body{touch-action:manipulation;}
+body{
+  margin:0;
+  overflow-x:hidden;
+  background:
+    /* 极细的纸纹颗粒（feTurbulence生成，透明度烘焙在SVG自身的alpha通道里，
+       约0.05），叠在原来的墨色径向渐变最上层——之前配色变量特意分了paper/ink
+       两套名字，但视觉上全程是纯色色块，没有一点"纸"的质地。这层颗粒不影响
+       任何文字对比度（alpha极低），只在大片纯色区域滚动时增加一点点肌理，
+       不再是死板的平涂色块。 */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.93 0 0 0 0 0.89 0 0 0 0 0.78 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat,
+    radial-gradient(1200px 700px at 50% -10%, #2a2419 0%, var(--ink) 60%),
+    var(--ink);
+  color:var(--text-lo);
+  font-family:'Noto Sans SC',sans-serif;
+  line-height:1.6;
+}
+h1,h2,h3,.serif{font-family:'Noto Serif SC',serif;}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  padding:76px 24px 56px;
+  text-align:center;
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+/* 头图原来是"小标签→大标题→副标题→八卦徽"四段纯居中堆叠，规规矩矩但略显常规。
+   这里在最底层铺两圈极淡的同心圆（不额外加DOM，用::before，天然画在其它内容
+   下面），让标题文字视觉上"坐"在一张更大的太极星盘里，而不是孤零零一段文字
+   后面再接一个独立的徽章图案，呼应下面bagua-ring但不抢文字的风头。 */
+.hero::before{
+  content:'';
+  position:absolute;
+  top:38%;left:50%;
+  width:640px;height:640px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:
+    radial-gradient(circle at center, transparent 0 219px, rgba(184,148,79,.07) 220px 221px, transparent 222px),
+    radial-gradient(circle at center, transparent 0 289px, rgba(184,148,79,.045) 290px 291px, transparent 292px);
+  pointer-events:none;
+}
+.hero .eyebrow{
+  letter-spacing:.35em;
+  font-size:var(--fs-2);
+  color:var(--brass);
+  text-transform:uppercase;
+}
+.hero h1{
+  font-size:clamp(34px,6vw,58px);
+  font-weight:900;
+  margin:14px 0 8px;
+  color:var(--paper);
+  letter-spacing:.03em;
+}
+.hero p.sub{
+  color:var(--text-mid);
+  font-size:var(--fs-5);
+  max-width:520px;
+  margin:0 auto;
+}
+.bagua-ring{
+  width:190px;height:190px;margin:20px auto 0;position:relative;
+}
+/* 徽章背后加一圈朱砂暖光晕：::before在文档流里排在svg前面，默认绘制顺序天然
+   垫在下面，不需要额外z-index。让太极徽看起来像是"嵌在光里"而不是贴在纯黑
+   背景上的一张扁平贴纸，跟上面.hero::before的同心圆呼应，标题区不再是三段
+   互不相干的堆叠，而是有一点前后层次。 */
+.bagua-ring::before{
+  content:'';
+  position:absolute;
+  inset:-30px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(168,57,31,.16), transparent 70%);
+  pointer-events:none;
+}
+.bagua-ring svg{width:100%;height:100%;position:relative;}
+.badge-spin{transform-origin:100px 100px;animation:spin 140s linear infinite;}
+@media (prefers-reduced-motion: reduce){.badge-spin{animation:none;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ---------- NAV ---------- */
+.tabs{
+  position:sticky;top:0;z-index:20;
+  display:flex;justify-content:center;gap:4px;
+  background:rgba(24,22,17,.92);
+  backdrop-filter:blur(6px);
+  padding:12px 52px;
+  border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.tab-btn{
+  font-family:'Noto Serif SC',serif;
+  background:none;border:1px solid transparent;
+  color:var(--text-mid);
+  /* 圆角原来单独写的3px，跟同属"小型控件"这一档的按钮/输入框/下拉框（清一色4px）
+     对不上——排查全站圆角取值后发现这是唯一一个跟自己所在的档位脱节的值，
+     其余"大容器"(8px)/"卡片"(6px)/"弹层"(10px)几档本身已经是一套有梯度的
+     体系，不需要额外合并，这里只改这一处对齐即可。 */
+  padding:9px 20px;border-radius:4px;
+  cursor:pointer;font-size:var(--fs-accent);letter-spacing:.05em;
+  transition:.2s;
+  /* 四个tab之前纯靠文字标题区分板块，视觉上比较同质。这里给每个tab配一个
+     极简线条小图标（内容见对应<button>里的内联svg），图标用currentColor，
+     跟随文字颜色（含hover/active态）自动变化，不用额外维护图标专属配色。 */
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+}
+.tab-icon{width:15px;height:15px;flex:none;}
+.tab-btn:hover{color:var(--paper);}
+.tab-btn.active{
+  /* 原来用朱砂做激活态文字色，跟"摇卦"按钮、动爻高亮撞成一个颜色，朱砂就不再
+     稀有。导航切换属于常规交互控件，改走黄铜这一路，朱砂留给真正需要被优先
+     看到的数据状态（动爻/报错/警告）。 */
+  color:var(--brass);
+  border-color:var(--brass-dim);
+  background:var(--panel);
+}
+.tab-btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+
+main{max-width:920px;margin:0 auto;padding:44px 20px 100px;}
+.panel{display:none;}
+.panel.active{display:block;animation:fade .35s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+/* 通用淡入工具类：跟标签切换/弹窗共用同一条 fade 关键帧，摇卦完排盘表渲染出来时也套这个，
+   动效语言保持统一，不再是硬切出现。JS里每次重新渲染都会先移除、强制回流、再加上这个类，
+   好让同一个元素能重复触发动画（同一个类连续加两次浏览器不会重新播放）。 */
+.fade-in{animation:fade .35s ease;}
+
+section.block{margin-bottom:56px;}
+section.block > h2{
+  font-size:23px;color:var(--paper);
+  display:flex;align-items:center;gap:10px;margin-bottom:6px;
+}
+section.block > h2::before{
+  content:'';width:8px;height:8px;background:var(--vermilion);
+  border-radius:50%;flex:none;
+}
+section.block > p.desc{color:var(--text-mid);font-size:var(--fs-4);margin:0 0 20px;max-width:640px;}
+
+/* ---------- 折叠区块：进阶/参考类内容默认收起，只留标题，减少信息量 ---------- */
+section.block-collapse{margin-bottom:14px;border-bottom:1px solid #2e2a1e;padding-bottom:14px;}
+section.block-collapse > h2{
+  cursor:pointer;user-select:none;margin-bottom:0;justify-content:flex-start;
+}
+section.block-collapse > h2 .collapse-hint{
+  margin-left:auto;font-size:var(--fs-2);font-weight:400;color:var(--text-dim);
+  font-family:'Noto Sans SC',sans-serif;letter-spacing:normal;white-space:nowrap;
+}
+section.block-collapse > h2 .collapse-hint::after{content:'展开 ▾';}
+section.block-collapse.open > h2 .collapse-hint::after{content:'收起 ▴';}
+section.block-collapse > .block-collapse-body{display:none;padding-top:16px;}
+section.block-collapse.open > .block-collapse-body{display:block;animation:fade .25s ease;}
+section.block-collapse.open{margin-bottom:56px;border-bottom:none;padding-bottom:0;}
+
+/* ---------- bagua grid ---------- */
+/* 原来用 auto-fit 自适应列数，容器够宽时一行能塞下6张，8张卡片就变成"6+2"——
+   第二行右边空出4个卡片的位置，头重脚轻。这里改成固定列数：宽屏4列（2行×4，
+   正好整除8张），窄屏（跟全站其它断点一致，见下面@media 640px）改2列（4行×2，
+   同样整除），不管容器宽度怎么变，8张卡片永远刚好分完，不会再出现某一行只放
+   一两张、右边一截空白的情况。 */
+.gua-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.gua-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:6px;
+  padding:16px 12px;text-align:center;
+}
+.gua-card .sym{font-size:34px;color:var(--brass);line-height:1;}
+.gua-card .name{font-family:'Noto Serif SC',serif;font-size:17px;margin:8px 0 2px;color:var(--paper);}
+.gua-card .meta{font-size:var(--fs-2);color:var(--text-dim);}
+
+/* ---------- wuxing wheel ---------- */
+.wuxing-wrap{display:flex;flex-wrap:wrap;gap:32px;align-items:center;justify-content:center;}
+.wuxing-svg{width:280px;height:280px;flex:none;}
+.wx-node{cursor:pointer;}
+.wx-node:focus-visible circle{stroke:var(--vermilion-bright);stroke-width:2.5;}
+.wx-node:focus{outline:none;}
+.wx-node circle{fill:var(--panel);stroke:var(--border-soft);stroke-width:1.5;transition:.2s;}
+.wx-node text{fill:var(--text-lo);font-size:16px;font-family:'Noto Serif SC',serif;pointer-events:none;}
+.wx-node.active circle{fill:var(--vermilion);stroke:var(--vermilion-bright);}
+.wx-arrow{stroke:#544a2e;stroke-width:1.6;fill:none;marker-end:url(#arrow);opacity:.55;}
+.wx-arrow.sheng.hl{stroke:var(--jade);opacity:1;stroke-width:2.4;}
+.wx-arrow.ke.hl{stroke:var(--vermilion-bright);opacity:1;stroke-width:2.4;}
+.wx-legend{font-size:var(--fs-3);color:var(--text-mid);max-width:280px;}
+.wx-legend b{color:var(--paper);}
+.wx-legend .row{margin-bottom:10px;padding:8px 10px;background:var(--panel);border-radius:4px;border-left:3px solid var(--brass-dim);min-height:20px;}
+
+/* ---------- table generic ---------- */
+table.ref{width:100%;border-collapse:collapse;font-size:var(--fs-3);}
+table.ref th,table.ref td{padding:8px 10px;border-bottom:1px solid var(--border-faint);text-align:center;}
+table.ref th{color:var(--brass);font-weight:500;background:#221f16;}
+table.ref td{color:var(--text-mid);}
+table.ref tr:hover td{color:var(--paper);background:#221f16;}
+/* 列比较多的参考表（比如6列的旺相休囚死）在窄屏下用 width:100% 硬挤会把每列
+   压得看不清，这里改成横向滚动兜底：宽屏下 min-width 反正比容器窄，视觉上还是撑满
+   width:100%；容器一旦比 min-width 窄（手机上常见），就交给 .ref-scroll 横向滚动，
+   而不是继续挤压列宽。窄表格（2-3列，靠文字自动换行）不需要这个处理，没加这两个类。
+   原来12列的地支五行表也走这套横滑方案，后来拆成两张6列子表上下堆叠，
+   不再需要横向滚动，改动见下方"天干地支"区块。 */
+.ref-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:14px;}
+table.ref.ref-wide{min-width:480px;}
+/* 光靠 overflow-x:auto 本身不够显眼——手机浏览器的滚动条大多细到几乎看不见，
+   窄屏下这几张宽表格右边被切掉一块，用户容易以为表格本来就这么点内容，
+   没意识到还能横滑看剩下的列。这里补一行小字提示，只在会真的触发横滑的
+   窄屏（跟.ref-wide触发横滑的断点对齐）下出现，宽屏本来就能整张摊开，不需要这行提示。 */
+.scroll-hint{display:none;font-size:var(--fs-1);color:var(--text-dim-sm);text-align:right;margin:-6px 2px 8px;}
+/* ---------- table.ref 卡片化：多行 key-value 结构的参考表在窄屏下改用
+   一行一卡片，跟 .plate-cards（排盘结果卡片）是同一套视觉语言。
+   单行 colspan 铺满的表（十天干/六合/六冲）本来就没套 .ref-scroll——
+   colspan 里的文字窄屏下自然换行，没有横滑摩擦，这里也不套卡片化。
+   地支五行原本是13列矩阵，套着 .ref-scroll 横滑；它是"一对一简单映射"，
+   拆成12张卡片密度太低、纵向滚动成本比横滑更大，改成拆两张6列子表
+   上下堆叠（见下方"天干地支"区块），同样不用卡片化，也不再需要横滑。 ---------- */
+@media (max-width:640px){
+  table.ref.ref-cards{display:block;width:100%;}
+  table.ref.ref-cards thead{display:none;}
+  table.ref.ref-cards tbody{display:block;}
+  table.ref.ref-cards tr{
+    display:block;
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:10px 12px;
+    margin-bottom:8px;
+    box-shadow:0 4px 16px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
+  }
+  table.ref.ref-cards tr:last-child{margin-bottom:0;}
+  table.ref.ref-cards th,
+  table.ref.ref-cards td{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    text-align:left;
+    padding:5px 0;
+    border-bottom:none;
+    color:var(--text-mid);
+    font-size:var(--fs-3);
+    background:transparent;
+  }
+  /* data-th 是每格对应的表头文字，用 ::before 补在左边充当"字段名" */
+  table.ref.ref-cards th[data-th]::before,
+  table.ref.ref-cards td[data-th]::before{
+    content:attr(data-th);
+    color:var(--brass);
+    font-weight:500;
+    flex:none;
+  }
+  /* 每行第一格当卡片标题用：字号提一档、加下分割线 */
+  table.ref.ref-cards tr > :first-child{
+    font-family:'Noto Serif SC',serif;
+    color:var(--paper);
+    font-size:var(--fs-4);
+    border-bottom:1px solid var(--border-faint);
+    margin-bottom:4px;
+    padding-bottom:8px;
+  }
+  table.ref.ref-cards tr > :first-child::before{content:none;}
+  /* 卡片化之后不再需要横滑，原来包在外面的 .ref-scroll 直接失效即可，
+     前面配套的"左右滑动"提示文字也跟着一起隐藏，避免文字和实际交互对不上。 */
+  .ref-scroll:has(table.ref-cards){overflow-x:visible;}
+  .scroll-hint:has(+ .ref-scroll table.ref-cards){display:none;}
+  table.ref.ref-cards.ref-wide{min-width:0;}
+}
+@media (max-width:640px){
+  .scroll-hint{display:block;}
+}
+
+/* ---------- caster ---------- */
+.caster-box{
+  background:var(--panel);border:1px solid var(--border);border-radius:8px;
+  padding:24px;display:flex;flex-wrap:wrap;gap:28px;
+}
+.caster-controls{flex:1;min-width:220px;}
+.caster-controls label{display:block;font-size:var(--fs-2);color:var(--text-mid);margin-bottom:6px;}
+.caster-controls select{
+  width:100%;background:var(--panel-2);color:var(--text-lo);
+  border:1px solid var(--border-soft);border-radius:4px;padding:9px;font-size:var(--fs-3);margin-bottom:18px;
+}
+.day-lookup-row{
+  display:flex;align-items:center;gap:8px;margin:-10px 0 18px;
+}
+.day-lookup-label{
+  margin-bottom:0!important;white-space:nowrap;font-size:var(--fs-2);color:var(--text-dim);
+}
+.day-lookup-row input[type="date"]{
+  flex:1;min-width:0;background:var(--panel-2);color:var(--text-lo);
+  border:1px solid var(--border-soft);border-radius:4px;padding:7px 8px;font-size:var(--fs-2);
+  font-family:'Noto Sans SC',sans-serif;color-scheme:dark;
+}
+.cast-btn{
+  /* 主操作按钮统一改用黄铜填充+墨色文字（原来是朱砂填充），朱砂只留给动爻、
+     报错这类"数据状态"，按钮这类常规交互控件不再跟它抢注意力。深色文字压在
+     这个亮度的黄铜底色上是特意选的组合，对比度比原来的浅色文字压朱砂更高。 */
+  width:100%;padding:13px;border:none;border-radius:4px;
+  background:var(--brass);color:var(--ink);
+  font-family:'Noto Serif SC',serif;font-size:var(--fs-accent);letter-spacing:.08em;
+  cursor:pointer;transition:.2s;
+}
+.cast-btn:hover{background:var(--brass-bright);}
+.cast-btn:disabled{opacity:.5;cursor:default;}
+/* 次要/跳转类按钮：外观上跟主操作按钮（同样满宽、同样字体）区分开来，用描边
+   代替实心填充，视觉权重明显更轻——"去 AI 解卦"这类"跳到下一步"的引导按钮
+   用这个，不再跟真正的"摇卦"主按钮撞成同一个颜色同一个分量，一眼就能看出
+   谁是这个面板里真正要点的那个按钮。 */
+.cast-btn.outline{
+  background:none;color:var(--brass);
+  border:1px solid var(--brass-dim);
+}
+.cast-btn.outline:hover{background:var(--panel-2);border-color:var(--brass);color:var(--paper);}
+.coin-log{
+  margin-top:14px;min-height:22px;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  font-size:var(--fs-2);color:var(--text-mid);
+  background:var(--panel-2);border:1px solid var(--border);border-radius:4px;
+  padding:9px 12px;
+}
+/* 摇卦前这个容器是真·空标签（innerHTML===''），但因为有 min-height+边框+背景色，
+   没摇之前会显示成一个悬浮的、没内容的空框，像个没渲染完的UI碎片。跟 .ai-result:empty
+   同款写法：内容一空就整个收起，第一次摇完（coinLog.innerHTML被写入结果）自然露出来，
+   每次重摇前JS会先清空一次（见"清掉上一次系统摇卦残留的铜钱记录"那行），也会跟着先隐一下再出现。 */
+.coin-log:empty{display:none;}
+.cast-mode-toggle{display:flex;gap:8px;margin-bottom:16px;}
+.mode-btn{
+  flex:1;padding:9px 6px;border:1px solid var(--border-soft);border-left:3px solid transparent;border-radius:4px;
+  background:var(--panel-2);color:var(--text-mid);
+  font-family:'Noto Serif SC',serif;font-size:var(--fs-3);cursor:pointer;transition:.2s;
+}
+.mode-btn:hover{color:var(--paper);}
+/* 原来这里直接抄"摇卦"主按钮同款的黄铜实心填充做激活态，但实心色块在别处
+   （.cast-btn等主操作按钮）通常表示"这是要点下去执行操作的按钮"；这里其实只是
+   "现在处于哪个模式"的选中反馈，跟"点了会做事"不是一回事，两处用同一种视觉语言
+   容易让人产生错误预期。这里改成半透明黄铜底色+左侧一道竖线，跟主操作按钮的
+   实心填充明显区分开，比导航栏纯描边的选中态又更醒目一点（这两个按钮间距紧，
+   纯描边不够抓眼）。base状态先占一条透明的左边框占位，选中时只切换颜色不改
+   宽度，避免切换模式时按钮内文字跟着轻微跳一下。 */
+.mode-btn.active{
+  background:rgba(184,148,79,.14);
+  color:var(--brass);
+  border-color:var(--brass-dim);
+  border-left-color:var(--brass);
+}
+.cast-quota-hint{font-size:var(--fs-1);color:var(--text-dim-sm);margin:-6px 0 14px;}
+.cast-quota-hint.cast-quota-warn{color:var(--vermilion-text);}
+.manual-lines{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.manual-line-row{display:flex;align-items:center;gap:10px;}
+.manual-line-row label{flex:none;width:40px;font-size:var(--fs-2);color:var(--text-mid);margin-bottom:0;}
+.manual-line-row select{
+  flex:1;background:var(--panel-2);color:var(--text-lo);
+  border:1px solid var(--border-soft);border-radius:4px;padding:8px;font-size:var(--fs-3);
+}
+.coin-log b{color:var(--paper);font-weight:500;}
+.coin-dot{
+  width:16px;height:16px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:10px;border:1px solid var(--brass-dim);color:var(--brass);flex:none;
+}
+.coin-dot.head{background:var(--brass-dim);color:var(--ink);}
+.coin-log .sum{color:var(--text-dim-sm);}
+
+.plate{flex:1.4;min-width:280px;overflow-x:auto;}
+.plate table{width:100%;border-collapse:collapse;font-size:var(--fs-3);}
+.plate th{color:var(--brass);font-weight:500;padding:6px 4px;border-bottom:1px solid var(--border-soft);}
+.plate td{padding:7px 4px;text-align:center;border-bottom:1px solid #2c2818;color:var(--text-mid);}
+.plate td.line-graphic{padding:9px 4px;}
+/* 原来这里只给"变出"这一列（内容最长，如"丙戌(土)子孙"）在窄屏下单独降字号、
+   预留两行高度，想缓解它换行撑高行高的问题。实测发现窄屏下真正的问题比这大得多：
+   8列表格宽度被压缩到每列没几像素时，不止"变出"，全部列的中文都会被挤成单字换行、
+   逐字竖排堆叠，单元格高度暴涨到200-300px，整张表滚动起来极长——这是"8列表格"这个
+   形态本身在窄屏下撑不住，不是靠给某一列单独调字号、插两个断行点能根治的。
+   这里窄屏下改成把<table>整个换成下面的"每爻一张卡片"布局（.plate-cards），
+   表格形态留给放得下的宽屏，窄屏不再硬挤。 */
+/* ---------- 移动端排盘卡片：一爻一张卡片，格式抄的是本文件"历史记录"展开态里
+   逐爻摘要那套已经验证过、在窄屏下依然横排不会拆成单字竖排的写法（历史记录用的
+   是 .history-line-row），宽屏下不显示（display:none，交给上面的<table>），
+   窄屏下由下面那条媒体查询切换成 flex 显示。renderPlate() / renderPlateFromCastData()
+   共用同一份拼图函数 buildPlateCardsHtml()（定义在 script 区，历史记录渲染函数附近）。
+   注意：这条基础规则必须写在下面的媒体查询之前——两条规则选择器优先级相同，
+   级联顺序按源码先后决定，写在后面的无条件声明会永远盖过前面媒体查询里的值，
+   之前的顺序反了导致这套卡片布局从未生效过。 ---------- */
+.plate-cards{display:none;flex-direction:column;gap:8px;margin-bottom:4px;}
+@media (max-width:640px){
+  .plate table{display:none;}
+  .plate-cards{display:flex;}
+}
+.plate-card{
+  background:var(--panel-2);border:1px solid var(--border);border-radius:6px;
+  padding:9px 12px;
+}
+.plate-card.moving{border-color:var(--vermilion-bright);}
+.plate-card-row{
+  display:grid;grid-template-columns:34px 1fr 1fr;gap:2px 10px;
+  font-size:var(--fs-3);color:var(--text-mid);align-items:baseline;
+}
+.plate-card.moving .plate-card-row{color:var(--vermilion-text);}
+.plate-card-pos{color:var(--brass);font-weight:500;}
+.plate-card-tag{color:var(--vermilion-text);margin-left:3px;}
+.plate-card-extra{margin-top:4px;font-size:var(--fs-2);color:var(--text-dim-sm);}
+/* ---------- 排盘图例：极简的一行小字，摇卦结果区顶部提示"红色代表动爻"，
+   跟五行生克板块里已有的图例卡片是同一个思路——第一次看的人不用自己猜朱砂色
+   到底是什么意思。<table>和.plate-cards两种布局（宽屏/窄屏）都用得到，
+   由JS里的PLATE_LEGEND_HTML常量统一插入，不用为两种布局各写一遍。 ---------- */
+.plate-legend{
+  display:flex;align-items:center;gap:6px;
+  font-size:var(--fs-1);color:var(--text-dim-sm);
+  margin-bottom:10px;
+}
+.plate-legend-swatch{
+  width:10px;height:10px;border-radius:2px;flex:none;
+  background:var(--vermilion-bright);
+}
+/* ---------- 六神色块：排盘表格/卡片里六神名字前的一个小圆点，六种颜色分别对应
+   青龙(木/--jade)、朱雀(火/--vermilion-bright)、勾陈(土/--brass)、螣蛇(--spirit-tengshe)、
+   白虎(金，近纸白，配一圈细边框避免在浅色区域糊成一片)、玄武(水/--spirit-xuanwu，同样配边框)。
+   纯粹是扫读表格时的颜色辅助定位，不代表吉凶，不影响判断逻辑；具体用哪个类由JS里
+   spiritDotHtml()按六神名字挑，四处渲染（宽屏表格/窄屏卡片/复原态/历史记录）共用。 ---------- */
+.spirit-dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  margin-right:4px;flex:none;vertical-align:middle;
+}
+.spirit-dot.qinglong{background:var(--jade);}
+.spirit-dot.zhuque{background:var(--vermilion-bright);}
+.spirit-dot.gouchen{background:var(--brass);}
+.spirit-dot.tengshe{background:var(--spirit-tengshe);}
+.spirit-dot.baihu{background:var(--paper);border:1px solid var(--brass-dim);}
+.spirit-dot.xuanwu{background:var(--spirit-xuanwu);border:1px solid var(--text-dim);}
+/* 配合上面JS里"变出"文案拆出的三个最小语义单元：每段自己不换行，段与段之间靠零宽空格
+   (\u200B)提供断行机会——平时紧挨着显示没有可见空隙，只在窄屏真放不下时才在这几个点断开，
+   且不会断在"(土)"这种括号中间，也不会因为单段太长逼出整表横向滚动。 */
+.bian-chunk{white-space:nowrap;}
+.yao{display:inline-flex;align-items:center;gap:9px;}
+.yao-bar{width:60px;height:8px;position:relative;flex:none;}
+.yao-bar .full{position:absolute;inset:0;background:var(--text-mid);border-radius:1px;}
+.yao-bar .half{position:absolute;top:0;bottom:0;width:44%;background:var(--text-mid);border-radius:1px;}
+.yao-bar .half.left{left:0;}
+.yao-bar .half.right{right:0;}
+.yao-mark{width:13px;text-align:center;font-size:13px;color:var(--vermilion-text);flex:none;}
+.plate tr.moving .yao-bar .full,
+.plate tr.moving .yao-bar .half{background:var(--vermilion-bright);}
+.plate tr.moving td{color:var(--vermilion-text);}
+.gua-name-row{display:flex;gap:30px;justify-content:center;margin-top:16px;font-size:var(--fs-4);color:var(--text-mid);flex-wrap:wrap;}
+.gua-name-row b{color:var(--paper);font-family:'Noto Serif SC',serif;font-size:var(--fs-5);}
+/* 公历/农历那一行强制单独占一整行（flex-basis:100%让flex-wrap在它后面另起一行），
+   这样年柱/月柱那一项永远排在日期下面，不会因为屏幕宽窄跟日期挤在同一行、顺序对不上。 */
+.gua-date-row{flex-basis:100%;justify-content:center;display:flex;}
+.gua-trend-row{flex-basis:100%;justify-content:center;display:flex;font-size:var(--fs-3);color:var(--text-dim-sm);text-align:center;}
+
+/* ---------- 卦象爻画图：本卦/变卦并排的六爻堆叠图，起卦排盘区和历史记录回看都用得到，
+   比逐行读表格里的"状态"和"变出"两列更直观——一眼就能看出整卦长什么样、变在哪一爻 ---------- */
+.gua-diagram{display:flex;align-items:center;justify-content:center;gap:18px;margin:16px 0;flex-wrap:wrap;}
+.gua-diagram-col{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.gua-diagram-label{font-size:var(--fs-2);color:var(--text-mid);white-space:nowrap;}
+.gua-diagram-label b{color:var(--paper);font-family:'Noto Serif SC',serif;font-size:var(--fs-4);}
+.gua-diagram-lines{display:flex;flex-direction:column;gap:7px;}
+.gd-line{display:flex;align-items:center;gap:6px;}
+.gd-bar{width:56px;height:8px;position:relative;flex:none;}
+.gd-bar-full{position:absolute;inset:0;background:var(--text-mid);border-radius:1px;}
+.gd-bar-half{position:absolute;top:0;bottom:0;width:44%;background:var(--text-mid);border-radius:1px;}
+.gd-bar-left{left:0;}
+.gd-bar-right{right:0;}
+.gd-mark{width:12px;text-align:center;font-size:12px;color:var(--vermilion-text);flex:none;}
+.gd-tag{width:20px;text-align:left;font-size:var(--fs-1);color:var(--vermilion-text);flex:none;font-family:'Noto Serif SC',serif;}
+.gd-line.moving .gd-bar-full,
+.gd-line.moving .gd-bar-half{background:var(--vermilion-bright);}
+.gua-diagram-arrow{color:var(--brass);font-size:18px;}
+
+/* ---------- 线下摇卦·手动填入的实时预览：配合下面 JS 里 change 监听 + renderManualPreview()。
+   复用上面这套 gd-bar/gd-line 画法，只是多了一种"这一爻还没选"的占位态——虚线框、不画
+   阴阳，画风上明显跟"已经选好"的实线/断线区分开；六爻里选一个就实时补一行，选满六爻
+   直接换成跟"生成排盘"完全一样的 buildGuaDiagramHtml() 产出（含世应、卦名、变卦），
+   而不是自己另起一套简化画法——保证"实时预览"和"正式结果"这两处长得一模一样，
+   不会出现选的时候是一种画风、点了生成排盘之后卦画又变了样的割裂感。 ---------- */
+.manual-preview-partial,.manual-preview-complete{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.manual-preview-hint{font-size:var(--fs-2);color:var(--text-mid);text-align:center;}
+.gd-bar-pending{position:absolute;inset:0;border-radius:1px;border:1px dashed var(--text-dim);}
+.gd-line.pending .gd-mark,
+.gd-line.pending .gd-tag{color:var(--text-dim);}
+/* 历史记录卡片里空间更窄，同一份卦象图缩小一号显示 */
+.history-cast .gua-diagram{margin:8px 0;gap:10px;}
+.history-cast .gua-diagram-label{font-size:var(--fs-1);}
+.history-cast .gua-diagram-label b{font-size:var(--fs-3);}
+.history-cast .gua-diagram-lines{gap:4px;}
+.history-cast .gd-bar{width:38px;height:6px;}
+.history-cast .gua-diagram-arrow{font-size:14px;}
+.placeholder{color:var(--text-dim);text-align:center;padding:40px 10px;font-size:var(--fs-4);}
+/* 摇卦前 .plate 里只有这一句提示占位，.plate本身是flex:1.4的高个子容器（跟左侧一长串
+   表单控件对齐高度），提示文字又是普通块级流式排布，结果就是文字贴在这片又宽又高的
+   空区域左上角，右边和下边大片空白很突兀。这里只在".plate"仅有一个".placeholder"子元素
+   （摇卦前 / 摇卦中）这一种情况下，让.plate临时变成flex居中容器，把提示文字纵向也居中；
+   一旦排盘表格渲染出来，.plate里多了<table>等其它子元素，这条选择器不再命中，
+   自动恢复默认布局，不影响表格本身的横向滚动。 */
+/* 手动填入的实时预览（.manual-preview-partial/.manual-preview-complete）跟.placeholder一样，
+   摇卦前都会作为.plate唯一的子元素出现，蹭同一条居中规则，不用再单独写一遍。 */
+.plate:has(> .placeholder),
+.plate:has(> .manual-preview-partial),
+.plate:has(> .manual-preview-complete){display:flex;align-items:center;justify-content:center;min-height:220px;}
+/* ---------- "摇卦中…"加载态：铜钱翻转小动效 ----------
+   原来这里点摇卦后就是纯文字"摇卦中…"居中挂着，持续约1.56秒（6次setInterval，
+   每爻260ms），全站唯一一个"每次摇卦都会看到、但完全没做质感"的状态，跟前面
+   给头图/卡片/按钮都加了层次感的思路不搭。这里加三枚小铜钱，样式复用下面
+   coinLog真实摇卦结果用的.coin-dot同一套配色（黄铜描边+墨色底），错开延迟
+   循环播放一个"竖直压扁再复原"的动画，模拟铜钱翻转时侧面一闪而过的样子——
+   跟真实算法"三枚铜钱摇一爻"的设定对应得上，成本很低但触发频率最高。 */
+.cast-loading-coins{display:flex;gap:12px;justify-content:center;margin-bottom:14px;}
+.cast-loading-coin{
+  width:18px;height:18px;border-radius:50%;
+  border:1px solid var(--brass-dim);background:var(--panel-2);
+  animation:coin-flip 1.05s ease-in-out infinite;
+}
+.cast-loading-coin:nth-child(2){animation-delay:.15s;}
+.cast-loading-coin:nth-child(3){animation-delay:.3s;}
+@keyframes coin-flip{
+  0%,100%{transform:scaleX(1);background:var(--panel-2);}
+  50%{transform:scaleX(.15);background:var(--brass-dim);}
+}
+@media (prefers-reduced-motion: reduce){
+  .cast-loading-coin{animation:none;}
+}
+
+/* ---------- duan gua guide ---------- */
+.guide-list{list-style:none;padding:0;margin:0;counter-reset:g;}
+.guide-list li{
+  counter-increment:g;
+  background:var(--panel);border-left:3px solid var(--brass-dim);
+  border-radius:4px;padding:16px 18px;margin-bottom:12px;position:relative;
+}
+.guide-list li::before{
+  content:counter(g,cjk-decimal)"、";
+  color:var(--vermilion-text);font-family:'Noto Serif SC',serif;font-size:var(--fs-accent);margin-right:6px;
+}
+.guide-list h4{margin:0 0 4px;display:inline;color:var(--paper);font-family:'Noto Serif SC',serif;font-size:var(--fs-5);}
+.guide-list p{margin:6px 0 0;color:var(--text-mid);font-size:var(--fs-4);}
+
+.note{
+  font-size:var(--fs-2);color:var(--text-dim);border-top:1px solid var(--border-faint);
+  margin-top:60px;padding-top:20px;text-align:center;
+}
+
+/* ---------- AI 解卦 ---------- */
+.ai-box{
+  background:var(--panel);border:1px solid var(--border);border-radius:8px;
+  padding:24px;margin-top:20px;
+}
+.ai-box textarea{
+  width:100%;background:var(--panel-2);color:var(--text-lo);
+  border:1px solid var(--border-soft);border-radius:4px;padding:10px;font-size:var(--fs-4);
+  line-height:1.6;font-family:inherit;resize:vertical;min-height:64px;margin-bottom:12px;
+  overflow:hidden; /* 部分移动端 WebKit（比如 iOS 上的 Edge/Safari）在占位文字换行超出
+    textarea 可视高度时，不会像普通内容那样老老实实被裁掉，会整段文字糊出边框外，
+    这里显式声明 overflow:hidden 兜底，保证占位文字最多也就是被截断，不会溢出面板。 */
+}
+/* #followUpInput 的占位文字比其他输入框更长，min-height 单独留高一点，
+   让它常见换行情况下能整段露出来，不用靠上面的 overflow:hidden 硬裁。 */
+#followUpInput{min-height:84px;}
+/* 输入框的占位文字统一跟随输入框本身的字号，不再单独设小一号——
+   之前只有 #followUpInput 的 placeholder 被单独改成12.5px，
+   跟自己输入时的字号、以及 questionInput 的占位字号都对不上，看着很跳。 */
+.ai-box textarea::placeholder{font-size:inherit;color:var(--text-dim);opacity:1;}
+/* 字数计数器：贴在对应 textarea 下方右对齐，平时是不起眼的小灰字，
+   快到上限（还剩<=20字）时变朱砂色提醒一下，不用等真被maxlength硬截断才发现。 */
+.char-counter{
+  text-align:right;font-size:var(--fs-1);color:var(--text-dim-sm);
+  margin:-6px 0 12px;
+}
+.char-counter.near-limit{color:var(--vermilion-text);}
+.ai-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.ai-btn{
+  /* 同 .cast-btn：主按钮统一走黄铜，朱砂让给下面 .ai-btn.stop（真的要提醒
+     "这是个会中断当前操作的按钮"）和数据状态用。 */
+  padding:11px 22px;border:none;border-radius:4px;
+  background:var(--brass);color:var(--ink);
+  font-family:'Noto Serif SC',serif;font-size:var(--fs-accent);letter-spacing:.06em;
+  cursor:pointer;transition:.2s;
+}
+.ai-btn:hover{background:var(--brass-bright);}
+.ai-btn:disabled{opacity:.5;cursor:default;}
+.ai-btn.ghost{
+  background:none;border:1px solid var(--brass-dim);color:var(--text-mid);
+  font-family:'Noto Sans SC',sans-serif;font-size:var(--fs-3);padding:9px 16px;
+  /* 设置/历史记录/输出提示词等按钮在移动端密集堆叠在同一行，实测渲染高度
+     约 41px，低于 44px 的通用触控热区建议值；这里用 min-height 兜底到 44px，
+     不改变桌面端视觉（宽屏下按钮本来就不会挤在一起，多出来的高度不明显）。 */
+  min-height:44px;box-sizing:border-box;
+}
+.ai-btn.ghost:hover{color:var(--paper);border-color:var(--brass);}
+.ai-status{font-size:var(--fs-2);color:var(--text-dim);margin-left:2px;}
+.current-cast-status{
+  font-size:var(--fs-3);color:var(--text-mid);
+  background:var(--panel-2);border:1px solid var(--border);border-left:3px solid var(--brass-dim);
+  border-radius:4px;padding:8px 12px;margin-bottom:12px;
+}
+.current-cast-status b{color:var(--paper);font-weight:500;}
+.ai-result{
+  margin-top:16px;white-space:pre-wrap;line-height:1.85;font-size:var(--fs-4);
+  color:var(--text-lo);background:var(--panel-2);border:1px solid var(--border);
+  border-radius:6px;padding:16px 18px;min-height:40px;
+}
+.ai-result:empty{display:none;}
+.convo-turn{margin-bottom:14px;}
+.convo-turn:last-child{margin-bottom:0;}
+.convo-turn b{color:var(--vermilion-text);font-family:'Noto Serif SC',serif;}
+.convo-user b{color:var(--brass);}
+.convo-cursor{display:inline-block;animation:convo-blink 1s step-start infinite;color:var(--vermilion-text);}
+@keyframes convo-blink{50%{opacity:0;}}
+.thinking-dots{color:var(--text-mid);font-style:italic;animation:think-pulse 1.4s ease-in-out infinite;}
+.thinking-seconds{color:var(--text-dim-sm);font-size:var(--fs-1);margin-left:8px;font-style:normal;}
+@keyframes think-pulse{0%,100%{opacity:.55;}50%{opacity:1;}}
+.history-turn{margin-bottom:10px;}
+.history-turn:last-child{margin-bottom:0;}
+.history-turn b{color:var(--vermilion-text);}
+.history-turn-user b{color:var(--brass);}
+.history-item-tag{font-size:var(--fs-1);color:var(--text-dim-sm);border:1px solid var(--brass);border-radius:8px;padding:1px 6px;margin-left:6px;}
+.ai-meta{font-size:var(--fs-2);color:var(--text-dim);margin-top:8px;}
+.ai-settings{
+  margin-top:16px;padding-top:16px;border-top:1px solid var(--border-faint);
+  display:none;flex-direction:column;
+}
+.ai-settings.open{display:flex;}
+
+/* ---------- 设置分组卡片：把原来一整条堆着的表单元素按主题分块，减少视觉混乱 ---------- */
+.settings-group{
+  background:var(--panel-2);border:1px solid var(--border);border-radius:6px;
+  padding:14px 16px;margin-bottom:14px;
+}
+.settings-group:last-child{margin-bottom:0;}
+.settings-group-title{
+  font-family:'Noto Serif SC',serif;font-size:var(--fs-4);color:var(--brass);
+  letter-spacing:.03em;margin-bottom:12px;padding-bottom:8px;
+  border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.settings-field{margin-bottom:14px;}
+.settings-field:last-child{margin-bottom:0;}
+/* 折叠态分组（目前只有"计价单价覆盖"用）：标题可点，内容默认收起 */
+.settings-group.collapsible .settings-group-title{cursor:pointer;user-select:none;margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.settings-group.collapsible .collapse-hint{
+  font-size:var(--fs-1);font-weight:400;color:var(--text-dim-sm);
+  font-family:'Noto Sans SC',sans-serif;letter-spacing:normal;white-space:nowrap;
+}
+.settings-group.collapsible .collapse-hint::after{content:'展开 ▾';}
+.settings-group.collapsible.open .collapse-hint::after{content:'收起 ▴';}
+.settings-group.collapsible .settings-group-body{display:none;padding-top:14px;margin-top:12px;border-top:1px solid var(--border);}
+.settings-group.collapsible.open .settings-group-body{display:block;animation:fade .25s ease;}
+
+.ai-settings label{font-size:var(--fs-2);color:var(--text-mid);display:block;margin-bottom:5px;}
+.ai-settings input.key-input,.ai-settings select{
+  width:100%;background:var(--panel-2);color:var(--text-lo);
+  border:1px solid var(--border-soft);border-radius:4px;padding:8px 10px;font-size:var(--fs-3);
+}
+/* 未锁定（正在输入/粘贴新Key）时用 -webkit-text-security 做视觉打码，
+   而不是用 type="password"——微信/部分安卓内置浏览器会屏蔽 password 输入框的粘贴，
+   导致手机端没法把复制好的 API Key 粘进来。这个属性效果等同（显示圆点），
+   但不是原生密码框，所以粘贴不受影响。少数不支持该属性的浏览器（如桌面 Firefox）
+   会退化成明文显示，但不影响功能，且此框本来就是本机专用、不上传。 */
+.ai-settings input.key-input:not(.masked){
+  -webkit-text-security:disc;
+  text-security:disc;
+}
+.ai-settings-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
+.ai-settings-row > div{flex:1;min-width:180px;}
+.ai-settings input.key-input[readonly]{
+  color:var(--text-dim);user-select:none;cursor:default;background:#1c1912;
+}
+.ai-key-hint{font-size:var(--fs-2);color:var(--text-mid);margin-top:4px;}
+.key-status{
+  font-size:var(--fs-1);font-weight:400;font-family:'Noto Sans SC',sans-serif;
+  margin-left:8px;padding:1px 8px;border-radius:8px;letter-spacing:normal;
+  display:inline-block;vertical-align:1px;
+}
+.key-status.has-key{color:var(--jade);border:1px solid var(--jade);}
+.key-status.no-key{color:var(--text-dim-sm);border:1px solid var(--brass-dim);}
+.ai-key-link{font-size:var(--fs-2);color:var(--brass);text-decoration:none;border-bottom:1px dotted var(--brass-dim);}
+.ai-key-link:hover{color:var(--paper);border-color:var(--brass);}
+
+/* ---------- 提示词导出：不经本站API Key，把完整提示词以纯文本形式展示，供复制去其他AI软件 ---------- */
+.prompt-output-box{
+  margin-top:16px;background:var(--panel-2);border:1px solid var(--border);border-radius:6px;
+  padding:14px 16px;
+}
+.prompt-output-box > .ai-status{display:block;margin-bottom:8px;color:var(--jade);}
+.prompt-followup-tip{font-size:var(--fs-1);color:var(--text-dim-sm);margin:0 0 10px;line-height:1.5;}
+.prompt-output-text{
+  width:100%;min-height:180px;background:var(--panel);color:var(--text-lo);
+  border:1px solid var(--border-soft);border-radius:4px;padding:10px;font-size:var(--fs-3);
+  line-height:1.6;font-family:inherit;resize:vertical;white-space:pre-wrap;
+}
+/* "输出提示词"下面的备用工具（整理格式 / 换软件带上下文追问）：默认折叠，只留一行入口。
+   多数人复制主提示词发给对方AI后会直接在那边接着聊，这两步用不上，收起来避免主提示词
+   后面拖一大截很少用到的表单；点开这行才展开里面两个 .prompt-output-box。 */
+.prompt-extra-tools{margin-top:16px;}
+.prompt-extra-toggle{
+  cursor:pointer;user-select:none;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 14px;background:var(--panel-2);border:1px solid var(--border);border-radius:6px;
+  font-size:var(--fs-3);color:var(--text-mid);
+}
+.prompt-extra-toggle:hover{color:var(--paper);}
+.prompt-extra-toggle .collapse-hint{
+  font-size:var(--fs-1);font-weight:400;color:var(--text-dim-sm);white-space:nowrap;flex:none;
+}
+.prompt-extra-toggle .collapse-hint::after{content:'展开 ▾';}
+.prompt-extra-tools.open .prompt-extra-toggle .collapse-hint::after{content:'收起 ▴';}
+.prompt-extra-body{display:none;}
+.prompt-extra-tools.open .prompt-extra-body{display:block;animation:fade .25s ease;}
+
+.price-override-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px 10px;margin-bottom:2px;}
+.price-override-grid > div{display:flex;flex-direction:column;gap:4px;}
+.price-override-grid span{font-size:var(--fs-2);color:var(--text-dim);}
+.price-override-grid input{
+  background:var(--panel-2);color:var(--text-lo);
+  border:1px solid var(--border-soft);border-radius:4px;padding:7px 8px;font-size:var(--fs-3);
+}
+
+.ai-btn.stop{
+  background:transparent;color:var(--vermilion-text);
+  border:1px solid var(--vermilion);
+}
+.ai-btn.stop:hover{background:var(--vermilion);color:var(--paper);}
+.convo-cursor{color:var(--vermilion-text);}
+.convo-turn.interrupted{border-left:2px solid var(--vermilion-dim,var(--vermilion));padding-left:8px;}
+.interrupted-note{display:block;margin-top:6px;font-size:var(--fs-1);color:var(--text-dim-sm);font-style:normal;}
+
+/* ---------- 累计统计条 ---------- */
+.ai-stats{
+  font-size:var(--fs-2);color:var(--text-mid);margin-bottom:14px;padding:10px 14px;
+  background:var(--panel-2);border:1px solid var(--border-faint);border-radius:6px;
+}
+.ai-stats b{color:var(--brass);font-weight:500;}
+.ai-stats:empty{display:none;}
+
+/* ---------- 历史记录面板 ---------- */
+.history-panel{
+  margin-top:16px;padding-top:16px;border-top:1px solid var(--border-faint);
+  display:none;flex-direction:column;gap:10px;
+}
+.history-panel.open{display:flex;}
+.history-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+/* 原来这里就是一行灰字"还没有解读记录"，跟页面其它空白/等待场景（头图、摇卦加载态）
+   讲究氛围的风格比起来朴素不少。这里加一个太极线稿小图标，呼应头图.bagua-ring里那个
+   太极徽的视觉语言，但改成纯线条描边（不填色），分量比头图轻很多，只是给这块空状态
+   添一点"讲究"，不是重新做一个装饰重点。 */
+.history-empty{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--text-dim);font-size:var(--fs-3);padding:24px 0;
+}
+.history-empty-icon{width:38px;height:38px;opacity:.7;}
+.history-empty-icon circle,
+.history-empty-icon path{fill:none;stroke:var(--brass-dim);stroke-width:1.4;}
+.history-empty-icon .eye{stroke-width:1.2;}
+/* 原来这里限死 max-height:420px + overflow-y:auto，做成了一个"面板里嵌一个小滚动条"的样子——
+   展开某一条的详细信息（本卦/变卦/干支/逐爻明细）时，内容一旦超过420px就被这个内层滚动条裁掉，
+   跟着整页一起截图只能截到这一小块，看不全，还得在这个小框里单独再滚一次。
+   这里去掉内层的高度限制，让历史列表跟着整个页面自然往下伸展、由外层页面滚动条统一管，
+   展开哪一条，那一条的完整内容就都摆在页面上，一次性截屏/长截图就能截全。*/
+.history-list{display:flex;flex-direction:column;gap:8px;}
+.history-item{
+  background:var(--panel-2);border:1px solid var(--border);border-radius:6px;padding:10px 12px;
+}
+.history-item-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;cursor:pointer;}
+.history-item-q{font-size:var(--fs-3);color:var(--paper);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
+.history-item-time{font-size:var(--fs-1);color:var(--text-dim-sm);flex:none;}
+.history-item-meta{font-size:var(--fs-1);color:var(--text-dim-sm);margin-top:4px;}
+.history-item-body{
+  margin-top:8px;white-space:pre-wrap;line-height:1.85;font-size:var(--fs-4);color:var(--text-lo);
+  display:none;border-top:1px solid var(--border-faint);padding-top:8px;
+}
+.history-item.expanded .history-item-body{display:block;}
+/* 历史记录里的排盘快照（卦名/变卦/世应/六爻明细等），展开某条记录时排在问答上方 */
+.history-cast{
+  margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--border-faint);
+  font-size:var(--fs-2);color:var(--text-mid);line-height:1.7;white-space:normal;
+}
+.history-cast-head b{color:var(--vermilion-text);}
+.history-cast-lines{margin-top:4px;}
+/* 逐爻明细：爻位/六亲六神/纳甲五行状态三列对齐成小网格，比之前一整行用全角空格隔开
+   在窄屏上换行错位要工整；每条独立一行，读起来跟表格一样一行对一爻。 */
+.history-line-row{
+  display:grid;grid-template-columns:32px 1fr 1fr;gap:2px 10px;
+  font-size:var(--fs-1);color:var(--text-dim-sm);line-height:1.6;padding:1px 0;
+}
+.history-line-pos{color:var(--text-mid);}
+.history-line-tag{color:var(--vermilion-text);margin-left:3px;}
+/* 展开正文最上面的"问"，跟卦象信息之间留一点空隙区分开 */
+.history-q-top{margin-bottom:10px;}
+.history-item-del{
+  font-size:var(--fs-1);color:var(--text-dim-sm);background:none;border:none;cursor:pointer;
+  margin-top:6px;padding:0;text-decoration:underline;
+}
+.history-item-del:hover{color:var(--vermilion-text);}
+
+/* ---------- toast 弹窗提示 ---------- */
+#toastWrap{
+  position:fixed;top:16px;left:50%;transform:translateX(-50%);
+  z-index:999;display:flex;flex-direction:column;gap:8px;align-items:center;
+  pointer-events:none;width:100%;padding:0 16px;
+}
+.toast{
+  pointer-events:auto;
+  max-width:420px;
+  background:var(--panel-2);border:1px solid var(--brass-dim);border-radius:6px;
+  color:var(--text-lo);font-size:var(--fs-4);line-height:1.5;
+  padding:12px 18px;box-shadow:0 8px 24px rgba(0,0,0,.4);
+  animation:toast-in .25s ease;
+}
+.toast.error{border-color:var(--vermilion-bright);color:#f3d9d3;}
+.toast.success{border-color:var(--jade);}
+.toast.fade-out{animation:toast-out .25s ease forwards;}
+@keyframes toast-in{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:none;}}
+@keyframes toast-out{from{opacity:1;}to{opacity:0;transform:translateY(-10px);}}
+
+/* ---------- 新手教程弹层 ---------- */
+.onboard-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.72);
+  display:flex;align-items:center;justify-content:center;z-index:998;
+  padding:20px;
+}
+/* 卡片本身不再滚动，改成"可滚动内容区 + 固定操作栏"上下两段的flex列布局：
+   内容较长需要滚动时，"知道了"按钮始终留在卡片底部可见，不会跟内容一起被卷走，
+   避免手机上一次快速下滑就直接划到按钮、内容还没读完就点了关闭。 */
+.onboard-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  max-width:480px;width:100%;max-height:86vh;
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.onboard-scroll{
+  position:relative;overflow-y:auto;padding:28px 26px 10px;
+}
+.onboard-card h3{margin:0 0 14px;color:var(--paper);font-size:20px;}
+.onboard-step{display:flex;gap:12px;margin-bottom:16px;}
+.onboard-step .num{
+  flex:none;width:26px;height:26px;border-radius:50%;background:var(--vermilion);
+  color:var(--paper);display:flex;align-items:center;justify-content:center;
+  font-family:'Noto Serif SC',serif;font-size:13px;
+}
+.onboard-step .txt{font-size:var(--fs-4);color:var(--text-mid);line-height:1.6;}
+.onboard-step .txt b{color:var(--paper);font-weight:500;}
+.onboard-actions{
+  display:flex;justify-content:flex-end;gap:10px;flex:none;
+  padding:14px 26px 22px;border-top:1px solid var(--border);
+}
+/* 底部渐隐遮罩：贴在可滚动内容区（.onboard-scroll）底部，用渐变把最后一行文字虚化，
+   暗示"下面还没读完"，比干巴巴的滚动条更容易被注意到。它是绝对定位在.onboard-scroll
+   自己身上（不是内容流里的一部分），所以滚动时始终贴在可视区底边，不会跟着内容一起
+   移走。滚到真正的底部时JS会给它加.hidden淡出，没有更多内容可看就不用再提示了。 */
+.onboard-fade{
+  position:absolute;left:0;right:0;bottom:0;height:36px;
+  background:linear-gradient(to bottom, rgba(33,29,23,0), var(--panel));
+  pointer-events:none;transition:opacity .2s ease;opacity:1;
+}
+.onboard-fade.hidden{opacity:0;}
+/* 弹层内新增的可聚焦元素（Esc/Tab焦点管理配套）统一用跟 .tab-btn:focus-visible
+   一致的朱砂/黄铜焦点色，不用浏览器默认的蓝色描边，跟站内视觉风格保持一致。 */
+.onboard-scroll:focus-visible{outline:2px solid var(--brass);outline-offset:-2px;}
+.onboard-actions .ai-btn:focus-visible,
+.confirm-actions .ai-btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+.help-fab{
+  position:absolute;top:50%;right:14px;transform:translateY(-50%);
+  background:var(--panel);border:1px solid var(--brass-dim);color:var(--text-mid);
+  border-radius:50%;width:30px;height:30px;font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;line-height:1;
+}
+.help-fab:hover{color:var(--paper);border-color:var(--brass);}
+
+/* ---------- 通用确认弹层（替代原生 confirm()） ---------- */
+.confirm-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.72);
+  display:flex;align-items:center;justify-content:center;z-index:1000;
+  padding:20px;
+}
+.confirm-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  max-width:400px;width:100%;padding:24px 22px;
+  animation:toast-in .2s ease;
+}
+.confirm-card h3{margin:0 0 12px;color:var(--paper);font-size:17px;font-family:'Noto Serif SC',serif;}
+.confirm-msg{font-size:var(--fs-4);color:var(--text-mid);line-height:1.7;white-space:pre-line;}
+.confirm-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px;flex-wrap:wrap;}
+/* ==================================================================
+   移动端输入框自动放大修复
+   ------------------------------------------------------------------
+   iOS Safari（以及部分安卓浏览器）有个默认行为：聚焦一个 font-size 小于16px
+   的表单控件（input/select/textarea）时，会自动把整个页面缩放放大到能让
+   这个字号"看起来像16px"，松手后也不一定缩回去，导致布局看着变形、错位。
+   这里不改桌面端的视觉密度，只在小屏幕下把这几个表单控件的字号统一提到16px，
+   从根源上不触发这个自动放大，而不是靠viewport meta里禁用缩放（那样会连手动
+   双指缩放也一起禁掉，对可访问性不友好，不建议用maximum-scale=1那种办法）。
+   ================================================================== */
+@media (max-width: 640px){
+  .caster-controls select,
+  .manual-line-row select,
+  .ai-box textarea,
+  .ai-settings input.key-input,
+  .ai-settings select{
+    font-size:16px;
+  }
+  /* 导航在这版之前的方案："?"帮助按钮跟四个tab一起走flex+wrap自然换行，纵向
+     好歹能跟同一行对齐，但四个tab按文字宽度换行经常挤成"3+1"——最后一个tab
+     独占一整行，看着孤零零地跟"?"按钮凑一堆，跟上面三个tab摆在一起的整齐感
+     不一致。这里改成2×2网格：四个tab永远整齐分两行两列，不管激活哪一个、
+     文字多宽，两行都是满的，不会再出现"1+3"这种一边空一边挤的观感。
+     "?"帮助按钮则彻底跳出tab的排列逻辑，固定悬浮在导航条右上角——两者各管
+     各的，互不挤占对方的位置。 */
+  .tabs{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:8px;padding:10px 44px 10px 12px;
+  }
+  .tab-btn{padding:9px 14px;text-align:center;}
+  /* 桌面端"黄铜细边框+同色文字"的激活态已经够用，但手机端2×2网格里四个格子
+     间距很紧，"当前在哪个标签页"主要靠一圈很细的描边传达，在强调"零依赖"的
+     深色系背景上，细描边跟周围暗色对比拉不开，快速扫一眼不够醒目。这里只在
+     窄屏下给激活态叠一层极淡的黄铜色背景填充（桌面端保持原样不动），描边还留着，
+     背景色+描边双重提示，比单靠一圈细线好认得多。 */
+  .tab-btn.active{
+    background:rgba(184,148,79,.18);
+  }
+  .help-fab{
+    position:absolute;top:10px;right:10px;transform:none;
+    width:32px;height:32px;font-size:14px;
+  }
+  /* 八卦卡片同样的"整除性"问题：宽屏4列在窄屏下改2列（4行×2），依然刚好整除8张，
+     不会出现最后一行只剩一张、旁边空一大截的情况。 */
+  .gua-grid{grid-template-columns:repeat(2,1fr);}
+  /* AI解卦面板"输出提示词/设置/历史记录"这几个按钮，之前纯靠flex-wrap按文字宽度
+     自然换行——按钮数量还会随"是否已填Key"“是否正在生成”动态增减（3个/4个/5个都
+     可能），用固定列数的网格没法保证不出现"最后一个按钮落单、旁边空一截"，跟
+     导航2×2那种"数量固定"的场景不是一回事。这里索性窄屏下改成纵向堆满整行宽度：
+     不管当下显示几个按钮，每个都单独占一整行，永远不会有"某个按钮只占一半、
+     另一半空着"的情况，比硬凑一个网格列数更稳妥。 */
+  .ai-row{flex-direction:column;align-items:stretch;}
+  .ai-row .ai-btn{width:100%;}
+  .ai-row .ai-status{margin-left:0;text-align:center;}
+}
+/* Ink, brass and vermilion; all table and coin artwork is inline SVG. */
+.physics-dialog{box-sizing:border-box;color:var(--paper);background:#211e18;border:1px solid #6b5736;border-radius:18px;width:min(880px,calc(100vw - 40px));max-height:calc(100dvh - 40px);padding:0;overflow:auto;box-shadow:0 32px 120px #0009,0 0 0 5px #b8944f0a;scrollbar-width:thin;scrollbar-color:#6b5736 #211e18}
+.physics-dialog::backdrop{background:#0d0c09c9;backdrop-filter:blur(7px)}
+.physics-header{display:flex;justify-content:space-between;align-items:center;padding:26px 30px;border-bottom:1px solid #b8944f26}
+.physics-heading{display:flex;gap:16px;align-items:center}.physics-seal{border:1px solid #bb563c;color:#e58868;font-family:'Noto Serif SC',serif;font-size:17px;line-height:1.3;text-align:center;padding:5px 7px;transform:rotate(-4deg);border-radius:3px}.physics-eyebrow{font-size:11px;letter-spacing:3px;color:#b6a27c;margin-bottom:5px}.physics-dialog h3{margin:0;font-size:25px;letter-spacing:3px;color:#f0e4c9;font-weight:600}
+.physics-close{display:grid;place-items:center;width:36px;height:36px;padding:8px;background:transparent;border:1px solid #b8944f30;color:#b6a27c;border-radius:50%;cursor:pointer}.physics-close:hover{color:#f1dfb6;background:#b8944f16;border-color:#b8944f}.physics-close svg,.physics-throw svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.4}
+.physics-body{display:grid;grid-template-columns:minmax(0,1fr) 228px;gap:0}.physics-table{min-width:0;display:flex;flex-direction:column;background:#1b1914}.physics-table-top{display:flex;justify-content:space-between;align-items:center;padding:20px 25px 0;color:#c1ac82;font-size:11px;letter-spacing:2px}.physics-table-top>span:first-child{display:flex;align-items:center;gap:8px}.physics-table-top i{width:5px;height:5px;background:#b8944f;border-radius:50%;box-shadow:0 0 10px #b8944f60}.physics-table-top>span:last-child{border:1px solid #b8944f30;border-radius:20px;padding:3px 10px;letter-spacing:1px;font-size:10px}
+.physics-scene{display:block;width:100%;height:auto;flex:1;min-height:0;touch-action:none;cursor:grab}.physics-scene.is-dragging{cursor:grabbing}.is-rolling .physics-scene,.is-complete .physics-scene{cursor:default}.physics-table-caption{display:flex;align-items:center;justify-content:center;gap:15px;padding:0 20px 22px;color:#b6a27c;font-size:12px;letter-spacing:1px}.physics-gesture-meter{display:block;width:36px;height:2px;background:#b8944f26;overflow:hidden}.physics-gesture-meter i{display:block;width:0;height:100%;background:#c7a569;transition:width .1s}.is-rolling .physics-drag-hint,.is-complete .physics-drag-hint{opacity:0}
+.physics-record{padding:24px 24px 20px;border-left:1px solid #b8944f26;background:linear-gradient(145deg,#eee3c9,#d8c9a8);color:#3f3525}.physics-record-title{display:flex;align-items:center;justify-content:space-between;gap:8px}.physics-record h4{font-family:'Noto Serif SC',serif;font-size:16px;letter-spacing:2px;margin:0;font-weight:600}.physics-count{font-family:Georgia,serif;font-size:24px;white-space:nowrap;color:#735733}.physics-count small{font-size:12px;color:#8a785a}.physics-record-hint{margin:5px 0 24px;font-size:11px;color:#85704f;letter-spacing:1px}.physics-results{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}.physics-results li{display:grid;grid-template-columns:30px 1fr 30px;gap:13px;align-items:center;padding:12px 0;border-bottom:1px solid #7c63381c;min-height:20px}.physics-line-number,.physics-line-name{font-size:11px;color:#9a8868;white-space:nowrap}.physics-line-name{text-align:right}.physics-line-glyph{display:flex;gap:7px;height:4px;opacity:.18}.physics-line-glyph i{flex:1;background:#6f5a37;border-radius:1px}.is-current .physics-line-number,.is-current .physics-line-name{color:#9e492d}.is-current .physics-line-glyph{opacity:.35}.is-done .physics-line-glyph{opacity:1}.is-done .physics-line-name,.is-done .physics-line-number{color:#504027}.is-yang .physics-line-glyph{gap:0}.is-moving .physics-line-glyph i{background:#ae4930}.is-moving .physics-line-name{color:#a33d24}.physics-record-foot{display:flex;align-items:center;gap:6px;font-size:10px;color:#85704f;margin-top:20px}.physics-moving-dot{display:inline-block;width:4px;height:4px;background:#ae4930;border-radius:50%}
+.physics-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 30px 18px;border-top:1px solid #b8944f26}.physics-status{display:block;font-family:'Noto Serif SC',serif;font-size:16px;font-weight:500;letter-spacing:1px;color:#e7d7b6}.physics-guidance p{margin:5px 0 0;color:#ac9c7b;font-size:12px}.physics-throw{display:flex;align-items:center;justify-content:center;gap:22px;flex-shrink:0;min-width:180px;min-height:48px;padding:12px 20px;background:linear-gradient(120deg,#d6b77d,#ba9354);border:1px solid #e2c893;border-radius:7px;color:#292116;box-shadow:inset 0 1px #ffecbd66,0 3px 12px #0002;font-family:inherit;font-size:14px;cursor:pointer;transition:transform .15s,filter .15s}.physics-throw:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}.physics-throw:active:not(:disabled){transform:translateY(1px)}.physics-throw:disabled{opacity:.55;cursor:wait}.physics-dialog button:focus-visible{outline:2px solid #f1d99c;outline-offset:4px}.physics-bottom-note{display:flex;justify-content:space-between;padding:0 30px 16px;color:#8f8064;font-size:10px;letter-spacing:1px}
+#castPace{margin:8px 0 14px;max-width:100%}
+@media(max-width:640px){.physics-dialog{width:calc(100vw - 24px);max-height:calc(100dvh - 24px);border-radius:14px}.physics-header{padding:18px 18px 15px}.physics-heading{gap:12px}.physics-dialog h3{font-size:21px;letter-spacing:2px}.physics-eyebrow{font-size:9px;letter-spacing:2px}.physics-seal{font-size:14px}.physics-body{grid-template-columns:1fr}.physics-table-top{padding:14px 18px 0}.physics-scene{max-height:230px;min-height:170px}.physics-table-caption{padding-bottom:16px;font-size:11px}.physics-record{padding:14px 18px 12px;border-left:0;border-top:1px solid #b8944f26}.physics-record h4{font-size:14px}.physics-record-hint{display:none}.physics-count{font-size:20px}.physics-results{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:12px}.physics-results li{grid-template-columns:1fr;gap:9px;text-align:center;border-bottom:0;padding:0;grid-row:1}.physics-results [data-line="0"]{grid-column:1}.physics-results [data-line="1"]{grid-column:2}.physics-results [data-line="2"]{grid-column:3}.physics-results [data-line="3"]{grid-column:4}.physics-results [data-line="4"]{grid-column:5}.physics-results [data-line="5"]{grid-column:6}.physics-line-name{text-align:center}.physics-line-glyph{margin:0 1px;gap:5px;height:3px}.physics-record-foot{margin-top:12px;font-size:9px}.physics-footer{padding:16px 18px 12px;flex-direction:column;align-items:stretch;gap:14px}.physics-status{font-size:15px}.physics-guidance p{font-size:11px}.physics-throw{min-height:46px;justify-content:space-between}.physics-bottom-note{padding:0 18px 14px;font-size:9px}}
+@media(prefers-reduced-motion:reduce){.physics-dialog *{transition:none!important}.physics-dialog::backdrop{backdrop-filter:none}}
+
