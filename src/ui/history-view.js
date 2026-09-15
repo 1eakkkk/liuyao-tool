@@ -1,3 +1,4 @@
+import { toLegacyCast } from '../core/normalize.js';
 import { buildGuaDiagramHtml, structLineToDiagram } from './plate-markup.js';
 import { spiritDotHtml, boldDateHtml, boldPillarsHtml, formatTime, escapeHtml } from './helpers.js';
 import { aiStats, historyList, historyEmpty, historyCount } from './dom.js';
@@ -15,6 +16,9 @@ import { buildDateDisplayText } from '../core/ganzhi.js';
 // 新记录直接用存好的cast.dateText（跟当时年月时柱算的是同一个Date，更准），两者不会同时用。
 function historyCastHtml(cast, ts){
   if(!cast) return '';
+  if(cast.canonical || cast.schema_version){
+    try { cast = toLegacyCast(cast); } catch { /* Keep the readable legacy fields of unsupported records. */ }
+  }
   const nameRow = `本卦：<b>${escapeHtml(cast.guaName||'')}</b>`
     + (cast.bianGuaName ? `　→　变卦：<b>${escapeHtml(cast.bianGuaName)}</b>` : '')
     + (cast.source === 'manual' ? '　（线下摇卦录入）' : cast.source === 'physics' ? '　（物理模拟投掷）' : '');

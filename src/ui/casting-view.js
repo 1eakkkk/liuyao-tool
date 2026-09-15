@@ -1,3 +1,4 @@
+import { castStore } from '../app/cast-store.js';
 import { resolveCastCalendar } from './calendar-input.js';
 import { resetConversation } from '../app/conversation.js';
 import { buildGuaDiagramHtml, structLineToDiagram, PLATE_LEGEND_HTML, buildPlateCardsHtml } from './plate-markup.js';
@@ -7,7 +8,7 @@ import { plateWrap } from './dom.js';
 import { pillarsAndKongText } from '../ai/formatter.js';
 import { castsRemainingInWindow } from '../storage/cast-log.js';
 import { state } from '../app/state.js';
-import { calculateCast } from '../core/casting.js';
+import { buildCanonicalCast, toLegacyCast, toPlateLineData, normalizeLegacyCast } from '../core/normalize.js';
 import { buildDateDisplayText } from '../core/ganzhi.js';
 
 
@@ -26,7 +27,9 @@ function renderCastQuota(){
 
 
 function renderPlate(lines, source='system'){
-  const {cast,lineData} = calculateCast(lines,source,resolveCastCalendar(),state.daySelectionMode);
+  const canonical = buildCanonicalCast({ lines, source, calendar: resolveCastCalendar(), daySelectionMode: state.daySelectionMode,
+    question: document.getElementById('questionInput')?.value.trim() || '', createdAt: Date.now() });
+  const cast = toLegacyCast(canonical), lineData = toPlateLineData(canonical);
   const {lines:structuredLines,guaName,bianGuaName,palaceText,lowerUpperText,dateText,fourPillarsText,kongText,overallTrendText} = cast;
   let rowsHtml = '';
   for(let pos=5; pos>=0; pos--){ // display top(6) to bottom(1)
@@ -97,13 +100,13 @@ function renderPlate(lines, source='system'){
   // （复盘历史卦时是knownCastDate反查到的那天，不是"今天"），只存Y/M/D三个数字、不存时分秒，
   // 应期换算只关心日历上的哪一天，跟起卦具体几点几分无关；overallTrendText是这次新增的
   // "证据速览"摘要，见上方注释，不判定吉凶，只给月令旺衰/回头生克/世应生克的收敛度参考）
-  window.lastCastData = cast;
+  castStore.canonical = canonical;
   if(window.updateCurrentCastStatus) window.updateCurrentCastStatus();
   // 同步记一下这次摇卦时输入框里的问题文字和摇卦时间，
   // 供下次摇卦时判断是不是换了新问题、以及空问题的卦能否被后写的问题"认领"
   const qEl = document.getElementById('questionInput');
-  window.lastCastQuestion = qEl ? qEl.value.trim() : '';
-  window.lastCastTime = Date.now();
+  castStore.question = qEl ? qEl.value.trim() : '';
+  castStore.time = Date.now();
   // 每次重新摇卦（不管是点"摇卦"/"生成排盘"直接起的新卦，还是经由"AI 解读"里自动重摇的），
   // 之前的AI解读结果和整个对话上下文都已经过期，必须一起清掉，否则会出现
   // "排盘表已经换成新卦，但点‘追问’却还在基于上一卦的对话上下文回答" 的错位。
@@ -129,9 +132,11 @@ function renderPlate(lines, source='system'){
 // 用途：刷新页面后恢复"上次未结束的AI会话"时，把这次会话对应的卦重新画出来，
 // 而不是让排盘区空着、对不上正在续接的问答。跟 renderPlate() 的区别是：
 // 这里输入的已经是当时算好的结构化数据（爻位/六亲/六神/纳甲/五行/状态/世应/空亡等），
-// 不需要重新按日柱推算一次，只负责按同样的表格样式渲染，并把 window.lastCastData /
+// 不需要重新按日柱推算一次，只负责按同样的表格样式渲染，并把 castStore.legacy /
 // lastCastQuestion / lastCastTime 一并写回去，避免恢复对话后"卦是空的"。
 function renderPlateFromCastData(castData, question, castTime){
+  const priorCanonical = castData?.canonical || (castData?.schema_version ? castData : null);
+  castData = toLegacyCast(castData);
   if(!castData || !Array.isArray(castData.lines)) return;
   // 日期显示：优先用当时存好的castData.dateText（跟那次年月时柱算的是同一个Date，最准）；
   // 老会话（改版前存的，没有dateText字段）就退回用castTime（那次起卦的时间戳）现算一个。
@@ -196,9 +201,9 @@ function renderPlateFromCastData(castData, question, castTime){
     <div class="placeholder" style="padding:10px 0 0;font-size:var(--fs-2);">（以上是刷新前留存的排盘，对应下面正在续接的追问）</div>`;
   replayFadeIn(plateWrap);
 
-  window.lastCastData = castData;
-  window.lastCastQuestion = question || '';
-  window.lastCastTime = castTime || Date.now();
+  castStore.canonical = normalizeLegacyCast(castData, { question, createdAt: castTime || Date.now(), castId: priorCanonical?.meta.cast_id });
+  castStore.question = question || '';
+  castStore.time = castTime || Date.now();
   if(window.updateCurrentCastStatus) window.updateCurrentCastStatus();
 }
 

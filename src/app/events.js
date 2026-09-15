@@ -1,3 +1,4 @@
+import { castStore } from './cast-store.js';
 import { cx, cy, R, pos, arcPath, activateWxNode } from '../ui/basics.js';
 import { manualLineTouched, buildManualLinesUI, renderManualPreview, performManualCast } from '../ui/manual-cast.js';
 import { isLifespanQuestion, isSameQuestion, guardBeforeCast } from '../app/question.js';
@@ -75,14 +76,14 @@ document.querySelectorAll('.settings-group.collapsible').forEach(group=>{
   const title = group.querySelector('.settings-group-title');
   title.addEventListener('click', ()=> group.classList.toggle('open'));
 });
-// 供 AI 面板顶部状态条使用：有 window.lastCastData 就显示"当前排盘：卦名 · 日柱"，
+// 供 AI 面板顶部状态条使用：有 castStore.legacy 就显示"当前排盘：卦名 · 日柱"，
 // 没有（还没摇过卦，或者数据被清空）就隐藏整条，不占位置。挂在 window 上是因为
-// 摇卦/复原历史卦等多处写 window.lastCastData 的代码分散在文件后面，
+// 摇卦/复原历史卦等多处写 castStore.legacy 的代码分散在文件后面，
 // 那几处会直接调用 window.updateCurrentCastStatus() 同步这条状态。
 window.updateCurrentCastStatus = function(){
   const box = document.getElementById('currentCastStatus');
   if(!box) return;
-  const d = window.lastCastData;
+  const d = castStore.legacy;
   if(d && d.guaName){
     const bianText = d.bianGuaName && d.bianGuaName !== d.guaName ? `（变 ${d.bianGuaName}）` : '';
     box.innerHTML = `当前排盘：<b>${d.guaName}</b>${bianText} · ${d.ganzhi || ''}日`;
@@ -183,7 +184,7 @@ document.getElementById('dayLookupTime').addEventListener('change',()=>{
 castBtn.addEventListener('click', async ()=>{
   if(!(await guardBeforeCast())) return;
   // 物理投掷完成六爻后才调用 renderPlate；期间锁定其他起卦和解读入口。
-  // 这期间 window.lastCastData/lastCastQuestion 还停在"上一卦"。这段时间如果去点"AI解读"
+  // 这期间 castStore.legacy/lastCastQuestion 还停在"上一卦"。这段时间如果去点"AI解读"
   // /"输出提示词"，读到的就是即将被替换掉的旧卦；如果去点"线下摇卦·生成排盘"，动画结束时
   // 系统摇出的新卦又会把手动填的排盘直接覆盖掉——所以动画期间把这几个按钮一并锁住。
   manualCastBtn.disabled = true;
@@ -236,9 +237,9 @@ manualCastBtn.addEventListener('click', async ()=>{
   // 10分钟最多3次的频率限制无限重摇，跟系统摇卦模式的规矩不一致。
   // 所以修正录入依然要占用一次摇卦名额（logCastEvent），只是跳过"是否同一件事"的比对。
   const currentQuestion = questionInput ? questionInput.value.trim() : '';
-  const sameQuestion = window.lastCastData &&
-    (currentQuestion === '' || isSameQuestion(currentQuestion, window.lastCastQuestion || ''));
-  if(window.lastCastData && window.lastCastData.source === 'manual' && sameQuestion){
+  const sameQuestion = castStore.legacy &&
+    (currentQuestion === '' || isSameQuestion(currentQuestion, castStore.question || ''));
+  if(castStore.legacy && castStore.legacy.source === 'manual' && sameQuestion){
     if(castsRemainingInWindow() <= 0){
       showToast('短时间内已经摇太多次了，心诚则灵，稍等一会再摇（10 分钟内最多 3 次）', 'error', 4500);
       return;
@@ -440,7 +441,7 @@ window.addEventListener('storage', (e)=>{
   state.currentConversation = saved.conversation;
   state.currentHistorySessionId = saved.sessionId || null;
   // 把当时的排盘也一起恢复出来：既让用户能看到这次对话对应的是哪一卦，
-  // 也避免 window.lastCastData 空着导致下次点"AI 解读"时被误判成"没摇过卦"而悄悄重摇。
+  // 也避免 castStore.legacy 空着导致下次点"AI 解读"时被误判成"没摇过卦"而悄悄重摇。
   if(saved.castData){
     renderPlateFromCastData(saved.castData, saved.castQuestion, saved.castTime);
   }
@@ -616,19 +617,19 @@ interpretBtn.addEventListener('click', async (event)=>{
     // 就把当前问题"认领"给这一卦——这卦就是为这个问题摇的，不重摇、不多扣次数。
     // 只认领 10 分钟内摇的卦：放太久的空问题旧卦（比如页面开着忘了）不认领，直接重摇新卦。
     const ADOPT_WINDOW_MS = 10 * 60 * 1000;
-    if(window.lastCastData && !(window.lastCastQuestion || '').trim()
-       && (Date.now() - (window.lastCastTime || 0)) <= ADOPT_WINDOW_MS){
-      window.lastCastQuestion = question;
+    if(castStore.legacy && !(castStore.question || '').trim()
+       && (Date.now() - (castStore.time || 0)) <= ADOPT_WINDOW_MS){
+      castStore.question = question;
     }
     // 判断是否要重新起卦：要么根本没摇过卦，要么问题跟上次摇卦时不一样——
     // 但"字面不一样"不代表真的是另一件事（可能只是同一件事换个说法/继续追问），
     // 所以这里不再静默自动重摇，改成弹窗让用户自己确认。
-    const questionChanged = !!window.lastCastData && !isSameQuestion(question, window.lastCastQuestion || '');
-    let shouldRecast = !window.lastCastData; // 压根没摇过卦，必须起一卦，不用问
+    const questionChanged = !!castStore.legacy && !isSameQuestion(question, castStore.question || '');
+    let shouldRecast = !castStore.legacy; // 压根没摇过卦，必须起一卦，不用问
 
-    if(window.lastCastData && questionChanged){
+    if(castStore.legacy && questionChanged){
       const userSaysNewEvent = await showConfirm(
-        `这次问题和上一卦提问的文字不完全一样：\n\n上一卦问的：${window.lastCastQuestion}\n这次写的：${question}\n\n是同一件事换个说法/继续追问，还是确实换了件不相关的新事？`,
+        `这次问题和上一卦提问的文字不完全一样：\n\n上一卦问的：${castStore.question}\n这次写的：${question}\n\n是同一件事换个说法/继续追问，还是确实换了件不相关的新事？`,
         { title: '是同一件事，还是换新事了？', okText: '换新事了，重摇', cancelText: '同一件事，不重摇' }
       );
       if(userSaysNewEvent){
@@ -636,14 +637,14 @@ interpretBtn.addEventListener('click', async (event)=>{
       }else{
         // 用户确认还是同一件事：把这次的说法记成"这一卦对应的问题"，
         // 免得下次又换个说法问，还得再弹一次确认。
-        window.lastCastQuestion = question;
+        castStore.question = question;
         showToast('沿用上一卦解读', 'info');
       }
     }
 
     if(shouldRecast){
 
-      // 这里如果 window.lastCastData 还在，说明能走到这一步是因为上面 questionChanged 分支里
+      // 这里如果 castStore.legacy 还在，说明能走到这一步是因为上面 questionChanged 分支里
       // 用户已经在"是同一件事，还是换新事了？"那个确认框里点过"换新事了，重摇"——
       // 已经问过一遍了，传 skipCastConfirm 避免 guardBeforeCast() 里再弹一次重复的确认框。
       if(!(await guardBeforeCast({ skipCastConfirm: true, background: true }))){
@@ -658,7 +659,7 @@ interpretBtn.addEventListener('click', async (event)=>{
 
     aiStatus.textContent = '正在调用 DeepSeek 生成解卦回复…';
     showToast('正在调用 DeepSeek 生成解卦回复…');
-    const castText = formatCastDataForAI(window.lastCastData);
+    const castText = formatCastDataForAI(castStore.canonical);
     // 这条历史记录id必须在调用 interpretWithDeepSeek 之前就生成好：interpretWithDeepSeek 内部
     // 拿到回复后会立刻调用一次 saveActiveConversation()，把 sessionId 存进"当前会话"缓存里；
     // 如果这里不提前赋值，那次保存用的还是 resetConversation() 刚清成的 null，
@@ -703,7 +704,7 @@ interpretBtn.addEventListener('click', async (event)=>{
         ts: state.currentHistorySessionId,
         type: 'ai',
         question,
-        cast: buildHistoryCastSnapshot(window.lastCastData),
+        cast: buildHistoryCastSnapshot(castStore.canonical),
         turns: state.currentConversation.turns.slice(),
         totalTokens: state.currentConversation.cumTokens,
         costYuan: state.currentConversation.cumCost,
@@ -736,7 +737,7 @@ interpretBtn.addEventListener('click', async (event)=>{
 // 已经跑通的interpretBtn主流程。区别只在最后一步：不调用DeepSeek、不计费、不写历史，
 // 而是把 buildSystemPrompt + 排盘数据 + 问题 拼成文本，直接显示出来给用户复制。
 // 开头会顺手把 interpretBtn 也锁住，防止"AI解读"和"输出提示词"这两个入口同时抢同一个
-// window.lastCastData / 摇卦次数配额；反过来 interpretBtn 点击时也会顺带锁住摇卦按钮，
+// castStore.legacy / 摇卦次数配额；反过来 interpretBtn 点击时也会顺带锁住摇卦按钮，
 // 这里额外检查 interpretBtn.disabled，防止"AI解读"正在跑的时候被"输出提示词"插队。
 promptBtn.addEventListener('click', async (event)=>{
   const physicalInput = castInputFromEvent(event);
@@ -770,22 +771,22 @@ promptBtn.addEventListener('click', async (event)=>{
 
   try{
     const ADOPT_WINDOW_MS = 10 * 60 * 1000;
-    if(window.lastCastData && !(window.lastCastQuestion || '').trim()
-       && (Date.now() - (window.lastCastTime || 0)) <= ADOPT_WINDOW_MS){
-      window.lastCastQuestion = question;
+    if(castStore.legacy && !(castStore.question || '').trim()
+       && (Date.now() - (castStore.time || 0)) <= ADOPT_WINDOW_MS){
+      castStore.question = question;
     }
-    const questionChanged = !!window.lastCastData && !isSameQuestion(question, window.lastCastQuestion || '');
-    let shouldRecast = !window.lastCastData;
+    const questionChanged = !!castStore.legacy && !isSameQuestion(question, castStore.question || '');
+    let shouldRecast = !castStore.legacy;
 
-    if(window.lastCastData && questionChanged){
+    if(castStore.legacy && questionChanged){
       const userSaysNewEvent = await showConfirm(
-        `这次问题和上一卦提问的文字不完全一样：\n\n上一卦问的：${window.lastCastQuestion}\n这次写的：${question}\n\n是同一件事换个说法/继续追问，还是确实换了件不相关的新事？`,
+        `这次问题和上一卦提问的文字不完全一样：\n\n上一卦问的：${castStore.question}\n这次写的：${question}\n\n是同一件事换个说法/继续追问，还是确实换了件不相关的新事？`,
         { title: '是同一件事，还是换新事了？', okText: '换新事了，重摇', cancelText: '同一件事，不重摇' }
       );
       if(userSaysNewEvent){
         shouldRecast = true;
       }else{
-        window.lastCastQuestion = question;
+        castStore.question = question;
         showToast('沿用上一卦排盘生成提示词');
       }
     }
@@ -801,7 +802,7 @@ promptBtn.addEventListener('click', async (event)=>{
       await performBackgroundCast(physicalInput, (done,total)=>{ aiStatus.textContent = `正在后台起卦 · ${done}/${total} 爻`; });
     }
 
-    const castText = formatCastDataForAI(window.lastCastData);
+    const castText = formatCastDataForAI(castStore.canonical);
     state.lastExportCastText = castText;
     state.lastExportQuestion = question;
     showPromptOutput(buildExportPromptText(question, castText));
@@ -819,7 +820,7 @@ promptBtn.addEventListener('click', async (event)=>{
         ts: Date.now(),
         type: 'prompt',
         question,
-        cast: buildHistoryCastSnapshot(window.lastCastData),
+        cast: buildHistoryCastSnapshot(castStore.canonical),
         roleLabel: currentRoleLabel(),
         styleLabel: currentReplyStyleLabel(),
         roleCustomText: currentRoleCustomSnapshot(),

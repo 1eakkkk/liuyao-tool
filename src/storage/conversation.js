@@ -1,3 +1,5 @@
+import { migrateStorage, migrateCastSnapshot, canWriteStoredJson } from './versions.js';
+import { castStore } from '../app/cast-store.js';
 import { safeGetItem } from './local.js';
 import { state } from '../app/state.js';
 
@@ -22,16 +24,16 @@ import { state } from '../app/state.js';
 const LS_KEY_ACTIVE_CONVO = 'liuyao_active_conversation';
 
 function saveActiveConversation(){
-  if(!state.currentConversation) return;
+  if(!state.currentConversation || !canWriteStoredJson(LS_KEY_ACTIVE_CONVO)) return;
   try{
     localStorage.setItem(LS_KEY_ACTIVE_CONVO, JSON.stringify({
       conversation: state.currentConversation,
       sessionId: state.currentHistorySessionId,
       // 连排盘本身也存一份快照，不然刷新恢复对话后排盘表是空的，
       // 而且下次点"AI 解读"会因为 lastCastData 为空而悄悄重新摇一卦。
-      castData: window.lastCastData || null,
-      castQuestion: window.lastCastQuestion || '',
-      castTime: window.lastCastTime || null,
+      castData: castStore.canonical ? migrateCastSnapshot(castStore.canonical) : null,
+      castQuestion: castStore.question || '',
+      castTime: castStore.time || null,
       savedAt: Date.now(),
     }));
   }catch(e){
@@ -39,12 +41,10 @@ function saveActiveConversation(){
   }
 }
 
-function loadActiveConversationFromStorage(){
-  try{ return JSON.parse(safeGetItem(LS_KEY_ACTIVE_CONVO) || 'null'); }
-  catch(e){ return null; }
-}
+function loadActiveConversationFromStorage(){ return migrateStorage().active; }
 
 function clearActiveConversationStorage(){
+  if(!canWriteStoredJson(LS_KEY_ACTIVE_CONVO)) return;
   try{
     localStorage.removeItem(LS_KEY_ACTIVE_CONVO);
   }catch(e){

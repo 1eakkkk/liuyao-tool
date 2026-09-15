@@ -1,3 +1,4 @@
+import { castStore } from './cast-store.js';
 import { showToast, showConfirm } from '../ui/dialogs.js';
 import { logCastEvent, castsRemainingInWindow } from '../storage/cast-log.js';
 import { state } from './state.js';
@@ -63,7 +64,7 @@ async function guardBeforeCast(opts = {}){
     showToast('短时间内已经摇太多次了，心诚则灵，稍等一会再摇（10 分钟内最多 3 次）', 'error', 4500);
     return false;
   }
-  if(window.lastCastData){
+  if(castStore.legacy){
     if(!skipCastConfirm){
       const wantsNewCast = await showConfirm(
         '上一卦还在。按"一事不问二卦"的规矩，同一件事不重复起卦——你是否需要再次起卦？',
@@ -74,11 +75,11 @@ async function guardBeforeCast(opts = {}){
     // 不管是刚刚用户点了"是，重新起卦"，还是调用方自己那套"换新事了"确认框已经问过一遍、
     // 传 skipCastConfirm 跳过了这里的重复确认——只要确定要重新起卦，就要把跟"上一卦"绑定的
     // 状态一并清掉。这一步是专门补的：以前"清空"按钮只清了 AI 对话相关的状态
-    // （currentConversation 等），没碰 window.lastCastData / lastCastQuestion，
+    // （currentConversation 等），没碰 castStore.legacy / lastCastQuestion，
     // 导致用户就算把问题框里的字删光，这两个变量依然停在"上一卦"的值上，一摇卦立刻又撞上
     // 同一条拦截逻辑——不清掉这两个变量，这条老毛病换个壳还会再犯一次。
-    if(state.castMode === 'manual' && !background) window.lastCastData = null;
-    if(state.castMode === 'manual' && !background) window.lastCastQuestion = '';
+    if(state.castMode === 'manual' && !background) castStore.legacy = null;
+    if(state.castMode === 'manual' && !background) castStore.question = '';
     if(!skipCastConfirm && state.castMode === 'manual' && !background){
       // 只有"摇卦"/"生成排盘"这种不一定跟问题绑定、可以直接重摇的场景，才顺手清空问题框
       // （呼应罗士程的建议：点另一卦的同时直接消去这里的文本）；"AI 解读"/"输出提示词"走

@@ -1,3 +1,4 @@
+import { castStore } from '../app/cast-store.js';
 import { SHICHEN_HOUR_MAP, JIAZI60_LABELS_REGEX } from './config.js';
 import { findNextDateForGanzhiIndex } from '../core/ganzhi.js';
 import { JIAZI60_INDEX_BY_LABEL } from '../core/constants.js';
@@ -11,7 +12,7 @@ function annotateShichen(text){
 }
 
 function annotateGanzhiDay(text){
-  const castData = window.lastCastData;
+  const castData = castStore.legacy;
   // 没有起卦锚点（还没摇过卦，或者老会话数据缺这个字段又没能在恢复时补上）就没法换算，原样返回，
   // 不强行拿"今天"瞎凑——那样算出来的日期跟这一卦的真实应期毫无关系，比不标更误导人。
   if(!castData || !castData.castAnchorY) return text;

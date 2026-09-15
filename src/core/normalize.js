@@ -57,9 +57,13 @@ function legacyId(raw, createdAt) {
 }
 export function isCanonicalCast(value) { return value?.schema_version === SCHEMA_VERSION; }
 export function assertCanonicalCast(cast) {
-  if (!isCanonicalCast(cast) || !cast.meta || !cast.calendar || !cast.hexagram || !cast.display || !cast.compatibility ||
+  const validPresence = (value, mapping) => Array.isArray(value?.compatibility?.presence) &&
+    value.compatibility.presence.every(key => Object.prototype.hasOwnProperty.call(mapping, key)) && value.compatibility.extensions && typeof value.compatibility.extensions === 'object';
+  if (!isCanonicalCast(cast) || !cast.meta || !cast.question || typeof cast.question.text !== 'string' ||
+      !cast.calendar || !cast.hexagram?.primary || !cast.display || !validPresence(cast, TOP) ||
       !Array.isArray(cast.lines) || cast.lines.length !== 6 || cast.lines.some((line, i) =>
-        line.position !== i + 1 || !['yin', 'yang'].includes(line.yin_yang) || typeof line.moving !== 'boolean' || !line.compatibility)) {
+        line.position !== i + 1 || !['yin', 'yang'].includes(line.yin_yang) || typeof line.moving !== 'boolean' ||
+        !line.relations || !validPresence(line, LINE))) {
     throw new Error('卦盘标准数据无效或版本不受支持');
   }
   return cast;
@@ -106,7 +110,16 @@ export function toLegacyCast(value) {
   return { ...mapBack(cast, TOP), lines: cast.lines.map(line => mapBack(line, LINE)) };
 }
 
-export function buildCanonicalCast({ lines, source = 'system', calendar, daySelectionMode = 'auto', question = '', createdAt = Date.now(), castId = crypto.randomUUID() }) {
+let sequence = 0;
+function newCastId() {
+  // Metadata only; this never supplies randomness to the physical casting algorithm.
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+  if (globalThis.crypto?.getRandomValues) {
+    return 'cast-' + Array.from(globalThis.crypto.getRandomValues(new Uint32Array(4)), n => n.toString(16).padStart(8, '0')).join('');
+  }
+  return `cast-${Date.now().toString(36)}-${++sequence}`;
+}
+export function buildCanonicalCast({ lines, source = 'system', calendar, daySelectionMode = 'auto', question = '', createdAt = Date.now(), castId = newCastId() }) {
   const { cast } = calculateCast(lines, source, calendar, daySelectionMode);
   return normalizeLegacyCast(cast, { question, createdAt, castId });
 }

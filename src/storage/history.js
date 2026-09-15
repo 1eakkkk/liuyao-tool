@@ -1,3 +1,5 @@
+import { migrateStorage, migrateHistoryRecord, migrateCastSnapshot, canWriteStoredJson } from './versions.js';
+import { normalizeLegacyCast, toLegacyCast } from '../core/normalize.js';
 import { safeGetItem, safeSetItem, safeRemoveItem } from './local.js';
 
      // 'high' | 'max'
@@ -6,13 +8,11 @@ const LS_KEY_HISTORY = 'liuyao_interpret_history';
 const HISTORY_MAX = 200;
 
 
-function loadHistory(){
-  try{ const v=JSON.parse(safeGetItem(LS_KEY_HISTORY) || '[]'); return Array.isArray(v)?v.filter(r=>r&&typeof r==='object'):[]; }
-  catch(e){ return []; }
-}
+function loadHistory(){ return migrateStorage().history; }
 
 function saveHistory(list){
-  safeSetItem(LS_KEY_HISTORY, JSON.stringify(list.slice(-HISTORY_MAX)));
+  if(!canWriteStoredJson(LS_KEY_HISTORY)) return false;
+  return safeSetItem(LS_KEY_HISTORY, JSON.stringify(list.slice(-HISTORY_MAX).map(migrateHistoryRecord)));
 }
 
 function appendHistory(record){
@@ -82,8 +82,12 @@ function historyTurnsOf(record){
 // 的信息，塞进历史记录里既占地方、回看时也没有意义。这份快照两条写历史的路径共用同一个函数，
 // 保证"AI 解读"和"输出提示词"两条历史记录里看到的排盘信息格式一致。
 function buildHistoryCastSnapshot(castData){
+  if(!castData) return null;
+  const canonical = normalizeLegacyCast(castData);
+  castData = toLegacyCast(canonical);
   if(!castData || !Array.isArray(castData.lines)) return null;
   return {
+    canonical,
     ganzhi: castData.ganzhi,
     yearGanzhi: castData.yearGanzhi,
     monthGanzhi: castData.monthGanzhi,

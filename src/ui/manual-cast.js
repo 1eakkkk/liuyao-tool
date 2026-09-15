@@ -1,3 +1,4 @@
+import { castStore } from '../app/cast-store.js';
 import { renderPlate } from './casting-view.js';
 import { buildGuaDiagramHtml } from './plate-markup.js';
 import { showToast } from './dialogs.js';
@@ -55,7 +56,7 @@ function buildManualLinesUI(){
 
 
 // ---- 手动填入面板的实时预览：只依赖manualLineTouched+六个select当前值，不碰
-// window.lastCastData，跟"生成排盘"那条正式落盘的流程完全分开，纯展示、可以
+// castStore.legacy，跟"生成排盘"那条正式落盘的流程完全分开，纯展示、可以
 // 随便重画，不会误触发摇卦次数配额或者覆盖掉AI解读要用的排盘数据。 ----
 function renderManualPreview(){
   const touchedCount = manualLineTouched.filter(Boolean).length;

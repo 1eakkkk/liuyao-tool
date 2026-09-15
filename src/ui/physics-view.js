@@ -1,3 +1,4 @@
+import { castStore } from '../app/cast-store.js';
 import { renderPlate } from './casting-view.js';
 import { coinLog } from './dom.js';
 import { logCastEvent } from '../storage/cast-log.js';
@@ -7,7 +8,7 @@ import { createCoinWorld, advanceCoinWorld } from '../core/physics.js';
 function commitPhysicsCast(lines){
   renderPlate(lines,'physics');logCastEvent();
   coinLog.textContent=lines.map((l,i)=>`${['初','二','三','四','五','上'][i]}爻 ${l.coins.join('')} · ${l.sum}`).join(' ｜ ');
-  return window.lastCastData;
+  return castStore.legacy;
 }
 
 

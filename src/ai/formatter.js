@@ -1,3 +1,4 @@
+import { toLegacyCast } from '../core/normalize.js';
 
 
 
@@ -6,6 +7,7 @@
 // 兼容老数据：这次改版之前存的历史记录、或刷新页面后从localStorage续接的castData，
 // 只有 dayKongText（日柱+空亡两项），没有年月时三柱，这里直接返回 dayKongText 原样，不强行拼凑。
 function pillarsAndKongText(castData){
+  if(castData?.schema_version || castData?.canonical) castData = toLegacyCast(castData);
   if(!castData) return '';
   if(castData.fourPillarsText){
     return castData.kongText ? `${castData.fourPillarsText}　${castData.kongText}` : castData.fourPillarsText;
@@ -30,6 +32,7 @@ function pillarsAndKongText(castData){
 // undefined，下面用 `|| ''` 兜底成空字符串，不会输出"undefined"，只是那几项标注缺失。
 // castData.overallTrendText同理：新算的卦才有，没有就不拼这一段，不强行补数据。
 function formatCastDataForAI(castData){
+  castData = toLegacyCast(castData);
   const linesText = castData.lines.map(ln => {
     let tag = '';
     if(ln.是否动爻) tag += '【动爻】';
