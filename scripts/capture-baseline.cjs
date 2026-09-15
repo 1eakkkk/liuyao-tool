@@ -16,7 +16,7 @@ for (const entry of cases) entry.expected = capture(dom.window, entry.input);
 fs.mkdirSync(root + '/tests/regression/fixtures', {recursive:true});
 fs.writeFileSync(root + '/tests/regression/fixtures/casts.json', JSON.stringify(cases,null,2)+'\n');
 fs.writeFileSync(root + '/tests/regression/fixtures/system-prompt.txt', dom.window.buildSystemPrompt());
-const html = fs.readFileSync(root+'/index.html','utf8');
+const html = fs.readFileSync(root+'/tests/regression/baseline/index.html','utf8');
 const keys = [...html.matchAll(/const (LS_KEY_\w+|ONBOARD_KEY) = '([^']+)'/g)].map(m=>({symbol:m[1],key:m[2]}));
 const functions = [...html.matchAll(/^(?:async )?function (\w+)\(/gm)].map(m=>m[1]);
 const events = html.split('\n').flatMap((s,i)=>/addEventListener|setInterval/.test(s)?[{line:i+1,source:s.trim()}]:[]);

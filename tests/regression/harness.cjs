@@ -12,13 +12,18 @@ function baseline(storage = {}) {
   w.HTMLElement.prototype.scrollIntoView = () => {};
   w.localStorage.setItem('liuyao_onboarded', '1');
   for (const [key, value] of Object.entries(storage)) w.localStorage.setItem(key, value);
-  for (const script of w.document.scripts) w.eval(script.textContent);
+  for (const script of w.document.scripts) {
+    const bridge = script.textContent.includes('let knownCastDate')
+      ? '\nwindow.__setCalendar = function(date){knownCastDate = new Date(date); daySelectionMode = "date";};'
+      : '';
+    w.eval(script.textContent + bridge);
+  }
   return dom;
 }
 function capture(w, input) {
   w.document.getElementById('questionInput').value = input.question;
   w.document.getElementById('dayGanzhi').value = String(input.dayIndex);
-  w.eval(`knownCastDate = new Date(${JSON.stringify(input.date)}); daySelectionMode = 'date';`);
+  w.__setCalendar(input.date);
   w.document.getElementById('dayLookupTime').value = '12:00';
   w.renderPlate(input.sums.map(w.lineFromSum), input.source);
   const cast = JSON.parse(JSON.stringify(w.lastCastData));
