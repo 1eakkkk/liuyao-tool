@@ -1,3 +1,7 @@
+import { calculateCast } from './core/casting.js';
+import { createCoinWorld, advanceCoinWorld, lineFromSum } from './core/physics.js';
+import { getTodayJiaziIndex, findNextDateForGanzhiIndex, julianDay, sunApparentLongitude, getSolarMonthBranch, getYearPillar, getMonthPillar, hourBranchOf, getHourPillar, buildYearMonthHourPillars, formatGregorianText, lunarDayCn, getLunarDateText, buildDateDisplayText } from './core/ganzhi.js';
+import { sixRelative, computeJinTuiShen, getYuelingState, getDayRelation, getHuitouRelation, getShiYingRelation, getFeishenFushenRelation } from './core/relations.js';
 import { BAGUA, WX, SHENG, KE, NAJIA, BRANCH_EL, SIX_SPIRITS, SPIRIT_CLASS, TRIGRAM_BY_KEY, PALACE_SEEDS, STEP_TYPES, STEP_WORLD, GUA_NAME_TABLE, EIGHT_PALACE_MAP, b2s, JIN_SHEN_PAIRS, TUI_SHEN_PAIRS, SEASON_BY_BRANCH, YUELING_TABLE, LIUHE_PAIR, LIUCHONG_PAIR, STEMS, STEM_SPIRIT_GROUP, BRANCHES12, KONG_PAIRS, JIAZI60, JIAZI60_INDEX_BY_LABEL, JIE_BRANCHES_FROM_LICHUN } from './core/constants.js';
 
 /* ==================================================================
@@ -165,87 +169,9 @@ function spiritDotHtml(spirit){
   const cls = SPIRIT_CLASS[spirit];
   return cls ? `<span class="spirit-dot ${cls}" aria-hidden="true"></span>` : '';
 }
-
-/* ---------------- six relatives ---------------- */
-function sixRelative(lineEl, palaceEl){
-  if(lineEl===palaceEl) return '兄弟';
-  if(SHENG[lineEl]===palaceEl) return '父母';
-  if(SHENG[palaceEl]===lineEl) return '子孙';
-  if(KE[lineEl]===palaceEl) return '官鬼';
-  if(KE[palaceEl]===lineEl) return '妻财';
-  return '－';
-}
-function computeJinTuiShen(fromBranch, toBranch){
-  if(!fromBranch || !toBranch || fromBranch === toBranch) return '';
-  if(JIN_SHEN_PAIRS[fromBranch] === toBranch) return '进神';
-  if(TUI_SHEN_PAIRS[fromBranch] === toBranch) return '退神';
-  return ''; // 未命中本版采用的进退神对，不预判
-}
-// 月令旺衰：只看"月建地支属于哪个季节"+"这一爻的五行"两个输入，跟断卦参考表里
-// 给人/给AI看的那份旺相休囚死表是同一套数据，这里做成可以直接查表返回的函数。
-function getYuelingState(monthBranch, element){
-  const season = SEASON_BY_BRANCH[monthBranch];
-  return (season && YUELING_TABLE[season][element]) || '';
-}
-function getDayRelation(lineBranch, dayBranch){
-  if(!lineBranch || !dayBranch) return '';
-  if(LIUHE_PAIR[lineBranch] === dayBranch) return '日辰合';
-  if(LIUCHONG_PAIR[lineBranch] === dayBranch) return '日辰冲';
-  return '';
-}
-// 回头生/回头克：动爻变出的五行反过来生或克本爻原来的五行，双方都是排盘里现成的
-// 五行字段，直接套五行生克表比对，跟旺衰/合冲那种需要额外语境判断的东西不是一回事。
-function getHuitouRelation(lineEl, bianEl){
-  if(!lineEl || !bianEl || lineEl === bianEl) return '';
-  if(SHENG[bianEl] === lineEl) return '回头生';
-  if(KE[bianEl] === lineEl) return '回头克';
-  return '';
-}
-// 世应生克：世爻代表求测人自己，应爻代表对方/所测之事，两者五行间的生克关系，
-// 是判断"这件事/这段关系"走向的通用维度，不依赖具体问题选的是哪个用神。
-function getShiYingRelation(shiEl, yingEl){
-  if(!shiEl || !yingEl) return '';
-  if(shiEl === yingEl) return '世应比和';
-  if(SHENG[shiEl] === yingEl) return '世生应';
-  if(SHENG[yingEl] === shiEl) return '应生世';
-  if(KE[shiEl] === yingEl) return '世克应';
-  if(KE[yingEl] === shiEl) return '应克世';
-  return '';
-}
-// 飞神对伏神的生克：伏神能不能"出伏"发挥作用，历代说法还涉及月破/空亡/逢冲等更复杂
-// 且各家不完全一致的条件（跟进退神在辰戌丑未组合时留空是同一道理），这里只判定
-// "飞神生/克伏神"这一层纯五行关系，不越界替AI判定"是否出伏"这类有分歧的结论。
-function getFeishenFushenRelation(feishenEl, fushenEl){
-  if(!feishenEl || !fushenEl) return '';
-  if(feishenEl === fushenEl) return '飞伏比和';
-  if(SHENG[feishenEl] === fushenEl) return '飞神生伏神';
-  if(SHENG[fushenEl] === feishenEl) return '伏神生飞神';
-  if(KE[feishenEl] === fushenEl) return '飞神克伏神';
-  if(KE[fushenEl] === feishenEl) return '伏神克飞神';
-  return '';
-}
 const dayGanzhiSelect = document.getElementById('dayGanzhi');
 dayGanzhiSelect.innerHTML = JIAZI60.map((d,i)=>`<option value="${i}">${d.label}</option>`).join('');
-
-// ---- 自动选中今天的日柱（对应桌面版 ganzhi.py 的算法，用同一批日期校准过）----
-function getTodayJiaziIndex(date = new Date()){
-  const daysSinceEpoch = Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000);
-  const OFFSET = 17; // 校准过：2026-07-25→庚子(36)、07-26→辛丑(37)、07-27→壬寅(38)
-  return ((daysSinceEpoch + OFFSET) % 60 + 60) % 60;
-}
 dayGanzhiSelect.value = String(getTodayJiaziIndex());
-// 2) 从某个"起卦锚点日"（真实公历日期）开始，往后找第一个干支下标等于targetIndex的那天。
-//    直接复用getTodayJiaziIndex()逐天试算，而不是自己另写一套模运算——干支和日期的对应关系
-//    只有这一份代码在算，"今日日柱""按日期反查日柱""干支日应期换算"三处用的是同一个函数，
-//    不会因为分别抄一遍公式而互相走漏、算出两个不一致的结果。60甲子每60天必然轮完一圈，
-//    所以最多找60天一定能命中，理论上不会落空。
-function findNextDateForGanzhiIndex(anchorDate, targetIndex){
-  for(let offset = 0; offset < 60; offset++){
-    const d = new Date(anchorDate.getFullYear(), anchorDate.getMonth(), anchorDate.getDate() + offset);
-    if(getTodayJiaziIndex(d) === targetIndex) return d;
-  }
-  return null; // 防御性兜底，正常不会走到这里
-}
 
 // ---- 年月时柱/日期显示要用哪个"时刻"算：默认是null，表示用renderPlate()里现取的
 // "现在"（正常摇卦场景）；只有下面"按公历日期反查日柱"成功命中之后，才会把那个具体日期
@@ -298,159 +224,6 @@ function resolveCastCalendar(){
     if(last.monthLabel!==ymh.monthLabel)ymh.monthLabel='交节日待定';
   }
   return {now,day,ymh,dateText:buildDateDisplayText(now)};
-}
-/* ==================================================================
-   年月时柱（干支）：配合上面的日柱下拉框，一起凑成"年月日时"四柱。
-   日柱本来就有下拉框可以手动改成任意一天（用来复原线下摇卦发生的那天）；
-   年柱、月柱、时柱这里改成完全按"起卦这一刻的系统时间"现算，不跟着日柱下拉框联动——
-   一来年月柱变化很慢（一年一变 / 一个节气一变），二来如果日柱被手动改成了别的日子，
-   非要联动着去反推那天对应的年月时柱，反而容易算错、也偏离了这三柱在这里的用途：
-   六爻真正要用的只有日柱（起六神、算空亡），年月日时四柱只是给用户/AI看的一份
-   "起卦时刻"参考信息，写法上贴近网上解卦博主发帖时惯常带的那行"公历/干支"。
-
-   月柱、年柱的边界严格来说都不是按固定公历日期走的，是按"节气"走的（准确说是
-   十二个"节"，不含"气"）——原来用固定日期近似表（比如立春按2/4）多数年份是准的，
-   但节气本身每年在公历上会前后浮动一两天，边界年份就可能被近似表判错。比如
-   2025年"立春"实际发生在2月3日22点多（北京时间），比常见的"2/4"早了一天多，
-   2月3日晚上起卦就会被近似表误判成还在上一个月柱、上一个年柱。
-   这里换成直接计算太阳视黄经（apparent ecliptic longitude）来判定节气边界，不再
-   查近似表：太阳视黄经每年绕一圈360°，"节"（不算"气"）固定卡在315°/345°/15°/
-   45°...每隔30°一个，谁跨过这些刻度线谁就换月柱；315°这个刻度（立春）额外兼任
-   年柱的分界。算法用天文测算里通行的低精度太阳坐标公式（Meeus《Astronomical
-   Algorithms》第25章的简化版本：平黄经+几项周期修正项，精度约0.01°，换算成时间
-   误差通常在几分钟以内，不宜作为交节瞬间的精确判据），只是三角函数和多项式运算，
-   不依赖外部天文库/网络请求/逐年数据表，符合本项目"零依赖单文件"的约束。
-   ================================================================== */
-// 儒略日（Julian Day）：date.getTime()本身就是UTC毫秒数，天然已经按时区换算好，
-// 不需要再手动处理时区偏移。
-function julianDay(date){
-  return date.getTime() / 86400000 + 2440587.5;
-}
-// 太阳视黄经（0°~360°），Meeus低精度公式：平黄经 + 中心差修正 + 章动/光行差修正，
-// T是从J2000.0起算的儒略世纪数。精度约0.01°（对应约几分钟的时间误差），
-// 交节前后数分钟可能出现差异，应核对权威历书。
-function sunApparentLongitude(date){
-  const jd = julianDay(date);
-  const T = (jd - 2451545.0) / 36525;
-  const rad = Math.PI / 180;
-  const L0 = 280.46646 + 36000.76983*T + 0.0003032*T*T;      // 太阳平黄经
-  const M  = 357.52911 + 35999.05029*T - 0.0001537*T*T;      // 平近点角
-  const Mr = M * rad;
-  const C = (1.914602 - 0.004817*T - 0.000014*T*T) * Math.sin(Mr)
-          + (0.019993 - 0.000101*T) * Math.sin(2*Mr)
-          + 0.000289 * Math.sin(3*Mr);                       // 中心差
-  const trueLong = L0 + C;
-  const Omega = 125.04 - 1934.136*T;
-  const apparentLong = trueLong - 0.00569 - 0.00478*Math.sin(Omega*rad); // 章动+光行差修正
-  return ((apparentLong % 360) + 360) % 360;
-}
-function getSolarMonthBranch(date){
-  const lon = sunApparentLongitude(date);
-  const idx = Math.floor((((lon - 315) % 360) + 360) % 360 / 30);
-  return JIE_BRANCHES_FROM_LICHUN[idx];
-}
-// 年柱以立春换年：公历年初的子月和丑月均需沿用上一年。
-function getYearPillar(date){
-  const lon = sunApparentLongitude(date);
-  const idx = Math.floor((((lon - 315) % 360) + 360) % 360 / 30);
-  const beforeLichun = date.getMonth() < 2 && (idx === 10 || idx === 11);
-  const y = date.getFullYear() - (beforeLichun ? 1 : 0);
-  const gzIdx = ((y-4)%60+60)%60;
-  return { stemIdx: gzIdx%10, label: STEMS[gzIdx%10]+BRANCHES12[gzIdx%12] };
-}
-// 五虎遁：由年干推月干（寅月起）。口诀"甲己丙寅头/乙庚戊寅头/丙辛庚寅头/丁壬壬寅头/戊癸甲寅头"，
-// 换算成STEMS数组下标就是 (年干下标%5)*2+2 = 寅月天干下标，其余月依次顺推。
-function getMonthPillar(date, yearStemIdx){
-  const branch = getSolarMonthBranch(date);
-  const offsetFromYin = (BRANCHES12.indexOf(branch) - 2 + 12) % 12; // 寅=0，往后顺数
-  const startStemIdx = ((yearStemIdx % 5) * 2 + 2) % 10;
-  return { label: STEMS[(startStemIdx + offsetFromYin) % 10] + branch };
-}
-function hourBranchOf(hour){
-  if(hour===23 || hour===0) return '子';
-  if(hour>=1  && hour<3)  return '丑';
-  if(hour>=3  && hour<5)  return '寅';
-  if(hour>=5  && hour<7)  return '卯';
-  if(hour>=7  && hour<9)  return '辰';
-  if(hour>=9  && hour<11) return '巳';
-  if(hour>=11 && hour<13) return '午';
-  if(hour>=13 && hour<15) return '未';
-  if(hour>=15 && hour<17) return '申';
-  if(hour>=17 && hour<19) return '酉';
-  if(hour>=19 && hour<21) return '戌';
-  return '亥'; // 21-23点
-}
-// 五鼠遁：由日干推时干（子时起）。口诀"甲己还加甲/乙庚丙作初/丙辛从戊起/丁壬庚子居/戊癸壬子是真途"，
-// 换算成STEMS数组下标就是 (日干下标%5)*2 = 子时天干下标，其余时辰依次顺推。
-function getHourPillar(date, dayStemIdx){
-  const branch = hourBranchOf(date.getHours());
-  const startStemIdx = ((dayStemIdx % 5) * 2) % 10;
-  return { label: STEMS[(startStemIdx + BRANCHES12.indexOf(branch)) % 10] + branch };
-}
-// 拼出这次起卦要用的"年柱/月柱/时柱"（日柱沿用调用方已经选好的日柱，这里不重复算）。
-// now 可选传入：调用方（renderPlate）如果同一时刻还要用这个 Date 对象去生成"公历/农历"日期显示，
-// 就传进来共用同一个 Date，避免这里再 new 一次跟外面差几毫秒（虽然基本不影响年月日，但没必要）。
-function buildYearMonthHourPillars(dayStem, now = new Date()){
-  const year = getYearPillar(now);
-  const month = getMonthPillar(now, year.stemIdx);
-  const hour = getHourPillar(now, STEMS.indexOf(dayStem));
-  return { yearLabel: year.label, monthLabel: month.label, hourLabel: hour.label };
-}
-/* ==================================================================
-   公历/农历日期显示：跟上面的年月日时干支是两码事——干支是给六爻/八字用的，
-   这里是给人看的"今天到底是哪年哪月哪日"，公历、农历都要写到"年"这一级，
-   避免年底年初跨农历新年那几天，只写"腊月廿三"分不清是去年还是今年。
-   农历换算不自己维护一份"每年月份天数+闰月"的老黄历表（那类表格手抄极易抄错、
-   错了还不容易发现），改用浏览器自带的 Intl 农历（Chinese calendar，ICU 提供）现算，
-   数据来源和公历一样准。少数很老的浏览器可能不认"chinese"这个日历，
-   那种情况下 getLunarDateText 会捕获异常返回空字符串，只显示公历、不硬凑农历。
-   ================================================================== */
-function formatGregorianText(date){
-  return `${date.getFullYear()}年${date.getMonth()+1}月${date.getDate()}日`;
-}
-// 农历初一到三十的传统写法：初一~初十、十一~十九、二十、廿一~廿九、三十。
-function lunarDayCn(d){
-  const digit = ['','一','二','三','四','五','六','七','八','九','十'];
-  if(d===10) return '初十';
-  if(d===20) return '二十';
-  if(d===30) return '三十';
-  if(d<10) return '初'+digit[d];
-  if(d<20) return '十'+digit[d-10];
-  return '廿'+digit[d-20];
-}
-function getLunarDateText(date){
-  try{
-    // 用 formatToParts 而不是拼好的字符串，是因为要拿到 relatedYear（这个农历年"挂"在
-    // 哪个公历年上）和月份原始代码（比如"Mo7"、闰月是"Mo11bis"），自己拼中文，
-    // 不依赖某个语言环境刚好把格式拼成我们想要的样子。
-    // era:'short' 这个选项必须带上——不带的话月份只会给"7"这种纯数字，看不出是不是闰月；
-    // 带上之后才会给"Mo7"/闰月"Mo11bis"这种带闰月标记的代码，下面靠这个代码判断是否闰月。
-    const parts = new Intl.DateTimeFormat('en-u-ca-chinese', {year:'numeric', month:'numeric', day:'numeric', era:'short'}).formatToParts(date);
-    const monthRaw = parts.find(p=>p.type==='month')?.value || '';
-    const dayRaw = parts.find(p=>p.type==='day')?.value || '';
-    const relatedYearRaw = parts.find(p=>p.type==='relatedYear')?.value || parts.find(p=>p.type==='year')?.value || '';
-    const m = monthRaw.match(/^Mo(\d+)(bis)?$/i);
-    const monthNum = m ? parseInt(m[1],10) : NaN;
-    const isLeap = !!(m && m[2]);
-    const dayNum = parseInt(dayRaw,10);
-    const relatedYear = parseInt(relatedYearRaw,10);
-    if(!monthNum || !dayNum || !relatedYear) return '';
-    // 农历年份的干支纪年在这里按"农历新年"换年（跟公历年不是同一天切换），
-    // 用的还是 STEMS/BRANCHES12 那套六十甲子，只是换年时间点不同于八字用的"立春"（getYearPillar）。
-    const yearIdx = ((relatedYear-4)%60+60)%60;
-    const yearGanzhi = STEMS[yearIdx%10] + BRANCHES12[yearIdx%12];
-    const monthNames = ['','正月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
-    const monthText = (isLeap?'闰':'') + (monthNames[monthNum] || `${monthNum}月`);
-    return `农历：${yearGanzhi}年${monthText}${lunarDayCn(dayNum)}`;
-  }catch(e){
-    return ''; // 极少数不支持"chinese"日历的浏览器，就只显示公历，不强行拼农历
-  }
-}
-// 拼出"公历：X年X月X日　农历：干支年X月X日"这一整行，起卦当下排盘区、历史记录回看两处共用。
-function buildDateDisplayText(date){
-  const solarText = `公历：${formatGregorianText(date)}`;
-  const lunarText = getLunarDateText(date);
-  return lunarText ? `${solarText}　${lunarText}` : solarText;
 }
 // 跟 boldPillarsHtml 同一个思路，把"公历：X"“农历：X”里"："后面的值部分加粗。
 function boldDateHtml(text){
@@ -736,49 +509,6 @@ function replayFadeIn(el){
   void el.offsetWidth;
   el.classList.add('fade-in');
 }
-
-// Physics simulation: fixed timestep, actual cylinder poses determine faces.
-function createCoinWorld(input, round){
-  const C = CANNON, world = new C.World();
-  world.gravity.set(0,0,-9.82);
-  world.allowSleep = true;
-  world.solver.iterations = 20;
-  world.defaultContactMaterial.friction = 0.42;
-  world.defaultContactMaterial.restitution = 0.28;
-  const floor = new C.Body({mass:0}); floor.addShape(new C.Plane()); world.addBody(floor);
-  for(const [x,y,sx,sy] of [[-4.5,0,.15,4.5],[4.5,0,.15,4.5],[0,-4.5,4.5,.15],[0,4.5,4.5,.15]]){
-    const wall = new C.Body({mass:0}); wall.addShape(new C.Box(new C.Vec3(sx,sy,2))); wall.position.set(x,y,1); world.addBody(wall);
-  }
-  const bodies=[];
-  for(let i=0;i<3;i++){
-    const body=new C.Body({mass:0.012,linearDamping:.22,angularDamping:.18,allowSleep:true,sleepSpeedLimit:.12,sleepTimeLimit:.7});
-    body.addShape(new C.Cylinder(.5,.5,.07,24));
-    body.position.set((i-1)*1.2,0,2+i*.23);
-    const phase=(input.phase||0) + input.duration*3 + input.distance*.013 + round*.71 + i*1.91;
-    body.quaternion.setFromEuler(phase,phase*.73,phase*.31);
-    body.velocity.set(input.vx*.002+(i-1)*.3,input.vy*.002,2+Math.min(3,input.distance*.008));
-    body.angularVelocity.set(9+input.vy*.012+i*2,7+input.vx*.012-i,phase%7);
-    world.addBody(body); bodies.push(body);
-  }
-  return {world,bodies};
-}
-
-// Shared physical settlement criteria for visible and background casting.
-function advanceCoinWorld(sim){
-  sim.world.step(1/120);
-  sim.steps=(sim.steps||0)+1;
-  const quiet=sim.bodies.every(b=>b.velocity.length()<.035&&b.angularVelocity.length()<.08&&b.position.z<.5);
-  sim.stable=quiet?(sim.stable||0)+1:0;
-  if(sim.stable>=72){
-    const normals=sim.bodies.map(b=>b.quaternion.vmult(new CANNON.Vec3(0,0,1)).z);
-    if(normals.every(n=>Math.abs(n)>.97)){
-      const coins=normals.map(n=>n>0?'字':'背'),sum=coins.reduce((s,c)=>s+(c==='字'?2:3),0);
-      return {line:{...lineFromSum(sum),coins}};
-    }
-    return {retry:true};
-  }
-  return sim.steps>=2400?{retry:true}:null;
-}
 function commitPhysicsCast(lines){
   renderPlate(lines,'physics');logCastEvent();
   coinLog.textContent=lines.map((l,i)=>`${['初','二','三','四','五','上'][i]}爻 ${l.coins.join('')} · ${l.sum}`).join(' ｜ ');
@@ -1008,12 +738,6 @@ castModeToggle.addEventListener('click', (e)=>{
   }
 });
 
-function lineFromSum(sum){
-  const yang = (sum === 7 || sum === 9);
-  const moving = (sum === 6 || sum === 9);
-  return { sum, coins: [], yang, moving };
-}
-
 // ---- 手动填入面板的实时预览：只依赖manualLineTouched+六个select当前值，不碰
 // window.lastCastData，跟"生成排盘"那条正式落盘的流程完全分开，纯展示、可以
 // 随便重画，不会误触发摇卦次数配额或者覆盖掉AI解读要用的排盘数据。 ----
@@ -1120,106 +844,9 @@ manualCastBtn.addEventListener('click', async ()=>{
 });
 
 function renderPlate(lines, source='system'){
-  if(!Array.isArray(lines)||lines.length!==6||lines.some(l=>!l||![6,7,8,9].includes(l.sum)||l.yang!==[7,9].includes(l.sum)||l.moving!==[6,9].includes(l.sum)))throw new Error('六爻数据不完整或阴阳动静不一致');
-  const lowerKey = lines.slice(0,3).map(l=>l.yang?'1':'0').join('');
-  const upperKey = lines.slice(3,6).map(l=>l.yang?'1':'0').join('');
-  const lower = TRIGRAM_BY_KEY[lowerKey];
-  const upper = TRIGRAM_BY_KEY[upperKey];
-  const palaceInfo = EIGHT_PALACE_MAP[lowerKey+upperKey];
-
-  const {now,day,ymh,dateText}=resolveCastCalendar();
-  const startSpirit = STEM_SPIRIT_GROUP[day.stem];
-  const kongBranches = KONG_PAIRS[day.kongGroup];
-  const fourPillarsText = `年柱：${ymh.yearLabel}　月柱：${ymh.monthLabel}　日柱：${day.label}　时柱：${ymh.hourLabel}`;
-  const kongText = `空亡：${kongBranches.join('、')}`;
-
-  // ---- 卦名 / 变卦：这里提到最前面统一算好（原来只在展示卦名那一步临时算，现在
-  // "动爻变出的干支/六亲"这一列也要用同一份变卦上下卦信息，两处共用，不重复算一遍）----
-  const guaName = palaceInfo.name;
-  const hasMoving = lines.some(l => l.moving);
-  const bianLowerKey = lines.slice(0,3).map(l => (l.moving ? !l.yang : l.yang) ? '1':'0').join('');
-  const bianUpperKey = lines.slice(3,6).map(l => (l.moving ? !l.yang : l.yang) ? '1':'0').join('');
-  const bianLowerTrig = TRIGRAM_BY_KEY[bianLowerKey];
-  const bianUpperTrig = TRIGRAM_BY_KEY[bianUpperKey];
-  const bianInfo = hasMoving ? EIGHT_PALACE_MAP[bianLowerKey+bianUpperKey] : null;
-  const bianGuaName = bianInfo ? bianInfo.name : null;
-
-  // ---- 伏神：本宫首卦（八纯卦，比如乾宫首卦就是"乾为天"）六个爻位各自对应的六亲，
-  // 跟当前这一卦六爻实际排出来的六亲比对，父母/兄弟/子孙/妻财/官鬼里缺了哪个，就去首卦
-  // 同一爻位借那个爻的干支叠在当前爻（飞神）下面，叫"伏神"——爻位跟首卦保持一致，
-  // 因为伏神本来就是"寄居"在当前卦对应爻位下面，不是另找位置。----
-  const seedName = palaceInfo.palace.slice(0, -1); // "乾宫"→"乾"
-  const pureLiuqinByPos = [];
-  for(let pos=0; pos<6; pos++){
-    const isLower = pos < 3;
-    const ganzhi = isLower ? NAJIA[seedName].inner[pos] : NAJIA[seedName].outer[pos-3];
-    const branchEl = BRANCH_EL[ganzhi[1]];
-    pureLiuqinByPos.push({ ganzhi, branchEl, liuqin: sixRelative(branchEl, palaceInfo.element) });
-  }
-
-  // ---- 先按初爻(0)→上爻(5)把每一爻的飞神数据都算好，再倒序拼表格：
-  // 伏神要先知道"当前卦六爻实际六亲的完整集合"才能判断缺了哪个，所以不能再像原来那样
-  // 边算边从上往下拼字符串，得先算完整卦六爻再统一比对。----
-  const ALL_LIUQIN = ['父母','兄弟','子孙','妻财','官鬼'];
-  // 月建、日辰的地支——月令旺衰只看季节（由月建地支决定），日辰合冲只看地支本身，
-  // 两者都已经在上面算好的ymh/day里现成拿到，不需要另外反查。
-  const monthBranch = ymh.monthLabel.slice(-1);
-  const dayBranch = day.label.slice(-1);
-  const lineData = [];
-  for(let pos=0; pos<6; pos++){
-    const l = lines[pos];
-    const lineNum = pos+1;
-    const isLower = pos < 3;
-    const trig = isLower ? lower : upper;
-    const ganzhi = isLower ? NAJIA[trig.name].inner[pos] : NAJIA[trig.name].outer[pos-3];
-    const stem = ganzhi[0], branch = ganzhi[1];
-    const branchEl = BRANCH_EL[branch];
-    const spirit = SIX_SPIRITS[(startSpirit + pos) % 6];
-    const liuqin = sixRelative(branchEl, palaceInfo.element);
-    const isWorld = lineNum === palaceInfo.world;
-    const isResponse = lineNum === palaceInfo.response;
-    const isKong = kongBranches.includes(branch);
-    // 月令旺衰/日辰合冲：见 getYuelingState/getDayRelation 上方注释，纯查表型计算，
-    // 跟六亲、纳甲一样属于"有唯一答案、代码直接算好给AI"的部分。
-    const yueling = getYuelingState(monthBranch, branchEl);
-    const dayRelation = getDayRelation(branch, dayBranch);
-
-    // 动爻变出的干支/六亲：只有动爻才有。这一爻变了之后，它所在的那组（上卦或下卦）
-    // 三根线的阴阳组合变成了另一个八卦（bianLowerTrig/bianUpperTrig），要按新八卦
-    // 同一爻位的纳甲表去查变出来的干支；但六亲判断的锚点仍是"本卦"的宫五行不换——
-    // 变爻六亲说的是"这个位置的六亲变成了什么"，参照系还是本卦，不重新按变卦的宫论。
-    let bianGanzhi = '', bianBranchEl = '', bianLiuqin = '', jinTuiShen = '', huitou = '';
-    if(l.moving && bianInfo){
-      const bianTrig = isLower ? bianLowerTrig : bianUpperTrig;
-      bianGanzhi = isLower ? NAJIA[bianTrig.name].inner[pos] : NAJIA[bianTrig.name].outer[pos-3];
-      bianBranchEl = BRANCH_EL[bianGanzhi[1]];
-      bianLiuqin = sixRelative(bianBranchEl, palaceInfo.element);
-      jinTuiShen = computeJinTuiShen(branch, bianGanzhi[1]); // 进退神预计算，见 computeJinTuiShen 上方注释
-      huitou = getHuitouRelation(branchEl, bianBranchEl); // 回头生克预计算，见 getHuitouRelation 上方注释
-    }
-
-    lineData.push({ pos, lineNum, l, stem, branch, branchEl, spirit, liuqin, isWorld, isResponse, isKong, bianGanzhi, bianBranchEl, bianLiuqin, jinTuiShen, huitou, yueling, dayRelation });
-  }
-
-  const presentLiuqin = new Set(lineData.map(d => d.liuqin));
-  const missingLiuqin = ALL_LIUQIN.filter(x => !presentLiuqin.has(x));
-  lineData.forEach(d => {
-    const pureAtPos = pureLiuqinByPos[d.pos];
-    d.fushen = missingLiuqin.includes(pureAtPos.liuqin) ? pureAtPos : null;
-    // 飞神（本爻）对伏神的生克关系，见 getFeishenFushenRelation 上方注释。
-    if(d.fushen){
-      d.fushen.feishenRelation = getFeishenFushenRelation(d.branchEl, d.fushen.branchEl);
-    }
-  });
-  // 世应生克：世爻/应爻各自是哪一条，palaceInfo.world/response已经标出，这里直接找到
-  // 对应的lineData取五行来比对，不依赖具体问的是哪件事、选的是哪个用神。
-  const shiLineData = lineData.find(d => d.isWorld);
-  const yingLineData = lineData.find(d => d.isResponse);
-  const shiYingRelation = (shiLineData && yingLineData)
-    ? getShiYingRelation(shiLineData.branchEl, yingLineData.branchEl) : '';
-
+  const {cast,lineData} = calculateCast(lines,source,resolveCastCalendar(),daySelectionMode);
+  const {lines:structuredLines,guaName,bianGuaName,palaceText,lowerUpperText,dateText,fourPillarsText,kongText,overallTrendText} = cast;
   let rowsHtml = '';
-  const structuredLines = []; // lineNum 6→1，末尾统一反转成 1→6 供AI使用
   for(let pos=5; pos>=0; pos--){ // display top(6) to bottom(1)
     const d = lineData[pos];
     const { l, lineNum, stem, branch, branchEl, spirit, liuqin, isWorld, isResponse, isKong, bianGanzhi, bianBranchEl, bianLiuqin, jinTuiShen, huitou, yueling, dayRelation, fushen } = d;
@@ -1252,52 +879,9 @@ function renderPlate(lines, source='system'){
       <td>${stateText}</td>
       <td>${bianText}</td>
     </tr>`;
-    structuredLines.push({
-      爻位: `${lineNum}爻`, 六亲: liuqin, 六神: spirit,
-      纳甲: `${stem}${branch}`, 五行: branchEl, 状态: stateText,
-      是否动爻: l.moving, 是否世爻: isWorld, 是否应爻: isResponse, 是否空亡: isKong,
-      变纳甲: l.moving ? bianGanzhi : '', 变五行: l.moving ? bianBranchEl : '', 变六亲: l.moving ? bianLiuqin : '',
-      伏神六亲: fushen ? fushen.liuqin : '', 伏神纳甲: fushen ? fushen.ganzhi : '', 伏神五行: fushen ? fushen.branchEl : '',
-      月令: yueling || '', 日辰关系: dayRelation || '',
-      回头: l.moving ? (huitou || '') : '',
-      // 进退神：computeJinTuiShen 早就在上面算好存进了jinTuiShen变量，但此前一直漏了拼进
-      // structuredLines——等于伏神/回头生克之前那次同样的疏漏又在进退神这里重演了一遍：
-      // AI提示词明明告诉AI"进退神已经算好直接标注给你、不用自己重算"，实际数据里却根本
-      // 没有这个字段，AI要么看不到、要么只能靠本爻变爻地支自己现猜，跟最初设计
-      // computeJinTuiShen就是为了不让AI自己心算这道题的初衷正好相反。这里补上，跟回头字段
-      // 同样只在动爻才有值。
-      进退神: l.moving ? (jinTuiShen || '') : '',
-      伏神与飞神关系: fushen ? (fushen.feishenRelation || '') : '',
-    });
-  }
-  structuredLines.reverse(); // 变成初爻→上爻，跟AI提示词的阅读顺序一致
-
-  // ---- 整体旺衰气象摘要：不针对具体某个用神（用神选择依赖对问题文本的语义理解，
-  // 是AI的判断题，代码不该越俎代庖去猜），只客观统计"当令得力(旺/相)"与"当令减力
-  // (休/囚/死)"的爻数、动爻里"回头生"与"回头克"的个数——这两类是唯一、没有分歧的
-  // 五行数学关系，用来给AI（以及用户）一个证据层面的收敛度参考：这一卦整体是偏旺、
-  // 偏衰，还是旺衰参半、需要仔细看用神；不越界替AI下"吉凶"结论。
-  const yuelingStrongCount = lineData.filter(d => d.yueling === '旺' || d.yueling === '相').length;
-  const yuelingWeakCount = lineData.filter(d => d.yueling === '休' || d.yueling === '囚' || d.yueling === '死').length;
-  const huitouShengCount = lineData.filter(d => d.huitou === '回头生').length;
-  const huitouKeCount = lineData.filter(d => d.huitou === '回头克').length;
-  let overallTrendText = `当令得力(旺/相)${yuelingStrongCount}爻、当令减力(休/囚/死)${yuelingWeakCount}爻`;
-  if(huitouShengCount || huitouKeCount){
-    overallTrendText += `；动爻回头生${huitouShengCount}个、回头克${huitouKeCount}个`;
-  }
-  if(shiYingRelation){
-    overallTrendText += `；世应：${shiYingRelation}`;
-  }
-  const strongLean = yuelingStrongCount - yuelingWeakCount;
-  if(Math.abs(strongLean) >= 3){
-    overallTrendText += strongLean > 0 ? '——整体当令气象偏旺，迹象比较集中' : '——整体当令气象偏弱，迹象比较集中';
-  } else {
-    overallTrendText += '——当令得力与减力的爻数相当，旺衰不算悬殊，具体判断还要结合用神细看';
+;
   }
 
-  const palaceText = `${palaceInfo.palace} · ${palaceInfo.type}卦（本宫五行：${palaceInfo.element}）`;
-  const lowerUpperText = `下卦：${lower.sym} ${lower.name}　上卦：${upper.sym} ${upper.name}`;
-  const dayKongText = `日柱：${day.label}　空亡：${kongBranches.join('、')}`;
   // 本卦/变卦的名字已经在卦画上方的分栏标签里各显示一次（buildGuaDiagramHtml 里的
   // gua-diagram-label），中间还有箭头表示"变成"的关系，不需要在下面这一行再合并重复一遍。
   // guaNameRowText 只在 diagramHtml 因某种原因没渲染出来时才当兜底文案用。
@@ -1331,18 +915,7 @@ function renderPlate(lines, source='system'){
   // （复盘历史卦时是knownCastDate反查到的那天，不是"今天"），只存Y/M/D三个数字、不存时分秒，
   // 应期换算只关心日历上的哪一天，跟起卦具体几点几分无关；overallTrendText是这次新增的
   // "证据速览"摘要，见上方注释，不判定吉凶，只给月令旺衰/回头生克/世应生克的收敛度参考）
-  window.lastCastData = {
-    ganzhi: day.label,
-    yearGanzhi: ymh.yearLabel, monthGanzhi: ymh.monthLabel, hourGanzhi: ymh.hourLabel,
-    fourPillarsText, kongText, dateText,
-    palaceText, lowerUpperText, dayKongText,
-    lines: structuredLines,
-    guaName, bianGuaName,
-    source, // physics=物理模拟；system=旧版随机；manual=线下录入
-    rulesVersion:'2026-09-15-2', coinConvention:source==='physics'?'字2背3':null,
-    castAnchorY: daySelectionMode==='manual'?null:now.getFullYear(), castAnchorM: daySelectionMode==='manual'?null:now.getMonth()+1, castAnchorD: daySelectionMode==='manual'?null:now.getDate(),
-    overallTrendText,
-  };
+  window.lastCastData = cast;
   if(window.updateCurrentCastStatus) window.updateCurrentCastStatus();
   // 同步记一下这次摇卦时输入框里的问题文字和摇卦时间，
   // 供下次摇卦时判断是不是换了新问题、以及空问题的卦能否被后写的问题"认领"
