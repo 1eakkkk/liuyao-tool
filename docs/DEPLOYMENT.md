@@ -15,7 +15,7 @@ npm run test:browser
 
 浏览器测试默认使用本机 Edge；可设置 `BROWSER_CHANNEL` 使用其他已安装的 Playwright channel。测试只用合成 API Key 与拦截响应，不调用付费接口。
 
-## 静态构建设置（供部署类型确认后使用）
+## Worker 静态构建设置
 
 - 构建命令：`npm run build`
 - 输出目录：`dist`
@@ -28,10 +28,19 @@ npm run test:browser
 - Wrangler 已由用户重新登录，账号正常。
 - Dashboard 项目名：`liuyao`，绑定域名：`gua.1eak.cool`。
 - 该项目不在 `wrangler pages project list` 中；用户以前通过 Dashboard 拖动文件部署。
-- **部署类型尚未确认，不能假设它是 Pages。**
+- 用户现已确认部署类型为 Cloudflare Worker，名称为 `liuyao`，不是 Pages。
 - 用户明确要求本轮跳过 Cloudflare Preview。没有执行 `wrangler pages deploy`，没有覆盖生产环境。
 
-后续先核实 Dashboard 资源的实际部署类型，再选择对应的独立预览方式。不能把本地 `vite preview` 当作 Cloudflare Preview 完成，也不能直接上传当前 `dist` 覆盖现有生产资源。
+根目录 `wrangler.jsonc` 仅配置 Worker 名称、兼容日期和 `assets.directory: "./dist"`，没有 Worker 后端入口、路由或域名变更。静态资产配置依据 [Cloudflare 官方文档](https://developers.cloudflare.com/workers/static-assets/binding/)。
+
+本轮仅验证，不执行实际部署：
+
+```sh
+npm run build
+npx wrangler deploy --dry-run
+```
+
+dry-run 通过不代表线上部署或 Preview 验收完成。实际部署仍待单独授权，不直接覆盖现有生产资源。
 
 ## 发布前人工验收
 
