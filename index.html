@@ -16,7 +16,7 @@
     · "输出提示词"（不经本站API Key，导出纯文本提示词给用户自行粘贴去其他AI）→ script 里 buildExportPromptText
     · 页面文案（教程/规矩说明/FAQ 式描述）→ body 区对应面板的 <p class="desc">
 
-  设计约束：刻意保持零依赖、零构建、单文件，改完拖进 Cloudflare Pages 即上线；
+  设计约束：保持零外部运行时依赖、零构建、单文件（内嵌 MIT 许可的 cannon.js 物理引擎），改完拖进 Cloudflare Pages 即上线；
   提 PR 时请维持这一约束，勿引入打包工具或拆分文件。
 ================================================================== -->
 <head>
@@ -1055,6 +1055,20 @@ table.ref.ref-wide{min-width:480px;}
   .ai-row .ai-btn{width:100%;}
   .ai-row .ai-status{margin-left:0;text-align:center;}
 }
+/* Ink, brass and vermilion; all table and coin artwork is inline SVG. */
+.physics-dialog{box-sizing:border-box;color:var(--paper);background:#211e18;border:1px solid #6b5736;border-radius:18px;width:min(880px,calc(100vw - 40px));max-height:calc(100dvh - 40px);padding:0;overflow:auto;box-shadow:0 32px 120px #0009,0 0 0 5px #b8944f0a;scrollbar-width:thin;scrollbar-color:#6b5736 #211e18}
+.physics-dialog::backdrop{background:#0d0c09c9;backdrop-filter:blur(7px)}
+.physics-header{display:flex;justify-content:space-between;align-items:center;padding:26px 30px;border-bottom:1px solid #b8944f26}
+.physics-heading{display:flex;gap:16px;align-items:center}.physics-seal{border:1px solid #bb563c;color:#e58868;font-family:'Noto Serif SC',serif;font-size:17px;line-height:1.3;text-align:center;padding:5px 7px;transform:rotate(-4deg);border-radius:3px}.physics-eyebrow{font-size:11px;letter-spacing:3px;color:#b6a27c;margin-bottom:5px}.physics-dialog h3{margin:0;font-size:25px;letter-spacing:3px;color:#f0e4c9;font-weight:600}
+.physics-close{display:grid;place-items:center;width:36px;height:36px;padding:8px;background:transparent;border:1px solid #b8944f30;color:#b6a27c;border-radius:50%;cursor:pointer}.physics-close:hover{color:#f1dfb6;background:#b8944f16;border-color:#b8944f}.physics-close svg,.physics-throw svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.4}
+.physics-body{display:grid;grid-template-columns:minmax(0,1fr) 228px;gap:0}.physics-table{min-width:0;display:flex;flex-direction:column;background:#1b1914}.physics-table-top{display:flex;justify-content:space-between;align-items:center;padding:20px 25px 0;color:#c1ac82;font-size:11px;letter-spacing:2px}.physics-table-top>span:first-child{display:flex;align-items:center;gap:8px}.physics-table-top i{width:5px;height:5px;background:#b8944f;border-radius:50%;box-shadow:0 0 10px #b8944f60}.physics-table-top>span:last-child{border:1px solid #b8944f30;border-radius:20px;padding:3px 10px;letter-spacing:1px;font-size:10px}
+.physics-scene{display:block;width:100%;height:auto;flex:1;min-height:0;touch-action:none;cursor:grab}.physics-scene.is-dragging{cursor:grabbing}.is-rolling .physics-scene,.is-complete .physics-scene{cursor:default}.physics-table-caption{display:flex;align-items:center;justify-content:center;gap:15px;padding:0 20px 22px;color:#b6a27c;font-size:12px;letter-spacing:1px}.physics-gesture-meter{display:block;width:36px;height:2px;background:#b8944f26;overflow:hidden}.physics-gesture-meter i{display:block;width:0;height:100%;background:#c7a569;transition:width .1s}.is-rolling .physics-drag-hint,.is-complete .physics-drag-hint{opacity:0}
+.physics-record{padding:24px 24px 20px;border-left:1px solid #b8944f26;background:linear-gradient(145deg,#eee3c9,#d8c9a8);color:#3f3525}.physics-record-title{display:flex;align-items:center;justify-content:space-between;gap:8px}.physics-record h4{font-family:'Noto Serif SC',serif;font-size:16px;letter-spacing:2px;margin:0;font-weight:600}.physics-count{font-family:Georgia,serif;font-size:24px;white-space:nowrap;color:#735733}.physics-count small{font-size:12px;color:#8a785a}.physics-record-hint{margin:5px 0 24px;font-size:11px;color:#85704f;letter-spacing:1px}.physics-results{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}.physics-results li{display:grid;grid-template-columns:30px 1fr 30px;gap:13px;align-items:center;padding:12px 0;border-bottom:1px solid #7c63381c;min-height:20px}.physics-line-number,.physics-line-name{font-size:11px;color:#9a8868;white-space:nowrap}.physics-line-name{text-align:right}.physics-line-glyph{display:flex;gap:7px;height:4px;opacity:.18}.physics-line-glyph i{flex:1;background:#6f5a37;border-radius:1px}.is-current .physics-line-number,.is-current .physics-line-name{color:#9e492d}.is-current .physics-line-glyph{opacity:.35}.is-done .physics-line-glyph{opacity:1}.is-done .physics-line-name,.is-done .physics-line-number{color:#504027}.is-yang .physics-line-glyph{gap:0}.is-moving .physics-line-glyph i{background:#ae4930}.is-moving .physics-line-name{color:#a33d24}.physics-record-foot{display:flex;align-items:center;gap:6px;font-size:10px;color:#85704f;margin-top:20px}.physics-moving-dot{display:inline-block;width:4px;height:4px;background:#ae4930;border-radius:50%}
+.physics-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 30px 18px;border-top:1px solid #b8944f26}.physics-status{display:block;font-family:'Noto Serif SC',serif;font-size:16px;font-weight:500;letter-spacing:1px;color:#e7d7b6}.physics-guidance p{margin:5px 0 0;color:#ac9c7b;font-size:12px}.physics-throw{display:flex;align-items:center;justify-content:center;gap:22px;flex-shrink:0;min-width:180px;min-height:48px;padding:12px 20px;background:linear-gradient(120deg,#d6b77d,#ba9354);border:1px solid #e2c893;border-radius:7px;color:#292116;box-shadow:inset 0 1px #ffecbd66,0 3px 12px #0002;font-family:inherit;font-size:14px;cursor:pointer;transition:transform .15s,filter .15s}.physics-throw:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}.physics-throw:active:not(:disabled){transform:translateY(1px)}.physics-throw:disabled{opacity:.55;cursor:wait}.physics-dialog button:focus-visible{outline:2px solid #f1d99c;outline-offset:4px}.physics-bottom-note{display:flex;justify-content:space-between;padding:0 30px 16px;color:#8f8064;font-size:10px;letter-spacing:1px}
+#castPace{margin:8px 0 14px;max-width:100%}
+@media(max-width:640px){.physics-dialog{width:calc(100vw - 24px);max-height:calc(100dvh - 24px);border-radius:14px}.physics-header{padding:18px 18px 15px}.physics-heading{gap:12px}.physics-dialog h3{font-size:21px;letter-spacing:2px}.physics-eyebrow{font-size:9px;letter-spacing:2px}.physics-seal{font-size:14px}.physics-body{grid-template-columns:1fr}.physics-table-top{padding:14px 18px 0}.physics-scene{max-height:230px;min-height:170px}.physics-table-caption{padding-bottom:16px;font-size:11px}.physics-record{padding:14px 18px 12px;border-left:0;border-top:1px solid #b8944f26}.physics-record h4{font-size:14px}.physics-record-hint{display:none}.physics-count{font-size:20px}.physics-results{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:12px}.physics-results li{grid-template-columns:1fr;gap:9px;text-align:center;border-bottom:0;padding:0;grid-row:1}.physics-results [data-line="0"]{grid-column:1}.physics-results [data-line="1"]{grid-column:2}.physics-results [data-line="2"]{grid-column:3}.physics-results [data-line="3"]{grid-column:4}.physics-results [data-line="4"]{grid-column:5}.physics-results [data-line="5"]{grid-column:6}.physics-line-name{text-align:center}.physics-line-glyph{margin:0 1px;gap:5px;height:3px}.physics-record-foot{margin-top:12px;font-size:9px}.physics-footer{padding:16px 18px 12px;flex-direction:column;align-items:stretch;gap:14px}.physics-status{font-size:15px}.physics-guidance p{font-size:11px}.physics-throw{min-height:46px;justify-content:space-between}.physics-bottom-note{padding:0 18px 14px;font-size:9px}}
+@media(prefers-reduced-motion:reduce){.physics-dialog *{transition:none!important}.physics-dialog::backdrop{backdrop-filter:none}}
+
 </style>
 </head>
 <body>
@@ -1078,7 +1092,7 @@ table.ref.ref-wide{min-width:480px;}
       <h3 id="onboardTitle">怎么用这个工具</h3>
       <div class="onboard-step">
         <div class="num">1</div>
-        <div class="txt">先摇一卦感受一下：切到 <b>起卦排盘</b> 标签页，日柱已经帮你选好今天的了，不用管。直接点 <b>摇卦</b>，像抛硬币一样自动摇出六爻——这一步不花钱、不用注册任何东西，纯网页自己算的。（如果你更信自己现实里摇的铜钱结果，也可以切到旁边"线下摇卦"，把自己摇到的结果手动填进去——选的时候右边会同步画出卦来。）</div>
+        <div class="txt">先摇一卦感受一下：切到 <b>起卦排盘</b> 标签页，日柱已经帮你选好今天的了，不用管。直接点 <b>摇卦</b>，选择逐爻或连续模式，在弹出的桌面中投掷铜钱——这一步不花钱、不用注册任何东西，纯网页自己算的。（如果你更信自己现实里摇的铜钱结果，也可以切到旁边"线下摇卦"，把自己摇到的结果手动填进去——选的时候右边会同步画出卦来。）</div>
       </div>
       <div class="onboard-step">
         <div class="num">2</div>
@@ -1090,7 +1104,7 @@ table.ref.ref-wide{min-width:480px;}
       </div>
       <div class="onboard-step">
         <div class="num">4</div>
-        <div class="txt">都弄好之后，<b>先写下你想问的问题</b>，再点 <b>AI 解读</b> 就行——会自动帮你摇卦并解读，一步到位；之后想问新的事，直接改问题再点一次就够了。Key 只存在你这台设备本地，不会上传。想了解六爻的基础知识（世应、六亲、空亡这些词到底啥意思），切到另外两个标签页看看，从头讲起。</div>
+        <div class="txt">都弄好之后，<b>先写下你想问的问题</b>，再点 <b>AI 解读</b> 就行——会在后台自动起卦，完成六爻后继续解读；之后想问新的事，直接改问题再点一次就够了。Key 保存在本机，请求解读时会发送给 DeepSeek 用于认证。想了解六爻的基础知识（世应、六亲、空亡这些词到底啥意思），切到另外两个标签页看看，从头讲起。</div>
       </div>
       <div class="onboard-fade" id="onboardFade" aria-hidden="true"></div>
     </div>
@@ -1240,17 +1254,18 @@ table.ref.ref-wide{min-width:480px;}
 <div class="panel" id="caster" role="tabpanel" aria-labelledby="tabbtn-caster" tabindex="0">
   <section class="block">
     <h2>摇卦 · 自动排盘</h2>
-    <p class="desc">点"摇卦"自动起卦；也可以切到"线下摇卦"手动填自己现实摇出的结果。</p>
+    <p class="desc">通过拖动或按住按钮给铜钱初始运动，再由物理模拟读取落地正反面。可逐爻投掷，也可连续完成六爻；现实铜钱结果可在线下摇卦中录入。</p>
 
     <div class="caster-box">
       <div class="caster-controls">
-        <label for="dayGanzhi">起卦日的干支（六十甲子，用于起六神、算空亡）</label>
+        <label for="dayGanzhi">起卦日的干支（用于起六神、算空亡）</label>
         <select id="dayGanzhi"></select>
         <div class="day-lookup-row">
           <label for="dayLookupDate" class="day-lookup-label">按公历日期反查 →</label>
-          <input type="date" id="dayLookupDate">
+          <input type="date" id="dayLookupDate" min="1900-01-01" max="2100-12-31"><label for="dayLookupTime" class="day-lookup-label">时间（可选）</label><input type="time" id="dayLookupTime">
         </div>
 
+        <p class="desc" style="font-size:12px;margin:8px 0">按设备本地时间、零点换日，年/月柱按节气。交节时刻为近似计算；仅录入日柱时不推定年月时柱。</p>
         <div class="cast-mode-toggle" id="castModeToggle">
           <button type="button" class="mode-btn active" data-mode="system">系统摇卦</button>
           <button type="button" class="mode-btn" data-mode="manual">线下摇卦</button>
@@ -1262,7 +1277,7 @@ table.ref.ref-wide{min-width:480px;}
         <div class="cast-quota-hint" id="castQuotaHint"></div>
 
         <div id="systemCastPanel">
-          <button class="cast-btn" id="castBtn">摇卦</button>
+          <label for="castPace">物理投掷节奏</label><select id="castPace"><option value="step">逐爻投掷 · 每次一爻</option><option value="all">一次完成 · 连续六爻</option></select><button class="cast-btn" id="castBtn">开始物理摇卦</button>
           <div class="coin-log" id="coinLog"></div>
         </div>
 
@@ -1281,7 +1296,7 @@ table.ref.ref-wide{min-width:480px;}
     <h2>起卦规矩 · 使用说明</h2>
     <div class="block-collapse-body">
     <p class="desc">世应、六亲已按八宫卦生成规则自动推出；空亡按日柱所在的"旬"标出。排盘结果下方还会同时列出年柱、月柱、时柱（按起卦这一刻的系统时间自动算出，不用手动填），方便对照查看。</p>
-    <p class="desc">按传统规矩，一事不问二卦：同一件事只摇一次。上一卦还在时再点"摇卦"/"生成排盘"，会弹窗确认是否要另起新卦——确认之后会清空上一卦的记录（连同问题框里的文字）再重新摇。短时间内也不建议连续摇太多卦，10 分钟内最多摇 3 次。</p>
+    <p class="desc">按传统规矩，一事不问二卦：同一件事只摇一次。上一卦还在时再点"摇卦"/"生成排盘"，会弹窗确认是否要另起新卦——物理模式在完成六爻后替换上一卦，取消则保留原卦；线下模式会清空旧问题后重新生成。短时间内也不建议连续摇太多卦，10 分钟内最多摇 3 次。</p>
     <p class="desc">另外几条老规矩也顺带提一句：别在大喜大怒、心浮气躁的时候乱测，也别单纯当好玩测着玩，念不专卦不应，测出来的参考价值不大；卦是用来"决疑"的，一件事已经拍板定了、没有回旋余地，再占意义也不大。</p>
     </div>
   </section>
@@ -1429,7 +1444,7 @@ table.ref.ref-wide{min-width:480px;}
 <div class="panel" id="ai" role="tabpanel" aria-labelledby="tabbtn-ai" tabindex="0">
   <section class="block">
     <h2>AI 解卦</h2>
-    <p class="desc">在文本框内写下想问的事情：填了 DeepSeek API Key 的话，点"AI 解读"直接在本页面拿到解卦回复；没填 Key、或者想用别的AI软件解卦，就点"输出提示词"——网页照样自动摇卦、排卦、装卦，只是最后一步给你一段可以直接复制的完整提示词，粘贴去任意AI聊天软件发送即可。</p>
+    <p class="desc">在文本框内写下想问的事情：填了 DeepSeek API Key 的话，点"AI 解读"直接在本页面拿到解卦回复；没填 Key、或者想用别的AI软件解卦，就点"输出提示词"——网页会在后台自动完成物理起卦，再排卦、装卦，只是最后一步给你一段可以直接复制的完整提示词，粘贴去任意AI聊天软件发送即可。</p>
     <!-- 排盘数据虽然一直存在内存里的 window.lastCastData，但跳转过来之后界面上
          完全看不出来——用户点"AI 解读"之前只能凭记忆或信任系统。这里补一条
          轻量状态提示，有 lastCastData 就渲染当前是哪一卦，没有就不显示，
@@ -1519,7 +1534,7 @@ table.ref.ref-wide{min-width:480px;}
           <div class="settings-group-title">DeepSeek API Key</div>
           <div class="ai-settings-row">
             <div>
-              <label for="apiKeyInput">Key（存在本机浏览器 localStorage，不上传）<span class="key-status" id="apiKeyStatus"></span></label>
+              <label for="apiKeyInput">Key（保存在本机，仅随请求发送给 DeepSeek）<span class="key-status" id="apiKeyStatus"></span></label>
               <input type="text" id="apiKeyInput" class="key-input" placeholder="sk-xxxxxxxxxxxxxxxx" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text">
               <div class="ai-key-hint">· <a class="ai-key-link" href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">没有Key？去DeepSeek领取 →</a></div>
             </div>
@@ -1566,7 +1581,7 @@ table.ref.ref-wide{min-width:480px;}
           <div class="settings-field">
             <label for="modelSelect">用哪个 DeepSeek 模型解卦</label>
             <select id="modelSelect">
-              <option value="deepseek-v4-flash">V4-Flash（默认·便宜·快速）</option>
+              <option value="deepseek-flash">V4.1-Flash（默认·便宜·快速）</option>
               <option value="deepseek-v4-pro">V4-Pro（更贵·更准·更慢）</option>
             </select>
             <div class="ai-key-hint">Pro 正式版已发布，解读更准；Flash 依旧够用，价格约为 Pro 的1/3。</div>
@@ -1644,6 +1659,36 @@ table.ref.ref-wide{min-width:480px;}
 </main>
 <div class="note">六爻入门 · 内容整理自传统火珠林纳甲体系，供学习参考</div>
 
+<script>
+/*
+ * Copyright (c) 2015 cannon.js Authors
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use, copy,
+ * modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&false)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.CANNON=e()}}(function(){return function e(f,n,o){function d(t,l){if(!n[t]){if(!f[t]){var u="function"==typeof require&&require;if(!l&&u)return u(t,!0);if(i)return i(t,!0);throw new Error("Cannot find module '"+t+"'")}var p=n[t]={exports:{}};f[t][0].call(p.exports,function(e){var n=f[t][1][e];return d(n?n:e)},p,p.exports,e,f,n,o)}return n[t].exports}for(var i="function"==typeof require&&require,t=0;t<o.length;t++)d(o[t]);return d}({1:[function(e,f){f.exports={name:"cannon",version:"0.6.2",description:"A lightweight 3D physics engine written in JavaScript.",homepage:"https://github.com/schteppe/cannon.js",author:"Stefan Hedman <schteppe@gmail.com> (http://steffe.se)",keywords:["cannon.js","cannon","physics","engine","3d"],main:"./build/cannon.js",engines:{node:"*"},repository:{type:"git",url:"https://github.com/schteppe/cannon.js.git"},bugs:{url:"https://github.com/schteppe/cannon.js/issues"},licenses:[{type:"MIT"}],devDependencies:{jshint:"latest","uglify-js":"latest",nodeunit:"^0.9.0",grunt:"~0.4.0","grunt-contrib-jshint":"~0.1.1","grunt-contrib-nodeunit":"^0.4.1","grunt-contrib-concat":"~0.1.3","grunt-contrib-uglify":"^0.5.1","grunt-browserify":"^2.1.4","grunt-contrib-yuidoc":"^0.5.2",browserify:"*"},dependencies:{}}},{}],2:[function(e,f){f.exports={version:e("../package.json").version,AABB:e("./collision/AABB"),ArrayCollisionMatrix:e("./collision/ArrayCollisionMatrix"),Body:e("./objects/Body"),Box:e("./shapes/Box"),Broadphase:e("./collision/Broadphase"),Constraint:e("./constraints/Constraint"),ContactEquation:e("./equations/ContactEquation"),Narrowphase:e("./world/Narrowphase"),ConeTwistConstraint:e("./constraints/ConeTwistConstraint"),ContactMaterial:e("./material/ContactMaterial"),ConvexPolyhedron:e("./shapes/ConvexPolyhedron"),Cylinder:e("./shapes/Cylinder"),DistanceConstraint:e("./constraints/DistanceConstraint"),Equation:e("./equations/Equation"),EventTarget:e("./utils/EventTarget"),FrictionEquation:e("./equations/FrictionEquation"),GSSolver:e("./solver/GSSolver"),GridBroadphase:e("./collision/GridBroadphase"),Heightfield:e("./shapes/Heightfield"),HingeConstraint:e("./constraints/HingeConstraint"),LockConstraint:e("./constraints/LockConstraint"),Mat3:e("./math/Mat3"),Material:e("./material/Material"),NaiveBroadphase:e("./collision/NaiveBroadphase"),ObjectCollisionMatrix:e("./collision/ObjectCollisionMatrix"),Pool:e("./utils/Pool"),Particle:e("./shapes/Particle"),Plane:e("./shapes/Plane"),PointToPointConstraint:e("./constraints/PointToPointConstraint"),Quaternion:e("./math/Quaternion"),Ray:e("./collision/Ray"),RaycastVehicle:e("./objects/RaycastVehicle"),RaycastResult:e("./collision/RaycastResult"),RigidVehicle:e("./objects/RigidVehicle"),RotationalEquation:e("./equations/RotationalEquation"),RotationalMotorEquation:e("./equations/RotationalMotorEquation"),SAPBroadphase:e("./collision/SAPBroadphase"),SPHSystem:e("./objects/SPHSystem"),Shape:e("./shapes/Shape"),Solver:e("./solver/Solver"),Sphere:e("./shapes/Sphere"),SplitSolver:e("./solver/SplitSolver"),Spring:e("./objects/Spring"),Trimesh:e("./shapes/Trimesh"),Vec3:e("./math/Vec3"),Vec3Pool:e("./utils/Vec3Pool"),World:e("./world/World")}},{"../package.json":1,"./collision/AABB":3,"./collision/ArrayCollisionMatrix":4,"./collision/Broadphase":5,"./collision/GridBroadphase":6,"./collision/NaiveBroadphase":7,"./collision/ObjectCollisionMatrix":8,"./collision/Ray":9,"./collision/RaycastResult":10,"./collision/SAPBroadphase":11,"./constraints/ConeTwistConstraint":12,"./constraints/Constraint":13,"./constraints/DistanceConstraint":14,"./constraints/HingeConstraint":15,"./constraints/LockConstraint":16,"./constraints/PointToPointConstraint":17,"./equations/ContactEquation":19,"./equations/Equation":20,"./equations/FrictionEquation":21,"./equations/RotationalEquation":22,"./equations/RotationalMotorEquation":23,"./material/ContactMaterial":24,"./material/Material":25,"./math/Mat3":27,"./math/Quaternion":28,"./math/Vec3":30,"./objects/Body":31,"./objects/RaycastVehicle":32,"./objects/RigidVehicle":33,"./objects/SPHSystem":34,"./objects/Spring":35,"./shapes/Box":37,"./shapes/ConvexPolyhedron":38,"./shapes/Cylinder":39,"./shapes/Heightfield":40,"./shapes/Particle":41,"./shapes/Plane":42,"./shapes/Shape":43,"./shapes/Sphere":44,"./shapes/Trimesh":45,"./solver/GSSolver":46,"./solver/Solver":47,"./solver/SplitSolver":48,"./utils/EventTarget":49,"./utils/Pool":51,"./utils/Vec3Pool":54,"./world/Narrowphase":55,"./world/World":56}],3:[function(e,f){function n(e){e=e||{},this.lowerBound=new o,e.lowerBound&&this.lowerBound.copy(e.lowerBound),this.upperBound=new o,e.upperBound&&this.upperBound.copy(e.upperBound)}{var o=e("../math/Vec3");e("../utils/Utils")}f.exports=n;var d=new o;n.prototype.setFromPoints=function(e,f,n,o){var i=this.lowerBound,t=this.upperBound,l=n;i.copy(e[0]),l&&l.vmult(i,i),t.copy(i);for(var u=1;u<e.length;u++){var p=e[u];l&&(l.vmult(p,d),p=d),p.x>t.x&&(t.x=p.x),p.x<i.x&&(i.x=p.x),p.y>t.y&&(t.y=p.y),p.y<i.y&&(i.y=p.y),p.z>t.z&&(t.z=p.z),p.z<i.z&&(i.z=p.z)}return f&&(f.vadd(i,i),f.vadd(t,t)),o&&(i.x-=o,i.y-=o,i.z-=o,t.x+=o,t.y+=o,t.z+=o),this},n.prototype.copy=function(e){return this.lowerBound.copy(e.lowerBound),this.upperBound.copy(e.upperBound),this},n.prototype.clone=function(){return(new n).copy(this)},n.prototype.extend=function(e){var f=e.lowerBound.x;this.lowerBound.x>f&&(this.lowerBound.x=f);var n=e.upperBound.x;this.upperBound.x<n&&(this.upperBound.x=n);var f=e.lowerBound.y;this.lowerBound.y>f&&(this.lowerBound.y=f);var n=e.upperBound.y;this.upperBound.y<n&&(this.upperBound.y=n);var f=e.lowerBound.z;this.lowerBound.z>f&&(this.lowerBound.z=f);var n=e.upperBound.z;this.upperBound.z<n&&(this.upperBound.z=n)},n.prototype.overlaps=function(e){var f=this.lowerBound,n=this.upperBound,o=e.lowerBound,d=e.upperBound;return(o.x<=n.x&&n.x<=d.x||f.x<=d.x&&d.x<=n.x)&&(o.y<=n.y&&n.y<=d.y||f.y<=d.y&&d.y<=n.y)&&(o.z<=n.z&&n.z<=d.z||f.z<=d.z&&d.z<=n.z)},n.prototype.contains=function(e){var f=this.lowerBound,n=this.upperBound,o=e.lowerBound,d=e.upperBound;return f.x<=o.x&&n.x>=d.x&&f.y<=o.y&&n.y>=d.y&&f.z<=o.z&&n.z>=d.z},n.prototype.getCorners=function(e,f,n,o,d,i,t,l){var u=this.lowerBound,p=this.upperBound;e.copy(u),f.set(p.x,u.y,u.z),n.set(p.x,p.y,u.z),o.set(u.x,p.y,p.z),d.set(p.x,u.y,u.z),i.set(u.x,p.y,u.z),t.set(u.x,u.y,p.z),l.copy(p)};var i=[new o,new o,new o,new o,new o,new o,new o,new o];n.prototype.toLocalFrame=function(e,f){var n=i,o=n[0],d=n[1],t=n[2],l=n[3],u=n[4],p=n[5],s=n[6],y=n[7];this.getCorners(o,d,t,l,u,p,s,y);for(var c=0;8!==c;c++){var a=n[c];e.pointToLocal(a,a)}return f.setFromPoints(n)},n.prototype.toWorldFrame=function(e,f){var n=i,o=n[0],d=n[1],t=n[2],l=n[3],u=n[4],p=n[5],s=n[6],y=n[7];this.getCorners(o,d,t,l,u,p,s,y);for(var c=0;8!==c;c++){var a=n[c];e.pointToWorld(a,a)}return f.setFromPoints(n)}},{"../math/Vec3":30,"../utils/Utils":53}],4:[function(e,f){function n(){this.matrix=[]}f.exports=n,n.prototype.get=function(e,f){if(e=e.index,f=f.index,f>e){var n=f;f=e,e=n}return this.matrix[(e*(e+1)>>1)+f-1]},n.prototype.set=function(e,f,n){if(e=e.index,f=f.index,f>e){var o=f;f=e,e=o}this.matrix[(e*(e+1)>>1)+f-1]=n?1:0},n.prototype.reset=function(){for(var e=0,f=this.matrix.length;e!==f;e++)this.matrix[e]=0},n.prototype.setNumObjects=function(e){this.matrix.length=e*(e-1)>>1}},{}],5:[function(e,f){function n(){this.world=null,this.useBoundingBoxes=!1,this.dirty=!0}{var o=e("../objects/Body"),d=e("../math/Vec3"),i=e("../math/Quaternion");e("../shapes/Shape"),e("../shapes/Plane")}f.exports=n,n.prototype.collisionPairs=function(){throw new Error("collisionPairs not implemented for this BroadPhase class!")};var t=o.STATIC|o.KINEMATIC;n.prototype.needBroadphaseCollision=function(e,f){return 0===(e.collisionFilterGroup&f.collisionFilterMask)||0===(f.collisionFilterGroup&e.collisionFilterMask)?!1:0===(e.type&t)&&e.sleepState!==o.SLEEPING||0===(f.type&t)&&f.sleepState!==o.SLEEPING?!0:!1},n.prototype.intersectionTest=function(e,f,n,o){this.useBoundingBoxes?this.doBoundingBoxBroadphase(e,f,n,o):this.doBoundingSphereBroadphase(e,f,n,o)};{var l=new d;new d,new i,new d}n.prototype.doBoundingSphereBroadphase=function(e,f,n,o){var d=l;f.position.vsub(e.position,d);var i=Math.pow(e.boundingRadius+f.boundingRadius,2),t=d.norm2();i>t&&(n.push(e),o.push(f))},n.prototype.doBoundingBoxBroadphase=function(e,f,n,o){e.aabbNeedsUpdate&&e.computeAABB(),f.aabbNeedsUpdate&&f.computeAABB(),e.aabb.overlaps(f.aabb)&&(n.push(e),o.push(f))};var u={keys:[]},p=[],s=[];n.prototype.makePairsUnique=function(e,f){for(var n=u,o=p,d=s,i=e.length,t=0;t!==i;t++)o[t]=e[t],d[t]=f[t];e.length=0,f.length=0;for(var t=0;t!==i;t++){var l=o[t].id,y=d[t].id,c=y>l?l+","+y:y+","+l;n[c]=t,n.keys.push(c)}for(var t=0;t!==n.keys.length;t++){var c=n.keys.pop(),a=n[c];e.push(o[a]),f.push(d[a]),delete n[c]}},n.prototype.setWorld=function(){};var y=new d;n.boundingSphereCheck=function(e,f){var n=y;return e.position.vsub(f.position,n),Math.pow(e.shape.boundingSphereRadius+f.shape.boundingSphereRadius,2)>n.norm2()},n.prototype.aabbQuery=function(){return console.warn(".aabbQuery is not implemented in this Broadphase subclass."),[]}},{"../math/Quaternion":28,"../math/Vec3":30,"../objects/Body":31,"../shapes/Plane":42,"../shapes/Shape":43}],6:[function(e,f){function n(e,f,n,i,t){o.apply(this),this.nx=n||10,this.ny=i||10,this.nz=t||10,this.aabbMin=e||new d(100,100,100),this.aabbMax=f||new d(-100,-100,-100);var l=this.nx*this.ny*this.nz;if(0>=l)throw"GridBroadphase: Each dimension's n must be >0";this.bins=[],this.binLengths=[],this.bins.length=l,this.binLengths.length=l;for(var u=0;l>u;u++)this.bins[u]=[],this.binLengths[u]=0}f.exports=n;var o=e("./Broadphase"),d=e("../math/Vec3"),i=e("../shapes/Shape");n.prototype=new o,n.prototype.constructor=n;{var t=new d;new d}n.prototype.collisionPairs=function(e,f,n){function o(e,f,n,o,d,i,t){var l=(e-g)*v|0,u=(f-x)*A|0,p=(n-j)*C|0,b=I((o-g)*v),m=I((d-x)*A),N=I((i-j)*C);0>l?l=0:l>=s&&(l=s-1),0>u?u=0:u>=y&&(u=y-1),0>p?p=0:p>=c&&(p=c-1),0>b?b=0:b>=s&&(b=s-1),0>m?m=0:m>=y&&(m=y-1),0>N?N=0:N>=c&&(N=c-1),l*=a,u*=r,p*=w,b*=a,m*=r,N*=w;for(var O=l;b>=O;O+=a)for(var h=u;m>=h;h+=r)for(var k=p;N>=k;k+=w){var q=O+h+k;E[q][F[q]++]=t}}for(var d=e.numObjects(),l=e.bodies,u=this.aabbMax,p=this.aabbMin,s=this.nx,y=this.ny,c=this.nz,a=y*c,r=c,w=1,b=u.x,m=u.y,N=u.z,g=p.x,x=p.y,j=p.z,v=s/(b-g),A=y/(m-x),C=c/(N-j),O=(b-g)/s,h=(m-x)/y,k=(N-j)/c,q=.5*Math.sqrt(O*O+h*h+k*k),z=i.types,B=z.SPHERE,D=z.PLANE,E=(z.BOX,z.COMPOUND,z.CONVEXPOLYHEDRON,this.bins),F=this.binLengths,G=this.bins.length,H=0;H!==G;H++)F[H]=0;for(var I=Math.ceil,p=Math.min,u=Math.max,H=0;H!==d;H++){var J=l[H],K=J.shape;switch(K.type){case B:var L=J.position.x,M=J.position.y,P=J.position.z,Q=K.radius;o(L-Q,M-Q,P-Q,L+Q,M+Q,P+Q,J);break;case D:K.worldNormalNeedsUpdate&&K.computeWorldNormal(J.quaternion);var R=K.worldNormal,S=g+.5*O-J.position.x,T=x+.5*h-J.position.y,U=j+.5*k-J.position.z,V=t;V.set(S,T,U);for(var W=0,X=0;W!==s;W++,X+=a,V.y=T,V.x+=O)for(var Y=0,Z=0;Y!==y;Y++,Z+=r,V.z=U,V.y+=h)for(var $=0,_=0;$!==c;$++,_+=w,V.z+=k)if(V.dot(R)<q){var ef=X+Z+_;E[ef][F[ef]++]=J}break;default:J.aabbNeedsUpdate&&J.computeAABB(),o(J.aabb.lowerBound.x,J.aabb.lowerBound.y,J.aabb.lowerBound.z,J.aabb.upperBound.x,J.aabb.upperBound.y,J.aabb.upperBound.z,J)}}for(var H=0;H!==G;H++){var ff=F[H];if(ff>1)for(var nf=E[H],W=0;W!==ff;W++)for(var J=nf[W],Y=0;Y!==W;Y++){var of=nf[Y];this.needBroadphaseCollision(J,of)&&this.intersectionTest(J,of,f,n)}}this.makePairsUnique(f,n)}},{"../math/Vec3":30,"../shapes/Shape":43,"./Broadphase":5}],7:[function(e,f){function n(){o.apply(this)}f.exports=n;var o=e("./Broadphase"),d=e("./AABB");n.prototype=new o,n.prototype.constructor=n,n.prototype.collisionPairs=function(e,f,n){var o,d,i,t,l=e.bodies,u=l.length;for(o=0;o!==u;o++)for(d=0;d!==o;d++)i=l[o],t=l[d],this.needBroadphaseCollision(i,t)&&this.intersectionTest(i,t,f,n)};new d;n.prototype.aabbQuery=function(e,f,n){n=n||[];for(var o=0;o<e.bodies.length;o++){var d=e.bodies[o];d.aabbNeedsUpdate&&d.computeAABB(),d.aabb.overlaps(f)&&n.push(d)}return n}},{"./AABB":3,"./Broadphase":5}],8:[function(e,f){function n(){this.matrix={}}f.exports=n,n.prototype.get=function(e,f){if(e=e.id,f=f.id,f>e){var n=f;f=e,e=n}return e+"-"+f in this.matrix},n.prototype.set=function(e,f,n){if(e=e.id,f=f.id,f>e){var o=f;f=e,e=o}n?this.matrix[e+"-"+f]=!0:delete this.matrix[e+"-"+f]},n.prototype.reset=function(){this.matrix={}},n.prototype.setNumObjects=function(){}},{}],9:[function(e,f){function n(e,f){this.from=e?e.clone():new i,this.to=f?f.clone():new i,this._direction=new i,this.precision=1e-4,this.checkCollisionResponse=!0,this.skipBackfaces=!1,this.collisionFilterMask=-1,this.collisionFilterGroup=-1,this.mode=n.ANY,this.result=new u,this.hasHit=!1,this.callback=function(){}}function o(e,f,n,o){o.vsub(f,G),n.vsub(f,a),e.vsub(f,r);var d,i,t=G.dot(G),l=G.dot(a),u=G.dot(r),p=a.dot(a),s=a.dot(r);return(d=p*u-l*s)>=0&&(i=t*s-l*u)>=0&&t*p-l*l>d+i}function d(e,f,n){n.vsub(e,G);var o=G.dot(f);f.mult(o,H),H.vadd(e,H);var d=n.distanceTo(H);return d}f.exports=n;var i=e("../math/Vec3"),t=e("../math/Quaternion"),l=e("../math/Transform"),u=(e("../shapes/ConvexPolyhedron"),e("../shapes/Box"),e("../collision/RaycastResult")),p=e("../shapes/Shape"),s=e("../collision/AABB");n.prototype.constructor=n,n.CLOSEST=1,n.ANY=2,n.ALL=4;var y=new s,c=[];n.prototype.intersectWorld=function(e,f){return this.mode=f.mode||n.ANY,this.result=f.result||new u,this.skipBackfaces=!!f.skipBackfaces,this.collisionFilterMask="undefined"!=typeof f.collisionFilterMask?f.collisionFilterMask:-1,this.collisionFilterGroup="undefined"!=typeof f.collisionFilterGroup?f.collisionFilterGroup:-1,f.from&&this.from.copy(f.from),f.to&&this.to.copy(f.to),this.callback=f.callback||function(){},this.hasHit=!1,this.result.reset(),this._updateDirection(),this.getAABB(y),c.length=0,e.broadphase.aabbQuery(e,y,c),this.intersectBodies(c),this.hasHit};var a=new i,r=new i;n.pointInTriangle=o;var w=new i,b=new t;n.prototype.intersectBody=function(e,f){f&&(this.result=f,this._updateDirection());var n=this.checkCollisionResponse;if((!n||e.collisionResponse)&&0!==(this.collisionFilterGroup&e.collisionFilterMask)&&0!==(e.collisionFilterGroup&this.collisionFilterMask))for(var o=w,d=b,i=0,t=e.shapes.length;t>i;i++){var l=e.shapes[i];if((!n||l.collisionResponse)&&(e.quaternion.mult(e.shapeOrientations[i],d),e.quaternion.vmult(e.shapeOffsets[i],o),o.vadd(e.position,o),this.intersectShape(l,d,o,e),this.result._shouldStop))break}},n.prototype.intersectBodies=function(e,f){f&&(this.result=f,this._updateDirection());for(var n=0,o=e.length;!this.result._shouldStop&&o>n;n++)this.intersectBody(e[n])},n.prototype._updateDirection=function(){this.to.vsub(this.from,this._direction),this._direction.normalize()},n.prototype.intersectShape=function(e,f,n,o){var i=this.from,t=d(i,this._direction,n);if(!(t>e.boundingSphereRadius)){var l=this[e.type];l&&l.call(this,e,f,n,o)}};{var m=(new i,new i,new i),N=new i,g=new i,x=new i;new i,new u}n.prototype.intersectBox=function(e,f,n,o){return this.intersectConvex(e.convexPolyhedronRepresentation,f,n,o)},n.prototype[p.types.BOX]=n.prototype.intersectBox,n.prototype.intersectPlane=function(e,f,n,o){var d=this.from,t=this.to,l=this._direction,u=new i(0,0,1);f.vmult(u,u);var p=new i;d.vsub(n,p);var s=p.dot(u);t.vsub(n,p);var y=p.dot(u);if(!(s*y>0||d.distanceTo(t)<s)){var c=u.dot(l);if(!(Math.abs(c)<this.precision)){var a=new i,r=new i,w=new i;d.vsub(n,a);var b=-u.dot(a)/c;l.scale(b,r),d.vadd(r,w),this.reportIntersection(u,w,e,o,-1)}}},n.prototype[p.types.PLANE]=n.prototype.intersectPlane,n.prototype.getAABB=function(e){var f=this.to,n=this.from;e.lowerBound.x=Math.min(f.x,n.x),e.lowerBound.y=Math.min(f.y,n.y),e.lowerBound.z=Math.min(f.z,n.z),e.upperBound.x=Math.max(f.x,n.x),e.upperBound.y=Math.max(f.y,n.y),e.upperBound.z=Math.max(f.z,n.z)};var j={faceList:[0]};n.prototype.intersectHeightfield=function(e,f,o,d){var t=(e.data,e.elementSize,new i),u=new n(this.from,this.to);l.pointToLocalFrame(o,f,u.from,u.from),l.pointToLocalFrame(o,f,u.to,u.to);var p=[],s=null,y=null,c=null,a=null,r=e.getIndexOfPosition(u.from.x,u.from.y,p,!1);if(r&&(s=p[0],y=p[1],c=p[0],a=p[1]),r=e.getIndexOfPosition(u.to.x,u.to.y,p,!1),r&&((null===s||p[0]<s)&&(s=p[0]),(null===c||p[0]>c)&&(c=p[0]),(null===y||p[1]<y)&&(y=p[1]),(null===a||p[1]>a)&&(a=p[1])),null!==s){var w=[];e.getRectMinMax(s,y,c,a,w);for(var b=(w[0],w[1],s);c>=b;b++)for(var m=y;a>=m;m++){if(this.result._shouldStop)return;if(e.getConvexTrianglePillar(b,m,!1),l.pointToWorldFrame(o,f,e.pillarOffset,t),this.intersectConvex(e.pillarConvex,f,t,d,j),this.result._shouldStop)return;e.getConvexTrianglePillar(b,m,!0),l.pointToWorldFrame(o,f,e.pillarOffset,t),this.intersectConvex(e.pillarConvex,f,t,d,j)}}},n.prototype[p.types.HEIGHTFIELD]=n.prototype.intersectHeightfield;var v=new i,A=new i;n.prototype.intersectSphere=function(e,f,n,o){var d=this.from,i=this.to,t=e.radius,l=Math.pow(i.x-d.x,2)+Math.pow(i.y-d.y,2)+Math.pow(i.z-d.z,2),u=2*((i.x-d.x)*(d.x-n.x)+(i.y-d.y)*(d.y-n.y)+(i.z-d.z)*(d.z-n.z)),p=Math.pow(d.x-n.x,2)+Math.pow(d.y-n.y,2)+Math.pow(d.z-n.z,2)-Math.pow(t,2),s=Math.pow(u,2)-4*l*p,y=v,c=A;if(!(0>s))if(0===s)d.lerp(i,s,y),y.vsub(n,c),c.normalize(),this.reportIntersection(c,y,e,o,-1);else{var a=(-u-Math.sqrt(s))/(2*l),r=(-u+Math.sqrt(s))/(2*l);if(a>=0&&1>=a&&(d.lerp(i,a,y),y.vsub(n,c),c.normalize(),this.reportIntersection(c,y,e,o,-1)),this.result._shouldStop)return;r>=0&&1>=r&&(d.lerp(i,r,y),y.vsub(n,c),c.normalize(),this.reportIntersection(c,y,e,o,-1))}},n.prototype[p.types.SPHERE]=n.prototype.intersectSphere;var C=new i,O=(new i,new i,new i);n.prototype.intersectConvex=function(e,f,n,d,i){for(var t=C,l=O,u=i&&i.faceList||null,p=e.faces,s=e.vertices,y=e.faceNormals,c=this._direction,a=this.from,r=this.to,w=a.distanceTo(r),b=u?u.length:p.length,j=this.result,v=0;!j._shouldStop&&b>v;v++){var A=u?u[v]:v,h=p[A],k=y[A],q=f,z=n;l.copy(s[h[0]]),q.vmult(l,l),l.vadd(z,l),l.vsub(a,l),q.vmult(k,t);var B=c.dot(t);if(!(Math.abs(B)<this.precision)){var D=t.dot(l)/B;if(!(0>D)){c.mult(D,m),m.vadd(a,m),N.copy(s[h[0]]),q.vmult(N,N),z.vadd(N,N);for(var E=1;!j._shouldStop&&E<h.length-1;E++){g.copy(s[h[E]]),x.copy(s[h[E+1]]),q.vmult(g,g),q.vmult(x,x),z.vadd(g,g),z.vadd(x,x);var F=m.distanceTo(a);!o(m,N,g,x)&&!o(m,g,N,x)||F>w||this.reportIntersection(t,m,e,d,A)}}}}},n.prototype[p.types.CONVEXPOLYHEDRON]=n.prototype.intersectConvex;var h=new i,k=new i,q=new i,z=new i,B=new i,D=new i,E=(new s,[]),F=new l;n.prototype.intersectTrimesh=function(e,f,n,d,i){var t=h,u=E,p=F,s=O,y=k,c=q,a=z,r=D,w=B,b=(i&&i.faceList||null,e.indices),j=(e.vertices,e.faceNormals,this.from),v=this.to,A=this._direction;p.position.copy(n),p.quaternion.copy(f),l.vectorToLocalFrame(n,f,A,y),l.pointToLocalFrame(n,f,j,c),l.pointToLocalFrame(n,f,v,a);var C=c.distanceSquared(a);e.tree.rayQuery(this,p,u);for(var G=0,H=u.length;!this.result._shouldStop&&G!==H;G++){var I=u[G];e.getNormal(I,t),e.getVertex(b[3*I],N),N.vsub(c,s);var J=y.dot(t),K=t.dot(s)/J;if(!(0>K)){y.scale(K,m),m.vadd(c,m),e.getVertex(b[3*I+1],g),e.getVertex(b[3*I+2],x);var L=m.distanceSquared(c);!o(m,g,N,x)&&!o(m,N,g,x)||L>C||(l.vectorToWorldFrame(f,t,w),l.pointToWorldFrame(n,f,m,r),this.reportIntersection(w,r,e,d,I))}}u.length=0},n.prototype[p.types.TRIMESH]=n.prototype.intersectTrimesh,n.prototype.reportIntersection=function(e,f,o,d,i){var t=this.from,l=this.to,u=t.distanceTo(f),p=this.result;if(!(this.skipBackfaces&&e.dot(this._direction)>0))switch(p.hitFaceIndex="undefined"!=typeof i?i:-1,this.mode){case n.ALL:this.hasHit=!0,p.set(t,l,e,f,o,d,u),p.hasHit=!0,this.callback(p);break;case n.CLOSEST:(u<p.distance||!p.hasHit)&&(this.hasHit=!0,p.hasHit=!0,p.set(t,l,e,f,o,d,u));break;case n.ANY:this.hasHit=!0,p.hasHit=!0,p.set(t,l,e,f,o,d,u),p._shouldStop=!0}};var G=new i,H=new i},{"../collision/AABB":3,"../collision/RaycastResult":10,"../math/Quaternion":28,"../math/Transform":29,"../math/Vec3":30,"../shapes/Box":37,"../shapes/ConvexPolyhedron":38,"../shapes/Shape":43}],10:[function(e,f){function n(){this.rayFromWorld=new o,this.rayToWorld=new o,this.hitNormalWorld=new o,this.hitPointWorld=new o,this.hasHit=!1,this.shape=null,this.body=null,this.hitFaceIndex=-1,this.distance=-1,this._shouldStop=!1}var o=e("../math/Vec3");f.exports=n,n.prototype.reset=function(){this.rayFromWorld.setZero(),this.rayToWorld.setZero(),this.hitNormalWorld.setZero(),this.hitPointWorld.setZero(),this.hasHit=!1,this.shape=null,this.body=null,this.hitFaceIndex=-1,this.distance=-1,this._shouldStop=!1},n.prototype.abort=function(){this._shouldStop=!0},n.prototype.set=function(e,f,n,o,d,i,t){this.rayFromWorld.copy(e),this.rayToWorld.copy(f),this.hitNormalWorld.copy(n),this.hitPointWorld.copy(o),this.shape=d,this.body=i,this.distance=t}},{"../math/Vec3":30}],11:[function(e,f){function n(e){o.apply(this),this.axisList=[],this.world=null,this.axisIndex=0;var f=this.axisList;this._addBodyHandler=function(e){f.push(e.body)},this._removeBodyHandler=function(e){var n=f.indexOf(e.body);-1!==n&&f.splice(n,1)},e&&this.setWorld(e)}var o=(e("../shapes/Shape"),e("../collision/Broadphase"));f.exports=n,n.prototype=new o,n.prototype.setWorld=function(e){this.axisList.length=0;for(var f=0;f<e.bodies.length;f++)this.axisList.push(e.bodies[f]);e.removeEventListener("addBody",this._addBodyHandler),e.removeEventListener("removeBody",this._removeBodyHandler),e.addEventListener("addBody",this._addBodyHandler),e.addEventListener("removeBody",this._removeBodyHandler),this.world=e,this.dirty=!0},n.insertionSortX=function(e){for(var f=1,n=e.length;n>f;f++){for(var o=e[f],d=f-1;d>=0&&!(e[d].aabb.lowerBound.x<=o.aabb.lowerBound.x);d--)e[d+1]=e[d];e[d+1]=o}return e},n.insertionSortY=function(e){for(var f=1,n=e.length;n>f;f++){for(var o=e[f],d=f-1;d>=0&&!(e[d].aabb.lowerBound.y<=o.aabb.lowerBound.y);d--)e[d+1]=e[d];e[d+1]=o}return e},n.insertionSortZ=function(e){for(var f=1,n=e.length;n>f;f++){for(var o=e[f],d=f-1;d>=0&&!(e[d].aabb.lowerBound.z<=o.aabb.lowerBound.z);d--)e[d+1]=e[d];e[d+1]=o}return e},n.prototype.collisionPairs=function(e,f,o){var d,i,t=this.axisList,l=t.length,u=this.axisIndex;for(this.dirty&&(this.sortList(),this.dirty=!1),d=0;d!==l;d++){var p=t[d];for(i=d+1;l>i;i++){var s=t[i];if(this.needBroadphaseCollision(p,s)){if(!n.checkBounds(p,s,u))break;this.intersectionTest(p,s,f,o)}}}},n.prototype.sortList=function(){for(var e=this.axisList,f=this.axisIndex,o=e.length,d=0;d!==o;d++){var i=e[d];i.aabbNeedsUpdate&&i.computeAABB()}0===f?n.insertionSortX(e):1===f?n.insertionSortY(e):2===f&&n.insertionSortZ(e)},n.checkBounds=function(e,f,n){var o,d;0===n?(o=e.position.x,d=f.position.x):1===n?(o=e.position.y,d=f.position.y):2===n&&(o=e.position.z,d=f.position.z);var i=e.boundingRadius,t=f.boundingRadius,l=o+i,u=d-t;return l>u},n.prototype.autoDetectAxis=function(){for(var e=0,f=0,n=0,o=0,d=0,i=0,t=this.axisList,l=t.length,u=1/l,p=0;p!==l;p++){var s=t[p],y=s.position.x;e+=y,f+=y*y;var c=s.position.y;n+=c,o+=c*c;var a=s.position.z;d+=a,i+=a*a}var r=f-e*e*u,w=o-n*n*u,b=i-d*d*u;this.axisIndex=r>w?r>b?0:2:w>b?1:2},n.prototype.aabbQuery=function(e,f,n){n=n||[],this.dirty&&(this.sortList(),this.dirty=!1);var o=this.axisIndex,d="x";1===o&&(d="y"),2===o&&(d="z");for(var i=this.axisList,t=(f.lowerBound[d],f.upperBound[d],0);t<i.length;t++){var l=i[t];l.aabbNeedsUpdate&&l.computeAABB(),l.aabb.overlaps(f)&&n.push(l)}return n}},{"../collision/Broadphase":5,"../shapes/Shape":43}],12:[function(e,f){function n(e,f,n){n=n||{};var l="undefined"!=typeof n.maxForce?n.maxForce:1e6,u=n.pivotA?n.pivotA.clone():new t,p=n.pivotB?n.pivotB.clone():new t;this.axisA=n.axisA?n.axisA.clone():new t,this.axisB=n.axisB?n.axisB.clone():new t,o.call(this,e,u,f,p,l),this.collideConnected=!!n.collideConnected,this.angle="undefined"!=typeof n.angle?n.angle:0;var s=this.coneEquation=new d(e,f,n),y=this.twistEquation=new i(e,f,n);this.twistAngle="undefined"!=typeof n.twistAngle?n.twistAngle:0,s.maxForce=0,s.minForce=-l,y.maxForce=0,y.minForce=-l,this.equations.push(s,y)}f.exports=n;var o=(e("./Constraint"),e("./PointToPointConstraint")),d=e("../equations/ConeEquation"),i=e("../equations/RotationalEquation"),t=(e("../equations/ContactEquation"),e("../math/Vec3"));n.prototype=new o,n.constructor=n;new t,new t;n.prototype.update=function(){var e=this.bodyA,f=this.bodyB,n=this.coneEquation,d=this.twistEquation;o.prototype.update.call(this),e.vectorToWorldFrame(this.axisA,n.axisA),f.vectorToWorldFrame(this.axisB,n.axisB),this.axisA.tangents(d.axisA,d.axisA),e.vectorToWorldFrame(d.axisA,d.axisA),this.axisB.tangents(d.axisB,d.axisB),f.vectorToWorldFrame(d.axisB,d.axisB),n.angle=this.angle,d.maxAngle=this.twistAngle}},{"../equations/ConeEquation":18,"../equations/ContactEquation":19,"../equations/RotationalEquation":22,"../math/Vec3":30,"./Constraint":13,"./PointToPointConstraint":17}],13:[function(e,f){function n(e,f,d){d=o.defaults(d,{collideConnected:!0,wakeUpBodies:!0}),this.equations=[],this.bodyA=e,this.bodyB=f,this.id=n.idCounter++,this.collideConnected=d.collideConnected,d.wakeUpBodies&&(e&&e.wakeUp(),f&&f.wakeUp())}f.exports=n;var o=e("../utils/Utils");n.prototype.update=function(){throw new Error("method update() not implmemented in this Constraint subclass!")},n.prototype.enable=function(){for(var e=this.equations,f=0;f<e.length;f++)e[f].enabled=!0},n.prototype.disable=function(){for(var e=this.equations,f=0;f<e.length;f++)e[f].enabled=!1},n.idCounter=0},{"../utils/Utils":53}],14:[function(e,f){function n(e,f,n,i){o.call(this,e,f),"undefined"==typeof n&&(n=e.position.distanceTo(f.position)),"undefined"==typeof i&&(i=1e6),this.distance=n;var t=this.distanceEquation=new d(e,f);this.equations.push(t),t.minForce=-i,t.maxForce=i}f.exports=n;var o=e("./Constraint"),d=e("../equations/ContactEquation");n.prototype=new o,n.prototype.update=function(){var e=this.bodyA,f=this.bodyB,n=this.distanceEquation,o=.5*this.distance,d=n.ni;f.position.vsub(e.position,d),d.normalize(),d.mult(o,n.ri),d.mult(-o,n.rj)}},{"../equations/ContactEquation":19,"./Constraint":13}],15:[function(e,f){function n(e,f,n){n=n||{};var l="undefined"!=typeof n.maxForce?n.maxForce:1e6,u=n.pivotA?n.pivotA.clone():new t,p=n.pivotB?n.pivotB.clone():new t;o.call(this,e,u,f,p,l);var s=this.axisA=n.axisA?n.axisA.clone():new t(1,0,0);s.normalize();var y=this.axisB=n.axisB?n.axisB.clone():new t(1,0,0);y.normalize();var c=this.rotationalEquation1=new d(e,f,n),a=this.rotationalEquation2=new d(e,f,n),r=this.motorEquation=new i(e,f,l);r.enabled=!1,this.equations.push(c,a,r)}f.exports=n;var o=(e("./Constraint"),e("./PointToPointConstraint")),d=e("../equations/RotationalEquation"),i=e("../equations/RotationalMotorEquation"),t=(e("../equations/ContactEquation"),e("../math/Vec3"));n.prototype=new o,n.constructor=n,n.prototype.enableMotor=function(){this.motorEquation.enabled=!0},n.prototype.disableMotor=function(){this.motorEquation.enabled=!1},n.prototype.setMotorSpeed=function(e){this.motorEquation.targetVelocity=e},n.prototype.setMotorMaxForce=function(e){this.motorEquation.maxForce=e,this.motorEquation.minForce=-e};var l=new t,u=new t;n.prototype.update=function(){var e=this.bodyA,f=this.bodyB,n=this.motorEquation,d=this.rotationalEquation1,i=this.rotationalEquation2,t=l,p=u,s=this.axisA,y=this.axisB;o.prototype.update.call(this),e.quaternion.vmult(s,t),f.quaternion.vmult(y,p),t.tangents(d.axisA,i.axisA),d.axisB.copy(p),i.axisB.copy(p),this.motorEquation.enabled&&(e.quaternion.vmult(this.axisA,n.axisA),f.quaternion.vmult(this.axisB,n.axisB))}},{"../equations/ContactEquation":19,"../equations/RotationalEquation":22,"../equations/RotationalMotorEquation":23,"../math/Vec3":30,"./Constraint":13,"./PointToPointConstraint":17}],16:[function(e,f){function n(e,f,n){n=n||{};var t="undefined"!=typeof n.maxForce?n.maxForce:1e6,l=new i,u=new i,p=new i;e.position.vadd(f.position,p),p.scale(.5,p),f.pointToLocalFrame(p,u),e.pointToLocalFrame(p,l),o.call(this,e,l,f,u,t);var s=this.rotationalEquation1=new d(e,f,n),y=this.rotationalEquation2=new d(e,f,n),c=this.rotationalEquation3=new d(e,f,n);this.equations.push(s,y,c)}f.exports=n;var o=(e("./Constraint"),e("./PointToPointConstraint")),d=e("../equations/RotationalEquation"),i=(e("../equations/RotationalMotorEquation"),e("../equations/ContactEquation"),e("../math/Vec3"));n.prototype=new o,n.constructor=n;new i,new i;n.prototype.update=function(){var e=this.bodyA,f=this.bodyB,n=(this.motorEquation,this.rotationalEquation1),d=this.rotationalEquation2,t=this.rotationalEquation3;o.prototype.update.call(this),e.vectorToWorldFrame(i.UNIT_X,n.axisA),f.vectorToWorldFrame(i.UNIT_Y,n.axisB),e.vectorToWorldFrame(i.UNIT_Y,d.axisA),f.vectorToWorldFrame(i.UNIT_Z,d.axisB),e.vectorToWorldFrame(i.UNIT_Z,t.axisA),f.vectorToWorldFrame(i.UNIT_X,t.axisB)}},{"../equations/ContactEquation":19,"../equations/RotationalEquation":22,"../equations/RotationalMotorEquation":23,"../math/Vec3":30,"./Constraint":13,"./PointToPointConstraint":17}],17:[function(e,f){function n(e,f,n,t,l){o.call(this,e,n),l="undefined"!=typeof l?l:1e6,this.pivotA=f?f.clone():new i,this.pivotB=t?t.clone():new i;var u=this.equationX=new d(e,n),p=this.equationY=new d(e,n),s=this.equationZ=new d(e,n);this.equations.push(u,p,s),u.minForce=p.minForce=s.minForce=-l,u.maxForce=p.maxForce=s.maxForce=l,u.ni.set(1,0,0),p.ni.set(0,1,0),s.ni.set(0,0,1)}f.exports=n;var o=e("./Constraint"),d=e("../equations/ContactEquation"),i=e("../math/Vec3");n.prototype=new o,n.prototype.update=function(){var e=this.bodyA,f=this.bodyB,n=this.equationX,o=this.equationY,d=this.equationZ;e.quaternion.vmult(this.pivotA,n.ri),f.quaternion.vmult(this.pivotB,n.rj),o.ri.copy(n.ri),o.rj.copy(n.rj),d.ri.copy(n.ri),d.rj.copy(n.rj)}},{"../equations/ContactEquation":19,"../math/Vec3":30,"./Constraint":13}],18:[function(e,f){function n(e,f,n){n=n||{};var i="undefined"!=typeof n.maxForce?n.maxForce:1e6;d.call(this,e,f,-i,i),this.axisA=n.axisA?n.axisA.clone():new o(1,0,0),this.axisB=n.axisB?n.axisB.clone():new o(0,1,0),this.angle="undefined"!=typeof n.angle?n.angle:0}f.exports=n;var o=e("../math/Vec3"),d=(e("../math/Mat3"),e("./Equation"));n.prototype=new d,n.prototype.constructor=n;var i=new o,t=new o;n.prototype.computeB=function(e){var f=this.a,n=this.b,o=this.axisA,d=this.axisB,l=i,u=t,p=this.jacobianElementA,s=this.jacobianElementB;o.cross(d,l),d.cross(o,u),p.rotational.copy(u),s.rotational.copy(l);var y=Math.cos(this.angle)-o.dot(d),c=this.computeGW(),a=this.computeGiMf(),r=-y*f-c*n-e*a;return r}},{"../math/Mat3":27,"../math/Vec3":30,"./Equation":20}],19:[function(e,f){function n(e,f,n){n="undefined"!=typeof n?n:1e6,o.call(this,e,f,0,n),this.restitution=0,this.ri=new d,this.rj=new d,this.ni=new d}f.exports=n;{var o=e("./Equation"),d=e("../math/Vec3");e("../math/Mat3")}n.prototype=new o,n.prototype.constructor=n;var i=new d,t=new d,l=new d;n.prototype.computeB=function(e){var f=this.a,n=this.b,o=this.bi,d=this.bj,u=this.ri,p=this.rj,s=i,y=t,c=o.velocity,a=o.angularVelocity,r=(o.force,o.torque,d.velocity),w=d.angularVelocity,b=(d.force,d.torque,l),m=this.jacobianElementA,N=this.jacobianElementB,g=this.ni;u.cross(g,s),p.cross(g,y),g.negate(m.spatial),s.negate(m.rotational),N.spatial.copy(g),N.rotational.copy(y),b.copy(d.position),b.vadd(p,b),b.vsub(o.position,b),b.vsub(u,b);var x=g.dot(b),j=this.restitution+1,v=j*r.dot(g)-j*c.dot(g)+w.dot(y)-a.dot(s),A=this.computeGiMf(),C=-x*f-v*n-e*A;return C};var u=new d,p=new d,s=new d,y=new d,c=new d;n.prototype.getImpactVelocityAlongNormal=function(){var e=u,f=p,n=s,o=y,d=c;return this.bi.position.vadd(this.ri,n),this.bj.position.vadd(this.rj,o),this.bi.getVelocityAtWorldPoint(n,e),this.bj.getVelocityAtWorldPoint(o,f),e.vsub(f,d),this.ni.dot(d)}},{"../math/Mat3":27,"../math/Vec3":30,"./Equation":20}],20:[function(e,f){function n(e,f,d,i){this.id=n.id++,this.minForce="undefined"==typeof d?-1e6:d,this.maxForce="undefined"==typeof i?1e6:i,this.bi=e,this.bj=f,this.a=0,this.b=0,this.eps=0,this.jacobianElementA=new o,this.jacobianElementB=new o,this.enabled=!0,this.setSpookParams(1e7,4,1/60)
+}f.exports=n;var o=e("../math/JacobianElement"),d=e("../math/Vec3");n.prototype.constructor=n,n.id=0,n.prototype.setSpookParams=function(e,f,n){var o=f,d=e,i=n;this.a=4/(i*(1+4*o)),this.b=4*o/(1+4*o),this.eps=4/(i*i*d*(1+4*o))},n.prototype.computeB=function(e,f,n){var o=this.computeGW(),d=this.computeGq(),i=this.computeGiMf();return-d*e-o*f-i*n},n.prototype.computeGq=function(){var e=this.jacobianElementA,f=this.jacobianElementB,n=this.bi,o=this.bj,d=n.position,i=o.position;return e.spatial.dot(d)+f.spatial.dot(i)};var i=new d;n.prototype.computeGW=function(){var e=this.jacobianElementA,f=this.jacobianElementB,n=this.bi,o=this.bj,d=n.velocity,t=o.velocity,l=n.angularVelocity||i,u=o.angularVelocity||i;return e.multiplyVectors(d,l)+f.multiplyVectors(t,u)},n.prototype.computeGWlambda=function(){var e=this.jacobianElementA,f=this.jacobianElementB,n=this.bi,o=this.bj,d=n.vlambda,t=o.vlambda,l=n.wlambda||i,u=o.wlambda||i;return e.multiplyVectors(d,l)+f.multiplyVectors(t,u)};var t=new d,l=new d,u=new d,p=new d;n.prototype.computeGiMf=function(){var e=this.jacobianElementA,f=this.jacobianElementB,n=this.bi,o=this.bj,d=n.force,i=n.torque,s=o.force,y=o.torque,c=n.invMassSolve,a=o.invMassSolve;return n.invInertiaWorldSolve?n.invInertiaWorldSolve.vmult(i,u):u.set(0,0,0),o.invInertiaWorldSolve?o.invInertiaWorldSolve.vmult(y,p):p.set(0,0,0),d.mult(c,t),s.mult(a,l),e.multiplyVectors(t,u)+f.multiplyVectors(l,p)};var s=new d;n.prototype.computeGiMGt=function(){var e=this.jacobianElementA,f=this.jacobianElementB,n=this.bi,o=this.bj,d=n.invMassSolve,i=o.invMassSolve,t=n.invInertiaWorldSolve,l=o.invInertiaWorldSolve,u=d+i;return t&&(t.vmult(e.rotational,s),u+=s.dot(e.rotational)),l&&(l.vmult(f.rotational,s),u+=s.dot(f.rotational)),u};{var y=new d;new d,new d,new d,new d,new d}n.prototype.addToWlambda=function(e){var f=this.jacobianElementA,n=this.jacobianElementB,o=this.bi,d=this.bj,i=y;f.spatial.mult(o.invMassSolve*e,i),o.vlambda.vadd(i,o.vlambda),n.spatial.mult(d.invMassSolve*e,i),d.vlambda.vadd(i,d.vlambda),o.invInertiaWorldSolve&&(o.invInertiaWorldSolve.vmult(f.rotational,i),i.mult(e,i),o.wlambda.vadd(i,o.wlambda)),d.invInertiaWorldSolve&&(d.invInertiaWorldSolve.vmult(n.rotational,i),i.mult(e,i),d.wlambda.vadd(i,d.wlambda))},n.prototype.computeC=function(){return this.computeGiMGt()+this.eps}},{"../math/JacobianElement":26,"../math/Vec3":30}],21:[function(e,f){function n(e,f,n){o.call(this,e,f,-n,n),this.ri=new d,this.rj=new d,this.t=new d}f.exports=n;{var o=e("./Equation"),d=e("../math/Vec3");e("../math/Mat3")}n.prototype=new o,n.prototype.constructor=n;var i=new d,t=new d;n.prototype.computeB=function(e){var f=(this.a,this.b),n=(this.bi,this.bj,this.ri),o=this.rj,d=i,l=t,u=this.t;n.cross(u,d),o.cross(u,l);var p=this.jacobianElementA,s=this.jacobianElementB;u.negate(p.spatial),d.negate(p.rotational),s.spatial.copy(u),s.rotational.copy(l);var y=this.computeGW(),c=this.computeGiMf(),a=-y*f-e*c;return a}},{"../math/Mat3":27,"../math/Vec3":30,"./Equation":20}],22:[function(e,f){function n(e,f,n){n=n||{};var i="undefined"!=typeof n.maxForce?n.maxForce:1e6;d.call(this,e,f,-i,i),this.axisA=n.axisA?n.axisA.clone():new o(1,0,0),this.axisB=n.axisB?n.axisB.clone():new o(0,1,0),this.maxAngle=Math.PI/2}f.exports=n;var o=e("../math/Vec3"),d=(e("../math/Mat3"),e("./Equation"));n.prototype=new d,n.prototype.constructor=n;var i=new o,t=new o;n.prototype.computeB=function(e){var f=this.a,n=this.b,o=this.axisA,d=this.axisB,l=i,u=t,p=this.jacobianElementA,s=this.jacobianElementB;o.cross(d,l),d.cross(o,u),p.rotational.copy(u),s.rotational.copy(l);var y=Math.cos(this.maxAngle)-o.dot(d),c=this.computeGW(),a=this.computeGiMf(),r=-y*f-c*n-e*a;return r}},{"../math/Mat3":27,"../math/Vec3":30,"./Equation":20}],23:[function(e,f){function n(e,f,n){n="undefined"!=typeof n?n:1e6,d.call(this,e,f,-n,n),this.axisA=new o,this.axisB=new o,this.targetVelocity=0}f.exports=n;var o=e("../math/Vec3"),d=(e("../math/Mat3"),e("./Equation"));n.prototype=new d,n.prototype.constructor=n,n.prototype.computeB=function(e){var f=(this.a,this.b),n=(this.bi,this.bj,this.axisA),o=this.axisB,d=this.jacobianElementA,i=this.jacobianElementB;d.rotational.copy(n),o.negate(i.rotational);var t=this.computeGW()-this.targetVelocity,l=this.computeGiMf(),u=-t*f-e*l;return u}},{"../math/Mat3":27,"../math/Vec3":30,"./Equation":20}],24:[function(e,f){function n(e,f,d){d=o.defaults(d,{friction:.3,restitution:.3,contactEquationStiffness:1e7,contactEquationRelaxation:3,frictionEquationStiffness:1e7,frictionEquationRelaxation:3}),this.id=n.idCounter++,this.materials=[e,f],this.friction=d.friction,this.restitution=d.restitution,this.contactEquationStiffness=d.contactEquationStiffness,this.contactEquationRelaxation=d.contactEquationRelaxation,this.frictionEquationStiffness=d.frictionEquationStiffness,this.frictionEquationRelaxation=d.frictionEquationRelaxation}var o=e("../utils/Utils");f.exports=n,n.idCounter=0},{"../utils/Utils":53}],25:[function(e,f){function n(e){var f="";e=e||{},"string"==typeof e?(f=e,e={}):"object"==typeof e&&(f=""),this.name=f,this.id=n.idCounter++,this.friction="undefined"!=typeof e.friction?e.friction:-1,this.restitution="undefined"!=typeof e.restitution?e.restitution:-1}f.exports=n,n.idCounter=0},{}],26:[function(e,f){function n(){this.spatial=new o,this.rotational=new o}f.exports=n;var o=e("./Vec3");n.prototype.multiplyElement=function(e){return e.spatial.dot(this.spatial)+e.rotational.dot(this.rotational)},n.prototype.multiplyVectors=function(e,f){return e.dot(this.spatial)+f.dot(this.rotational)}},{"./Vec3":30}],27:[function(e,f){function n(e){this.elements=e?e:[0,0,0,0,0,0,0,0,0]}f.exports=n;var o=e("./Vec3");n.prototype.identity=function(){var e=this.elements;e[0]=1,e[1]=0,e[2]=0,e[3]=0,e[4]=1,e[5]=0,e[6]=0,e[7]=0,e[8]=1},n.prototype.setZero=function(){var e=this.elements;e[0]=0,e[1]=0,e[2]=0,e[3]=0,e[4]=0,e[5]=0,e[6]=0,e[7]=0,e[8]=0},n.prototype.setTrace=function(e){var f=this.elements;f[0]=e.x,f[4]=e.y,f[8]=e.z},n.prototype.getTrace=function(e){var e=e||new o,f=this.elements;e.x=f[0],e.y=f[4],e.z=f[8]},n.prototype.vmult=function(e,f){f=f||new o;var n=this.elements,d=e.x,i=e.y,t=e.z;return f.x=n[0]*d+n[1]*i+n[2]*t,f.y=n[3]*d+n[4]*i+n[5]*t,f.z=n[6]*d+n[7]*i+n[8]*t,f},n.prototype.smult=function(e){for(var f=0;f<this.elements.length;f++)this.elements[f]*=e},n.prototype.mmult=function(e,f){for(var o=f||new n,d=0;3>d;d++)for(var i=0;3>i;i++){for(var t=0,l=0;3>l;l++)t+=e.elements[d+3*l]*this.elements[l+3*i];o.elements[d+3*i]=t}return o},n.prototype.scale=function(e,f){f=f||new n;for(var o=this.elements,d=f.elements,i=0;3!==i;i++)d[3*i+0]=e.x*o[3*i+0],d[3*i+1]=e.y*o[3*i+1],d[3*i+2]=e.z*o[3*i+2];return f},n.prototype.solve=function(e,f){f=f||new o;for(var n=3,d=4,i=[],t=0;n*d>t;t++)i.push(0);var t,l;for(t=0;3>t;t++)for(l=0;3>l;l++)i[t+d*l]=this.elements[t+3*l];i[3]=e.x,i[7]=e.y,i[11]=e.z;var u,p,s=3,y=s,c=4;do{if(t=y-s,0===i[t+d*t])for(l=t+1;y>l;l++)if(0!==i[t+d*l]){u=c;do p=c-u,i[p+d*t]+=i[p+d*l];while(--u);break}if(0!==i[t+d*t])for(l=t+1;y>l;l++){var a=i[t+d*l]/i[t+d*t];u=c;do p=c-u,i[p+d*l]=t>=p?0:i[p+d*l]-i[p+d*t]*a;while(--u)}}while(--s);if(f.z=i[2*d+3]/i[2*d+2],f.y=(i[1*d+3]-i[1*d+2]*f.z)/i[1*d+1],f.x=(i[0*d+3]-i[0*d+2]*f.z-i[0*d+1]*f.y)/i[0*d+0],isNaN(f.x)||isNaN(f.y)||isNaN(f.z)||1/0===f.x||1/0===f.y||1/0===f.z)throw"Could not solve equation! Got x=["+f.toString()+"], b=["+e.toString()+"], A=["+this.toString()+"]";return f},n.prototype.e=function(e,f,n){return void 0===n?this.elements[f+3*e]:void(this.elements[f+3*e]=n)},n.prototype.copy=function(e){for(var f=0;f<e.elements.length;f++)this.elements[f]=e.elements[f];return this},n.prototype.toString=function(){for(var e="",f=",",n=0;9>n;n++)e+=this.elements[n]+f;return e},n.prototype.reverse=function(e){e=e||new n;for(var f=3,o=6,d=[],i=0;f*o>i;i++)d.push(0);var i,t;for(i=0;3>i;i++)for(t=0;3>t;t++)d[i+o*t]=this.elements[i+3*t];d[3]=1,d[9]=0,d[15]=0,d[4]=0,d[10]=1,d[16]=0,d[5]=0,d[11]=0,d[17]=1;var l,u,p=3,s=p,y=o;do{if(i=s-p,0===d[i+o*i])for(t=i+1;s>t;t++)if(0!==d[i+o*t]){l=y;do u=y-l,d[u+o*i]+=d[u+o*t];while(--l);break}if(0!==d[i+o*i])for(t=i+1;s>t;t++){var c=d[i+o*t]/d[i+o*i];l=y;do u=y-l,d[u+o*t]=i>=u?0:d[u+o*t]-d[u+o*i]*c;while(--l)}}while(--p);i=2;do{t=i-1;do{var c=d[i+o*t]/d[i+o*i];l=o;do u=o-l,d[u+o*t]=d[u+o*t]-d[u+o*i]*c;while(--l)}while(t--)}while(--i);i=2;do{var c=1/d[i+o*i];l=o;do u=o-l,d[u+o*i]=d[u+o*i]*c;while(--l)}while(i--);i=2;do{t=2;do{if(u=d[f+t+o*i],isNaN(u)||1/0===u)throw"Could not reverse! A=["+this.toString()+"]";e.e(i,t,u)}while(t--)}while(i--);return e},n.prototype.setRotationFromQuaternion=function(e){var f=e.x,n=e.y,o=e.z,d=e.w,i=f+f,t=n+n,l=o+o,u=f*i,p=f*t,s=f*l,y=n*t,c=n*l,a=o*l,r=d*i,w=d*t,b=d*l,m=this.elements;return m[0]=1-(y+a),m[1]=p-b,m[2]=s+w,m[3]=p+b,m[4]=1-(u+a),m[5]=c-r,m[6]=s-w,m[7]=c+r,m[8]=1-(u+y),this},n.prototype.transpose=function(e){e=e||new n;for(var f=e.elements,o=this.elements,d=0;3!==d;d++)for(var i=0;3!==i;i++)f[3*d+i]=o[3*i+d];return e}},{"./Vec3":30}],28:[function(e,f){function n(e,f,n,o){this.x=void 0!==e?e:0,this.y=void 0!==f?f:0,this.z=void 0!==n?n:0,this.w=void 0!==o?o:1}f.exports=n;var o=e("./Vec3");n.prototype.set=function(e,f,n,o){this.x=e,this.y=f,this.z=n,this.w=o},n.prototype.toString=function(){return this.x+","+this.y+","+this.z+","+this.w},n.prototype.toArray=function(){return[this.x,this.y,this.z,this.w]},n.prototype.setFromAxisAngle=function(e,f){var n=Math.sin(.5*f);this.x=e.x*n,this.y=e.y*n,this.z=e.z*n,this.w=Math.cos(.5*f)},n.prototype.toAxisAngle=function(e){e=e||new o,this.normalize();var f=2*Math.acos(this.w),n=Math.sqrt(1-this.w*this.w);return.001>n?(e.x=this.x,e.y=this.y,e.z=this.z):(e.x=this.x/n,e.y=this.y/n,e.z=this.z/n),[e,f]};var d=new o,i=new o;n.prototype.setFromVectors=function(e,f){if(e.isAntiparallelTo(f)){var n=d,o=i;e.tangents(n,o),this.setFromAxisAngle(n,Math.PI)}else{var t=e.cross(f);this.x=t.x,this.y=t.y,this.z=t.z,this.w=Math.sqrt(Math.pow(e.norm(),2)*Math.pow(f.norm(),2))+e.dot(f),this.normalize()}};var t=new o,l=new o,u=new o;n.prototype.mult=function(e,f){f=f||new n;var o=this.w,d=t,i=l,p=u;return d.set(this.x,this.y,this.z),i.set(e.x,e.y,e.z),f.w=o*e.w-d.dot(i),d.cross(i,p),f.x=o*i.x+e.w*d.x+p.x,f.y=o*i.y+e.w*d.y+p.y,f.z=o*i.z+e.w*d.z+p.z,f},n.prototype.inverse=function(e){var f=this.x,o=this.y,d=this.z,i=this.w;e=e||new n,this.conjugate(e);var t=1/(f*f+o*o+d*d+i*i);return e.x*=t,e.y*=t,e.z*=t,e.w*=t,e},n.prototype.conjugate=function(e){return e=e||new n,e.x=-this.x,e.y=-this.y,e.z=-this.z,e.w=this.w,e},n.prototype.normalize=function(){var e=Math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z+this.w*this.w);0===e?(this.x=0,this.y=0,this.z=0,this.w=0):(e=1/e,this.x*=e,this.y*=e,this.z*=e,this.w*=e)},n.prototype.normalizeFast=function(){var e=(3-(this.x*this.x+this.y*this.y+this.z*this.z+this.w*this.w))/2;0===e?(this.x=0,this.y=0,this.z=0,this.w=0):(this.x*=e,this.y*=e,this.z*=e,this.w*=e)},n.prototype.vmult=function(e,f){f=f||new o;var n=e.x,d=e.y,i=e.z,t=this.x,l=this.y,u=this.z,p=this.w,s=p*n+l*i-u*d,y=p*d+u*n-t*i,c=p*i+t*d-l*n,a=-t*n-l*d-u*i;return f.x=s*p+a*-t+y*-u-c*-l,f.y=y*p+a*-l+c*-t-s*-u,f.z=c*p+a*-u+s*-l-y*-t,f},n.prototype.copy=function(e){return this.x=e.x,this.y=e.y,this.z=e.z,this.w=e.w,this},n.prototype.toEuler=function(e,f){f=f||"YZX";var n,o,d,i=this.x,t=this.y,l=this.z,u=this.w;switch(f){case"YZX":var p=i*t+l*u;if(p>.499&&(n=2*Math.atan2(i,u),o=Math.PI/2,d=0),-.499>p&&(n=-2*Math.atan2(i,u),o=-Math.PI/2,d=0),isNaN(n)){var s=i*i,y=t*t,c=l*l;n=Math.atan2(2*t*u-2*i*l,1-2*y-2*c),o=Math.asin(2*p),d=Math.atan2(2*i*u-2*t*l,1-2*s-2*c)}break;default:throw new Error("Euler order "+f+" not supported yet.")}e.y=n,e.z=o,e.x=d},n.prototype.setFromEuler=function(e,f,n,o){o=o||"XYZ";var d=Math.cos(e/2),i=Math.cos(f/2),t=Math.cos(n/2),l=Math.sin(e/2),u=Math.sin(f/2),p=Math.sin(n/2);return"XYZ"===o?(this.x=l*i*t+d*u*p,this.y=d*u*t-l*i*p,this.z=d*i*p+l*u*t,this.w=d*i*t-l*u*p):"YXZ"===o?(this.x=l*i*t+d*u*p,this.y=d*u*t-l*i*p,this.z=d*i*p-l*u*t,this.w=d*i*t+l*u*p):"ZXY"===o?(this.x=l*i*t-d*u*p,this.y=d*u*t+l*i*p,this.z=d*i*p+l*u*t,this.w=d*i*t-l*u*p):"ZYX"===o?(this.x=l*i*t-d*u*p,this.y=d*u*t+l*i*p,this.z=d*i*p-l*u*t,this.w=d*i*t+l*u*p):"YZX"===o?(this.x=l*i*t+d*u*p,this.y=d*u*t+l*i*p,this.z=d*i*p-l*u*t,this.w=d*i*t-l*u*p):"XZY"===o&&(this.x=l*i*t-d*u*p,this.y=d*u*t-l*i*p,this.z=d*i*p+l*u*t,this.w=d*i*t+l*u*p),this},n.prototype.clone=function(){return new n(this.x,this.y,this.z,this.w)}},{"./Vec3":30}],29:[function(e,f){function n(e){e=e||{},this.position=new o,e.position&&this.position.copy(e.position),this.quaternion=new d,e.quaternion&&this.quaternion.copy(e.quaternion)}var o=e("./Vec3"),d=e("./Quaternion");f.exports=n;var i=new d;n.pointToLocalFrame=function(e,f,n,d){var d=d||new o;return n.vsub(e,d),f.conjugate(i),i.vmult(d,d),d},n.prototype.pointToLocal=function(e,f){return n.pointToLocalFrame(this.position,this.quaternion,e,f)},n.pointToWorldFrame=function(e,f,n,d){var d=d||new o;return f.vmult(n,d),d.vadd(e,d),d},n.prototype.pointToWorld=function(e,f){return n.pointToWorldFrame(this.position,this.quaternion,e,f)},n.prototype.vectorToWorldFrame=function(e,f){var f=f||new o;return this.quaternion.vmult(e,f),f},n.vectorToWorldFrame=function(e,f,n){return e.vmult(f,n),n},n.vectorToLocalFrame=function(e,f,n,d){var d=d||new o;return f.w*=-1,f.vmult(n,d),f.w*=-1,d}},{"./Quaternion":28,"./Vec3":30}],30:[function(e,f){function n(e,f,n){this.x=e||0,this.y=f||0,this.z=n||0}f.exports=n;var o=e("./Mat3");n.ZERO=new n(0,0,0),n.UNIT_X=new n(1,0,0),n.UNIT_Y=new n(0,1,0),n.UNIT_Z=new n(0,0,1),n.prototype.cross=function(e,f){var o=e.x,d=e.y,i=e.z,t=this.x,l=this.y,u=this.z;return f=f||new n,f.x=l*i-u*d,f.y=u*o-t*i,f.z=t*d-l*o,f},n.prototype.set=function(e,f,n){return this.x=e,this.y=f,this.z=n,this},n.prototype.setZero=function(){this.x=this.y=this.z=0},n.prototype.vadd=function(e,f){return f?(f.x=e.x+this.x,f.y=e.y+this.y,f.z=e.z+this.z,void 0):new n(this.x+e.x,this.y+e.y,this.z+e.z)},n.prototype.vsub=function(e,f){return f?(f.x=this.x-e.x,f.y=this.y-e.y,f.z=this.z-e.z,void 0):new n(this.x-e.x,this.y-e.y,this.z-e.z)},n.prototype.crossmat=function(){return new o([0,-this.z,this.y,this.z,0,-this.x,-this.y,this.x,0])},n.prototype.normalize=function(){var e=this.x,f=this.y,n=this.z,o=Math.sqrt(e*e+f*f+n*n);if(o>0){var d=1/o;this.x*=d,this.y*=d,this.z*=d}else this.x=0,this.y=0,this.z=0;return o},n.prototype.unit=function(e){e=e||new n;var f=this.x,o=this.y,d=this.z,i=Math.sqrt(f*f+o*o+d*d);return i>0?(i=1/i,e.x=f*i,e.y=o*i,e.z=d*i):(e.x=1,e.y=0,e.z=0),e},n.prototype.norm=function(){var e=this.x,f=this.y,n=this.z;return Math.sqrt(e*e+f*f+n*n)},n.prototype.length=n.prototype.norm,n.prototype.norm2=function(){return this.dot(this)},n.prototype.lengthSquared=n.prototype.norm2,n.prototype.distanceTo=function(e){var f=this.x,n=this.y,o=this.z,d=e.x,i=e.y,t=e.z;return Math.sqrt((d-f)*(d-f)+(i-n)*(i-n)+(t-o)*(t-o))},n.prototype.distanceSquared=function(e){var f=this.x,n=this.y,o=this.z,d=e.x,i=e.y,t=e.z;return(d-f)*(d-f)+(i-n)*(i-n)+(t-o)*(t-o)},n.prototype.mult=function(e,f){f=f||new n;var o=this.x,d=this.y,i=this.z;return f.x=e*o,f.y=e*d,f.z=e*i,f},n.prototype.scale=n.prototype.mult,n.prototype.dot=function(e){return this.x*e.x+this.y*e.y+this.z*e.z},n.prototype.isZero=function(){return 0===this.x&&0===this.y&&0===this.z},n.prototype.negate=function(e){return e=e||new n,e.x=-this.x,e.y=-this.y,e.z=-this.z,e};var d=new n,i=new n;n.prototype.tangents=function(e,f){var n=this.norm();if(n>0){var o=d,t=1/n;o.set(this.x*t,this.y*t,this.z*t);var l=i;Math.abs(o.x)<.9?(l.set(1,0,0),o.cross(l,e)):(l.set(0,1,0),o.cross(l,e)),o.cross(e,f)}else e.set(1,0,0),f.set(0,1,0)},n.prototype.toString=function(){return this.x+","+this.y+","+this.z},n.prototype.toArray=function(){return[this.x,this.y,this.z]},n.prototype.copy=function(e){return this.x=e.x,this.y=e.y,this.z=e.z,this},n.prototype.lerp=function(e,f,n){var o=this.x,d=this.y,i=this.z;n.x=o+(e.x-o)*f,n.y=d+(e.y-d)*f,n.z=i+(e.z-i)*f},n.prototype.almostEquals=function(e,f){return void 0===f&&(f=1e-6),Math.abs(this.x-e.x)>f||Math.abs(this.y-e.y)>f||Math.abs(this.z-e.z)>f?!1:!0},n.prototype.almostZero=function(e){return void 0===e&&(e=1e-6),Math.abs(this.x)>e||Math.abs(this.y)>e||Math.abs(this.z)>e?!1:!0};var t=new n;n.prototype.isAntiparallelTo=function(e,f){return this.negate(t),t.almostEquals(e,f)},n.prototype.clone=function(){return new n(this.x,this.y,this.z)}},{"./Mat3":27}],31:[function(e,f){function n(e){e=e||{},o.apply(this),this.id=n.idCounter++,this.world=null,this.preStep=null,this.postStep=null,this.vlambda=new d,this.collisionFilterGroup="number"==typeof e.collisionFilterGroup?e.collisionFilterGroup:1,this.collisionFilterMask="number"==typeof e.collisionFilterMask?e.collisionFilterMask:1,this.collisionResponse=!0,this.position=new d,e.position&&this.position.copy(e.position),this.previousPosition=new d,this.initPosition=new d,this.velocity=new d,e.velocity&&this.velocity.copy(e.velocity),this.initVelocity=new d,this.force=new d;var f="number"==typeof e.mass?e.mass:0;this.mass=f,this.invMass=f>0?1/f:0,this.material=e.material||null,this.linearDamping="number"==typeof e.linearDamping?e.linearDamping:.01,this.type=0>=f?n.STATIC:n.DYNAMIC,typeof e.type==typeof n.STATIC&&(this.type=e.type),this.allowSleep="undefined"!=typeof e.allowSleep?e.allowSleep:!0,this.sleepState=0,this.sleepSpeedLimit="undefined"!=typeof e.sleepSpeedLimit?e.sleepSpeedLimit:.1,this.sleepTimeLimit="undefined"!=typeof e.sleepTimeLimit?e.sleepTimeLimit:1,this.timeLastSleepy=0,this._wakeUpAfterNarrowphase=!1,this.torque=new d,this.quaternion=new t,e.quaternion&&this.quaternion.copy(e.quaternion),this.initQuaternion=new t,this.angularVelocity=new d,e.angularVelocity&&this.angularVelocity.copy(e.angularVelocity),this.initAngularVelocity=new d,this.interpolatedPosition=new d,this.interpolatedQuaternion=new t,this.shapes=[],this.shapeOffsets=[],this.shapeOrientations=[],this.inertia=new d,this.invInertia=new d,this.invInertiaWorld=new i,this.invMassSolve=0,this.invInertiaSolve=new d,this.invInertiaWorldSolve=new i,this.fixedRotation="undefined"!=typeof e.fixedRotation?e.fixedRotation:!1,this.angularDamping="undefined"!=typeof e.angularDamping?e.angularDamping:.01,this.aabb=new l,this.aabbNeedsUpdate=!0,this.wlambda=new d,e.shape&&this.addShape(e.shape),this.updateMassProperties()}f.exports=n;var o=e("../utils/EventTarget"),d=(e("../shapes/Shape"),e("../math/Vec3")),i=e("../math/Mat3"),t=e("../math/Quaternion"),l=(e("../material/Material"),e("../collision/AABB")),u=e("../shapes/Box");n.prototype=new o,n.prototype.constructor=n,n.DYNAMIC=1,n.STATIC=2,n.KINEMATIC=4,n.AWAKE=0,n.SLEEPY=1,n.SLEEPING=2,n.idCounter=0,n.prototype.wakeUp=function(){var e=this.sleepState;this.sleepState=0,e===n.SLEEPING&&this.dispatchEvent({type:"wakeup"})},n.prototype.sleep=function(){this.sleepState=n.SLEEPING,this.velocity.set(0,0,0),this.angularVelocity.set(0,0,0)},n.sleepyEvent={type:"sleepy"},n.sleepEvent={type:"sleep"},n.prototype.sleepTick=function(e){if(this.allowSleep){var f=this.sleepState,o=this.velocity.norm2()+this.angularVelocity.norm2(),d=Math.pow(this.sleepSpeedLimit,2);f===n.AWAKE&&d>o?(this.sleepState=n.SLEEPY,this.timeLastSleepy=e,this.dispatchEvent(n.sleepyEvent)):f===n.SLEEPY&&o>d?this.wakeUp():f===n.SLEEPY&&e-this.timeLastSleepy>this.sleepTimeLimit&&(this.sleep(),this.dispatchEvent(n.sleepEvent))}},n.prototype.updateSolveMassProperties=function(){this.sleepState===n.SLEEPING||this.type===n.KINEMATIC?(this.invMassSolve=0,this.invInertiaSolve.setZero(),this.invInertiaWorldSolve.setZero()):(this.invMassSolve=this.invMass,this.invInertiaSolve.copy(this.invInertia),this.invInertiaWorldSolve.copy(this.invInertiaWorld))},n.prototype.pointToLocalFrame=function(e,f){var f=f||new d;return e.vsub(this.position,f),this.quaternion.conjugate().vmult(f,f),f},n.prototype.vectorToLocalFrame=function(e,f){var f=f||new d;return this.quaternion.conjugate().vmult(e,f),f},n.prototype.pointToWorldFrame=function(e,f){var f=f||new d;return this.quaternion.vmult(e,f),f.vadd(this.position,f),f},n.prototype.vectorToWorldFrame=function(e,f){var f=f||new d;return this.quaternion.vmult(e,f),f};var p=new d,s=new t;n.prototype.addShape=function(e,f,n){var o=new d,i=new t;return f&&o.copy(f),n&&i.copy(n),this.shapes.push(e),this.shapeOffsets.push(o),this.shapeOrientations.push(i),this.updateMassProperties(),this.updateBoundingRadius(),this.aabbNeedsUpdate=!0,this},n.prototype.updateBoundingRadius=function(){for(var e=this.shapes,f=this.shapeOffsets,n=e.length,o=0,d=0;d!==n;d++){var i=e[d];i.updateBoundingSphereRadius();var t=f[d].norm(),l=i.boundingSphereRadius;t+l>o&&(o=t+l)}this.boundingRadius=o};var y=new l;n.prototype.computeAABB=function(){for(var e=this.shapes,f=this.shapeOffsets,n=this.shapeOrientations,o=e.length,d=p,i=s,t=this.quaternion,l=this.aabb,u=y,c=0;c!==o;c++){var a=e[c];n[c].mult(t,i),i.vmult(f[c],d),d.vadd(this.position,d),a.calculateWorldAABB(d,i,u.lowerBound,u.upperBound),0===c?l.copy(u):l.extend(u)}this.aabbNeedsUpdate=!1};{var c=new i,a=new i;new i}n.prototype.updateInertiaWorld=function(e){var f=this.invInertia;if(f.x!==f.y||f.y!==f.z||e){var n=c,o=a;n.setRotationFromQuaternion(this.quaternion),n.transpose(o),n.scale(f,n),n.mmult(o,this.invInertiaWorld)}else;};var r=new d,w=new d;n.prototype.applyForce=function(e,f){if(this.type===n.DYNAMIC){var o=r;f.vsub(this.position,o);var d=w;o.cross(e,d),this.force.vadd(e,this.force),this.torque.vadd(d,this.torque)}};var b=new d,m=new d;n.prototype.applyLocalForce=function(e,f){if(this.type===n.DYNAMIC){var o=b,d=m;this.vectorToWorldFrame(e,o),this.pointToWorldFrame(f,d),this.applyForce(o,d)}};var N=new d,g=new d,x=new d;n.prototype.applyImpulse=function(e,f){if(this.type===n.DYNAMIC){var o=N;f.vsub(this.position,o);var d=g;d.copy(e),d.mult(this.invMass,d),this.velocity.vadd(d,this.velocity);var i=x;o.cross(e,i),this.invInertiaWorld.vmult(i,i),this.angularVelocity.vadd(i,this.angularVelocity)}};var j=new d,v=new d;n.prototype.applyLocalImpulse=function(e,f){if(this.type===n.DYNAMIC){var o=j,d=v;this.vectorToWorldFrame(e,o),this.pointToWorldFrame(f,d),this.applyImpulse(o,d)}};var A=new d;n.prototype.updateMassProperties=function(){var e=A;this.invMass=this.mass>0?1/this.mass:0;var f=this.inertia,n=this.fixedRotation;this.computeAABB(),e.set((this.aabb.upperBound.x-this.aabb.lowerBound.x)/2,(this.aabb.upperBound.y-this.aabb.lowerBound.y)/2,(this.aabb.upperBound.z-this.aabb.lowerBound.z)/2),u.calculateInertia(e,this.mass,f),this.invInertia.set(f.x>0&&!n?1/f.x:0,f.y>0&&!n?1/f.y:0,f.z>0&&!n?1/f.z:0),this.updateInertiaWorld(!0)},n.prototype.getVelocityAtWorldPoint=function(e,f){var n=new d;return e.vsub(this.position,n),this.angularVelocity.cross(n,f),this.velocity.vadd(f,f),f}},{"../collision/AABB":3,"../material/Material":25,"../math/Mat3":27,"../math/Quaternion":28,"../math/Vec3":30,"../shapes/Box":37,"../shapes/Shape":43,"../utils/EventTarget":49}],32:[function(e,f){function n(e){this.chassisBody=e.chassisBody,this.wheelInfos=[],this.sliding=!1,this.world=null,this.indexRightAxis="undefined"!=typeof e.indexRightAxis?e.indexRightAxis:1,this.indexForwardAxis="undefined"!=typeof e.indexForwardAxis?e.indexForwardAxis:0,this.indexUpAxis="undefined"!=typeof e.indexUpAxis?e.indexUpAxis:2}function o(e,f,n,o,i){var t=0,l=n,u=x,p=j,s=v;e.getVelocityAtWorldPoint(l,u),f.getVelocityAtWorldPoint(l,p),u.vsub(p,s);var y=o.dot(s),c=d(e,n,o),a=d(f,n,o),r=1,w=r/(c+a);return t=-y*w,t>i&&(t=i),-i>t&&(t=-i),t}function d(e,f,n){var o=A,d=C,i=O,t=h;return f.vsub(e.position,o),o.cross(n,d),e.invInertiaWorld.vmult(d,t),t.cross(o,i),e.invMass+n.dot(i)}function i(e,f,n,o,d,i){var t=d.norm2();if(t>1.1)return 0;var l=k,u=q,p=z;e.getVelocityAtWorldPoint(f,l),n.getVelocityAtWorldPoint(o,u),l.vsub(u,p);var s=d.dot(p),y=.2,c=1/(e.invMass+n.invMass),i=-y*s*c;return i}var t=(e("./Body"),e("../math/Vec3")),l=e("../math/Quaternion"),u=(e("../collision/RaycastResult"),e("../collision/Ray")),p=e("../objects/WheelInfo");f.exports=n;{var s=(new t,new t,new t,new t),y=new t,c=new t;new u}n.prototype.addWheel=function(e){e=e||{};var f=new p(e),n=this.wheelInfos.length;return this.wheelInfos.push(f),n},n.prototype.setSteeringValue=function(e,f){var n=this.wheelInfos[f];n.steering=e};new t;n.prototype.applyEngineForce=function(e,f){this.wheelInfos[f].engineForce=e},n.prototype.setBrake=function(e,f){this.wheelInfos[f].brake=e},n.prototype.addToWorld=function(e){this.constraints;e.add(this.chassisBody);var f=this;this.preStepCallback=function(){f.updateVehicle(e.dt)},e.addEventListener("preStep",this.preStepCallback),this.world=e},n.prototype.getVehicleAxisWorld=function(e,f){f.set(0===e?1:0,1===e?1:0,2===e?1:0),this.chassisBody.vectorToWorldFrame(f,f)},n.prototype.updateVehicle=function(e){for(var f=this.wheelInfos,n=f.length,o=this.chassisBody,d=0;n>d;d++)this.updateWheelTransform(d);this.currentVehicleSpeedKmHour=3.6*o.velocity.norm();var i=new t;this.getVehicleAxisWorld(this.indexForwardAxis,i),i.dot(o.velocity)<0&&(this.currentVehicleSpeedKmHour*=-1);for(var d=0;n>d;d++)this.castRay(f[d]);this.updateSuspension(e);for(var l=new t,u=new t,d=0;n>d;d++){var p=f[d],s=p.suspensionForce;s>p.maxSuspensionForce&&(s=p.maxSuspensionForce),p.raycastResult.hitNormalWorld.scale(s*e,l),p.raycastResult.hitPointWorld.vsub(o.position,u),o.applyImpulse(l,p.raycastResult.hitPointWorld)}this.updateFriction(e);var y=new t,c=new t,a=new t;for(d=0;n>d;d++){var p=f[d];o.getVelocityAtWorldPoint(p.chassisConnectionPointWorld,a);var r=1;switch(this.indexUpAxis){case 1:r=-1}if(p.isInContact){this.getVehicleAxisWorld(this.indexForwardAxis,c);var w=c.dot(p.raycastResult.hitNormalWorld);p.raycastResult.hitNormalWorld.scale(w,y),c.vsub(y,c);var b=c.dot(a);p.deltaRotation=r*b*e/p.radius}!p.sliding&&p.isInContact||0===p.engineForce||!p.useCustomSlidingRotationalSpeed||(p.deltaRotation=(p.engineForce>0?1:-1)*p.customSlidingRotationalSpeed*e),Math.abs(p.brake)>Math.abs(p.engineForce)&&(p.deltaRotation=0),p.rotation+=p.deltaRotation,p.deltaRotation*=.99}},n.prototype.updateSuspension=function(){for(var e=this.chassisBody,f=e.mass,n=this.wheelInfos,o=n.length,d=0;o>d;d++){var i=n[d];if(i.isInContact){var t,l=i.suspensionRestLength,u=i.suspensionLength,p=l-u;t=i.suspensionStiffness*p*i.clippedInvContactDotSuspension;var s,y=i.suspensionRelativeVelocity;s=0>y?i.dampingCompression:i.dampingRelaxation,t-=s*y,i.suspensionForce=t*f,i.suspensionForce<0&&(i.suspensionForce=0)}else i.suspensionForce=0}},n.prototype.removeFromWorld=function(e){this.constraints;e.remove(this.chassisBody),e.removeEventListener("preStep",this.preStepCallback),this.world=null};var a=new t,r=new t;n.prototype.castRay=function(e){var f=a,n=r;this.updateWheelTransformWorld(e);var o=this.chassisBody,d=-1,i=e.suspensionRestLength+e.radius;e.directionWorld.scale(i,f);var l=e.chassisConnectionPointWorld;l.vadd(f,n);var u=e.raycastResult;u.reset();var p=o.collisionResponse;o.collisionResponse=!1,this.world.rayTest(l,n,u),o.collisionResponse=p;var s=u.body;if(e.raycastResult.groundObject=0,s){d=u.distance,e.raycastResult.hitNormalWorld=u.hitNormalWorld,e.isInContact=!0;var y=u.distance;e.suspensionLength=y-e.radius;var c=e.suspensionRestLength-e.maxSuspensionTravel,w=e.suspensionRestLength+e.maxSuspensionTravel;e.suspensionLength<c&&(e.suspensionLength=c),e.suspensionLength>w&&(e.suspensionLength=w,e.raycastResult.reset());var b=e.raycastResult.hitNormalWorld.dot(e.directionWorld),m=new t;o.getVelocityAtWorldPoint(e.raycastResult.hitPointWorld,m);var N=e.raycastResult.hitNormalWorld.dot(m);if(b>=-.1)e.suspensionRelativeVelocity=0,e.clippedInvContactDotSuspension=10;else{var g=-1/b;e.suspensionRelativeVelocity=N*g,e.clippedInvContactDotSuspension=g}}else e.suspensionLength=e.suspensionRestLength+0*e.maxSuspensionTravel,e.suspensionRelativeVelocity=0,e.directionWorld.scale(-1,e.raycastResult.hitNormalWorld),e.clippedInvContactDotSuspension=1;return d},n.prototype.updateWheelTransformWorld=function(e){e.isInContact=!1;var f=this.chassisBody;f.pointToWorldFrame(e.chassisConnectionPointLocal,e.chassisConnectionPointWorld),f.vectorToWorldFrame(e.directionLocal,e.directionWorld),f.vectorToWorldFrame(e.axleLocal,e.axleWorld)},n.prototype.updateWheelTransform=function(e){var f=s,n=y,o=c,d=this.wheelInfos[e];this.updateWheelTransformWorld(d),d.directionLocal.scale(-1,f),n.copy(d.axleLocal),f.cross(n,o),o.normalize(),n.normalize();var i=d.steering,t=new l;t.setFromAxisAngle(f,i);var u=new l;u.setFromAxisAngle(n,d.rotation);var p=d.worldTransform.quaternion;this.chassisBody.quaternion.mult(t,p),p.mult(u,p),p.normalize();var a=d.worldTransform.position;a.copy(d.directionWorld),a.scale(d.suspensionLength,a),a.vadd(d.chassisConnectionPointWorld,a)};var w=[new t(1,0,0),new t(0,1,0),new t(0,0,1)];n.prototype.getWheelTransformWorld=function(e){return this.wheelInfos[e].worldTransform};var b=new t,m=[],N=[],g=1;n.prototype.updateFriction=function(e){for(var f=b,n=this.wheelInfos,d=n.length,l=this.chassisBody,u=N,p=m,s=0,y=0;d>y;y++){var c=n[y],a=c.raycastResult.body;a&&s++,c.sideImpulse=0,c.forwardImpulse=0,u[y]||(u[y]=new t),p[y]||(p[y]=new t)}for(var y=0;d>y;y++){var c=n[y],a=c.raycastResult.body;if(a){var r=p[y],x=this.getWheelTransformWorld(y);x.vectorToWorldFrame(w[this.indexRightAxis],r);var j=c.raycastResult.hitNormalWorld,v=r.dot(j);j.scale(v,f),r.vsub(f,r),r.normalize(),j.cross(r,u[y]),u[y].normalize(),c.sideImpulse=i(l,c.raycastResult.hitPointWorld,a,c.raycastResult.hitPointWorld,r),c.sideImpulse*=g}}var A=1,C=.5;this.sliding=!1;for(var y=0;d>y;y++){var c=n[y],a=c.raycastResult.body,O=0;if(c.slipInfo=1,a){var h=0,k=c.brake?c.brake:h;O=o(l,a,c.raycastResult.hitPointWorld,u[y],k),O+=c.engineForce*e;var q=k/O;c.slipInfo*=q}if(c.forwardImpulse=0,c.skidInfo=1,a){c.skidInfo=1;var z=c.suspensionForce*e*c.frictionSlip,B=z,D=z*B;c.forwardImpulse=O;var E=c.forwardImpulse*C,F=c.sideImpulse*A,G=E*E+F*F;if(c.sliding=!1,G>D){this.sliding=!0,c.sliding=!0;var q=z/Math.sqrt(G);c.skidInfo*=q}}}if(this.sliding)for(var y=0;d>y;y++){var c=n[y];0!==c.sideImpulse&&c.skidInfo<1&&(c.forwardImpulse*=c.skidInfo,c.sideImpulse*=c.skidInfo)}for(var y=0;d>y;y++){var c=n[y],H=new t;if(H.copy(c.raycastResult.hitPointWorld),0!==c.forwardImpulse){var I=new t;u[y].scale(c.forwardImpulse,I),l.applyImpulse(I,H)}if(0!==c.sideImpulse){var a=c.raycastResult.body,J=new t;J.copy(c.raycastResult.hitPointWorld);var K=new t;p[y].scale(c.sideImpulse,K),l.pointToLocalFrame(H,H),H["xyz"[this.indexUpAxis]]*=c.rollInfluence,l.pointToWorldFrame(H,H),l.applyImpulse(K,H),K.scale(-1,K),a.applyImpulse(K,J)}}};var x=new t,j=new t,v=new t,A=new t,C=new t,O=new t,h=new t,k=new t,q=new t,z=new t},{"../collision/Ray":9,"../collision/RaycastResult":10,"../math/Quaternion":28,"../math/Vec3":30,"../objects/WheelInfo":36,"./Body":31}],33:[function(e,f){function n(e){if(this.wheelBodies=[],this.coordinateSystem="undefined"==typeof e.coordinateSystem?new t(1,2,3):e.coordinateSystem.clone(),this.chassisBody=e.chassisBody,!this.chassisBody){var f=new i(new t(5,2,.5));this.chassisBody=new o(1,f)}this.constraints=[],this.wheelAxes=[],this.wheelForces=[]}var o=e("./Body"),d=e("../shapes/Sphere"),i=e("../shapes/Box"),t=e("../math/Vec3"),l=e("../constraints/HingeConstraint");f.exports=n,n.prototype.addWheel=function(e){e=e||{};var f=e.body;f||(f=new o(1,new d(1.2))),this.wheelBodies.push(f),this.wheelForces.push(0);var n=(new t,"undefined"!=typeof e.position?e.position.clone():new t),i=new t;this.chassisBody.pointToWorldFrame(n,i),f.position.set(i.x,i.y,i.z);var u="undefined"!=typeof e.axis?e.axis.clone():new t(0,1,0);this.wheelAxes.push(u);var p=new l(this.chassisBody,f,{pivotA:n,axisA:u,pivotB:t.ZERO,axisB:u,collideConnected:!1});return this.constraints.push(p),this.wheelBodies.length-1},n.prototype.setSteeringValue=function(e,f){var n=this.wheelAxes[f],o=Math.cos(e),d=Math.sin(e),i=n.x,t=n.y;this.constraints[f].axisA.set(o*i-d*t,d*i+o*t,0)},n.prototype.setMotorSpeed=function(e,f){var n=this.constraints[f];n.enableMotor(),n.motorTargetVelocity=e},n.prototype.disableMotor=function(e){var f=this.constraints[e];
+f.disableMotor()};var u=new t;n.prototype.setWheelForce=function(e,f){this.wheelForces[f]=e},n.prototype.applyWheelForce=function(e,f){var n=this.wheelAxes[f],o=this.wheelBodies[f],d=o.torque;n.scale(e,u),o.vectorToWorldFrame(u,u),d.vadd(u,d)},n.prototype.addToWorld=function(e){for(var f=this.constraints,n=this.wheelBodies.concat([this.chassisBody]),o=0;o<n.length;o++)e.add(n[o]);for(var o=0;o<f.length;o++)e.addConstraint(f[o]);e.addEventListener("preStep",this._update.bind(this))},n.prototype._update=function(){for(var e=this.wheelForces,f=0;f<e.length;f++)this.applyWheelForce(e[f],f)},n.prototype.removeFromWorld=function(e){for(var f=this.constraints,n=this.wheelBodies.concat([this.chassisBody]),o=0;o<n.length;o++)e.remove(n[o]);for(var o=0;o<f.length;o++)e.removeConstraint(f[o])};var p=new t;n.prototype.getWheelSpeed=function(e){var f=this.wheelAxes[e],n=this.wheelBodies[e],o=n.angularVelocity;return this.chassisBody.vectorToWorldFrame(f,p),o.dot(p)}},{"../constraints/HingeConstraint":15,"../math/Vec3":30,"../shapes/Box":37,"../shapes/Sphere":44,"./Body":31}],34:[function(e,f){function n(){this.particles=[],this.density=1,this.smoothingRadius=1,this.speedOfSound=1,this.viscosity=.01,this.eps=1e-6,this.pressures=[],this.densities=[],this.neighbors=[]}f.exports=n;{var o=(e("../shapes/Shape"),e("../math/Vec3"));e("../math/Quaternion"),e("../shapes/Particle"),e("../objects/Body"),e("../material/Material")}n.prototype.add=function(e){this.particles.push(e),this.neighbors.length<this.particles.length&&this.neighbors.push([])},n.prototype.remove=function(e){var f=this.particles.indexOf(e);-1!==f&&(this.particles.splice(f,1),this.neighbors.length>this.particles.length&&this.neighbors.pop())};var d=new o;n.prototype.getNeighbors=function(e,f){for(var n=this.particles.length,o=e.id,i=this.smoothingRadius*this.smoothingRadius,t=d,l=0;l!==n;l++){var u=this.particles[l];u.position.vsub(e.position,t),o!==u.id&&t.norm2()<i&&f.push(u)}};var i=new o,t=new o,l=new o,u=new o,p=new o,s=new o;n.prototype.update=function(){for(var e=this.particles.length,f=i,n=this.speedOfSound,o=this.eps,d=0;d!==e;d++){var y=this.particles[d],c=this.neighbors[d];c.length=0,this.getNeighbors(y,c),c.push(this.particles[d]);for(var a=c.length,r=0,w=0;w!==a;w++){y.position.vsub(c[w].position,f);var b=f.norm(),m=this.w(b);r+=c[w].mass*m}this.densities[d]=r,this.pressures[d]=n*n*(this.densities[d]-this.density)}for(var N=t,g=l,x=u,j=p,v=s,d=0;d!==e;d++){var A=this.particles[d];N.set(0,0,0),g.set(0,0,0);for(var C,O,c=this.neighbors[d],a=c.length,w=0;w!==a;w++){var h=c[w];A.position.vsub(h.position,j);var k=j.norm();C=-h.mass*(this.pressures[d]/(this.densities[d]*this.densities[d]+o)+this.pressures[w]/(this.densities[w]*this.densities[w]+o)),this.gradw(j,x),x.mult(C,x),N.vadd(x,N),h.velocity.vsub(A.velocity,v),v.mult(1/(1e-4+this.densities[d]*this.densities[w])*this.viscosity*h.mass,v),O=this.nablaw(k),v.mult(O,v),g.vadd(v,g)}g.mult(A.mass,g),N.mult(A.mass,N),A.force.vadd(g,A.force),A.force.vadd(N,A.force)}},n.prototype.w=function(e){var f=this.smoothingRadius;return 315/(64*Math.PI*Math.pow(f,9))*Math.pow(f*f-e*e,3)},n.prototype.gradw=function(e,f){var n=e.norm(),o=this.smoothingRadius;e.mult(945/(32*Math.PI*Math.pow(o,9))*Math.pow(o*o-n*n,2),f)},n.prototype.nablaw=function(e){var f=this.smoothingRadius,n=945/(32*Math.PI*Math.pow(f,9))*(f*f-e*e)*(7*e*e-3*f*f);return n}},{"../material/Material":25,"../math/Quaternion":28,"../math/Vec3":30,"../objects/Body":31,"../shapes/Particle":41,"../shapes/Shape":43}],35:[function(e,f){function n(e,f,n){n=n||{},this.restLength="number"==typeof n.restLength?n.restLength:1,this.stiffness=n.stiffness||100,this.damping=n.damping||1,this.bodyA=e,this.bodyB=f,this.localAnchorA=new o,this.localAnchorB=new o,n.localAnchorA&&this.localAnchorA.copy(n.localAnchorA),n.localAnchorB&&this.localAnchorB.copy(n.localAnchorB),n.worldAnchorA&&this.setWorldAnchorA(n.worldAnchorA),n.worldAnchorB&&this.setWorldAnchorB(n.worldAnchorB)}var o=e("../math/Vec3");f.exports=n,n.prototype.setWorldAnchorA=function(e){this.bodyA.pointToLocalFrame(e,this.localAnchorA)},n.prototype.setWorldAnchorB=function(e){this.bodyB.pointToLocalFrame(e,this.localAnchorB)},n.prototype.getWorldAnchorA=function(e){this.bodyA.pointToWorldFrame(this.localAnchorA,e)},n.prototype.getWorldAnchorB=function(e){this.bodyB.pointToWorldFrame(this.localAnchorB,e)};var d=new o,i=new o,t=new o,l=new o,u=new o,p=new o,s=new o,y=new o,c=new o,a=new o,r=new o;n.prototype.applyForce=function(){var e=this.stiffness,f=this.damping,n=this.restLength,o=this.bodyA,w=this.bodyB,b=d,m=i,N=t,g=l,x=r,j=u,v=p,A=s,C=y,O=c,h=a;this.getWorldAnchorA(j),this.getWorldAnchorB(v),j.vsub(o.position,A),v.vsub(w.position,C),v.vsub(j,b);var k=b.norm();m.copy(b),m.normalize(),w.velocity.vsub(o.velocity,N),w.angularVelocity.cross(C,x),N.vadd(x,N),o.angularVelocity.cross(A,x),N.vsub(x,N),m.mult(-e*(k-n)-f*N.dot(m),g),o.force.vsub(g,o.force),w.force.vadd(g,w.force),A.cross(g,O),C.cross(g,h),o.torque.vsub(O,o.torque),w.torque.vadd(h,w.torque)}},{"../math/Vec3":30}],36:[function(e,f){function n(e){e=t.defaults(e,{chassisConnectionPointLocal:new o,chassisConnectionPointWorld:new o,directionLocal:new o,directionWorld:new o,axleLocal:new o,axleWorld:new o,suspensionRestLength:1,suspensionMaxLength:2,radius:1,suspensionStiffness:100,dampingCompression:10,dampingRelaxation:10,frictionSlip:1e4,steering:0,rotation:0,deltaRotation:0,rollInfluence:.01,maxSuspensionForce:Number.MAX_VALUE,isFrontWheel:!0,clippedInvContactDotSuspension:1,suspensionRelativeVelocity:0,suspensionForce:0,skidInfo:0,suspensionLength:0,maxSuspensionTravel:1,useCustomSlidingRotationalSpeed:!1,customSlidingRotationalSpeed:-.1}),this.maxSuspensionTravel=e.maxSuspensionTravel,this.customSlidingRotationalSpeed=e.customSlidingRotationalSpeed,this.useCustomSlidingRotationalSpeed=e.useCustomSlidingRotationalSpeed,this.sliding=!1,this.chassisConnectionPointLocal=e.chassisConnectionPointLocal.clone(),this.chassisConnectionPointWorld=e.chassisConnectionPointWorld.clone(),this.directionLocal=e.directionLocal.clone(),this.directionWorld=e.directionWorld.clone(),this.axleLocal=e.axleLocal.clone(),this.axleWorld=e.axleWorld.clone(),this.suspensionRestLength=e.suspensionRestLength,this.suspensionMaxLength=e.suspensionMaxLength,this.radius=e.radius,this.suspensionStiffness=e.suspensionStiffness,this.dampingCompression=e.dampingCompression,this.dampingRelaxation=e.dampingRelaxation,this.frictionSlip=e.frictionSlip,this.steering=0,this.rotation=0,this.deltaRotation=0,this.rollInfluence=e.rollInfluence,this.maxSuspensionForce=e.maxSuspensionForce,this.engineForce=0,this.brake=0,this.isFrontWheel=e.isFrontWheel,this.clippedInvContactDotSuspension=1,this.suspensionRelativeVelocity=0,this.suspensionForce=0,this.skidInfo=0,this.suspensionLength=0,this.sideImpulse=0,this.forwardImpulse=0,this.raycastResult=new i,this.worldTransform=new d,this.isInContact=!1}var o=e("../math/Vec3"),d=e("../math/Transform"),i=e("../collision/RaycastResult"),t=e("../utils/Utils");f.exports=n;var l=new o,u=new o,l=new o;n.prototype.updateWheel=function(e){var f=this.raycastResult;if(this.isInContact){var n=f.hitNormalWorld.dot(f.directionWorld);f.hitPointWorld.vsub(e.position,u),e.getVelocityAtWorldPoint(u,l);var o=f.hitNormalWorld.dot(l);if(n>=-.1)this.suspensionRelativeVelocity=0,this.clippedInvContactDotSuspension=10;else{var d=-1/n;this.suspensionRelativeVelocity=o*d,this.clippedInvContactDotSuspension=d}}else f.suspensionLength=this.suspensionRestLength,this.suspensionRelativeVelocity=0,f.directionWorld.scale(-1,f.hitNormalWorld),this.clippedInvContactDotSuspension=1}},{"../collision/RaycastResult":10,"../math/Transform":29,"../math/Vec3":30,"../utils/Utils":53}],37:[function(e,f){function n(e){o.call(this),this.type=o.types.BOX,this.halfExtents=e,this.convexPolyhedronRepresentation=null,this.updateConvexPolyhedronRepresentation(),this.updateBoundingSphereRadius()}f.exports=n;var o=e("./Shape"),d=e("../math/Vec3"),i=e("./ConvexPolyhedron");n.prototype=new o,n.prototype.constructor=n,n.prototype.updateConvexPolyhedronRepresentation=function(){var e=this.halfExtents.x,f=this.halfExtents.y,n=this.halfExtents.z,o=d,t=[new o(-e,-f,-n),new o(e,-f,-n),new o(e,f,-n),new o(-e,f,-n),new o(-e,-f,n),new o(e,-f,n),new o(e,f,n),new o(-e,f,n)],l=[[3,2,1,0],[4,5,6,7],[5,4,0,1],[2,3,7,6],[0,4,7,3],[1,2,6,5]],u=([new o(0,0,1),new o(0,1,0),new o(1,0,0)],new i(t,l));this.convexPolyhedronRepresentation=u,u.material=this.material},n.prototype.calculateLocalInertia=function(e,f){return f=f||new d,n.calculateInertia(this.halfExtents,e,f),f},n.calculateInertia=function(e,f,n){var o=e;n.x=1/12*f*(2*o.y*2*o.y+2*o.z*2*o.z),n.y=1/12*f*(2*o.x*2*o.x+2*o.z*2*o.z),n.z=1/12*f*(2*o.y*2*o.y+2*o.x*2*o.x)},n.prototype.getSideNormals=function(e,f){var n=e,o=this.halfExtents;if(n[0].set(o.x,0,0),n[1].set(0,o.y,0),n[2].set(0,0,o.z),n[3].set(-o.x,0,0),n[4].set(0,-o.y,0),n[5].set(0,0,-o.z),void 0!==f)for(var d=0;d!==n.length;d++)f.vmult(n[d],n[d]);return n},n.prototype.volume=function(){return 8*this.halfExtents.x*this.halfExtents.y*this.halfExtents.z},n.prototype.updateBoundingSphereRadius=function(){this.boundingSphereRadius=this.halfExtents.norm()};{var t=new d;new d}n.prototype.forEachWorldCorner=function(e,f,n){for(var o=this.halfExtents,d=[[o.x,o.y,o.z],[-o.x,o.y,o.z],[-o.x,-o.y,o.z],[-o.x,-o.y,-o.z],[o.x,-o.y,-o.z],[o.x,o.y,-o.z],[-o.x,o.y,-o.z],[o.x,-o.y,o.z]],i=0;i<d.length;i++)t.set(d[i][0],d[i][1],d[i][2]),f.vmult(t,t),e.vadd(t,t),n(t.x,t.y,t.z)};var l=[new d,new d,new d,new d,new d,new d,new d,new d];n.prototype.calculateWorldAABB=function(e,f,n,o){var d=this.halfExtents;l[0].set(d.x,d.y,d.z),l[1].set(-d.x,d.y,d.z),l[2].set(-d.x,-d.y,d.z),l[3].set(-d.x,-d.y,-d.z),l[4].set(d.x,-d.y,-d.z),l[5].set(d.x,d.y,-d.z),l[6].set(-d.x,d.y,-d.z),l[7].set(d.x,-d.y,d.z);var i=l[0];f.vmult(i,i),e.vadd(i,i),o.copy(i),n.copy(i);for(var t=1;8>t;t++){var i=l[t];f.vmult(i,i),e.vadd(i,i);var u=i.x,p=i.y,s=i.z;u>o.x&&(o.x=u),p>o.y&&(o.y=p),s>o.z&&(o.z=s),u<n.x&&(n.x=u),p<n.y&&(n.y=p),s<n.z&&(n.z=s)}}},{"../math/Vec3":30,"./ConvexPolyhedron":38,"./Shape":43}],38:[function(e,f){function n(e,f,n){o.call(this),this.type=o.types.CONVEXPOLYHEDRON,this.vertices=e||[],this.worldVertices=[],this.worldVerticesNeedsUpdate=!0,this.faces=f||[],this.faceNormals=[],this.computeNormals(),this.worldFaceNormalsNeedsUpdate=!0,this.worldFaceNormals=[],this.uniqueEdges=[],this.uniqueAxes=n?n.slice():null,this.computeEdges(),this.updateBoundingSphereRadius()}f.exports=n;var o=e("./Shape"),d=e("../math/Vec3"),i=(e("../math/Quaternion"),e("../math/Transform"));n.prototype=new o,n.prototype.constructor=n;var t=new d;n.prototype.computeEdges=function(){var e=this.faces,f=this.vertices,n=(f.length,this.uniqueEdges);n.length=0;for(var o=t,d=0;d!==e.length;d++)for(var i=e[d],l=i.length,u=0;u!==l;u++){var p=(u+1)%l;f[i[u]].vsub(f[i[p]],o),o.normalize();for(var s=!1,y=0;y!==n.length;y++)if(n[y].almostEquals(o)||n[y].almostEquals(o)){s=!0;break}s||n.push(o.clone())}},n.prototype.computeNormals=function(){this.faceNormals.length=this.faces.length;for(var e=0;e<this.faces.length;e++){for(var f=0;f<this.faces[e].length;f++)if(!this.vertices[this.faces[e][f]])throw new Error("Vertex "+this.faces[e][f]+" not found!");var n=this.faceNormals[e]||new d;this.getFaceNormal(e,n),n.negate(n),this.faceNormals[e]=n;var o=this.vertices[this.faces[e][0]];if(n.dot(o)<0){console.error(".faceNormals["+e+"] = Vec3("+n.toString()+") looks like it points into the shape? The vertices follow. Make sure they are ordered CCW around the normal, using the right hand rule.");for(var f=0;f<this.faces[e].length;f++)console.warn(".vertices["+this.faces[e][f]+"] = Vec3("+this.vertices[this.faces[e][f]].toString()+")")}}};var l=new d,u=new d;n.computeNormal=function(e,f,n,o){f.vsub(e,u),n.vsub(f,l),l.cross(u,o),o.isZero()||o.normalize()},n.prototype.getFaceNormal=function(e,f){var o=this.faces[e],d=this.vertices[o[0]],i=this.vertices[o[1]],t=this.vertices[o[2]];return n.computeNormal(d,i,t,f)};var p=new d;n.prototype.clipAgainstHull=function(e,f,n,o,i,t,l,u,s){for(var y=p,c=-1,a=-Number.MAX_VALUE,r=0;r<n.faces.length;r++){y.copy(n.faceNormals[r]),i.vmult(y,y);var w=y.dot(t);w>a&&(a=w,c=r)}for(var b=[],m=n.faces[c],N=m.length,g=0;N>g;g++){var x=n.vertices[m[g]],j=new d;j.copy(x),i.vmult(j,j),o.vadd(j,j),b.push(j)}c>=0&&this.clipFaceAgainstHull(t,e,f,b,l,u,s)};var s=new d,y=new d,c=new d,a=new d,r=new d,w=new d;n.prototype.findSeparatingAxis=function(e,f,n,o,d,i,t,l){var u=s,p=y,b=c,m=a,N=r,g=w,x=Number.MAX_VALUE,j=this,v=0;if(j.uniqueAxes)for(var A=0;A!==j.uniqueAxes.length;A++){n.vmult(j.uniqueAxes[A],u);var C=j.testSepAxis(u,e,f,n,o,d);if(C===!1)return!1;x>C&&(x=C,i.copy(u))}else for(var O=t?t.length:j.faces.length,A=0;O>A;A++){var h=t?t[A]:A;u.copy(j.faceNormals[h]),n.vmult(u,u);var C=j.testSepAxis(u,e,f,n,o,d);if(C===!1)return!1;x>C&&(x=C,i.copy(u))}if(e.uniqueAxes)for(var A=0;A!==e.uniqueAxes.length;A++){d.vmult(e.uniqueAxes[A],p),v++;var C=j.testSepAxis(p,e,f,n,o,d);if(C===!1)return!1;x>C&&(x=C,i.copy(p))}else for(var k=l?l.length:e.faces.length,A=0;k>A;A++){var h=l?l[A]:A;p.copy(e.faceNormals[h]),d.vmult(p,p),v++;var C=j.testSepAxis(p,e,f,n,o,d);if(C===!1)return!1;x>C&&(x=C,i.copy(p))}for(var q=0;q!==j.uniqueEdges.length;q++){n.vmult(j.uniqueEdges[q],m);for(var z=0;z!==e.uniqueEdges.length;z++)if(d.vmult(e.uniqueEdges[z],N),m.cross(N,g),!g.almostZero()){g.normalize();var B=j.testSepAxis(g,e,f,n,o,d);if(B===!1)return!1;x>B&&(x=B,i.copy(g))}}return o.vsub(f,b),b.dot(i)>0&&i.negate(i),!0};var b=[],m=[];n.prototype.testSepAxis=function(e,f,o,d,i,t){var l=this;n.project(l,e,o,d,b),n.project(f,e,i,t,m);var u=b[0],p=b[1],s=m[0],y=m[1];if(y>u||p>s)return!1;var c=u-y,a=s-p,r=a>c?c:a;return r};var N=new d,g=new d;n.prototype.calculateLocalInertia=function(e,f){this.computeLocalAABB(N,g);var n=g.x-N.x,o=g.y-N.y,d=g.z-N.z;f.x=1/12*e*(2*o*2*o+2*d*2*d),f.y=1/12*e*(2*n*2*n+2*d*2*d),f.z=1/12*e*(2*o*2*o+2*n*2*n)},n.prototype.getPlaneConstantOfFace=function(e){var f=this.faces[e],n=this.faceNormals[e],o=this.vertices[f[0]],d=-n.dot(o);return d};var x=new d,j=new d,v=new d,A=new d,C=new d,O=new d,h=new d,k=new d;n.prototype.clipFaceAgainstHull=function(e,f,n,o,d,i,t){for(var l=x,u=j,p=v,s=A,y=C,c=O,a=h,r=k,w=this,b=[],m=o,N=b,g=-1,q=Number.MAX_VALUE,z=0;z<w.faces.length;z++){l.copy(w.faceNormals[z]),n.vmult(l,l);var B=l.dot(e);q>B&&(q=B,g=z)}if(!(0>g)){var D=w.faces[g];D.connectedFaces=[];for(var E=0;E<w.faces.length;E++)for(var F=0;F<w.faces[E].length;F++)-1!==D.indexOf(w.faces[E][F])&&E!==g&&-1===D.connectedFaces.indexOf(E)&&D.connectedFaces.push(E);for(var G=(m.length,D.length),H=0;G>H;H++){var I=w.vertices[D[H]],J=w.vertices[D[(H+1)%G]];I.vsub(J,u),p.copy(u),n.vmult(p,p),f.vadd(p,p),s.copy(this.faceNormals[g]),n.vmult(s,s),f.vadd(s,s),p.cross(s,y),y.negate(y),c.copy(I),n.vmult(c,c),f.vadd(c,c);var K,L=(-c.dot(y),D.connectedFaces[H]);a.copy(this.faceNormals[L]);var M=this.getPlaneConstantOfFace(L);r.copy(a),n.vmult(r,r);var K=M-r.dot(f);for(this.clipFaceAgainstPlane(m,N,r,K);m.length;)m.shift();for(;N.length;)m.push(N.shift())}a.copy(this.faceNormals[g]);var M=this.getPlaneConstantOfFace(g);r.copy(a),n.vmult(r,r);for(var K=M-r.dot(f),E=0;E<m.length;E++){var P=r.dot(m[E])+K;if(d>=P&&(console.log("clamped: depth="+P+" to minDist="+(d+"")),P=d),i>=P){var Q=m[E];if(0>=P){var R={point:Q,normal:r,depth:P};t.push(R)}}}}},n.prototype.clipFaceAgainstPlane=function(e,f,n,o){var i,t,l=e.length;if(2>l)return f;var u=e[e.length-1],p=e[0];i=n.dot(u)+o;for(var s=0;l>s;s++){if(p=e[s],t=n.dot(p)+o,0>i)if(0>t){var y=new d;y.copy(p),f.push(y)}else{var y=new d;u.lerp(p,i/(i-t),y),f.push(y)}else if(0>t){var y=new d;u.lerp(p,i/(i-t),y),f.push(y),f.push(p)}u=p,i=t}return f},n.prototype.computeWorldVertices=function(e,f){for(var n=this.vertices.length;this.worldVertices.length<n;)this.worldVertices.push(new d);for(var o=this.vertices,i=this.worldVertices,t=0;t!==n;t++)f.vmult(o[t],i[t]),e.vadd(i[t],i[t]);this.worldVerticesNeedsUpdate=!1};new d;n.prototype.computeLocalAABB=function(e,f){var n=this.vertices.length,o=this.vertices;e.set(Number.MAX_VALUE,Number.MAX_VALUE,Number.MAX_VALUE),f.set(-Number.MAX_VALUE,-Number.MAX_VALUE,-Number.MAX_VALUE);for(var d=0;n>d;d++){var i=o[d];i.x<e.x?e.x=i.x:i.x>f.x&&(f.x=i.x),i.y<e.y?e.y=i.y:i.y>f.y&&(f.y=i.y),i.z<e.z?e.z=i.z:i.z>f.z&&(f.z=i.z)}},n.prototype.computeWorldFaceNormals=function(e){for(var f=this.faceNormals.length;this.worldFaceNormals.length<f;)this.worldFaceNormals.push(new d);for(var n=this.faceNormals,o=this.worldFaceNormals,i=0;i!==f;i++)e.vmult(n[i],o[i]);this.worldFaceNormalsNeedsUpdate=!1},n.prototype.updateBoundingSphereRadius=function(){for(var e=0,f=this.vertices,n=0,o=f.length;n!==o;n++){var d=f[n].norm2();d>e&&(e=d)}this.boundingSphereRadius=Math.sqrt(e)};var q=new d;n.prototype.calculateWorldAABB=function(e,f,n,o){for(var d,i,t,l,u,p,s=this.vertices.length,y=this.vertices,c=0;s>c;c++){q.copy(y[c]),f.vmult(q,q),e.vadd(q,q);var a=q;a.x<d||void 0===d?d=a.x:(a.x>l||void 0===l)&&(l=a.x),a.y<i||void 0===i?i=a.y:(a.y>u||void 0===u)&&(u=a.y),a.z<t||void 0===t?t=a.z:(a.z>p||void 0===p)&&(p=a.z)}n.set(d,i,t),o.set(l,u,p)},n.prototype.volume=function(){return 4*Math.PI*this.boundingSphereRadius/3},n.prototype.getAveragePointLocal=function(e){e=e||new d;for(var f=this.vertices.length,n=this.vertices,o=0;f>o;o++)e.vadd(n[o],e);return e.mult(1/f,e),e},n.prototype.transformAllPoints=function(e,f){var n=this.vertices.length,o=this.vertices;if(f){for(var d=0;n>d;d++){var i=o[d];f.vmult(i,i)}for(var d=0;d<this.faceNormals.length;d++){var i=this.faceNormals[d];f.vmult(i,i)}}if(e)for(var d=0;n>d;d++){var i=o[d];i.vadd(e,i)}};var z=new d,B=new d,D=new d;n.prototype.pointIsInside=function(e){var f=this.vertices.length,n=this.vertices,o=this.faces,d=this.faceNormals,i=null,t=this.faces.length,l=z;this.getAveragePointLocal(l);for(var u=0;t>u;u++){var f=(this.faces[u].length,d[u]),p=n[o[u][0]],s=B;e.vsub(p,s);var y=f.dot(s),c=D;l.vsub(p,c);var a=f.dot(c);if(0>y&&a>0||y>0&&0>a)return!1}return i?1:-1};var E=(new d,new d),F=new d;n.project=function(e,f,n,o,d){var t=e.vertices.length,l=E,u=0,p=0,s=F,y=e.vertices;s.setZero(),i.vectorToLocalFrame(n,o,f,l),i.pointToLocalFrame(n,o,s,s);var c=s.dot(l);p=u=y[0].dot(l);for(var a=1;t>a;a++){var r=y[a].dot(l);r>u&&(u=r),p>r&&(p=r)}if(p-=c,u-=c,p>u){var w=p;p=u,u=w}d[0]=u,d[1]=p}},{"../math/Quaternion":28,"../math/Transform":29,"../math/Vec3":30,"./Shape":43}],39:[function(e,f){function n(e,f,n,t){var l=t,u=[],p=[],s=[],y=[],c=[],a=Math.cos,r=Math.sin;u.push(new d(f*a(0),f*r(0),.5*-n)),y.push(0),u.push(new d(e*a(0),e*r(0),.5*n)),c.push(1);for(var w=0;l>w;w++){var b=2*Math.PI/l*(w+1),m=2*Math.PI/l*(w+.5);l-1>w?(u.push(new d(f*a(b),f*r(b),.5*-n)),y.push(2*w+2),u.push(new d(e*a(b),e*r(b),.5*n)),c.push(2*w+3),s.push([2*w+2,2*w+3,2*w+1,2*w])):s.push([0,1,2*w+1,2*w]),(l%2===1||l/2>w)&&p.push(new d(a(m),r(m),0))}s.push(c),p.push(new d(0,0,1));for(var N=[],w=0;w<y.length;w++)N.push(y[y.length-w-1]);s.push(N),this.type=o.types.CONVEXPOLYHEDRON,i.call(this,u,s,p)}f.exports=n;var o=e("./Shape"),d=e("../math/Vec3"),i=(e("../math/Quaternion"),e("./ConvexPolyhedron"));n.prototype=new i},{"../math/Quaternion":28,"../math/Vec3":30,"./ConvexPolyhedron":38,"./Shape":43}],40:[function(e,f){function n(e,f){f=t.defaults(f,{maxValue:null,minValue:null,elementSize:1}),this.data=e,this.maxValue=f.maxValue,this.minValue=f.minValue,this.elementSize=f.elementSize,null===f.minValue&&this.updateMinValue(),null===f.maxValue&&this.updateMaxValue(),this.cacheEnabled=!0,o.call(this),this.pillarConvex=new d,this.pillarOffset=new i,this.type=o.types.HEIGHTFIELD,this.updateBoundingSphereRadius(),this._cachedPillars={}}var o=e("./Shape"),d=e("./ConvexPolyhedron"),i=e("../math/Vec3"),t=e("../utils/Utils");f.exports=n,n.prototype=new o,n.prototype.update=function(){this._cachedPillars={}},n.prototype.updateMinValue=function(){for(var e=this.data,f=e[0][0],n=0;n!==e.length;n++)for(var o=0;o!==e[n].length;o++){var d=e[n][o];f>d&&(f=d)}this.minValue=f},n.prototype.updateMaxValue=function(){for(var e=this.data,f=e[0][0],n=0;n!==e.length;n++)for(var o=0;o!==e[n].length;o++){var d=e[n][o];d>f&&(f=d)}this.maxValue=f},n.prototype.setHeightValueAtIndex=function(e,f,n){var o=this.data;o[e][f]=n,this.clearCachedConvexTrianglePillar(e,f,!1),e>0&&(this.clearCachedConvexTrianglePillar(e-1,f,!0),this.clearCachedConvexTrianglePillar(e-1,f,!1)),f>0&&(this.clearCachedConvexTrianglePillar(e,f-1,!0),this.clearCachedConvexTrianglePillar(e,f-1,!1)),f>0&&e>0&&this.clearCachedConvexTrianglePillar(e-1,f-1,!0)},n.prototype.getRectMinMax=function(e,f,n,o,d){d=d||[];for(var i=this.data,t=this.minValue,l=e;n>=l;l++)for(var u=f;o>=u;u++){var p=i[l][u];p>t&&(t=p)}d[0]=this.minValue,d[1]=t},n.prototype.getIndexOfPosition=function(e,f,n,o){var d=this.elementSize,i=this.data,t=Math.floor(e/d),l=Math.floor(f/d);return n[0]=t,n[1]=l,o&&(0>t&&(t=0),0>l&&(l=0),t>=i.length-1&&(t=i.length-1),l>=i[0].length-1&&(l=i[0].length-1)),0>t||0>l||t>=i.length-1||l>=i[0].length-1?!1:!0},n.prototype.getHeightAt=function(e,f,n){var o=[];this.getIndexOfPosition(e,f,o,n);var d=[];return this.getRectMinMax(o[0],o[1]+1,o[0],o[1]+1,d),(d[0]+d[1])/2},n.prototype.getCacheConvexTrianglePillarKey=function(e,f,n){return e+"_"+f+"_"+(n?1:0)},n.prototype.getCachedConvexTrianglePillar=function(e,f,n){return this._cachedPillars[this.getCacheConvexTrianglePillarKey(e,f,n)]},n.prototype.setCachedConvexTrianglePillar=function(e,f,n,o,d){this._cachedPillars[this.getCacheConvexTrianglePillarKey(e,f,n)]={convex:o,offset:d}},n.prototype.clearCachedConvexTrianglePillar=function(e,f,n){delete this._cachedPillars[this.getCacheConvexTrianglePillarKey(e,f,n)]},n.prototype.getConvexTrianglePillar=function(e,f,n){var o=this.pillarConvex,t=this.pillarOffset;if(this.cacheEnabled){var l=this.getCachedConvexTrianglePillar(e,f,n);if(l)return this.pillarConvex=l.convex,void(this.pillarOffset=l.offset);o=new d,t=new i,this.pillarConvex=o,this.pillarOffset=t}var l=this.data,u=this.elementSize,p=o.faces;o.vertices.length=6;for(var s=0;6>s;s++)o.vertices[s]||(o.vertices[s]=new i);p.length=5;for(var s=0;5>s;s++)p[s]||(p[s]=[]);var y=o.vertices,c=(Math.min(l[e][f],l[e+1][f],l[e][f+1],l[e+1][f+1])-this.minValue)/2+this.minValue;n?(t.set((e+.75)*u,(f+.75)*u,c),y[0].set(.25*u,.25*u,l[e+1][f+1]-c),y[1].set(-.75*u,.25*u,l[e][f+1]-c),y[2].set(.25*u,-.75*u,l[e+1][f]-c),y[3].set(.25*u,.25*u,-c-1),y[4].set(-.75*u,.25*u,-c-1),y[5].set(.25*u,-.75*u,-c-1),p[0][0]=0,p[0][1]=1,p[0][2]=2,p[1][0]=5,p[1][1]=4,p[1][2]=3,p[2][0]=2,p[2][1]=5,p[2][2]=3,p[2][3]=0,p[3][0]=3,p[3][1]=4,p[3][2]=1,p[3][3]=0,p[4][0]=1,p[4][1]=4,p[4][2]=5,p[4][3]=2):(t.set((e+.25)*u,(f+.25)*u,c),y[0].set(-.25*u,-.25*u,l[e][f]-c),y[1].set(.75*u,-.25*u,l[e+1][f]-c),y[2].set(-.25*u,.75*u,l[e][f+1]-c),y[3].set(-.25*u,-.25*u,-c-1),y[4].set(.75*u,-.25*u,-c-1),y[5].set(-.25*u,.75*u,-c-1),p[0][0]=0,p[0][1]=1,p[0][2]=2,p[1][0]=5,p[1][1]=4,p[1][2]=3,p[2][0]=0,p[2][1]=2,p[2][2]=5,p[2][3]=3,p[3][0]=1,p[3][1]=0,p[3][2]=3,p[3][3]=4,p[4][0]=4,p[4][1]=5,p[4][2]=2,p[4][3]=1),o.computeNormals(),o.computeEdges(),o.updateBoundingSphereRadius(),this.setCachedConvexTrianglePillar(e,f,n,o,t)},n.prototype.calculateLocalInertia=function(e,f){return f=f||new i,f.set(0,0,0),f},n.prototype.volume=function(){return Number.MAX_VALUE},n.prototype.calculateWorldAABB=function(e,f,n,o){n.set(-Number.MAX_VALUE,-Number.MAX_VALUE,-Number.MAX_VALUE),o.set(Number.MAX_VALUE,Number.MAX_VALUE,Number.MAX_VALUE)},n.prototype.updateBoundingSphereRadius=function(){var e=this.data,f=this.elementSize;this.boundingSphereRadius=new i(e.length*f,e[0].length*f,Math.max(Math.abs(this.maxValue),Math.abs(this.minValue))).norm()}},{"../math/Vec3":30,"../utils/Utils":53,"./ConvexPolyhedron":38,"./Shape":43}],41:[function(e,f){function n(){o.call(this),this.type=o.types.PARTICLE}f.exports=n;var o=e("./Shape"),d=e("../math/Vec3");n.prototype=new o,n.prototype.constructor=n,n.prototype.calculateLocalInertia=function(e,f){return f=f||new d,f.set(0,0,0),f},n.prototype.volume=function(){return 0},n.prototype.updateBoundingSphereRadius=function(){this.boundingSphereRadius=0},n.prototype.calculateWorldAABB=function(e,f,n,o){n.copy(e),o.copy(e)}},{"../math/Vec3":30,"./Shape":43}],42:[function(e,f){function n(){o.call(this),this.type=o.types.PLANE,this.worldNormal=new d,this.worldNormalNeedsUpdate=!0,this.boundingSphereRadius=Number.MAX_VALUE}f.exports=n;var o=e("./Shape"),d=e("../math/Vec3");n.prototype=new o,n.prototype.constructor=n,n.prototype.computeWorldNormal=function(e){var f=this.worldNormal;f.set(0,0,1),e.vmult(f,f),this.worldNormalNeedsUpdate=!1},n.prototype.calculateLocalInertia=function(e,f){return f=f||new d},n.prototype.volume=function(){return Number.MAX_VALUE};var i=new d;n.prototype.calculateWorldAABB=function(e,f,n,o){i.set(0,0,1),f.vmult(i,i);var d=Number.MAX_VALUE;n.set(-d,-d,-d),o.set(d,d,d),1===i.x&&(o.x=e.x),1===i.y&&(o.y=e.y),1===i.z&&(o.z=e.z),-1===i.x&&(n.x=e.x),-1===i.y&&(n.y=e.y),-1===i.z&&(n.z=e.z)},n.prototype.updateBoundingSphereRadius=function(){this.boundingSphereRadius=Number.MAX_VALUE}},{"../math/Vec3":30,"./Shape":43}],43:[function(e,f){function n(){this.id=n.idCounter++,this.type=0,this.boundingSphereRadius=0,this.collisionResponse=!0,this.material=null}f.exports=n;{var n=e("./Shape");e("../math/Vec3"),e("../math/Quaternion"),e("../material/Material")}n.prototype.constructor=n,n.prototype.updateBoundingSphereRadius=function(){throw"computeBoundingSphereRadius() not implemented for shape type "+this.type},n.prototype.volume=function(){throw"volume() not implemented for shape type "+this.type},n.prototype.calculateLocalInertia=function(){throw"calculateLocalInertia() not implemented for shape type "+this.type},n.idCounter=0,n.types={SPHERE:1,PLANE:2,BOX:4,COMPOUND:8,CONVEXPOLYHEDRON:16,HEIGHTFIELD:32,PARTICLE:64,CYLINDER:128,TRIMESH:256}},{"../material/Material":25,"../math/Quaternion":28,"../math/Vec3":30,"./Shape":43}],44:[function(e,f){function n(e){if(o.call(this),this.radius=void 0!==e?Number(e):1,this.type=o.types.SPHERE,this.radius<0)throw new Error("The sphere radius cannot be negative.");this.updateBoundingSphereRadius()}f.exports=n;var o=e("./Shape"),d=e("../math/Vec3");n.prototype=new o,n.prototype.constructor=n,n.prototype.calculateLocalInertia=function(e,f){f=f||new d;var n=2*e*this.radius*this.radius/5;return f.x=n,f.y=n,f.z=n,f},n.prototype.volume=function(){return 4*Math.PI*this.radius/3},n.prototype.updateBoundingSphereRadius=function(){this.boundingSphereRadius=this.radius},n.prototype.calculateWorldAABB=function(e,f,n,o){for(var d=this.radius,i=["x","y","z"],t=0;t<i.length;t++){var l=i[t];n[l]=e[l]-d,o[l]=e[l]+d}}},{"../math/Vec3":30,"./Shape":43}],45:[function(e,f){function n(e,f){o.call(this),this.type=o.types.TRIMESH,this.vertices=new Float32Array(e),this.indices=new Int16Array(f),this.normals=new Float32Array(f.length),this.aabb=new t,this.edges=null,this.scale=new d(1,1,1),this.tree=new l,this.updateEdges(),this.updateNormals(),this.updateAABB(),this.updateBoundingSphereRadius(),this.updateTree()}f.exports=n;var o=e("./Shape"),d=e("../math/Vec3"),i=(e("../math/Quaternion"),e("../math/Transform")),t=e("../collision/AABB"),l=e("../utils/Octree");n.prototype=new o,n.prototype.constructor=n;var u=new d;n.prototype.updateTree=function(){var e=this.tree;e.reset(),e.aabb.copy(this.aabb);var f=this.scale;e.aabb.lowerBound.x*=1/f.x,e.aabb.lowerBound.y*=1/f.y,e.aabb.lowerBound.z*=1/f.z,e.aabb.upperBound.x*=1/f.x,e.aabb.upperBound.y*=1/f.y,e.aabb.upperBound.z*=1/f.z;for(var n=new t,o=new d,i=new d,l=new d,u=[o,i,l],p=0;p<this.indices.length/3;p++){var s=3*p;this._getUnscaledVertex(this.indices[s],o),this._getUnscaledVertex(this.indices[s+1],i),this._getUnscaledVertex(this.indices[s+2],l),n.setFromPoints(u),e.insert(n,p)}e.removeEmptyNodes()};var p=new t;n.prototype.getTrianglesInAABB=function(e,f){p.copy(e);var n=this.scale,o=n.x,d=n.y,i=n.z,t=p.lowerBound,l=p.upperBound;return t.x/=o,t.y/=d,t.z/=i,l.x/=o,l.y/=d,l.z/=i,this.tree.aabbQuery(p,f)},n.prototype.setScale=function(e){var f=this.scale.x===this.scale.y===this.scale.z,n=e.x===e.y===e.z;f&&n||this.updateNormals(),this.scale.copy(e),this.updateAABB(),this.updateBoundingSphereRadius()},n.prototype.updateNormals=function(){for(var e=u,f=this.normals,o=0;o<this.indices.length/3;o++){var d=3*o,i=this.indices[d],t=this.indices[d+1],l=this.indices[d+2];this.getVertex(i,r),this.getVertex(t,w),this.getVertex(l,b),n.computeNormal(w,r,b,e),f[d]=e.x,f[d+1]=e.y,f[d+2]=e.z}},n.prototype.updateEdges=function(){for(var e={},f=function(){var f=i>d?d+"_"+i:i+"_"+d;e[f]=!0},n=0;n<this.indices.length/3;n++){var o=3*n,d=this.indices[o],i=this.indices[o+1],t=this.indices[o+2];f(d,i),f(i,t),f(t,d)}var l=Object.keys(e);this.edges=new Int16Array(2*l.length);for(var n=0;n<l.length;n++){var u=l[n].split("_");this.edges[2*n]=parseInt(u[0],10),this.edges[2*n+1]=parseInt(u[1],10)}},n.prototype.getEdgeVertex=function(e,f,n){var o=this.edges[2*e+(f?1:0)];this.getVertex(o,n)};var s=new d,y=new d;n.prototype.getEdgeVector=function(e,f){var n=s,o=y;this.getEdgeVertex(e,0,n),this.getEdgeVertex(e,1,o),o.vsub(n,f)};var c=new d,a=new d;n.computeNormal=function(e,f,n,o){f.vsub(e,a),n.vsub(f,c),c.cross(a,o),o.isZero()||o.normalize()};var r=new d,w=new d,b=new d;n.prototype.getVertex=function(e,f){var n=this.scale;return this._getUnscaledVertex(e,f),f.x*=n.x,f.y*=n.y,f.z*=n.z,f},n.prototype._getUnscaledVertex=function(e,f){var n=3*e,o=this.vertices;return f.set(o[n],o[n+1],o[n+2])},n.prototype.getWorldVertex=function(e,f,n,o){return this.getVertex(e,o),i.pointToWorldFrame(f,n,o,o),o},n.prototype.getTriangleVertices=function(e,f,n,o){var d=3*e;this.getVertex(this.indices[d],f),this.getVertex(this.indices[d+1],n),this.getVertex(this.indices[d+2],o)},n.prototype.getNormal=function(e,f){var n=3*e;return f.set(this.normals[n],this.normals[n+1],this.normals[n+2])};var m=new t;n.prototype.calculateLocalInertia=function(e,f){this.computeLocalAABB(m);var n=m.upperBound.x-m.lowerBound.x,o=m.upperBound.y-m.lowerBound.y,d=m.upperBound.z-m.lowerBound.z;return f.set(1/12*e*(2*o*2*o+2*d*2*d),1/12*e*(2*n*2*n+2*d*2*d),1/12*e*(2*o*2*o+2*n*2*n))};var N=new d;n.prototype.computeLocalAABB=function(e){var f=e.lowerBound,n=e.upperBound,o=this.vertices.length,d=(this.vertices,N);this.getVertex(0,d),f.copy(d),n.copy(d);for(var i=0;i!==o;i++)this.getVertex(i,d),d.x<f.x?f.x=d.x:d.x>n.x&&(n.x=d.x),d.y<f.y?f.y=d.y:d.y>n.y&&(n.y=d.y),d.z<f.z?f.z=d.z:d.z>n.z&&(n.z=d.z)},n.prototype.updateAABB=function(){this.computeLocalAABB(this.aabb)},n.prototype.updateBoundingSphereRadius=function(){for(var e=0,f=this.vertices,n=new d,o=0,i=f.length/3;o!==i;o++){this.getVertex(o,n);var t=n.norm2();t>e&&(e=t)}this.boundingSphereRadius=Math.sqrt(e)};var g=(new d,new i),x=new t;n.prototype.calculateWorldAABB=function(e,f,n,o){var d=g,i=x;d.position=e,d.quaternion=f,this.aabb.toWorldFrame(d,i),n.copy(i.lowerBound),o.copy(i.upperBound)},n.prototype.volume=function(){return 4*Math.PI*this.boundingSphereRadius/3},n.createTorus=function(e,f,o,d,i){e=e||1,f=f||.5,o=o||8,d=d||6,i=i||2*Math.PI;for(var t=[],l=[],u=0;o>=u;u++)for(var p=0;d>=p;p++){var s=p/d*i,y=u/o*Math.PI*2,c=(e+f*Math.cos(y))*Math.cos(s),a=(e+f*Math.cos(y))*Math.sin(s),r=f*Math.sin(y);t.push(c,a,r)}for(var u=1;o>=u;u++)for(var p=1;d>=p;p++){var w=(d+1)*u+p-1,b=(d+1)*(u-1)+p-1,m=(d+1)*(u-1)+p,N=(d+1)*u+p;l.push(w,b,N),l.push(b,m,N)}return new n(t,l)}},{"../collision/AABB":3,"../math/Quaternion":28,"../math/Transform":29,"../math/Vec3":30,"../utils/Octree":50,"./Shape":43}],46:[function(e,f){function n(){o.call(this),this.iterations=10,this.tolerance=1e-7}f.exports=n;var o=(e("../math/Vec3"),e("../math/Quaternion"),e("./Solver"));n.prototype=new o;var d=[],i=[],t=[];n.prototype.solve=function(e,f){var n,o,l,u,p,s,y=0,c=this.iterations,a=this.tolerance*this.tolerance,r=this.equations,w=r.length,b=f.bodies,m=b.length,N=e;if(0!==w)for(var g=0;g!==m;g++)b[g].updateSolveMassProperties();var x=i,j=t,v=d;
+x.length=w,j.length=w,v.length=w;for(var g=0;g!==w;g++){var A=r[g];v[g]=0,j[g]=A.computeB(N),x[g]=1/A.computeC()}if(0!==w){for(var g=0;g!==m;g++){var C=b[g],O=C.vlambda,h=C.wlambda;O.set(0,0,0),h&&h.set(0,0,0)}for(y=0;y!==c;y++){u=0;for(var k=0;k!==w;k++){var A=r[k];n=j[k],o=x[k],s=v[k],p=A.computeGWlambda(),l=o*(n-p-A.eps*s),s+l<A.minForce?l=A.minForce-s:s+l>A.maxForce&&(l=A.maxForce-s),v[k]+=l,u+=l>0?l:-l,A.addToWlambda(l)}if(a>u*u)break}for(var g=0;g!==m;g++){var C=b[g],q=C.velocity,z=C.angularVelocity;q.vadd(C.vlambda,q),z&&z.vadd(C.wlambda,z)}}return y}},{"../math/Quaternion":28,"../math/Vec3":30,"./Solver":47}],47:[function(e,f){function n(){this.equations=[]}f.exports=n,n.prototype.solve=function(){return 0},n.prototype.addEquation=function(e){e.enabled&&this.equations.push(e)},n.prototype.removeEquation=function(e){var f=this.equations,n=f.indexOf(e);-1!==n&&f.splice(n,1)},n.prototype.removeAllEquations=function(){this.equations.length=0}},{}],48:[function(e,f){function n(e){for(l.call(this),this.iterations=10,this.tolerance=1e-7,this.subsolver=e,this.nodes=[],this.nodePool=[];this.nodePool.length<128;)this.nodePool.push(this.createNode())}function o(e){for(var f=e.length,n=0;n!==f;n++){var o=e[n];if(!(o.visited||o.body.type&c))return o}return!1}function d(e,f,n,d){for(a.push(e),e.visited=!0,f(e,n,d);a.length;)for(var i,t=a.pop();i=o(t.children);)i.visited=!0,f(i,n,d),a.push(i)}function i(e,f,n){f.push(e.body);for(var o=e.eqs.length,d=0;d!==o;d++){var i=e.eqs[d];-1===n.indexOf(i)&&n.push(i)}}function t(e,f){return f.id-e.id}f.exports=n;var l=(e("../math/Vec3"),e("../math/Quaternion"),e("./Solver")),u=e("../objects/Body");n.prototype=new l;var p=[],s=[],y={bodies:[]},c=u.STATIC,a=[];n.prototype.createNode=function(){return{body:null,children:[],eqs:[],visited:!1}},n.prototype.solve=function(e,f){for(var n=p,l=this.nodePool,u=f.bodies,c=this.equations,a=c.length,r=u.length,w=this.subsolver;l.length<r;)l.push(this.createNode());n.length=r;for(var b=0;r>b;b++)n[b]=l[b];for(var b=0;b!==r;b++){var m=n[b];m.body=u[b],m.children.length=0,m.eqs.length=0,m.visited=!1}for(var N=0;N!==a;N++){var g=c[N],b=u.indexOf(g.bi),x=u.indexOf(g.bj),j=n[b],v=n[x];j.children.push(v),j.eqs.push(g),v.children.push(j),v.eqs.push(g)}var A,C=0,O=s;w.tolerance=this.tolerance,w.iterations=this.iterations;for(var h=y;A=o(n);){O.length=0,h.bodies.length=0,d(A,i,h.bodies,O);var k=O.length;O=O.sort(t);for(var b=0;b!==k;b++)w.addEquation(O[b]);{w.solve(e,h)}w.removeAllEquations(),C++}return C}},{"../math/Quaternion":28,"../math/Vec3":30,"../objects/Body":31,"./Solver":47}],49:[function(e,f){var n=function(){};f.exports=n,n.prototype={constructor:n,addEventListener:function(e,f){void 0===this._listeners&&(this._listeners={});var n=this._listeners;return void 0===n[e]&&(n[e]=[]),-1===n[e].indexOf(f)&&n[e].push(f),this},hasEventListener:function(e,f){if(void 0===this._listeners)return!1;var n=this._listeners;return void 0!==n[e]&&-1!==n[e].indexOf(f)?!0:!1},removeEventListener:function(e,f){if(void 0===this._listeners)return this;var n=this._listeners;if(void 0===n[e])return this;var o=n[e].indexOf(f);return-1!==o&&n[e].splice(o,1),this},dispatchEvent:function(e){if(void 0===this._listeners)return this;var f=this._listeners,n=f[e.type];if(void 0!==n){e.target=this;for(var o=0,d=n.length;d>o;o++)n[o].call(this,e)}return this}}},{}],50:[function(e,f){function n(e){e=e||{},this.root=e.root||null,this.aabb=e.aabb?e.aabb.clone():new d,this.data=[],this.children=[]}function o(e,f){f=f||{},f.root=null,f.aabb=e,n.call(this,f),this.maxDepth="undefined"!=typeof f.maxDepth?f.maxDepth:8}var d=e("../collision/AABB"),i=e("../math/Vec3");f.exports=o,o.prototype=new n,n.prototype.reset=function(){this.children.length=this.data.length=0},n.prototype.insert=function(e,f,n){var o=this.data;if(n=n||0,!this.aabb.contains(e))return!1;var d=this.children;if(n<(this.maxDepth||this.root.maxDepth)){var i=!1;d.length||(this.subdivide(),i=!0);for(var t=0;8!==t;t++)if(d[t].insert(e,f,n+1))return!0;i&&(d.length=0)}return o.push(f),!0};var t=new i;n.prototype.subdivide=function(){var e=this.aabb,f=e.lowerBound,o=e.upperBound,l=this.children;l.push(new n({aabb:new d({lowerBound:new i(0,0,0)})}),new n({aabb:new d({lowerBound:new i(1,0,0)})}),new n({aabb:new d({lowerBound:new i(1,1,0)})}),new n({aabb:new d({lowerBound:new i(1,1,1)})}),new n({aabb:new d({lowerBound:new i(0,1,1)})}),new n({aabb:new d({lowerBound:new i(0,0,1)})}),new n({aabb:new d({lowerBound:new i(1,0,1)})}),new n({aabb:new d({lowerBound:new i(0,1,0)})})),o.vsub(f,t),t.scale(.5,t);for(var u=this.root||this,p=0;8!==p;p++){var s=l[p];s.root=u;var y=s.aabb.lowerBound;y.x*=t.x,y.y*=t.y,y.z*=t.z,y.vadd(f,y),y.vadd(t,s.aabb.upperBound)}},n.prototype.aabbQuery=function(e,f){for(var n=(this.data,this.children,[this]);n.length;){var o=n.pop();o.aabb.overlaps(e)&&Array.prototype.push.apply(f,o.data),Array.prototype.push.apply(n,o.children)}return f};var l=new d;n.prototype.rayQuery=function(e,f,n){return e.getAABB(l),l.toLocalFrame(f,l),this.aabbQuery(l,n),n},n.prototype.removeEmptyNodes=function(){for(var e=[this];e.length;){for(var f=e.pop(),n=f.children.length-1;n>=0;n--)f.children[n].data.length||f.children.splice(n,1);Array.prototype.push.apply(e,f.children)}}},{"../collision/AABB":3,"../math/Vec3":30}],51:[function(e,f){function n(){this.objects=[],this.type=Object}f.exports=n,n.prototype.release=function(){for(var e=arguments.length,f=0;f!==e;f++)this.objects.push(arguments[f])},n.prototype.get=function(){return 0===this.objects.length?this.constructObject():this.objects.pop()},n.prototype.constructObject=function(){throw new Error("constructObject() not implemented in this Pool subclass yet!")}},{}],52:[function(e,f){function n(){this.data={keys:[]}}f.exports=n,n.prototype.get=function(e,f){if(e>f){var n=f;f=e,e=n}return this.data[e+"-"+f]},n.prototype.set=function(e,f,n){if(e>f){var o=f;f=e,e=o}var d=e+"-"+f;this.get(e,f)||this.data.keys.push(d),this.data[d]=n},n.prototype.reset=function(){for(var e=this.data,f=e.keys;f.length>0;){var n=f.pop();delete e[n]}}},{}],53:[function(e,f){function n(){}f.exports=n,n.defaults=function(e,f){e=e||{};for(var n in f)n in e||(e[n]=f[n]);return e}},{}],54:[function(e,f){function n(){d.call(this),this.type=o}f.exports=n;var o=e("../math/Vec3"),d=e("./Pool");n.prototype=new d,n.prototype.constructObject=function(){return new o}},{"../math/Vec3":30,"./Pool":51}],55:[function(e,f){function n(e){this.contactPointPool=[],this.frictionEquationPool=[],this.result=[],this.frictionResult=[],this.v3pool=new s,this.world=e,this.currentContactMaterial=null,this.enableFrictionReduction=!1}function o(e,f,n){for(var o=null,d=e.length,i=0;i!==d;i++){var t=e[i],l=M;e[(i+1)%d].vsub(t,l);var u=P;l.cross(f,u);var p=Q;n.vsub(t,p);var s=u.dot(p);if(!(null===o||s>0&&o===!0||0>=s&&o===!1))return!1;null===o&&(o=s>0)}return!0}f.exports=n;var d=e("../collision/AABB"),i=e("../shapes/Shape"),t=e("../collision/Ray"),l=e("../math/Vec3"),u=e("../math/Transform"),p=(e("../shapes/ConvexPolyhedron"),e("../math/Quaternion")),s=(e("../solver/Solver"),e("../utils/Vec3Pool")),y=e("../equations/ContactEquation"),c=e("../equations/FrictionEquation");n.prototype.createContactEquation=function(e,f,n,o,d,i){var t;this.contactPointPool.length?(t=this.contactPointPool.pop(),t.bi=e,t.bj=f):t=new y(e,f),t.enabled=e.collisionResponse&&f.collisionResponse&&n.collisionResponse&&o.collisionResponse;var l=this.currentContactMaterial;t.restitution=l.restitution,t.setSpookParams(l.contactEquationStiffness,l.contactEquationRelaxation,this.world.dt);var u=n.material||e.material,p=o.material||f.material;return u&&p&&u.restitution>=0&&p.restitution>=0&&(t.restitution=u.restitution*p.restitution),t.si=d||n,t.sj=i||o,t},n.prototype.createFrictionEquationsFromContact=function(e,f){var n=e.bi,o=e.bj,d=e.si,i=e.sj,t=this.world,l=this.currentContactMaterial,u=l.friction,p=d.material||n.material,s=i.material||o.material;if(p&&s&&p.friction>=0&&s.friction>=0&&(u=p.friction*s.friction),u>0){var y=u*t.gravity.length(),a=n.invMass+o.invMass;a>0&&(a=1/a);var r=this.frictionEquationPool,w=r.length?r.pop():new c(n,o,y*a),b=r.length?r.pop():new c(n,o,y*a);return w.bi=b.bi=n,w.bj=b.bj=o,w.minForce=b.minForce=-y*a,w.maxForce=b.maxForce=y*a,w.ri.copy(e.ri),w.rj.copy(e.rj),b.ri.copy(e.ri),b.rj.copy(e.rj),e.ni.tangents(w.t,b.t),w.setSpookParams(l.frictionEquationStiffness,l.frictionEquationRelaxation,t.dt),b.setSpookParams(l.frictionEquationStiffness,l.frictionEquationRelaxation,t.dt),w.enabled=b.enabled=e.enabled,f.push(w,b),!0}return!1};var a=new l,r=new l,w=new l;n.prototype.createFrictionFromAverage=function(e){var f=this.result[this.result.length-1];if(this.createFrictionEquationsFromContact(f,this.frictionResult)&&1!==e){var n=this.frictionResult[this.frictionResult.length-2],o=this.frictionResult[this.frictionResult.length-1];a.setZero(),r.setZero(),w.setZero();for(var d=f.bi,i=(f.bj,0);i!==e;i++)f=this.result[this.result.length-1-i],f.bodyA!==d?(a.vadd(f.ni,a),r.vadd(f.ri,r),w.vadd(f.rj,w)):(a.vsub(f.ni,a),r.vadd(f.rj,r),w.vadd(f.ri,w));var t=1/e;r.scale(t,n.ri),w.scale(t,n.rj),o.ri.copy(n.ri),o.rj.copy(n.rj),a.normalize(),a.tangents(n.t,o.t)}};var b=new l,m=new l,N=new p,g=new p;n.prototype.getContacts=function(e,f,n,o,d,i,t){this.contactPointPool=d,this.frictionEquationPool=t,this.result=o,this.frictionResult=i;for(var l=N,u=g,p=b,s=m,y=0,c=e.length;y!==c;y++){var a=e[y],r=f[y],w=null;a.material&&r.material&&(w=n.getContactMaterial(a.material,r.material)||null);for(var x=0;x<a.shapes.length;x++){a.quaternion.mult(a.shapeOrientations[x],l),a.quaternion.vmult(a.shapeOffsets[x],p),p.vadd(a.position,p);for(var j=a.shapes[x],v=0;v<r.shapes.length;v++){r.quaternion.mult(r.shapeOrientations[v],u),r.quaternion.vmult(r.shapeOffsets[v],s),s.vadd(r.position,s);var A=r.shapes[v];if(!(p.distanceTo(s)>j.boundingSphereRadius+A.boundingSphereRadius)){var C=null;j.material&&A.material&&(C=n.getContactMaterial(j.material,A.material)||null),this.currentContactMaterial=C||w||n.defaultContactMaterial;var O=this[j.type|A.type];O&&(j.type<A.type?O.call(this,j,A,p,s,l,u,a,r,j,A):O.call(this,A,j,s,p,u,l,r,a,j,A))}}}}};n.prototype[i.types.BOX|i.types.BOX]=n.prototype.boxBox=function(e,f,n,o,d,i,t,l){e.convexPolyhedronRepresentation.material=e.material,f.convexPolyhedronRepresentation.material=f.material,e.convexPolyhedronRepresentation.collisionResponse=e.collisionResponse,f.convexPolyhedronRepresentation.collisionResponse=f.collisionResponse,this.convexConvex(e.convexPolyhedronRepresentation,f.convexPolyhedronRepresentation,n,o,d,i,t,l,e,f)},n.prototype[i.types.BOX|i.types.CONVEXPOLYHEDRON]=n.prototype.boxConvex=function(e,f,n,o,d,i,t,l){e.convexPolyhedronRepresentation.material=e.material,e.convexPolyhedronRepresentation.collisionResponse=e.collisionResponse,this.convexConvex(e.convexPolyhedronRepresentation,f,n,o,d,i,t,l,e,f)},n.prototype[i.types.BOX|i.types.PARTICLE]=n.prototype.boxParticle=function(e,f,n,o,d,i,t,l){e.convexPolyhedronRepresentation.material=e.material,e.convexPolyhedronRepresentation.collisionResponse=e.collisionResponse,this.convexParticle(e.convexPolyhedronRepresentation,f,n,o,d,i,t,l,e,f)},n.prototype[i.types.SPHERE]=n.prototype.sphereSphere=function(e,f,n,o,d,i,t,l){var u=this.createContactEquation(t,l,e,f);o.vsub(n,u.ni),u.ni.normalize(),u.ri.copy(u.ni),u.rj.copy(u.ni),u.ri.mult(e.radius,u.ri),u.rj.mult(-f.radius,u.rj),u.ri.vadd(n,u.ri),u.ri.vsub(t.position,u.ri),u.rj.vadd(o,u.rj),u.rj.vsub(l.position,u.rj),this.result.push(u),this.createFrictionEquationsFromContact(u,this.frictionResult)};var x=new l,j=new l,v=new l;n.prototype[i.types.PLANE|i.types.TRIMESH]=n.prototype.planeTrimesh=function(e,f,n,o,d,i,t,p){var s=new l,y=x;y.set(0,0,1),d.vmult(y,y);for(var c=0;c<f.vertices.length/3;c++){f.getVertex(c,s);var a=new l;a.copy(s),u.pointToWorldFrame(o,i,a,s);var r=j;s.vsub(n,r);var w=y.dot(r);if(0>=w){var b=this.createContactEquation(t,p,e,f);b.ni.copy(y);var m=v;y.scale(r.dot(y),m),s.vsub(m,m),b.ri.copy(m),b.ri.vsub(t.position,b.ri),b.rj.copy(s),b.rj.vsub(p.position,b.rj),this.result.push(b),this.createFrictionEquationsFromContact(b,this.frictionResult)}}};var A=new l,C=new l,O=(new l,new l),h=new l,k=new l,q=new l,z=new l,B=new l,D=new l,E=new l,F=new l,G=new l,H=new l,I=new d,J=[];n.prototype[i.types.SPHERE|i.types.TRIMESH]=n.prototype.sphereTrimesh=function(e,f,n,o,d,i,l,p){var s=k,y=q,c=z,a=B,r=D,w=E,b=I,m=h,N=C,g=J;u.pointToLocalFrame(o,i,n,r);var x=e.radius;b.lowerBound.set(r.x-x,r.y-x,r.z-x),b.upperBound.set(r.x+x,r.y+x,r.z+x),f.getTrianglesInAABB(b,g);for(var j=O,v=e.radius*e.radius,K=0;K<g.length;K++)for(var L=0;3>L;L++)if(f.getVertex(f.indices[3*g[K]+L],j),j.vsub(r,N),N.norm2()<=v){m.copy(j),u.pointToWorldFrame(o,i,m,j),j.vsub(n,N);var M=this.createContactEquation(l,p,e,f);M.ni.copy(N),M.ni.normalize(),M.ri.copy(M.ni),M.ri.scale(e.radius,M.ri),M.ri.vadd(n,M.ri),M.ri.vsub(l.position,M.ri),M.rj.copy(j),M.rj.vsub(p.position,M.rj),this.result.push(M),this.createFrictionEquationsFromContact(M,this.frictionResult)}for(var K=0;K<g.length;K++)for(var L=0;3>L;L++){f.getVertex(f.indices[3*g[K]+L],s),f.getVertex(f.indices[3*g[K]+(L+1)%3],y),y.vsub(s,c),r.vsub(y,w);var P=w.dot(c);r.vsub(s,w);var Q=w.dot(c);if(Q>0&&0>P){r.vsub(s,w),a.copy(c),a.normalize(),Q=w.dot(a),a.scale(Q,w),w.vadd(s,w);var R=w.distanceTo(r);if(R<e.radius){var M=this.createContactEquation(l,p,e,f);w.vsub(r,M.ni),M.ni.normalize(),M.ni.scale(e.radius,M.ri),u.pointToWorldFrame(o,i,w,w),w.vsub(p.position,M.rj),u.vectorToWorldFrame(i,M.ni,M.ni),u.vectorToWorldFrame(i,M.ri,M.ri),this.result.push(M),this.createFrictionEquationsFromContact(M,this.frictionResult)}}}for(var S=F,T=G,U=H,V=A,K=0,W=g.length;K!==W;K++){f.getTriangleVertices(g[K],S,T,U),f.getNormal(g[K],V),r.vsub(S,w);var R=w.dot(V);if(V.scale(R,w),r.vsub(w,w),R=w.distanceTo(r),t.pointInTriangle(w,S,T,U)&&R<e.radius){var M=this.createContactEquation(l,p,e,f);w.vsub(r,M.ni),M.ni.normalize(),M.ni.scale(e.radius,M.ri),u.pointToWorldFrame(o,i,w,w),w.vsub(p.position,M.rj),u.vectorToWorldFrame(i,M.ni,M.ni),u.vectorToWorldFrame(i,M.ri,M.ri),this.result.push(M),this.createFrictionEquationsFromContact(M,this.frictionResult)}}g.length=0};var K=new l,L=new l;n.prototype[i.types.SPHERE|i.types.PLANE]=n.prototype.spherePlane=function(e,f,n,o,d,i,t,l){var u=this.createContactEquation(t,l,e,f);if(u.ni.set(0,0,1),i.vmult(u.ni,u.ni),u.ni.negate(u.ni),u.ni.normalize(),u.ni.mult(e.radius,u.ri),n.vsub(o,K),u.ni.mult(u.ni.dot(K),L),K.vsub(L,u.rj),-K.dot(u.ni)<=e.radius){var p=u.ri,s=u.rj;p.vadd(n,p),p.vsub(t.position,p),s.vadd(o,s),s.vsub(l.position,s),this.result.push(u),this.createFrictionEquationsFromContact(u,this.frictionResult)}};var M=new l,P=new l,Q=new l,R=new l,S=new l,T=new l,U=new l,V=[new l,new l,new l,new l,new l,new l],W=new l,X=new l,Y=new l,Z=new l;n.prototype[i.types.SPHERE|i.types.BOX]=n.prototype.sphereBox=function(e,f,n,o,d,i,t,l){var u=this.v3pool,p=V;n.vsub(o,R),f.getSideNormals(p,i);for(var s=e.radius,y=!1,c=X,a=Y,r=Z,w=null,b=0,m=0,N=0,g=null,x=0,j=p.length;x!==j&&y===!1;x++){var v=S;v.copy(p[x]);var A=v.norm();v.normalize();var C=R.dot(v);if(A+s>C&&C>0){var O=T,h=U;O.copy(p[(x+1)%3]),h.copy(p[(x+2)%3]);var k=O.norm(),q=h.norm();O.normalize(),h.normalize();var z=R.dot(O),B=R.dot(h);if(k>z&&z>-k&&q>B&&B>-q){var D=Math.abs(C-A-s);(null===g||g>D)&&(g=D,m=z,N=B,w=A,c.copy(v),a.copy(O),r.copy(h),b++)}}}if(b){y=!0;var E=this.createContactEquation(t,l,e,f);c.mult(-s,E.ri),E.ni.copy(c),E.ni.negate(E.ni),c.mult(w,c),a.mult(m,a),c.vadd(a,c),r.mult(N,r),c.vadd(r,E.rj),E.ri.vadd(n,E.ri),E.ri.vsub(t.position,E.ri),E.rj.vadd(o,E.rj),E.rj.vsub(l.position,E.rj),this.result.push(E),this.createFrictionEquationsFromContact(E,this.frictionResult)}for(var F=u.get(),G=W,H=0;2!==H&&!y;H++)for(var I=0;2!==I&&!y;I++)for(var J=0;2!==J&&!y;J++)if(F.set(0,0,0),H?F.vadd(p[0],F):F.vsub(p[0],F),I?F.vadd(p[1],F):F.vsub(p[1],F),J?F.vadd(p[2],F):F.vsub(p[2],F),o.vadd(F,G),G.vsub(n,G),G.norm2()<s*s){y=!0;var E=this.createContactEquation(t,l,e,f);E.ri.copy(G),E.ri.normalize(),E.ni.copy(E.ri),E.ri.mult(s,E.ri),E.rj.copy(F),E.ri.vadd(n,E.ri),E.ri.vsub(t.position,E.ri),E.rj.vadd(o,E.rj),E.rj.vsub(l.position,E.rj),this.result.push(E),this.createFrictionEquationsFromContact(E,this.frictionResult)}u.release(F),F=null;for(var K=u.get(),L=u.get(),E=u.get(),M=u.get(),D=u.get(),P=p.length,H=0;H!==P&&!y;H++)for(var I=0;I!==P&&!y;I++)if(H%3!==I%3){p[I].cross(p[H],K),K.normalize(),p[H].vadd(p[I],L),E.copy(n),E.vsub(L,E),E.vsub(o,E);var Q=E.dot(K);K.mult(Q,M);for(var J=0;J===H%3||J===I%3;)J++;D.copy(n),D.vsub(M,D),D.vsub(L,D),D.vsub(o,D);var $=Math.abs(Q),_=D.norm();if($<p[J].norm()&&s>_){y=!0;var ef=this.createContactEquation(t,l,e,f);L.vadd(M,ef.rj),ef.rj.copy(ef.rj),D.negate(ef.ni),ef.ni.normalize(),ef.ri.copy(ef.rj),ef.ri.vadd(o,ef.ri),ef.ri.vsub(n,ef.ri),ef.ri.normalize(),ef.ri.mult(s,ef.ri),ef.ri.vadd(n,ef.ri),ef.ri.vsub(t.position,ef.ri),ef.rj.vadd(o,ef.rj),ef.rj.vsub(l.position,ef.rj),this.result.push(ef),this.createFrictionEquationsFromContact(ef,this.frictionResult)}}u.release(K,L,E,M,D)};var $=new l,_=new l,ef=new l,ff=new l,nf=new l,of=new l,df=new l,tf=new l,lf=new l,uf=new l;n.prototype[i.types.SPHERE|i.types.CONVEXPOLYHEDRON]=n.prototype.sphereConvex=function(e,f,n,d,i,t,l,u){var p=this.v3pool;n.vsub(d,$);for(var s=f.faceNormals,y=f.faces,c=f.vertices,a=e.radius,r=0;r!==c.length;r++){var w=c[r],b=nf;t.vmult(w,b),d.vadd(b,b);var m=ff;if(b.vsub(n,m),m.norm2()<a*a){g=!0;var N=this.createContactEquation(l,u,e,f);return N.ri.copy(m),N.ri.normalize(),N.ni.copy(N.ri),N.ri.mult(a,N.ri),b.vsub(d,N.rj),N.ri.vadd(n,N.ri),N.ri.vsub(l.position,N.ri),N.rj.vadd(d,N.rj),N.rj.vsub(u.position,N.rj),this.result.push(N),void this.createFrictionEquationsFromContact(N,this.frictionResult)}}for(var g=!1,r=0,x=y.length;r!==x&&g===!1;r++){var j=s[r],v=y[r],A=of;t.vmult(j,A);var C=df;t.vmult(c[v[0]],C),C.vadd(d,C);var O=tf;A.mult(-a,O),n.vadd(O,O);var h=lf;O.vsub(C,h);var k=h.dot(A),q=uf;if(n.vsub(C,q),0>k&&q.dot(A)>0){for(var z=[],B=0,D=v.length;B!==D;B++){var E=p.get();t.vmult(c[v[B]],E),d.vadd(E,E),z.push(E)}if(o(z,A,n)){g=!0;var N=this.createContactEquation(l,u,e,f);A.mult(-a,N.ri),A.negate(N.ni);var F=p.get();A.mult(-k,F);var G=p.get();A.mult(-a,G),n.vsub(d,N.rj),N.rj.vadd(G,N.rj),N.rj.vadd(F,N.rj),N.rj.vadd(d,N.rj),N.rj.vsub(u.position,N.rj),N.ri.vadd(n,N.ri),N.ri.vsub(l.position,N.ri),p.release(F),p.release(G),this.result.push(N),this.createFrictionEquationsFromContact(N,this.frictionResult);for(var B=0,H=z.length;B!==H;B++)p.release(z[B]);return}for(var B=0;B!==v.length;B++){var I=p.get(),J=p.get();t.vmult(c[v[(B+1)%v.length]],I),t.vmult(c[v[(B+2)%v.length]],J),d.vadd(I,I),d.vadd(J,J);var K=_;J.vsub(I,K);var L=ef;K.unit(L);var M=p.get(),P=p.get();n.vsub(I,P);var Q=P.dot(L);L.mult(Q,M),M.vadd(I,M);var R=p.get();if(M.vsub(n,R),Q>0&&Q*Q<K.norm2()&&R.norm2()<a*a){var N=this.createContactEquation(l,u,e,f);M.vsub(d,N.rj),M.vsub(n,N.ni),N.ni.normalize(),N.ni.mult(a,N.ri),N.rj.vadd(d,N.rj),N.rj.vsub(u.position,N.rj),N.ri.vadd(n,N.ri),N.ri.vsub(l.position,N.ri),this.result.push(N),this.createFrictionEquationsFromContact(N,this.frictionResult);for(var B=0,H=z.length;B!==H;B++)p.release(z[B]);return p.release(I),p.release(J),p.release(M),p.release(R),void p.release(P)}p.release(I),p.release(J),p.release(M),p.release(R),p.release(P)}for(var B=0,H=z.length;B!==H;B++)p.release(z[B])}}};new l,new l;n.prototype[i.types.PLANE|i.types.BOX]=n.prototype.planeBox=function(e,f,n,o,d,i,t,l){f.convexPolyhedronRepresentation.material=f.material,f.convexPolyhedronRepresentation.collisionResponse=f.collisionResponse,this.planeConvex(e,f.convexPolyhedronRepresentation,n,o,d,i,t,l)};var pf=new l,sf=new l,yf=new l,cf=new l;n.prototype[i.types.PLANE|i.types.CONVEXPOLYHEDRON]=n.prototype.planeConvex=function(e,f,n,o,d,i,t,l){var u=pf,p=sf;p.set(0,0,1),d.vmult(p,p);for(var s=0,y=yf,c=0;c!==f.vertices.length;c++){u.copy(f.vertices[c]),i.vmult(u,u),o.vadd(u,u),u.vsub(n,y);var a=p.dot(y);if(0>=a){var r=this.createContactEquation(t,l,e,f),w=cf;p.mult(p.dot(y),w),u.vsub(w,w),w.vsub(n,r.ri),r.ni.copy(p),u.vsub(o,r.rj),r.ri.vadd(n,r.ri),r.ri.vsub(t.position,r.ri),r.rj.vadd(o,r.rj),r.rj.vsub(l.position,r.rj),this.result.push(r),s++,this.enableFrictionReduction||this.createFrictionEquationsFromContact(r,this.frictionResult)}}this.enableFrictionReduction&&s&&this.createFrictionFromAverage(s)};var af=new l,rf=new l;n.prototype[i.types.CONVEXPOLYHEDRON]=n.prototype.convexConvex=function(e,f,n,o,d,i,t,l,u,p,s,y){var c=af;if(!(n.distanceTo(o)>e.boundingSphereRadius+f.boundingSphereRadius)&&e.findSeparatingAxis(f,n,d,o,i,c,s,y)){var a=[],r=rf;e.clipAgainstHull(n,d,f,o,i,c,-100,100,a);for(var w=0,b=0;b!==a.length;b++){var m=this.createContactEquation(t,l,e,f,u,p),N=m.ri,g=m.rj;c.negate(m.ni),a[b].normal.negate(r),r.mult(a[b].depth,r),a[b].point.vadd(r,N),g.copy(a[b].point),N.vsub(n,N),g.vsub(o,g),N.vadd(n,N),N.vsub(t.position,N),g.vadd(o,g),g.vsub(l.position,g),this.result.push(m),w++,this.enableFrictionReduction||this.createFrictionEquationsFromContact(m,this.frictionResult)}this.enableFrictionReduction&&w&&this.createFrictionFromAverage(w)}};var wf=new l,bf=new l,mf=new l;n.prototype[i.types.PLANE|i.types.PARTICLE]=n.prototype.planeParticle=function(e,f,n,o,d,i,t,l){var u=wf;u.set(0,0,1),t.quaternion.vmult(u,u);var p=bf;o.vsub(t.position,p);var s=u.dot(p);if(0>=s){var y=this.createContactEquation(l,t,f,e);y.ni.copy(u),y.ni.negate(y.ni),y.ri.set(0,0,0);var c=mf;u.mult(u.dot(o),c),o.vsub(c,c),y.rj.copy(c),this.result.push(y),this.createFrictionEquationsFromContact(y,this.frictionResult)}};var Nf=new l;n.prototype[i.types.PARTICLE|i.types.SPHERE]=n.prototype.sphereParticle=function(e,f,n,o,d,i,t,l){var u=Nf;u.set(0,0,1),o.vsub(n,u);var p=u.norm2();if(p<=e.radius*e.radius){var s=this.createContactEquation(l,t,f,e);u.normalize(),s.rj.copy(u),s.rj.mult(e.radius,s.rj),s.ni.copy(u),s.ni.negate(s.ni),s.ri.set(0,0,0),this.result.push(s),this.createFrictionEquationsFromContact(s,this.frictionResult)}};var gf=new p,xf=new l,jf=(new l,new l),vf=new l,Af=new l;n.prototype[i.types.PARTICLE|i.types.CONVEXPOLYHEDRON]=n.prototype.convexParticle=function(e,f,n,o,d,i,t,l){var u=-1,p=jf,s=Af,y=null,c=0,a=xf;if(a.copy(o),a.vsub(n,a),d.conjugate(gf),gf.vmult(a,a),e.pointIsInside(a)){e.worldVerticesNeedsUpdate&&e.computeWorldVertices(n,d),e.worldFaceNormalsNeedsUpdate&&e.computeWorldFaceNormals(d);for(var r=0,w=e.faces.length;r!==w;r++){var b=[e.worldVertices[e.faces[r][0]]],m=e.worldFaceNormals[r];o.vsub(b[0],vf);var N=-m.dot(vf);(null===y||Math.abs(N)<Math.abs(y))&&(y=N,u=r,p.copy(m),c++)}if(-1!==u){var g=this.createContactEquation(l,t,f,e);p.mult(y,s),s.vadd(o,s),s.vsub(n,s),g.rj.copy(s),p.negate(g.ni),g.ri.set(0,0,0);var x=g.ri,j=g.rj;x.vadd(o,x),x.vsub(l.position,x),j.vadd(n,j),j.vsub(t.position,j),this.result.push(g),this.createFrictionEquationsFromContact(g,this.frictionResult)}else console.warn("Point found inside convex, but did not find penetrating face!")}},n.prototype[i.types.BOX|i.types.HEIGHTFIELD]=n.prototype.boxHeightfield=function(e,f,n,o,d,i,t,l){e.convexPolyhedronRepresentation.material=e.material,e.convexPolyhedronRepresentation.collisionResponse=e.collisionResponse,this.convexHeightfield(e.convexPolyhedronRepresentation,f,n,o,d,i,t,l)};var Cf=new l,Of=new l,hf=[0];n.prototype[i.types.CONVEXPOLYHEDRON|i.types.HEIGHTFIELD]=n.prototype.convexHeightfield=function(e,f,n,o,d,i,t,l){var p=f.data,s=f.elementSize,y=e.boundingSphereRadius,c=Of,a=hf,r=Cf;u.pointToLocalFrame(o,i,n,r);var w=Math.floor((r.x-y)/s)-1,b=Math.ceil((r.x+y)/s)+1,m=Math.floor((r.y-y)/s)-1,N=Math.ceil((r.y+y)/s)+1;if(!(0>b||0>N||w>p.length||m>p[0].length)){0>w&&(w=0),0>b&&(b=0),0>m&&(m=0),0>N&&(N=0),w>=p.length&&(w=p.length-1),b>=p.length&&(b=p.length-1),N>=p[0].length&&(N=p[0].length-1),m>=p[0].length&&(m=p[0].length-1);var g=[];f.getRectMinMax(w,m,b,N,g);var x=g[0],j=g[1];if(!(r.z-y>j||r.z+y<x))for(var v=w;b>v;v++)for(var A=m;N>A;A++)f.getConvexTrianglePillar(v,A,!1),u.pointToWorldFrame(o,i,f.pillarOffset,c),n.distanceTo(c)<f.pillarConvex.boundingSphereRadius+e.boundingSphereRadius&&this.convexConvex(e,f.pillarConvex,n,c,d,i,t,l,null,null,a,null),f.getConvexTrianglePillar(v,A,!0),u.pointToWorldFrame(o,i,f.pillarOffset,c),n.distanceTo(c)<f.pillarConvex.boundingSphereRadius+e.boundingSphereRadius&&this.convexConvex(e,f.pillarConvex,n,c,d,i,t,l,null,null,a,null)}};var kf=new l,qf=new l;n.prototype[i.types.SPHERE|i.types.HEIGHTFIELD]=n.prototype.sphereHeightfield=function(e,f,n,o,d,i,t,l){var p=f.data,s=e.radius,y=f.elementSize,c=qf,a=kf;u.pointToLocalFrame(o,i,n,a);var r=Math.floor((a.x-s)/y)-1,w=Math.ceil((a.x+s)/y)+1,b=Math.floor((a.y-s)/y)-1,m=Math.ceil((a.y+s)/y)+1;if(!(0>w||0>m||r>p.length||m>p[0].length)){0>r&&(r=0),0>w&&(w=0),0>b&&(b=0),0>m&&(m=0),r>=p.length&&(r=p.length-1),w>=p.length&&(w=p.length-1),m>=p[0].length&&(m=p[0].length-1),b>=p[0].length&&(b=p[0].length-1);var N=[];f.getRectMinMax(r,b,w,m,N);var g=N[0],x=N[1];if(!(a.z-s>x||a.z+s<g))for(var j=this.result,v=r;w>v;v++)for(var A=b;m>A;A++){var C=j.length;f.getConvexTrianglePillar(v,A,!1),u.pointToWorldFrame(o,i,f.pillarOffset,c),n.distanceTo(c)<f.pillarConvex.boundingSphereRadius+e.boundingSphereRadius&&this.sphereConvex(e,f.pillarConvex,n,c,d,i,t,l),f.getConvexTrianglePillar(v,A,!0),u.pointToWorldFrame(o,i,f.pillarOffset,c),n.distanceTo(c)<f.pillarConvex.boundingSphereRadius+e.boundingSphereRadius&&this.sphereConvex(e,f.pillarConvex,n,c,d,i,t,l);var O=j.length-C;if(O>2)return}}}},{"../collision/AABB":3,"../collision/Ray":9,"../equations/ContactEquation":19,"../equations/FrictionEquation":21,"../math/Quaternion":28,"../math/Transform":29,"../math/Vec3":30,"../shapes/ConvexPolyhedron":38,"../shapes/Shape":43,"../solver/Solver":47,"../utils/Vec3Pool":54}],56:[function(e,f){function n(){u.apply(this),this.dt=-1,this.allowSleep=!1,this.contacts=[],this.frictionEquations=[],this.quatNormalizeSkip=0,this.quatNormalizeFast=!1,this.time=0,this.stepnumber=0,this.default_dt=1/60,this.nextId=0,this.gravity=new d,this.broadphase=new m,this.bodies=[],this.solver=new t,this.constraints=[],this.narrowphase=new l(this),this.collisionMatrix=new p,this.collisionMatrixPrevious=new p,this.materials=[],this.contactmaterials=[],this.contactMaterialTable=new a,this.defaultMaterial=new s("default"),this.defaultContactMaterial=new y(this.defaultMaterial,this.defaultMaterial,{friction:.3,restitution:0}),this.doProfiling=!1,this.profile={solve:0,makeContactConstraints:0,broadphase:0,integrate:0,narrowphase:0},this.subsystems=[],this.addBodyEvent={type:"addBody",body:null},this.removeBodyEvent={type:"removeBody",body:null}}f.exports=n;var o=e("../shapes/Shape"),d=e("../math/Vec3"),i=e("../math/Quaternion"),t=e("../solver/GSSolver"),l=(e("../utils/Vec3Pool"),e("../equations/ContactEquation"),e("../equations/FrictionEquation"),e("./Narrowphase")),u=e("../utils/EventTarget"),p=e("../collision/ArrayCollisionMatrix"),s=e("../material/Material"),y=e("../material/ContactMaterial"),c=e("../objects/Body"),a=e("../utils/TupleDictionary"),r=e("../collision/RaycastResult"),w=e("../collision/AABB"),b=e("../collision/Ray"),m=e("../collision/NaiveBroadphase");n.prototype=new u;var N=(new w,new b);if(n.prototype.getContactMaterial=function(e,f){return this.contactMaterialTable.get(e.id,f.id)},n.prototype.numObjects=function(){return this.bodies.length},n.prototype.collisionMatrixTick=function(){var e=this.collisionMatrixPrevious;this.collisionMatrixPrevious=this.collisionMatrix,this.collisionMatrix=e,this.collisionMatrix.reset()},n.prototype.add=n.prototype.addBody=function(e){-1===this.bodies.indexOf(e)&&(e.index=this.bodies.length,this.bodies.push(e),e.world=this,e.initPosition.copy(e.position),e.initVelocity.copy(e.velocity),e.timeLastSleepy=this.time,e instanceof c&&(e.initAngularVelocity.copy(e.angularVelocity),e.initQuaternion.copy(e.quaternion)),this.collisionMatrix.setNumObjects(this.bodies.length),this.addBodyEvent.body=e,this.dispatchEvent(this.addBodyEvent))},n.prototype.addConstraint=function(e){this.constraints.push(e)},n.prototype.removeConstraint=function(e){var f=this.constraints.indexOf(e);-1!==f&&this.constraints.splice(f,1)},n.prototype.rayTest=function(e,f,n){n instanceof r?this.raycastClosest(e,f,{skipBackfaces:!0},n):this.raycastAll(e,f,{skipBackfaces:!0},n)},n.prototype.raycastAll=function(e,f,n,o){return n.mode=b.ALL,n.from=e,n.to=f,n.callback=o,N.intersectWorld(this,n)},n.prototype.raycastAny=function(e,f,n,o){return n.mode=b.ANY,n.from=e,n.to=f,n.result=o,N.intersectWorld(this,n)},n.prototype.raycastClosest=function(e,f,n,o){return n.mode=b.CLOSEST,n.from=e,n.to=f,n.result=o,N.intersectWorld(this,n)},n.prototype.remove=function(e){e.world=null;var f=this.bodies.length-1,n=this.bodies,o=n.indexOf(e);if(-1!==o){n.splice(o,1);for(var d=0;d!==n.length;d++)n[d].index=d;this.collisionMatrix.setNumObjects(f),this.removeBodyEvent.body=e,this.dispatchEvent(this.removeBodyEvent)}},n.prototype.removeBody=n.prototype.remove,n.prototype.addMaterial=function(e){this.materials.push(e)},n.prototype.addContactMaterial=function(e){this.contactmaterials.push(e),this.contactMaterialTable.set(e.materials[0].id,e.materials[1].id,e)},"undefined"==typeof performance&&(performance={}),!performance.now){var g=Date.now();performance.timing&&performance.timing.navigationStart&&(g=performance.timing.navigationStart),performance.now=function(){return Date.now()-g}}var x=new d;n.prototype.step=function(e,f,n){if(n=n||10,f=f||0,0===f)this.internalStep(e),this.time+=e;else{var o=Math.floor((this.time+f)/e)-Math.floor(this.time/e);o=Math.min(o,n);for(var d=performance.now(),i=0;i!==o&&(this.internalStep(e),!(performance.now()-d>1e3*e));i++);this.time+=f;for(var t=this.time%e,l=t/e,u=x,p=this.bodies,s=0;s!==p.length;s++){var y=p[s];y.type!==c.STATIC&&y.sleepState!==c.SLEEPING?(y.position.vsub(y.previousPosition,u),u.scale(l,u),y.position.vadd(u,y.interpolatedPosition)):(y.interpolatedPosition.copy(y.position),y.interpolatedQuaternion.copy(y.quaternion))}}};var j={type:"postStep"},v={type:"preStep"},A={type:"collide",body:null,contact:null},C=[],O=[],h=[],k=[],q=(new d,new d,new d,new d,new d,new d,new d,new d,new d,new i,new i),z=new i,B=new d;n.prototype.internalStep=function(e){this.dt=e;var f,n=this.contacts,d=h,i=k,t=this.numObjects(),l=this.bodies,u=this.solver,p=this.gravity,s=this.doProfiling,y=this.profile,a=c.DYNAMIC,r=this.constraints,w=O,b=(p.norm(),p.x),m=p.y,N=p.z,g=0;for(s&&(f=performance.now()),g=0;g!==t;g++){var x=l[g];if(x.type&a){var D=x.force,E=x.mass;D.x+=E*b,D.y+=E*m,D.z+=E*N}}for(var g=0,F=this.subsystems.length;g!==F;g++)this.subsystems[g].update();s&&(f=performance.now()),d.length=0,i.length=0,this.broadphase.collisionPairs(this,d,i),s&&(y.broadphase=performance.now()-f);var G=r.length;for(g=0;g!==G;g++){var H=r[g];if(!H.collideConnected)for(var I=d.length-1;I>=0;I-=1)(H.bodyA===d[I]&&H.bodyB===i[I]||H.bodyB===d[I]&&H.bodyA===i[I])&&(d.splice(I,1),i.splice(I,1))}this.collisionMatrixTick(),s&&(f=performance.now());var J=C,K=n.length;for(g=0;g!==K;g++)J.push(n[g]);n.length=0;var L=this.frictionEquations.length;for(g=0;g!==L;g++)w.push(this.frictionEquations[g]);this.frictionEquations.length=0,this.narrowphase.getContacts(d,i,this,n,J,this.frictionEquations,w),s&&(y.narrowphase=performance.now()-f),s&&(f=performance.now());for(var g=0;g<this.frictionEquations.length;g++)u.addEquation(this.frictionEquations[g]);for(var M=n.length,P=0;P!==M;P++){{var Q,H=n[P],x=H.bi,R=H.bj;H.si,H.sj}Q=x.material&&R.material?this.getContactMaterial(x.material,R.material)||this.defaultContactMaterial:this.defaultContactMaterial;var S=Q.friction;if(x.material&&R.material&&(x.material.friction>=0&&R.material.friction>=0&&(S=x.material.friction*R.material.friction),x.material.restitution>=0&&R.material.restitution>=0&&(H.restitution=x.material.restitution*R.material.restitution)),u.addEquation(H),x.allowSleep&&x.type===c.DYNAMIC&&x.sleepState===c.SLEEPING&&R.sleepState===c.AWAKE&&R.type!==c.STATIC){var T=R.velocity.norm2()+R.angularVelocity.norm2(),U=Math.pow(R.sleepSpeedLimit,2);
+T>=2*U&&(x._wakeUpAfterNarrowphase=!0)}if(R.allowSleep&&R.type===c.DYNAMIC&&R.sleepState===c.SLEEPING&&x.sleepState===c.AWAKE&&x.type!==c.STATIC){var V=x.velocity.norm2()+x.angularVelocity.norm2(),W=Math.pow(x.sleepSpeedLimit,2);V>=2*W&&(R._wakeUpAfterNarrowphase=!0)}this.collisionMatrix.set(x,R,!0),this.collisionMatrixPrevious.get(x,R)||(A.body=R,A.contact=H,x.dispatchEvent(A),A.body=x,R.dispatchEvent(A))}for(s&&(y.makeContactConstraints=performance.now()-f,f=performance.now()),g=0;g!==t;g++){var x=l[g];x._wakeUpAfterNarrowphase&&(x.wakeUp(),x._wakeUpAfterNarrowphase=!1)}var G=r.length;for(g=0;g!==G;g++){var H=r[g];H.update();for(var I=0,X=H.equations.length;I!==X;I++){var Y=H.equations[I];u.addEquation(Y)}}u.solve(e,this),s&&(y.solve=performance.now()-f),u.removeAllEquations();var Z=Math.pow;for(g=0;g!==t;g++){var x=l[g];if(x.type&a){var $=Z(1-x.linearDamping,e),_=x.velocity;_.mult($,_);var ef=x.angularVelocity;if(ef){var ff=Z(1-x.angularDamping,e);ef.mult(ff,ef)}}}for(this.dispatchEvent(v),g=0;g!==t;g++){var x=l[g];x.preStep&&x.preStep.call(x)}s&&(f=performance.now());{var nf=q,of=z,df=this.stepnumber,tf=c.DYNAMIC|c.KINEMATIC,lf=df%(this.quatNormalizeSkip+1)===0,uf=this.quatNormalizeFast,pf=.5*e;o.types.PLANE,o.types.CONVEXPOLYHEDRON}for(g=0;g!==t;g++){var sf=l[g],yf=sf.force,cf=sf.torque;if(sf.type&tf&&sf.sleepState!==c.SLEEPING){var af=sf.velocity,rf=sf.angularVelocity,wf=sf.position,bf=sf.quaternion,mf=sf.invMass,Nf=sf.invInertiaWorld;af.x+=yf.x*mf*e,af.y+=yf.y*mf*e,af.z+=yf.z*mf*e,sf.angularVelocity&&(Nf.vmult(cf,B),B.mult(e,B),B.vadd(rf,rf)),wf.x+=af.x*e,wf.y+=af.y*e,wf.z+=af.z*e,sf.angularVelocity&&(nf.set(rf.x,rf.y,rf.z,0),nf.mult(bf,of),bf.x+=pf*of.x,bf.y+=pf*of.y,bf.z+=pf*of.z,bf.w+=pf*of.w,lf&&(uf?bf.normalizeFast():bf.normalize())),sf.aabb&&(sf.aabbNeedsUpdate=!0),sf.updateInertiaWorld&&sf.updateInertiaWorld()}}for(this.clearForces(),this.broadphase.dirty=!0,s&&(y.integrate=performance.now()-f),this.time+=e,this.stepnumber+=1,this.dispatchEvent(j),g=0;g!==t;g++){var x=l[g],gf=x.postStep;gf&&gf.call(x)}if(this.allowSleep)for(g=0;g!==t;g++)l[g].sleepTick(this.time)},n.prototype.clearForces=function(){for(var e=this.bodies,f=e.length,n=0;n!==f;n++){{var o=e[n];o.force,o.torque}o.force.set(0,0,0),o.torque.set(0,0,0)}}},{"../collision/AABB":3,"../collision/ArrayCollisionMatrix":4,"../collision/NaiveBroadphase":7,"../collision/Ray":9,"../collision/RaycastResult":10,"../equations/ContactEquation":19,"../equations/FrictionEquation":21,"../material/ContactMaterial":24,"../material/Material":25,"../math/Quaternion":28,"../math/Vec3":30,"../objects/Body":31,"../shapes/Shape":43,"../solver/GSSolver":46,"../utils/EventTarget":49,"../utils/TupleDictionary":52,"../utils/Vec3Pool":54,"./Narrowphase":55}]},{},[2])(2)});
+</script>
 <script>
 /* ==================================================================
   ③ 逻辑区目录（按出现顺序，各节都有同款横幅注释可搜索跳转）：
@@ -1906,22 +1951,15 @@ function sixRelative(lineEl, palaceEl){
   return '－';
 }
 
-/* ---------------- 进神/退神（爻辰进退） ----------------
-   之前这个判断完全交给AI自己现算（本爻地支变成变爻地支，是"进"还是"退"），但这其实是
-   一道有唯一正确答案的计算题，不该留给AI凭训练时的零散记忆去现推——历代纳甲典籍
-   （《卜筮正宗》《增删卜易》等）说法一致的，只有四组同五行、地支顺行相邻的固定地支对：
-   寅→卯（木）、巳→午（火）、申→酉（金）、亥→子（水）是"进神"，反过来变是"退神"。
-   辰戌丑未（土）之间怎么算进退，各家说法不一、没有公认唯一答案，这里不强行给出判断，
-   统一留空——宁可让这一项在没有把握时空着交给AI用回头生克去谈，也不要把一个本身有
-   流派分歧的东西包装成"确定性结论"喂给AI，那样反而会制造新一类看似有据、实则立不住的
-   计算错误。 ---------------- */
-const JIN_SHEN_PAIRS = {'寅':'卯', '巳':'午', '申':'酉', '亥':'子'}; // 本爻地支→变爻地支 命中即为"进神"
-const TUI_SHEN_PAIRS = {'卯':'寅', '午':'巳', '酉':'申', '子':'亥'}; // 本爻地支→变爻地支 命中即为"退神"
+/* 进退神：采用《增删卜易·进神退神章》所列地支对。
+   土爻补丑→辰、辰→未、未→戌；戌→丑的循环扩展本版不预判。 */
+const JIN_SHEN_PAIRS = {'寅':'卯','巳':'午','申':'酉','亥':'子','丑':'辰','辰':'未','未':'戌'};
+const TUI_SHEN_PAIRS = {'卯':'寅','午':'巳','酉':'申','子':'亥','辰':'丑','未':'辰','戌':'未'};
 function computeJinTuiShen(fromBranch, toBranch){
   if(!fromBranch || !toBranch || fromBranch === toBranch) return '';
   if(JIN_SHEN_PAIRS[fromBranch] === toBranch) return '进神';
   if(TUI_SHEN_PAIRS[fromBranch] === toBranch) return '退神';
-  return ''; // 五行不同、或土行内部变化：不属于标准进退神对，不判定
+  return ''; // 未命中本版采用的进退神对，不预判
 }
 
 /* ---------------- 月令旺衰 / 日辰合冲 / 回头生克 / 世应生克 / 飞神伏神生克 ----------------
@@ -2039,7 +2077,8 @@ function findNextDateForGanzhiIndex(anchorDate, targetIndex){
 // （见下面dayGanzhiSelect的change监听），就清空退回"现在"——因为单选一个干支
 // 本身是模糊的（六十天一轮回，没法反推唯一对应哪一天），没法再关联到具体日期。
 let knownCastDate = null;
-dayGanzhiSelect.addEventListener('change', ()=>{ knownCastDate = null; });
+let daySelectionMode = 'auto';
+dayGanzhiSelect.addEventListener('change', ()=>{knownCastDate=null;daySelectionMode='manual';document.getElementById('dayLookupDate').value='';document.getElementById('dayLookupTime').value='';});
 
 // ---- 按公历日期反查日柱：想复盘某个历史案例（比如书上的老案例、以前手动摇的卦）
 // 之前只能自己心算六十甲子再去下拉框里找，这里加个日期选择器，选完直接调用上面已有的
@@ -2050,18 +2089,38 @@ const dayLookupDateInput = document.getElementById('dayLookupDate');
 if(dayLookupDateInput){
   dayLookupDateInput.addEventListener('change', ()=>{
     const v = dayLookupDateInput.value; // "YYYY-MM-DD"
-    if(!v) return;
+    if(!v){knownCastDate=null;daySelectionMode='auto';dayGanzhiSelect.value=String(getTodayJiaziIndex());return;}
     const [y,m,d] = v.split('-').map(Number);
     if(!y || !m || !d) return;
     const picked = new Date(y, m-1, d); // 按本地日历日期算，跟getTodayJiaziIndex(new Date())默认走同一套时区口径
     // 用JS赋值.value不会触发上面dayGanzhiSelect的'change'监听（那个监听只认用户手动在下拉框里
     // 选选项这种真实交互），所以这里设置knownCastDate不会被自己刚改的下拉框清空。
     dayGanzhiSelect.value = String(getTodayJiaziIndex(picked));
-    knownCastDate = picked;
+    knownCastDate = picked; daySelectionMode='date';
+    const time=document.getElementById('dayLookupTime').value;if(time){const [h,min]=time.split(':').map(Number);knownCastDate.setHours(h,min);}
     showToast(`已按 ${v} 反查并选中日柱：${JIAZI60[getTodayJiaziIndex(picked)].label}`);
   });
 }
 
+document.getElementById('dayLookupTime').addEventListener('change',()=>{
+  if(knownCastDate){const [h,m]=(document.getElementById('dayLookupTime').value||'00:00').split(':').map(Number);knownCastDate.setHours(h,m,0,0);}
+});
+// Browser local civil time; day changes at 00:00. No true-solar-time correction.
+function resolveCastCalendar(){
+  const now=knownCastDate ? new Date(knownCastDate) : new Date();
+  if(daySelectionMode==='auto')dayGanzhiSelect.value=String(getTodayJiaziIndex(now));
+  const day=JIAZI60[Number(dayGanzhiSelect.value)];
+  if(daySelectionMode==='manual')return {now,day,ymh:{yearLabel:'未指定',monthLabel:'未指定',hourLabel:'未指定'},dateText:'公历日期未指定（仅录入日柱）'};
+  const ymh=buildYearMonthHourPillars(day.stem,now);
+  if(knownCastDate&&!document.getElementById('dayLookupTime').value){
+    ymh.hourLabel='未指定';
+    const end=new Date(now);end.setHours(23,59,59,999);
+    const last=buildYearMonthHourPillars(day.stem,end);
+    if(last.yearLabel!==ymh.yearLabel)ymh.yearLabel='交节日待定';
+    if(last.monthLabel!==ymh.monthLabel)ymh.monthLabel='交节日待定';
+  }
+  return {now,day,ymh,dateText:buildDateDisplayText(now)};
+}
 /* ==================================================================
    年月时柱（干支）：配合上面的日柱下拉框，一起凑成"年月日时"四柱。
    日柱本来就有下拉框可以手动改成任意一天（用来复原线下摇卦发生的那天）；
@@ -2081,7 +2140,7 @@ if(dayLookupDateInput){
    45°...每隔30°一个，谁跨过这些刻度线谁就换月柱；315°这个刻度（立春）额外兼任
    年柱的分界。算法用天文测算里通行的低精度太阳坐标公式（Meeus《Astronomical
    Algorithms》第25章的简化版本：平黄经+几项周期修正项，精度约0.01°，换算成时间
-   误差通常在几分钟以内，判定节气边界绰绰有余），只是三角函数和多项式运算，
+   误差通常在几分钟以内，不宜作为交节瞬间的精确判据），只是三角函数和多项式运算，
    不依赖外部天文库/网络请求/逐年数据表，符合本项目"零依赖单文件"的约束。
    ================================================================== */
 // 儒略日（Julian Day）：date.getTime()本身就是UTC毫秒数，天然已经按时区换算好，
@@ -2091,7 +2150,7 @@ function julianDay(date){
 }
 // 太阳视黄经（0°~360°），Meeus低精度公式：平黄经 + 中心差修正 + 章动/光行差修正，
 // T是从J2000.0起算的儒略世纪数。精度约0.01°（对应约几分钟的时间误差），
-// 判定节气边界（我们只需要日甚至时级精度）绰绰有余，不需要更高阶的行星历表。
+// 交节前后数分钟可能出现差异，应核对权威历书。
 function sunApparentLongitude(date){
   const jd = julianDay(date);
   const T = (jd - 2451545.0) / 36525;
@@ -2115,14 +2174,12 @@ function getSolarMonthBranch(date){
   const idx = Math.floor((((lon - 315) % 360) + 360) % 360 / 30);
   return JIE_BRANCHES_FROM_LICHUN[idx];
 }
-// 年柱同样按"立春"换年，是同一套边界：上面12档里的最后一档"丑"（315°往前推30°，
-// 也就是小寒到立春之间那段，通常落在公历1月上旬到2月上旬）此时还没跨过立春，
-// 哪怕公历已经翻到新一年，年柱仍算上一年——用idx===11（丑）直接判断"是否还没立春"，
-// 比原来卡固定"2/4"更准，边界年份也不会错判。
+// 年柱以立春换年：公历年初的子月和丑月均需沿用上一年。
 function getYearPillar(date){
   const lon = sunApparentLongitude(date);
   const idx = Math.floor((((lon - 315) % 360) + 360) % 360 / 30);
-  const y = idx === 11 ? date.getFullYear() - 1 : date.getFullYear();
+  const beforeLichun = date.getMonth() < 2 && (idx === 10 || idx === 11);
+  const y = date.getFullYear() - (beforeLichun ? 1 : 0);
   const gzIdx = ((y-4)%60+60)%60;
   return { stemIdx: gzIdx%10, label: STEMS[gzIdx%10]+BRANCHES12[gzIdx%12] };
 }
@@ -2373,6 +2430,7 @@ function isLifespanQuestion(text){
    原作者已经明确设计为"静默失败即可，不影响当前这次问答本身"，不需要用
    toast 打扰用户，这里保留原设计判断，没有改动那两个函数。
    ================================================================== */
+function safeGetItem(key){try{return localStorage.getItem(key);}catch(e){return null;}}
 function safeSetItem(key, val){
   try{
     localStorage.setItem(key, val);
@@ -2402,7 +2460,7 @@ const CAST_COOLDOWN_WINDOW_MS = 10 * 60 * 1000; // 10 分钟窗口
 const CAST_COOLDOWN_MAX = 3;                    // 窗口内最多摇 3 次
 
 function loadCastLog(){
-  try{ return JSON.parse(localStorage.getItem(LS_KEY_CAST_LOG) || '[]'); }
+  try{ const v=JSON.parse(safeGetItem(LS_KEY_CAST_LOG) || '[]'); return Array.isArray(v)?v.filter(t=>Number.isFinite(t)&&t<=Date.now()):[]; }
   catch(e){ return []; }
 }
 function pruneCastLog(log){
@@ -2453,7 +2511,7 @@ function isSameQuestion(a, b){
 // 已经自己弹过一次"是同一件事，还是换新事了？"的确认框，判断出确实要重新起卦了，
 // 这里就不用再问第二遍，只需要跟着把状态清干净、正常走频率限制+记录这一次摇卦事件。
 async function guardBeforeCast(opts = {}){
-  const { skipCastConfirm = false } = opts;
+  const { skipCastConfirm = false, background = false } = opts;
   if(castsRemainingInWindow() <= 0){
     showToast('短时间内已经摇太多次了，心诚则灵，稍等一会再摇（10 分钟内最多 3 次）', 'error', 4500);
     return false;
@@ -2472,9 +2530,9 @@ async function guardBeforeCast(opts = {}){
     // （currentConversation 等），没碰 window.lastCastData / lastCastQuestion，
     // 导致用户就算把问题框里的字删光，这两个变量依然停在"上一卦"的值上，一摇卦立刻又撞上
     // 同一条拦截逻辑——不清掉这两个变量，这条老毛病换个壳还会再犯一次。
-    window.lastCastData = null;
-    window.lastCastQuestion = '';
-    if(!skipCastConfirm){
+    if(castMode === 'manual' && !background) window.lastCastData = null;
+    if(castMode === 'manual' && !background) window.lastCastQuestion = '';
+    if(!skipCastConfirm && castMode === 'manual' && !background){
       // 只有"摇卦"/"生成排盘"这种不一定跟问题绑定、可以直接重摇的场景，才顺手清空问题框
       // （呼应罗士程的建议：点另一卦的同时直接消去这里的文本）；"AI 解读"/"输出提示词"走
       // skipCastConfirm 这条分支时，输入框里的文字就是用户马上要问的新问题，不能跟着清掉。
@@ -2485,7 +2543,7 @@ async function guardBeforeCast(opts = {}){
       }
     }
   }
-  logCastEvent();
+  if(castMode === 'manual' && !background) logCastEvent();
   return true;
 }
 
@@ -2504,53 +2562,185 @@ function replayFadeIn(el){
   el.classList.add('fade-in');
 }
 
-function tossLine(){
-  // 3 coins: head(value3)=陽, tail(value2)=陰
-  let sum=0, coins=[];
-  for(let i=0;i<3;i++){
-    const head = Math.random()<0.5;
-    coins.push(head?'正':'反');
-    sum += head?3:2;
+// Physics simulation: fixed timestep, actual cylinder poses determine faces.
+function createCoinWorld(input, round){
+  const C = CANNON, world = new C.World();
+  world.gravity.set(0,0,-9.82);
+  world.allowSleep = true;
+  world.solver.iterations = 20;
+  world.defaultContactMaterial.friction = 0.42;
+  world.defaultContactMaterial.restitution = 0.28;
+  const floor = new C.Body({mass:0}); floor.addShape(new C.Plane()); world.addBody(floor);
+  for(const [x,y,sx,sy] of [[-4.5,0,.15,4.5],[4.5,0,.15,4.5],[0,-4.5,4.5,.15],[0,4.5,4.5,.15]]){
+    const wall = new C.Body({mass:0}); wall.addShape(new C.Box(new C.Vec3(sx,sy,2))); wall.position.set(x,y,1); world.addBody(wall);
   }
-  // 6 老阴(变) 7少阳 8少阴 9老阳(变)
-  const yang = (sum===7||sum===9);
-  const moving = (sum===6||sum===9);
-  return {sum, coins, yang, moving};
+  const bodies=[];
+  for(let i=0;i<3;i++){
+    const body=new C.Body({mass:0.012,linearDamping:.22,angularDamping:.18,allowSleep:true,sleepSpeedLimit:.12,sleepTimeLimit:.7});
+    body.addShape(new C.Cylinder(.5,.5,.07,24));
+    body.position.set((i-1)*1.2,0,2+i*.23);
+    const phase=(input.phase||0) + input.duration*3 + input.distance*.013 + round*.71 + i*1.91;
+    body.quaternion.setFromEuler(phase,phase*.73,phase*.31);
+    body.velocity.set(input.vx*.002+(i-1)*.3,input.vy*.002,2+Math.min(3,input.distance*.008));
+    body.angularVelocity.set(9+input.vy*.012+i*2,7+input.vx*.012-i,phase%7);
+    world.addBody(body); bodies.push(body);
+  }
+  return {world,bodies};
+}
+
+// Shared physical settlement criteria for visible and background casting.
+function advanceCoinWorld(sim){
+  sim.world.step(1/120);
+  sim.steps=(sim.steps||0)+1;
+  const quiet=sim.bodies.every(b=>b.velocity.length()<.035&&b.angularVelocity.length()<.08&&b.position.z<.5);
+  sim.stable=quiet?(sim.stable||0)+1:0;
+  if(sim.stable>=72){
+    const normals=sim.bodies.map(b=>b.quaternion.vmult(new CANNON.Vec3(0,0,1)).z);
+    if(normals.every(n=>Math.abs(n)>.97)){
+      const coins=normals.map(n=>n>0?'字':'背'),sum=coins.reduce((s,c)=>s+(c==='字'?2:3),0);
+      return {line:{...lineFromSum(sum),coins}};
+    }
+    return {retry:true};
+  }
+  return sim.steps>=2400?{retry:true}:null;
+}
+function commitPhysicsCast(lines){
+  renderPlate(lines,'physics');logCastEvent();
+  coinLog.textContent=lines.map((l,i)=>`${['初','二','三','四','五','上'][i]}爻 ${l.coins.join('')} · ${l.sum}`).join(' ｜ ');
+  return window.lastCastData;
+}
+
+// The initiating click's coordinates and timestamp supply initial conditions;
+// no random result is selected. Simulation yields between fixed-step batches.
+function castInputFromEvent(event){
+  const t=(event?.timeStamp ?? performance.now())/1000;
+  return {duration:t%10,distance:Math.hypot(event?.clientX||0,event?.clientY||0)%450,
+    vx:((event?.clientX||0)%600)-300,vy:((event?.clientY||0)%600)-300};
+}
+async function performBackgroundCast(input, onProgress){
+  const lines=[];
+  for(let round=0;round<6;round++){
+    onProgress?.(round,6);
+    let line=null;
+    for(let attempt=0;attempt<4&&!line;attempt++){
+      const sim=createCoinWorld({...input,duration:input.duration+attempt*.413},round);
+      let result=null;
+      while(!result){
+        for(let i=0;i<240&&!result;i++) result=advanceCoinWorld(sim);
+        await new Promise(resolve=>setTimeout(resolve,0));
+      }
+      line=result.line||null;
+    }
+    if(!line) throw new Error('铜钱未能稳定落下，本次未扣次数，请重新点击起卦');
+    lines.push(line);
+  }
+  onProgress?.(6,6);
+  return commitPhysicsCast(lines);
+}
+
+function physicsCoinSvg(id){
+  // Vector relief and patina; reverse is a decorative seal design, not a tracing.
+  const ring='M28 0a28 28 0 1 0-56 0a28 28 0 1 0 56 0M-6-6h12v12h-12z';
+  const speckles=Array.from({length:62},(_,i)=>{const a=i*2.399963,r=9+(i*7.13)%16.7;return `<circle cx="${(Math.cos(a)*r).toFixed(2)}" cy="${(Math.sin(a)*r).toFixed(2)}" r="${(.12+(i%4)*.09).toFixed(2)}" fill="${i%3?'#443d24':'#54715a'}" opacity="${.13+(i%4)*.05}"/>`;}).join('');
+  const lettering='<text y="-10">乾</text><text y="20">隆</text><text x="15.5" y="4">通</text><text x="-15.5" y="4">寶</text>';
+  const reverse='<path d="M-14-18c-5 2-5 6-1 7 5 1 5-5 2-6m-1 5v24c0 4-3 6-6 7m6-22c-8-4-9 4-3 5l3-1m0 4c-8-2-8 5-2 5m2 1 5 3m-5 1-4 4M14-18c5 1 6 5 2 7-5 2-7-3-3-6m1 5v27c0 3-3 5-5 4m5-25c7-4 9 3 4 5l-4-1m0 4c7-2 9 5 3 6l-3-1m0 5 5 2"/>';
+  return `<g class="physics-coin" data-coin="${id}"><title>字面记二，背面记三</title><defs><linearGradient id="coin-metal-${id}" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#f2dfa9"/><stop offset=".2" stop-color="#c6a15d"/><stop offset=".48" stop-color="#a48248"/><stop offset=".73" stop-color="#d9ba76"/><stop offset="1" stop-color="#8b6939"/></linearGradient><linearGradient id="coin-rim-${id}" x2=".7" y2="1"><stop stop-color="#ffedb7"/><stop offset=".4" stop-color="#d6bb80"/><stop offset="1" stop-color="#765028"/></linearGradient></defs>
+  <g class="coin-edge"><path d="${ring}" fill="#624626" fill-rule="evenodd" stroke="#b28e50" stroke-width="1.2"/><path d="M-25 12A28 28 0 0 0 25 12" fill="none" stroke="#d0ad64" stroke-width=".8"/></g>
+  <g class="coin-face"><path d="${ring}" fill="url(#coin-metal-${id})" fill-rule="evenodd" stroke="#785a30" stroke-width=".8"/>
+  <circle r="26.5" fill="none" stroke="url(#coin-rim-${id})" stroke-width="2.2"/><circle r="24.9" fill="none" stroke="#6c502d" stroke-width=".65"/><circle r="24.1" fill="none" stroke="#f3d79a" stroke-opacity=".45" stroke-width=".6"/>
+  ${speckles}<path d="M-21-12q5-8 12-10M11 22l4-2M-22 9l2 3M19-15l2 3" fill="none" stroke="#eed398" stroke-width=".5" opacity=".45"/>
+  <path d="M-7.3-7.3h14.6v14.6h-14.6z" fill="none" stroke="#f0d69a" stroke-width="1.6"/><path d="M-6-6h12v12h-12z" fill="none" stroke="#614622" stroke-width="1.2"/>
+  <g class="coin-inscription" font-family="KaiTi,STKaiti,'Noto Serif SC',serif" font-size="10.7" font-weight="700" text-anchor="middle"><g fill="#f8e2a9" transform="translate(.45 .7)">${lettering}</g><g fill="#715027" stroke="#543c21" stroke-width=".18">${lettering}</g></g>
+  <g class="coin-reverse" style="display:none" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#f3d99c" stroke-width="1.8" transform="translate(.4 .65)">${reverse}</g><g stroke="#684921" stroke-width="1.5">${reverse}</g><circle cy="-16" r="1.3" fill="#78592e" stroke="none"/><circle cy="16" r="1.3" fill="#78592e" stroke="none"/></g></g></g>`;
 }
 
 function performCast(){
-  return new Promise(resolve=>{
-    castBtn.disabled = true;
-    const lines = [];
-    let i = 0;
-    plateWrap.innerHTML = `<div class="placeholder">
-      <div class="cast-loading-coins">
-        <span class="cast-loading-coin"></span>
-        <span class="cast-loading-coin"></span>
-        <span class="cast-loading-coin"></span>
-      </div>
-      <div>摇卦中…</div>
-    </div>`;
-    const timer = setInterval(()=>{
-      const r = tossLine();
-      lines.push(r);
-      const dots = r.coins.map(c=>`<span class="coin-dot ${c==='正'?'head':''}">${c}</span>`).join('');
-      const resultName = r.moving ? (r.yang?'老阳':'老阴') : (r.yang?'少阳':'少阴');
-      coinLog.innerHTML = `<b>第${i+1}爻</b> ${dots} <span class="sum">${resultName}</span>`;
-      i++;
-      if(i===6){
-        clearInterval(timer);
-        renderPlate(lines);
-        castBtn.disabled = false;
-        resolve(window.lastCastData);
-      }
-    }, 260);
+  return new Promise((resolve,reject)=>{
+    const labels=['初爻','二爻','三爻','四爻','五爻','上爻'];
+    const auto=document.getElementById('castPace').value==='all';
+    const dialog=document.createElement('dialog');dialog.className='physics-dialog';
+    dialog.setAttribute('aria-labelledby','physics-title');dialog.setAttribute('aria-describedby','physics-description');
+    dialog.innerHTML=`<header class="physics-header"><div class="physics-heading"><span class="physics-seal" aria-hidden="true">六<br>爻</span><div><div class="physics-eyebrow">以钱为媒 · 静心起卦</div><h3 id="physics-title">一念起，六爻成</h3></div></div><button type="button" class="physics-close" aria-label="关闭摇卦窗口"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header>
+    <div class="physics-body"><section class="physics-table"><div class="physics-table-top"><span><i></i> 三钱起卦</span><span>${auto?'连续六爻':'逐爻投掷'}</span></div>
+    <svg class="physics-scene" viewBox="0 0 600 400" role="img" aria-label="铜钱投掷桌面，可拖动蓄势">
+    <defs><radialGradient id="table-glow"><stop stop-color="#3b3222"/><stop offset="1" stop-color="#1b1914"/></radialGradient><linearGradient id="coin-gold" x2="1" y2="1"><stop stop-color="#f1d99c"/><stop offset=".46" stop-color="#c5a360"/><stop offset="1" stop-color="#92703c"/></linearGradient><radialGradient id="coin-shadow"><stop stop-color="#000" stop-opacity=".5"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+    <rect width="600" height="400" fill="url(#table-glow)"/>
+    <g class="physics-engraving" transform="translate(300 222) scale(1 .62)" fill="none" stroke="#b8944f"><circle r="219" opacity=".16"/><circle r="210" opacity=".2"/><circle r="166" opacity=".1"/><path d="M0-200v12M0 200v-12M-200 0h12M200 0h-12" opacity=".45"/><g opacity=".26">${Array.from({length:8},(_,i)=>`<g transform="rotate(${i*45}) translate(0 -183)"><path d="M-15 0h30M-15 5h${i%2?11:30}${i%2?'m8 0h11':''}M-15 10h${i%3?11:30}${i%3?'m8 0h11':''}" stroke-width="2"/></g>`).join('')}</g></g>
+    <g class="physics-shadows">${[0,1,2].map(i=>`<ellipse data-shadow="${i}" cx="${220+i*80}" cy="250" rx="34" ry="12" fill="url(#coin-shadow)"/>`).join('')}</g><g class="physics-coins">${[0,1,2].map(physicsCoinSvg).join('')}</g>
+    <g class="physics-drag-hint" fill="none" stroke="#b8944f" opacity=".5"><path d="M262 334h76m-69-5-7 5 7 5m62-10 7 5-7 5"/></g></svg>
+    <div class="physics-table-caption"><span class="physics-stage-caption">轻摇铜钱，静候落定</span><span class="physics-gesture-meter" aria-hidden="true"><i></i></span></div></section>
+    <aside class="physics-record"><div class="physics-record-title"><h4>六爻成象</h4><span class="physics-count">00 <small>/ 06</small></span></div><p class="physics-record-hint">自下而上，依次成爻</p><ol class="physics-results" aria-label="六爻投掷结果">${labels.map((name,i)=>`<li data-line="${i}" class="${i===0?'is-current':''}"><span class="physics-line-number">${name}</span><span class="physics-line-glyph"><i></i><i></i></span><span class="physics-line-name">${i===0?'待投':'—'}</span></li>`).reverse().join('')}</ol><div class="physics-record-foot"><span class="physics-moving-dot"></span>朱砂标记动爻</div></aside></div>
+    <footer class="physics-footer"><div class="physics-guidance"><strong class="physics-status" role="status" aria-live="polite">${auto?'一掷启程，六爻依次落定':'从初爻开始'}</strong><p id="physics-description">在桌面拖动蓄势，或直接点击投掷。</p></div><button type="button" class="physics-throw"><span>${auto?'开始连续投掷':'投掷初爻'}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></footer><div class="physics-bottom-note">三枚铜钱 · 六次成卦 <span>字面二 · 背面三</span></div>`;
+    document.body.appendChild(dialog);
+    const scene=dialog.querySelector('.physics-scene'),status=dialog.querySelector('.physics-status'),launch=dialog.querySelector('.physics-throw');
+    const count=dialog.querySelector('.physics-count'),caption=dialog.querySelector('.physics-stage-caption'),meter=dialog.querySelector('.physics-gesture-meter i');
+    const coinNodes=[...dialog.querySelectorAll('.physics-coin')],shadows=[...dialog.querySelectorAll('[data-shadow]')];
+    const previousFocus=document.activeElement,previousOverflow=document.body.style.overflow;
+    let lines=[],sim=null,frame=0,nextTimer=0,running=false,closed=false,complete=false,previousTime=0,accumulator=0;
+    let input={vx:0,vy:0,distance:0,duration:0},pointer=null,pressStart=0;
+    function cleanup(){if(closed)return;closed=true;cancelAnimationFrame(frame);clearTimeout(nextTimer);dialog.close();dialog.remove();document.body.style.overflow=previousOverflow;previousFocus?.focus({preventScroll:true});}
+    function cancel(){cleanup();if(!complete)reject(new Error('已取消本卦，未扣除摇卦次数'));}
+    dialog.addEventListener('cancel',e=>{e.preventDefault();cancel();});dialog.querySelector('.physics-close').onclick=cancel;
+    function project(p){return {x:300+p.x*53+p.y*13,y:220+p.y*31-p.z*49};}
+    function draw(){
+      coinNodes.forEach((node,i)=>{
+        if(!sim){node.querySelector('.coin-edge').setAttribute('transform',`translate(${220+i*80} 222) scale(1 .72)`);node.querySelector('.coin-face').setAttribute('transform',`translate(${220+i*80} 218) scale(1 .72)`);return;}
+        const b=sim.bodies[i],q=b.quaternion,center=project(b.position),u=project(b.position.vadd(q.vmult(new CANNON.Vec3(.5/28,0,0)))),v=project(b.position.vadd(q.vmult(new CANNON.Vec3(0,.5/28,0))));
+        const matrix=(offset)=>`matrix(${u.x-center.x} ${u.y-center.y} ${v.x-center.x} ${v.y-center.y} ${center.x} ${center.y+offset})`;
+        node.querySelector('.coin-edge').setAttribute('transform',matrix(3));node.querySelector('.coin-face').setAttribute('transform',matrix(0));
+        const normal=q.vmult(new CANNON.Vec3(0,0,1));
+        const front=(-637*normal.x+2597*normal.y+1643*normal.z)>0;
+        // Flip the back's local x axis so its relief is not mirror-written.
+        if(!front){const backMatrix=(offset)=>`matrix(${center.x-u.x} ${center.y-u.y} ${v.x-center.x} ${v.y-center.y} ${center.x} ${center.y+offset})`;node.querySelector('.coin-face').setAttribute('transform',backMatrix(0));}
+        node.querySelector('.coin-inscription').style.display=front?'':'none';node.querySelector('.coin-reverse').style.display=front?'none':'';
+        const floor=project({x:b.position.x,y:b.position.y,z:0});shadows[i].setAttribute('cx',floor.x);shadows[i].setAttribute('cy',floor.y+5);shadows[i].setAttribute('opacity',Math.max(.2,1-b.position.z*.15));
+      });
+      if(sim)[0,1,2].sort((a,b)=>{const depth=b=>b.position.z-b.position.y*.6;return depth(sim.bodies[a])-depth(sim.bodies[b]);}).forEach(i=>coinNodes[i].parentNode.appendChild(coinNodes[i]));
+    }
+    function record(line){
+      const index=lines.length-1,row=dialog.querySelector(`[data-line="${index}"]`);
+      row.className='is-done'+(line.moving?' is-moving':'')+(line.yang?' is-yang':'');
+      row.querySelector('.physics-line-name').textContent={6:'老阴',7:'少阳',8:'少阴',9:'老阳'}[line.sum];
+      row.title=line.coins.join(' · ')+`，合计 ${line.sum}`;
+      if(lines.length<6){const next=dialog.querySelector(`[data-line="${lines.length}"]`);next.classList.add('is-current');next.querySelector('.physics-line-name').textContent='待投';}
+      count.innerHTML=`${String(lines.length).padStart(2,'0')} <small>/ 06</small>`;
+    }
+    scene.onpointerdown=e=>{if(running||complete)return;scene.setPointerCapture(e.pointerId);pointer={x:e.clientX,y:e.clientY,t:e.timeStamp};input.distance=0;scene.classList.add('is-dragging');};
+    scene.onpointermove=e=>{if(!pointer||running)return;const dt=Math.max(1,e.timeStamp-pointer.t),scale=600/scene.getBoundingClientRect().width,dx=(e.clientX-pointer.x)*scale,dy=(e.clientY-pointer.y)*scale;input.vx=Math.max(-800,Math.min(800,dx/dt*1000));input.vy=Math.max(-800,Math.min(800,dy/dt*1000));input.distance=Math.min(2000,input.distance+Math.hypot(dx,dy));pointer={x:e.clientX,y:e.clientY,t:e.timeStamp};meter.style.width=Math.min(100,input.distance/4)+'%';caption.textContent='势已起 · 松手后投掷';if(!sim)coinNodes.forEach((n,i)=>{n.setAttribute('transform',`translate(${Math.sin(input.distance*.025+i)*6} ${Math.cos(input.distance*.02+i)*4})`);});};
+    scene.onpointerup=scene.onpointercancel=()=>{pointer=null;scene.classList.remove('is-dragging');};
+    launch.onpointerdown=()=>{pressStart=performance.now();};launch.onkeydown=e=>{if((e.key===' '||e.key==='Enter')&&!e.repeat)pressStart=performance.now();};
+    function begin(){
+      if(closed||running||complete)return;
+      try{sim=createCoinWorld(input,lines.length);accumulator=0;previousTime=0;running=true;launch.disabled=true;dialog.classList.add('is-rolling');coinNodes.forEach(n=>n.removeAttribute('transform'));status.textContent=`${labels[lines.length]} · 静候铜钱落定`;caption.textContent='铜钱翻转，卦象渐成';launch.querySelector('span').textContent='铜钱落定中';frame=requestAnimationFrame(tick);}catch(e){cleanup();reject(e);}
+    }
+    function retry(){running=false;dialog.classList.remove('is-rolling');status.textContent='铜钱未平稳落定';caption.textContent='已成之爻保留，本爻请再投一次';launch.disabled=false;launch.querySelector('span').textContent='重投'+labels[lines.length];}
+    function tick(time){
+      if(closed)return;
+      try{
+        accumulator+=previousTime?Math.min(.05,(time-previousTime)/1000):1/60;previousTime=time;
+        while(accumulator>=1/120&&running){
+          const result=advanceCoinWorld(sim);accumulator-=1/120;
+          if(result?.line){
+            lines.push(result.line);running=false;record(result.line);dialog.classList.remove('is-rolling');draw();
+            if(lines.length===6){
+              const data=commitPhysicsCast(lines);complete=true;status.textContent='六爻已成，卦象已定';caption.textContent='一念有始，六爻有应';dialog.querySelector('#physics-description').textContent='查看本卦的纳甲、世应与动爻。';launch.disabled=false;launch.querySelector('span').textContent='查看排盘';dialog.classList.add('is-complete');launch.focus({preventScroll:true});resolve(data);return;
+            }
+            status.textContent=`${labels[lines.length-1]}已成 · ${auto?'即将投掷':'下一爻为'}${labels[lines.length]}`;caption.textContent='铜钱已落定';launch.disabled=false;launch.querySelector('span').textContent='投掷'+labels[lines.length];
+            if(auto){launch.disabled=true;nextTimer=setTimeout(begin,550);return;}
+          }else if(result?.retry)retry();
+        }
+        draw();if(running)frame=requestAnimationFrame(tick);
+      }catch(e){cleanup();reject(e);}
+    }
+    launch.onclick=(event)=>{if(complete){cleanup();return;}input.duration=Math.min(10,Math.max(.001,(performance.now()-(pressStart||performance.now()))/1000));input.phase=(event.timeStamp/1000)%(Math.PI*2);pressStart=0;begin();};
+    document.body.style.overflow='hidden';dialog.showModal();draw();launch.focus({preventScroll:true});
   });
 }
 
+
 castBtn.addEventListener('click', async ()=>{
   if(!(await guardBeforeCast())) return;
-  // 摇卦动画有约1.56秒的过程（6次setInterval），renderPlate()要等最后一爻摇完才会调用，
+  // 物理投掷完成六爻后才调用 renderPlate；期间锁定其他起卦和解读入口。
   // 这期间 window.lastCastData/lastCastQuestion 还停在"上一卦"。这段时间如果去点"AI解读"
   // /"输出提示词"，读到的就是即将被替换掉的旧卦；如果去点"线下摇卦·生成排盘"，动画结束时
   // 系统摇出的新卦又会把手动填的排盘直接覆盖掉——所以动画期间把这几个按钮一并锁住。
@@ -2565,6 +2755,8 @@ castBtn.addEventListener('click', async ()=>{
   clearResultBtn.disabled = true;
   try{
     await performCast();
+  }catch(e){
+    showToast(e.message, 'error');
   }finally{
     manualCastBtn.disabled = false;
     interpretBtn.disabled = false;
@@ -2598,7 +2790,7 @@ const MANUAL_LINE_OPTIONS = [
 // 不随select本身的默认值联动，从而准确区分"没选"和"选了少阳"。
 const manualLineTouched = [false, false, false, false, false, false];
 
-// 生成六行手动选择器：三枚铜钱正面记3、反面记2，三枚之和 6/7/8/9
+// 生成六行手动选择器：三枚铜钱字面记2、背面记3，三枚之和 6/7/8/9
 // 对应 老阴(6,动)/少阳(7)/少阴(8)/老阳(9,动)，跟现实摇钱结果一一对应，
 // 用户只要照着自己现实摇出的老少阴阳选就行，不用换算铜钱正反数。
 function buildManualLinesUI(){
@@ -2723,11 +2915,12 @@ function performManualCast(isCorrection){
   coinLog.innerHTML = ''; // 清掉上一次系统摇卦残留的铜钱记录，避免和手动排盘混淆
   renderPlate(lines, 'manual');
   showToast(isCorrection
-    ? '已按修正后的录入重新排盘（修正填错的爻不算重新起卦，不占摇卦次数）'
+    ? '已按修正后的录入重新排盘（修正录入仍占用一次摇卦次数）'
     : '已按你手动填入的结果排盘，AI 解读会知道这是你亲自摇的卦', 'success');
 }
 
 manualCastBtn.addEventListener('click', async ()=>{
+  if(!manualLineTouched.every(Boolean)){showToast('请先逐一确认六爻的录入结果，再生成排盘','error');return;}
   // 修正录入的特例：上一卦本来就是手动填的、问题也没换，
   // 说明大概率是填错了某一爻想改——现实中的摇卦只发生了一次，
   // 重新生成排盘只是数据修正，不算重新起卦，不受"一事不问二卦"拦截。
@@ -2752,22 +2945,16 @@ manualCastBtn.addEventListener('click', async ()=>{
 });
 
 function renderPlate(lines, source='system'){
+  if(!Array.isArray(lines)||lines.length!==6||lines.some(l=>!l||![6,7,8,9].includes(l.sum)||l.yang!==[7,9].includes(l.sum)||l.moving!==[6,9].includes(l.sum)))throw new Error('六爻数据不完整或阴阳动静不一致');
   const lowerKey = lines.slice(0,3).map(l=>l.yang?'1':'0').join('');
   const upperKey = lines.slice(3,6).map(l=>l.yang?'1':'0').join('');
   const lower = TRIGRAM_BY_KEY[lowerKey];
   const upper = TRIGRAM_BY_KEY[upperKey];
   const palaceInfo = EIGHT_PALACE_MAP[lowerKey+upperKey];
 
-  const dayIdx = parseInt(dayGanzhiSelect.value,10);
-  const day = JIAZI60[dayIdx];
+  const {now,day,ymh,dateText}=resolveCastCalendar();
   const startSpirit = STEM_SPIRIT_GROUP[day.stem];
   const kongBranches = KONG_PAIRS[day.kongGroup];
-  // 年月时柱按起卦这一刻的"时刻"现算，日柱沿用上面下拉框选好的那个（见本函数上方的大段注释）；
-  // 这个"时刻"优先用knownCastDate（如果最近一次是靠"反查日期"定的这个日柱，就用那个真实历史
-  // 日期），没有的话才退回"现在"——公历/农历日期显示用的也是同一个now，三者不会各算各的对不上。
-  const now = knownCastDate || new Date();
-  const ymh = buildYearMonthHourPillars(day.stem, now);
-  const dateText = buildDateDisplayText(now);
   const fourPillarsText = `年柱：${ymh.yearLabel}　月柱：${ymh.monthLabel}　日柱：${day.label}　时柱：${ymh.hourLabel}`;
   const kongText = `空亡：${kongBranches.join('、')}`;
 
@@ -2976,8 +3163,9 @@ function renderPlate(lines, source='system'){
     palaceText, lowerUpperText, dayKongText,
     lines: structuredLines,
     guaName, bianGuaName,
-    source, // 'system'=网页随机摇卦 / 'manual'=用户线下摇卦手动填入
-    castAnchorY: now.getFullYear(), castAnchorM: now.getMonth()+1, castAnchorD: now.getDate(),
+    source, // physics=物理模拟；system=旧版随机；manual=线下录入
+    rulesVersion:'2026-09-15-2', coinConvention:source==='physics'?'字2背3':null,
+    castAnchorY: daySelectionMode==='manual'?null:now.getFullYear(), castAnchorM: daySelectionMode==='manual'?null:now.getMonth()+1, castAnchorD: daySelectionMode==='manual'?null:now.getDate(),
     overallTrendText,
   };
   if(window.updateCurrentCastStatus) window.updateCurrentCastStatus();
@@ -3020,7 +3208,7 @@ function renderPlateFromCastData(castData, question, castTime){
   // 同样的兼容思路：castAnchorY/M/D（干支日应期换算要用的锚点）是这次改版新增的字段，
   // 更早存的会话没有——这里就地补一份，退回用castTime（没有就用现在）当锚点，
   // 尽量让老会话也能算，宁可稍微不准也别整个功能直接失效不标注。
-  if(!castData.castAnchorY){
+  if(!castData.castAnchorY && !castData.rulesVersion){
     const fallback = castTime ? new Date(castTime) : new Date();
     castData.castAnchorY = fallback.getFullYear();
     castData.castAnchorM = fallback.getMonth() + 1;
@@ -3238,7 +3426,7 @@ function closeOnboard(){
   onboardPreviouslyFocused = null;
 }
 
-if(!localStorage.getItem(ONBOARD_KEY)){
+if(!safeGetItem(ONBOARD_KEY)){
   openOnboard();
 }
 onboardCloseBtn.addEventListener('click', ()=>{
@@ -3324,9 +3512,9 @@ const ROLE_PRESETS = {
 // ---- 人设选择：存 localStorage，读取时优先用用户选的，没选过就用 classic 默认档 ----
 const LS_KEY_ROLE = 'liuyao_role_choice';       // 'classic' | 'sharp' | 'warm' | 'plain' | 'bluff' | 'cryptic' | 'custom'
 const LS_KEY_CUSTOM_ROLE = 'liuyao_custom_role';
-function loadRoleChoice(){ return localStorage.getItem(LS_KEY_ROLE) || 'classic'; }
+function loadRoleChoice(){ return safeGetItem(LS_KEY_ROLE) || 'classic'; }
 function saveRoleChoice(v){ safeSetItem(LS_KEY_ROLE, v); }
-function loadCustomRole(){ return localStorage.getItem(LS_KEY_CUSTOM_ROLE) || ''; }
+function loadCustomRole(){ return safeGetItem(LS_KEY_CUSTOM_ROLE) || ''; }
 function saveCustomRole(v){ safeSetItem(LS_KEY_CUSTOM_ROLE, v); }
 function currentRoleInfo(){
   const choice = loadRoleChoice();
@@ -3437,30 +3625,20 @@ const SAFETY_BASELINE = `涉及命理解读内容，务必认真对待、给出�
 
 const DEEPSEEK_BASE_URL = 'https://api.deepseek.com';
 
-// ---- 模型选择：'deepseek-v4-flash' | 'deepseek-v4-pro'，存 localStorage，默认走 Flash ----
+// ---- 模型选择：'deepseek-flash' | 'deepseek-v4-pro'，存 localStorage，默认走 Flash ----
 // V4-Pro 正式版（V4-Pro-0813）已于 2026-08-13 GA，但 Flash 依然便宜得多（约1/3价），
 // 日常问卦精度够用，所以默认继续给 Flash；想要更准的解读可以在设置里手动切到 Pro。
 const LS_KEY_MODEL = 'liuyao_deepseek_model';
-function loadModelChoice(){ return localStorage.getItem(LS_KEY_MODEL) || 'deepseek-v4-flash'; }
+function loadModelChoice(){const v=safeGetItem(LS_KEY_MODEL);return v==='deepseek-v4-pro'?v:'deepseek-flash';}
 function saveModelChoice(v){ safeSetItem(LS_KEY_MODEL, v); }
 
-// 元/百万token，按DeepSeek官方价格页核对。这里的单价数字和"高峰=闲时2倍"的倍率，
-// 对应的是第一轮调价：2026-08-16 16:00 UTC / 北京时间 2026-08-17 00:00 生效，
-// 当时公布的高峰时段是"每天 9:00-12:00 和 14:00-18:00"（对应 UTC 01:00-04:00 / 06:00-10:00），
-// 按官方原文这是不分工作日/周末、单纯按时钟小时判断的——也就是说 8/17-8/22 这几天，
-// 周末只要落在这两段时间内，也是按高峰价算的，并不是一开始就有"周末不涨价"这回事。
-//
-// 真正的"周末不涨价"是6天后单独追加的第二轮调整：2026-08-22 公布、
-// 北京时间 2026-08-23 00:00 起生效——周六、周日全天不再区分峰谷，统一按闲时价计费，
-// 工作日的峰谷规则（时段和倍率）不变。下面 isBeijingPeakHour() 里"周末直接判false"
-// 走的是这一轮之后的规则，和当前实际计费是对得上的；只是这条注释之前把两轮调价的日期
-// 和适用范围混在一起写了，容易让人误以为"周末不涨价"从8/17就有、或者不知道这是两次
-// 分开的公告。DeepSeek 这类峰谷/周末规则目前还在小步快调，如果之后再变，记得回来对一下：
-// 官方价格页 https://api-docs.deepseek.com/quick_start/pricing
+// 元/百万 tokens，2026-09-15 核对官方定价。Flash 已升级 V4.1，旧 id 会路由到新模型。
+// https://api-docs.deepseek.com/zh-cn/quick_start/pricing/
+// 周一至周五北京时间 9–12、14–18 为高峰，其余时段半价；用户覆盖价仍优先。
 const PRICE_TABLES = {
-  'deepseek-v4-flash': {
-    offpeak: { hit: 0.05,  miss: 1.5, output: 4.5 },
-    peak:    { hit: 0.10,  miss: 3,   output: 9   },
+  'deepseek-flash': {
+    offpeak: { hit: 0.02,  miss: 1, output: 4 },
+    peak:    { hit: 0.04,  miss: 2, output: 8 },
   },
   'deepseek-v4-pro': {
     offpeak: { hit: 0.15,  miss: 4.5, output: 13.5 },
@@ -3474,7 +3652,7 @@ const PRICE_TABLES = {
 const LS_KEY_PRICE_OVERRIDE = 'liuyao_price_override';
 function loadPriceOverride(){
   try{
-    const raw = JSON.parse(localStorage.getItem(LS_KEY_PRICE_OVERRIDE) || 'null');
+    const raw = JSON.parse(safeGetItem(LS_KEY_PRICE_OVERRIDE) || 'null');
     return (raw && typeof raw === 'object') ? raw : null;
   }catch(e){ return null; }
 }
@@ -3485,7 +3663,7 @@ function clearPriceOverride(){
   safeRemoveItem(LS_KEY_PRICE_OVERRIDE);
 }
 function effectivePriceTable(){
-  const base = PRICE_TABLES[loadModelChoice()] || PRICE_TABLES['deepseek-v4-flash'];
+  const base = PRICE_TABLES[loadModelChoice()] || PRICE_TABLES['deepseek-flash'];
   const o = loadPriceOverride();
   if(!o) return base;
   return {
@@ -3513,7 +3691,7 @@ const LS_KEY_EFFORT = 'liuyao_reply_effort';     // 'high' | 'max'
 const LS_KEY_HISTORY = 'liuyao_interpret_history';
 const HISTORY_MAX = 200;
 
-function loadApiKey(){ return localStorage.getItem(LS_KEY_API) || ''; }
+function loadApiKey(){ return safeGetItem(LS_KEY_API) || ''; }
 function saveApiKey(k){ safeSetItem(LS_KEY_API, k); }
 function clearApiKey(){ safeRemoveItem(LS_KEY_API); }
 function maskApiKey(k){
@@ -3523,7 +3701,7 @@ function maskApiKey(k){
 }
 
 function loadHistory(){
-  try{ return JSON.parse(localStorage.getItem(LS_KEY_HISTORY) || '[]'); }
+  try{ const v=JSON.parse(safeGetItem(LS_KEY_HISTORY) || '[]'); return Array.isArray(v)?v.filter(r=>r&&typeof r==='object'):[]; }
   catch(e){ return []; }
 }
 function saveHistory(list){
@@ -3546,7 +3724,7 @@ function appendHistory(record){
 const LS_KEY_LIFETIME_STATS = 'liuyao_lifetime_stats';
 function loadLifetimeStats(){
   try{
-    const raw = JSON.parse(localStorage.getItem(LS_KEY_LIFETIME_STATS) || 'null');
+    const raw = JSON.parse(safeGetItem(LS_KEY_LIFETIME_STATS) || 'null');
     if(raw && typeof raw === 'object'){
       return { cost: raw.cost || 0, tokens: raw.tokens || 0 };
     }
@@ -3576,11 +3754,11 @@ function clearLifetimeStats(){
   safeRemoveItem(LS_KEY_LIFETIME_STATS);
 }
 
-function loadStyleChoice(){ return localStorage.getItem(LS_KEY_STYLE) || 'brief'; }
+function loadStyleChoice(){ return safeGetItem(LS_KEY_STYLE) || 'brief'; }
 function saveStyleChoice(v){ safeSetItem(LS_KEY_STYLE, v); }
-function loadCustomStyle(){ return localStorage.getItem(LS_KEY_CUSTOM_STYLE) || ''; }
+function loadCustomStyle(){ return safeGetItem(LS_KEY_CUSTOM_STYLE) || ''; }
 function saveCustomStyle(v){ safeSetItem(LS_KEY_CUSTOM_STYLE, v); }
-function loadEffortChoice(){ return localStorage.getItem(LS_KEY_EFFORT) || 'max'; }
+function loadEffortChoice(){ return safeGetItem(LS_KEY_EFFORT) || 'max'; }
 function saveEffortChoice(v){ safeSetItem(LS_KEY_EFFORT, v); }
 function currentEffortPreset(){ return EFFORT_PRESETS[loadEffortChoice()] || EFFORT_PRESETS.max; }
 
@@ -3748,10 +3926,10 @@ ${styleBlock}
 
 【核心原则：结论必须能被复核，且不重复推算已经算好的数据】
 卦名、纳甲干支、六亲配属、进退神、伏神信息、每一爻的月令旺衰（旺/相/休/囚/死）、是否与
-日辰构成合冲、动爻是否回头生/回头克、飞神对伏神是生是克——这些都是有唯一正确答案的
-计算题，已经在【排盘数据】里由代码算好直接标注给你（进退神留空的辰戌丑未组合，是因为
-这一步没有公认唯一答案，不必强行判定），你不需要、也不应该自己重新推算或质疑这些数据，
-直接采信即可；用神该选哪个六亲、合冲对这一爻究竟是利是弊、旺衰强弱怎么打分、吉凶趋势
+日辰构成合冲、动爻是否回头生/回头克、飞神对伏神是生是克——已按本工具口径计算。
+进退神采用《增删卜易》列举的七组进神及逆向退神；空白不等于存在相反结论。
+月令是季节五行简表，不等于综合旺衰。年月时柱未指定或交节日待定时，不得补造。
+优先引用已给数据；发现明确矛盾应指出，不能强行解释。用神该选哪个六亲、合冲对这一爻究竟是利是弊、旺衰强弱怎么打分、吉凶趋势
 怎么措辞、给什么建议——这些没有唯一答案、需要经验判断的，才是你的职责所在。不要把
 该交给数据的部分自己现算，也不要把该自己判断的部分说得好像有唯一标准答案。
 
@@ -3871,7 +4049,7 @@ function formatCastDataForAI(castData){
   }).join('\n');
   const sourceText = castData.source === 'manual'
     ? '起卦方式：提问者本人现实中线下摇卦（铜钱或其他方式），结果由本人手动录入系统，六爻老少阴阳均为真实所得，并非网页随机生成。'
-    : '起卦方式：网页系统随机摇卦生成。';
+    : castData.source === 'physics' ? '起卦方式：由用户操作驱动的网页刚体物理模拟，读取铜钱落地姿态，连续投掷六次；并非现实铜钱或随机数取值。' : '起卦方式：旧版网页随机摇卦生成。';
   // 卦名（本卦/变卦的六十四卦标准卦名，如"地水师""水火既济"）：之前只在页面上展示、
   // 没有拼进发给AI的文本里，AI拿到的只有"坎宫·二世卦"这类宫位信息和拆开的上下卦（坎/坤），
   // 从没见过合起来的完整卦名。六爻断卦的主要依据确实是六亲/世应/纳甲/动变而不是卦名本身，
@@ -3981,7 +4159,7 @@ function saveActiveConversation(){
   }
 }
 function loadActiveConversationFromStorage(){
-  try{ return JSON.parse(localStorage.getItem(LS_KEY_ACTIVE_CONVO) || 'null'); }
+  try{ return JSON.parse(safeGetItem(LS_KEY_ACTIVE_CONVO) || 'null'); }
   catch(e){ return null; }
 }
 function clearActiveConversationStorage(){
@@ -4015,6 +4193,8 @@ async function callDeepSeekRaw(messages, onDelta, signal){
   }
 
   const startTime = Date.now();
+  const requestIsPeak = isBeijingPeakHour();
+  const requestPrice = {...(requestIsPeak ? effectivePriceTable().peak : effectivePriceTable().offpeak)};
   let response;
   try{
     response = await fetch(`${DEEPSEEK_BASE_URL}/chat/completions`, {
@@ -4060,6 +4240,8 @@ async function callDeepSeekRaw(messages, onDelta, signal){
   let buffer = '';
   let rawText = '';
   let usage = null;
+  let sawDone = false;
+  let finishReason = null;
   let interruptReason = null; // null=正常读完 | 'user'=手动停止 | 'network'=读流中途出错(断线等)
 
   while(true){
@@ -4082,9 +4264,10 @@ async function callDeepSeekRaw(messages, onDelta, signal){
       const trimmed = line.trim();
       if(!trimmed.startsWith('data:')) continue;
       const payload = trimmed.slice(5).trim();
-      if(payload === '[DONE]') continue;
+      if(payload === '[DONE]'){sawDone=true;continue;}
       let json;
       try{ json = JSON.parse(payload); }catch(e){ continue; }
+      if(json.choices?.[0]?.finish_reason) finishReason=json.choices[0].finish_reason;
       const delta = json.choices?.[0]?.delta?.content;
       if(delta){
         rawText += delta;
@@ -4094,7 +4277,8 @@ async function callDeepSeekRaw(messages, onDelta, signal){
     }
   }
 
-  if(interruptReason){
+  if(!sawDone || finishReason !== 'stop') interruptReason = interruptReason || (finishReason === 'length' ? 'limit' : 'network');
+  if(interruptReason && !usage){
     return buildInterruptedResult(rawText, startTime, interruptReason);
   }
 
@@ -4108,8 +4292,8 @@ async function callDeepSeekRaw(messages, onDelta, signal){
   const cacheHitTokens = usage.prompt_cache_hit_tokens || 0;
   const cacheMissTokens = usage.prompt_cache_miss_tokens || Math.max(promptTokens - cacheHitTokens, 0);
 
-  const isPeak = isBeijingPeakHour();
-  const price = isPeak ? effectivePriceTable().peak : effectivePriceTable().offpeak;
+  const isPeak = requestIsPeak;
+  const price = requestPrice;
   const costYuan = (cacheHitTokens / 1e6) * price.hit
                   + (cacheMissTokens / 1e6) * price.miss
                   + (completionTokens / 1e6) * price.output;
@@ -4118,18 +4302,24 @@ async function callDeepSeekRaw(messages, onDelta, signal){
   // 只在这一处累加就能同时覆盖两边，不用在各自的调用方各写一遍、也不会漏记或重复记。
   addLifetimeUsage(costYuan, totalTokens);
 
-  return { text: cleanText, elapsedSeconds, promptTokens, completionTokens, totalTokens, costYuan, isPeak, interrupted: false };
+  const partial = interruptReason ? buildInterruptedResult(rawText,startTime,interruptReason) : {};
+  return { ...partial, text:interruptReason?partial.text:cleanText, elapsedSeconds, promptTokens, completionTokens, totalTokens, costYuan, isPeak, interrupted:!!interruptReason, usageKnown:true };
 }
 
 // ---- 停止生成/网络中断的兜底结果：已流出的部分文字当作最终答案，token/费用统计不完整（没等到最后一个
 // 带usage的chunk），所以这里费用按0算、并且标注清楚"未完成"，不能假装是完整解读的账单。 ----
+function resultUsageText(result){
+  const state=result.interrupted?({user:'已停止',limit:'达到长度上限',network:'网络中断'}[result.interruptReason]||'未完成'):'完成';
+  const usage=result.interrupted&&!result.usageKnown?'用量未收全，费用未知（零值不代表免费）':`token共${result.totalTokens} · 约¥${result.costYuan.toFixed(4)}`;
+  return `${state} · 耗时 ${result.elapsedSeconds.toFixed(1)}s · ${usage} · 以 DeepSeek 账单为准`;
+}
 function buildInterruptedResult(rawText, startTime, reason){
   const elapsedSeconds = (Date.now() - startTime) / 1000;
   const cleanText = annotateGanzhiDay(annotateShichen(stripMarkdown(rawText)));
   const suffix = reason === 'user'
     ? '\n\n【用户手动停止生成，以上为已输出的部分内容】'
-    : '\n\n【网络中断，以上为已生成的部分内容，后续内容未完成】';
-  const text = cleanText ? (cleanText + suffix) : (reason === 'user' ? '（还没来得及生成内容就被停止了）' : '（网络中断，还没收到任何内容）');
+    : reason === 'limit' ? '\n\n【达到输出长度上限，以上内容未完整生成】' : '\n\n【网络中断，以上为已生成的部分内容，后续内容未完成】';
+  const text = cleanText ? (cleanText + suffix) : (reason === 'user' ? '（还没来得及生成内容就被停止了）' : reason === 'limit' ? '（达到输出长度上限，未收到正文）' : '（网络中断，还没收到任何内容）');
   return {
     text,
     elapsedSeconds,
@@ -4277,6 +4467,8 @@ function buildHistoryCastSnapshot(castData){
     guaName: castData.guaName,
     bianGuaName: castData.bianGuaName,
     source: castData.source,
+    rulesVersion: castData.rulesVersion, coinConvention: castData.coinConvention,
+    castAnchorY: castData.castAnchorY, castAnchorM: castData.castAnchorM, castAnchorD: castData.castAnchorD,
     lines: castData.lines,
     overallTrendText: castData.overallTrendText,
   };
@@ -4292,7 +4484,7 @@ function historyCastHtml(cast, ts){
   if(!cast) return '';
   const nameRow = `本卦：<b>${escapeHtml(cast.guaName||'')}</b>`
     + (cast.bianGuaName ? `　→　变卦：<b>${escapeHtml(cast.bianGuaName)}</b>` : '')
-    + (cast.source === 'manual' ? '　（线下摇卦录入）' : '');
+    + (cast.source === 'manual' ? '　（线下摇卦录入）' : cast.source === 'physics' ? '　（物理模拟投掷）' : '');
   const dateText = cast.dateText || (ts ? buildDateDisplayText(new Date(ts)) : '');
   const dateHtml = dateText ? boldDateHtml(escapeHtml(dateText)) : '';
   // 年月日时+空亡：新记录有fourPillarsText/kongText，走pillarsAndKongText统一拼接；
@@ -4475,7 +4667,7 @@ const resetPriceOverrideBtn = document.getElementById('resetPriceOverrideBtn');
 // ---- 价格覆盖输入框的占位数字（灰字提示"不填的话会用这个默认值"）要跟着当前选中的模型走，
 // 不然切换模型后这里还显示旧模型的单价，容易让人误以为默认值没变。 ----
 function refreshPriceOverridePlaceholders(){
-  const base = PRICE_TABLES[loadModelChoice()] || PRICE_TABLES['deepseek-v4-flash'];
+  const base = PRICE_TABLES[loadModelChoice()] || PRICE_TABLES['deepseek-flash'];
   priceHit.placeholder = base.offpeak.hit;
   priceMiss.placeholder = base.offpeak.miss;
   priceOutput.placeholder = base.offpeak.output;
@@ -4928,7 +5120,8 @@ copyFollowUpExportBtn.addEventListener('click', ()=>{
   });
 });
 
-interpretBtn.addEventListener('click', async ()=>{
+interpretBtn.addEventListener('click', async (event)=>{
+  const physicalInput = castInputFromEvent(event);
   const question = questionInput.value.trim();
   if(!question){
     showToast('先写一下想问的问题', 'error');
@@ -5000,24 +5193,17 @@ interpretBtn.addEventListener('click', async ()=>{
     }
 
     if(shouldRecast){
-      if(castMode === 'manual'){
-        const msg = questionChanged
-          ? '换了新事，按规矩得重新起一卦——去"线下摇卦"里重新填一次结果，再点"生成排盘"'
-          : '请先在"线下摇卦"里填好六爻结果，点"生成排盘"再解读';
-        showToast(msg, 'error', 4000);
-        interpretBtn.disabled = false;
-        return;
-      }
+
       // 这里如果 window.lastCastData 还在，说明能走到这一步是因为上面 questionChanged 分支里
       // 用户已经在"是同一件事，还是换新事了？"那个确认框里点过"换新事了，重摇"——
       // 已经问过一遍了，传 skipCastConfirm 避免 guardBeforeCast() 里再弹一次重复的确认框。
-      if(!(await guardBeforeCast({ skipCastConfirm: true }))){
+      if(!(await guardBeforeCast({ skipCastConfirm: true, background: true }))){
         interpretBtn.disabled = false;
         return;
       }
-      aiStatus.textContent = '正在自动摇卦…';
-      showToast(questionChanged ? '换了新问题，先帮你重新摇一卦' : '还没摇卦，先帮你自动摇一卦');
-      await performCast();
+      aiStatus.textContent = '正在后台起卦…';
+      aiStatus.textContent = '正在后台起卦…';
+      await performBackgroundCast(physicalInput, (done,total)=>{ aiStatus.textContent = `正在后台起卦 · ${done}/${total} 爻`; });
       castBtn.disabled = true; // performCast 结束会解锁摇卦按钮，这里重新锁住直到本次解读完成
     }
 
@@ -5042,6 +5228,8 @@ interpretBtn.addEventListener('click', async ()=>{
       renderLive(question, fullSoFar);
     });
     let result;
+    const requestConfig = {roleLabel: currentRoleLabel(), styleLabel: currentReplyStyleLabel(),
+      roleCustomText: currentRoleCustomSnapshot(), styleCustomText: currentStyleCustomSnapshot()};
     try{
       result = await interpretWithDeepSeek(question, castText, thinking.onDelta, controller.signal);
     }finally{
@@ -5050,11 +5238,7 @@ interpretBtn.addEventListener('click', async ()=>{
       hideStopBtn();
     }
     renderConversation();
-    aiMeta.textContent = result.interrupted
-      ? `耗时 ${result.elapsedSeconds.toFixed(1)}s · ${result.interruptReason === 'user' ? '手动停止生成，未走完整流程' : '网络中断，未收全'} · 未获得完整token用量，本站这里显示¥0只是没拿到计费数据，不代表DeepSeek没扣费——已生成的部分通常仍会计费，请以DeepSeek账单为准`
-      : `耗时 ${result.elapsedSeconds.toFixed(1)}s · ` +
-      `token 输入${result.promptTokens}/输出${result.completionTokens}/共${result.totalTokens} · ` +
-      `约¥${result.costYuan.toFixed(4)} · 仅供参考，以DeepSeek账单为准`;
+    aiMeta.textContent = resultUsageText(result);
     copyRow.style.display = 'flex';
     followUpBox.style.display = 'flex';
 
@@ -5075,18 +5259,15 @@ interpretBtn.addEventListener('click', async ()=>{
         totalTokens: currentConversation.cumTokens,
         costYuan: currentConversation.cumCost,
         isPeak: result.isPeak,
-        roleLabel: currentRoleLabel(),
-        styleLabel: currentReplyStyleLabel(),
-        roleCustomText: currentRoleCustomSnapshot(),
-        styleCustomText: currentStyleCustomSnapshot(),
+        ...requestConfig,
       });
       renderStats();
       if(historyPanel.classList.contains('open')) renderHistory();
     }catch(histErr){
       showToast('回复已经生成，但这条没能存进历史记录（' + (histErr.message || '本地存储异常') + '）', 'error', 5000);
     }
-    aiStatus.textContent = '完成';
-    showToast('解读完成', 'success');
+    aiStatus.textContent = result.interrupted ? '解读未完整结束' : '完成';
+    showToast(result.interrupted?'解读未完整结束，已保留收到的内容':'解读完成', result.interrupted?'info':'success');
   }catch(e){
     const msg = e.message || '出错了，再试一次';
     aiStatus.textContent = msg;
@@ -5108,7 +5289,8 @@ interpretBtn.addEventListener('click', async ()=>{
 // 开头会顺手把 interpretBtn 也锁住，防止"AI解读"和"输出提示词"这两个入口同时抢同一个
 // window.lastCastData / 摇卦次数配额；反过来 interpretBtn 点击时也会顺带锁住摇卦按钮，
 // 这里额外检查 interpretBtn.disabled，防止"AI解读"正在跑的时候被"输出提示词"插队。
-promptBtn.addEventListener('click', async ()=>{
+promptBtn.addEventListener('click', async (event)=>{
+  const physicalInput = castInputFromEvent(event);
   if(interpretBtn.disabled){
     showToast('"AI 解读"正在进行中，请稍等它结束', 'error');
     return;
@@ -5160,26 +5342,21 @@ promptBtn.addEventListener('click', async ()=>{
     }
 
     if(shouldRecast){
-      if(castMode === 'manual'){
-        const msg = questionChanged
-          ? '换了新事，按规矩得重新起一卦——去"线下摇卦"里重新填一次结果，再点"生成排盘"'
-          : '请先在"线下摇卦"里填好六爻结果，点"生成排盘"再输出提示词';
-        showToast(msg, 'error', 4000);
-        return;
-      }
+
       // 同上（interpretBtn 那边一致）：能走到这一步说明 questionChanged 分支里用户已经确认过
       // "换新事了，重摇"，这里跳过 guardBeforeCast() 里那次会重复的确认框。
-      if(!(await guardBeforeCast({ skipCastConfirm: true }))){
+      if(!(await guardBeforeCast({ skipCastConfirm: true, background: true }))){
         return;
       }
-      showToast(questionChanged ? '换了新问题，先帮你重新摇一卦' : '还没摇卦，先帮你自动摇一卦');
-      await performCast();
+      aiStatus.textContent = '正在后台起卦…';
+      await performBackgroundCast(physicalInput, (done,total)=>{ aiStatus.textContent = `正在后台起卦 · ${done}/${total} 爻`; });
     }
 
     const castText = formatCastDataForAI(window.lastCastData);
     lastExportCastText = castText;
     lastExportQuestion = question;
     showPromptOutput(buildExportPromptText(question, castText));
+    aiStatus.textContent = '提示词已生成';
     showToast('提示词已生成，复制后可以粘贴去其他AI软件解卦', 'success');
 
     // "输出提示词"这条路径之前不写历史，导致这里生成过的卦在"历史记录"里完全找不到。
@@ -5273,11 +5450,8 @@ followUpBtn.addEventListener('click', async ()=>{
     followUpInput.value = '';
     followUpInput.dispatchEvent(new Event('input')); // 同步触发一次，让字数计数器跟着归零
     renderConversation();
-    aiMeta.textContent = result.interrupted
-      ? `本轮${result.interruptReason === 'user' ? '手动停止生成' : '网络中断'}，未获得完整token用量，这里显示¥0只是没拿到计费数据，不代表DeepSeek没扣费 · 本次追问会话累计约¥${currentConversation.cumCost.toFixed(4)}（不含本轮，已生成部分请以DeepSeek账单为准）`
-      : `本轮耗时 ${result.elapsedSeconds.toFixed(1)}s · 本轮token共${result.totalTokens} · 本轮约¥${result.costYuan.toFixed(4)} · ` +
-      `本次追问会话累计约¥${currentConversation.cumCost.toFixed(4)}（每次追问都会带上前面的问答一起发给AI，累计费用会往上涨）`;
-    followUpStatus.textContent = result.interrupted ? (result.interruptReason === 'user' ? '已停止' : '网络中断') : '完成';
+    aiMeta.textContent = resultUsageText(result);
+    followUpStatus.textContent = result.interrupted ? (result.interruptReason === 'user' ? '已停止' : result.interruptReason === 'limit' ? '达到长度上限' : '网络中断') : '完成';
 
     // 更新同一条历史会话记录（用首次解读时记住的sessionId去找），把新的这两轮追加进turns里；
     // 找不到就说明历史被清空过，直接放弃写回，不强行拼一条新的。
