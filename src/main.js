@@ -1,3 +1,4 @@
+import { BAGUA, WX, SHENG, KE, NAJIA, BRANCH_EL, SIX_SPIRITS, SPIRIT_CLASS, TRIGRAM_BY_KEY, PALACE_SEEDS, STEP_TYPES, STEP_WORLD, GUA_NAME_TABLE, EIGHT_PALACE_MAP, b2s, JIN_SHEN_PAIRS, TUI_SHEN_PAIRS, SEASON_BY_BRANCH, YUELING_TABLE, LIUHE_PAIR, LIUCHONG_PAIR, STEMS, STEM_SPIRIT_GROUP, BRANCHES12, KONG_PAIRS, JIAZI60, JIAZI60_INDEX_BY_LABEL, JIE_BRANCHES_FROM_LICHUN } from './core/constants.js';
 
 /* ==================================================================
   ③ 逻辑区目录（按出现顺序，各节都有同款横幅注释可搜索跳转）：
@@ -96,29 +97,12 @@ tabButtons.forEach((btn, i)=>{
     target.focus();
   });
 });
-
-/* ---------------- bagua grid ---------------- */
-const BAGUA = [
-  {key:'111',name:'乾',sym:'☰',el:'金',meta:'三阳 · 天 · 父'},
-  {key:'110',name:'兑',sym:'☱',el:'金',meta:'上阴 · 泽 · 少女'},
-  {key:'101',name:'离',sym:'☲',el:'火',meta:'中虚 · 火 · 中女'},
-  {key:'100',name:'震',sym:'☳',el:'木',meta:'下阳 · 雷 · 长男'},
-  {key:'011',name:'巽',sym:'☴',el:'木',meta:'下阴 · 风 · 长女'},
-  {key:'010',name:'坎',sym:'☵',el:'水',meta:'中满 · 水 · 中男'},
-  {key:'001',name:'艮',sym:'☶',el:'土',meta:'上阳 · 山 · 少男'},
-  {key:'000',name:'坤',sym:'☷',el:'土',meta:'三阴 · 地 · 母'},
-];
 document.getElementById('baguaGrid').innerHTML = BAGUA.map(g=>`
   <div class="gua-card">
     <div class="sym">${g.sym}</div>
     <div class="name">${g.name}　·　${g.el}</div>
     <div class="meta">${g.meta}</div>
   </div>`).join('');
-
-/* ---------------- wuxing wheel ---------------- */
-const WX = ['木','火','土','金','水'];
-const SHENG = {'木':'火','火':'土','土':'金','金':'水','水':'木'};
-const KE = {'木':'土','土':'水','水':'火','火':'金','金':'木'};
 const svg = document.getElementById('wuxingSvg');
 const cx=140, cy=140, R=95;
 const pos = {};
@@ -177,78 +161,10 @@ svg.querySelectorAll('.wx-node').forEach(node=>{
     }
   });
 });
-
-/* ---------------- najia data ---------------- */
-const NAJIA = {
-  '乾':{inner:['甲子','甲寅','甲辰'], outer:['壬午','壬申','壬戌']},
-  '坤':{inner:['乙未','乙巳','乙卯'], outer:['癸丑','癸亥','癸酉']},
-  '震':{inner:['庚子','庚寅','庚辰'], outer:['庚午','庚申','庚戌']},
-  '巽':{inner:['辛丑','辛亥','辛酉'], outer:['辛未','辛巳','辛卯']},
-  '坎':{inner:['戊寅','戊辰','戊午'], outer:['戊申','戊戌','戊子']},
-  '离':{inner:['己卯','己丑','己亥'], outer:['己酉','己未','己巳']},
-  '艮':{inner:['丙辰','丙午','丙申'], outer:['丙戌','丙子','丙寅']},
-  '兑':{inner:['丁巳','丁卯','丁丑'], outer:['丁亥','丁酉','丁未']},
-};
-const BRANCH_EL = {'子':'水','丑':'土','寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土','申':'金','酉':'金','戌':'土','亥':'水'};
-const SIX_SPIRITS = ['青龙','朱雀','勾陈','螣蛇','白虎','玄武'];
-// 六神→CSS类名的映射，配合CSS里的 .spirit-dot 系列规则，给排盘表格/卡片里的六神名字
-// 前面加一个小色块，方便扫读时快速定位（纯装饰，不影响任何判断逻辑）。四处渲染
-// （renderPlate表格/buildPlateCardsHtml卡片/renderPlateFromCastData复原态/historyCastHtml历史记录）
-// 共用这一份，spirit不在映射表里（理论上不会发生，六神固定六个）时返回空字符串，不出色块也不报错。
-const SPIRIT_CLASS = {'青龙':'qinglong','朱雀':'zhuque','勾陈':'gouchen','螣蛇':'tengshe','白虎':'baihu','玄武':'xuanwu'};
 function spiritDotHtml(spirit){
   const cls = SPIRIT_CLASS[spirit];
   return cls ? `<span class="spirit-dot ${cls}" aria-hidden="true"></span>` : '';
 }
-const TRIGRAM_BY_KEY = {};
-BAGUA.forEach(g=>TRIGRAM_BY_KEY[g.key]=g);
-
-/* ---------------- eight-palace (八宫) generation ---------------- */
-const PALACE_SEEDS = [
-  {name:'乾', bits:[1,1,1], el:'金'},
-  {name:'兑', bits:[1,1,0], el:'金'},
-  {name:'离', bits:[1,0,1], el:'火'},
-  {name:'震', bits:[1,0,0], el:'木'},
-  {name:'巽', bits:[0,1,1], el:'木'},
-  {name:'坎', bits:[0,1,0], el:'水'},
-  {name:'艮', bits:[0,0,1], el:'土'},
-  {name:'坤', bits:[0,0,0], el:'土'},
-];
-const STEP_TYPES = ['八纯','一世','二世','三世','四世','五世','游魂','归魂'];
-const STEP_WORLD = [6,1,2,3,4,5,4,3];
-// 八宫64卦标准卦名，顺序与 STEP_TYPES 对齐（八纯→一世→...→游魂→归魂）
-const GUA_NAME_TABLE = {
-  '乾': ['乾为天','天风姤','天山遁','天地否','风地观','山地剥','火地晋','火天大有'],
-  '兑': ['兑为泽','泽水困','泽地萃','泽山咸','水山蹇','地山谦','雷山小过','雷泽归妹'],
-  '离': ['离为火','火山旅','火风鼎','火水未济','山水蒙','风水涣','天水讼','天火同人'],
-  '震': ['震为雷','雷地豫','雷水解','雷风恒','地风升','水风井','泽风大过','泽雷随'],
-  '巽': ['巽为风','风天小畜','风火家人','风雷益','天雷无妄','火雷噬嗑','山雷颐','山风蛊'],
-  '坎': ['坎为水','水泽节','水雷屯','水火既济','泽火革','雷火丰','地火明夷','地水师'],
-  '艮': ['艮为山','山火贲','山天大畜','山泽损','火泽睽','天泽履','风泽中孚','风山渐'],
-  '坤': ['坤为地','地雷复','地泽临','地天泰','雷天大壮','泽天夬','水天需','水地比'],
-};
-const EIGHT_PALACE_MAP = {};
-function b2s(arr){return arr.join('');}
-PALACE_SEEDS.forEach(seed=>{
-  const [p0,p1,p2] = seed.bits;
-  const f = x=>1-x;
-  const steps = [
-    {lower:[p0,p1,p2], upper:[p0,p1,p2]},
-    {lower:[f(p0),p1,p2], upper:[p0,p1,p2]},
-    {lower:[f(p0),f(p1),p2], upper:[p0,p1,p2]},
-    {lower:[f(p0),f(p1),f(p2)], upper:[p0,p1,p2]},
-    {lower:[f(p0),f(p1),f(p2)], upper:[f(p0),p1,p2]},
-    {lower:[f(p0),f(p1),f(p2)], upper:[f(p0),f(p1),p2]},
-    {lower:[f(p0),f(p1),f(p2)], upper:[p0,f(p1),p2]},
-    {lower:[p0,p1,p2], upper:[p0,f(p1),p2]},
-  ];
-  steps.forEach((s,i)=>{
-    const key = b2s(s.lower)+b2s(s.upper);
-    const world = STEP_WORLD[i];
-    const response = ((world+3-1)%6)+1;
-    EIGHT_PALACE_MAP[key] = {palace:seed.name+'宫', element:seed.el, type:STEP_TYPES[i], world, response, name:GUA_NAME_TABLE[seed.name][i]};
-  });
-});
 
 /* ---------------- six relatives ---------------- */
 function sixRelative(lineEl, palaceEl){
@@ -259,49 +175,18 @@ function sixRelative(lineEl, palaceEl){
   if(KE[palaceEl]===lineEl) return '妻财';
   return '－';
 }
-
-/* 进退神：采用《增删卜易·进神退神章》所列地支对。
-   土爻补丑→辰、辰→未、未→戌；戌→丑的循环扩展本版不预判。 */
-const JIN_SHEN_PAIRS = {'寅':'卯','巳':'午','申':'酉','亥':'子','丑':'辰','辰':'未','未':'戌'};
-const TUI_SHEN_PAIRS = {'卯':'寅','午':'巳','酉':'申','子':'亥','辰':'丑','未':'辰','戌':'未'};
 function computeJinTuiShen(fromBranch, toBranch){
   if(!fromBranch || !toBranch || fromBranch === toBranch) return '';
   if(JIN_SHEN_PAIRS[fromBranch] === toBranch) return '进神';
   if(TUI_SHEN_PAIRS[fromBranch] === toBranch) return '退神';
   return ''; // 未命中本版采用的进退神对，不预判
 }
-
-/* ---------------- 月令旺衰 / 日辰合冲 / 回头生克 / 世应生克 / 飞神伏神生克 ----------------
-   这几项跟上面的进退神是同一类东西：给定"五行生克"这套纯数学关系，答案唯一、没有流派
-   分歧，此前却一直是甩给AI在断卦时自己心算——AI凭训练时的零散记忆现算月令旺衰、
-   现套六合六冲表，容易出现同一张排盘这次说"旺"、下次说"衰"的前后不一致，也没法排查
-   到底是卦理判断错了还是纯粹算错了这道计算题。这里补上代码计算，AI只管拿现成结论用。
-
-   刻意不算的两类，跟进退神在辰戌丑未组合时留空是同一个道理：
-   1. 合/冲对旺衰到底是"利好"还是"利空"——合有牵绊安稳、也有绊住不动两种解读，
-      冲有暗动、也有冲散两种解读，历代说法本身就不是单一方向，这属于需要结合语境
-      判断的部分，这里只客观标出"有没有合/冲"这个事实，不越界替AI下结论。
-   2. 用神该选哪个六亲——依赖对问题文本的语义理解，是判断题不是计算题，继续交给AI。
-   ---------------------------------------------------------------------------------- */
-const SEASON_BY_BRANCH = {
-  '寅':'春','卯':'春','巳':'夏','午':'夏','申':'秋','酉':'秋','亥':'冬','子':'冬',
-  '辰':'四季','戌':'四季','丑':'四季','未':'四季',
-};
-const YUELING_TABLE = {
-  '春': {'木':'旺','火':'相','水':'休','金':'囚','土':'死'},
-  '夏': {'火':'旺','土':'相','木':'休','水':'囚','金':'死'},
-  '秋': {'金':'旺','水':'相','土':'休','火':'囚','木':'死'},
-  '冬': {'水':'旺','木':'相','金':'休','土':'囚','火':'死'},
-  '四季':{'土':'旺','金':'相','火':'休','木':'囚','水':'死'},
-};
 // 月令旺衰：只看"月建地支属于哪个季节"+"这一爻的五行"两个输入，跟断卦参考表里
 // 给人/给AI看的那份旺相休囚死表是同一套数据，这里做成可以直接查表返回的函数。
 function getYuelingState(monthBranch, element){
   const season = SEASON_BY_BRANCH[monthBranch];
   return (season && YUELING_TABLE[season][element]) || '';
 }
-const LIUHE_PAIR = {'子':'丑','丑':'子','寅':'亥','亥':'寅','卯':'戌','戌':'卯','辰':'酉','酉':'辰','巳':'申','申':'巳','午':'未','未':'午'};
-const LIUCHONG_PAIR = {'子':'午','午':'子','丑':'未','未':'丑','寅':'申','申':'寅','卯':'酉','酉':'卯','辰':'戌','戌':'辰','巳':'亥','亥':'巳'};
 function getDayRelation(lineBranch, dayBranch){
   if(!lineBranch || !dayBranch) return '';
   if(LIUHE_PAIR[lineBranch] === dayBranch) return '日辰合';
@@ -339,16 +224,6 @@ function getFeishenFushenRelation(feishenEl, fushenEl){
   if(KE[fushenEl] === feishenEl) return '伏神克飞神';
   return '';
 }
-
-/* ---------------- 60 jiazi / kongwang ---------------- */
-const STEMS = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
-const STEM_SPIRIT_GROUP = {'甲':0,'乙':0,'丙':1,'丁':1,'戊':2,'己':3,'庚':4,'辛':4,'壬':5,'癸':5};
-const BRANCHES12 = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
-const KONG_PAIRS = [['戌','亥'],['申','酉'],['午','未'],['辰','巳'],['寅','卯'],['子','丑']];
-const JIAZI60 = [];
-for(let i=0;i<60;i++){
-  JIAZI60.push({label:STEMS[i%10]+BRANCHES12[i%12], stem:STEMS[i%10], kongGroup:Math.floor(i/10)});
-}
 const dayGanzhiSelect = document.getElementById('dayGanzhi');
 dayGanzhiSelect.innerHTML = JIAZI60.map((d,i)=>`<option value="${i}">${d.label}</option>`).join('');
 
@@ -359,12 +234,6 @@ function getTodayJiaziIndex(date = new Date()){
   return ((daysSinceEpoch + OFFSET) % 60 + 60) % 60;
 }
 dayGanzhiSelect.value = String(getTodayJiaziIndex());
-
-// ---- "干支日→实际公历日期"换算要用到的两个基础工具：
-// 1) 干支文字（如"戊戌"）反查是第几个甲子（0-59），供下面annotateGanzhiDay按文本匹配到的干支
-//    去查它的下标；跟dayGanzhiIndex用的是同一份JIAZI60数据源，不会出现两边表对不上的情况。
-const JIAZI60_INDEX_BY_LABEL = {};
-JIAZI60.forEach((d,i)=>{ JIAZI60_INDEX_BY_LABEL[d.label] = i; });
 // 2) 从某个"起卦锚点日"（真实公历日期）开始，往后找第一个干支下标等于targetIndex的那天。
 //    直接复用getTodayJiaziIndex()逐天试算，而不是自己另写一套模运算——干支和日期的对应关系
 //    只有这一份代码在算，"今日日柱""按日期反查日柱""干支日应期换算"三处用的是同一个函数，
@@ -475,9 +344,6 @@ function sunApparentLongitude(date){
   const apparentLong = trueLong - 0.00569 - 0.00478*Math.sin(Omega*rad); // 章动+光行差修正
   return ((apparentLong % 360) + 360) % 360;
 }
-// 十二"节"对应的地支，按太阳视黄经315°起排（315°=立春=寅月起点），此后每隔30°换一档，
-// 顺序跟传统节气表完全一致（不掺"气"，"气"只影响中气/闰月判断，跟六爻月柱无关）。
-const JIE_BRANCHES_FROM_LICHUN = ['寅','卯','辰','巳','午','未','申','酉','戌','亥','子','丑'];
 function getSolarMonthBranch(date){
   const lon = sunApparentLongitude(date);
   const idx = Math.floor((((lon - 315) % 360) + 360) % 360 / 30);
