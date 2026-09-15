@@ -9,7 +9,7 @@
     "width": 1280,
     "target": "built",
     "tab": "basics",
-    "maximumChannelDifference": 2
+    "maximumChannelDifference": 0
   },
   {
     "width": 1280,
@@ -21,7 +21,7 @@
     "width": 1280,
     "target": "built",
     "tab": "guide",
-    "maximumChannelDifference": 2
+    "maximumChannelDifference": 0
   },
   {
     "width": 1280,
@@ -34,6 +34,9 @@
     "target": "built",
     "screenshots": 5,
     "prompt": "identical",
+    "mockApiRequests": 2,
+    "conversation": "identical",
+    "restoredPlate": "identical",
     "errors": 0
   },
   {
@@ -46,19 +49,19 @@
     "width": 1280,
     "target": "dev",
     "tab": "basics",
-    "maximumChannelDifference": 2
-  },
-  {
-    "width": 1280,
-    "target": "dev",
-    "tab": "caster",
     "maximumChannelDifference": 0
   },
   {
     "width": 1280,
     "target": "dev",
-    "tab": "guide",
+    "tab": "caster",
     "maximumChannelDifference": 2
+  },
+  {
+    "width": 1280,
+    "target": "dev",
+    "tab": "guide",
+    "maximumChannelDifference": 0
   },
   {
     "width": 1280,
@@ -71,6 +74,9 @@
     "target": "dev",
     "screenshots": 5,
     "prompt": "identical",
+    "mockApiRequests": 2,
+    "conversation": "identical",
+    "restoredPlate": "identical",
     "errors": 0
   },
   {
@@ -108,6 +114,9 @@
     "target": "built",
     "screenshots": 5,
     "prompt": "identical",
+    "mockApiRequests": 2,
+    "conversation": "identical",
+    "restoredPlate": "identical",
     "errors": 0
   },
   {
@@ -145,6 +154,9 @@
     "target": "dev",
     "screenshots": 5,
     "prompt": "identical",
+    "mockApiRequests": 2,
+    "conversation": "identical",
+    "restoredPlate": "identical",
     "errors": 0
   }
 ]

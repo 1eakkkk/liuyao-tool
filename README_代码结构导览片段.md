@@ -1,22 +1,15 @@
-## 🧭 代码结构导览（想读懂/修改本项目看这里）
+# 代码结构导览
 
-整个项目就一个 `index.html`，**零依赖、零构建**——改完文件拖进 Cloudflare Pages 即上线。文件从上到下分三大区，每区开头都有横幅注释目录，搜索关键词即可跳转：
+本分支已按用户确认的 REFACTOR_PLAN 迁移为 Vite + ES Modules。旧“单文件、零构建”的贡献约束已由该方案取代。
 
-| 区域 | 内容 | 想改什么来这里 |
-| ---- | ---- | ---- |
-| ① style 样式区 | 全部 CSS，按页面区块分小节 | 主题配色只需改 `:root` 里的 CSS 变量 |
-| ② body 结构区 | 弹层 → 头图 → 导航 → 三个标签页面板 | 页面文案、教程内容、规矩说明 |
-| ③ script 逻辑区 | 全部 JS，文件末尾 | 见下表 |
+- `src/core`：原排盘、历法、物理计算、Canonical。
+- `src/ai`：原 Prompt、formatter、DeepSeek SSE 与追问。
+- `src/storage`：13 个原 key、历史、会话、兼容迁移。
+- `src/ui`：页面渲染、设置、导航与交互。
+- `src/app`：初始化事件、问题与对话控制、唯一卦盘状态。
+- `src/styles/main.css`：原样式。
+- `public/vendor/cannon.js`：原物理库。
 
-逻辑区里最常动的几块（在文件内搜索对应关键词）：
+完整 [迁移表](docs/MIGRATION_MAP.md)、[架构](docs/ARCHITECTURE.md)、[Schema](docs/DATA_SCHEMA.md)、[验证与部署](docs/DEPLOYMENT.md)。
 
-| 想改什么 | 搜索关键词 |
-| ---- | ---- |
-| 排盘核心算法（纳甲/八宫世应/六亲/空亡） | `najia data`、`eight-palace`、`six relatives`、`kongwang` |
-| 摇卦规则（一事一挂 / 10分钟频率限制） | `摇卦前置校验` |
-| AI 角色设定与回复风格 | `SHOP_INFO`、`REPLY_STYLE_PRESETS` |
-| AI 系统提示词 | `buildSystemPrompt` |
-| DeepSeek 模型与计费单价 | `DEEPSEEK_MODEL`、`PRICE_TABLE` |
-| 问卦主流程（自动摇卦→调AI→写历史） | `interpretBtn.addEventListener` |
-
-> 提 PR 时请保持"单文件、零依赖、零构建"的约束，不要引入打包工具或拆分文件——这是本项目"打开即用"的根基。排盘部分是与界面无关的纯函数，欢迎补充经典卦例的测试断言。
+本轮仅 Phase 0～2。不得提前增加规则引擎、知识库、RAG、Benchmark、后端或重设计 UI。

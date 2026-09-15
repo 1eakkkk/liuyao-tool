@@ -34,7 +34,7 @@ Keys are listed exactly in inventory.json. History supports flat question/text, 
 
 ## External acceptance
 
-The live site could not be retrieved by the web reader. Local authoritative source is the baseline by user instruction. No claim of production equality is made. Capacitor/Electron source and Cloudflare project configuration are absent. Live API, actual app-shell and Cloudflare Preview acceptance remain separate gates.
+The web reader initially failed. A later direct HTTP read of https://liuyao.1eak.cool on 2026-09-15 returned 200 and 490580 UTF-8 bytes (SHA256 edbad1a1ca623e9603f8a81e768b9606f716a7bc8502cb70203b61d57ad75cc1). A line comparison against the frozen authoritative source found only an added Cloudflare Insights beacon script. This is a source comparison at that time, not a live browser or API acceptance result. Local authoritative source remains the baseline by user instruction. Capacitor/Electron source and Cloudflare project configuration are absent. Live API, actual app-shell and Cloudflare Preview acceptance remain separate gates.
 
 ## Rollback
 

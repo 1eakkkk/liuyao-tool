@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import { PNG } from 'pngjs';
 
 const EPOCH = new Date('2026-09-15T12:00:00+08:00').getTime();
+const outputRoot = process.argv.includes('--record') ? 'docs/acceptance' : 'test-results/browser';
 const baseline = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.end(fs.readFileSync('tests/regression/baseline/index.html'));
@@ -32,7 +33,7 @@ try {
       await page.locator('#manualLine5').waitFor({ state: 'attached' });
       // Finish CSS transitions identically; fake timers alone do not advance compositor animations.
       await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}' });
-      const out = `docs/acceptance/${name}`;
+      const out = `${outputRoot}/${name}`;
       fs.mkdirSync(out, { recursive: true });
       outputs[name] = {};
       const capture = async tab => {
@@ -55,6 +56,32 @@ try {
       await page.locator('#promptBtn').click();
       await page.waitForFunction(() => document.getElementById('promptOutputText').value.length > 100);
       outputs[name].prompt = await page.locator('#promptOutputText').inputValue();
+      const requests = [];
+      await page.route('https://api.deepseek.com/chat/completions', async route => {
+        requests.push(route.request().postDataJSON());
+        const chunks = [
+          { choices: [{ delta: { content: '固定流式回复，供回归验证。' } }] },
+          { choices: [{ delta: {}, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 20, total_tokens: 120, prompt_cache_hit_tokens: 0, prompt_cache_miss_tokens: 100 } },
+        ];
+        await route.fulfill({ status: 200, contentType: 'text/event-stream', body: chunks.map(chunk => `data: ${JSON.stringify(chunk)}\n\n`).join('') + 'data: [DONE]\n\n' });
+      });
+      await page.locator('#toggleSettingsBtn').click();
+      await page.locator('#apiKeyInput').fill('synthetic-browser-key');
+      await page.locator('#saveKeyBtn').click();
+      await page.locator('#toggleSettingsBtn').click();
+      await page.locator('#interpretBtn').click();
+      await page.waitForFunction(() => !document.getElementById('interpretBtn').disabled && document.getElementById('aiResult').textContent.includes('固定流式回复'));
+      await page.locator('#followUpInput').fill('固定追问');
+      await page.locator('#followUpBtn').click();
+      await page.waitForFunction(() => !document.getElementById('followUpBtn').disabled && document.getElementById('aiResult').textContent.includes('固定追问'));
+      outputs[name].conversation = await page.locator('#aiResult').innerHTML();
+      await page.reload();
+      await page.waitForFunction(() => document.getElementById('aiResult').textContent.includes('固定追问'));
+      outputs[name].restoredPlate = await page.locator('#plateWrap').innerHTML();
+      outputs[name].restoredConversation = await page.locator('#aiResult').innerHTML();
+      outputs[name].requests = requests;
+      assert.equal(requests.length, 2);
+      assert.equal(await page.evaluate(() => localStorage.getItem('liuyao_deepseek_api_key')), 'synthetic-browser-key');
       assert.deepEqual(errors, [], `${name} browser errors`);
       assert.equal(await page.evaluate(() => typeof CANNON.World), 'function');
       await context.close();
@@ -71,10 +98,11 @@ try {
         report.push({ width, target: name, tab, maximumChannelDifference });
       }
       assert.equal(outputs[name].prompt, outputs.baseline.prompt, `${name} exported prompt`);
-      report.push({ width, target: name, screenshots: 5, prompt: 'identical', errors: 0 });
+      for (const key of ['conversation', 'restoredConversation', 'restoredPlate', 'requests']) assert.deepEqual(outputs[name][key], outputs.baseline[key], `${name} ${key}`);
+      report.push({ width, target: name, screenshots: 5, prompt: 'identical', mockApiRequests: 2, conversation: 'identical', restoredPlate: 'identical', errors: 0 });
     }
   }
-  fs.writeFileSync('docs/acceptance/browser-report.json', JSON.stringify(report, null, 2) + '\n');
+  fs.writeFileSync(`${outputRoot}/browser-report.json`, JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify(report));
 } finally {
   await browser.close();
