@@ -1,0 +1,62 @@
+{
+  "version": "phase6-cases-v1",
+  "cases_hash": "5619947b697a14303c06e82d803273309ec56781bc18562a7c79d4ee0d8d1845",
+  "cases": [
+    {
+      "case_id": "case-01",
+      "canonical_hash": "e0d9e259c72aa59ec4fc9789b38df22a7b7ea790c603144dcb9a139287b4be18",
+      "question_hash": "52f5fbecdde15c39c96d7776778d4d4b66100c7945f6de52e589e0e88ee9cb8c",
+      "follow_up_hash": "226e6cc4da784dcc6087d70df038bc7ec519e973afdf3b4daffd9ec668e6b180",
+      "checklist_with_reasons_hash": "e38a7df39480f7c785c8574b0bb6b7c7867511ad4ab01162a888c8d70c0554ab"
+    },
+    {
+      "case_id": "case-02",
+      "canonical_hash": "ac7007b5ca804795ad7d4947ebf15ea791e1e644e42a751167f1f0cfb97d5d45",
+      "question_hash": "52f5fbecdde15c39c96d7776778d4d4b66100c7945f6de52e589e0e88ee9cb8c",
+      "follow_up_hash": "226e6cc4da784dcc6087d70df038bc7ec519e973afdf3b4daffd9ec668e6b180",
+      "checklist_with_reasons_hash": "319448806d2a020d6623873414970b385ff9866a618b2507d572f933923c5bfc"
+    },
+    {
+      "case_id": "case-03",
+      "canonical_hash": "4b238e65d5983682f719e8ab493ceaea92b86adf95837251da7c013f60020788",
+      "question_hash": "52f5fbecdde15c39c96d7776778d4d4b66100c7945f6de52e589e0e88ee9cb8c",
+      "follow_up_hash": "226e6cc4da784dcc6087d70df038bc7ec519e973afdf3b4daffd9ec668e6b180",
+      "checklist_with_reasons_hash": "68f9887cfec2fffd827d5b12bf02c6aae7813b506c62c925ccb43fd46885241f"
+    },
+    {
+      "case_id": "case-04",
+      "canonical_hash": "5da3a29f9eedd10d6593e2282253045f8c5c3e7de99e382797dfb68ec19daf9b",
+      "question_hash": "52f5fbecdde15c39c96d7776778d4d4b66100c7945f6de52e589e0e88ee9cb8c",
+      "follow_up_hash": "226e6cc4da784dcc6087d70df038bc7ec519e973afdf3b4daffd9ec668e6b180",
+      "checklist_with_reasons_hash": "f073886cf04d4590ad2e3afffdbf9ee82a4eb57787cc99111470ded118bacb75"
+    },
+    {
+      "case_id": "case-05",
+      "canonical_hash": "84daadd0b46276ce20c983f33e4d4560b37cddc09ba12a416c25ba3139fe4b46",
+      "question_hash": "52f5fbecdde15c39c96d7776778d4d4b66100c7945f6de52e589e0e88ee9cb8c",
+      "follow_up_hash": "226e6cc4da784dcc6087d70df038bc7ec519e973afdf3b4daffd9ec668e6b180",
+      "checklist_with_reasons_hash": "dcaf93e1b3c6ceebbd20745b309410da33025ac1d7d1ad43b9f1293b9574aea6"
+    },
+    {
+      "case_id": "case-06",
+      "canonical_hash": "39c6e1f7f15bbb4d4583f85b776b3f7581470a68974d5f42a34be857c3ca234d",
+      "question_hash": "52f5fbecdde15c39c96d7776778d4d4b66100c7945f6de52e589e0e88ee9cb8c",
+      "follow_up_hash": "226e6cc4da784dcc6087d70df038bc7ec519e973afdf3b4daffd9ec668e6b180",
+      "checklist_with_reasons_hash": "cf7e7a3c0e4a1a7a4f0004bfcea5d54874639e9a0e8a06c532896c4e5ed4b1d0"
+    },
+    {
+      "case_id": "case-07",
+      "canonical_hash": "45df5c5b4943cab2874f37e0557ce12c2eea1968ed1de882597b1ecef9ff2e4a",
+      "question_hash": "52f5fbecdde15c39c96d7776778d4d4b66100c7945f6de52e589e0e88ee9cb8c",
+      "follow_up_hash": "226e6cc4da784dcc6087d70df038bc7ec519e973afdf3b4daffd9ec668e6b180",
+      "checklist_with_reasons_hash": "fcd3f66408a24e0107ce3e65e5933667bc8043a662444196468da7bd209c3076"
+    },
+    {
+      "case_id": "case-08",
+      "canonical_hash": "e446c6cd95a3db0fa78b7397fb972800a95df32480d89dfe815751e450cc20a6",
+      "question_hash": "52f5fbecdde15c39c96d7776778d4d4b66100c7945f6de52e589e0e88ee9cb8c",
+      "follow_up_hash": "226e6cc4da784dcc6087d70df038bc7ec519e973afdf3b4daffd9ec668e6b180",
+      "checklist_with_reasons_hash": "7f2f54aa6f74c8e87ef7e715da3c3213842b6ec35b963b78e59747956c40a833"
+    }
+  ]
+}

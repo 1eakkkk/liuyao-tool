@@ -1,0 +1,1 @@
+{"case_id":"case-01","variant":"A","initial_file":"D:/answers/case-01-A-initial.txt","follow_up_file":"D:/answers/case-01-A-follow-up.txt","actual_order":1,"model":"与准备配置的 label 完全一致","settings":{"reasoning":null,"search":false,"memory":false,"temperature":null},"deviations":[],"usage":null,"latency":null}

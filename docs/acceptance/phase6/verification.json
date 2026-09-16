@@ -1,0 +1,30 @@
+{
+  "status": "evaluation_pipeline_ready",
+  "real_external_answers": 0,
+  "effects_conclusion": null,
+  "baseline_commit": "1dbc63cae2aab042a64d7d9106128de71b9aa22f",
+  "tests": {
+    "command": "npm test -- --maxWorkers=1",
+    "files_passed": 12,
+    "tests_passed": 132,
+    "duration_seconds": 64.42,
+    "prior_default_parallel_run": "132 passed",
+    "final_default_parallel_attempt": "131 passed; existing frozen.test.js exceeded unchanged 5000ms timeout",
+    "assertions_and_timeouts_changed": false
+  },
+  "build": {
+    "command": "npm run build",
+    "status": "passed",
+    "modules": 51,
+    "javascript_asset": "index-BUs3Mv5n.js",
+    "css_asset": "index-63lbvoss.css"
+  },
+  "browser": {
+    "legacy": "passed",
+    "structured_1_0": "passed",
+    "structured_1_1_rules": "passed"
+  },
+  "production_diff": "No changes relative to baseline; all Phase 6 files are additions outside production paths",
+  "synthetic_cli": "Full prepare/import/scoring/review/lock/unblind/report passed; synthetic only",
+  "blinding_boundary": "Execution filenames and schedule omit assignment and seed; original prompt treatment fields remain visible. Scoring package excludes input metadata; self-disclosure remains in raw answers and is flagged."
+}
