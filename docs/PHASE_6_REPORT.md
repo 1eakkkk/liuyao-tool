@@ -1,21 +1,96 @@
-# Phase 6 报告：Structured 1.1 Rules 离线受控 A/B 工具链
+# Phase 6 最终报告：Structured 1.1 Rules 离线受控 A/B
 
 日期：2026-09-16。分支：`phase6/rules-ab`。
 稳定基点：`1dbc63cae2aab042a64d7d9106128de71b9aa22f`（Phase 5 合并 main，用户已生产人工验收）。
 
-## 结论与真实实验状态
+## 最终状态
 
-**evaluation pipeline ready：评测工具链完成。真实外部 A/B 实验尚未执行。**
+- **Phase 6A evaluation pipeline complete**：离线评测工具链完成，合成流程验证与真实数据分开。
+- **Phase 6B external A/B complete**：真实外部回答已录入，盲评已锁定并解盲，状态为 `external_ab_completed`。
+- 真实实验共 8 个定向案例、16 个独立对话，每个对话含首答和统一追问，共 32 段回答。
+- 工具的 `effects_conclusion` 仍为 null；以下是已锁定评分的描述性总结，不是统计证明或预测准确率结论。
 
-- 真实外部模型回答：0。
-- 真实 API 调用：0。
-- 本轮只用明确标记为 synthetic 的回答与合成评分验证完整流程。
-- 没有真实盲评、锁定、解盲后的模型效果数据，不宣称 Rules ON/OFF 已完成效果实验，不给出优劣结论。
-- 工具输出区分 `synthetic_pipeline_validation` 与 `external_ab_completed`；`effects_conclusion` 保持 null。
+本次只更新本总结文档，不改变生产代码、评分、实验输入或规则，不提交本地原始实验资料。不 push、不 merge main、不部署，不进入 Phase 7。
 
-本阶段已按要求停止。不进入 Phase 7，不 push、不 merge main、不部署。
+## Phase 6B：真实外部 A/B 结果
 
-## 完成内容
+### 实验身份与核对
+
+| 项目 | 值 |
+| --- | --- |
+| experiment_id | phase6-external-01 |
+| 可见模型 | ChatGPT Web / GPT-5.6 Sol |
+| code_commit | ba94f8fee08d1c3d8f3fb708bc9b9c1c0031ded8 |
+| 锁定状态 | blind review locked；已解盲 |
+| lock_hash | b40f6c69c2c2559f170ee4d311a5019f072bc065ebeac076a16db7c5e3d6fd96 |
+| 实验状态 | external_ab_completed |
+| 后续基准 | Ruleset r1 / 25 rules；不增加或修改规则 |
+| 输入与 Prompt | Structured 1.1 / structured-rules-p1；两组仅 E.enabled/hits 不同 |
+| protocol deviation | 无记录偏离 |
+
+本次只读校验锁定资料并重新汇总，结果与本地 `test-results/phase6-run-01/report.json` 完全一致；`report.md` 及用户提供的指标、案例比较也核对一致。此处仅发布汇总，不附原回答、匿名变体到组别的映射、种子、配置或其他本地实验文件。
+
+### 总体指标
+
+| 指标 | Rules OFF | Rules ON |
+| --- | ---: | ---: |
+| fact_errors | 0 | 0 |
+| relation_errors | 0 | 1 |
+| relevant_omissions | 7 | 0 |
+| fact_overrides | 0 | 0 |
+| contradictions | 0 | 1 |
+| double_counting | 0 | 0 |
+| uncertain | 0 | 0 |
+| direction_errors | 0 | 0 |
+| checklist_opportunities | 56 | 56 |
+
+**工程观察：Rules ON 在本轮冻结 checklist 中的相关关系遗漏由 OFF 的 7 项降至 0 项，呈现明显减少。** 这是该案例集、该模型、该锁定评分下的计数观察，不代表统计显著性。ON 同时记录 1 项关系错误及 1 项矛盾，不能据遗漏单项下降推断所有维度全面改善；各错误类别也不相加当作互不重叠的独立错误总数。
+
+| 遗漏拆分 | OFF | ON |
+| --- | ---: | ---: |
+| shi_ying | 2 | 0 |
+| month_relation | 5 | 0 |
+| 首答 relevant_omissions | 6 | 0 |
+| follow-up relevant_omissions | 1 | 0 |
+
+类别拆分与轮次拆分是同一批遗漏的两种视角，不再次累计。
+
+### 案例比较
+
+| 案例 | 已锁定比较 |
+| --- | --- |
+| case-01 | on_better |
+| case-02 | on_better |
+| case-03 | same |
+| case-04 | unable_to_judge |
+| case-05 | on_better |
+| case-06 | same |
+| case-07 | same |
+| case-08 | on_better |
+
+共 4 例 on_better、3 例 same、1 例 unable_to_judge。case-04 的 OFF 有 1 项遗漏，ON 无该遗漏但出现 1 项关系错误和 1 项矛盾，按预定的无权重比较规则保留无法判断，不事后改成某组获胜。方向错误两组均为 0。这些是冻结评判维度内的比较，不是最终预测胜负。
+
+### 输入开销与解释限制
+
+| Prompt 字符数 | 数值 |
+| --- | ---: |
+| OFF | 156,385 |
+| ON | 230,193 |
+| 增量 | +73,808 |
+| 相对增量 | +47.196%（约 47.2%） |
+
+字符数是完整 Prompt 的 Unicode 字符计数，不等同实际 token 或费用。需要同时保留以下限制：
+
+- 仅 8 个定向案例、单一可见模型，非随机样本，不外推到所有卦例或模型。
+- 16/16 对话均记录 `blinding_compromised`，评分者可能推断组别，不能当作完整盲评证据；没有 protocol deviation 不等于盲化成功。
+- Prompt 增长约 47.2%，本轮不能分离结构化关系提示与额外上下文长度各自的作用。
+- 首答和追问相关，部分案例本变卦相同；56 个核对机会不是 56 个独立随机样本。
+- 客户端模型只按可见型号记录，精确后台版本未知，无法保证所有隐藏设置完全受控。
+- 不作统计显著性声明，不评价预测准确率，不写成 Rules 已科学验证或已被证明有效。
+
+Ruleset r1 / 25 rules 作为后续比较基准保持不变。本次不根据实验答案临时修订规则、Prompt、问题或遗漏清单，也不启动下一阶段。
+
+## Phase 6A：工具链完成内容
 
 ### 冻结 8 个案例及评判依据
 
@@ -24,7 +99,7 @@
 案例集版本：`phase6-cases-v1`；盲评版本：`blind-review-v1`。
 完整案例集哈希：`5619947b697a14303c06e82d803273309ec56781bc18562a7c79d4ee0d8d1845`。
 
-这些内容在查看任何模型回答之前已冻结。本轮没有真实回答；准备实验时再次把案例、Prompt、配置、映射和关键源码哈希封存。后续任何已封存字段发生变化都会阻止继续操作。不能根据回复修改遗漏标准。
+这些内容在查看任何模型回答之前已冻结；准备实验时再次把案例、Prompt、配置、映射和关键源码哈希封存。后续任何已封存字段发生变化都会阻止继续操作。不能根据回复修改遗漏标准。
 
 | 案例 | 冻结来源 | 主要关系 | 命中数 |
 | --- | --- | --- | ---: |
@@ -76,9 +151,9 @@
 
 Prompt 字符开销在固定默认偏好下为：OFF 156,385；ON 230,193；增加 73,808（约 47.2%）。这是 8 个完整导出合计的 Unicode 字符数，包含缩进，不是 token、真实费用或准确率指标。
 
-## 文件范围
+## Phase 6A 文件范围（工具链提交）
 
-全部为新增文件：
+工具链提交时新增以下文件；本次 Phase 6B 收口仅修改本报告：
 
 - `scripts/phase6-ab.js`：离线 CLI。
 - `scripts/phase6/workflow.js`：冻结、导入、分包、锁定、解盲、汇总。
@@ -89,7 +164,7 @@ Prompt 字符开销在固定默认偏好下为：OFF 156,385；ON 230,193；增�
 
 生产源码、Core、Canonical Schema、25 条规则、Legacy 默认、Structured 1.0／1.1、主页面、静态资源、package.json、依赖锁文件及构建配置均未修改。旧 Phase 5 脚本保持不变。
 
-## 验证结果
+## Phase 6A 工程验收记录
 
 | 检查 | 结果 |
 | --- | --- |
@@ -127,8 +202,18 @@ Synthetic smoke 的回答与评分均为流程占位资料，明确标记 synthe
 
 哈希不是签名或可信时间戳。准备时和锁定时应在独立审计位置保存相应哈希。代码更新后不能继续同一冻结轮次；需要用冻结源码完成或开新版本，不以实验答案为理由即时修改规则。
 
-## 停止点
+## Phase 6B 文档收口验证
 
-**本轮交付的是 evaluation pipeline ready。真实外部 A/B 未开始，尚无 Rules OFF/ON 效果结论。**
+- `npm test -- --maxWorkers=1`：12 个文件，132/132 通过（68.04 秒）。
+- `npm run build`：通过，51 modules；JS/CSS 仍为 index-BUs3Mv5n.js / index-63lbvoss.css；既有 Cannon 经典脚本提示保持不变。
+- `git diff --check`：通过；仅本报告发生变更，生产源码、规则、Prompt、实验工具及冻结案例均无修改。
+- 本轮为文档收口，没有重跑浏览器或模型实验；上方浏览器记录属于 Phase 6A 历史验收。
+- 仅暂存本报告；未跟踪的本地 my-config.json 原样保留，不纳入提交，也不改动其内容。
 
-单独提交到 phase6/rules-ab；不 push、不 merge main，不进入 Phase 7。真实实验需要之后按操作说明收集外部回答并完成独立盲评，本轮不自动执行。
+## 最终收口范围与停止点
+
+**Phase 6A evaluation pipeline complete；Phase 6B external A/B complete。**
+
+本次仅修改 `docs/PHASE_6_REPORT.md`，记录已锁定的真实实验汇总与限制。原始回答、private mapping、seed、my-config 及临时文件均不提交；此前 synthetic 验收文件保持其历史含义，不混入真实实验数据。
+
+单独提交实验结果文档到 phase6/rules-ab，不 push、不 merge main，不修改生产代码或 Ruleset r1 / 25 rules。完成后停止，不进入 Phase 7。
