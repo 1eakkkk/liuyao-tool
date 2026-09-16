@@ -1,3 +1,5 @@
+import { selectedRulesMode, buildRulesPair, buildRulesExportPrompt } from '../ai/rules-input.js';
+import { showRulesExportComparison } from '../ui/rules-debug.js';
 import { buildPairedPromptExports, buildStructuredExportPrompt } from '../ai/exports.js';
 import { showAiExportComparison } from '../ui/ai-debug.js';
 import { selectedAiInputMode } from '../ai/structured-input.js';
@@ -559,7 +561,9 @@ followUpExportBtn.addEventListener('click', ()=>{
     showToast('请先点一次"输出提示词"生成初次提示词', 'error');
     return;
   }
-  followUpExportOutput.value = state.lastExportMode === 'structured'
+  followUpExportOutput.value = state.lastExportMode === 'rules'
+    ? buildRulesExportPrompt(state.lastRulesExportInput, priorAnswerText, followUpText)
+    : state.lastExportMode === 'structured'
     ? buildStructuredExportPrompt(state.lastStructuredExportInput, priorAnswerText, followUpText)
     : buildExportFollowUpPromptText(state.lastExportQuestion, state.lastExportCastText, priorAnswerText, followUpText);
   followUpExportOutput.style.display = 'block';
@@ -687,7 +691,7 @@ interpretBtn.addEventListener('click', async (event)=>{
     const requestConfig = {roleLabel: currentRoleLabel(), styleLabel: currentReplyStyleLabel(),
       roleCustomText: currentRoleCustomSnapshot(), styleCustomText: currentStyleCustomSnapshot()};
     try{
-      result = await interpretWithDeepSeek(question, castText, thinking.onDelta, controller.signal, structuredCast);
+      result = await interpretWithDeepSeek(question, castText, thinking.onDelta, controller.signal, structuredCast, selectedRulesMode());
     }finally{
       thinking.stop(); // 保底：万一中途出错/被中断，没等到第一个delta，也要把跳秒计时器停掉
       state.activeAbortController = null;
@@ -817,6 +821,8 @@ promptBtn.addEventListener('click', async (event)=>{
     if (new URLSearchParams(location.search).get('debug') === '1') {
       if (question !== castStore.canonical.question.text) throw new Error('实验导出问题与卦盘不一致');
       showAiExportComparison(buildPairedPromptExports(castStore.canonical), selectedAiInputMode());
+      const rulesMode = selectedRulesMode();
+      if (rulesMode !== null) showRulesExportComparison(buildRulesPair(castStore.canonical), rulesMode);
     }
     aiStatus.textContent = '提示词已生成';
     showToast('提示词已生成，复制后可以粘贴去其他AI软件解卦', 'success');

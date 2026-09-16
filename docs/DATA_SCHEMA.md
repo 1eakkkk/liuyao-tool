@@ -47,3 +47,10 @@ Schema 示例见 `canonical-example.json`。回归样例来自原 HTML，不是�
 ## Phase 4 的独立 AI Input Schema
 
 Canonical 1.0 的字段与语义保持不变。`buildStructuredAiInput(canonical)` 只读地选择 AI 所需白名单字段，生成独立的 AI Input Schema 1.0。排除 `compatibility`、未知扩展以及 `display.overall_trend_text`，不将投影写回 Canonical。字段清单、缺失值语义和实验协议见 [PHASE_4_REPORT.md](PHASE_4_REPORT.md)。
+
+
+## Phase 5 的独立 Rule Result / AI Input 1.1
+
+Canonical Schema 1.0 无修改；月破和月合不写入 Canonical。Rule Result Schema 1.0 独立记录版本、hits、skipped、diagnostics，每条命中含 rule_id / rule_version / origin / target / evidence / result。
+
+AI Input 1.1 是新增协议，保留 1.0 路径。两组严格 Rules A/B 均为 1.1，E_rule_results 含 enabled 和 Rule Result，只有 enabled/hits 改变。所有证据必须能在传输的 C 白名单中找到对应原值；拒绝未知字段、重复命中、版本错误及禁用时仍带命中。没有评分或吉凶字段。Schema 详见 [RULE_SYSTEM.md](RULE_SYSTEM.md)。

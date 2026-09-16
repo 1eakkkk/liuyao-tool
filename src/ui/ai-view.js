@@ -68,6 +68,10 @@ function renderLive(questionText, liveAnswerText){
 //    这种情况下不强制清空 lastExportCastText/lastExportQuestion（卦没变，数据仍然有效），
 //    真正的作废只交给 renderPlate() 在"确实重摇了"的时候去做。
 function hidePromptExportBoxes(){
+  state.lastRulesExportPair = null;
+  state.lastRulesExportInput = null;
+  const rulesPanel = document.getElementById('rulesInputComparison');
+  if (rulesPanel) rulesPanel.style.display = 'none';
   state.lastExportPair = null;
   state.lastStructuredExportInput = null;
   state.lastExportMode = 'legacy';

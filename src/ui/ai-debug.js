@@ -3,6 +3,10 @@ import { state } from '../app/state.js';
 // Only appears after explicit ?debug=1 opt-in. Both buttons use the same captured export pair.
 export function showAiExportComparison(pair, initialMode) {
   if (new URLSearchParams(globalThis.location.search).get('debug') !== '1') return;
+  state.lastRulesExportPair = null;
+  state.lastRulesExportInput = null;
+  const rulesPanel = document.getElementById('rulesInputComparison');
+  if (rulesPanel) rulesPanel.style.display = 'none';
   state.lastExportPair = pair;
   let panel = document.getElementById('aiInputComparison');
   if (!panel) {
@@ -26,6 +30,7 @@ function selectExport(mode) {
   const pair = state.lastExportPair;
   if (!pair || !state.lastExportQuestion) return;
   state.lastExportMode = mode;
+  for (const candidate of ['off', 'on']) document.getElementById(`export-rules-${candidate}`)?.setAttribute('aria-pressed', 'false');
   state.lastStructuredExportInput = mode === 'structured' ? pair.structuredInput : null;
   state.lastExportCastText = pair.legacyText;
   document.getElementById('promptOutputText').value = pair[mode];
