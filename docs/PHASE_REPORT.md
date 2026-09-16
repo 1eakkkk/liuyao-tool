@@ -46,3 +46,18 @@ Phase 0～2 正式验收完成。
 - 构建提示：原 Cannon 经典脚本提示保持不变，已确认 `dist/vendor/cannon.js` 存在（132201 字节）。本轮未重新部署或执行人工 Preview。
 - 结论：Phase 3 关闭。场景与不变量覆盖满足本阶段要求；没有测量代码覆盖率，不将 fixture 全通过等同于所有代码分支覆盖。
 - 停止点：不进入 Phase 4，不新增规则引擎、知识库或后端，不合并 main。本阶段单独本地提交；本轮不自动 push 或部署。
+
+## Phase 4 — Structured AI Input（2026-09-16）
+
+- 完成内容：保留默认 Legacy，新增 Canonical 白名单投影、独立 AI Input Schema 1.0、Structured 指令、会话模式锁定与版本校验、两份完整提示词及 Structured 追问导出、人工 A/B 离线准备与哈希记录。
+- 修改文件：`src/ai/interpreter.js`、`src/app/events.js`、`src/ui/ai-view.js`、package scripts、架构／Schema 文档。`src/core`、Canonical 字段语义、原 formatter、原 prompt-builder、原 client、主页面 HTML／CSS 保持不变。
+- 新增文件：`src/ai/schemas.js`、`structured-input.js`、`exports.js`、`src/ui/ai-debug.js`、`tests/regression/structured-ai.test.js`、两份 Phase 4 脚本、`docs/PHASE_4_REPORT.md` 与本阶段浏览器验收记录。
+- 自动测试：`npm test` 82/82 通过（9 文件）；原 75 项不变，新增 7 项聚合测试。覆盖 88 个固定卦例的白名单事实保真、未知扩展／派生摘要排除、稳定输入、双模式请求、刷新追问、导出和哈希。
+- 构建：`npm run build` 通过；保持原 Cannon 经典脚本静态资源提示，无新构建失败。
+- Legacy 浏览器：开发版／dist、1280／390 两尺寸，完整提示词、mock API 首次／追问请求、回复和刷新恢复与冻结旧版一致，页面错误零；截图最大通道差异 0～2，沿用既有阈值。
+- Structured 浏览器：开发版／dist 各 4 次 mock 请求（首次、追问、URL 改为 Legacy 后刷新追问、新开 Legacy），白名单 payload、模式锁定、成对完整提示词、剪贴板复制、Structured 追问导出全部通过，页面错误零。记录包含模式、模型、Prompt／输入版本、请求／回复哈希、模拟 usage 和 latency，明确标为 mock。
+- 调试记录：最初并行运行两套浏览器与单测时，两个旧测试触发 5 秒超时；单独重跑 82/82 通过，未放宽断言或超时。新脚本修正 Windows 剪贴板 CRLF 规范化，以及刷新后新开解读前填写问题的测试步骤。
+- 人工 A/B：离线准备六组成对提示词；记录工具以独立合成响应校验通过。尚未收集真实模型回答，不将导出成功或 mock 成功当作事实可靠性提升的证据。
+- 验收调整：按用户最新要求，真实批量 DeepSeek A/B 为可选项；本轮未调用真实 API，没有消耗 API 额度。只评价事实可靠性、一致性、遗漏、矛盾和成本，不评价预测准确率。
+- 兼容性：普通用户仍走 Legacy；现有存储 key 不变，Structured 会话仅加模式／版本元数据；未引入规则引擎、知识库、RAG 或后端。详细风险、使用方式与回滚见 `PHASE_4_REPORT.md`。
+- 结论：按调整后的验收条件完成 Phase 4。独立提交到 refactor/v2 后停止；不自动 push／部署，不合并 main，不进入 Phase 5。

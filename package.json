@@ -12,7 +12,9 @@
     "preview": "vite preview --host 127.0.0.1",
     "test": "vitest run",
     "test:baseline": "node --test tests/regression/baseline.test.cjs",
-    "test:browser": "node scripts/verify-browser.js"
+    "test:browser": "node scripts/verify-browser.js",
+    "test:browser:structured": "node scripts/verify-structured-browser.js",
+    "ab:prepare": "node scripts/phase4-ab.js --prepare"
   },
   "devDependencies": {
     "jsdom": "30.0.1",

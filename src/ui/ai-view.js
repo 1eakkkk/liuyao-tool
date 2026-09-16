@@ -68,6 +68,9 @@ function renderLive(questionText, liveAnswerText){
 //    这种情况下不强制清空 lastExportCastText/lastExportQuestion（卦没变，数据仍然有效），
 //    真正的作废只交给 renderPlate() 在"确实重摇了"的时候去做。
 function hidePromptExportBoxes(){
+  state.lastExportPair = null;
+  state.lastStructuredExportInput = null;
+  state.lastExportMode = 'legacy';
   promptOutputBox.style.display = 'none';
   promptExtraTools.style.display = 'none';
   promptExtraTools.classList.remove('open'); // 下次重新弹出时重新从折叠态开始，不记住上次展没展开

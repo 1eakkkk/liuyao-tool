@@ -49,3 +49,11 @@ Vite 输出相对资源路径（`base: './'`），JS 目标为 ES2020，接近�
 日常浏览器测试输出到忽略的 `test-results/browser`，不改写已提交的验收文件。显式执行 `node scripts/verify-browser.js --record` 才更新 `docs/acceptance`；比较来源始终是冻结原 HTML。
 
 真实 API、实际 App 壳及 Cloudflare Preview 单独验收。浏览器模拟不替代这些项目。
+
+## Phase 4：双模式 AI 输入
+
+排盘与 Canonical 继续沿用 Phase 0～3。默认 Legacy 链路保持原 formatter、Prompt 和客户端；Structured 经 `src/ai/structured-input.js`／`schemas.js` 白名单投影后发送，独立于 Canonical Schema，排除兼容扩展与整体趋势摘要。
+
+Structured 会话自带模式及协议版本，追问与刷新恢复保持同一输入协议。debug 导出区域可以从同一个快照切换两份完整提示词，使用原复制按钮进行外部人工 A/B。普通用户主流程不增加实验步骤。
+
+新增验证：`npm run test:browser:structured`；离线成对导出：`npm run ab:prepare`。具体协议、人工评估和回滚见 [PHASE_4_REPORT.md](PHASE_4_REPORT.md)。

@@ -1,0 +1,214 @@
+{
+  "report": [
+    {
+      "target": "dev",
+      "mock_requests": 4,
+      "paired_copy": "passed",
+      "structured_followup_export": "passed",
+      "restore_mode_lock": "passed",
+      "errors": []
+    },
+    {
+      "target": "built",
+      "mock_requests": 4,
+      "paired_copy": "passed",
+      "structured_followup_export": "passed",
+      "restore_mode_lock": "passed",
+      "errors": []
+    }
+  ],
+  "records": [
+    {
+      "case_id": "dev",
+      "repetition": null,
+      "order": 1,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "a52bc9da2a2b44c419aaffea5b1f7008e121998acb83d3f8edcd71545b647cc9",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 110.9421999999995,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "dev",
+      "repetition": null,
+      "order": 2,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "219d468c045b9acc4a9a83c53c2f6a000a97cfe8a3c84219dcbfbe21d6a78f18",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 72.09419999999955,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "dev",
+      "repetition": null,
+      "order": 3,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "b650f057275f8a0c0bd8d27876e60501c425797db6b96fd71ba3adc25d3d0196",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 440.58860000000004,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "dev",
+      "repetition": null,
+      "order": 4,
+      "input_mode": "legacy",
+      "model": "deepseek-flash",
+      "prompt_version": "p1",
+      "ai_input_schema_version": null,
+      "payload_kind": "api_body",
+      "payload_hash": "42f0f2a3d97aa3ce5c3e7c024d7d0e5364bd43bdc0aa6aea33cae3798ad8bfcd",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 58.956099999999424,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "repetition": null,
+      "order": 5,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "a52bc9da2a2b44c419aaffea5b1f7008e121998acb83d3f8edcd71545b647cc9",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 122.22409999999945,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "repetition": null,
+      "order": 6,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "219d468c045b9acc4a9a83c53c2f6a000a97cfe8a3c84219dcbfbe21d6a78f18",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 73.84539999999834,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "repetition": null,
+      "order": 7,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "b650f057275f8a0c0bd8d27876e60501c425797db6b96fd71ba3adc25d3d0196",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 444.3932999999997,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "repetition": null,
+      "order": 8,
+      "input_mode": "legacy",
+      "model": "deepseek-flash",
+      "prompt_version": "p1",
+      "ai_input_schema_version": null,
+      "payload_kind": "api_body",
+      "payload_hash": "42f0f2a3d97aa3ce5c3e7c024d7d0e5364bd43bdc0aa6aea33cae3798ad8bfcd",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 55.732599999999366,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    }
+  ]
+}

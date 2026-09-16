@@ -1,3 +1,6 @@
+import { buildPairedPromptExports, buildStructuredExportPrompt } from '../ai/exports.js';
+import { showAiExportComparison } from '../ui/ai-debug.js';
+import { selectedAiInputMode } from '../ai/structured-input.js';
 import { castStore } from './cast-store.js';
 import { cx, cy, R, pos, arcPath, activateWxNode } from '../ui/basics.js';
 import { manualLineTouched, buildManualLinesUI, renderManualPreview, performManualCast } from '../ui/manual-cast.js';
@@ -556,7 +559,9 @@ followUpExportBtn.addEventListener('click', ()=>{
     showToast('请先点一次"输出提示词"生成初次提示词', 'error');
     return;
   }
-  followUpExportOutput.value = buildExportFollowUpPromptText(state.lastExportQuestion, state.lastExportCastText, priorAnswerText, followUpText);
+  followUpExportOutput.value = state.lastExportMode === 'structured'
+    ? buildStructuredExportPrompt(state.lastStructuredExportInput, priorAnswerText, followUpText)
+    : buildExportFollowUpPromptText(state.lastExportQuestion, state.lastExportCastText, priorAnswerText, followUpText);
   followUpExportOutput.style.display = 'block';
   followUpExportCopyRow.style.display = 'flex';
 });
@@ -659,7 +664,8 @@ interpretBtn.addEventListener('click', async (event)=>{
 
     aiStatus.textContent = '正在调用 DeepSeek 生成解卦回复…';
     showToast('正在调用 DeepSeek 生成解卦回复…');
-    const castText = formatCastDataForAI(castStore.canonical);
+    const structuredCast = selectedAiInputMode() === 'structured' ? castStore.canonical : null;
+    const castText = structuredCast ? null : formatCastDataForAI(castStore.canonical);
     // 这条历史记录id必须在调用 interpretWithDeepSeek 之前就生成好：interpretWithDeepSeek 内部
     // 拿到回复后会立刻调用一次 saveActiveConversation()，把 sessionId 存进"当前会话"缓存里；
     // 如果这里不提前赋值，那次保存用的还是 resetConversation() 刚清成的 null，
@@ -681,7 +687,7 @@ interpretBtn.addEventListener('click', async (event)=>{
     const requestConfig = {roleLabel: currentRoleLabel(), styleLabel: currentReplyStyleLabel(),
       roleCustomText: currentRoleCustomSnapshot(), styleCustomText: currentStyleCustomSnapshot()};
     try{
-      result = await interpretWithDeepSeek(question, castText, thinking.onDelta, controller.signal);
+      result = await interpretWithDeepSeek(question, castText, thinking.onDelta, controller.signal, structuredCast);
     }finally{
       thinking.stop(); // 保底：万一中途出错/被中断，没等到第一个delta，也要把跳秒计时器停掉
       state.activeAbortController = null;
@@ -805,7 +811,13 @@ promptBtn.addEventListener('click', async (event)=>{
     const castText = formatCastDataForAI(castStore.canonical);
     state.lastExportCastText = castText;
     state.lastExportQuestion = question;
+    state.lastExportMode = 'legacy';
+    state.lastStructuredExportInput = null;
     showPromptOutput(buildExportPromptText(question, castText));
+    if (new URLSearchParams(location.search).get('debug') === '1') {
+      if (question !== castStore.canonical.question.text) throw new Error('实验导出问题与卦盘不一致');
+      showAiExportComparison(buildPairedPromptExports(castStore.canonical), selectedAiInputMode());
+    }
     aiStatus.textContent = '提示词已生成';
     showToast('提示词已生成，复制后可以粘贴去其他AI软件解卦', 'success');
 

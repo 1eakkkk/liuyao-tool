@@ -43,3 +43,7 @@
 原最早历史没有日期锚点的恢复兜底仍然保留；现代记录中“仅日柱”的 null 锚点不会被补成今天。
 
 Schema 示例见 `canonical-example.json`。回归样例来自原 HTML，不是独立历法正确性证明。
+
+## Phase 4 的独立 AI Input Schema
+
+Canonical 1.0 的字段与语义保持不变。`buildStructuredAiInput(canonical)` 只读地选择 AI 所需白名单字段，生成独立的 AI Input Schema 1.0。排除 `compatibility`、未知扩展以及 `display.overall_trend_text`，不将投影写回 Canonical。字段清单、缺失值语义和实验协议见 [PHASE_4_REPORT.md](PHASE_4_REPORT.md)。
