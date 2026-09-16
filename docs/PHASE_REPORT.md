@@ -61,3 +61,13 @@ Phase 0～2 正式验收完成。
 - 验收调整：按用户最新要求，真实批量 DeepSeek A/B 为可选项；本轮未调用真实 API，没有消耗 API 额度。只评价事实可靠性、一致性、遗漏、矛盾和成本，不评价预测准确率。
 - 兼容性：普通用户仍走 Legacy；现有存储 key 不变，Structured 会话仅加模式／版本元数据；未引入规则引擎、知识库、RAG 或后端。详细风险、使用方式与回滚见 `PHASE_4_REPORT.md`。
 - 结论：按调整后的验收条件完成 Phase 4。独立提交到 refactor/v2 后停止；不自动 push／部署，不合并 main，不进入 Phase 5。
+
+
+## Phase 5 — 最小确定性规则引擎（2026-09-16）
+
+- 基于用户已验收的 Phase 0～4 main 稳定点 e2d46b74109cc335cb77776f0ab31b87bb38e71e，在 phase5/rule-engine 实施。
+- 完成 25 条局部规则、独立 Rule Result、证据及方向；18 条索引已有事实、5 条复用 Core 函数、2 条月破／月合只在派生层输出。不修改 Core、Canonical、Legacy 默认或 Structured 1.0。
+- 新增 AI Input 1.1：严格 Rules A/B 的两组同 Prompt，只通过 E.enabled/hits 区分；明确已有标注不是第二份证据，不得重复加权。保留完整提示词复制、追问、离线 A/B 与哈希记录。
+- 120/120 单测通过，build 通过；Legacy、Structured 1.0、Rules 浏览器 mock 均通过。补测 25 正反 fixture、88 快照不变、144 月支组合、25 世应五行组合及真实化进用例。飞伏比和明确为合成契约样例。
+- 无真实 API 调用，无预测准确率／模型优胜结论。新实验仅 debug 开启，不改变普通用户主流程。
+- 详情及证据见 [PHASE_5_REPORT.md](PHASE_5_REPORT.md) 与 [RULE_SYSTEM.md](RULE_SYSTEM.md)。本阶段单独本地提交，不自动 push／部署或 merge main；完成后停止，不进入 Phase 6 或知识库阶段。

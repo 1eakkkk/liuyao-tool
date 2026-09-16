@@ -1,0 +1,214 @@
+{
+  "report": [
+    {
+      "target": "dev",
+      "mock_requests": 4,
+      "paired_copy": "passed",
+      "structured_followup_export": "passed",
+      "restore_mode_lock": "passed",
+      "errors": []
+    },
+    {
+      "target": "built",
+      "mock_requests": 4,
+      "paired_copy": "passed",
+      "structured_followup_export": "passed",
+      "restore_mode_lock": "passed",
+      "errors": []
+    }
+  ],
+  "records": [
+    {
+      "case_id": "dev",
+      "repetition": null,
+      "order": 1,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "8a55875460690999d32513f68d2ec5574d8eb3e1f578dd38487b5ee5f6cb0e33",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 142.49149999999918,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "dev",
+      "repetition": null,
+      "order": 2,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "a5fff9b68ccd43a59a026128506277caac4fd61580b5e34dc3d08724c77a1a56",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 109.26490000000013,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "dev",
+      "repetition": null,
+      "order": 3,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "edfb83521ac2d5267f1384716bb8d259e5b69f02626683ad57fe9d38d23685ab",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 482.46150000000034,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "dev",
+      "repetition": null,
+      "order": 4,
+      "input_mode": "legacy",
+      "model": "deepseek-flash",
+      "prompt_version": "p1",
+      "ai_input_schema_version": null,
+      "payload_kind": "api_body",
+      "payload_hash": "4aa8dd6f57fd7f35b180b8b331644dc8eee09846060561256d17d9e6a4f9949c",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 106.75619999999981,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "repetition": null,
+      "order": 5,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "8a55875460690999d32513f68d2ec5574d8eb3e1f578dd38487b5ee5f6cb0e33",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 144.6895000000004,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "repetition": null,
+      "order": 6,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "a5fff9b68ccd43a59a026128506277caac4fd61580b5e34dc3d08724c77a1a56",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 73.57090000000062,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "repetition": null,
+      "order": 7,
+      "input_mode": "structured",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-p1",
+      "ai_input_schema_version": "1.0",
+      "payload_kind": "api_body",
+      "payload_hash": "edfb83521ac2d5267f1384716bb8d259e5b69f02626683ad57fe9d38d23685ab",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 430.4459999999999,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "repetition": null,
+      "order": 8,
+      "input_mode": "legacy",
+      "model": "deepseek-flash",
+      "prompt_version": "p1",
+      "ai_input_schema_version": null,
+      "payload_kind": "api_body",
+      "payload_hash": "4aa8dd6f57fd7f35b180b8b331644dc8eee09846060561256d17d9e6a4f9949c",
+      "response_hash": "5705a68def59e29b898a56fb3315ce7273358cd4175b8d03e7b104967bae00ba",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 79.52829999999994,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    }
+  ]
+}

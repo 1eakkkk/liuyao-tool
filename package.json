@@ -14,7 +14,9 @@
     "test:baseline": "node --test tests/regression/baseline.test.cjs",
     "test:browser": "node scripts/verify-browser.js",
     "test:browser:structured": "node scripts/verify-structured-browser.js",
-    "ab:prepare": "node scripts/phase4-ab.js --prepare"
+    "ab:prepare": "node scripts/phase4-ab.js --prepare",
+    "test:browser:rules": "node scripts/verify-rules-browser.js",
+    "ab:prepare:rules": "node scripts/phase5-ab.js --prepare"
   },
   "devDependencies": {
     "jsdom": "30.0.1",

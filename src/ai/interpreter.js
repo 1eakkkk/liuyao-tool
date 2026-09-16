@@ -1,3 +1,5 @@
+import { buildRulesMessages, buildRulesSystemPrompt, RULES_AI_INPUT_VERSION, RULES_PROMPT_VERSION, assertRulesAiInput } from './rules-input.js';
+import { RULESET_VERSION } from '../rules/registry.js';
 import { buildStructuredMessages, buildStructuredSystemPrompt } from './structured-input.js';
 import { STRUCTURED_PROMPT_VERSION, AI_INPUT_SCHEMA_VERSION } from './schemas.js';
 import { callDeepSeekRaw } from './client.js';
@@ -9,15 +11,16 @@ import { state } from '../app/state.js';
 
 // ---- 首次解读：建立本次会话的消息数组，并把结果存进 currentConversation 供后续追问续接 ----
 // signal: 传给 callDeepSeekRaw，用于支持"停止生成"中途打断请求。
-async function interpretWithDeepSeek(question, castDataText, onDelta, signal, structuredCast = null){
-  const messages = structuredCast ? buildStructuredMessages(question, structuredCast) : [
+async function interpretWithDeepSeek(question, castDataText, onDelta, signal, structuredCast = null, rulesMode = null){
+  if (rulesMode !== null && (!structuredCast || !['on', 'off'].includes(rulesMode))) throw new Error('Rules mode requires a Canonical cast');
+  const messages = rulesMode !== null ? buildRulesMessages(question, structuredCast, rulesMode) : structuredCast ? buildStructuredMessages(question, structuredCast) : [
     { role: 'system', content: buildSystemPrompt() },
     { role: 'user', content:
       `排盘数据：\n${castDataText}\n\n提问者的问题是：${question}\n\n请结合以上排盘数据给出解卦回复。` },
   ];
   const result = await callDeepSeekRaw(messages, onDelta, signal);
   state.currentConversation = {
-    ...(structuredCast ? { input_mode: 'structured', prompt_version: STRUCTURED_PROMPT_VERSION, ai_input_schema_version: AI_INPUT_SCHEMA_VERSION } : {}),
+    ...(rulesMode !== null ? { input_mode: 'structured', rules_mode: rulesMode, ruleset_version: RULESET_VERSION, prompt_version: RULES_PROMPT_VERSION, ai_input_schema_version: RULES_AI_INPUT_VERSION } : structuredCast ? { input_mode: 'structured', prompt_version: STRUCTURED_PROMPT_VERSION, ai_input_schema_version: AI_INPUT_SCHEMA_VERSION } : {}),
     messages: [...messages, { role: 'assistant', content: result.text }],
     turns: [
       { role: 'user', text: question, ts: Date.now() },
@@ -44,8 +47,15 @@ async function followUpWithDeepSeek(followUpText, onDelta, signal){
   // 对话历史（用户问/AI答的具体轮次）不受影响，变的只是这条system指令本身。
   const mode = state.currentConversation.input_mode || 'legacy';
   if (!['legacy', 'structured'].includes(mode)) throw new Error('不支持此会话的 AI 输入模式');
-  if (mode === 'structured' && (state.currentConversation.prompt_version !== STRUCTURED_PROMPT_VERSION || state.currentConversation.ai_input_schema_version !== AI_INPUT_SCHEMA_VERSION)) throw new Error('此实验会话协议已变化，请重新开始解读');
-  const freshSystemMessage = { role: 'system', content: mode === 'structured' ? buildStructuredSystemPrompt() : buildSystemPrompt() };
+  const rulesMode = state.currentConversation.rules_mode ?? null;
+  if (rulesMode !== null) {
+    const c = state.currentConversation;
+    if (mode !== 'structured' || !['on', 'off'].includes(rulesMode) || c.prompt_version !== RULES_PROMPT_VERSION || c.ai_input_schema_version !== RULES_AI_INPUT_VERSION || c.ruleset_version !== RULESET_VERSION) throw new Error('规则会话版本不支持，请重新开始解读');
+    const input = assertRulesAiInput(JSON.parse(c.messages[1].content));
+    if (input.E_rule_results.enabled !== (rulesMode === 'on') || (rulesMode === 'off' && input.E_rule_results.hits.length)) throw new Error('规则会话模式与快照不一致');
+  }
+  if (mode === 'structured' && rulesMode === null && (state.currentConversation.prompt_version !== STRUCTURED_PROMPT_VERSION || state.currentConversation.ai_input_schema_version !== AI_INPUT_SCHEMA_VERSION)) throw new Error('此实验会话协议已变化，请重新开始解读');
+  const freshSystemMessage = { role: 'system', content: rulesMode !== null ? buildRulesSystemPrompt() : mode === 'structured' ? buildStructuredSystemPrompt() : buildSystemPrompt() };
   const messages = [freshSystemMessage, ...state.currentConversation.messages.slice(1), { role: 'user', content: followUpContent }];
   const result = await callDeepSeekRaw(messages, onDelta, signal);
   state.currentConversation.messages = [...messages, { role: 'assistant', content: result.text }];

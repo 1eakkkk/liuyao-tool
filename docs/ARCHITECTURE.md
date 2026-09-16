@@ -57,3 +57,10 @@ Vite 输出相对资源路径（`base: './'`），JS 目标为 ES2020，接近�
 Structured 会话自带模式及协议版本，追问与刷新恢复保持同一输入协议。debug 导出区域可以从同一个快照切换两份完整提示词，使用原复制按钮进行外部人工 A/B。普通用户主流程不增加实验步骤。
 
 新增验证：`npm run test:browser:structured`；离线成对导出：`npm run ab:prepare`。具体协议、人工评估和回滚见 [PHASE_4_REPORT.md](PHASE_4_REPORT.md)。
+
+
+## Phase 5：可选局部规则层
+
+新增 `src/rules/{registry,engine,schema}.js`。Canonical → 事实索引／共享 Core 函数／月支关系派生 → 独立 Rule Result → Structured 1.1 的 E。无写回、无第二套排盘。规则层只使用 `src/ai/schemas.js` 的纯结构校验工具，不依赖 API 或模型。
+
+默认 Legacy 和 Structured 1.0 保留。显式 debug + structured + ai_rules=off/on 才进入 1.1；两组系统 Prompt 相同，仅 enabled/hits 不同。会话保存协议版本与 rules_mode，追问及刷新不受后来 URL 切换影响，新解读才采用当前开关。详见 [RULE_SYSTEM.md](RULE_SYSTEM.md) 和 [PHASE_5_REPORT.md](PHASE_5_REPORT.md)。

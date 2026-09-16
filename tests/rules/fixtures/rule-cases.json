@@ -1,0 +1,571 @@
+{
+  "provenance": "Hand-authored isolated Canonical field patches; contract tests, not independently cast or historical cases. Includes hidden same-element synthetic annotation, which current missing-relative placement cannot produce.",
+  "cases": [
+    {
+      "rule_id": "LINE-MOVING-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/moving": true
+      },
+      "negative": {
+        "/lines/0/moving": false
+      }
+    },
+    {
+      "rule_id": "LINE-VOID-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/is_kongwang": true
+      },
+      "negative": {
+        "/lines/0/is_kongwang": false
+      }
+    },
+    {
+      "rule_id": "DAY-CLASH-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/branch": "子",
+        "/lines/0/relations/day_relation": "日辰冲",
+        "/calendar/day_branch": "午"
+      },
+      "negative": {
+        "/lines/0/branch": "子",
+        "/lines/0/relations/day_relation": "",
+        "/calendar/day_branch": "午"
+      }
+    },
+    {
+      "rule_id": "DAY-COMBINE-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/branch": "子",
+        "/lines/0/relations/day_relation": "日辰合",
+        "/calendar/day_branch": "丑"
+      },
+      "negative": {
+        "/lines/0/branch": "子",
+        "/lines/0/relations/day_relation": "",
+        "/calendar/day_branch": "丑"
+      }
+    },
+    {
+      "rule_id": "MOVE-RETURN-GENERATE-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/moving": true,
+        "/lines/0/element": "土",
+        "/lines/0/changed": {
+          "element": "火",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/return_relation": "回头生"
+      },
+      "negative": {
+        "/lines/0/moving": true,
+        "/lines/0/element": "土",
+        "/lines/0/changed": {
+          "element": "火",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/return_relation": ""
+      }
+    },
+    {
+      "rule_id": "MOVE-RETURN-CONTROL-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/moving": true,
+        "/lines/0/element": "土",
+        "/lines/0/changed": {
+          "element": "木",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/return_relation": "回头克"
+      },
+      "negative": {
+        "/lines/0/moving": true,
+        "/lines/0/element": "土",
+        "/lines/0/changed": {
+          "element": "木",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/return_relation": ""
+      }
+    },
+    {
+      "rule_id": "MOVE-ADVANCE-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/moving": true,
+        "/lines/0/branch": "寅",
+        "/lines/0/changed": {
+          "element": "木",
+          "branch": "卯",
+          "ganzhi": "甲卯",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/advance_retreat": "进神"
+      },
+      "negative": {
+        "/lines/0/moving": true,
+        "/lines/0/branch": "寅",
+        "/lines/0/changed": {
+          "element": "木",
+          "branch": "卯",
+          "ganzhi": "甲卯",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/advance_retreat": ""
+      }
+    },
+    {
+      "rule_id": "MOVE-RETREAT-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/moving": true,
+        "/lines/0/branch": "卯",
+        "/lines/0/changed": {
+          "element": "木",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/advance_retreat": "退神"
+      },
+      "negative": {
+        "/lines/0/moving": true,
+        "/lines/0/branch": "卯",
+        "/lines/0/changed": {
+          "element": "木",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/advance_retreat": ""
+      }
+    },
+    {
+      "rule_id": "HIDDEN-FLY-GENERATE-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/element": "木",
+        "/lines/0/hidden": {
+          "element": "火",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/hidden_relation": "飞神生伏神"
+      },
+      "negative": {
+        "/lines/0/element": "木",
+        "/lines/0/hidden": {
+          "element": "火",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/hidden_relation": ""
+      }
+    },
+    {
+      "rule_id": "HIDDEN-GENERATE-FLY-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/element": "木",
+        "/lines/0/hidden": {
+          "element": "水",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/hidden_relation": "伏神生飞神"
+      },
+      "negative": {
+        "/lines/0/element": "木",
+        "/lines/0/hidden": {
+          "element": "水",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/hidden_relation": ""
+      }
+    },
+    {
+      "rule_id": "HIDDEN-FLY-CONTROL-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/element": "木",
+        "/lines/0/hidden": {
+          "element": "土",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/hidden_relation": "飞神克伏神"
+      },
+      "negative": {
+        "/lines/0/element": "木",
+        "/lines/0/hidden": {
+          "element": "土",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/hidden_relation": ""
+      }
+    },
+    {
+      "rule_id": "HIDDEN-CONTROL-FLY-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/element": "木",
+        "/lines/0/hidden": {
+          "element": "金",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/hidden_relation": "伏神克飞神"
+      },
+      "negative": {
+        "/lines/0/element": "木",
+        "/lines/0/hidden": {
+          "element": "金",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/hidden_relation": ""
+      }
+    },
+    {
+      "rule_id": "HIDDEN-SAME-ELEMENT-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/element": "木",
+        "/lines/0/hidden": {
+          "element": "木",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/hidden_relation": "飞伏比和"
+      },
+      "negative": {
+        "/lines/0/element": "木",
+        "/lines/0/hidden": {
+          "element": "木",
+          "branch": "寅",
+          "ganzhi": "甲寅",
+          "relative": "官鬼"
+        },
+        "/lines/0/relations/hidden_relation": ""
+      }
+    },
+    {
+      "rule_id": "MONTH-STATE-WANG-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/element": "木",
+        "/lines/0/relations/month_strength": "旺",
+        "/calendar/month_branch": "寅"
+      },
+      "negative": {
+        "/lines/0/element": "木",
+        "/lines/0/relations/month_strength": "",
+        "/calendar/month_branch": "寅"
+      }
+    },
+    {
+      "rule_id": "MONTH-STATE-XIANG-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/element": "火",
+        "/lines/0/relations/month_strength": "相",
+        "/calendar/month_branch": "寅"
+      },
+      "negative": {
+        "/lines/0/element": "火",
+        "/lines/0/relations/month_strength": "",
+        "/calendar/month_branch": "寅"
+      }
+    },
+    {
+      "rule_id": "MONTH-STATE-XIU-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/element": "水",
+        "/lines/0/relations/month_strength": "休",
+        "/calendar/month_branch": "寅"
+      },
+      "negative": {
+        "/lines/0/element": "水",
+        "/lines/0/relations/month_strength": "",
+        "/calendar/month_branch": "寅"
+      }
+    },
+    {
+      "rule_id": "MONTH-STATE-QIU-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/element": "金",
+        "/lines/0/relations/month_strength": "囚",
+        "/calendar/month_branch": "寅"
+      },
+      "negative": {
+        "/lines/0/element": "金",
+        "/lines/0/relations/month_strength": "",
+        "/calendar/month_branch": "寅"
+      }
+    },
+    {
+      "rule_id": "MONTH-STATE-SI-001",
+      "target_line": 1,
+      "positive": {
+        "/lines/0/element": "土",
+        "/lines/0/relations/month_strength": "死",
+        "/calendar/month_branch": "寅"
+      },
+      "negative": {
+        "/lines/0/element": "土",
+        "/lines/0/relations/month_strength": "",
+        "/calendar/month_branch": "寅"
+      }
+    },
+    {
+      "rule_id": "SHI-GENERATE-YING-001",
+      "target_line": 6,
+      "positive": {
+        "/hexagram/shi_line": 6,
+        "/hexagram/ying_line": 3,
+        "/lines/5/element": "木",
+        "/lines/2/element": "火",
+        "/lines/0/is_shi": false,
+        "/lines/0/is_ying": false,
+        "/lines/1/is_shi": false,
+        "/lines/1/is_ying": false,
+        "/lines/2/is_shi": false,
+        "/lines/2/is_ying": true,
+        "/lines/3/is_shi": false,
+        "/lines/3/is_ying": false,
+        "/lines/4/is_shi": false,
+        "/lines/4/is_ying": false,
+        "/lines/5/is_shi": true,
+        "/lines/5/is_ying": false
+      },
+      "negative": {
+        "/hexagram/shi_line": 6,
+        "/hexagram/ying_line": 3,
+        "/lines/5/element": "木",
+        "/lines/2/element": "木",
+        "/lines/0/is_shi": false,
+        "/lines/0/is_ying": false,
+        "/lines/1/is_shi": false,
+        "/lines/1/is_ying": false,
+        "/lines/2/is_shi": false,
+        "/lines/2/is_ying": true,
+        "/lines/3/is_shi": false,
+        "/lines/3/is_ying": false,
+        "/lines/4/is_shi": false,
+        "/lines/4/is_ying": false,
+        "/lines/5/is_shi": true,
+        "/lines/5/is_ying": false
+      }
+    },
+    {
+      "rule_id": "YING-GENERATE-SHI-001",
+      "target_line": 6,
+      "positive": {
+        "/hexagram/shi_line": 6,
+        "/hexagram/ying_line": 3,
+        "/lines/5/element": "木",
+        "/lines/2/element": "水",
+        "/lines/0/is_shi": false,
+        "/lines/0/is_ying": false,
+        "/lines/1/is_shi": false,
+        "/lines/1/is_ying": false,
+        "/lines/2/is_shi": false,
+        "/lines/2/is_ying": true,
+        "/lines/3/is_shi": false,
+        "/lines/3/is_ying": false,
+        "/lines/4/is_shi": false,
+        "/lines/4/is_ying": false,
+        "/lines/5/is_shi": true,
+        "/lines/5/is_ying": false
+      },
+      "negative": {
+        "/hexagram/shi_line": 6,
+        "/hexagram/ying_line": 3,
+        "/lines/5/element": "木",
+        "/lines/2/element": "木",
+        "/lines/0/is_shi": false,
+        "/lines/0/is_ying": false,
+        "/lines/1/is_shi": false,
+        "/lines/1/is_ying": false,
+        "/lines/2/is_shi": false,
+        "/lines/2/is_ying": true,
+        "/lines/3/is_shi": false,
+        "/lines/3/is_ying": false,
+        "/lines/4/is_shi": false,
+        "/lines/4/is_ying": false,
+        "/lines/5/is_shi": true,
+        "/lines/5/is_ying": false
+      }
+    },
+    {
+      "rule_id": "SHI-CONTROL-YING-001",
+      "target_line": 6,
+      "positive": {
+        "/hexagram/shi_line": 6,
+        "/hexagram/ying_line": 3,
+        "/lines/5/element": "木",
+        "/lines/2/element": "土",
+        "/lines/0/is_shi": false,
+        "/lines/0/is_ying": false,
+        "/lines/1/is_shi": false,
+        "/lines/1/is_ying": false,
+        "/lines/2/is_shi": false,
+        "/lines/2/is_ying": true,
+        "/lines/3/is_shi": false,
+        "/lines/3/is_ying": false,
+        "/lines/4/is_shi": false,
+        "/lines/4/is_ying": false,
+        "/lines/5/is_shi": true,
+        "/lines/5/is_ying": false
+      },
+      "negative": {
+        "/hexagram/shi_line": 6,
+        "/hexagram/ying_line": 3,
+        "/lines/5/element": "木",
+        "/lines/2/element": "木",
+        "/lines/0/is_shi": false,
+        "/lines/0/is_ying": false,
+        "/lines/1/is_shi": false,
+        "/lines/1/is_ying": false,
+        "/lines/2/is_shi": false,
+        "/lines/2/is_ying": true,
+        "/lines/3/is_shi": false,
+        "/lines/3/is_ying": false,
+        "/lines/4/is_shi": false,
+        "/lines/4/is_ying": false,
+        "/lines/5/is_shi": true,
+        "/lines/5/is_ying": false
+      }
+    },
+    {
+      "rule_id": "YING-CONTROL-SHI-001",
+      "target_line": 6,
+      "positive": {
+        "/hexagram/shi_line": 6,
+        "/hexagram/ying_line": 3,
+        "/lines/5/element": "木",
+        "/lines/2/element": "金",
+        "/lines/0/is_shi": false,
+        "/lines/0/is_ying": false,
+        "/lines/1/is_shi": false,
+        "/lines/1/is_ying": false,
+        "/lines/2/is_shi": false,
+        "/lines/2/is_ying": true,
+        "/lines/3/is_shi": false,
+        "/lines/3/is_ying": false,
+        "/lines/4/is_shi": false,
+        "/lines/4/is_ying": false,
+        "/lines/5/is_shi": true,
+        "/lines/5/is_ying": false
+      },
+      "negative": {
+        "/hexagram/shi_line": 6,
+        "/hexagram/ying_line": 3,
+        "/lines/5/element": "木",
+        "/lines/2/element": "木",
+        "/lines/0/is_shi": false,
+        "/lines/0/is_ying": false,
+        "/lines/1/is_shi": false,
+        "/lines/1/is_ying": false,
+        "/lines/2/is_shi": false,
+        "/lines/2/is_ying": true,
+        "/lines/3/is_shi": false,
+        "/lines/3/is_ying": false,
+        "/lines/4/is_shi": false,
+        "/lines/4/is_ying": false,
+        "/lines/5/is_shi": true,
+        "/lines/5/is_ying": false
+      }
+    },
+    {
+      "rule_id": "SHI-YING-SAME-ELEMENT-001",
+      "target_line": 6,
+      "positive": {
+        "/hexagram/shi_line": 6,
+        "/hexagram/ying_line": 3,
+        "/lines/5/element": "木",
+        "/lines/2/element": "木",
+        "/lines/0/is_shi": false,
+        "/lines/0/is_ying": false,
+        "/lines/1/is_shi": false,
+        "/lines/1/is_ying": false,
+        "/lines/2/is_shi": false,
+        "/lines/2/is_ying": true,
+        "/lines/3/is_shi": false,
+        "/lines/3/is_ying": false,
+        "/lines/4/is_shi": false,
+        "/lines/4/is_ying": false,
+        "/lines/5/is_shi": true,
+        "/lines/5/is_ying": false
+      },
+      "negative": {
+        "/hexagram/shi_line": 6,
+        "/hexagram/ying_line": 3,
+        "/lines/5/element": "木",
+        "/lines/2/element": "土",
+        "/lines/0/is_shi": false,
+        "/lines/0/is_ying": false,
+        "/lines/1/is_shi": false,
+        "/lines/1/is_ying": false,
+        "/lines/2/is_shi": false,
+        "/lines/2/is_ying": true,
+        "/lines/3/is_shi": false,
+        "/lines/3/is_ying": false,
+        "/lines/4/is_shi": false,
+        "/lines/4/is_ying": false,
+        "/lines/5/is_shi": true,
+        "/lines/5/is_ying": false
+      }
+    },
+    {
+      "rule_id": "MONTH-CLASH-001",
+      "target_line": 1,
+      "positive": {
+        "/calendar/month_branch": "午",
+        "/lines/0/branch": "子"
+      },
+      "negative": {
+        "/calendar/month_branch": "子",
+        "/lines/0/branch": "子"
+      }
+    },
+    {
+      "rule_id": "MONTH-COMBINE-001",
+      "target_line": 1,
+      "positive": {
+        "/calendar/month_branch": "丑",
+        "/lines/0/branch": "子"
+      },
+      "negative": {
+        "/calendar/month_branch": "子",
+        "/lines/0/branch": "子"
+      }
+    }
+  ]
+}
