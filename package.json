@@ -1,0 +1,26 @@
+{
+  "name": "liuyao-tool",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.15.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run",
+    "test:baseline": "node --test tests/regression/baseline.test.cjs",
+    "test:browser": "node scripts/verify-browser.js",
+    "test:browser:structured": "node scripts/verify-structured-browser.js",
+    "ab:prepare": "node scripts/phase4-ab.js --prepare"
+  },
+  "devDependencies": {
+    "jsdom": "30.0.1",
+    "playwright": "1.63.0",
+    "pngjs": "7.0.0",
+    "vite": "8.3.0",
+    "vitest": "5.0.0"
+  }
+}
