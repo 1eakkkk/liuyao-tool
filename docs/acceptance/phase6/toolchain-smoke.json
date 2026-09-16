@@ -1,0 +1,48 @@
+{
+  "synthetic": true,
+  "real_external_answers": 0,
+  "api_calls": 0,
+  "preparation": {
+    "status": "prepared_no_answers",
+    "experiment_id": "phase6-cli-smoke",
+    "cases": 8,
+    "freeze_hash": "4d62816ad964b52e82950a5962dcb54dbf59a9dbe28eb510d447a9cbf7ef6682"
+  },
+  "before": {
+    "status": "awaiting_external_answers",
+    "data_kind": "synthetic",
+    "collected_pairs": 0,
+    "required_pairs": 16,
+    "effects_conclusion": null
+  },
+  "scoring": {
+    "status": "blind_scoring_pending",
+    "anonymous_pairs": 16
+  },
+  "locking": {
+    "status": "blind_reviews_locked",
+    "lock_hash": "5a2079f06f6362a8f8b21f21ff2342df241a9dd58ec816102989419e8f10d0be"
+  },
+  "unblinding": {
+    "status": "unblinded",
+    "data_kind": "synthetic"
+  },
+  "report": {
+    "status": "synthetic_pipeline_validation",
+    "effects_conclusion": null
+  },
+  "checks": {
+    "cli_full_flow": "passed",
+    "raw_disclosure_preserved": "passed",
+    "scoring_separation": "passed",
+    "compromised_pair_count": 1,
+    "no_effect_conclusion": "passed"
+  },
+  "prompt_characters": {
+    "off": 156385,
+    "on": 230193,
+    "delta": 73808,
+    "increase_percent": 47.19634236020079,
+    "unit": "Unicode code points; not tokens"
+  }
+}

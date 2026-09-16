@@ -1,0 +1,300 @@
+{
+  "report": [
+    {
+      "target": "dev",
+      "width": 1280,
+      "mock_requests": 5,
+      "paired_copy": "passed",
+      "rules_followup_export": "passed",
+      "identical_system_prompt": "passed",
+      "only_enabled_and_hits_differ": "passed",
+      "restore_rules_lock": "passed",
+      "stale_rules_export_cleared": "passed",
+      "errors": []
+    },
+    {
+      "target": "built",
+      "width": 390,
+      "mock_requests": 5,
+      "paired_copy": "passed",
+      "rules_followup_export": "passed",
+      "identical_system_prompt": "passed",
+      "only_enabled_and_hits_differ": "passed",
+      "restore_rules_lock": "passed",
+      "stale_rules_export_cleared": "passed",
+      "errors": []
+    }
+  ],
+  "records": [
+    {
+      "case_id": "dev",
+      "order": 1,
+      "input_mode": "structured",
+      "rules_mode": "off",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-rules-p1",
+      "ai_input_schema_version": "1.1",
+      "ruleset_version": "r1",
+      "rule_result_schema_version": "1.0",
+      "rule_result_hash": "ab5aff55967986840f52b94836f13df5586530abba29e26fc8a81478a1767b64",
+      "payload_kind": "api_body",
+      "payload_hash": "59add9a7c096e4c590abcf29bed26558a426425abee0934b035e8755b0f78e64",
+      "response_hash": "7832bcf2c0eb653844633e264debf3171b8564d29d2dd2b09444face284566c2",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 127.83820000000014,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "dev",
+      "order": 2,
+      "input_mode": "structured",
+      "rules_mode": "on",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-rules-p1",
+      "ai_input_schema_version": "1.1",
+      "ruleset_version": "r1",
+      "rule_result_schema_version": "1.0",
+      "rule_result_hash": "c3b013d85b9c09156869bcd108e741c49bd4ac8d874761457a3254f4ebb9762c",
+      "payload_kind": "api_body",
+      "payload_hash": "798d66c0f874f2bd83b8435a1e55d90555615d10ecd183c7d31abcb68869e9e7",
+      "response_hash": "7832bcf2c0eb653844633e264debf3171b8564d29d2dd2b09444face284566c2",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 64.13010000000031,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "dev",
+      "order": 3,
+      "input_mode": "structured",
+      "rules_mode": "on",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-rules-p1",
+      "ai_input_schema_version": "1.1",
+      "ruleset_version": "r1",
+      "rule_result_schema_version": "1.0",
+      "rule_result_hash": "c3b013d85b9c09156869bcd108e741c49bd4ac8d874761457a3254f4ebb9762c",
+      "payload_kind": "api_body",
+      "payload_hash": "69b83e429d3dda4b19d49ae7c633c66533cd93c0ef16f267146769cec341eb46",
+      "response_hash": "7832bcf2c0eb653844633e264debf3171b8564d29d2dd2b09444face284566c2",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 63.83150000000023,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "dev",
+      "order": 4,
+      "input_mode": "structured",
+      "rules_mode": "on",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-rules-p1",
+      "ai_input_schema_version": "1.1",
+      "ruleset_version": "r1",
+      "rule_result_schema_version": "1.0",
+      "rule_result_hash": "c3b013d85b9c09156869bcd108e741c49bd4ac8d874761457a3254f4ebb9762c",
+      "payload_kind": "api_body",
+      "payload_hash": "78179b08a4fb44d304ba29f03463488673ba8a93d31c8d288bfa4b02d5e9e786",
+      "response_hash": "7832bcf2c0eb653844633e264debf3171b8564d29d2dd2b09444face284566c2",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 440.3723,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "dev",
+      "order": 5,
+      "input_mode": "structured",
+      "rules_mode": "off",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-rules-p1",
+      "ai_input_schema_version": "1.1",
+      "ruleset_version": "r1",
+      "rule_result_schema_version": "1.0",
+      "rule_result_hash": "ab5aff55967986840f52b94836f13df5586530abba29e26fc8a81478a1767b64",
+      "payload_kind": "api_body",
+      "payload_hash": "59add9a7c096e4c590abcf29bed26558a426425abee0934b035e8755b0f78e64",
+      "response_hash": "7832bcf2c0eb653844633e264debf3171b8564d29d2dd2b09444face284566c2",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 71.90170000000035,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "order": 6,
+      "input_mode": "structured",
+      "rules_mode": "off",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-rules-p1",
+      "ai_input_schema_version": "1.1",
+      "ruleset_version": "r1",
+      "rule_result_schema_version": "1.0",
+      "rule_result_hash": "ab5aff55967986840f52b94836f13df5586530abba29e26fc8a81478a1767b64",
+      "payload_kind": "api_body",
+      "payload_hash": "59add9a7c096e4c590abcf29bed26558a426425abee0934b035e8755b0f78e64",
+      "response_hash": "7832bcf2c0eb653844633e264debf3171b8564d29d2dd2b09444face284566c2",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 130.683500000001,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "order": 7,
+      "input_mode": "structured",
+      "rules_mode": "on",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-rules-p1",
+      "ai_input_schema_version": "1.1",
+      "ruleset_version": "r1",
+      "rule_result_schema_version": "1.0",
+      "rule_result_hash": "c3b013d85b9c09156869bcd108e741c49bd4ac8d874761457a3254f4ebb9762c",
+      "payload_kind": "api_body",
+      "payload_hash": "798d66c0f874f2bd83b8435a1e55d90555615d10ecd183c7d31abcb68869e9e7",
+      "response_hash": "7832bcf2c0eb653844633e264debf3171b8564d29d2dd2b09444face284566c2",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 65.22219999999834,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "order": 8,
+      "input_mode": "structured",
+      "rules_mode": "on",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-rules-p1",
+      "ai_input_schema_version": "1.1",
+      "ruleset_version": "r1",
+      "rule_result_schema_version": "1.0",
+      "rule_result_hash": "c3b013d85b9c09156869bcd108e741c49bd4ac8d874761457a3254f4ebb9762c",
+      "payload_kind": "api_body",
+      "payload_hash": "69b83e429d3dda4b19d49ae7c633c66533cd93c0ef16f267146769cec341eb46",
+      "response_hash": "7832bcf2c0eb653844633e264debf3171b8564d29d2dd2b09444face284566c2",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 77.71160000000054,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "order": 9,
+      "input_mode": "structured",
+      "rules_mode": "on",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-rules-p1",
+      "ai_input_schema_version": "1.1",
+      "ruleset_version": "r1",
+      "rule_result_schema_version": "1.0",
+      "rule_result_hash": "c3b013d85b9c09156869bcd108e741c49bd4ac8d874761457a3254f4ebb9762c",
+      "payload_kind": "api_body",
+      "payload_hash": "78179b08a4fb44d304ba29f03463488673ba8a93d31c8d288bfa4b02d5e9e786",
+      "response_hash": "7832bcf2c0eb653844633e264debf3171b8564d29d2dd2b09444face284566c2",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 440.8629999999994,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    },
+    {
+      "case_id": "built",
+      "order": 10,
+      "input_mode": "structured",
+      "rules_mode": "off",
+      "model": "deepseek-flash",
+      "prompt_version": "structured-rules-p1",
+      "ai_input_schema_version": "1.1",
+      "ruleset_version": "r1",
+      "rule_result_schema_version": "1.0",
+      "rule_result_hash": "ab5aff55967986840f52b94836f13df5586530abba29e26fc8a81478a1767b64",
+      "payload_kind": "api_body",
+      "payload_hash": "59add9a7c096e4c590abcf29bed26558a426425abee0934b035e8755b0f78e64",
+      "response_hash": "7832bcf2c0eb653844633e264debf3171b8564d29d2dd2b09444face284566c2",
+      "usage": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 100
+      },
+      "latency": {
+        "milliseconds": 52.97659999999996,
+        "source": "mock_browser_end_to_end"
+      },
+      "mock": true
+    }
+  ]
+}

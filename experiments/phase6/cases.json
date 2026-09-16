@@ -1,0 +1,3547 @@
+{
+  "version": "phase6-cases-v1",
+  "rubric_version": "blind-review-v1",
+  "base_commit": "1dbc63cae2aab042a64d7d9106128de71b9aa22f",
+  "purpose": "定向局部事实关系诊断集，不是随机抽样或预测准确率评测。",
+  "cases": [
+    {
+      "case_id": "case-01",
+      "source": {
+        "kind": "core_recipe",
+        "sums": [
+          7,
+          8,
+          9,
+          7,
+          6,
+          8
+        ],
+        "timestamp": "2026-09-15T12:00:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "explicit_day_index": 0
+      },
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "advance-fixture",
+          "created_at": "1970-01-01T00:00:00.000Z",
+          "source": "manual",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "甲子",
+          "year_ganzhi": "丙午",
+          "month_ganzhi": "丁酉",
+          "hour_ganzhi": "庚午",
+          "anchor": {
+            "year": 2026,
+            "month": 9,
+            "day": 15
+          },
+          "month_branch": "酉",
+          "day_branch": "子",
+          "kongwang": [
+            "戌",
+            "亥"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "雷火丰",
+            "palace": "坎宫",
+            "lower_trigram": "离",
+            "upper_trigram": "震"
+          },
+          "changed": {
+            "name": "泽雷随"
+          },
+          "shi_line": 5,
+          "ying_line": 2
+        },
+        "display": {
+          "four_pillars_text": "年柱：丙午　月柱：丁酉　日柱：甲子　时柱：庚午",
+          "kong_text": "空亡：戌、亥",
+          "date_text": "公历：2026年9月15日　农历：丙午年八月初五",
+          "palace_text": "坎宫 · 五世卦（本宫五行：水）",
+          "lower_upper_text": "下卦：☲ 离　上卦：☳ 震",
+          "day_kong_text": "日柱：甲子　空亡：戌、亥",
+          "overall_trend_text": "当令得力(旺/相)2爻、当令减力(休/囚/死)4爻；动爻回头生0个、回头克1个；世应：应生世——当令得力与减力的爻数相当，旺衰不算悬殊，具体判断还要结合用神细看"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "死",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "1爻",
+            "relative": "子孙",
+            "spirit": "青龙",
+            "ganzhi": "己卯",
+            "element": "木",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "卯"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "日辰合",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "2爻",
+            "relative": "官鬼",
+            "spirit": "朱雀",
+            "ganzhi": "己丑",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "丑"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yang",
+            "changed": {
+              "ganzhi": "庚辰",
+              "element": "土",
+              "relative": "官鬼",
+              "branch": "辰"
+            },
+            "hidden": null,
+            "relations": {
+              "month_strength": "相",
+              "day_relation": "",
+              "return_relation": "回头克",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "3爻",
+            "relative": "兄弟",
+            "spirit": "勾陈",
+            "ganzhi": "己亥",
+            "element": "水",
+            "state_text": "老阳→变阴",
+            "moving": true,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": true,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "亥"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "日辰冲",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "妻财",
+            "spirit": "螣蛇",
+            "ganzhi": "庚午",
+            "element": "火",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "午"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yin",
+            "changed": {
+              "ganzhi": "丁酉",
+              "element": "金",
+              "relative": "父母",
+              "branch": "酉"
+            },
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "进神",
+              "hidden_relation": ""
+            },
+            "position_label": "5爻",
+            "relative": "父母",
+            "spirit": "白虎",
+            "ganzhi": "庚申",
+            "element": "金",
+            "state_text": "老阴→变阳",
+            "moving": true,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "申"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "官鬼",
+            "spirit": "玄武",
+            "ganzhi": "庚戌",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": true,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "戌"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "question": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+      "follow_up": "请复核上一答中引用的爻位及关系方向，补充遗漏的适用依据；若有错误请明确更正，不要改变卦盘字段。",
+      "checklist": [
+        {
+          "checklist_id": "check-1",
+          "rule_id": "MOVE-ADVANCE-001",
+          "line": 5,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑动变；该爻存在对应变化，核对变化种类及方向，不要求吉凶结论。"
+        },
+        {
+          "checklist_id": "check-2",
+          "rule_id": "MOVE-RETURN-CONTROL-001",
+          "line": 3,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑动变；该爻存在对应变化，核对变化种类及方向，不要求吉凶结论。"
+        },
+        {
+          "checklist_id": "check-3",
+          "rule_id": "YING-GENERATE-SHI-001",
+          "line": 5,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求说明世应关系；只核对方向，不把现实双方身份或用神选择当作程序事实。"
+        },
+        {
+          "checklist_id": "check-4",
+          "rule_id": "DAY-CLASH-001",
+          "line": 4,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑日月关系；核对该爻与日月的局部配对，不要求合化、解除或吉凶推论。"
+        }
+      ]
+    },
+    {
+      "case_id": "case-02",
+      "source": {
+        "kind": "static",
+        "index": 44,
+        "identifier": 44
+      },
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "legacy-dbc6b2e0",
+          "created_at": "1970-01-01T00:00:00.000Z",
+          "source": "manual",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "壬申",
+          "year_ganzhi": "丙午",
+          "month_ganzhi": "丁酉",
+          "hour_ganzhi": "丙午",
+          "anchor": {
+            "year": 2026,
+            "month": 9,
+            "day": 15
+          },
+          "month_branch": "酉",
+          "day_branch": "申",
+          "kongwang": [
+            "戌",
+            "亥"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "火山旅",
+            "palace": "离宫",
+            "lower_trigram": "艮",
+            "upper_trigram": "离"
+          },
+          "changed": null,
+          "shi_line": 1,
+          "ying_line": 4
+        },
+        "display": {
+          "four_pillars_text": "年柱：丙午　月柱：丁酉　日柱：壬申　时柱：丙午",
+          "kong_text": "空亡：戌、亥",
+          "date_text": "公历：2026年9月15日　农历：丙午年八月初五",
+          "palace_text": "离宫 · 一世卦（本宫五行：火）",
+          "lower_upper_text": "下卦：☶ 艮　上卦：☲ 离",
+          "day_kong_text": "日柱：壬申　空亡：戌、亥",
+          "overall_trend_text": "当令得力(旺/相)2爻、当令减力(休/囚/死)4爻；世应：世生应——当令得力与减力的爻数相当，旺衰不算悬殊，具体判断还要结合用神细看"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": {
+              "relative": "父母",
+              "ganzhi": "己卯",
+              "element": "木",
+              "branch": "卯"
+            },
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": "伏神克飞神"
+            },
+            "position_label": "1爻",
+            "relative": "子孙",
+            "spirit": "玄武",
+            "ganzhi": "丙辰",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "辰"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "2爻",
+            "relative": "兄弟",
+            "spirit": "青龙",
+            "ganzhi": "丙午",
+            "element": "火",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "午"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": {
+              "relative": "官鬼",
+              "ganzhi": "己亥",
+              "element": "水",
+              "branch": "亥"
+            },
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": "飞神生伏神"
+            },
+            "position_label": "3爻",
+            "relative": "妻财",
+            "spirit": "朱雀",
+            "ganzhi": "丙申",
+            "element": "金",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "申"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "妻财",
+            "spirit": "勾陈",
+            "ganzhi": "己酉",
+            "element": "金",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "酉"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "5爻",
+            "relative": "子孙",
+            "spirit": "螣蛇",
+            "ganzhi": "己未",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "未"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "日辰合",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "兄弟",
+            "spirit": "白虎",
+            "ganzhi": "己巳",
+            "element": "火",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "巳"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "question": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+      "follow_up": "请复核上一答中引用的爻位及关系方向，补充遗漏的适用依据；若有错误请明确更正，不要改变卦盘字段。",
+      "checklist": [
+        {
+          "checklist_id": "check-1",
+          "rule_id": "HIDDEN-FLY-GENERATE-001",
+          "line": 3,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑适用伏神关系；核对飞伏生克方向，不据此判定最终结果。"
+        },
+        {
+          "checklist_id": "check-2",
+          "rule_id": "HIDDEN-CONTROL-FLY-001",
+          "line": 1,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑适用伏神关系；核对飞伏生克方向，不据此判定最终结果。"
+        },
+        {
+          "checklist_id": "check-3",
+          "rule_id": "SHI-GENERATE-YING-001",
+          "line": 1,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求说明世应关系；只核对方向，不把现实双方身份或用神选择当作程序事实。"
+        },
+        {
+          "checklist_id": "check-4",
+          "rule_id": "MONTH-COMBINE-001",
+          "line": 1,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑日月关系；核对该爻与日月的局部配对，不要求合化、解除或吉凶推论。"
+        }
+      ]
+    },
+    {
+      "case_id": "case-03",
+      "source": {
+        "kind": "static",
+        "index": 60,
+        "identifier": 60
+      },
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "legacy-deac322",
+          "created_at": "1970-01-01T00:00:00.000Z",
+          "source": "manual",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "甲子",
+          "year_ganzhi": "丙午",
+          "month_ganzhi": "丁酉",
+          "hour_ganzhi": "庚午",
+          "anchor": {
+            "year": 2026,
+            "month": 9,
+            "day": 15
+          },
+          "month_branch": "酉",
+          "day_branch": "子",
+          "kongwang": [
+            "戌",
+            "亥"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "天山遁",
+            "palace": "乾宫",
+            "lower_trigram": "艮",
+            "upper_trigram": "乾"
+          },
+          "changed": null,
+          "shi_line": 2,
+          "ying_line": 5
+        },
+        "display": {
+          "four_pillars_text": "年柱：丙午　月柱：丁酉　日柱：甲子　时柱：庚午",
+          "kong_text": "空亡：戌、亥",
+          "date_text": "公历：2026年9月15日　农历：丙午年八月初五",
+          "palace_text": "乾宫 · 二世卦（本宫五行：金）",
+          "lower_upper_text": "下卦：☶ 艮　上卦：☰ 乾",
+          "day_kong_text": "日柱：甲子　空亡：戌、亥",
+          "overall_trend_text": "当令得力(旺/相)2爻、当令减力(休/囚/死)4爻；世应：世克应——当令得力与减力的爻数相当，旺衰不算悬殊，具体判断还要结合用神细看"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": {
+              "relative": "子孙",
+              "ganzhi": "甲子",
+              "element": "水",
+              "branch": "子"
+            },
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": "飞神克伏神"
+            },
+            "position_label": "1爻",
+            "relative": "父母",
+            "spirit": "青龙",
+            "ganzhi": "丙辰",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "辰"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": {
+              "relative": "妻财",
+              "ganzhi": "甲寅",
+              "element": "木",
+              "branch": "寅"
+            },
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "日辰冲",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": "伏神生飞神"
+            },
+            "position_label": "2爻",
+            "relative": "官鬼",
+            "spirit": "朱雀",
+            "ganzhi": "丙午",
+            "element": "火",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "午"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "3爻",
+            "relative": "兄弟",
+            "spirit": "勾陈",
+            "ganzhi": "丙申",
+            "element": "金",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "申"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "日辰冲",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "官鬼",
+            "spirit": "螣蛇",
+            "ganzhi": "壬午",
+            "element": "火",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "午"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "5爻",
+            "relative": "兄弟",
+            "spirit": "白虎",
+            "ganzhi": "壬申",
+            "element": "金",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "申"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "父母",
+            "spirit": "玄武",
+            "ganzhi": "壬戌",
+            "element": "土",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": true,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "戌"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "question": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+      "follow_up": "请复核上一答中引用的爻位及关系方向，补充遗漏的适用依据；若有错误请明确更正，不要改变卦盘字段。",
+      "checklist": [
+        {
+          "checklist_id": "check-1",
+          "rule_id": "HIDDEN-GENERATE-FLY-001",
+          "line": 2,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑适用伏神关系；核对飞伏生克方向，不据此判定最终结果。"
+        },
+        {
+          "checklist_id": "check-2",
+          "rule_id": "HIDDEN-FLY-CONTROL-001",
+          "line": 1,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑适用伏神关系；核对飞伏生克方向，不据此判定最终结果。"
+        },
+        {
+          "checklist_id": "check-3",
+          "rule_id": "SHI-CONTROL-YING-001",
+          "line": 2,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求说明世应关系；只核对方向，不把现实双方身份或用神选择当作程序事实。"
+        },
+        {
+          "checklist_id": "check-4",
+          "rule_id": "DAY-CLASH-001",
+          "line": 2,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑日月关系；核对该爻与日月的局部配对，不要求合化、解除或吉凶推论。"
+        }
+      ]
+    },
+    {
+      "case_id": "case-04",
+      "source": {
+        "kind": "legacy",
+        "index": 13,
+        "identifier": "baseline-14"
+      },
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "legacy-5a9cb724",
+          "created_at": "1970-01-01T00:00:00.000Z",
+          "source": "manual",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "乙未",
+          "year_ganzhi": "乙巳",
+          "month_ganzhi": "戊子",
+          "hour_ganzhi": "丙子",
+          "anchor": {
+            "year": 2026,
+            "month": 1,
+            "day": 1
+          },
+          "month_branch": "子",
+          "day_branch": "未",
+          "kongwang": [
+            "辰",
+            "巳"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "乾为天",
+            "palace": "乾宫",
+            "lower_trigram": "乾",
+            "upper_trigram": "乾"
+          },
+          "changed": {
+            "name": "泽雷随"
+          },
+          "shi_line": 6,
+          "ying_line": 3
+        },
+        "display": {
+          "four_pillars_text": "年柱：乙巳　月柱：戊子　日柱：乙未　时柱：丙子",
+          "kong_text": "空亡：辰、巳",
+          "date_text": "公历：2026年1月1日　农历：乙巳年十一月十三",
+          "palace_text": "乾宫 · 八纯卦（本宫五行：金）",
+          "lower_upper_text": "下卦：☰ 乾　上卦：☰ 乾",
+          "day_kong_text": "日柱：乙未　空亡：辰、巳",
+          "overall_trend_text": "当令得力(旺/相)2爻、当令减力(休/囚/死)4爻；世应：世应比和——当令得力与减力的爻数相当，旺衰不算悬殊，具体判断还要结合用神细看"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "1爻",
+            "relative": "子孙",
+            "spirit": "青龙",
+            "ganzhi": "甲子",
+            "element": "水",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "子"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yang",
+            "changed": {
+              "ganzhi": "庚寅",
+              "element": "木",
+              "relative": "妻财",
+              "branch": "寅"
+            },
+            "hidden": null,
+            "relations": {
+              "month_strength": "相",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "2爻",
+            "relative": "妻财",
+            "spirit": "朱雀",
+            "ganzhi": "甲寅",
+            "element": "木",
+            "state_text": "老阳→变阴",
+            "moving": true,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "寅"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yang",
+            "changed": {
+              "ganzhi": "庚辰",
+              "element": "土",
+              "relative": "父母",
+              "branch": "辰"
+            },
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "3爻",
+            "relative": "父母",
+            "spirit": "勾陈",
+            "ganzhi": "甲辰",
+            "element": "土",
+            "state_text": "老阳→变阴",
+            "moving": true,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": true,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "辰"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "死",
+              "day_relation": "日辰合",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "官鬼",
+            "spirit": "螣蛇",
+            "ganzhi": "壬午",
+            "element": "火",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "午"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "5爻",
+            "relative": "兄弟",
+            "spirit": "白虎",
+            "ganzhi": "壬申",
+            "element": "金",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "申"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yang",
+            "changed": {
+              "ganzhi": "丁未",
+              "element": "土",
+              "relative": "父母",
+              "branch": "未"
+            },
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "退神",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "父母",
+            "spirit": "玄武",
+            "ganzhi": "壬戌",
+            "element": "土",
+            "state_text": "老阳→变阴",
+            "moving": true,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "戌"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "question": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+      "follow_up": "请复核上一答中引用的爻位及关系方向，补充遗漏的适用依据；若有错误请明确更正，不要改变卦盘字段。",
+      "checklist": [
+        {
+          "checklist_id": "check-1",
+          "rule_id": "MOVE-RETREAT-001",
+          "line": 6,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑动变；该爻存在对应变化，核对变化种类及方向，不要求吉凶结论。"
+        },
+        {
+          "checklist_id": "check-2",
+          "rule_id": "SHI-YING-SAME-ELEMENT-001",
+          "line": 6,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求说明世应关系；只核对方向，不把现实双方身份或用神选择当作程序事实。"
+        },
+        {
+          "checklist_id": "check-3",
+          "rule_id": "MONTH-CLASH-001",
+          "line": 4,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑日月关系；核对该爻与日月的局部配对，不要求合化、解除或吉凶推论。"
+        }
+      ]
+    },
+    {
+      "case_id": "case-05",
+      "source": {
+        "kind": "static",
+        "index": 5,
+        "identifier": 5
+      },
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "legacy-184c3290",
+          "created_at": "1970-01-01T00:00:00.000Z",
+          "source": "manual",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "己亥",
+          "year_ganzhi": "丙午",
+          "month_ganzhi": "丁酉",
+          "hour_ganzhi": "庚午",
+          "anchor": {
+            "year": 2026,
+            "month": 9,
+            "day": 15
+          },
+          "month_branch": "酉",
+          "day_branch": "亥",
+          "kongwang": [
+            "辰",
+            "巳"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "地火明夷",
+            "palace": "坎宫",
+            "lower_trigram": "离",
+            "upper_trigram": "坤"
+          },
+          "changed": null,
+          "shi_line": 4,
+          "ying_line": 1
+        },
+        "display": {
+          "four_pillars_text": "年柱：丙午　月柱：丁酉　日柱：己亥　时柱：庚午",
+          "kong_text": "空亡：辰、巳",
+          "date_text": "公历：2026年9月15日　农历：丙午年八月初五",
+          "palace_text": "坎宫 · 游魂卦（本宫五行：水）",
+          "lower_upper_text": "下卦：☲ 离　上卦：☷ 坤",
+          "day_kong_text": "日柱：己亥　空亡：辰、巳",
+          "overall_trend_text": "当令得力(旺/相)3爻、当令减力(休/囚/死)3爻；世应：应克世——当令得力与减力的爻数相当，旺衰不算悬殊，具体判断还要结合用神细看"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "死",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "1爻",
+            "relative": "子孙",
+            "spirit": "螣蛇",
+            "ganzhi": "己卯",
+            "element": "木",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "卯"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "2爻",
+            "relative": "官鬼",
+            "spirit": "白虎",
+            "ganzhi": "己丑",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "丑"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": {
+              "relative": "妻财",
+              "ganzhi": "戊午",
+              "element": "火",
+              "branch": "午"
+            },
+            "relations": {
+              "month_strength": "相",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": "飞神克伏神"
+            },
+            "position_label": "3爻",
+            "relative": "兄弟",
+            "spirit": "玄武",
+            "ganzhi": "己亥",
+            "element": "水",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "亥"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "官鬼",
+            "spirit": "青龙",
+            "ganzhi": "癸丑",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "丑"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "相",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "5爻",
+            "relative": "兄弟",
+            "spirit": "朱雀",
+            "ganzhi": "癸亥",
+            "element": "水",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "亥"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "父母",
+            "spirit": "勾陈",
+            "ganzhi": "癸酉",
+            "element": "金",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "酉"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "question": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+      "follow_up": "请复核上一答中引用的爻位及关系方向，补充遗漏的适用依据；若有错误请明确更正，不要改变卦盘字段。",
+      "checklist": [
+        {
+          "checklist_id": "check-1",
+          "rule_id": "YING-CONTROL-SHI-001",
+          "line": 4,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求说明世应关系；只核对方向，不把现实双方身份或用神选择当作程序事实。"
+        },
+        {
+          "checklist_id": "check-2",
+          "rule_id": "HIDDEN-FLY-CONTROL-001",
+          "line": 3,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑适用伏神关系；核对飞伏生克方向，不据此判定最终结果。"
+        },
+        {
+          "checklist_id": "check-3",
+          "rule_id": "MONTH-CLASH-001",
+          "line": 1,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑日月关系；核对该爻与日月的局部配对，不要求合化、解除或吉凶推论。"
+        }
+      ]
+    },
+    {
+      "case_id": "case-06",
+      "source": {
+        "kind": "legacy",
+        "index": 16,
+        "identifier": "baseline-17"
+      },
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "legacy-b02abc",
+          "created_at": "1970-01-01T00:00:00.000Z",
+          "source": "system",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "丙辰",
+          "year_ganzhi": "乙巳",
+          "month_ganzhi": "戊子",
+          "hour_ganzhi": "戊子",
+          "anchor": {
+            "year": 2026,
+            "month": 1,
+            "day": 1
+          },
+          "month_branch": "子",
+          "day_branch": "辰",
+          "kongwang": [
+            "子",
+            "丑"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "火水未济",
+            "palace": "离宫",
+            "lower_trigram": "坎",
+            "upper_trigram": "离"
+          },
+          "changed": {
+            "name": "乾为天"
+          },
+          "shi_line": 3,
+          "ying_line": 6
+        },
+        "display": {
+          "four_pillars_text": "年柱：乙巳　月柱：戊子　日柱：丙辰　时柱：戊子",
+          "kong_text": "空亡：子、丑",
+          "date_text": "公历：2026年1月1日　农历：乙巳年十一月十三",
+          "palace_text": "离宫 · 三世卦（本宫五行：火）",
+          "lower_upper_text": "下卦：☵ 坎　上卦：☲ 离",
+          "day_kong_text": "日柱：丙辰　空亡：子、丑",
+          "overall_trend_text": "当令得力(旺/相)1爻、当令减力(休/囚/死)5爻；动爻回头生1个、回头克0个；世应：世应比和——整体当令气象偏弱，迹象比较集中"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yin",
+            "changed": {
+              "ganzhi": "甲子",
+              "element": "水",
+              "relative": "官鬼",
+              "branch": "子"
+            },
+            "hidden": null,
+            "relations": {
+              "month_strength": "相",
+              "day_relation": "",
+              "return_relation": "回头生",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "1爻",
+            "relative": "父母",
+            "spirit": "朱雀",
+            "ganzhi": "戊寅",
+            "element": "木",
+            "state_text": "老阴→变阳",
+            "moving": true,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "寅"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "2爻",
+            "relative": "子孙",
+            "spirit": "勾陈",
+            "ganzhi": "戊辰",
+            "element": "土",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "辰"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yin",
+            "changed": {
+              "ganzhi": "甲辰",
+              "element": "土",
+              "relative": "子孙",
+              "branch": "辰"
+            },
+            "hidden": {
+              "relative": "官鬼",
+              "ganzhi": "己亥",
+              "element": "水",
+              "branch": "亥"
+            },
+            "relations": {
+              "month_strength": "死",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": "伏神克飞神"
+            },
+            "position_label": "3爻",
+            "relative": "兄弟",
+            "spirit": "螣蛇",
+            "ganzhi": "戊午",
+            "element": "火",
+            "state_text": "老阴→变阳",
+            "moving": true,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "午"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "日辰合",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "妻财",
+            "spirit": "白虎",
+            "ganzhi": "己酉",
+            "element": "金",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "酉"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yin",
+            "changed": {
+              "ganzhi": "壬申",
+              "element": "金",
+              "relative": "妻财",
+              "branch": "申"
+            },
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "5爻",
+            "relative": "子孙",
+            "spirit": "玄武",
+            "ganzhi": "己未",
+            "element": "土",
+            "state_text": "老阴→变阳",
+            "moving": true,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "未"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "死",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "兄弟",
+            "spirit": "青龙",
+            "ganzhi": "己巳",
+            "element": "火",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "巳"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "question": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+      "follow_up": "请复核上一答中引用的爻位及关系方向，补充遗漏的适用依据；若有错误请明确更正，不要改变卦盘字段。",
+      "checklist": [
+        {
+          "checklist_id": "check-1",
+          "rule_id": "MOVE-RETURN-GENERATE-001",
+          "line": 1,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑动变；该爻存在对应变化，核对变化种类及方向，不要求吉凶结论。"
+        },
+        {
+          "checklist_id": "check-2",
+          "rule_id": "HIDDEN-CONTROL-FLY-001",
+          "line": 3,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑适用伏神关系；核对飞伏生克方向，不据此判定最终结果。"
+        },
+        {
+          "checklist_id": "check-3",
+          "rule_id": "DAY-COMBINE-001",
+          "line": 4,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑日月关系；核对该爻与日月的局部配对，不要求合化、解除或吉凶推论。"
+        }
+      ]
+    },
+    {
+      "case_id": "case-07",
+      "source": {
+        "kind": "legacy",
+        "index": 20,
+        "identifier": "baseline-21"
+      },
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "legacy-9773ca56",
+          "created_at": "1970-01-01T00:00:00.000Z",
+          "source": "system",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "甲申",
+          "year_ganzhi": "甲辰",
+          "month_ganzhi": "丁丑",
+          "hour_ganzhi": "乙亥",
+          "anchor": {
+            "year": 2025,
+            "month": 2,
+            "day": 3
+          },
+          "month_branch": "丑",
+          "day_branch": "申",
+          "kongwang": [
+            "午",
+            "未"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "火水未济",
+            "palace": "离宫",
+            "lower_trigram": "坎",
+            "upper_trigram": "离"
+          },
+          "changed": {
+            "name": "乾为天"
+          },
+          "shi_line": 3,
+          "ying_line": 6
+        },
+        "display": {
+          "four_pillars_text": "年柱：甲辰　月柱：丁丑　日柱：甲申　时柱：乙亥",
+          "kong_text": "空亡：午、未",
+          "date_text": "公历：2025年2月3日　农历：乙巳年正月初六",
+          "palace_text": "离宫 · 三世卦（本宫五行：火）",
+          "lower_upper_text": "下卦：☵ 坎　上卦：☲ 离",
+          "day_kong_text": "日柱：甲申　空亡：午、未",
+          "overall_trend_text": "当令得力(旺/相)3爻、当令减力(休/囚/死)3爻；动爻回头生1个、回头克0个；世应：世应比和——当令得力与减力的爻数相当，旺衰不算悬殊，具体判断还要结合用神细看"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yin",
+            "changed": {
+              "ganzhi": "甲子",
+              "element": "水",
+              "relative": "官鬼",
+              "branch": "子"
+            },
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "日辰冲",
+              "return_relation": "回头生",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "1爻",
+            "relative": "父母",
+            "spirit": "青龙",
+            "ganzhi": "戊寅",
+            "element": "木",
+            "state_text": "老阴→变阳",
+            "moving": true,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "寅"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "2爻",
+            "relative": "子孙",
+            "spirit": "朱雀",
+            "ganzhi": "戊辰",
+            "element": "土",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "辰"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yin",
+            "changed": {
+              "ganzhi": "甲辰",
+              "element": "土",
+              "relative": "子孙",
+              "branch": "辰"
+            },
+            "hidden": {
+              "relative": "官鬼",
+              "ganzhi": "己亥",
+              "element": "水",
+              "branch": "亥"
+            },
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": "伏神克飞神"
+            },
+            "position_label": "3爻",
+            "relative": "兄弟",
+            "spirit": "勾陈",
+            "ganzhi": "戊午",
+            "element": "火",
+            "state_text": "老阴→变阳",
+            "moving": true,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": true,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "午"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "相",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "妻财",
+            "spirit": "螣蛇",
+            "ganzhi": "己酉",
+            "element": "金",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "酉"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yin",
+            "changed": {
+              "ganzhi": "壬申",
+              "element": "金",
+              "relative": "妻财",
+              "branch": "申"
+            },
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "5爻",
+            "relative": "子孙",
+            "spirit": "白虎",
+            "ganzhi": "己未",
+            "element": "土",
+            "state_text": "老阴→变阳",
+            "moving": true,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": true,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "未"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "日辰合",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "兄弟",
+            "spirit": "玄武",
+            "ganzhi": "己巳",
+            "element": "火",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "巳"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "question": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+      "follow_up": "请复核上一答中引用的爻位及关系方向，补充遗漏的适用依据；若有错误请明确更正，不要改变卦盘字段。",
+      "checklist": [
+        {
+          "checklist_id": "check-1",
+          "rule_id": "MOVE-RETURN-GENERATE-001",
+          "line": 1,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑动变；该爻存在对应变化，核对变化种类及方向，不要求吉凶结论。"
+        },
+        {
+          "checklist_id": "check-2",
+          "rule_id": "LINE-VOID-001",
+          "line": 3,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "旬空属于被引用动爻的确定状态；核对状态，不要求推断出空日期或解空。"
+        },
+        {
+          "checklist_id": "check-3",
+          "rule_id": "DAY-CLASH-001",
+          "line": 1,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑日月关系；核对该爻与日月的局部配对，不要求合化、解除或吉凶推论。"
+        },
+        {
+          "checklist_id": "check-4",
+          "rule_id": "DAY-COMBINE-001",
+          "line": 6,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑日月关系；核对该爻与日月的局部配对，不要求合化、解除或吉凶推论。"
+        }
+      ]
+    },
+    {
+      "case_id": "case-08",
+      "source": {
+        "kind": "static",
+        "index": 3,
+        "identifier": 3
+      },
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "legacy-57d2c59e",
+          "created_at": "1970-01-01T00:00:00.000Z",
+          "source": "manual",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "乙酉",
+          "year_ganzhi": "丙午",
+          "month_ganzhi": "丁酉",
+          "hour_ganzhi": "壬午",
+          "anchor": {
+            "year": 2026,
+            "month": 9,
+            "day": 15
+          },
+          "month_branch": "酉",
+          "day_branch": "酉",
+          "kongwang": [
+            "午",
+            "未"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "地泽临",
+            "palace": "坤宫",
+            "lower_trigram": "兑",
+            "upper_trigram": "坤"
+          },
+          "changed": null,
+          "shi_line": 2,
+          "ying_line": 5
+        },
+        "display": {
+          "four_pillars_text": "年柱：丙午　月柱：丁酉　日柱：乙酉　时柱：壬午",
+          "kong_text": "空亡：午、未",
+          "date_text": "公历：2026年9月15日　农历：丙午年八月初五",
+          "palace_text": "坤宫 · 二世卦（本宫五行：土）",
+          "lower_upper_text": "下卦：☱ 兑　上卦：☷ 坤",
+          "day_kong_text": "日柱：乙酉　空亡：午、未",
+          "overall_trend_text": "当令得力(旺/相)2爻、当令减力(休/囚/死)4爻；世应：应生世——当令得力与减力的爻数相当，旺衰不算悬殊，具体判断还要结合用神细看"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "1爻",
+            "relative": "父母",
+            "spirit": "青龙",
+            "ganzhi": "丁巳",
+            "element": "火",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "巳"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "死",
+              "day_relation": "日辰冲",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "2爻",
+            "relative": "官鬼",
+            "spirit": "朱雀",
+            "ganzhi": "丁卯",
+            "element": "木",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "卯"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "3爻",
+            "relative": "兄弟",
+            "spirit": "勾陈",
+            "ganzhi": "丁丑",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "丑"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "兄弟",
+            "spirit": "螣蛇",
+            "ganzhi": "癸丑",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "丑"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "相",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "5爻",
+            "relative": "妻财",
+            "spirit": "白虎",
+            "ganzhi": "癸亥",
+            "element": "水",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "亥"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "子孙",
+            "spirit": "玄武",
+            "ganzhi": "癸酉",
+            "element": "金",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "酉"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "question": "我与合作方计划本月完成项目交付，时间尚未确定。请说明世应关系，并结合日月、动变和伏神中适用的局部关系解释依据；确定事实与推理分开，不必给出最终吉凶。",
+      "follow_up": "请复核上一答中引用的爻位及关系方向，补充遗漏的适用依据；若有错误请明确更正，不要改变卦盘字段。",
+      "checklist": [
+        {
+          "checklist_id": "check-1",
+          "rule_id": "YING-GENERATE-SHI-001",
+          "line": 2,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求说明世应关系；只核对方向，不把现实双方身份或用神选择当作程序事实。"
+        },
+        {
+          "checklist_id": "check-2",
+          "rule_id": "DAY-CLASH-001",
+          "line": 2,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑日月关系；核对该爻与日月的局部配对，不要求合化、解除或吉凶推论。"
+        },
+        {
+          "checklist_id": "check-3",
+          "rule_id": "MONTH-CLASH-001",
+          "line": 2,
+          "turns": [
+            "initial",
+            "follow_up"
+          ],
+          "reason": "问题明确要求考虑日月关系；核对该爻与日月的局部配对，不要求合化、解除或吉凶推论。"
+        }
+      ]
+    }
+  ]
+}
