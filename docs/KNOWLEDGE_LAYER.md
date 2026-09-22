@@ -1,10 +1,10 @@
-# Knowledge Layer：出处契约与 Phase 7.1 离线检索
+# Knowledge Layer：出处、离线检索与 Structured 1.2 成对输入
 
 ## 状态与边界
 
-Phase 7.0 建立结构契约；Phase 7.1 使用已确认的单一底本，提供离线加载、准入与检索。现有 1 个 SourceEdition、9 个 SourceSegment、10 个 KnowledgeUnit（7 reviewed / 3 source_checked）、0 Commentary、0 Case。catalog 为 14 个概念、6 个分类、0 个自由标签。仅 7 个准入单元可检索。
+Phase 7.0 建立结构契约；Phase 7.1 提供单一底本的离线加载、准入与检索；Phase 7.2 新增独立 Structured 1.2 离线成对输入。现有 1 个 SourceEdition、9 个 SourceSegment、10 个 KnowledgeUnit（7 reviewed / 3 source_checked）、0 Commentary、0 Case。catalog 为 14 个概念、6 个分类、0 个自由标签。仅 7 个准入单元可检索。
 
-不修改 Core、Canonical、Ruleset r1 的 25 条规则、Legacy、Structured 1.0/1.1、Prompt、UI 或部署配置。不实现 AI 注入、Structured 1.2、案例 Schema 或实验效果评测。
+不修改 Core、Canonical、Ruleset r1 的 25 条规则、Legacy、Structured 1.0/1.1、Prompt、UI 或部署配置。新增的 Structured 1.2 只用于离线成对导出，不接生产 UI/API，不实现案例 Schema 或效果评测。
 
 ## 目录与依赖
 
@@ -166,7 +166,7 @@ git diff --check
 
 ## 停止点
 
-停止于 Phase 7.1 离线语料与检索。未实现 knowledge-input、Structured 1.2、AI 注入、build-index 持久化命令、export-pair 或效果实验；不进入 Phase 7.2。
+当前停止于 Phase 7.2 离线 paired input pipeline。未接生产、未运行外部 A/B、未改变语料、未做效果或预测准确率实验，不进入 Phase 8。
 
 ## Phase 7.1：单一影像见证与转写
 
@@ -229,7 +229,7 @@ const result = retrieve(index, { concepts: ['shi-ying'], limit: 2 });
 - 相同规则 ID、相同原文片段或类似措辞都不足以自动合并。S7 支撑进神与退神两个不同命题，它们保留为两项。
 - 先过滤再分组，代表项为最小 ID；保留组内全部 knowledge_id、锁定出处和关联 ID。未解决 disputes 阻止双方准入，不偷偷挑选更有利的一方。
 - `association` 明确 `semantics:association_only`、`knowledge_role:literature_context`、`independent_evidence:false`、`evidence_identity:null`、`requires_cast_binding:true`。没有 Cast 时，不凭 rule_id 伪造具体爻位证据。
-- `associateEvidence(units, [{ruleset_version:'r1',rule_id,evidence_identity}])` 是最小离线关联函数，输入应来自已准入检索结果；它继承调用方现有的 cast/target/direction 身份，合并文献引用，绝不创造新身份、计算命中或增加证据份数。它额外拒绝非 reviewed/test_only 引用，但不替代上游准入校验。不同 Cast/爻位必须由调用方提供不同身份；Phase 7.2 才设计实际 AI 映射。
+- `associateEvidence(units, [{ruleset_version:'r1',rule_id,evidence_identity}])` 是最小离线关联函数，输入应来自已准入检索结果；它继承调用方现有的 cast/target/direction 身份，合并文献引用，绝不创造新身份、计算命中或增加证据份数。它额外拒绝非 reviewed/test_only 引用，但不替代上游准入校验。不同 Cast/爻位必须由调用方提供不同身份；Phase 7.2 的独立离线输入映射见下节；未接生产。
 - C 是程序事实，E 是确定性关系/索引，K 是文献解释/术语/条件。MONTH-CLASH 的 K 只解释名称，不宣告具体某爻月破；不能称作对 r1 正确性的独立验证。
 
 ### 离线操作
@@ -244,3 +244,25 @@ git diff --check
 ```
 
 当前默认严格校验命令（没有 --allow-pending）会因三个待核单元返回 1，这是预期行为；显式允许留存待核并不会让它们可检索。查询及校验命令不写文件、不自动建立持久索引、不访问网络。
+
+## Phase 7.2：独立 Structured 1.2 离线输入
+
+本阶段状态仅为 **knowledge-aware paired input pipeline ready**。三个阶段分别是出处Schema基础、冻结语料与检索、离线成对输入；不把工具链完成解释为知识有效性结论。7.1语料依旧只有Codex影像核对与整理自审，reviewed不是独立学术复核。
+
+新增 `src/ai/knowledge-schema.js` / `knowledge-input.js`，旧 `schemas.js`、`structured-input.js`、`rules-input.js` 及所有生产入口不变。新模块是Node离线模块，显式读取传入的冻结corpus；没有生产导入、浏览器偏好读取或模型请求。脚本 `scripts/phase7-knowledge.js` 只写独立导出目录。
+
+1.2保留A问题、B程序事实边界、C原白名单、D推理任务。E为 `{rule_result,relation_anchors}`：rule_result逐字段保留现有r1结果，另建引用anchor，不修改RuleResult或Canonical。1.1实验开关enabled不进入1.2。F两组固定为 `{items:[]}` 的同构容器；只有items内是否放入实际完整文献条目不同。
+
+F白名单为：knowledge_id/revision/source_role、original_text、normalized_statement、applicable_conditions/exclusions/exceptions、citation、related_concepts、literature_identity/relation_links、role/independent_evidence。citation包含底本、卷章、页序、segment revision和span；没有出处工作流、notes、哈希、catalog、tags或retrieval debug。原文与项目整理明确分开；文献不能改写C/E，冲突时保留程序事实并说明文献语境，多次引用不增加独立证据份数。
+
+anchor identity为本次输入内的 `r1/<rule_id>/<component>/<line>/<related_line或self>`；附target、结构化方向、C路径和历法路径。由hit的字段生成，不猜中文字符串。每个E hit只生成一个anchor，F只引用现有anchor；无当前命中的概念说明只有literature身份，不能变成hit。跨卦使用private canonical_hash联合限定，不把本地anchor误当全局ID。
+
+`buildKnowledgePair`执行固定语料准入、白名单投影、预算和成对断言；`assertKnowledgeInput`验证结构、路径、anchor及F大小，`assertKnowledgeLiterature`对冻结语料投影逐项校验，`assertKnowledgePair`要求清空F.items后深度相等且增量不超过15%。两组共用1.2与相同指令，不是1.1对比1.2。
+
+实验初始预算是**最多4项、F序列化内容最多2400 Unicode code points、完整可见文本增量最多15%**，同时满足。依检索顺序整项加入，放不下则budget_excluded，继续尝试后续单元；不删字、删条件或删例外。允许0项。字符统计包含可见JSON键/标点/转义，不是token估算。这些值不是长期标准或最优参数。
+
+默认按已有r1 IDs检索，显式query可替代默认需求；没有命中且没有明确需求时选择0项。question_domain保留unknown，不自动分类、不回写topic。corpus仍固定 `phase7.1-initial-1` / 原hash，policy仍 `deterministic-literature-1.0`，7 reviewed / 3 source_checked不变。Prompt版本 `structured-literature-p1`，投影版本 `literature-whitelist-1.0`。
+
+导出包的execution只放中性A/B文本；private保存assignment、seed、共享模型设置、hash/version、字符统计和检索/预算trace。common-base hash覆盖清空F后的完整文本含共同指令。原文引用多少、F空不空仍可能泄露处理条件；共同指令只要求回答不提协议/实验状态，不能保证完全盲化。不得把private记录复制给模型或盲评者。
+
+使用和字段详情见 [experiments/phase7/README.md](../experiments/phase7/README.md)。现有3个fixture和Phase6案例均非未见效果测试集；将来真实外部实验须另用新案例，本轮没有外部模型回答。

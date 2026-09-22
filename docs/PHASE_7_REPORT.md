@@ -1,6 +1,83 @@
 # Phase 7：Knowledge Layer
 
-## Phase 7.1 当前结果
+## Phase 7.2 当前结果
+
+**knowledge-aware paired input pipeline ready**
+
+基线：`beb0165623e7c7c6c4c0aa21077385355530a461`。分支：`phase7/knowledge`。范围为Structured 1.2知识白名单、关系引用、确定性预算与离线成对导出；没有生产调用或真实外部模型实验。
+
+### 最终协议与冻结版本
+
+| 层 | 内容 |
+| --- | --- |
+| A_user_question | 与Canonical问题一致 |
+| B_program_facts | 继承事实边界，明确文献只是解释材料 |
+| C_canonical_cast | 原有Structured白名单投影，字段值不改 |
+| D_ai_task | 继承原推理任务边界 |
+| E_rule_results.rule_result | 未修改的r1结果，保留hits/skipped/diagnostics |
+| E_rule_results.relation_anchors | 对已有hit建立当前卦盘内引用身份，不增加hit |
+| F_literature_context.items | OFF为空；ON为准入且预算内的完整文献条目 |
+
+1.2的E包装不携带1.1的enabled；旧1.1协议及行为没有修改。模型可见层没有mode、treatment、variant、group、assignment等实验字段。两组共同指令相同，只有F.items允许不同；清空F后深度相等由机器断言执行。
+
+F只投影knowledge_id/revision/source_role、原文、结构化整理、完整条件/排除/例外、可定位citation、concepts、文献身份和relation_links，以及明确的literature_context/independent_evidence:false。不注入provenance、审核notes、获取信息、内容哈希、自由tags、catalog或retrieval debug。
+
+| 版本 | 值 |
+| --- | --- |
+| ai_input_schema_version | 1.2 |
+| prompt_version | structured-literature-p1 |
+| knowledge_projection_version | literature-whitelist-1.0 |
+| corpus version | phase7.1-initial-1 |
+| corpus hash | sha256:1b24872a9533ef5d94576c2f8df3489eb221c69f7dfbf0167cdc6e00ab868729 |
+| retrieval policy | deterministic-literature-1.0 |
+| corpus statuses | 7 reviewed / 3 source_checked，不变 |
+
+每个anchor由r1 ID、target/component/line/related_line构成局部身份，并保留结构化方向、Canonical路径与历法路径。只用hit字段，不解析自然语言标签。F解释E/C时只link同一个anchor，不创建第二条证据；概念材料的literature identity不算程序事实。跨cast审计用private canonical_hash联合限定。
+
+### 预算和离线隔离
+
+最多4项、F序列化内容最多2400 Unicode code points、完整可见输入增量最多15%，三个条件同时满足。按固定检索顺序尝试完整单元，超出任一预算便记录budget_excluded，绝不截断原文或条件。允许零项。这些仅为Phase7.2实验初始值，不是最优参数；字符数不是token数。
+
+默认检索已有r1关联，显式concept/category等需求可替代默认选择器。未知问题领域保持unknown，不修改Canonical.question.topic。三个待核单元不能靠本阶段需要样本而升状态；修改语料或状态会因冻结哈希不匹配而拒绝导出。
+
+执行目录只含case-A/B.txt完整文本；private保存assignment/seed、共享模型设置、版本、共同基础/两组完整文本/F哈希、字符数/增量、实际query、选择与排除原因。common-base hash包含相同共同指令，不只是JSON。输出目录必须不存在，防止静默覆盖；包构造不使用时钟、随机数、网络或模型API。
+
+共同指令要求不提输入协议、字段、section、实验状态或功能是否开启，只回答用户问题。F有无内容和答案中的引用仍可能被识别，**不宣称完全盲化**。目录分离不等于访问权限隔离，private记录不能复制给模型或评分者。
+
+### Pipeline validation
+
+3个compatibility fixture来自已观察的旧回归数据，仅验证结构、预算和关联，不是新的效果案例；model_settings.model为not-run。真实外部A/B未运行，无答案或评分。未来需新案例，Phase6的8个案例及这些开发fixture不能冒充未见测试集。
+
+- `npm test -- --maxWorkers=1`：**15个测试文件，230/230通过**，52.93秒；原197项继续通过，新增33项。覆盖1.0/1.1兼容、封闭1.2结构、准入和冻结hash、投影/引用内容、证据锚点、F唯一差异、三重预算、零匹配、Unicode计数、重复导出、private隔离、不覆盖已有输出及受保护源码哈希。
+- `npm run build`：**通过**，51模块；JS仍为`index-BUs3Mv5n.js`，CSS仍为`index-63lbvoss.css`。既有Cannon经典脚本提示仍在，没有新增构建提示。
+- 实际CLI生成并核验 `test-results/phase7-pipeline-verified/`，包含6份中性文本及private审计包；目录已被Git忽略，不提交。CLI不调用模型；测试也断言构造过程没有fetch调用。
+- `git diff --check`通过。受保护路径diff为空：Core、r1、正式corpus/原检索器、原AI模块、生产入口和配置无修改。正式库仍为1/9/10、7 reviewed / 3 source_checked，hash与7.1一致。
+
+兼容性输出统计（Unicode code points，仅工具链验证）：
+
+| Case | OFF完整文本 | ON完整文本 | 增量 | 选入项数 |
+| --- | ---: | ---: | ---: | ---: |
+| compat-01 | 20572 | 22501 | 9.377% | 2 |
+| compat-02 | 20460 | 22534 | 10.137% | 2 |
+| compat-03 | 20572 | 20572 | 0% | 0 |
+
+每组common-base hash相同，ON/OFF仅F.items有差异。另有合成的小基础输入测试触发15%上限，确认比例预算并非只写在配置里；全库显式需求测试触发F字符上限，完整排除未放入项。没有删原文或例外来满足预算。
+
+### 文件和边界
+
+- 新增 `src/ai/knowledge-input.js`、`src/ai/knowledge-schema.js`，没有修改旧AI模块。
+- 新增 `scripts/phase7-knowledge.js`、`experiments/phase7/README.md`、`config-schema.js`、`config.fixture.json`、3个compatibility Canonical fixture。
+- 新增 `tests/phase7/pipeline.test.js`。
+- 更新 `docs/KNOWLEDGE_LAYER.md`、本报告，保留7.0/7.1历史。
+- Core/Canonical、25条规则/r1、Legacy、Structured1.0/1.1、生产入口/UI/API、Cloudflare、依赖以及整个正式corpus和检索策略不修改。
+
+7.1的reviewed仅代表Codex影像核对与整理自审，不是独立学术复核；文献记录不证明预测有效性。本轮只完成工具链，不作回答改进或预测能力结论。
+
+单独提交 `feat: add knowledge-aware structured input pipeline`，不push；停止，不进入Phase8。
+
+---
+
+## Phase 7.1 记录（冻结语料基线）
 
 **Phase 7.1 single-edition traceable corpus and deterministic retrieval complete**
 
