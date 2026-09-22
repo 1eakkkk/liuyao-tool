@@ -68,7 +68,7 @@ const reviewed = r => r.verification_status === 'reviewed';
 const sets = ['sources', 'segments', 'units', 'commentary'];
 const keys = ['source_id', 'segment_id', 'knowledge_id', 'commentary_id'];
 
-export function validateCorpus(corpus, { ruleIds, rulesetVersion, mode = 'production', previous = null } = {}) {
+export function validateCorpus(corpus, { ruleIds, rulesetVersion, mode = 'production', previous = null, requireImageWitness = false } = {}) {
   if (!['production', 'fixture'].includes(mode)) fail('invalid mode');
   if (rulesetVersion !== 'r1' || !Array.isArray(ruleIds) || ruleIds.length !== 25 || new Set(ruleIds).size !== 25) fail('explicit Ruleset r1 / 25 rule registry required');
   validateValue(corpus, CORPUS_SCHEMA);
@@ -80,7 +80,7 @@ export function validateCorpus(corpus, { ruleIds, rulesetVersion, mode = 'produc
   const concepts = index(corpus.catalog.concepts, 'concept_id');
   const categories = index(corpus.catalog.categories, 'category_id');
   const tags = index(corpus.catalog.tags, 'tag_id');
-  const aliases = new Set();
+  const aliases = new Set(concepts.keys());
   for (const concept of concepts.values()) for (const alias of [concept.label, ...concept.aliases]) {
     if (aliases.has(alias)) fail(`ambiguous/duplicate concept alias: ${alias}`);
     aliases.add(alias);
@@ -105,13 +105,26 @@ export function validateCorpus(corpus, { ruleIds, rulesetVersion, mode = 'produc
     for (const c of r.related_concepts || []) if (!concepts.has(c)) fail(`unknown concept: ${c}`);
     for (const t of r.tags || []) if (!tags.has(t)) fail(`unknown controlled tag: ${t}`);
   }
+  for (const s of sources.values()) if (s.image_witness) {
+    const w = s.image_witness;
+    for (const value of [w.mirror.url, w.rights_statement_url]) {
+      let url; try { url = new URL(value); } catch { fail('invalid witness URL'); }
+      if (!['http:', 'https:'].includes(url.protocol)) fail('witness URL protocol');
+    }
+    if (w.metadata_image_pages.some(p => p > w.page_count)) fail('witness page outside artifact');
+  }
   for (const s of segments.values()) {
     const source = reference(sources, s.source_ref, 'source_id');
     if (s.work_id !== source.work_id || s.edition_id !== source.edition_id) fail('segment edition/work mismatch');
     if (textHash(s.text) !== s.text_hash) fail('text hash mismatch');
+    if (source.image_witness) {
+      if (s.provenance.artifact_hash !== source.provenance.artifact_hash) fail('segment artifact differs from edition');
+      if (s.locator.image_page > source.image_witness.page_count) fail('segment page outside artifact');
+    }
   }
   for (const u of units.values()) {
     const { segment, text } = checkSpan(segments, u.segment_ref);
+    if (sources.get(segment.source_ref.source_id).image_witness && u.provenance.artifact_hash !== segment.provenance.artifact_hash) fail('unit artifact differs from segment');
     if (own(u, 'original_text') && u.original_text !== text) fail('original_text differs from segment span');
     if (u.source_type !== (segment.text_role === 'original_body' ? 'classical_body' : 'historical_commentary')) fail('original/commentary role mismatch');
     if (!categories.has(u.category)) fail('unknown category');
@@ -162,9 +175,12 @@ export function validateCorpus(corpus, { ruleIds, rulesetVersion, mode = 'produc
     if (i === 0) {
       if (!r.edition.designation || !r.holding.repository || !r.holding.identifier || !r.contributors.length) reasons.push('incomplete_edition_provenance');
       if (!r.provenance.artifact_hash) reasons.push('source_artifact_not_pinned');
+      if (requireImageWitness && !r.image_witness) reasons.push('image_witness_missing');
     } else if (i === 1) {
       if (!eligible.has(r.source_ref.source_id)) reasons.push('source_not_admitted');
       if (!precise(r.locator)) reasons.push('imprecise_locator');
+      if (r.transcription_uncertainties?.length) reasons.push('transcription_uncertain');
+      if (requireImageWitness && r.locator.image_page === null) reasons.push('image_page_missing');
     } else if (i === 2) {
       if (!eligible.has(r.segment_ref.segment_id)) reasons.push('segment_not_admitted');
       if (['applicable_conditions', 'exclusions', 'exceptions'].some(k => r[k].status === 'unreviewed')) reasons.push('conditions_unreviewed');

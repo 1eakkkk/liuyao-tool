@@ -1,0 +1,20 @@
+{
+  "data_kind": "test_only",
+  "purpose": "Frozen retrieval expectations, not classical corpus or model-effect evidence",
+  "corpus_hash": "sha256:1b24872a9533ef5d94576c2f8df3489eb221c69f7dfbf0167cdc6e00ab868729",
+  "policy_version": "deterministic-literature-1.0",
+  "cases": [
+    { "name": "exact concept", "query": { "concepts": ["shi-ying"] }, "ids": ["zsby-shiying-scope-001"] },
+    { "name": "traditional alias", "query": { "terms": ["世應"] }, "ids": ["zsby-shiying-scope-001"] },
+    { "name": "controlled alternate name", "query": { "terms": ["空亡"] }, "ids": ["zsby-void-definition-001"] },
+    { "name": "category", "query": { "categories": ["month-relation"] }, "ids": ["zsby-month-clash-001", "zsby-month-combine-001"] },
+    { "name": "r1 association", "query": { "related_rule_ids": ["DAY-CLASH-001"] }, "ids": ["zsby-day-clash-context-001"] },
+    { "name": "combined AND filters", "query": { "concepts": ["month-combine"], "categories": ["month-relation"], "related_rule_ids": ["MONTH-COMBINE-001"], "allowed_editions": ["zsby-wenming-1925-11-nlc-12jh005345"], "condition_statuses": { "exceptions": "none_stated" } }, "ids": ["zsby-month-combine-001"] },
+    { "name": "known but unrepresented r1 relation", "query": { "related_rule_ids": ["SHI-CONTROL-YING-001"] }, "ids": [] },
+    { "name": "pending candidate excluded", "query": { "related_rule_ids": ["DAY-COMBINE-001"] }, "ids": [] },
+    { "name": "unknown term is zero match", "query": { "terms": ["not-a-catalog-alias"] }, "ids": [] },
+    { "name": "stable limit after sorting", "query": { "categories": ["moving-relation"], "limit": 1 }, "ids": ["zsby-advance-definition-001"] },
+    { "name": "zero limit", "query": { "limit": 0 }, "ids": [] },
+    { "name": "no non-reviewed override", "query": { "verification_status": "source_checked" }, "ids": [] }
+  ]
+}

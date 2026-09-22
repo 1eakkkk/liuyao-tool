@@ -1,4 +1,120 @@
-# Phase 7.0：Knowledge provenance/schema foundation
+# Phase 7：Knowledge Layer
+
+## Phase 7.1 当前结果
+
+**Phase 7.1 single-edition traceable corpus and deterministic retrieval complete**
+
+基线：`d3a2ead48a4c9da3a6928dbd58b23526de054eaf`。分支：`phase7/knowledge`。影像获取与本轮录入核对日期：2026-09-22。
+
+| 项目 | 结果 |
+| --- | --- |
+| SourceEdition | 1，reviewed |
+| SourceSegment | 9，reviewed（转写自审，不等于其关联知识命题通过整理审核） |
+| KnowledgeUnit | 10：reviewed 7；source_checked 3；draft/disputed/retired 0 |
+| 可检索单元 | 7，必须通过完整链条准入 |
+| Commentary / Case | 0 / 0；无 Case Schema |
+| Catalog | 14 concepts、6 categories、0 tags；revision 2 |
+| Corpus version | `phase7.1-initial-1` |
+| Corpus hash | `sha256:1b24872a9533ef5d94576c2f8df3489eb221c69f7dfbf0167cdc6e00ab868729` |
+| Retrieval policy | `deterministic-literature-1.0` |
+
+这是文献记录与离线检索的工程交付，未进行知识效果实验，也未向任何生产 AI 请求注入知识。
+
+### 唯一底本最终登记
+
+正式记录：`knowledge/sources/zsby-nlc-12jh005345.json`。共同字段为 schema_version 1.0、revision 1、data_kind corpus、verification_status reviewed、transcription_revision 1；content_hash 根据完整记录自动核算，不与底本文件哈希混同。
+
+| 字段 | 记录值及依据 |
+| --- | --- |
+| title | 增刪卜易 |
+| work_id | zeng-shan-bu-yi |
+| edition_id | zsby-wenming-1925-11-nlc-12jh005345 |
+| source_id | zsby-nlc-12jh005345 |
+| edition.designation | 中華民國十四年十一月文明書局本 |
+| publication | 文明書局；上海；中華民國十四年十一月 |
+| manuscript | scribe/date_text 均 null，不推测抄本信息 |
+| holding | 中国国家图书馆；12jh005345 / 45344；镜像所列 MG/B992.2 |
+| 实际取得位置 | Wikimedia Commons 镜像及 upload.wikimedia.org PDF，未把镜像写成原馆 |
+| acquisition_date | 2026-09-22 |
+| 物理/数字范围 | 六卷、全三册、PDF 394 影像页，11,089,308 字节 |
+| 元数据定位 | 影像21题署；339卷六题页；393刊记/全三册 |
+| 出版/发行日期 | 刊记分别写“中華民國十四年十一月出版”“中華民國十四年十一月發行” |
+| 印刷/发行机构 | 文明書局印刷、發行；上海南京路文明書局及上海棋盤街中華書局为發行所 |
+| 原馆归属依据 | 镜像文件说明与文件名；未声称直接检验NLC馆藏原件 |
+| 再利用依据 | Commons 文件页 Licensing 的 PD-scan / PD-China 声明，来源链接保存在 rights 与 image_witness 内 |
+| 审核身份 | codex-visual-review，自本次影像查看核对；没有独立人类复核身份 |
+
+署名均保留 name/role/attribution_basis/certainty，certainty 是 as_printed：
+
+- 野鶴老人／著。
+- 李坦我平／鉴定，题署“楚江李坦我平鑒定”，不自动拆分姓名字号。
+- 李文輝覺子／增删，题署“湖南李文輝覺子增刪”。
+- 陳文吉茂生／校；茹芝山秀／校，依据影像21的“壻…男…同校閱”；没有从旁证补姓。
+- 秦愼安／校，依据影像393“校勘者 江甯秦愼安”；镜像书目使用“慎”，未反过来改写影像转写。
+
+[底本镜像及声明](https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf)。实际下载副本 SHA-256：
+
+```text
+caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa
+```
+
+source 的 image_witness 保存全部页数、卷册数、元数据页、mirror、来源归属依据、声明链接、出版发行机构与转写约定。provenance.source_url 指向实际取得的 PDF；notes 解释署名/原馆依据限制。下载原件及所有渲染页位于仓库外临时目录，没有提交。
+
+### 片段和候选的最终范围
+
+所有定位均重新打开影像确认；image_page 是 PDF **从1开始**的实际页序，不以书签偏移代替页序。locator 的 page 保留书内印页；双页段另在 anchor 写明终点。只线性化手工转写所列片段，没有整章录入、自动 OCR 或从其他版本填字。
+
+| 候选／knowledge_id | SourceSegment | 卷章；影像／印页 | 状态与边界 |
+| --- | --- | --- | --- |
+| K1 zsby-shiying-scope-001 | zsby-1925-s1 | 卷三增刪黃金策千金賦；146／四 | reviewed；彼此之事及帮助方向。historical_commentary 角色，不伪装成独立经典正文 |
+| K2 zsby-month-clash-001 | zsby-1925-s2 | 卷二月破；104／三四 | reviewed；仅月建冲之的名称定义。动态、时效与吉凶不在命题范围 |
+| K3 zsby-month-combine-001 | zsby-1925-s3 | 卷一月將；61／四一 | reviewed；月合名称与原文措辞角色，不把有用转成计算字段 |
+| K4 zsby-day-clash-context-001 | zsby-1925-s4 | 卷一日辰；67／四七 | reviewed；只讨论旺静/衰静的条件，不自动判旺衰或暗动日破 |
+| K5 zsby-day-combine-context-001 | zsby-1925-s5 | 卷二六合；74／四 | source_checked；日/月/动爻之合及后续有气/失陷条件还未整体整理 |
+| K6 zsby-return-scope-001 | zsby-1925-s6 | 卷一動變生尅沖合；58／三八 | source_checked；59页日月作用于变爻的边界未纳入最小片段 |
+| K7 zsby-advance-definition-001 | zsby-1925-s7 | 卷二進神退神；116–117／四六–四七 | reviewed；保留章首喜忌条件及全部进退列举，仅解释化进方向 |
+| K8 zsby-retreat-definition-001 | 同S7 | 同上 | reviewed；独立的化退命题，不因共用原文而合并为化进 |
+| K9 zsby-flying-hidden-context-001 | zsby-1925-s8 | 卷二飛伏神；110／四〇 | source_checked；仅六项条件，尚不足覆盖前面飞克占例及后面评论的边界 |
+| K10 zsby-void-definition-001 | zsby-1925-s9 | 卷二旬空；93／二三 | reviewed；甲子旬例的历法名义，不推广实际效力 |
+
+S5/S6/S8 的文字转写与定位可审核，不等于 K5/K6/K9 的整理命题可准入；三项 exceptions 保持 unreviewed，provenance 无 reviewed_by/date，检索明确返回 verification:source_checked、conditions_unreviewed。没有凑满10个 reviewed。
+
+原文完整覆盖各自知识命题的范围；K2/K10 明确缩到名义定义，不声称整理了整章条件或例外。`none_stated` 仅指所引定义段未述及，不代表经典其他位置没有例外。待核候选不用于运行时解释。S7 的“出化”按影像保留，不猜改为“爻化”。
+
+### 实现与事实边界
+
+- SourceEdition/Segment 的封闭 Schema 增补 image_witness / transcription_uncertainties；旧字段含义不变，Canonical 与 AI Schema 未改。
+- `load.js` 只读固定目录、拒绝软链接和非 JSON 文件；`createKnowledgeIndex` 严格校验及准入后创建内存索引。结构有效的待核记录有保留理由，不是可用知识。
+- `retrieve.js` 支持 concept/category/r1 ID/edition、受控 aliases、verification_status、已知条件状态、limit；同查询+快照+策略的排序与结果稳定。没有自然语言条件判定、随机选择、经验评分或推理。
+- 同命题只按相同来源命题及边界或明确 equivalent 合并，保留全部锁定引用；不能因为同 rule_id 就合并两种不同命题。
+- 检索带 match/excluded 原因、固定 source/segment/span/hash、corpus version/hash、policy version。C/E/K 同一具体关系只能继承一个已有 evidence_identity；文献关联明确 independent_evidence:false。本轮不创造 Cast 身份、不接生产调用。
+- 两个 CLI 仅校验/查询，不下载、不写文件、不生成知识。默认严格校验因三项待核返回1，显式 --allow-pending 返回0但不改变准入。
+- 没有 Commentary 或 Case，没有 confidence/score/prediction_weight，没有自动选用神、自动造规则或效果实验。
+
+### 验证与交付
+
+- `npm test -- --maxWorkers=1`：**14 个测试文件、197/197 通过**，92.39 秒；原161项继续通过，新增36项。知识层合计65项，其中12组固定检索预期。
+- 覆盖真实底本/片段 Schema、来源链/页号/字节哈希、缓存原文与span、r1 ID、待核/争议/出处不完整隔离、别名、精确与组合查询、条件元数据、稳定排序与limit、同命题/冲突、既有证据身份、CLI、fixture隔离、无Commentary/Case/统计字段，以及r1源码冻结哈希。
+- `npm run build`：**通过**，51模块，1.98秒；JS `index-BUs3Mv5n.js`、CSS `index-63lbvoss.css` 与Phase7.0相同。既有 `vendor/cannon.js` 经典脚本构建提示仍在，没有新增警告。
+- `node scripts/knowledge/validate-corpus.js --allow-pending`：通过；source/segment/unit准入为1/9/7，三个待核单元及原因如上。严格模式的退出码1由测试确认，不是隐瞒待核状态。
+- 固定下载文件再次核验 SHA-256 与11,089,308字节长度；原件未进入仓库。查询重载及集合重排的corpus hash由冻结测试核对。
+- `git diff --check` 通过；修改/新增文件均在下述范围。没有生产路径引入Knowledge；构建产物文件名未变。本轮未要求或执行浏览器/真实AI效果实验。
+
+新增/修改文件：
+
+- `knowledge/sources/zsby-nlc-12jh005345.json`；`knowledge/classics/zsby-1925-s1.json`至`s9.json`；`knowledge/units/`的上述10个候选JSON；`knowledge/catalog/catalog.json`。
+- 新增 `src/knowledge/load.js`、`retrieve.js`、`dedupe.js`；更新 `schemas.js`、`validate.js`。
+- 新增 `scripts/knowledge/retrieve.js`；更新 `scripts/knowledge/validate-corpus.js`，保留旧的readCorpus导出兼容测试。
+- 新增 `tests/knowledge/retrieval-cases.json`、`retrieval.test.js`；更新 `contracts.test.js`，将“仓库永远为空”的历史断言换成空库契约测试并继续验证正式读取不含fixture。其他原回归断言未删。
+- 更新 `docs/KNOWLEDGE_LAYER.md`、`docs/PHASE_7_REPORT.md`，保留7.0历史记录。
+
+代码/数据差异仅允许在 `src/knowledge/`、`scripts/knowledge/`、`knowledge/`、`tests/knowledge/` 及这两份知识文档。不修改 Core、Canonical、src/rules、Legacy、Structured 1.0/1.1、Prompt、UI、生产入口、Cloudflare 或依赖配置。完整 PDF、渲染页、OCR dump、用户配置和实验临时文件不在提交集合。
+
+完成后单独 commit、不 push，停止于 Phase 7.1，不进入 Phase 7.2。
+
+---
+
+## Phase 7.0 历史记录（下文空库状态仅指当时）
 
 ## 范围
 

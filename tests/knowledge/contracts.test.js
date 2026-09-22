@@ -165,9 +165,13 @@ test('strict validation rejects null objects, missing required arrays and duplic
   reject(c => { delete c.units[0].related_rule_ids; }, /missing/);
   reject(c => { c.units[0].related_concepts.push('fixture-concept'); }, /duplicate/);
 });
-test('repository corpus and catalog are empty; production checker reads no test fixtures', () => {
-  const result = checkCorpus(); expect(result.counts).toEqual({ sources: 0, segments: 0, units: 0, commentary: 0 });
-  expect(readCorpus().catalog.concepts).toEqual([]); expect(result.excluded).toEqual([]);
+test('an empty corpus remains valid; production reader stays separate from test fixtures', () => {
+  const empty = { sources: [], segments: [], units: [], commentary: [], catalog: { schema_version: '1.0', revision: 1, concepts: [], categories: [], tags: [] } };
+  const result = validate(empty, { mode: 'production' });
+  expect(result.counts).toEqual({ sources: 0, segments: 0, units: 0, commentary: 0 });
+  expect(result.excluded).toEqual([]);
+  expect(readCorpus().units.every(u => u.data_kind === 'corpus')).toBe(true);
+  expect(checkCorpus().valid).toBe(true);
 });
 test('CLI rejects a fixture copied into a corpus directory with nonzero exit', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'knowledge-contract-test-'));

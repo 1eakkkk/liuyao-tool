@@ -28,15 +28,24 @@ const segmentRef = obj({ segment_id: id, revision: { type: 'integer', minimum: 1
   span: obj({ start: { type: 'integer', minimum: 0 }, end: { type: 'integer', minimum: 1 },
     unit: { const: 'unicode_code_point' } }) });
 const conditionSet = obj({ status: enumeration(['unreviewed', 'specified', 'none_stated']), statements: list(str) });
+// Optional additive witness contract; Phase 7.1's offline loader requires it for admission.
+const imageWitness = obj({ page_count: { type: 'integer', minimum: 1 },
+  volume_count: { type: 'integer', minimum: 1 }, booklet_count: { type: 'integer', minimum: 1 },
+  metadata_image_pages: { ...list({ type: 'integer', minimum: 1 }), minItems: 1 },
+  mirror: obj({ repository: str, identifier: str, url: str }), source_identity_basis: str,
+  rights_statement_url: str, publication_date_text: str, distribution_date_text: str,
+  publication_roles: { ...list(obj({ role: str, name: str, place: nullable })), minItems: 1 },
+  transcription_policy: str });
 
 export const SOURCE_EDITION_SCHEMA = obj({ ...common, source_id: id, work_id: id, edition_id: id, title: str,
   contributors: list(attribution), edition: obj({ designation: nullable, publication: obj({ publisher: nullable,
     place: nullable, date_text: nullable }), manuscript: obj({ scribe: nullable, date_text: nullable }), digital_version: nullable }),
   holding: obj({ repository: nullable, identifier: nullable }),
-  transcription_revision: { type: 'integer', minimum: 1 }, locator });
+  transcription_revision: { type: 'integer', minimum: 1 }, locator, image_witness: imageWitness }, ['image_witness']);
 export const SOURCE_SEGMENT_SCHEMA = obj({ ...common, segment_id: id, source_ref: sourceRef, work_id: id, edition_id: id,
   title: str, text_role: enumeration(['original_body', 'historical_commentary']), locator, text: str,
-  transcription_revision: { type: 'integer', minimum: 1 }, text_hash: hash });
+  transcription_revision: { type: 'integer', minimum: 1 }, text_hash: hash,
+  transcription_uncertainties: list(str) }, ['transcription_uncertainties']);
 export const KNOWLEDGE_UNIT_SCHEMA = obj({ ...common, knowledge_id: id,
   source_type: enumeration(['classical_body', 'historical_commentary']), segment_ref: segmentRef, original_text: str,
   normalized_statement: str, category: id, applicable_conditions: conditionSet, exclusions: conditionSet, exceptions: conditionSet,

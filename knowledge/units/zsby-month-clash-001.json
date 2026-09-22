@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "reviewed",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "editorial",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": "codex-visual-review",
+    "reviewed_at": "2026-09-22",
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:50fb85dfc90c7cdf9ecf03872912ee69e0a5d9cee1d8df9ba8e6bfd610d11916",
+  "notes": "仅文献术语/解释/条件；不新增事实，不证明r1；notes不默认进入未来AI输入。",
+  "knowledge_id": "zsby-month-clash-001",
+  "source_type": "classical_body",
+  "segment_ref": {
+    "segment_id": "zsby-1925-s2",
+    "revision": 1,
+    "span": {
+      "start": 0,
+      "end": 15,
+      "unit": "unicode_code_point"
+    }
+  },
+  "original_text": "月建沖之爲月破逐月之破日是也。",
+  "normalized_statement": "本段以月建之冲解释月破名称；这是术语定义，不含具体占问中的效力结论。",
+  "category": "month-relation",
+  "applicable_conditions": {
+    "status": "specified",
+    "statements": [
+      "仅解释月建相冲的命名。"
+    ]
+  },
+  "exclusions": {
+    "status": "specified",
+    "statements": [
+      "不推定无用、永久失效或吉凶；后文动态与时间条件不在本命题内。"
+    ]
+  },
+  "exceptions": {
+    "status": "none_stated",
+    "statements": []
+  },
+  "related_concepts": [
+    "month-break",
+    "temporal-scope",
+    "interpretation-boundary"
+  ],
+  "related_rule_ids": [
+    "MONTH-CLASH-001"
+  ],
+  "ruleset_version": "r1",
+  "rule_link_semantics": "association_only",
+  "tags": [],
+  "supersedes": [],
+  "related_units": [],
+  "disputes": []
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "reviewed",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "manual_transcription",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": "codex-visual-review",
+    "reviewed_at": "2026-09-22",
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:6ed143d8d9dd56ef4ad4eba25cf88954af68aaea387db3e331d7527718b76f4e",
+  "notes": "固定影像逐字视觉核对后手工录入；竖排右至左、列内上至下线性化；小句读圈记。、大圈记○；换列不加空格，表格按行加换行。保留可辨繁体异体，不以网络转录补字。reviewed为Codex影像及整理自审，非独立人工复核。",
+  "segment_id": "zsby-1925-s8",
+  "source_ref": {
+    "source_id": "zsby-nlc-12jh005345",
+    "revision": 1
+  },
+  "work_id": "zeng-shan-bu-yi",
+  "edition_id": "zsby-wenming-1925-11-nlc-12jh005345",
+  "title": "伏神有用六項（整理待核）",
+  "text_role": "original_body",
+  "locator": {
+    "volume": "二",
+    "chapter": "飛伏神章第二十八",
+    "section": null,
+    "page": "四〇",
+    "leaf": null,
+    "image_page": 110,
+    "anchor": "伏神有用者六起，第六项者六也止；不含前面飞克占例和后面黄金策评论"
+  },
+  "text": "伏神有用者六\n伏神得日月生者一也。○伏神旺相者二也。○伏神得飛神生者。三也。○伏神得動爻生者。四也。○伏神得遇日月動爻沖尅飛神者五也。○伏神得遇飛神空破休囚墓絕者。六也。",
+  "transcription_revision": 1,
+  "text_hash": "sha256:a822fa3f789a6925cf6c2ec62a07ebf53002e63bc348b41d70b68e6a7c1e4ee0",
+  "transcription_uncertainties": []
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "reviewed",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "editorial",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": "codex-visual-review",
+    "reviewed_at": "2026-09-22",
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:11d34b696ecdd0f2c61fde671e98471eb29921c766afb183686e1fd948c9e2f4",
+  "notes": "仅文献术语/解释/条件；不新增事实，不证明r1；notes不默认进入未来AI输入。",
+  "knowledge_id": "zsby-shiying-scope-001",
+  "source_type": "historical_commentary",
+  "segment_ref": {
+    "segment_id": "zsby-1925-s1",
+    "revision": 1,
+    "span": {
+      "start": 0,
+      "end": 72,
+      "unit": "unicode_code_point"
+    }
+  },
+  "original_text": "世爲己應爲人大宜契合○世爲自己應爲他人。凡占彼此之事。兼而用之。欲他扶助我者喜應爻生合世爻。我欲代他而謀事者。宜世爻而生應也。非占彼此而不用也。",
+  "normalized_statement": "本段将世应兼用限定在彼此之事，并区分他人扶助自己（应生合世）与自己代他人谋事（世生应）的方向。",
+  "category": "shi-ying",
+  "applicable_conditions": {
+    "status": "specified",
+    "statements": [
+      "文献所称彼此之事，先分清所问帮助方向。"
+    ]
+  },
+  "exclusions": {
+    "status": "specified",
+    "statements": [
+      "非占彼此不套用此段；不由相生直接作成败结论。"
+    ]
+  },
+  "exceptions": {
+    "status": "none_stated",
+    "statements": []
+  },
+  "related_concepts": [
+    "shi-ying",
+    "relation-direction",
+    "interpretation-boundary"
+  ],
+  "related_rule_ids": [
+    "SHI-GENERATE-YING-001",
+    "YING-GENERATE-SHI-001"
+  ],
+  "ruleset_version": "r1",
+  "rule_link_semantics": "association_only",
+  "tags": [],
+  "supersedes": [],
+  "related_units": [],
+  "disputes": []
+}
