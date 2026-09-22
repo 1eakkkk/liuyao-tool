@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "source_checked",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "editorial",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:047f93fbe9274a1653068c30bacc43102f850f918533be3fcb9059e888c9fddb",
+  "notes": "59页另论日月能作用于变爻；完整边界未纳入，暂不准入。",
+  "knowledge_id": "zsby-return-scope-001",
+  "source_type": "classical_body",
+  "segment_ref": {
+    "segment_id": "zsby-1925-s6",
+    "revision": 1,
+    "span": {
+      "start": 0,
+      "end": 50,
+      "unit": "unicode_code_point"
+    }
+  },
+  "original_text": "卦有動爻。動而必變。夫變出之爻能生尅沖合本位之動爻不能生尅他爻。而他爻與本位之動爻亦不能生尅他變爻。",
+  "normalized_statement": "待核草案：所选段区分变爻作用于本位动爻与其他爻；不能扩大为任意变爻影响全盘。",
+  "category": "moving-relation",
+  "applicable_conditions": {
+    "status": "specified",
+    "statements": [
+      "变爻与其本位动爻的关系。"
+    ]
+  },
+  "exclusions": {
+    "status": "specified",
+    "statements": [
+      "不把本位变爻关系推广到其他爻。"
+    ]
+  },
+  "exceptions": {
+    "status": "unreviewed",
+    "statements": []
+  },
+  "related_concepts": [
+    "return-relation",
+    "relation-direction",
+    "interpretation-boundary"
+  ],
+  "related_rule_ids": [
+    "MOVE-RETURN-GENERATE-001",
+    "MOVE-RETURN-CONTROL-001"
+  ],
+  "ruleset_version": "r1",
+  "rule_link_semantics": "association_only",
+  "tags": [],
+  "supersedes": [],
+  "related_units": [],
+  "disputes": []
+}

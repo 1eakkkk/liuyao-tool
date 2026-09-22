@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "reviewed",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "editorial",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": "codex-visual-review",
+    "reviewed_at": "2026-09-22",
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:516ed6b1e285d6118141af2360904075d6c74cf3f5a7fe71b136a2b74db7d762",
+  "notes": "仅文献术语/解释/条件；不新增事实，不证明r1；notes不默认进入未来AI输入。",
+  "knowledge_id": "zsby-month-combine-001",
+  "source_type": "classical_body",
+  "segment_ref": {
+    "segment_id": "zsby-1925-s3",
+    "revision": 1,
+    "span": {
+      "start": 0,
+      "end": 46,
+      "unit": "unicode_code_point"
+    }
+  },
+  "original_text": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻則爲月破無用之爻也。",
+  "normalized_statement": "本段将月建合爻称为月合，并与月破对举；有用、无用为文献评价措辞，不能当成程序效力字段。",
+  "category": "month-relation",
+  "applicable_conditions": {
+    "status": "specified",
+    "statements": [
+      "仅解释该段月合名称及文献措辞的角色。"
+    ]
+  },
+  "exclusions": {
+    "status": "specified",
+    "statements": [
+      "不将有用转换成最终有利；不以相邻无用句取代月破章的条件。"
+    ]
+  },
+  "exceptions": {
+    "status": "none_stated",
+    "statements": []
+  },
+  "related_concepts": [
+    "month-combine",
+    "interpretation-boundary"
+  ],
+  "related_rule_ids": [
+    "MONTH-COMBINE-001"
+  ],
+  "ruleset_version": "r1",
+  "rule_link_semantics": "association_only",
+  "tags": [],
+  "supersedes": [],
+  "related_units": [],
+  "disputes": []
+}

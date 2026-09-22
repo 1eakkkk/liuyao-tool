@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "reviewed",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "manual_transcription",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": "codex-visual-review",
+    "reviewed_at": "2026-09-22",
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:3fdb402b25c370e1fca5f146d39d38c68231f721b34bef9cc78f8118c2bccbbf",
+  "notes": "固定影像逐字视觉核对后手工录入；竖排右至左、列内上至下线性化；小句读圈记。、大圈记○；换列不加空格，表格按行加换行。保留可辨繁体异体，不以网络转录补字。reviewed为Codex影像及整理自审，非独立人工复核。",
+  "segment_id": "zsby-1925-s4",
+  "source_ref": {
+    "source_id": "zsby-nlc-12jh005345",
+    "revision": 1
+  },
+  "work_id": "zeng-shan-bu-yi",
+  "edition_id": "zsby-wenming-1925-11-nlc-12jh005345",
+  "title": "靜爻日沖之語境",
+  "text_role": "original_body",
+  "locator": {
+    "volume": "一",
+    "chapter": "日辰章第十七",
+    "section": null,
+    "page": "四七",
+    "leaf": null,
+    "image_page": 67,
+    "anchor": "沖旺相之靜爻起，愈加無用止"
+  },
+  "text": "沖旺相之靜爻卽爲暗動。沖衰弱之靜爻則爲日破。爻之旺而靜者。沖之則爲暗動。愈得其力。爻之靜而衰者。沖之則爲日破。愈加無用。",
+  "transcription_revision": 1,
+  "text_hash": "sha256:e32481f2aa0eadeacbf81f430f750719b8064d0d55efcd4b64202a908cdf9b3b",
+  "transcription_uncertainties": []
+}

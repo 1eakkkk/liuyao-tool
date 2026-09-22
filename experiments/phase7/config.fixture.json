@@ -1,0 +1,34 @@
+{
+  "data_kind": "compatibility_fixture",
+  "experiment_id": "phase7-pipeline-validation",
+  "assignment_seed": "public-fixture-seed-not-for-effect-experiments",
+  "model_settings": {
+    "model": "not-run",
+    "settings": {}
+  },
+  "cases": [
+    {
+      "case_id": "compat-01",
+      "canonical_file": "fixtures/compat-1.json"
+    },
+    {
+      "case_id": "compat-02",
+      "canonical_file": "fixtures/compat-2.json",
+      "query": {
+        "concepts": [
+          "interpretation-boundary"
+        ],
+        "limit": 100
+      }
+    },
+    {
+      "case_id": "compat-03",
+      "canonical_file": "fixtures/compat-3.json",
+      "query": {
+        "terms": [
+          "unknown-concept-test-only"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0",
+  "revision": 2,
+  "concepts": [
+    {
+      "concept_id": "shi-ying",
+      "label": "世应",
+      "aliases": [
+        "世應"
+      ],
+      "definition": "本批文献检索主题：世应；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "relation-direction",
+      "label": "关系方向",
+      "aliases": [
+        "關係方向"
+      ],
+      "definition": "本批文献检索主题：关系方向；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "month-break",
+      "label": "月破",
+      "aliases": [],
+      "definition": "本批文献检索主题：月破；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "month-combine",
+      "label": "月合",
+      "aliases": [],
+      "definition": "本批文献检索主题：月合；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "day-clash",
+      "label": "日冲",
+      "aliases": [
+        "日沖"
+      ],
+      "definition": "本批文献检索主题：日冲；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "day-combine",
+      "label": "日合",
+      "aliases": [],
+      "definition": "本批文献检索主题：日合；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "return-relation",
+      "label": "回头关系",
+      "aliases": [
+        "回頭關係",
+        "回头生克",
+        "回頭生克"
+      ],
+      "definition": "本批文献检索主题：回头关系；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "advance",
+      "label": "进神",
+      "aliases": [
+        "進神",
+        "化进",
+        "化進"
+      ],
+      "definition": "本批文献检索主题：进神；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "retreat",
+      "label": "退神",
+      "aliases": [
+        "化退"
+      ],
+      "definition": "本批文献检索主题：退神；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "flying-hidden",
+      "label": "飞伏",
+      "aliases": [
+        "飛伏"
+      ],
+      "definition": "本批文献检索主题：飞伏；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "xunkong",
+      "label": "旬空",
+      "aliases": [
+        "空亡"
+      ],
+      "definition": "本批文献检索主题：旬空；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "moving-static",
+      "label": "动静",
+      "aliases": [
+        "動靜"
+      ],
+      "definition": "本批文献检索主题：动静；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "temporal-scope",
+      "label": "时间范围",
+      "aliases": [
+        "時間範圍"
+      ],
+      "definition": "本批文献检索主题：时间范围；只控制检索称谓，不执行排盘规则。"
+    },
+    {
+      "concept_id": "interpretation-boundary",
+      "label": "解释边界",
+      "aliases": [
+        "解釋邊界"
+      ],
+      "definition": "本批文献检索主题：解释边界；只控制检索称谓，不执行排盘规则。"
+    }
+  ],
+  "categories": [
+    {
+      "category_id": "shi-ying",
+      "label": "世应文献"
+    },
+    {
+      "category_id": "month-relation",
+      "label": "月建关系文献"
+    },
+    {
+      "category_id": "day-relation",
+      "label": "日辰关系文献"
+    },
+    {
+      "category_id": "moving-relation",
+      "label": "动变关系文献"
+    },
+    {
+      "category_id": "hidden-relation",
+      "label": "飞伏文献"
+    },
+    {
+      "category_id": "void",
+      "label": "旬空文献"
+    }
+  ],
+  "tags": []
+}

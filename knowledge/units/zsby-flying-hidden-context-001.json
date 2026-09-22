@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "source_checked",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "editorial",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:5916ba110cd0ee4bb0a6dc0a526a44ca4900f136d63f9165cfaa7c4f4b12f40c",
+  "notes": "飞克解释在前一占例，后有黄金策评议；仅六项不足支撑完整候选边界，暂不准入。",
+  "knowledge_id": "zsby-flying-hidden-context-001",
+  "source_type": "classical_body",
+  "segment_ref": {
+    "segment_id": "zsby-1925-s8",
+    "revision": 1,
+    "span": {
+      "start": 0,
+      "end": 85,
+      "unit": "unicode_code_point"
+    }
+  },
+  "original_text": "伏神有用者六\n伏神得日月生者一也。○伏神旺相者二也。○伏神得飛神生者。三也。○伏神得動爻生者。四也。○伏神得遇日月動爻沖尅飛神者五也。○伏神得遇飛神空破休囚墓絕者。六也。",
+  "normalized_statement": "待核草案：本段将飞神生伏列为伏神有用的多个条件之一，局部飞伏生克不应当成出伏或成败的充分条件。",
+  "category": "hidden-relation",
+  "applicable_conditions": {
+    "status": "specified",
+    "statements": [
+      "本段六项并列条件须全部保留。"
+    ]
+  },
+  "exclusions": {
+    "status": "specified",
+    "statements": [
+      "本段未直接解释飞克伏，不以rule关联冒充原文支撑。"
+    ]
+  },
+  "exceptions": {
+    "status": "unreviewed",
+    "statements": []
+  },
+  "related_concepts": [
+    "flying-hidden",
+    "interpretation-boundary"
+  ],
+  "related_rule_ids": [
+    "HIDDEN-FLY-GENERATE-001",
+    "HIDDEN-FLY-CONTROL-001"
+  ],
+  "ruleset_version": "r1",
+  "rule_link_semantics": "association_only",
+  "tags": [],
+  "supersedes": [],
+  "related_units": [],
+  "disputes": []
+}

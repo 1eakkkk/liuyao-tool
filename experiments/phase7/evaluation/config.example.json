@@ -1,0 +1,10 @@
+{
+  "experiment_id": "phase7-knowledge-package",
+  "data_kind": "external",
+  "model": {
+    "client": "NOT_SELECTED",
+    "label": "MODEL_NOT_SELECTED",
+    "version": null,
+    "settings": {}
+  }
+}

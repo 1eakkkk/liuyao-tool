@@ -1,0 +1,1692 @@
+{
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "rubric_version": {
+      "type": "string"
+    },
+    "base_commit": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "case_type": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "condition": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "follow_up": {
+            "type": "string"
+          },
+          "query": {
+            "type": "object",
+            "properties": {
+              "concepts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "limit": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "concepts",
+              "limit"
+            ],
+            "additionalProperties": false
+          },
+          "recipe": {
+            "type": "object",
+            "properties": {
+              "sums": {
+                "type": "array",
+                "minItems": 6,
+                "maxItems": 6,
+                "items": {
+                  "enum": [
+                    6,
+                    7,
+                    8,
+                    9
+                  ]
+                }
+              },
+              "timestamp": {
+                "type": "string"
+              },
+              "timezone": {
+                "type": "string"
+              },
+              "explicit_day_index": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "sums",
+              "timestamp",
+              "timezone",
+              "explicit_day_index"
+            ],
+            "additionalProperties": false
+          },
+          "canonical": {
+            "type": "object",
+            "properties": {
+              "schema_version": {
+                "type": "string"
+              },
+              "meta": {
+                "type": "object",
+                "properties": {
+                  "cast_id": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "type": "string"
+                  },
+                  "coin_convention": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "cast_id",
+                  "created_at",
+                  "source",
+                  "coin_convention"
+                ],
+                "additionalProperties": false
+              },
+              "question": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "topic": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "text",
+                  "topic"
+                ],
+                "additionalProperties": false
+              },
+              "versions": {
+                "type": "object",
+                "properties": {
+                  "app": {
+                    "type": "string"
+                  },
+                  "engine": {
+                    "type": "string"
+                  },
+                  "prompt": {
+                    "type": "string"
+                  },
+                  "legacy_rules": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "app",
+                  "engine",
+                  "prompt",
+                  "legacy_rules"
+                ],
+                "additionalProperties": false
+              },
+              "calendar": {
+                "type": "object",
+                "properties": {
+                  "day_ganzhi": {
+                    "type": "string"
+                  },
+                  "year_ganzhi": {
+                    "type": "string"
+                  },
+                  "month_ganzhi": {
+                    "type": "string"
+                  },
+                  "hour_ganzhi": {
+                    "type": "string"
+                  },
+                  "anchor": {
+                    "type": "object",
+                    "properties": {
+                      "year": {
+                        "type": "number"
+                      },
+                      "month": {
+                        "type": "number"
+                      },
+                      "day": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "year",
+                      "month",
+                      "day"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "month_branch": {
+                    "type": "string"
+                  },
+                  "day_branch": {
+                    "type": "string"
+                  },
+                  "kongwang": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "day_ganzhi",
+                  "year_ganzhi",
+                  "month_ganzhi",
+                  "hour_ganzhi",
+                  "anchor",
+                  "month_branch",
+                  "day_branch",
+                  "kongwang"
+                ],
+                "additionalProperties": false
+              },
+              "hexagram": {
+                "type": "object",
+                "properties": {
+                  "primary": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "palace": {
+                        "type": "string"
+                      },
+                      "lower_trigram": {
+                        "type": "string"
+                      },
+                      "upper_trigram": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "palace",
+                      "lower_trigram",
+                      "upper_trigram"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "changed": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "shi_line": {
+                    "type": "number"
+                  },
+                  "ying_line": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "primary",
+                  "changed",
+                  "shi_line",
+                  "ying_line"
+                ],
+                "additionalProperties": false
+              },
+              "display": {
+                "type": "object",
+                "properties": {
+                  "four_pillars_text": {
+                    "type": "string"
+                  },
+                  "kong_text": {
+                    "type": "string"
+                  },
+                  "date_text": {
+                    "type": "string"
+                  },
+                  "palace_text": {
+                    "type": "string"
+                  },
+                  "lower_upper_text": {
+                    "type": "string"
+                  },
+                  "day_kong_text": {
+                    "type": "string"
+                  },
+                  "overall_trend_text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "four_pillars_text",
+                  "kong_text",
+                  "date_text",
+                  "palace_text",
+                  "lower_upper_text",
+                  "day_kong_text",
+                  "overall_trend_text"
+                ],
+                "additionalProperties": false
+              },
+              "lines": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "position": {
+                      "type": "number"
+                    },
+                    "yin_yang": {
+                      "type": "string"
+                    },
+                    "changed": {
+                      "type": [
+                        "null",
+                        "object"
+                      ],
+                      "properties": {
+                        "ganzhi": {
+                          "type": "string"
+                        },
+                        "element": {
+                          "type": "string"
+                        },
+                        "relative": {
+                          "type": "string"
+                        },
+                        "branch": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "ganzhi",
+                        "element",
+                        "relative",
+                        "branch"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "hidden": {
+                      "type": [
+                        "null",
+                        "object"
+                      ],
+                      "properties": {
+                        "relative": {
+                          "type": "string"
+                        },
+                        "ganzhi": {
+                          "type": "string"
+                        },
+                        "element": {
+                          "type": "string"
+                        },
+                        "branch": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "relative",
+                        "ganzhi",
+                        "element",
+                        "branch"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "relations": {
+                      "type": "object",
+                      "properties": {
+                        "month_strength": {
+                          "type": "string"
+                        },
+                        "day_relation": {
+                          "type": "string"
+                        },
+                        "return_relation": {
+                          "type": "string"
+                        },
+                        "advance_retreat": {
+                          "type": "string"
+                        },
+                        "hidden_relation": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "month_strength",
+                        "day_relation",
+                        "return_relation",
+                        "advance_retreat",
+                        "hidden_relation"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "position_label": {
+                      "type": "string"
+                    },
+                    "relative": {
+                      "type": "string"
+                    },
+                    "spirit": {
+                      "type": "string"
+                    },
+                    "ganzhi": {
+                      "type": "string"
+                    },
+                    "element": {
+                      "type": "string"
+                    },
+                    "state_text": {
+                      "type": "string"
+                    },
+                    "moving": {
+                      "type": "boolean"
+                    },
+                    "is_shi": {
+                      "type": "boolean"
+                    },
+                    "is_ying": {
+                      "type": "boolean"
+                    },
+                    "is_kongwang": {
+                      "type": "boolean"
+                    },
+                    "compatibility": {
+                      "type": "object",
+                      "properties": {
+                        "presence": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "extensions": {
+                          "type": "object",
+                          "properties": {},
+                          "required": [],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "presence",
+                        "extensions"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "branch": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "position",
+                    "yin_yang",
+                    "changed",
+                    "hidden",
+                    "relations",
+                    "position_label",
+                    "relative",
+                    "spirit",
+                    "ganzhi",
+                    "element",
+                    "state_text",
+                    "moving",
+                    "is_shi",
+                    "is_ying",
+                    "is_kongwang",
+                    "compatibility",
+                    "branch"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "compatibility": {
+                "type": "object",
+                "properties": {
+                  "presence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "extensions": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "presence",
+                  "extensions"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "schema_version",
+              "meta",
+              "question",
+              "versions",
+              "calendar",
+              "hexagram",
+              "display",
+              "lines",
+              "compatibility"
+            ],
+            "additionalProperties": false
+          },
+          "rule_result": {
+            "type": "object",
+            "properties": {
+              "schema_version": {
+                "type": "string"
+              },
+              "engine_version": {
+                "type": "string"
+              },
+              "ruleset_version": {
+                "type": "string"
+              },
+              "input_schema_version": {
+                "type": "string"
+              },
+              "hits": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "rule_id": {
+                      "type": "string"
+                    },
+                    "rule_version": {
+                      "type": "string"
+                    },
+                    "origin": {
+                      "type": "string"
+                    },
+                    "target": {
+                      "type": "object",
+                      "properties": {
+                        "line": {
+                          "type": "number"
+                        },
+                        "component": {
+                          "type": "string"
+                        },
+                        "related_line": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "line",
+                        "component"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "evidence": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "path": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": [
+                              "boolean",
+                              "string",
+                              "number"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "path",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "from": {
+                          "type": "object",
+                          "properties": {
+                            "line": {
+                              "type": "number"
+                            },
+                            "component": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "line",
+                            "component"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "to": {
+                          "type": "object",
+                          "properties": {
+                            "line": {
+                              "type": "number"
+                            },
+                            "component": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "line",
+                            "component"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "label"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "rule_id",
+                    "rule_version",
+                    "origin",
+                    "target",
+                    "evidence",
+                    "result"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "skipped": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "rule_id": {
+                      "type": "string"
+                    },
+                    "target": {
+                      "type": "object",
+                      "properties": {
+                        "line": {
+                          "type": "number"
+                        },
+                        "component": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "line",
+                        "component"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "paths": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "rule_id",
+                    "target",
+                    "reason",
+                    "paths"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "diagnostics": {
+                "type": "array",
+                "items": {
+                  "type": [
+                    "string",
+                    "number",
+                    "boolean",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "schema_version",
+              "engine_version",
+              "ruleset_version",
+              "input_schema_version",
+              "hits",
+              "skipped",
+              "diagnostics"
+            ],
+            "additionalProperties": false
+          },
+          "checklist": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "checklist_id": {
+                  "type": "string"
+                },
+                "statement": {
+                  "type": "string"
+                },
+                "turns": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "checklist_id",
+                "statement",
+                "turns",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "checklist_hash": {
+            "type": "string"
+          },
+          "known_traps": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "expected": {
+            "type": "object",
+            "properties": {
+              "selected_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "zero_match": {
+                "type": "boolean"
+              },
+              "archive": {
+                "type": "object",
+                "properties": {
+                  "case_id": {
+                    "type": "string"
+                  },
+                  "validation_only": {
+                    "type": "boolean"
+                  },
+                  "model_settings": {
+                    "type": "object",
+                    "properties": {
+                      "model": {
+                        "type": "string"
+                      },
+                      "settings": {
+                        "type": "object",
+                        "properties": {},
+                        "required": [],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "model",
+                      "settings"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "question_domain": {
+                    "type": "string"
+                  },
+                  "ai_input_schema_version": {
+                    "type": "string"
+                  },
+                  "prompt_version": {
+                    "type": "string"
+                  },
+                  "knowledge_projection_version": {
+                    "type": "string"
+                  },
+                  "corpus_version": {
+                    "type": "string"
+                  },
+                  "corpus_hash": {
+                    "type": "string"
+                  },
+                  "retrieval_policy_version": {
+                    "type": "string"
+                  },
+                  "canonical_hash": {
+                    "type": "string"
+                  },
+                  "rule_result_hash": {
+                    "type": "string"
+                  },
+                  "common_base_hash": {
+                    "type": "string"
+                  },
+                  "off_common_base_hash": {
+                    "type": "string"
+                  },
+                  "on_common_base_hash": {
+                    "type": "string"
+                  },
+                  "off_visible_prompt_hash": {
+                    "type": "string"
+                  },
+                  "on_visible_prompt_hash": {
+                    "type": "string"
+                  },
+                  "f_hash": {
+                    "type": "object",
+                    "properties": {
+                      "off": {
+                        "type": "string"
+                      },
+                      "on": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "off",
+                      "on"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "prompt_chars": {
+                    "type": "object",
+                    "properties": {
+                      "off": {
+                        "type": "number"
+                      },
+                      "on": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "off",
+                      "on"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "delta_chars": {
+                    "type": "number"
+                  },
+                  "delta_percent": {
+                    "type": "number"
+                  },
+                  "f_chars": {
+                    "type": "object",
+                    "properties": {
+                      "off": {
+                        "type": "number"
+                      },
+                      "on": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "off",
+                      "on"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "budget": {
+                    "type": "object",
+                    "properties": {
+                      "max_units": {
+                        "type": "number"
+                      },
+                      "max_f_code_points": {
+                        "type": "number"
+                      },
+                      "max_delta_percent": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "max_units",
+                      "max_f_code_points",
+                      "max_delta_percent"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "selected_knowledge_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "budget_excluded": {
+                    "type": "array",
+                    "items": {
+                      "type": [
+                        "string",
+                        "number",
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  },
+                  "retrieval_query": {
+                    "type": "object",
+                    "properties": {
+                      "concepts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "limit": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "concepts",
+                      "limit"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "retrieval_trace": {
+                    "type": "object",
+                    "properties": {
+                      "corpus_version": {
+                        "type": "string"
+                      },
+                      "corpus_hash": {
+                        "type": "string"
+                      },
+                      "retrieval_policy_version": {
+                        "type": "string"
+                      },
+                      "selected": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "unit": {
+                              "type": "object",
+                              "properties": {
+                                "schema_version": {
+                                  "type": "string"
+                                },
+                                "revision": {
+                                  "type": "number"
+                                },
+                                "data_kind": {
+                                  "type": "string"
+                                },
+                                "verification_status": {
+                                  "type": "string"
+                                },
+                                "provenance": {
+                                  "type": "object",
+                                  "properties": {
+                                    "acquisition_date": {
+                                      "type": "string"
+                                    },
+                                    "source_url": {
+                                      "type": "string"
+                                    },
+                                    "identifier": {
+                                      "type": "string"
+                                    },
+                                    "artifact_hash": {
+                                      "type": "string"
+                                    },
+                                    "method": {
+                                      "type": "string"
+                                    },
+                                    "agent": {
+                                      "type": "string"
+                                    },
+                                    "reviewed_by": {
+                                      "type": "string"
+                                    },
+                                    "reviewed_at": {
+                                      "type": "string"
+                                    },
+                                    "rights": {
+                                      "type": "object",
+                                      "properties": {
+                                        "status": {
+                                          "type": "string"
+                                        },
+                                        "basis": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "status",
+                                        "basis"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "required": [
+                                    "acquisition_date",
+                                    "source_url",
+                                    "identifier",
+                                    "artifact_hash",
+                                    "method",
+                                    "agent",
+                                    "reviewed_by",
+                                    "reviewed_at",
+                                    "rights"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "content_hash": {
+                                  "type": "string"
+                                },
+                                "notes": {
+                                  "type": "string"
+                                },
+                                "knowledge_id": {
+                                  "type": "string"
+                                },
+                                "source_type": {
+                                  "type": "string"
+                                },
+                                "segment_ref": {
+                                  "type": "object",
+                                  "properties": {
+                                    "segment_id": {
+                                      "type": "string"
+                                    },
+                                    "revision": {
+                                      "type": "number"
+                                    },
+                                    "span": {
+                                      "type": "object",
+                                      "properties": {
+                                        "start": {
+                                          "type": "number"
+                                        },
+                                        "end": {
+                                          "type": "number"
+                                        },
+                                        "unit": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "start",
+                                        "end",
+                                        "unit"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "required": [
+                                    "segment_id",
+                                    "revision",
+                                    "span"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "original_text": {
+                                  "type": "string"
+                                },
+                                "normalized_statement": {
+                                  "type": "string"
+                                },
+                                "category": {
+                                  "type": "string"
+                                },
+                                "applicable_conditions": {
+                                  "type": "object",
+                                  "properties": {
+                                    "status": {
+                                      "type": "string"
+                                    },
+                                    "statements": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "status",
+                                    "statements"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "exclusions": {
+                                  "type": "object",
+                                  "properties": {
+                                    "status": {
+                                      "type": "string"
+                                    },
+                                    "statements": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "status",
+                                    "statements"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "exceptions": {
+                                  "type": "object",
+                                  "properties": {
+                                    "status": {
+                                      "type": "string"
+                                    },
+                                    "statements": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "null"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "status",
+                                    "statements"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "related_concepts": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "related_rule_ids": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "ruleset_version": {
+                                  "type": "string"
+                                },
+                                "rule_link_semantics": {
+                                  "type": "string"
+                                },
+                                "tags": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": [
+                                      "string",
+                                      "number",
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "supersedes": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": [
+                                      "string",
+                                      "number",
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "related_units": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": [
+                                      "string",
+                                      "number",
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "disputes": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": [
+                                      "string",
+                                      "number",
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "schema_version",
+                                "revision",
+                                "data_kind",
+                                "verification_status",
+                                "provenance",
+                                "content_hash",
+                                "notes",
+                                "knowledge_id",
+                                "source_type",
+                                "segment_ref",
+                                "original_text",
+                                "normalized_statement",
+                                "category",
+                                "applicable_conditions",
+                                "exclusions",
+                                "exceptions",
+                                "related_concepts",
+                                "related_rule_ids",
+                                "ruleset_version",
+                                "rule_link_semantics",
+                                "tags",
+                                "supersedes",
+                                "related_units",
+                                "disputes"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "match_reasons": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "same_proposition_ids": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "citation": {
+                              "type": "object",
+                              "properties": {
+                                "knowledge_id": {
+                                  "type": "string"
+                                },
+                                "source_id": {
+                                  "type": "string"
+                                },
+                                "source_revision": {
+                                  "type": "number"
+                                },
+                                "edition_id": {
+                                  "type": "string"
+                                },
+                                "title": {
+                                  "type": "string"
+                                },
+                                "source_url": {
+                                  "type": "string"
+                                },
+                                "segment_ref": {
+                                  "type": "object",
+                                  "properties": {
+                                    "segment_id": {
+                                      "type": "string"
+                                    },
+                                    "revision": {
+                                      "type": "number"
+                                    },
+                                    "span": {
+                                      "type": "object",
+                                      "properties": {
+                                        "start": {
+                                          "type": "number"
+                                        },
+                                        "end": {
+                                          "type": "number"
+                                        },
+                                        "unit": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "start",
+                                        "end",
+                                        "unit"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "required": [
+                                    "segment_id",
+                                    "revision",
+                                    "span"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "locator": {
+                                  "type": "object",
+                                  "properties": {
+                                    "volume": {
+                                      "type": "string"
+                                    },
+                                    "chapter": {
+                                      "type": "string"
+                                    },
+                                    "section": {
+                                      "type": "null"
+                                    },
+                                    "page": {
+                                      "type": "string"
+                                    },
+                                    "leaf": {
+                                      "type": "null"
+                                    },
+                                    "image_page": {
+                                      "type": "number"
+                                    },
+                                    "anchor": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "volume",
+                                    "chapter",
+                                    "section",
+                                    "page",
+                                    "leaf",
+                                    "image_page",
+                                    "anchor"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "artifact_hash": {
+                                  "type": "string"
+                                },
+                                "text_hash": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "knowledge_id",
+                                "source_id",
+                                "source_revision",
+                                "edition_id",
+                                "title",
+                                "source_url",
+                                "segment_ref",
+                                "locator",
+                                "artifact_hash",
+                                "text_hash"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "same_proposition_citations": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "knowledge_id": {
+                                    "type": "string"
+                                  },
+                                  "source_id": {
+                                    "type": "string"
+                                  },
+                                  "source_revision": {
+                                    "type": "number"
+                                  },
+                                  "edition_id": {
+                                    "type": "string"
+                                  },
+                                  "title": {
+                                    "type": "string"
+                                  },
+                                  "source_url": {
+                                    "type": "string"
+                                  },
+                                  "segment_ref": {
+                                    "type": "object",
+                                    "properties": {
+                                      "segment_id": {
+                                        "type": "string"
+                                      },
+                                      "revision": {
+                                        "type": "number"
+                                      },
+                                      "span": {
+                                        "type": "object",
+                                        "properties": {
+                                          "start": {
+                                            "type": "number"
+                                          },
+                                          "end": {
+                                            "type": "number"
+                                          },
+                                          "unit": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "start",
+                                          "end",
+                                          "unit"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "required": [
+                                      "segment_id",
+                                      "revision",
+                                      "span"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  "locator": {
+                                    "type": "object",
+                                    "properties": {
+                                      "volume": {
+                                        "type": "string"
+                                      },
+                                      "chapter": {
+                                        "type": "string"
+                                      },
+                                      "section": {
+                                        "type": "null"
+                                      },
+                                      "page": {
+                                        "type": "string"
+                                      },
+                                      "leaf": {
+                                        "type": "null"
+                                      },
+                                      "image_page": {
+                                        "type": "number"
+                                      },
+                                      "anchor": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "volume",
+                                      "chapter",
+                                      "section",
+                                      "page",
+                                      "leaf",
+                                      "image_page",
+                                      "anchor"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  "artifact_hash": {
+                                    "type": "string"
+                                  },
+                                  "text_hash": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "knowledge_id",
+                                  "source_id",
+                                  "source_revision",
+                                  "edition_id",
+                                  "title",
+                                  "source_url",
+                                  "segment_ref",
+                                  "locator",
+                                  "artifact_hash",
+                                  "text_hash"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "association": {
+                              "type": "object",
+                              "properties": {
+                                "ruleset_version": {
+                                  "type": "string"
+                                },
+                                "related_rule_ids": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "semantics": {
+                                  "type": "string"
+                                },
+                                "knowledge_role": {
+                                  "type": "string"
+                                },
+                                "independent_evidence": {
+                                  "type": "boolean"
+                                },
+                                "evidence_identity": {
+                                  "type": "null"
+                                },
+                                "requires_cast_binding": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "ruleset_version",
+                                "related_rule_ids",
+                                "semantics",
+                                "knowledge_role",
+                                "independent_evidence",
+                                "evidence_identity",
+                                "requires_cast_binding"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "unit",
+                            "match_reasons",
+                            "same_proposition_ids",
+                            "citation",
+                            "same_proposition_citations",
+                            "association"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "excluded": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "reasons": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "reasons"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "admission_excluded": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "reasons": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "reasons"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "normalized_terms": {
+                        "type": "array",
+                        "items": {
+                          "type": [
+                            "string",
+                            "number",
+                            "boolean",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "corpus_version",
+                      "corpus_hash",
+                      "retrieval_policy_version",
+                      "selected",
+                      "excluded",
+                      "admission_excluded",
+                      "normalized_terms"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "limitations": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "case_id",
+                  "validation_only",
+                  "model_settings",
+                  "question_domain",
+                  "ai_input_schema_version",
+                  "prompt_version",
+                  "knowledge_projection_version",
+                  "corpus_version",
+                  "corpus_hash",
+                  "retrieval_policy_version",
+                  "canonical_hash",
+                  "rule_result_hash",
+                  "common_base_hash",
+                  "off_common_base_hash",
+                  "on_common_base_hash",
+                  "off_visible_prompt_hash",
+                  "on_visible_prompt_hash",
+                  "f_hash",
+                  "prompt_chars",
+                  "delta_chars",
+                  "delta_percent",
+                  "f_chars",
+                  "budget",
+                  "selected_knowledge_ids",
+                  "budget_excluded",
+                  "retrieval_query",
+                  "retrieval_trace",
+                  "limitations"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "selected_ids",
+              "zero_match",
+              "archive"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "case_id",
+          "case_type",
+          "category",
+          "condition",
+          "question",
+          "follow_up",
+          "query",
+          "recipe",
+          "canonical",
+          "rule_result",
+          "checklist",
+          "checklist_hash",
+          "known_traps",
+          "rationale",
+          "expected"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 12,
+      "maxItems": 12
+    }
+  },
+  "required": [
+    "version",
+    "rubric_version",
+    "base_commit",
+    "purpose",
+    "cases"
+  ],
+  "additionalProperties": false
+}
