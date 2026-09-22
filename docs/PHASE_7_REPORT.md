@@ -1,6 +1,30 @@
 # Phase 7：Knowledge Layer
 
-## Phase 7.2 当前结果
+## 最终收口状态
+
+Phase 7.3B external Knowledge A/B completed。实验状态为 `external_ab_completed`，`effects_conclusion = null`。本次只更新公开总结，未修改生产代码、corpus、审核状态、评分或实验数据；不进入 Phase 8。
+
+| 阶段 | 已完成范围 | 基线记录 |
+| --- | --- | --- |
+| Phase 7.0 | provenance/schema foundation：结构、出处、修订与审核契约 | d3a2ead；当时正式 corpus 为空 |
+| Phase 7.1 | traceable single-edition corpus + deterministic retrieval | beb0165；1 底本、9 片段、10 单元，7 reviewed / 3 source_checked |
+| Phase 7.2 | Structured 1.2 paired offline pipeline | a8c8dbb；仅 F.items 不同的成对输入、白名单、预算与离线导出 |
+| Phase 7.3A | frozen unseen evaluation package | 0d3af10；12 个新案例、共同 checklist、blind-review-v2、冻结与独立评测流程 |
+| Phase 7.3B | external Knowledge A/B completed | 24 个真实外部会话已导入，评分验证、lock、unblind、report 完成 |
+
+完整公开结果见 [PHASE_7_3B_RESULTS.md](PHASE_7_3B_RESULTS.md)。[Phase 7.3A 设计记录](PHASE_7_3A_DESIGN.md)保留原样；下文 7.0–7.2 的“尚未实验”“语料为空”等表述均为各阶段当时的历史状态，不代表当前状态。
+
+### 描述性结果与保留方向
+
+在当前 12 个定向案例、人工冻结检索条件和单一模型下，Knowledge Context 从 70 个适用 checklist 机会中的 2 个遗漏降至 0，文献过度泛化事件从 3 降至 2，且未观察到事实错误、关系错误、误引、事实覆盖、重复证据计权或矛盾增加。Prompt 字符开销约 +3.893%。这些是本轮锁定评分的观察计数，不是因果或预测准确率结论。
+
+结果支持保留 Knowledge Layer 作为可追溯的文献解释上下文机制，并支持继续研究其在解释边界和遗漏控制上的工程价值。**month-combine 在 ON 条件下仍发生 2 个 literature_overreach 事件，是后续需要重点审计的主题**；本轮不修改 corpus、规则或协议来适配结果。
+
+24/24 session 的 context/new-chat 状态无法独立确认，这是可验证性限制，不能改写为已确认上下文污染；2/24 记录盲化受损。现有比较逻辑将任何 protocol deviation 的 case 标记为 unable_to_judge，因此 12 个 case 全部无法判定胜负，不事后修改本轮逻辑。限制还包括定向非随机样本、单一模型、人工 concept query、不评价自动检索/问题分类或预测准确率、reviewed 仅为项目内部审核而非独立学术认证、生成随机波动，以及指标可能重叠而不能相加为总分。
+
+---
+
+## Phase 7.2 历史记录
 
 **knowledge-aware paired input pipeline ready**
 
