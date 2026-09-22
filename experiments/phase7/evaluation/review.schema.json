@@ -1,0 +1,964 @@
+{
+  "type": "object",
+  "properties": {
+    "rubric_version": {
+      "const": "blind-review-v2"
+    },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "variant": {
+            "enum": [
+              "A",
+              "B"
+            ]
+          },
+          "reviewer_id": {
+            "type": "string"
+          },
+          "review_status": {
+            "enum": [
+              "pending",
+              "complete"
+            ]
+          },
+          "blinding_compromised": {
+            "type": "boolean"
+          },
+          "blinding_note": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "fact_errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "finding_id": {
+                  "type": "string"
+                },
+                "turn": {
+                  "enum": [
+                    "initial",
+                    "follow_up",
+                    "cross_turn"
+                  ]
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "turn": {
+                        "enum": [
+                          "initial",
+                          "follow_up"
+                        ]
+                      },
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "turn",
+                      "start",
+                      "end",
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "description": "quote.start / quote.end are JavaScript UTF-16 code-unit offsets into the exact raw answer string."
+                  }
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "checklist_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "direction_error": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "finding_id",
+                "turn",
+                "quotes",
+                "fact_ids",
+                "source_reference_ids",
+                "checklist_id",
+                "direction_error",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "relation_errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "finding_id": {
+                  "type": "string"
+                },
+                "turn": {
+                  "enum": [
+                    "initial",
+                    "follow_up",
+                    "cross_turn"
+                  ]
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "turn": {
+                        "enum": [
+                          "initial",
+                          "follow_up"
+                        ]
+                      },
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "turn",
+                      "start",
+                      "end",
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "description": "quote.start / quote.end are JavaScript UTF-16 code-unit offsets into the exact raw answer string."
+                  }
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "checklist_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "direction_error": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "finding_id",
+                "turn",
+                "quotes",
+                "fact_ids",
+                "source_reference_ids",
+                "checklist_id",
+                "direction_error",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "relevant_omissions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "finding_id": {
+                  "type": "string"
+                },
+                "turn": {
+                  "enum": [
+                    "initial",
+                    "follow_up",
+                    "cross_turn"
+                  ]
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "turn": {
+                        "enum": [
+                          "initial",
+                          "follow_up"
+                        ]
+                      },
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "turn",
+                      "start",
+                      "end",
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "description": "quote.start / quote.end are JavaScript UTF-16 code-unit offsets into the exact raw answer string."
+                  }
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "checklist_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "direction_error": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "finding_id",
+                "turn",
+                "quotes",
+                "fact_ids",
+                "source_reference_ids",
+                "checklist_id",
+                "direction_error",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "fact_overrides": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "finding_id": {
+                  "type": "string"
+                },
+                "turn": {
+                  "enum": [
+                    "initial",
+                    "follow_up",
+                    "cross_turn"
+                  ]
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "turn": {
+                        "enum": [
+                          "initial",
+                          "follow_up"
+                        ]
+                      },
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "turn",
+                      "start",
+                      "end",
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "description": "quote.start / quote.end are JavaScript UTF-16 code-unit offsets into the exact raw answer string."
+                  }
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "checklist_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "direction_error": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "finding_id",
+                "turn",
+                "quotes",
+                "fact_ids",
+                "source_reference_ids",
+                "checklist_id",
+                "direction_error",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "contradictions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "finding_id": {
+                  "type": "string"
+                },
+                "turn": {
+                  "enum": [
+                    "initial",
+                    "follow_up",
+                    "cross_turn"
+                  ]
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "turn": {
+                        "enum": [
+                          "initial",
+                          "follow_up"
+                        ]
+                      },
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "turn",
+                      "start",
+                      "end",
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "description": "quote.start / quote.end are JavaScript UTF-16 code-unit offsets into the exact raw answer string."
+                  }
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "checklist_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "direction_error": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "finding_id",
+                "turn",
+                "quotes",
+                "fact_ids",
+                "source_reference_ids",
+                "checklist_id",
+                "direction_error",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "duplicate_evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "finding_id": {
+                  "type": "string"
+                },
+                "turn": {
+                  "enum": [
+                    "initial",
+                    "follow_up",
+                    "cross_turn"
+                  ]
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "turn": {
+                        "enum": [
+                          "initial",
+                          "follow_up"
+                        ]
+                      },
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "turn",
+                      "start",
+                      "end",
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "description": "quote.start / quote.end are JavaScript UTF-16 code-unit offsets into the exact raw answer string."
+                  }
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "checklist_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "direction_error": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "finding_id",
+                "turn",
+                "quotes",
+                "fact_ids",
+                "source_reference_ids",
+                "checklist_id",
+                "direction_error",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "literature_misquotes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "finding_id": {
+                  "type": "string"
+                },
+                "turn": {
+                  "enum": [
+                    "initial",
+                    "follow_up",
+                    "cross_turn"
+                  ]
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "turn": {
+                        "enum": [
+                          "initial",
+                          "follow_up"
+                        ]
+                      },
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "turn",
+                      "start",
+                      "end",
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "description": "quote.start / quote.end are JavaScript UTF-16 code-unit offsets into the exact raw answer string."
+                  }
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "checklist_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "direction_error": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "finding_id",
+                "turn",
+                "quotes",
+                "fact_ids",
+                "source_reference_ids",
+                "checklist_id",
+                "direction_error",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "literature_overreach": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "finding_id": {
+                  "type": "string"
+                },
+                "turn": {
+                  "enum": [
+                    "initial",
+                    "follow_up",
+                    "cross_turn"
+                  ]
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "turn": {
+                        "enum": [
+                          "initial",
+                          "follow_up"
+                        ]
+                      },
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "turn",
+                      "start",
+                      "end",
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "description": "quote.start / quote.end are JavaScript UTF-16 code-unit offsets into the exact raw answer string."
+                  }
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "checklist_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "direction_error": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "finding_id",
+                "turn",
+                "quotes",
+                "fact_ids",
+                "source_reference_ids",
+                "checklist_id",
+                "direction_error",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "irrelevant_literature": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "finding_id": {
+                  "type": "string"
+                },
+                "turn": {
+                  "enum": [
+                    "initial",
+                    "follow_up",
+                    "cross_turn"
+                  ]
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "turn": {
+                        "enum": [
+                          "initial",
+                          "follow_up"
+                        ]
+                      },
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "turn",
+                      "start",
+                      "end",
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "description": "quote.start / quote.end are JavaScript UTF-16 code-unit offsets into the exact raw answer string."
+                  }
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "checklist_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "direction_error": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "finding_id",
+                "turn",
+                "quotes",
+                "fact_ids",
+                "source_reference_ids",
+                "checklist_id",
+                "direction_error",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "uncertain": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "finding_id": {
+                  "type": "string"
+                },
+                "turn": {
+                  "enum": [
+                    "initial",
+                    "follow_up",
+                    "cross_turn"
+                  ]
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "turn": {
+                        "enum": [
+                          "initial",
+                          "follow_up"
+                        ]
+                      },
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "turn",
+                      "start",
+                      "end",
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "description": "quote.start / quote.end are JavaScript UTF-16 code-unit offsets into the exact raw answer string."
+                  }
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source_reference_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "checklist_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "direction_error": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "finding_id",
+                "turn",
+                "quotes",
+                "fact_ids",
+                "source_reference_ids",
+                "checklist_id",
+                "direction_error",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "checklist_assessments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "checklist_id": {
+                  "type": "string"
+                },
+                "turn": {
+                  "enum": [
+                    "initial",
+                    "follow_up"
+                  ]
+                },
+                "assessment": {
+                  "enum": [
+                    "satisfied",
+                    "omitted",
+                    "incorrect",
+                    "uncertain"
+                  ]
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "checklist_id",
+                "turn",
+                "assessment",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "case_id",
+          "variant",
+          "reviewer_id",
+          "review_status",
+          "blinding_compromised",
+          "blinding_note",
+          "notes",
+          "fact_errors",
+          "relation_errors",
+          "relevant_omissions",
+          "fact_overrides",
+          "contradictions",
+          "duplicate_evidence",
+          "literature_misquotes",
+          "literature_overreach",
+          "irrelevant_literature",
+          "uncertain",
+          "checklist_assessments"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "rubric_version",
+    "reviews"
+  ],
+  "additionalProperties": false
+}

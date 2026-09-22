@@ -1,0 +1,13 @@
+{
+  "case_id": "case-01",
+  "variant": "A",
+  "data_kind": "external",
+  "initial_file": "test-results/private-input/initial.txt",
+  "follow_up_file": "test-results/private-input/follow_up.txt",
+  "actual_order": 1,
+  "model": "REPLACE_WITH_FROZEN_MODEL_LABEL",
+  "settings": {},
+  "deviations": [],
+  "usage": null,
+  "latency": null
+}
