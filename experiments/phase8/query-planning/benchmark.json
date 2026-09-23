@@ -1,0 +1,5225 @@
+{
+  "version": "query-planning-candidate-1.1",
+  "candidate_status": "candidate_not_frozen",
+  "baseline_commit": "93497094f70687d9329d3a55ba12980525e013ce",
+  "semantic_families": [
+    {
+      "family_id": "family-01",
+      "split": "development",
+      "intent_template": "current month-break literature boundary"
+    },
+    {
+      "family_id": "family-02",
+      "split": "development",
+      "intent_template": "current month-combine naming and scope"
+    },
+    {
+      "family_id": "family-03",
+      "split": "development",
+      "intent_template": "current day-clash literature"
+    },
+    {
+      "family_id": "family-04",
+      "split": "development",
+      "intent_template": "current advance terminology"
+    },
+    {
+      "family_id": "family-05",
+      "split": "development",
+      "intent_template": "current retreat terminology"
+    },
+    {
+      "family_id": "family-06",
+      "split": "development",
+      "intent_template": "current xunkong interpretation"
+    },
+    {
+      "family_id": "family-07",
+      "split": "development",
+      "intent_template": "shi-ying relation explanation or factual restriction"
+    },
+    {
+      "family_id": "family-08",
+      "split": "development",
+      "intent_template": "no-case terminology definitions"
+    },
+    {
+      "family_id": "family-09",
+      "split": "development",
+      "intent_template": "names and moving-line factual-only outputs"
+    },
+    {
+      "family_id": "family-10",
+      "split": "development",
+      "intent_template": "broad non-topic requests"
+    },
+    {
+      "family_id": "family-11",
+      "split": "development",
+      "intent_template": "month-break and xunkong independent definitions"
+    },
+    {
+      "family_id": "family-12",
+      "split": "development",
+      "intent_template": "day-clash preference with month-break excluded"
+    },
+    {
+      "family_id": "family-13",
+      "split": "development",
+      "intent_template": "day-combine source-checked admission"
+    },
+    {
+      "family_id": "family-14",
+      "split": "development",
+      "intent_template": "return-relation source-checked admission"
+    },
+    {
+      "family_id": "family-15",
+      "split": "development",
+      "intent_template": "flying-hidden source-checked admission"
+    },
+    {
+      "family_id": "family-16",
+      "split": "development",
+      "intent_template": "mixed theory and current relation"
+    },
+    {
+      "family_id": "family-17",
+      "split": "holdout",
+      "intent_template": "different-line month-break and day-clash boundary comparison"
+    },
+    {
+      "family_id": "family-18",
+      "split": "holdout",
+      "intent_template": "different-line retreat and xunkong boundary comparison"
+    },
+    {
+      "family_id": "family-19",
+      "split": "holdout",
+      "intent_template": "absent month-combine conditional query"
+    },
+    {
+      "family_id": "family-20",
+      "split": "holdout",
+      "intent_template": "partial reviewed plus source-checked theory"
+    },
+    {
+      "family_id": "family-21",
+      "split": "holdout",
+      "intent_template": "three-topic cap and explicit narrowing"
+    },
+    {
+      "family_id": "family-22",
+      "split": "holdout",
+      "intent_template": "void timing, multi-hit dedupe and shorthand"
+    },
+    {
+      "family_id": "family-23",
+      "split": "holdout",
+      "intent_template": "narrow canonical transcription, arithmetic and formatting"
+    },
+    {
+      "family_id": "family-24",
+      "split": "holdout",
+      "intent_template": "unrelated topics and possible typo"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "qp-001",
+      "split": "development",
+      "family_id": "family-01",
+      "coverage_tags": [
+        "explicit_single_topic",
+        "case_specific"
+      ],
+      "user_question": "这一爻月破，古书说的“破”究竟指哪种关系？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-03",
+        "canonical_hash": "sha256:8a54d038abe14bff6f0086a7c4b66676f54191fbbdc22b9b6e606ddcfad153cd"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-break",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-break"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "明确问当前月破关系的文献含义。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-002",
+      "split": "development",
+      "family_id": "family-01",
+      "coverage_tags": [
+        "explicit_single_topic",
+        "colloquial_chinese"
+      ],
+      "user_question": "这里被月建冲到，能查一下月破的说法吗？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-03",
+        "canonical_hash": "sha256:8a54d038abe14bff6f0086a7c4b66676f54191fbbdc22b9b6e606ddcfad153cd"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-break",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 12,
+              "end": 14,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-break"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "MONTH-CLASH-001",
+          "target": {
+            "line": 1,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 2,
+            "end": 7,
+            "matched_text": "被月建冲到"
+          }
+        }
+      ],
+      "rationale": "口语描述伴随明确术语，只选被问及的月破。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-003",
+      "split": "development",
+      "family_id": "family-01",
+      "coverage_tags": [
+        "explicit_exclusion",
+        "topic_only"
+      ],
+      "user_question": "本卦还有旬空，但我只看月破的文献边界。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-03",
+        "canonical_hash": "sha256:8a54d038abe14bff6f0086a7c4b66676f54191fbbdc22b9b6e606ddcfad153cd"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "xunkong",
+            "basis": "explicit_exclusion",
+            "question_span": {
+              "start": 4,
+              "end": 6,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "month-break",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 11,
+              "end": 13,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-break"
+        ],
+        "excluded_concepts": [
+          {
+            "concept_id": "xunkong",
+            "reason": "explicit_exclusion"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [
+            "xunkong"
+          ],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "topic_only"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "明确只看月破，旬空虽出现也被排除。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-004",
+      "split": "development",
+      "family_id": "family-02",
+      "coverage_tags": [
+        "explicit_single_topic"
+      ],
+      "user_question": "这个月合在原书中怎么命名？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-04",
+        "canonical_hash": "sha256:2cf60241a7fb6f98eb7e45fba4cc722f0b0fc6572a1e767b2b4056cfee8a223c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "HIDDEN-FLY-GENERATE-001",
+        "LINE-MOVING-001",
+        "MONTH-CLASH-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-combine",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 2,
+              "end": 4,
+              "matched_text": "月合"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-combine"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "当前存在月合且问题明确要求文献命名。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-005",
+      "split": "development",
+      "family_id": "family-02",
+      "coverage_tags": [
+        "colloquial_chinese",
+        "output_constraint"
+      ],
+      "user_question": "我只想了解此爻与月建相合的文献语境，不要判断吉凶。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-04",
+        "canonical_hash": "sha256:2cf60241a7fb6f98eb7e45fba4cc722f0b0fc6572a1e767b2b4056cfee8a223c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "HIDDEN-FLY-GENERATE-001",
+        "LINE-MOVING-001",
+        "MONTH-CLASH-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-combine",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 7,
+              "end": 12,
+              "matched_text": "与月建相合"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-combine"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "no_prediction"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "MONTH-COMBINE-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 7,
+            "end": 12,
+            "matched_text": "与月建相合"
+          }
+        }
+      ],
+      "rationale": "相合指向月合；不论吉凶不排除文献解释。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-006",
+      "split": "development",
+      "family_id": "family-02",
+      "coverage_tags": [
+        "absolute_wording",
+        "interpretation_boundary"
+      ],
+      "user_question": "别从月合直接推成功；请说明“有用”这句话的边界。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-04",
+        "canonical_hash": "sha256:2cf60241a7fb6f98eb7e45fba4cc722f0b0fc6572a1e767b2b4056cfee8a223c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "HIDDEN-FLY-GENERATE-001",
+        "LINE-MOVING-001",
+        "MONTH-CLASH-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-combine",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 2,
+              "end": 4,
+              "matched_text": "月合"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-combine"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "问原文评价词边界，不请求成功断语。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-007",
+      "split": "development",
+      "family_id": "family-03",
+      "coverage_tags": [
+        "explicit_single_topic"
+      ],
+      "user_question": "这个静爻的日冲在文献里怎样理解？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-05",
+        "canonical_hash": "sha256:1ccc96f6c2ea14d9619f17079a1ef2ca105b748e822fbfbbe0ec34ed376097ee"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "day-clash",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 5,
+              "end": 7,
+              "matched_text": "日冲"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "day-clash"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "DAY-CLASH-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 2,
+            "end": 7,
+            "matched_text": "静爻的日冲"
+          }
+        }
+      ],
+      "rationale": "明确询问当前日冲。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-008",
+      "split": "development",
+      "family_id": "family-03",
+      "coverage_tags": [
+        "colloquial_chinese"
+      ],
+      "user_question": "日辰冲了这爻，我想看冲的适用条件。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-05",
+        "canonical_hash": "sha256:1ccc96f6c2ea14d9619f17079a1ef2ca105b748e822fbfbbe0ec34ed376097ee"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "day-clash",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 0,
+              "end": 3,
+              "matched_text": "日辰冲"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "day-clash"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "日辰冲是受控日冲主题的确定表达。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-009",
+      "split": "development",
+      "family_id": "family-03",
+      "coverage_tags": [
+        "catalog_alias",
+        "output_constraint"
+      ],
+      "user_question": "只解释日沖的术语，不替我断成败。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-05",
+        "canonical_hash": "sha256:1ccc96f6c2ea14d9619f17079a1ef2ca105b748e822fbfbbe0ec34ed376097ee"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "day-clash",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "日沖"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "day-clash"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "no_prediction",
+            "topic_only"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "繁体别名与不得断成败的限制可以并存。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-010",
+      "split": "development",
+      "family_id": "family-04",
+      "coverage_tags": [
+        "explicit_single_topic"
+      ],
+      "user_question": "这一动爻化进，进神指什么？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-06",
+        "canonical_hash": "sha256:4b8bfd43639001939f62b3888c4b70ea595453e7d1725904cfe3d4fb1d819673"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-GENERATE-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "advance",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 4,
+              "end": 6,
+              "matched_text": "化进"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "advance"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "MOVE-ADVANCE-001",
+          "target": {
+            "line": 5,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 2,
+            "end": 6,
+            "matched_text": "动爻化进"
+          }
+        }
+      ],
+      "rationale": "当前化进命中且明确提问。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-011",
+      "split": "development",
+      "family_id": "family-04",
+      "coverage_tags": [
+        "catalog_alias"
+      ],
+      "user_question": "这里的進神能不能只作局部关系解释？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-06",
+        "canonical_hash": "sha256:4b8bfd43639001939f62b3888c4b70ea595453e7d1725904cfe3d4fb1d819673"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-GENERATE-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "advance",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "進神"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "advance"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "繁体术语仍指向同一受控概念。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-012",
+      "split": "development",
+      "family_id": "family-04",
+      "coverage_tags": [
+        "colloquial_chinese",
+        "ambiguous_query"
+      ],
+      "user_question": "动爻往前进那种标注，文献有怎么界定吗？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-06",
+        "canonical_hash": "sha256:4b8bfd43639001939f62b3888c4b70ea595453e7d1725904cfe3d4fb1d819673"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-GENERATE-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ambiguous",
+        "requested_concepts": [],
+        "selected_concepts": [],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": [
+          {
+            "text": "往前进那种标注",
+            "reason": "insufficient_context",
+            "candidate_concepts": [
+              "advance"
+            ],
+            "question_span": {
+              "start": 2,
+              "end": 9,
+              "matched_text": "往前进那种标注"
+            }
+          }
+        ]
+      },
+      "acceptable_plans": [
+        {
+          "question_scope": "case_specific",
+          "status": "ready",
+          "requested_concepts": [
+            {
+              "concept_id": "advance",
+              "basis": "deterministic_phrase",
+              "question_span": {
+                "start": 2,
+                "end": 9,
+                "matched_text": "往前进那种标注"
+              },
+              "additional_question_spans": []
+            }
+          ],
+          "selected_concepts": [
+            "advance"
+          ],
+          "excluded_concepts": [],
+          "constraints": {
+            "exclude_concepts": [],
+            "knowledge_allowed": true,
+            "narrow_request": false,
+            "output_constraints": []
+          },
+          "unresolved_mentions": []
+        }
+      ],
+      "question_fact_references": [],
+      "rationale": "标注未明；不能由 Rule hit 反推意图。",
+      "ambiguity_status": "multiple_plausible"
+    },
+    {
+      "case_id": "qp-013",
+      "split": "development",
+      "family_id": "family-05",
+      "coverage_tags": [
+        "absolute_wording"
+      ],
+      "user_question": "这爻化退，退神是否一定代表坏结果？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-07",
+        "canonical_hash": "sha256:d6eb06c95c6dd3057513caf1d2a95d20ac8abcf564438dbd963982a3e4b33433"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-FLY-CONTROL-001",
+        "LINE-MOVING-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "retreat",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 2,
+              "end": 4,
+              "matched_text": "化退"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "retreat"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "MOVE-RETREAT-001",
+          "target": {
+            "line": 2,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 0,
+            "end": 4,
+            "matched_text": "这爻化退"
+          }
+        }
+      ],
+      "rationale": "绝对化措辞请求退神解释边界。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-014",
+      "split": "development",
+      "family_id": "family-05",
+      "coverage_tags": [
+        "explicit_single_topic",
+        "output_constraint"
+      ],
+      "user_question": "我问退神这个名称的意思，别直接断凶。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-07",
+        "canonical_hash": "sha256:d6eb06c95c6dd3057513caf1d2a95d20ac8abcf564438dbd963982a3e4b33433"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-FLY-CONTROL-001",
+        "LINE-MOVING-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "retreat",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 2,
+              "end": 4,
+              "matched_text": "退神"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "retreat"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "no_prediction"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "不得断凶不等于拒绝知识。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-015",
+      "split": "development",
+      "family_id": "family-05",
+      "coverage_tags": [
+        "explicit_exclusion",
+        "topic_only"
+      ],
+      "user_question": "化退这一条先单独讲，别顺带讲月合。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-07",
+        "canonical_hash": "sha256:d6eb06c95c6dd3057513caf1d2a95d20ac8abcf564438dbd963982a3e4b33433"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-FLY-CONTROL-001",
+        "LINE-MOVING-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "retreat",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 0,
+              "end": 2,
+              "matched_text": "化退"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "month-combine",
+            "basis": "explicit_exclusion",
+            "question_span": {
+              "start": 14,
+              "end": 16,
+              "matched_text": "月合"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "retreat"
+        ],
+        "excluded_concepts": [
+          {
+            "concept_id": "month-combine",
+            "reason": "explicit_exclusion"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [
+            "month-combine"
+          ],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "topic_only"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "排除月合；当前卦虽也有月合，不应注入。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-016",
+      "split": "development",
+      "family_id": "family-06",
+      "coverage_tags": [
+        "explicit_single_topic"
+      ],
+      "user_question": "这个爻旬空，空亡在文献里指什么？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-08",
+        "canonical_hash": "sha256:9c70d7fab552bbfa2113075051dbe2cca25a3bf3d3f54683535b0c92bee682e3"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "HIDDEN-GENERATE-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "xunkong",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "xunkong"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 0,
+            "end": 5,
+            "matched_text": "这个爻旬空"
+          }
+        }
+      ],
+      "rationale": "当前旬空已有 reviewed 单元。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-017",
+      "split": "development",
+      "family_id": "family-06",
+      "coverage_tags": [
+        "colloquial_chinese",
+        "absolute_wording"
+      ],
+      "user_question": "这一爻落在日旬缺的地支里，就等于它完全不存在吗？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-08",
+        "canonical_hash": "sha256:9c70d7fab552bbfa2113075051dbe2cca25a3bf3d3f54683535b0c92bee682e3"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "HIDDEN-GENERATE-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "xunkong",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 3,
+              "end": 12,
+              "matched_text": "落在日旬缺的地支里"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "xunkong"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 3,
+            "end": 12,
+            "matched_text": "落在日旬缺的地支里"
+          }
+        }
+      ],
+      "rationale": "以日旬所缺地支描述旬空，不把标注等同爻不存在。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-018",
+      "split": "development",
+      "family_id": "family-06",
+      "coverage_tags": [
+        "topic_only",
+        "output_constraint"
+      ],
+      "user_question": "我只要旬空的定义，不要推断应期。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-08",
+        "canonical_hash": "sha256:9c70d7fab552bbfa2113075051dbe2cca25a3bf3d3f54683535b0c92bee682e3"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "HIDDEN-GENERATE-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "xunkong",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "xunkong"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "topic_only",
+            "no_prediction"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "输出范围受限但文献定义仍相关。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-019",
+      "split": "development",
+      "family_id": "family-07",
+      "coverage_tags": [
+        "explicit_single_topic"
+      ],
+      "user_question": "世应谁生谁，请解释这条方向。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:c9e9c767db25bac0f9864ac6f29f61a5797b371648799e55c792a5393247ddd1"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "HIDDEN-FLY-GENERATE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "shi-ying",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 0,
+              "end": 2,
+              "matched_text": "世应"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "shi-ying"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "当前应生世命中且 reviewed 单元直接关联。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-020",
+      "split": "development",
+      "family_id": "family-07",
+      "coverage_tags": [
+        "catalog_alias",
+        "absolute_wording"
+      ],
+      "user_question": "世應关系可不可以直接当合作承诺？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:c9e9c767db25bac0f9864ac6f29f61a5797b371648799e55c792a5393247ddd1"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "HIDDEN-FLY-GENERATE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "shi-ying",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 0,
+              "end": 2,
+              "matched_text": "世應"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "shi-ying"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "繁体别名及结果边界共同出现。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-021",
+      "split": "development",
+      "family_id": "family-07",
+      "coverage_tags": [
+        "narrow_factual_request",
+        "zero_knowledge_request"
+      ],
+      "user_question": "只列出本卦世爻、应爻分别在第几爻，以及谁生谁；不要解释，也不要引用文献。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:c9e9c767db25bac0f9864ac6f29f61a5797b371648799e55c792a5393247ddd1"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "HIDDEN-FLY-GENERATE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "shi-ying",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 5,
+              "end": 7,
+              "matched_text": "世爻"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "shi-ying",
+            "reason": "narrow_request"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": false,
+          "narrow_request": true,
+          "output_constraints": [
+            "no_explanation"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "只要程序位置和关系，不要文献。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-022",
+      "split": "development",
+      "family_id": "family-08",
+      "coverage_tags": [
+        "theory_question",
+        "no_case"
+      ],
+      "user_question": "六爻术语里的月合一般是什么意思？",
+      "context_mode": "no_case",
+      "case_fixture": null,
+      "available_rule_ids": [],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-combine",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 6,
+              "end": 8,
+              "matched_text": "月合"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-combine"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "纯理论问题无卦盘也允许 reviewed 概念。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-023",
+      "split": "development",
+      "family_id": "family-08",
+      "coverage_tags": [
+        "theory_question",
+        "colloquial_chinese"
+      ],
+      "user_question": "不针对任何卦，日旬里缺的两支在六爻中叫什么？",
+      "context_mode": "no_case",
+      "case_fixture": null,
+      "available_rule_ids": [],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "xunkong",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 7,
+              "end": 14,
+              "matched_text": "日旬里缺的两支"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "xunkong"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "无卦例的旬空命名询问。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-024",
+      "split": "development",
+      "family_id": "family-08",
+      "coverage_tags": [
+        "theory_question",
+        "catalog_alias"
+      ],
+      "user_question": "我先学术语：世應在六爻里是什么意思？",
+      "context_mode": "no_case",
+      "case_fixture": null,
+      "available_rule_ids": [],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "shi-ying",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 6,
+              "end": 8,
+              "matched_text": "世應"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "shi-ying"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "理论问题不伪造当前世应锚点。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-025",
+      "split": "development",
+      "family_id": "family-09",
+      "coverage_tags": [
+        "narrow_factual_request",
+        "zero_knowledge_request",
+        "rule_present_but_unasked"
+      ],
+      "user_question": "请只报本卦和变卦名称。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-09",
+        "canonical_hash": "sha256:c08a4977f7127a5b0a147eea3021fc92a136bfa16fb2ceec0e8da2105f357a38"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "SHI-CONTROL-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [],
+        "selected_concepts": [],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": false,
+          "narrow_request": true,
+          "output_constraints": [
+            "names_only"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "窄事实请求不需要文献，即使卦里有旬空。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-026",
+      "split": "development",
+      "family_id": "family-09",
+      "coverage_tags": [
+        "narrow_factual_request",
+        "zero_knowledge_request"
+      ],
+      "user_question": "只列动爻位置，别解释。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-09",
+        "canonical_hash": "sha256:c08a4977f7127a5b0a147eea3021fc92a136bfa16fb2ceec0e8da2105f357a38"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "SHI-CONTROL-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [],
+        "selected_concepts": [],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": false,
+          "narrow_request": true,
+          "output_constraints": [
+            "line_positions_only",
+            "no_explanation"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "动爻位置来自 Canonical，不需要知识。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-027",
+      "split": "development",
+      "family_id": "family-09",
+      "coverage_tags": [
+        "narrow_factual_request",
+        "zero_knowledge_request"
+      ],
+      "user_question": "不用引用古书，告诉我卦名就行。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-09",
+        "canonical_hash": "sha256:c08a4977f7127a5b0a147eea3021fc92a136bfa16fb2ceec0e8da2105f357a38"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "SHI-CONTROL-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [],
+        "selected_concepts": [],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": false,
+          "narrow_request": true,
+          "output_constraints": [
+            "names_only",
+            "no_explanation"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "明确拒绝引文与狭窄卦名请求。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-028",
+      "split": "development",
+      "family_id": "family-10",
+      "coverage_tags": [
+        "broad_question",
+        "zero_knowledge_request"
+      ],
+      "user_question": "这个卦怎么看？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-10",
+        "canonical_hash": "sha256:fac35ad6103a3cca38921c72167239ab242054960953f0779eb3a3241f844f9c"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-CONTROL-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [],
+        "selected_concepts": [],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "泛问不授权注入所有当前 Rule hits。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-029",
+      "split": "development",
+      "family_id": "family-10",
+      "coverage_tags": [
+        "broad_question",
+        "zero_knowledge_request"
+      ],
+      "user_question": "帮我全面聊一聊。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-10",
+        "canonical_hash": "sha256:fac35ad6103a3cca38921c72167239ab242054960953f0779eb3a3241f844f9c"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-CONTROL-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [],
+        "selected_concepts": [],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "没有受控文献主题。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-030",
+      "split": "development",
+      "family_id": "family-10",
+      "coverage_tags": [
+        "broad_question",
+        "zero_knowledge_request"
+      ],
+      "user_question": "我想看一下整体情况，先别引用文献。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-10",
+        "canonical_hash": "sha256:fac35ad6103a3cca38921c72167239ab242054960953f0779eb3a3241f844f9c"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-CONTROL-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [],
+        "selected_concepts": [],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": false,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "泛问并明确拒绝引文。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-031",
+      "split": "development",
+      "family_id": "family-11",
+      "coverage_tags": [
+        "multi_topic_two",
+        "case_specific"
+      ],
+      "user_question": "初爻月破、五爻旬空；两个标注分别是什么意思？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-03",
+        "canonical_hash": "sha256:8a54d038abe14bff6f0086a7c4b66676f54191fbbdc22b9b6e606ddcfad153cd"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-break",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 2,
+              "end": 4,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "xunkong",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 7,
+              "end": 9,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-break",
+          "xunkong"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "MONTH-CLASH-001",
+          "target": {
+            "line": 1,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 0,
+            "end": 4,
+            "matched_text": "初爻月破"
+          }
+        },
+        {
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 5,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 5,
+            "end": 9,
+            "matched_text": "五爻旬空"
+          }
+        }
+      ],
+      "rationale": "不同爻位，关系均有 reviewed 文献。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-032",
+      "split": "development",
+      "family_id": "family-11",
+      "coverage_tags": [
+        "multi_topic_two",
+        "theory_question"
+      ],
+      "user_question": "先解释旬空，再解释月破，别合成吉凶结论。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-03",
+        "canonical_hash": "sha256:8a54d038abe14bff6f0086a7c4b66676f54191fbbdc22b9b6e606ddcfad153cd"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "xunkong",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "month-break",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 9,
+              "end": 11,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "xunkong",
+          "month-break"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "no_prediction"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "只问术语定义，没有当前卦断言。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-033",
+      "split": "development",
+      "family_id": "family-11",
+      "coverage_tags": [
+        "multi_topic_two",
+        "theory_question"
+      ],
+      "user_question": "月破和空亡可以同时讨论吗？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-03",
+        "canonical_hash": "sha256:8a54d038abe14bff6f0086a7c4b66676f54191fbbdc22b9b6e606ddcfad153cd"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-break",
+            "basis": "explicit_comparison",
+            "question_span": {
+              "start": 0,
+              "end": 2,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "xunkong",
+            "basis": "explicit_comparison",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "空亡"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-break",
+          "xunkong"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "概念比较，不声称同一爻双命中。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-034",
+      "split": "development",
+      "family_id": "family-12",
+      "coverage_tags": [
+        "negation",
+        "explicit_exclusion"
+      ],
+      "user_question": "不是问月破，我问的是日冲。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-05",
+        "canonical_hash": "sha256:1ccc96f6c2ea14d9619f17079a1ef2ca105b748e822fbfbbe0ec34ed376097ee"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-break",
+            "basis": "explicit_exclusion",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "day-clash",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 10,
+              "end": 12,
+              "matched_text": "日冲"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "day-clash"
+        ],
+        "excluded_concepts": [
+          {
+            "concept_id": "month-break",
+            "reason": "explicit_exclusion"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [
+            "month-break"
+          ],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "月破被明确排除，日冲当前命中。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-035",
+      "split": "development",
+      "family_id": "family-12",
+      "coverage_tags": [
+        "negative_exclusion",
+        "explicit_exclusion"
+      ],
+      "user_question": "先别说月破，日辰冲的原文有什么限制？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-05",
+        "canonical_hash": "sha256:1ccc96f6c2ea14d9619f17079a1ef2ca105b748e822fbfbbe0ec34ed376097ee"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-break",
+            "basis": "explicit_exclusion",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "day-clash",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 6,
+              "end": 9,
+              "matched_text": "日辰冲"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "day-clash"
+        ],
+        "excluded_concepts": [
+          {
+            "concept_id": "month-break",
+            "reason": "explicit_exclusion"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [
+            "month-break"
+          ],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "否定月破、肯定日冲的复合句。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-036",
+      "split": "development",
+      "family_id": "family-12",
+      "coverage_tags": [
+        "explicit_exclusion",
+        "catalog_alias"
+      ],
+      "user_question": "除了月破之外，只看这一爻日沖。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-05",
+        "canonical_hash": "sha256:1ccc96f6c2ea14d9619f17079a1ef2ca105b748e822fbfbbe0ec34ed376097ee"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-break",
+            "basis": "explicit_exclusion",
+            "question_span": {
+              "start": 2,
+              "end": 4,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "day-clash",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 12,
+              "end": 14,
+              "matched_text": "日沖"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "day-clash"
+        ],
+        "excluded_concepts": [
+          {
+            "concept_id": "month-break",
+            "reason": "explicit_exclusion"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [
+            "month-break"
+          ],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "topic_only"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "繁体日冲与排除范围应同时遵守。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-037",
+      "split": "development",
+      "family_id": "family-13",
+      "coverage_tags": [
+        "source_checked_only",
+        "case_specific"
+      ],
+      "user_question": "本卦日合在古书里怎么解释？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-04",
+        "canonical_hash": "sha256:2cf60241a7fb6f98eb7e45fba4cc722f0b0fc6572a1e767b2b4056cfee8a223c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "HIDDEN-FLY-GENERATE-001",
+        "LINE-MOVING-001",
+        "MONTH-CLASH-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "day-combine",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 2,
+              "end": 4,
+              "matched_text": "日合"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "day-combine",
+            "reason": "knowledge_not_admitted"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "日合命中但对应知识仍 source_checked。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-038",
+      "split": "development",
+      "family_id": "family-13",
+      "coverage_tags": [
+        "source_checked_only",
+        "explicit_exclusion"
+      ],
+      "user_question": "先别管月合，我要查日辰合的文献。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-04",
+        "canonical_hash": "sha256:2cf60241a7fb6f98eb7e45fba4cc722f0b0fc6572a1e767b2b4056cfee8a223c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "HIDDEN-FLY-GENERATE-001",
+        "LINE-MOVING-001",
+        "MONTH-CLASH-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "month-combine",
+            "basis": "explicit_exclusion",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "月合"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "day-combine",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 9,
+              "end": 12,
+              "matched_text": "日辰合"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "month-combine",
+            "reason": "explicit_exclusion"
+          },
+          {
+            "concept_id": "day-combine",
+            "reason": "knowledge_not_admitted"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [
+            "month-combine"
+          ],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "月合排除且日合文献未准入。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-039",
+      "split": "development",
+      "family_id": "family-13",
+      "coverage_tags": [
+        "source_checked_only",
+        "theory_question",
+        "no_case"
+      ],
+      "user_question": "没有当前卦也想知道日合的文献定义。",
+      "context_mode": "no_case",
+      "case_fixture": null,
+      "available_rule_ids": [],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "day-combine",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 9,
+              "end": 11,
+              "matched_text": "日合"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "day-combine",
+            "reason": "knowledge_not_admitted"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "理论主题可识别，但未 reviewed。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-040",
+      "split": "development",
+      "family_id": "family-14",
+      "coverage_tags": [
+        "source_checked_only",
+        "colloquial_chinese"
+      ],
+      "user_question": "动爻变化后反过来生原爻，文献如何称呼这种关系？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-11",
+        "canonical_hash": "sha256:e2705823b2ba90c216484ed6bf0c36d8577a91d1bc88181102cb2b7e2fad398b"
+      },
+      "available_rule_ids": [
+        "HIDDEN-FLY-GENERATE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MOVE-RETURN-CONTROL-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "return-relation",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 5,
+              "end": 11,
+              "matched_text": "反过来生原爻"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "return-relation",
+            "reason": "knowledge_not_admitted"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "MOVE-RETURN-GENERATE-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 5,
+            "end": 11,
+            "matched_text": "反过来生原爻"
+          }
+        }
+      ],
+      "rationale": "描述回头生方向；文献尚未 reviewed。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-041",
+      "split": "development",
+      "family_id": "family-14",
+      "coverage_tags": [
+        "source_checked_only",
+        "theory_question"
+      ],
+      "user_question": "回頭克在六爻理论中怎么讲？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-11",
+        "canonical_hash": "sha256:e2705823b2ba90c216484ed6bf0c36d8577a91d1bc88181102cb2b7e2fad398b"
+      },
+      "available_rule_ids": [
+        "HIDDEN-FLY-GENERATE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MOVE-RETURN-CONTROL-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "return-relation",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 0,
+              "end": 3,
+              "matched_text": "回頭克"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "return-relation",
+            "reason": "knowledge_not_admitted"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "理论识别不需要当前命中；未 reviewed。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-042",
+      "split": "development",
+      "family_id": "family-14",
+      "coverage_tags": [
+        "source_checked_only",
+        "output_constraint"
+      ],
+      "user_question": "把五爻回头克的来去方向说清楚，不引未审文献。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-11",
+        "canonical_hash": "sha256:e2705823b2ba90c216484ed6bf0c36d8577a91d1bc88181102cb2b7e2fad398b"
+      },
+      "available_rule_ids": [
+        "HIDDEN-FLY-GENERATE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MOVE-RETURN-CONTROL-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "return-relation",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 3,
+              "end": 6,
+              "matched_text": "回头克"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "return-relation",
+            "reason": "knowledge_not_admitted"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "MOVE-RETURN-CONTROL-001",
+          "target": {
+            "line": 5,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 1,
+            "end": 6,
+            "matched_text": "五爻回头克"
+          }
+        }
+      ],
+      "rationale": "五爻命中回头克，文献未准入。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-043",
+      "split": "development",
+      "family_id": "family-15",
+      "coverage_tags": [
+        "source_checked_only",
+        "colloquial_chinese"
+      ],
+      "user_question": "飞神压制下方的伏神，古籍是否说明这种关系？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-12",
+        "canonical_hash": "sha256:73fcf701335b1b18e6b5a608be00969957250ce79d5d258dc4014433bb286ab2"
+      },
+      "available_rule_ids": [
+        "HIDDEN-FLY-CONTROL-001",
+        "HIDDEN-GENERATE-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-CONTROL-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "flying-hidden",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 0,
+              "end": 9,
+              "matched_text": "飞神压制下方的伏神"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "flying-hidden",
+            "reason": "knowledge_not_admitted"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "HIDDEN-FLY-CONTROL-001",
+          "target": {
+            "line": 1,
+            "component": "hidden",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 0,
+            "end": 9,
+            "matched_text": "飞神压制下方的伏神"
+          }
+        }
+      ],
+      "rationale": "描述飞神克伏神，知识仍未 reviewed。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-044",
+      "split": "development",
+      "family_id": "family-15",
+      "coverage_tags": [
+        "source_checked_only",
+        "theory_question"
+      ],
+      "user_question": "一般说的飛伏是什么，不看具体卦？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-12",
+        "canonical_hash": "sha256:73fcf701335b1b18e6b5a608be00969957250ce79d5d258dc4014433bb286ab2"
+      },
+      "available_rule_ids": [
+        "HIDDEN-FLY-CONTROL-001",
+        "HIDDEN-GENERATE-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-CONTROL-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "flying-hidden",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 4,
+              "end": 6,
+              "matched_text": "飛伏"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "flying-hidden",
+            "reason": "knowledge_not_admitted"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "纯理论识别可成功，检索仍为零。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-045",
+      "split": "development",
+      "family_id": "family-15",
+      "coverage_tags": [
+        "source_checked_only",
+        "narrow_factual_request"
+      ],
+      "user_question": "只说伏神与飞神的方向，不要塞古籍。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-12",
+        "canonical_hash": "sha256:73fcf701335b1b18e6b5a608be00969957250ce79d5d258dc4014433bb286ab2"
+      },
+      "available_rule_ids": [
+        "HIDDEN-FLY-CONTROL-001",
+        "HIDDEN-GENERATE-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-CONTROL-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "flying-hidden",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 2,
+              "end": 7,
+              "matched_text": "伏神与飞神"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "flying-hidden",
+            "reason": "narrow_request"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": false,
+          "narrow_request": true,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "明确不用古籍，当前关系仍可由 Rules 解释。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-046",
+      "split": "development",
+      "family_id": "family-16",
+      "coverage_tags": [
+        "mixed_question",
+        "case_specific"
+      ],
+      "user_question": "一般化退是什么意思；这卦的化退又该怎么引用？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-07",
+        "canonical_hash": "sha256:d6eb06c95c6dd3057513caf1d2a95d20ac8abcf564438dbd963982a3e4b33433"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-FLY-CONTROL-001",
+        "LINE-MOVING-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "mixed",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "retreat",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 0,
+              "end": 4,
+              "matched_text": "一般化退"
+            },
+            "additional_question_spans": [
+              {
+                "start": 10,
+                "end": 15,
+                "matched_text": "这卦的化退"
+              }
+            ]
+          }
+        ],
+        "selected_concepts": [
+          "retreat"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "一般概念和当前卦两次提及均记录。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-047",
+      "split": "development",
+      "family_id": "family-16",
+      "coverage_tags": [
+        "mixed_question",
+        "theory_question"
+      ],
+      "user_question": "先讲月合的通常含义，再看本卦月合。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-07",
+        "canonical_hash": "sha256:d6eb06c95c6dd3057513caf1d2a95d20ac8abcf564438dbd963982a3e4b33433"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-FLY-CONTROL-001",
+        "LINE-MOVING-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "mixed",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-combine",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 2,
+              "end": 9,
+              "matched_text": "月合的通常含义"
+            },
+            "additional_question_spans": [
+              {
+                "start": 12,
+                "end": 16,
+                "matched_text": "本卦月合"
+              }
+            ]
+          }
+        ],
+        "selected_concepts": [
+          "month-combine"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "一般含义与当前卦两次提及，检索一次。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-048",
+      "split": "development",
+      "family_id": "family-16",
+      "coverage_tags": [
+        "case_specific",
+        "topic_only"
+      ],
+      "user_question": "退神概念我知道了，这次只查本卦化退的适用边界。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase7/evaluation/cases.json",
+        "case_id": "case-07",
+        "canonical_hash": "sha256:d6eb06c95c6dd3057513caf1d2a95d20ac8abcf564438dbd963982a3e4b33433"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "HIDDEN-FLY-CONTROL-001",
+        "LINE-MOVING-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "MOVE-RETURN-GENERATE-001",
+        "YING-CONTROL-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "retreat",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 15,
+              "end": 17,
+              "matched_text": "化退"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "retreat"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "topic_only"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "只锚定本卦化退。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-049",
+      "split": "holdout",
+      "family_id": "family-17",
+      "coverage_tags": [
+        "multi_topic_two",
+        "comparison_wording"
+      ],
+      "user_question": "初爻受月建冲，四爻受日辰冲；请分别核对各自的文献边界。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:3381cb37d1d28099d37ccc006ec76c9846ce582308a55696361c203c404c398c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "MOVE-RETURN-CONTROL-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-break",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 3,
+              "end": 6,
+              "matched_text": "月建冲"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "day-clash",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 10,
+              "end": 13,
+              "matched_text": "日辰冲"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-break",
+          "day-clash"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "MONTH-CLASH-001",
+          "target": {
+            "line": 1,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 0,
+            "end": 6,
+            "matched_text": "初爻受月建冲"
+          }
+        },
+        {
+          "rule_id": "DAY-CLASH-001",
+          "target": {
+            "line": 4,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 7,
+            "end": 13,
+            "matched_text": "四爻受日辰冲"
+          }
+        }
+      ],
+      "rationale": "两个不同爻位及时间来源。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-050",
+      "split": "holdout",
+      "family_id": "family-17",
+      "coverage_tags": [
+        "multi_topic_two",
+        "comparison_wording"
+      ],
+      "user_question": "四爻日冲、初爻月破；古籍各自的适用范围是什么？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:3381cb37d1d28099d37ccc006ec76c9846ce582308a55696361c203c404c398c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "MOVE-RETURN-CONTROL-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "day-clash",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 2,
+              "end": 4,
+              "matched_text": "日冲"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "month-break",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 7,
+              "end": 9,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "day-clash",
+          "month-break"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "DAY-CLASH-001",
+          "target": {
+            "line": 4,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 0,
+            "end": 4,
+            "matched_text": "四爻日冲"
+          }
+        },
+        {
+          "rule_id": "MONTH-CLASH-001",
+          "target": {
+            "line": 1,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 5,
+            "end": 9,
+            "matched_text": "初爻月破"
+          }
+        }
+      ],
+      "rationale": "不同爻位的文献边界，非同一爻双命中。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-051",
+      "split": "holdout",
+      "family_id": "family-17",
+      "coverage_tags": [
+        "case_specific",
+        "interpretation_boundary"
+      ],
+      "user_question": "四爻受日辰冲是程序标注；请给相关古籍出处，并区分程序事实与文献解释。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:3381cb37d1d28099d37ccc006ec76c9846ce582308a55696361c203c404c398c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "MOVE-RETURN-CONTROL-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "day-clash",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 3,
+              "end": 6,
+              "matched_text": "日辰冲"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "day-clash"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "DAY-CLASH-001",
+          "target": {
+            "line": 4,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 0,
+            "end": 6,
+            "matched_text": "四爻受日辰冲"
+          }
+        }
+      ],
+      "rationale": "以日冲问出处，同时明确程序事实和文献解释的层级。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-052",
+      "split": "holdout",
+      "family_id": "family-18",
+      "coverage_tags": [
+        "multi_topic_two",
+        "utf16_supplementary",
+        "interpretation_boundary"
+      ],
+      "user_question": "🧭上爻化退与三爻旬空同时出现时，能把两条文献合成一个必然判断吗？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-04",
+        "canonical_hash": "sha256:fea393107034d297434d56e97b4998407c834838027fad633185a5677097ffee"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "SHI-YING-SAME-ELEMENT-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "retreat",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 4,
+              "end": 6,
+              "matched_text": "化退"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "xunkong",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 9,
+              "end": 11,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "retreat",
+          "xunkong"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "no_prediction"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "MOVE-RETREAT-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 2,
+            "end": 6,
+            "matched_text": "上爻化退"
+          }
+        },
+        {
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 3,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 7,
+            "end": 11,
+            "matched_text": "三爻旬空"
+          }
+        }
+      ],
+      "rationale": "核对证据层级，不把不同关系合为必然结论。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-053",
+      "split": "holdout",
+      "family_id": "family-18",
+      "coverage_tags": [
+        "multi_topic_two",
+        "explicit_exclusion"
+      ],
+      "user_question": "本卦只讨论退神与旬空，不讨论月破。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-04",
+        "canonical_hash": "sha256:fea393107034d297434d56e97b4998407c834838027fad633185a5677097ffee"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "SHI-YING-SAME-ELEMENT-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "retreat",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 5,
+              "end": 7,
+              "matched_text": "退神"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "xunkong",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 8,
+              "end": 10,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "month-break",
+            "basis": "explicit_exclusion",
+            "question_span": {
+              "start": 14,
+              "end": 16,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "retreat",
+          "xunkong"
+        ],
+        "excluded_concepts": [
+          {
+            "concept_id": "month-break",
+            "reason": "explicit_exclusion"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [
+            "month-break"
+          ],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "退神和旬空有不同爻位的真实锚点；月破显式排除。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-054",
+      "split": "holdout",
+      "family_id": "family-18",
+      "coverage_tags": [
+        "comparison_wording",
+        "output_constraint"
+      ],
+      "user_question": "这卦化退和旬空谁更严重？不要给两者打分。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-04",
+        "canonical_hash": "sha256:fea393107034d297434d56e97b4998407c834838027fad633185a5677097ffee"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETREAT-001",
+        "SHI-YING-SAME-ELEMENT-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "retreat",
+            "basis": "explicit_comparison",
+            "question_span": {
+              "start": 2,
+              "end": 4,
+              "matched_text": "化退"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "xunkong",
+            "basis": "explicit_comparison",
+            "question_span": {
+              "start": 5,
+              "end": 7,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "retreat",
+          "xunkong"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "no_prediction"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "比较请求可检索两个边界，但不得给预测权重。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-055",
+      "split": "holdout",
+      "family_id": "family-19",
+      "coverage_tags": [
+        "relation_absent_from_case",
+        "case_specific"
+      ],
+      "user_question": "我这个爻有月合吗？若有请查原书。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:3381cb37d1d28099d37ccc006ec76c9846ce582308a55696361c203c404c398c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "MOVE-RETURN-CONTROL-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "month-combine",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 5,
+              "end": 7,
+              "matched_text": "月合"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "month-combine",
+            "reason": "case_relation_not_present"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "当前无 MONTH-COMBINE，不能用原文暗示存在。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-056",
+      "split": "holdout",
+      "family_id": "family-19",
+      "coverage_tags": [
+        "relation_absent_from_case",
+        "colloquial_chinese"
+      ],
+      "user_question": "请先核对本卦有没有月建合爻；如果没有，就不要引用月合文献。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:3381cb37d1d28099d37ccc006ec76c9846ce582308a55696361c203c404c398c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "MOVE-RETURN-CONTROL-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "month-combine",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 9,
+              "end": 13,
+              "matched_text": "月建合爻"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "month-combine",
+            "reason": "case_relation_not_present"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "条件式请求，当前无月合；避免虚构引用。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-057",
+      "split": "holdout",
+      "family_id": "family-19",
+      "coverage_tags": [
+        "theory_question",
+        "interpretation_boundary"
+      ],
+      "user_question": "不参照此卦，只核对古书把“月建合爻”命名为什么；不要推断成败。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:3381cb37d1d28099d37ccc006ec76c9846ce582308a55696361c203c404c398c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "MOVE-RETURN-CONTROL-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-combine",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 13,
+              "end": 17,
+              "matched_text": "月建合爻"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-combine"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "no_prediction"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "理论命名任务，与当前月合缺席无关。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-058",
+      "split": "holdout",
+      "family_id": "family-20",
+      "coverage_tags": [
+        "theory_question",
+        "source_checked_only",
+        "comparison_wording"
+      ],
+      "user_question": "日合与月合在文献里有什么区别？",
+      "context_mode": "no_case",
+      "case_fixture": null,
+      "available_rule_ids": [],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "day-combine",
+            "basis": "explicit_comparison",
+            "question_span": {
+              "start": 0,
+              "end": 2,
+              "matched_text": "日合"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "month-combine",
+            "basis": "explicit_comparison",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "月合"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-combine"
+        ],
+        "excluded_concepts": [
+          {
+            "concept_id": "day-combine",
+            "reason": "knowledge_not_admitted"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "两个术语可识别，但只有月合 reviewed。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-059",
+      "split": "holdout",
+      "family_id": "family-20",
+      "coverage_tags": [
+        "theory_question",
+        "source_checked_only"
+      ],
+      "user_question": "不看具体卦：回头克和进神的概念分别是什么？",
+      "context_mode": "no_case",
+      "case_fixture": null,
+      "available_rule_ids": [],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "return-relation",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 6,
+              "end": 9,
+              "matched_text": "回头克"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "advance",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 10,
+              "end": 12,
+              "matched_text": "进神"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "advance"
+        ],
+        "excluded_concepts": [
+          {
+            "concept_id": "return-relation",
+            "reason": "knowledge_not_admitted"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "回头关系未准入、进神已 reviewed。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-060",
+      "split": "holdout",
+      "family_id": "family-20",
+      "coverage_tags": [
+        "theory_question",
+        "source_checked_only"
+      ],
+      "user_question": "飞伏与旬空两种说法都想查出处。",
+      "context_mode": "no_case",
+      "case_fixture": null,
+      "available_rule_ids": [],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "flying-hidden",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 0,
+              "end": 2,
+              "matched_text": "飞伏"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "xunkong",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "xunkong"
+        ],
+        "excluded_concepts": [
+          {
+            "concept_id": "flying-hidden",
+            "reason": "knowledge_not_admitted"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "飞伏仍 source_checked，旬空可检索。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-061",
+      "split": "holdout",
+      "family_id": "family-21",
+      "coverage_tags": [
+        "multi_topic_over_two",
+        "needs_narrowing"
+      ],
+      "user_question": "请把月破、旬空、化进三项文献都列出来。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:3381cb37d1d28099d37ccc006ec76c9846ce582308a55696361c203c404c398c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "MOVE-RETURN-CONTROL-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "needs_narrowing",
+        "requested_concepts": [
+          {
+            "concept_id": "month-break",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 2,
+              "end": 4,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "xunkong",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 5,
+              "end": 7,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "advance",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 8,
+              "end": 10,
+              "matched_text": "化进"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "month-break",
+            "reason": "too_many_requested_topics"
+          },
+          {
+            "concept_id": "xunkong",
+            "reason": "too_many_requested_topics"
+          },
+          {
+            "concept_id": "advance",
+            "reason": "too_many_requested_topics"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "三个独立主题超出上限。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-062",
+      "split": "holdout",
+      "family_id": "family-21",
+      "coverage_tags": [
+        "multi_topic_two",
+        "explicit_exclusion"
+      ],
+      "user_question": "只讨论月破和化进；旬空先别说。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:3381cb37d1d28099d37ccc006ec76c9846ce582308a55696361c203c404c398c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "MOVE-RETURN-CONTROL-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "month-break",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "advance",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 6,
+              "end": 8,
+              "matched_text": "化进"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "xunkong",
+            "basis": "explicit_exclusion",
+            "question_span": {
+              "start": 9,
+              "end": 11,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "month-break",
+          "advance"
+        ],
+        "excluded_concepts": [
+          {
+            "concept_id": "xunkong",
+            "reason": "explicit_exclusion"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [
+            "xunkong"
+          ],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "topic_only"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "两个正向主题，旬空显式排除。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-063",
+      "split": "holdout",
+      "family_id": "family-21",
+      "coverage_tags": [
+        "multi_topic_over_two",
+        "comparison_wording"
+      ],
+      "user_question": "月破、旬空、化进哪个最要紧？三个都要文献。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-01",
+        "canonical_hash": "sha256:3381cb37d1d28099d37ccc006ec76c9846ce582308a55696361c203c404c398c"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-SI-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-ADVANCE-001",
+        "MOVE-RETURN-CONTROL-001",
+        "YING-GENERATE-SHI-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "needs_narrowing",
+        "requested_concepts": [
+          {
+            "concept_id": "month-break",
+            "basis": "explicit_comparison",
+            "question_span": {
+              "start": 0,
+              "end": 2,
+              "matched_text": "月破"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "xunkong",
+            "basis": "explicit_comparison",
+            "question_span": {
+              "start": 3,
+              "end": 5,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          },
+          {
+            "concept_id": "advance",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 6,
+              "end": 8,
+              "matched_text": "化进"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "month-break",
+            "reason": "too_many_requested_topics"
+          },
+          {
+            "concept_id": "xunkong",
+            "reason": "too_many_requested_topics"
+          },
+          {
+            "concept_id": "advance",
+            "reason": "too_many_requested_topics"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "三个明确主题，需要缩窄；不作权重判定。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-064",
+      "split": "holdout",
+      "family_id": "family-22",
+      "coverage_tags": [
+        "utf16_supplementary",
+        "interpretation_boundary"
+      ],
+      "user_question": "🔍请核对本卦三爻空亡的文献边界，只讨论术语是否涉及应期。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-07",
+        "canonical_hash": "sha256:7e777de4148a5428b3907ff4788024e89b697a6082b119dbfcdbc8aa1bb1a577"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-YING-SAME-ELEMENT-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "xunkong",
+            "basis": "catalog_alias",
+            "question_span": {
+              "start": 9,
+              "end": 11,
+              "matched_text": "空亡"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "xunkong"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 3,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 7,
+            "end": 11,
+            "matched_text": "三爻空亡"
+          }
+        }
+      ],
+      "rationale": "指定三爻，问文献是否覆盖应期。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-065",
+      "split": "holdout",
+      "family_id": "family-22",
+      "coverage_tags": [
+        "case_specific",
+        "interpretation_boundary"
+      ],
+      "user_question": "三爻和五爻都旬空；同一段文献该引用一次，还是按两个爻位重复引用？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-07",
+        "canonical_hash": "sha256:7e777de4148a5428b3907ff4788024e89b697a6082b119dbfcdbc8aa1bb1a577"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-YING-SAME-ELEMENT-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "case_specific",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "xunkong",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 6,
+              "end": 8,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "xunkong"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 3,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 0,
+            "end": 8,
+            "matched_text": "三爻和五爻都旬空"
+          }
+        },
+        {
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 5,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 0,
+            "end": 8,
+            "matched_text": "三爻和五爻都旬空"
+          }
+        }
+      ],
+      "rationale": "两个真实命中共用一项知识，考查检索去重和事实分位。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-066",
+      "split": "holdout",
+      "family_id": "family-22",
+      "coverage_tags": [
+        "theory_question",
+        "typo_shorthand"
+      ],
+      "user_question": "六爻中“空”这个简称一定就是旬空吗？",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-07",
+        "canonical_hash": "sha256:7e777de4148a5428b3907ff4788024e89b697a6082b119dbfcdbc8aa1bb1a577"
+      },
+      "available_rule_ids": [
+        "DAY-CLASH-001",
+        "DAY-COMBINE-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "LINE-MOVING-001",
+        "LINE-VOID-001",
+        "MONTH-CLASH-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIANG-001",
+        "MONTH-STATE-XIU-001",
+        "MOVE-RETURN-GENERATE-001",
+        "SHI-YING-SAME-ELEMENT-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "xunkong",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 14,
+              "end": 16,
+              "matched_text": "旬空"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "xunkong"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "明确旬空作为主题；单字空是否等同属于回答边界。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-067",
+      "split": "holdout",
+      "family_id": "family-23",
+      "coverage_tags": [
+        "narrow_factual_request",
+        "zero_knowledge_request"
+      ],
+      "user_question": "请按原问题文字重述我的提问，不展开术数解释。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-02",
+        "canonical_hash": "sha256:1101629fcc32a23842e860af3f8dcbf2819040bd2422420e160e9cb7b37a3d08"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "HIDDEN-FLY-GENERATE-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIU-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [],
+        "selected_concepts": [],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": false,
+          "narrow_request": true,
+          "output_constraints": [
+            "no_explanation"
+          ]
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "窄转述请求，无文献主题。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-068",
+      "split": "holdout",
+      "family_id": "family-23",
+      "coverage_tags": [
+        "narrow_factual_request",
+        "zero_knowledge_request"
+      ],
+      "user_question": "世爻和应爻的位置编号相差多少？只给数字，不解释含义。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-02",
+        "canonical_hash": "sha256:1101629fcc32a23842e860af3f8dcbf2819040bd2422420e160e9cb7b37a3d08"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "HIDDEN-FLY-GENERATE-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIU-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [
+          {
+            "concept_id": "shi-ying",
+            "basis": "deterministic_phrase",
+            "question_span": {
+              "start": 0,
+              "end": 5,
+              "matched_text": "世爻和应爻"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [],
+        "excluded_concepts": [
+          {
+            "concept_id": "shi-ying",
+            "reason": "narrow_request"
+          }
+        ],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": false,
+          "narrow_request": true,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "要求对已知位置编号做简单计算，不检索文献。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-069",
+      "split": "holdout",
+      "family_id": "family-23",
+      "coverage_tags": [
+        "narrow_factual_request",
+        "rule_present_but_unasked"
+      ],
+      "user_question": "虽有日合标注，请把六爻阴阳从初爻到上爻拼成一个字符串，不解释。",
+      "context_mode": "case",
+      "case_fixture": {
+        "file": "experiments/phase6/cases.json",
+        "case_id": "case-02",
+        "canonical_hash": "sha256:1101629fcc32a23842e860af3f8dcbf2819040bd2422420e160e9cb7b37a3d08"
+      },
+      "available_rule_ids": [
+        "DAY-COMBINE-001",
+        "HIDDEN-CONTROL-FLY-001",
+        "HIDDEN-FLY-GENERATE-001",
+        "MONTH-COMBINE-001",
+        "MONTH-STATE-QIU-001",
+        "MONTH-STATE-WANG-001",
+        "MONTH-STATE-XIU-001",
+        "SHI-GENERATE-YING-001"
+      ],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [],
+        "selected_concepts": [],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": false,
+          "narrow_request": true,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [
+        {
+          "rule_id": "DAY-COMBINE-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": null
+          },
+          "question_span": {
+            "start": 2,
+            "end": 6,
+            "matched_text": "日合标注"
+          }
+        }
+      ],
+      "rationale": "日合仅作背景；对 Canonical 阴阳做格式转换。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-070",
+      "split": "holdout",
+      "family_id": "family-24",
+      "coverage_tags": [
+        "unrelated_question",
+        "zero_knowledge_request"
+      ],
+      "user_question": "明天上海会下雨吗？",
+      "context_mode": "no_case",
+      "case_fixture": null,
+      "available_rule_ids": [],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [],
+        "selected_concepts": [],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "无六爻知识检索意图。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-071",
+      "split": "holdout",
+      "family_id": "family-24",
+      "coverage_tags": [
+        "unrelated_question",
+        "zero_knowledge_request"
+      ],
+      "user_question": "卦的知识是指算法还是古籍？",
+      "context_mode": "no_case",
+      "case_fixture": null,
+      "available_rule_ids": [],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "unknown",
+        "status": "zero_knowledge",
+        "requested_concepts": [],
+        "selected_concepts": [],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": []
+        },
+        "unresolved_mentions": []
+      },
+      "acceptable_plans": [],
+      "question_fact_references": [],
+      "rationale": "未指向受控主题。",
+      "ambiguity_status": "clear"
+    },
+    {
+      "case_id": "qp-072",
+      "split": "holdout",
+      "family_id": "family-24",
+      "coverage_tags": [
+        "typo_shorthand",
+        "comparison_wording",
+        "theory_question"
+      ],
+      "user_question": "“近神”可能是笔误；它和退神的定义有什么区别？",
+      "context_mode": "no_case",
+      "case_fixture": null,
+      "available_rule_ids": [],
+      "catalog_revision": 2,
+      "corpus_version": "phase8a-month-combine-hardening-1",
+      "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+      "primary_expected_plan": {
+        "question_scope": "theory",
+        "status": "ready",
+        "requested_concepts": [
+          {
+            "concept_id": "retreat",
+            "basis": "exact_term",
+            "question_span": {
+              "start": 12,
+              "end": 14,
+              "matched_text": "退神"
+            },
+            "additional_question_spans": []
+          }
+        ],
+        "selected_concepts": [
+          "retreat"
+        ],
+        "excluded_concepts": [],
+        "constraints": {
+          "exclude_concepts": [],
+          "knowledge_allowed": true,
+          "narrow_request": false,
+          "output_constraints": [
+            "no_prediction"
+          ]
+        },
+        "unresolved_mentions": [
+          {
+            "text": "近神",
+            "reason": "possible_typo",
+            "candidate_concepts": [
+              "advance"
+            ],
+            "question_span": {
+              "start": 1,
+              "end": 3,
+              "matched_text": "近神"
+            }
+          }
+        ]
+      },
+      "acceptable_plans": [
+        {
+          "question_scope": "theory",
+          "status": "ready",
+          "requested_concepts": [
+            {
+              "concept_id": "advance",
+              "basis": "deterministic_phrase",
+              "question_span": {
+                "start": 1,
+                "end": 3,
+                "matched_text": "近神"
+              },
+              "additional_question_spans": []
+            },
+            {
+              "concept_id": "retreat",
+              "basis": "exact_term",
+              "question_span": {
+                "start": 12,
+                "end": 14,
+                "matched_text": "退神"
+              },
+              "additional_question_spans": []
+            }
+          ],
+          "selected_concepts": [
+            "advance",
+            "retreat"
+          ],
+          "excluded_concepts": [],
+          "constraints": {
+            "exclude_concepts": [],
+            "knowledge_allowed": true,
+            "narrow_request": false,
+            "output_constraints": [
+              "no_prediction"
+            ]
+          },
+          "unresolved_mentions": []
+        }
+      ],
+      "question_fact_references": [],
+      "rationale": "退神明确；近神只能作为待确认纠错候选。",
+      "ambiguity_status": "multiple_plausible"
+    }
+  ]
+}

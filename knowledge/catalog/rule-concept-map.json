@@ -1,0 +1,32 @@
+{
+  "version": "r1-concept-availability-1.0",
+  "ruleset_version": "r1",
+  "catalog_revision": 2,
+  "entries": [
+    { "rule_id": "LINE-MOVING-001", "concept_id": "moving-static", "exposure": "internal_metadata", "note": "动静是关系限定，不因动爻本身注入文献。" },
+    { "rule_id": "LINE-VOID-001", "concept_id": "xunkong", "exposure": "user_facing", "note": "旬空有 reviewed 概念文献。" },
+    { "rule_id": "DAY-CLASH-001", "concept_id": "day-clash", "exposure": "user_facing", "note": "日冲有 reviewed 文献。" },
+    { "rule_id": "DAY-COMBINE-001", "concept_id": "day-combine", "exposure": "user_facing", "note": "日合单元仍为 source_checked，当前不能注入。" },
+    { "rule_id": "MOVE-RETURN-GENERATE-001", "concept_id": "return-relation", "exposure": "user_facing", "note": "回头生单元仍为 source_checked，当前不能注入。" },
+    { "rule_id": "MOVE-RETURN-CONTROL-001", "concept_id": "return-relation", "exposure": "user_facing", "note": "回头克与回头生共用概念，当前文献未准入。" },
+    { "rule_id": "MOVE-ADVANCE-001", "concept_id": "advance", "exposure": "user_facing", "note": "化进有 reviewed 文献。" },
+    { "rule_id": "MOVE-RETREAT-001", "concept_id": "retreat", "exposure": "user_facing", "note": "化退有 reviewed 文献。" },
+    { "rule_id": "HIDDEN-FLY-GENERATE-001", "concept_id": "flying-hidden", "exposure": "user_facing", "note": "飞伏方向之一；文献仍为 source_checked。" },
+    { "rule_id": "HIDDEN-GENERATE-FLY-001", "concept_id": "flying-hidden", "exposure": "user_facing", "note": "飞伏方向之一；文献仍为 source_checked。" },
+    { "rule_id": "HIDDEN-FLY-CONTROL-001", "concept_id": "flying-hidden", "exposure": "user_facing", "note": "飞伏方向之一；文献仍为 source_checked。" },
+    { "rule_id": "HIDDEN-CONTROL-FLY-001", "concept_id": "flying-hidden", "exposure": "user_facing", "note": "飞伏方向之一；文献仍为 source_checked。" },
+    { "rule_id": "HIDDEN-SAME-ELEMENT-001", "concept_id": "flying-hidden", "exposure": "user_facing", "note": "飞伏比和；文献仍为 source_checked。" },
+    { "rule_id": "MONTH-STATE-WANG-001", "concept_id": "temporal-scope", "exposure": "internal_metadata", "note": "月令旺是局部季节标注，不作为顶层查询意图。" },
+    { "rule_id": "MONTH-STATE-XIANG-001", "concept_id": "temporal-scope", "exposure": "internal_metadata", "note": "月令相是局部季节标注，不作为顶层查询意图。" },
+    { "rule_id": "MONTH-STATE-XIU-001", "concept_id": "temporal-scope", "exposure": "internal_metadata", "note": "月令休是局部季节标注，不作为顶层查询意图。" },
+    { "rule_id": "MONTH-STATE-QIU-001", "concept_id": "temporal-scope", "exposure": "internal_metadata", "note": "月令囚是局部季节标注，不作为顶层查询意图。" },
+    { "rule_id": "MONTH-STATE-SI-001", "concept_id": "temporal-scope", "exposure": "internal_metadata", "note": "月令死是局部季节标注，不作为顶层查询意图。" },
+    { "rule_id": "SHI-GENERATE-YING-001", "concept_id": "shi-ying", "exposure": "user_facing", "note": "世生应；reviewed 单元与本规则直接关联。" },
+    { "rule_id": "YING-GENERATE-SHI-001", "concept_id": "shi-ying", "exposure": "user_facing", "note": "应生世；reviewed 单元与本规则直接关联。" },
+    { "rule_id": "SHI-CONTROL-YING-001", "concept_id": "shi-ying", "exposure": "user_facing", "note": "世克应有概念映射，但现有 reviewed 单元未直接关联本 Rule ID。" },
+    { "rule_id": "YING-CONTROL-SHI-001", "concept_id": "shi-ying", "exposure": "user_facing", "note": "应克世有概念映射，但现有 reviewed 单元未直接关联本 Rule ID。" },
+    { "rule_id": "SHI-YING-SAME-ELEMENT-001", "concept_id": "shi-ying", "exposure": "user_facing", "note": "世应比和有概念映射，但现有 reviewed 单元未直接关联本 Rule ID。" },
+    { "rule_id": "MONTH-CLASH-001", "concept_id": "month-break", "exposure": "user_facing", "note": "月破有 reviewed 文献。" },
+    { "rule_id": "MONTH-COMBINE-001", "concept_id": "month-combine", "exposure": "user_facing", "note": "月合有 reviewed 文献；个案实际效力仍须保持解释边界。" }
+  ]
+}
