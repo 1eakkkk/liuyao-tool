@@ -1,7 +1,8 @@
 import { stableJson, textHash, validateCorpus } from './validate.js';
 import { compareIds, dedupeUnits } from './dedupe.js';
+import { DEFAULT_CORPUS_VERSION, loadedCorpusVersion, selectedCorpusVersion } from './versions.js';
 
-export const CORPUS_VERSION = 'phase7.1-initial-1';
+export const CORPUS_VERSION = DEFAULT_CORPUS_VERSION;
 export const RETRIEVAL_POLICY_VERSION = 'deterministic-literature-1.0';
 const states = new WeakMap();
 const sorted = values => [...new Set(values)].sort(compareIds);
@@ -12,10 +13,11 @@ function canonicalSnapshot(corpus) {
   for (const [set, key] of [['concepts', 'concept_id'], ['categories', 'category_id'], ['tags', 'tag_id']]) c.catalog[set].sort((a, b) => compareIds(a[key], b[key]));
   return c;
 }
-export function createKnowledgeIndex(corpus, { ruleIds, rulesetVersion, previous } = {}) {
+export function createKnowledgeIndex(corpus, { ruleIds, rulesetVersion, previous, corpusVersion } = {}) {
+  const version = selectedCorpusVersion(corpusVersion ?? loadedCorpusVersion(corpus));
   const c = canonicalSnapshot(corpus);
   const admission = validateCorpus(c, { ruleIds, rulesetVersion, previous, mode: 'production', requireImageWitness: true });
-  const handle = Object.freeze({ corpus_version: CORPUS_VERSION, corpus_hash: textHash(stableJson(c)), retrieval_policy_version: RETRIEVAL_POLICY_VERSION });
+  const handle = Object.freeze({ corpus_version: version, corpus_hash: textHash(stableJson(c)), retrieval_policy_version: RETRIEVAL_POLICY_VERSION });
   const postings = { concepts: new Map(), categories: new Map(), related_rule_ids: new Map() };
   const add = (map, term, id) => { if (!map.has(term)) map.set(term, new Set()); map.get(term).add(id); };
   for (const u of c.units) if (admission.admitted.units.includes(u.knowledge_id)) {

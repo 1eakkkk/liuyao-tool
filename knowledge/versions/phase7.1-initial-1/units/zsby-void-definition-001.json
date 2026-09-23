@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "reviewed",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "editorial",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": "codex-visual-review",
+    "reviewed_at": "2026-09-22",
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:278576e191397b861eb224d535edb21d6c1fdf609d8d58cb6bd51a5e7cf8ca70",
+  "notes": "仅文献术语/解释/条件；不新增事实，不证明r1；notes不默认进入未来AI输入。",
+  "knowledge_id": "zsby-void-definition-001",
+  "source_type": "classical_body",
+  "segment_ref": {
+    "segment_id": "zsby-1925-s9",
+    "revision": 1,
+    "span": {
+      "start": 0,
+      "end": 45,
+      "unit": "unicode_code_point"
+    }
+  },
+  "original_text": "何謂旬空如甲子至癸酉日爲一旬。此十日之內。並無戌亥。所以爻逢戌亥爲空亡。\n又名旬空餘倣此。",
+  "normalized_statement": "本段以甲子至癸酉十日不含戌亥说明旬空名称，并说其余类推；这里只说明历法名义，不论实际效力。",
+  "category": "void",
+  "applicable_conditions": {
+    "status": "specified",
+    "statements": [
+      "限本段甲子旬例及旬空名称。"
+    ]
+  },
+  "exclusions": {
+    "status": "specified",
+    "statements": [
+      "不由旬空推出无用；不整理真空、假空、冲空或出空效力。"
+    ]
+  },
+  "exceptions": {
+    "status": "none_stated",
+    "statements": []
+  },
+  "related_concepts": [
+    "xunkong",
+    "temporal-scope",
+    "interpretation-boundary"
+  ],
+  "related_rule_ids": [
+    "LINE-VOID-001"
+  ],
+  "ruleset_version": "r1",
+  "rule_link_semantics": "association_only",
+  "tags": [],
+  "supersedes": [],
+  "related_units": [],
+  "disputes": []
+}

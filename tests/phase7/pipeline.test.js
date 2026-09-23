@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { test, expect, vi } from 'vitest';
+import { test, expect, vi, afterAll } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
@@ -15,6 +15,12 @@ import { buildKnowledgePair, assertKnowledgeInput, assertKnowledgePair, assertKn
   buildRelationAnchors, commonBase, renderKnowledgePrompt, FROZEN_CORPUS_HASH, KNOWLEDGE_SYSTEM_PROMPT } from '../../src/ai/knowledge-input.js';
 import { exportKnowledgePairs } from '../../scripts/phase7-knowledge.js';
 
+const priorCorpusVersion = process.env.LIUYAO_KNOWLEDGE_CORPUS_VERSION;
+process.env.LIUYAO_KNOWLEDGE_CORPUS_VERSION = 'phase7.1-initial-1';
+afterAll(() => {
+  if (priorCorpusVersion === undefined) delete process.env.LIUYAO_KNOWLEDGE_CORPUS_VERSION;
+  else process.env.LIUYAO_KNOWLEDGE_CORPUS_VERSION = priorCorpusVersion;
+});
 const root = path.resolve('experiments/phase7');
 const config = JSON.parse(fs.readFileSync(path.join(root, 'config.fixture.json'), 'utf8'));
 const corpus = readCorpus();
