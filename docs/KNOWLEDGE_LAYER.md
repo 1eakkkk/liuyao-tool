@@ -266,3 +266,7 @@ anchor identity为本次输入内的 `r1/<rule_id>/<component>/<line>/<related_l
 导出包的execution只放中性A/B文本；private保存assignment、seed、共享模型设置、hash/version、字符统计和检索/预算trace。common-base hash覆盖清空F后的完整文本含共同指令。原文引用多少、F空不空仍可能泄露处理条件；共同指令只要求回答不提协议/实验状态，不能保证完全盲化。不得把private记录复制给模型或盲评者。
 
 使用和字段详情见 [experiments/phase7/README.md](../experiments/phase7/README.md)。现有3个fixture和Phase6案例均非未见效果测试集；将来真实外部实验须另用新案例，本轮没有外部模型回答。
+
+## Phase 8A.2：语料版本隔离
+
+上文的 Phase 7.1／7.2 版本和 hash 是**历史冻结状态**，没有被新语料覆盖。Phase 8A.2 对月合片段进行同底本转录修正并澄清 KnowledgeUnit 编辑边界，详情见 [PHASE_8A_REPORT.md](PHASE_8A_REPORT.md)。当前离线默认语料为 `phase8a-month-combine-hardening-1`；`phase7.1-initial-1` 保留于 `knowledge/versions/phase7.1-initial-1/`。`readCorpus({ version })` 和 `loadCorpus({ version }, registryOptions)` 可显式选择；历史 CLI 回归可显式设置环境变量 `LIUYAO_KNOWLEDGE_CORPUS_VERSION=phase7.1-initial-1`。新旧版本分别计算并核对哈希，不根据当前 Git HEAD 猜测。现有 Structured 1.2 继续只接受旧版冻结 corpus，Prompt 与投影代码不变；检索策略没有扩展。

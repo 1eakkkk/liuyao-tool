@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "reviewed",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "manual_transcription",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": "codex-visual-review",
+    "reviewed_at": "2026-09-22",
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:677b7a0f1b352079425a94c132e5727029663f272717f57eb09deb085a19ca8b",
+  "notes": "固定影像逐字视觉核对后手工录入；竖排右至左、列内上至下线性化；小句读圈记。、大圈记○；换列不加空格，表格按行加换行。保留可辨繁体异体，不以网络转录补字。reviewed为Codex影像及整理自审，非独立人工复核。",
+  "segment_id": "zsby-1925-s5",
+  "source_ref": {
+    "source_id": "zsby-nlc-12jh005345",
+    "revision": 1
+  },
+  "work_id": "zeng-shan-bu-yi",
+  "edition_id": "zsby-wenming-1925-11-nlc-12jh005345",
+  "title": "合起合絆（整理待核）",
+  "text_role": "original_body",
+  "locator": {
+    "volume": "二",
+    "chapter": "六合章第十九",
+    "section": null,
+    "page": "四",
+    "leaf": null,
+    "image_page": 74,
+    "anchor": "爻之合者起，得他扶助之意止；后文用神有气/失陷限制未并入"
+  },
+  "text": "爻之合者。靜而逢合謂之合起。動而逢合謂之合絆。○爻與爻合。謂之合好。爻動化合。謂之化扶。○爻靜或與日月動爻合者得合而起。卽使爻值休囚亦有旺相之意。○爻動或與日月動爻合者。謂之動逢合而絆住反不能動之意。○爻動與動爻相合乃得他來合我與我和好相助之意。○爻動化出之爻回頭相合者謂之化扶得他扶助之意。",
+  "transcription_revision": 1,
+  "text_hash": "sha256:42633c37a9f737e4d9a21d111ef19553db3d7c4f6f74be661d1df5b203260c50",
+  "transcription_uncertainties": []
+}

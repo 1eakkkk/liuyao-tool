@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "reviewed",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "manual_transcription",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": "codex-visual-review",
+    "reviewed_at": "2026-09-22",
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:26bd960e86ba541a1b0feeb6a117e7d7d965e84c9c6fcb4175adef30efa0aa07",
+  "notes": "单一1925年11月底本。校勘者愼字按影像，镜像书目用慎；无CiNii旁证冒充影像确认。刊记仍有当时翻印必究声明。",
+  "source_id": "zsby-nlc-12jh005345",
+  "work_id": "zeng-shan-bu-yi",
+  "edition_id": "zsby-wenming-1925-11-nlc-12jh005345",
+  "title": "增刪卜易",
+  "contributors": [
+    {
+      "name": "野鶴老人",
+      "role": "著",
+      "attribution_basis": "影像21、339：野鶴老人著；不认定笔名对应身份。",
+      "certainty": "as_printed"
+    },
+    {
+      "name": "李坦我平",
+      "role": "鉴定",
+      "attribution_basis": "影像21、339：楚江李坦我平鑒定；题署连录，不从网络拆分姓名字号。",
+      "certainty": "as_printed"
+    },
+    {
+      "name": "李文輝覺子",
+      "role": "增删",
+      "attribution_basis": "影像21、339：湖南李文輝覺子增刪。",
+      "certainty": "as_printed"
+    },
+    {
+      "name": "陳文吉茂生",
+      "role": "校",
+      "attribution_basis": "影像21：壻陳文吉茂生，与男茹芝山秀同校閱。",
+      "certainty": "as_printed"
+    },
+    {
+      "name": "茹芝山秀",
+      "role": "校",
+      "attribution_basis": "影像21：男茹芝山秀，同校閱；不补旁证中的姓氏。",
+      "certainty": "as_printed"
+    },
+    {
+      "name": "秦愼安",
+      "role": "校",
+      "attribution_basis": "影像393：校勘者 江甯秦愼安。",
+      "certainty": "as_printed"
+    }
+  ],
+  "edition": {
+    "designation": "中華民國十四年十一月文明書局本",
+    "publication": {
+      "publisher": "文明書局",
+      "place": "上海",
+      "date_text": "中華民國十四年十一月"
+    },
+    "manuscript": {
+      "scribe": null,
+      "date_text": null
+    },
+    "digital_version": "NLC416-12jh005345-45344_增刪卜易.pdf；2026-09-22固定394页副本"
+  },
+  "holding": {
+    "repository": "中国国家图书馆",
+    "identifier": "12jh005345 / 45344；镜像所列館藏信息MG/B992.2"
+  },
+  "transcription_revision": 1,
+  "locator": {
+    "volume": null,
+    "chapter": null,
+    "section": null,
+    "page": null,
+    "leaf": null,
+    "image_page": 21,
+    "anchor": "题署21；卷六题页339；刊记及全三冊393"
+  },
+  "image_witness": {
+    "page_count": 394,
+    "volume_count": 6,
+    "booklet_count": 3,
+    "metadata_image_pages": [
+      21,
+      339,
+      393
+    ],
+    "mirror": {
+      "repository": "Wikimedia Commons（获取镜像，非原馆）",
+      "identifier": "NLC416-12jh005345-45344_增刪卜易.pdf",
+      "url": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf"
+    },
+    "source_identity_basis": "原馆身份与MG/B992.2来自镜像文件说明，12jh005345/45344来自固定文件名；没有直接取得NLC馆藏证书。卷一/卷六题页21/339、全三冊及刊记393已逐项查看。",
+    "rights_statement_url": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing",
+    "publication_date_text": "中華民國十四年十一月出版",
+    "distribution_date_text": "中華民國十四年十一月發行",
+    "publication_roles": [
+      {
+        "role": "發行者",
+        "name": "文明書局",
+        "place": null
+      },
+      {
+        "role": "印刷者",
+        "name": "文明書局",
+        "place": null
+      },
+      {
+        "role": "發行所",
+        "name": "文明書局",
+        "place": "上海南京路"
+      },
+      {
+        "role": "發行所",
+        "name": "中華書局",
+        "place": "上海棋盤街"
+      }
+    ],
+    "transcription_policy": "固定影像逐字视觉核对后手工录入；竖排右至左、列内上至下线性化；小句读圈记。、大圈记○；换列不加空格，表格按行加换行。保留可辨繁体异体，不以网络转录补字。reviewed为Codex影像及整理自审，非独立人工复核。"
+  }
+}

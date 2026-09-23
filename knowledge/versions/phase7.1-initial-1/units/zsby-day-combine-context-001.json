@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "source_checked",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "editorial",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:f8d2eb639d49c69553a893bd0839deb334a8a95b976fa455491c262b2119cc1a",
+  "notes": "后文用神有气/失陷限制与不同合的主体条件尚未整体整理，不准入。",
+  "knowledge_id": "zsby-day-combine-context-001",
+  "source_type": "classical_body",
+  "segment_ref": {
+    "segment_id": "zsby-1925-s5",
+    "revision": 1,
+    "span": {
+      "start": 0,
+      "end": 146,
+      "unit": "unicode_code_point"
+    }
+  },
+  "original_text": "爻之合者。靜而逢合謂之合起。動而逢合謂之合絆。○爻與爻合。謂之合好。爻動化合。謂之化扶。○爻靜或與日月動爻合者得合而起。卽使爻值休囚亦有旺相之意。○爻動或與日月動爻合者。謂之動逢合而絆住反不能動之意。○爻動與動爻相合乃得他來合我與我和好相助之意。○爻動化出之爻回頭相合者謂之化扶得他扶助之意。",
+  "normalized_statement": "待核草案：文献在静、动前提下讨论合起、合绊，日合关系不能单独推出全部解释。",
+  "category": "day-relation",
+  "applicable_conditions": {
+    "status": "specified",
+    "statements": [
+      "所选段含日、月、动爻之合，须区分主体。"
+    ]
+  },
+  "exclusions": {
+    "status": "specified",
+    "statements": [
+      "不能把动爻相合、化扶与日合等同。"
+    ]
+  },
+  "exceptions": {
+    "status": "unreviewed",
+    "statements": []
+  },
+  "related_concepts": [
+    "day-combine",
+    "moving-static",
+    "interpretation-boundary"
+  ],
+  "related_rule_ids": [
+    "DAY-COMBINE-001"
+  ],
+  "ruleset_version": "r1",
+  "rule_link_semantics": "association_only",
+  "tags": [],
+  "supersedes": [],
+  "related_units": [],
+  "disputes": []
+}

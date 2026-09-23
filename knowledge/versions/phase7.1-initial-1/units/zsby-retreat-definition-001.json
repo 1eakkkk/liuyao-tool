@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "revision": 1,
+  "data_kind": "corpus",
+  "verification_status": "reviewed",
+  "provenance": {
+    "acquisition_date": "2026-09-22",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+    "identifier": "NLC:12jh005345/45344",
+    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+    "method": "editorial",
+    "agent": "codex-visual-transcription",
+    "reviewed_by": "codex-visual-review",
+    "reviewed_at": "2026-09-22",
+    "rights": {
+      "status": "public_domain",
+      "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
+    }
+  },
+  "content_hash": "sha256:9697be0ea98c7639820ef2781b81102a8aaf79e9f3cc43e5ee3c314fba5abf40",
+  "notes": "仅文献术语/解释/条件；不新增事实，不证明r1；notes不默认进入未来AI输入。",
+  "knowledge_id": "zsby-retreat-definition-001",
+  "source_type": "classical_body",
+  "segment_ref": {
+    "segment_id": "zsby-1925-s7",
+    "revision": 1,
+    "span": {
+      "start": 0,
+      "end": 161,
+      "unit": "unicode_code_point"
+    }
+  },
+  "original_text": "進神退神者。爻之動而化也。化進化退。吉凶禍福。有喜忌之分所喜者宜於化進。所忌者宜化退神。\n進神 亥化子。寅化卯。巳化午。申化酉。丑化辰。辰化未。未化戌。\n退神 子化亥。卯化寅。午化巳。酉化申。辰化丑。未化辰。戌化未。\n進神者。出化而前進也。如春木之榮。有源之水。久遠長進之象。\n退神者。由此而漸退也如秋天花木。漸漸凋零也。",
+  "normalized_statement": "本段把化退列作动而化的一类，列举子亥、卯寅、午巳、酉申、辰丑、未辰、戌未方向；退神不是无条件的凶险判词。",
+  "category": "moving-relation",
+  "applicable_conditions": {
+    "status": "specified",
+    "statements": [
+      "限本段动而化及退神列举的方向。"
+    ]
+  },
+  "exclusions": {
+    "status": "specified",
+    "statements": [
+      "首句保留喜忌之分；不选择用神，不把化退换成凶或评分。"
+    ]
+  },
+  "exceptions": {
+    "status": "none_stated",
+    "statements": []
+  },
+  "related_concepts": [
+    "retreat",
+    "moving-static",
+    "interpretation-boundary"
+  ],
+  "related_rule_ids": [
+    "MOVE-RETREAT-001"
+  ],
+  "ruleset_version": "r1",
+  "rule_link_semantics": "association_only",
+  "tags": [],
+  "supersedes": [],
+  "related_units": [],
+  "disputes": []
+}

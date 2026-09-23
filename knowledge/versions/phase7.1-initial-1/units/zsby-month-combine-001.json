@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "revision": 2,
+  "revision": 1,
   "data_kind": "corpus",
   "verification_status": "reviewed",
   "provenance": {
@@ -11,39 +11,38 @@
     "method": "editorial",
     "agent": "codex-visual-transcription",
     "reviewed_by": "codex-visual-review",
-    "reviewed_at": "2026-09-23",
+    "reviewed_at": "2026-09-22",
     "rights": {
       "status": "public_domain",
       "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
     }
   },
-  "content_hash": "sha256:e11d6e06529fc58c47be4c9000414115e2f9ed9272c2c24db039f7e92502990a",
-  "notes": "仅文献术语/解释/条件；不新增事实，不证明r1；notes不默认进入未来AI输入。Revision 2 (2026-09-23): Pinned corrected SourceSegment revision 2 and clarified editorial scope from the same 1925 image context; the individual-case boundary is project interpretation, not a quotation from the source. Prior revision 1 is preserved at Git baseline d4e111f94d344805a3d8bb1723d67276cb78e722.",
+  "content_hash": "sha256:516ed6b1e285d6118141af2360904075d6c74cf3f5a7fe71b136a2b74db7d762",
+  "notes": "仅文献术语/解释/条件；不新增事实，不证明r1；notes不默认进入未来AI输入。",
   "knowledge_id": "zsby-month-combine-001",
   "source_type": "classical_body",
   "segment_ref": {
     "segment_id": "zsby-1925-s3",
-    "revision": 2,
+    "revision": 1,
     "span": {
       "start": 0,
-      "end": 47,
+      "end": 46,
       "unit": "unicode_code_point"
     }
   },
-  "original_text": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻。卽爲月破無用之爻也。",
-  "normalized_statement": "该段将月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞。",
+  "original_text": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻則爲月破無用之爻也。",
+  "normalized_statement": "本段将月建合爻称为月合，并与月破对举；有用、无用为文献评价措辞，不能当成程序效力字段。",
   "category": "month-relation",
   "applicable_conditions": {
     "status": "specified",
     "statements": [
-      "仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。"
+      "仅解释该段月合名称及文献措辞的角色。"
     ]
   },
   "exclusions": {
     "status": "specified",
     "statements": [
-      "本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
-      "不能据此直接推出事情有利、成功或最终吉凶；不以相邻无用句取代月破章的条件。"
+      "不将有用转换成最终有利；不以相邻无用句取代月破章的条件。"
     ]
   },
   "exceptions": {

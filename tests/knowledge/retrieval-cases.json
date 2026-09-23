@@ -1,7 +1,7 @@
 {
   "data_kind": "test_only",
   "purpose": "Frozen retrieval expectations, not classical corpus or model-effect evidence",
-  "corpus_hash": "sha256:1b24872a9533ef5d94576c2f8df3489eb221c69f7dfbf0167cdc6e00ab868729",
+  "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
   "policy_version": "deterministic-literature-1.0",
   "cases": [
     { "name": "exact concept", "query": { "concepts": ["shi-ying"] }, "ids": ["zsby-shiying-scope-001"] },

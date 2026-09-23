@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "revision": 2,
+  "revision": 1,
   "data_kind": "corpus",
   "verification_status": "reviewed",
   "provenance": {
@@ -11,14 +11,14 @@
     "method": "manual_transcription",
     "agent": "codex-visual-transcription",
     "reviewed_by": "codex-visual-review",
-    "reviewed_at": "2026-09-23",
+    "reviewed_at": "2026-09-22",
     "rights": {
       "status": "public_domain",
       "basis": "https://commons.wikimedia.org/wiki/File:NLC416-12jh005345-45344_增刪卜易.pdf#Licensing；获取日页面声明PD-scan与PD-China。记录镜像声明，不声称独立法律认证。"
     }
   },
-  "content_hash": "sha256:6ceae1eb866cbe543af46e0206b4bfb2455f40e99674fc786e3049989af69088",
-  "notes": "固定影像逐字视觉核对后手工录入；竖排右至左、列内上至下线性化；小句读圈记。、大圈记○；换列不加空格，表格按行加换行。保留可辨繁体异体，不以网络转录补字。reviewed为Codex影像及整理自审，非独立人工复核。Revision 2 (2026-09-23): Corrected transcription against the frozen 1925 Wenming Shuju edition image: 則→卽 and restored source punctuation after 爻. Prior revision 1 is preserved at Git baseline d4e111f94d344805a3d8bb1723d67276cb78e722; this is a textual correction, not a divination-rule change.",
+  "content_hash": "sha256:4759567e66ce5b236dc17acc17aec5b877a3bc5e1120f61b37479eae8673469b",
+  "notes": "固定影像逐字视觉核对后手工录入；竖排右至左、列内上至下线性化；小句读圈记。、大圈记○；换列不加空格，表格按行加换行。保留可辨繁体异体，不以网络转录补字。reviewed为Codex影像及整理自审，非独立人工复核。",
   "segment_id": "zsby-1925-s3",
   "source_ref": {
     "source_id": "zsby-nlc-12jh005345",
@@ -37,8 +37,8 @@
     "image_page": 61,
     "anchor": "爻逢月合起，无用之爻也止"
   },
-  "text": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻。卽爲月破無用之爻也。",
-  "transcription_revision": 2,
-  "text_hash": "sha256:8e85035cffbcad00db63922b34bfa08e93b076f8b8245a1e7a01744ff94e69b3",
+  "text": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻則爲月破無用之爻也。",
+  "transcription_revision": 1,
+  "text_hash": "sha256:faf4f625074fafa56864f9635af3d29d8792e388deafde4ea6698492ef01d604",
   "transcription_uncertainties": []
 }

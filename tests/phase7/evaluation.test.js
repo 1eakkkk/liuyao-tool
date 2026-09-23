@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { test as vitestTest, expect, afterEach } from 'vitest';
+import { test as vitestTest, expect, afterEach, afterAll } from 'vitest';
 import { loadCases, regenerate, assertFresh, conditionHits, referencePack } from '../../scripts/phase7/evaluation-cases.js';
 import { prepare, verify, importAnswer, exportScoring, lockReviews, unblind, summarize, report, status } from '../../scripts/phase7/evaluation-workflow.js';
 import { REVIEW_SCHEMA, METRICS, revealsTreatment, reviewTemplate, validateReviews } from '../../scripts/phase7/evaluation-review-schema.js';
@@ -11,6 +11,12 @@ import { buildKnowledgePair, commonBase, KNOWLEDGE_SYSTEM_PROMPT } from '../../s
 import { readCorpus } from '../../src/knowledge/load.js';
 import { evaluateRules } from '../../src/rules/engine.js';
 import { validateAiValue } from '../../src/ai/schemas.js';
+const priorCorpusVersion = process.env.LIUYAO_KNOWLEDGE_CORPUS_VERSION;
+process.env.LIUYAO_KNOWLEDGE_CORPUS_VERSION = 'phase7.1-initial-1';
+afterAll(() => {
+  if (priorCorpusVersion === undefined) delete process.env.LIUYAO_KNOWLEDGE_CORPUS_VERSION;
+  else process.env.LIUYAO_KNOWLEDGE_CORPUS_VERSION = priorCorpusVersion;
+});
 const dirs=[];
 // Round-trip tests hash complete frozen archives and spawn the CLI, not just pure functions.
 const test=(name,fn)=>vitestTest(name,fn,30000);
