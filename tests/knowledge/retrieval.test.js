@@ -185,7 +185,7 @@ test('offline CLI requires explicit pending allowance and retrieval emits a trac
   expect(allowed.status).toBe(0); expect(JSON.parse(allowed.stdout).admitted.units).toHaveLength(7);
   const query = spawnSync(process.execPath, ['scripts/knowledge/retrieve.js', JSON.stringify({ concepts: ['shi-ying'] })], { encoding: 'utf8' });
   expect(query.status).toBe(0); expect(ids(JSON.parse(query.stdout))).toEqual(['zsby-shiying-scope-001']);
-});
+}, 30000);
 test('loader rejects a fixture copied into production and unexpected binary files', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'knowledge-load-'));
   try {

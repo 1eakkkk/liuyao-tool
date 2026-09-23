@@ -41,3 +41,11 @@ Phase 8A.1 重新取得 Phase 7.1 指定的**同一** 1925 年 11 月文明书�
 - `npm run build`：通过，51 个模块；产物 `index-BUs3Mv5n.js` 与 `index-63lbvoss.css` 文件名保持原样。现有 Cannon 非 module 脚本提示仍在。
 - `git diff --check`：退出码 0。Windows 工作树的 LF／CRLF 提示不构成空白错误，也不修改本轮冻结策略。
 - 未改 Core、Canonical、Rules、Structured 1.2、Prompt、生产 UI/API 或历史实验文件；没有扩充 SourceSegment，也没有进行新的外部 A/B。
+
+## Phase 8A.3：独立的可复现性基础设施
+
+Phase 8A.3 不再调整月合语料或解释边界。新增的 [REPRODUCIBILITY.md](REPRODUCIBILITY.md) 单独定义未来实验的 Git blob 源码身份、生成／外部文件的原始字节身份、脏工作树拒绝策略和 v1 只读兼容状态。旧 FREEZE 不重算；本节不对 Phase 7.3B 的 month-combine 效果作新结论。
+
+Phase 8A.3 的 synthetic freeze-v2 fixture 不调用外部模型。LF 与 CRLF 工作树表示改变后，同一 Git blob 仍通过验证；真实源内容、暂存内容、回答或 PDF 的字节改变均使相应验证失败。历史 v1 的只读兼容器分别返回 `exact_match`、`content_equivalent_git` 或 `unverifiable`，不把 Git 内容相同伪装为旧工作树字节精确相同。当前 Phase 8A.2 checkout 下读取本地 Phase 7 外部轮次：旧封存文件的原始字节检查通过，源码状态为 `unverifiable`（41 项工作树字节不符、4 项 Git 源 blob 后续改变）。这不修改或重新解释旧 FREEZE。
+
+`npm test -- --maxWorkers=1`：18 个文件、277/277 通过（原 268 项 + 新增 9 项）；`npm run build`：通过、51 模块、JS/CSS 产物名未变；`git diff --check`：通过。两版 corpus hash 保持上表数值，生产入口及历史实验文件无差异。
