@@ -49,7 +49,13 @@ npm test
 npm run release:check
 ```
 
-首次结果：`test-results/task-scope-revision-first-pass.json`。完整全套测试与生产资产校验结果在本轮结束时补记。
+首次结果：`test-results/task-scope-revision-first-pass.json`。
+
+验证完成：新增 5 项回归通过；[GitHub 完整检查](https://github.com/1eakkkk/liuyao-tool/actions/runs/35948974452) 在提交 `9c3f384` 上通过全部 345 项测试、生产包检查及三套浏览器验证。本地与线上已归档清单比较，5 个生产文件 SHA-256 完全相同；旧 holdout 清单封印保持不变。
+
+本地验证过程中，默认并发曾令两个旧 Phase 6 测试触发 5 秒超时；随后单进程全套遇到未提交 README 触发冻结校验的工作区保护。提交后受影响的 18 项测试全部通过，GitHub 干净检出也全套通过。未调整超时阈值、删除断言或放宽冻结保护。
+
+源码已推送 [phase8/task-scope-revision](https://github.com/1eakkkk/liuyao-tool/tree/phase8/task-scope-revision)，没有合并 main 或部署候选。
 
 本轮比较身份（SHA-256，原始文件字节）：
 
