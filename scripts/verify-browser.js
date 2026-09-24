@@ -11,9 +11,9 @@ const baseline = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.end(fs.readFileSync('tests/regression/baseline/index.html'));
 });
-await new Promise(resolve => baseline.listen(0, '127.0.0.1', resolve));
-const built = await preview({ preview: { port: 0 } });
-const dev = await createServer({ server: { port: 0 } });
+await new Promise((resolve, reject) => { baseline.once('error', reject); baseline.listen(4319, '127.0.0.1', resolve); });
+const built = await preview({ preview: { port: 4320, strictPort: true } });
+const dev = await createServer({ server: { port: 4321, strictPort: true } });
 await dev.listen();
 const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true });
 const report = [];

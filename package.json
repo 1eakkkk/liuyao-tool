@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
+    "release:check": "node scripts/release-check.js",
     "preview": "vite preview --host 127.0.0.1",
     "test": "vitest run",
     "test:baseline": "node --test tests/regression/baseline.test.cjs",

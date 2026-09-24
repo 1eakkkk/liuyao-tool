@@ -5,9 +5,9 @@ import assert from 'node:assert/strict';
 import { buildAbRecord } from '../src/ai/exports.js';
 import { buildStructuredAiInput } from '../src/ai/structured-input.js';
 
-const dev = await createServer({ server: { port: 0 } });
+const dev = await createServer({ server: { port: 4322, strictPort: true } });
 await dev.listen();
-const built = await preview({ preview: { port: 0 } });
+const built = await preview({ preview: { port: 4323, strictPort: true } });
 const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true });
 const report = [], records = [];
 const usage = { prompt_tokens: 100, completion_tokens: 20, total_tokens: 120, prompt_cache_hit_tokens: 0, prompt_cache_miss_tokens: 100 };

@@ -1,0 +1,28 @@
+name: Verify stable website
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.18.0'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run release:check
+      - run: npm run test:browser
+      - run: npm run test:browser:structured
+      - run: npm run test:browser:rules
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-results
+          path: test-results/

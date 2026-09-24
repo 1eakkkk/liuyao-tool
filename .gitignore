@@ -3,3 +3,8 @@ dist/
 .vite/
 test-results/
 *.local
+.env
+.env.*
+!.env.example
+my-config.json
+.wrangler/

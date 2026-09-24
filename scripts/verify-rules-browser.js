@@ -4,9 +4,9 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { buildRulesAbRecord, buildRulesAiInput } from '../src/ai/rules-input.js';
 
-const dev = await createServer({ server: { port: 0 } });
+const dev = await createServer({ server: { port: 4324, strictPort: true } });
 await dev.listen();
-const built = await preview({ preview: { port: 0 } });
+const built = await preview({ preview: { port: 4325, strictPort: true } });
 const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true });
 const report = [], records = [];
 const usage = { prompt_tokens: 100, completion_tokens: 20, total_tokens: 120, prompt_cache_hit_tokens: 0, prompt_cache_miss_tokens: 100 };
