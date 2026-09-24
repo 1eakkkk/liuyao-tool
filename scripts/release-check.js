@@ -16,6 +16,8 @@ await build({ plugins: [{
           `Unapproved knowledge module in stable release: ${id}`);
         assert(!/\/src\/ai\/knowledge-[^/]+\.js/.test(id.replaceAll('\\', '/')),
           `Unapproved knowledge AI input in stable release: ${id}`);
+        assert(!/\/src\/ai\/output\//.test(id.replaceAll('\\', '/')),
+          `Offline structured output has not been approved for stable release: ${id}`);
       }
     }
   },
