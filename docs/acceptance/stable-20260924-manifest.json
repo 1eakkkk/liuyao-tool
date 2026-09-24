@@ -1,0 +1,33 @@
+{
+  "createdAt": "2026-09-24T02:23:35.869Z",
+  "sourceCommit": "a7d77b593facdb051a6fec541d24b1e670c884a4",
+  "workingTreeDirty": true,
+  "mode": "stable-legacy-default-no-knowledge",
+  "artifacts": [
+    {
+      "path": "_headers",
+      "bytes": 88,
+      "sha256": "7adfc9d081df47326b338a222a5b2cc931d6dcafd75581391fe36380ca40a1ca"
+    },
+    {
+      "path": "assets/index-63lbvoss.css",
+      "bytes": 38548,
+      "sha256": "8c388327323b743c66a1eea129bdc4f414d999ebca06e1b7329c1b08498c33eb"
+    },
+    {
+      "path": "assets/index-BUs3Mv5n.js",
+      "bytes": 138550,
+      "sha256": "e6cc745d27b82cf3d48e628b7fa7d390d8c552ffcf84e2d03b6eec9a32fa21f0"
+    },
+    {
+      "path": "index.html",
+      "bytes": 48807,
+      "sha256": "f31f1324fe8b3cf76ba91f8de062bab68f520171d2aca4d5e6059e8102d85f40"
+    },
+    {
+      "path": "vendor/cannon.js",
+      "bytes": 132230,
+      "sha256": "6968efb8ee824bdcb1b0627ee9cf518ff4b360aba606c135448a53684c73e14d"
+    }
+  ]
+}
