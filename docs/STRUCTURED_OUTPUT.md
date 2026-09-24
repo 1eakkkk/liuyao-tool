@@ -65,7 +65,7 @@ prepare 创建全新的目录，输出完整提示词、messages、上下文、S
 
 生产构建门槛新增禁止导入 `src/ai/output/`。生产输出的 5 个文件与已发布清单 SHA-256 完全一致。离线原型不会随本次提交进入线上页面。
 
-全套测试与远端检查结果待本轮验证后补记。
+本地全套验证：`npm test -- --maxWorkers=1`，28 个文件、360/360 通过。[GitHub 检查](https://github.com/1eakkkk/liuyao-tool/actions/runs/35971589930) 在提交 `6964ba3` 上全部通过，包括全套测试、生产包边界、Legacy／Structured／Rules 浏览器以及本次离线输出页面。源码在 [phase-next/structured-output](https://github.com/1eakkkk/liuyao-tool/tree/phase-next/structured-output)，没有合并 main 或部署。
 
 ## 下一阶段需要明确的需求
 
