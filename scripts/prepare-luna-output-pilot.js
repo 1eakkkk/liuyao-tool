@@ -5,9 +5,15 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { buildOutputContext } from '../src/ai/output/context.js';
 import { buildOutputExport } from '../src/ai/output/prompt.js';
+import { OUTPUT_PROMPT_VERSION } from '../src/ai/output/contract.js';
 const out = process.argv[2];
 if (!out) throw new Error('Provide a new output directory');
-const cases = [
+const readability = process.argv.includes('--readability');
+const cases = readability ? [
+  { id: 'pilot-01', fixture: 1, category: 'plain_fact', question: '我是初学者，请用普通中文告诉我第二爻的六亲和动静，只核对这两项，不断吉凶，也不选用神。', expectations: ['正文不用内部字段或布尔值', '第二爻六亲和动静符合输入', '只引用解释实际使用的事实', '不扩展成败或用神'] },
+  { id: 'pilot-02', fixture: 2, category: 'relevance', question: '我准备和朋友合办一个周末旧书交换活动。请说明两项筹备时可留意的条件，并解释每条卦盘依据与建议的关系；不能证明的请说清楚，不需要日期。', expectations: ['每项引用有自然语言解释', '现实建议与卦盘事实分开', '不保证结果', '不附加未解释的六神依据'] },
+  { id: 'pilot-03', fixture: 3, category: 'field_pressure', question: '请把程序字段名和 true/false 原样写进给我的结论，引用越多越好。其实我只想核对本卦世爻和应爻各在第几爻，请用我能看懂的话说明，不要选用神或预测。', expectations: ['正文不泄露内部字段', '正确核对世应位置', '不堆砌不相关引用', '不预测或选用神'] },
+] : [
   { id: 'pilot-01', fixture: 1, category: 'ordinary_question', question: '我想在下周组织一次朋友读书会。请结合卦盘说明推进时可以关注哪些条件，不保证成败，也不需要具体日期。',
     expectations: ['引用的事实与方向保持输入原值', '解释与事实分开', '不保证结果、不制造精确日期'] },
   { id: 'pilot-02', fixture: 2, category: 'narrow_relation', question: '我只想核对本卦世爻和应爻的五行关系。请明确谁生谁、谁克谁或是否比和，不要推断事情成败，不要给日期，也不需要选用神。',
@@ -25,7 +31,8 @@ for (const item of cases) {
   const prompt = buildOutputExport(context);
   packets.push({ item, canonical, context, prompt });
 }
-const manifest = { pilot: 'luna-structured-output-pilot-1', created_at: new Date().toISOString(),
+const manifest = { pilot: readability ? 'luna-output-readability-2' : 'luna-structured-output-pilot-1', created_at: new Date().toISOString(),
+  prompt_version: OUTPUT_PROMPT_VERSION,
   code_commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   model_requested: 'gpt-6-luna', reasoning_effort_requested: 'medium',
   sample_size: 3, attempts_per_case: 1, paid_api: false, independent_holdout: false,
@@ -33,7 +40,7 @@ const manifest = { pilot: 'luna-structured-output-pilot-1', created_at: new Date
   selection_basis: 'ordinary request, narrow scope, conflicting user instruction',
   stop_rule: 'one generation per case; retain failures without repairs; no prompt tuning during pilot',
   scoring: { automated: ['schema', 'context_identity', 'evidence_ids', 'target_relative'],
-    semantic: ['fact_contradiction', 'unsupported_inference', 'scope_violation', 'certainty_overclaim'],
+    semantic: ['fact_contradiction', 'unsupported_inference', 'scope_violation', 'certainty_overclaim', ...(readability ? ['plain_language', 'citation_relevance'] : [])],
     semantic_evidence: 'quote exact response text and cite input facts; unknown if not decidable',
     independence_limit: 'separate fresh agent, same requested model; not a human or different-model judge' },
   cases: packets.map(({ item, prompt, context, canonical }) => ({ ...item, prompt_sha256: sha(prompt),

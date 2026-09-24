@@ -1,6 +1,6 @@
 // Browser-compatible, offline output protocol. No network, storage or UI imports.
 export const OUTPUT_VERSION = 'structured-answer-1.0';
-export const OUTPUT_PROMPT_VERSION = 'structured-answer-p1';
+export const OUTPUT_PROMPT_VERSION = 'structured-answer-p2';
 export const MAX_RESPONSE_CHARS = 64000;
 const object = properties => ({ type: 'object', properties, required: Object.keys(properties), additionalProperties: false });
 const text = maxLength => ({ type: 'string', minLength: 1, maxLength });
