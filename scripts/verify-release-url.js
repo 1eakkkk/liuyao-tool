@@ -15,7 +15,10 @@ for (const asset of manifest.artifacts) {
   assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
   assert.equal(response.headers.get('referrer-policy'), 'strict-origin-when-cross-origin');
 }
-const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true });
+const browser = await chromium.launch({
+  channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true,
+  ...(process.env.HTTPS_PROXY ? { proxy: { server: process.env.HTTPS_PROXY } } : {}),
+});
 const results = [];
 try {
   for (const width of [1280, 390]) {
@@ -29,7 +32,8 @@ try {
     await page.locator('[data-mode="manual"]').click();
     for (const [i, sum] of [7, 8, 9, 7, 6, 8].entries()) await page.locator(`#manualLine${i}`).selectOption(String(sum));
     await page.locator('#manualCastBtn').click();
-    await page.locator('#plateWrap table').waitFor();
+    await page.locator('#plateWrap table').waitFor({ state: 'attached' });
+    assert((await page.locator('#plateWrap table').textContent()).length > 20);
     await page.locator('[data-tab="ai"]').click();
     await page.locator('#questionInput').fill('发布验证：当前计划应如何安排？');
     await page.locator('#promptBtn').click();
