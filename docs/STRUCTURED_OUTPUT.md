@@ -14,7 +14,7 @@
 
 ## 协议与边界
 
-- 输出版本：`structured-answer-1.0`；Prompt：`structured-answer-p1`。
+- M2 初始输出版本：`structured-answer-1.0`；初始 Prompt：`structured-answer-p1`。后续实验已迭代至 p3，协议版本不变，见 [真实接口评测](DEEPSEEK_LIVE_EVALUATION.md)。
 - 必填：schema_version、context_id、answer、direction、yongshen_candidates、factors、timing_candidates、uncertainties。
 - direction 是模型判断的枚举，不是概率。协议没有 confidence／成功率字段；未知字段拒绝。
 - 候选用神与应期可为空；至少一项有引用的解释因素和一项不确定性。
@@ -69,6 +69,6 @@ prepare 创建全新的目录，输出完整提示词、messages、上下文、S
 
 ## 下一阶段需要明确的需求
 
-用户已决定真实 API 测试暂缓，因此 M3 暂不执行付费请求。后续开始前需明确测试 Key 的使用授权、费用上限和可用模型；不需要在聊天中粘贴 Key。
+M2 完成时用户选择暂缓真实 API；后续已授权累计 20 元并执行 23 次真实开发测试，结果见 [真实接口评测](DEEPSEEK_LIVE_EVALUATION.md)。Key 仅保存在本地被忽略的配置文件。M3 的普通用户接入与效果验收仍未完成。
 
 M3 的实施顺序：保留原始 API 响应的兼容适配 → 独立结构化会话与追问版本 → 冻结实际模型对照问题、评分和预算 → 真实调用并评估格式成功率、引用错误、语义错误、遗漏、矛盾与用量 → 决定是否开放可选入口。默认切换、知识自动注入及正式部署不由本轮离线测试自动授权。
