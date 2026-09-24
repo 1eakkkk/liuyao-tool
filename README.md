@@ -2,6 +2,8 @@
 
 当前生产收尾说明：[范围与完整方案](docs/PRODUCTION_PLAN.md) · [本次发布记录](docs/PRODUCTION_RELEASE.md)。稳定版保持纯静态前端、用户自带 DeepSeek Key／提示词导出；知识库自动注入尚未通过发布门槛。
 
+全部 Phase 的真实进度、结构化输入／输出区别及后续目标见 [项目状态与路线](docs/PROJECT_STATUS.md)。稳定网站上线不代表原始研究方案全部完成。
+
 ## refactor/v2 开发说明
 
 本分支执行 REFACTOR_PLAN 的 Phase 0～2，以父文件夹的最新版 HTML 为基线。源码已迁移为 Vite + 原生 ES Modules。
