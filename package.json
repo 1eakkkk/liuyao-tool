@@ -19,6 +19,7 @@
     "test:browser:rules": "node scripts/verify-rules-browser.js",
     "test:browser:output": "node scripts/verify-output-browser.js",
     "test:browser:facts": "node scripts/verify-fact-check-browser.js",
+    "test:browser:reading": "node scripts/verify-reading-browser.js",
     "ab:prepare:rules": "node scripts/phase5-ab.js --prepare"
   },
   "devDependencies": {

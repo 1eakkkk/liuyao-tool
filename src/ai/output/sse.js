@@ -120,5 +120,5 @@ export async function parseOutputSse(source, context, { signal, maxEventChars = 
   }
   let result = collector.finish({ finishReason, sawDone, interrupted: Boolean(errorCode || signal?.aborted) });
   if (errorCode) result = { ...result, issues: [{ code: errorCode, path: '$' }] };
-  return { result, usage, finishReason, sawDone, error: errorCode };
+  return { result, rawText: collector.rawText, usage, finishReason, sawDone, error: errorCode };
 }

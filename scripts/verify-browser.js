@@ -35,7 +35,7 @@ try {
       await page.locator('#manualLine5').waitFor({ state: 'attached' });
       // Finish CSS transitions identically; fake timers alone do not advance compositor animations.
       // Approved new fact-check panel has its own browser acceptance; retain pixel parity for the existing UI.
-      await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}#factCheckPanel{display:none!important}' });
+      await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}#factCheckPanel,.reading-mode,#readingPanel{display:none!important}' });
       const out = `${outputRoot}/${name}`;
       fs.mkdirSync(out, { recursive: true });
       outputs[name] = {};

@@ -48,6 +48,7 @@ export function createOutputCollector(context) {
   if (!isOutputContext(context)) throw new OutputError('untrusted_context');
   let text = '', closed = false, exceeded = false;
   return {
+    get rawText() { return text; },
     append(delta) {
       if (closed) throw new OutputError('collector_closed');
       if (typeof delta !== 'string') throw new OutputError('invalid_response_type');

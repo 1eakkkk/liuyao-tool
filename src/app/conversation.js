@@ -6,6 +6,7 @@ import { state } from './state.js';
 
 
 function resetConversation(){
+  document.dispatchEvent(new Event('reading:reset'));
   state.currentConversation = null;
   state.currentHistorySessionId = null;
   followUpBox.style.display = 'none';

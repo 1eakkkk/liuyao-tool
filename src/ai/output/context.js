@@ -17,20 +17,21 @@ const labels = { position: '爻位', yin_yang: '阴阳', moving: '动爻', ganzh
   month_strength: '月令', day_relation: '日辰关系', return_relation: '回头关系', advance_retreat: '进退',
   hidden_relation: '飞伏关系', name: '卦名', palace: '卦宫', shi_line: '世爻位置', ying_line: '应爻位置',
   year_ganzhi: '年柱', month_ganzhi: '月柱', day_ganzhi: '日柱', hour_ganzhi: '时柱',
-  day_branch: '日支', month_branch: '月支', kongwang: '空亡', state_text: '爻状态' };
+  day_branch: '日支', month_branch: '月支', kongwang: '空亡', state_text: '爻状态', hidden: '伏神记录', changed: '变爻记录' };
 function factLabel(path) {
   const parts = path.split('/').slice(1);
   const prefix = parts[0] === 'lines' ? `第${Number(parts[1]) + 1}爻` : parts[0] === 'calendar' ? '历法' : '卦盘';
   const component = parts.includes('changed') ? '变爻／变卦' : parts.includes('hidden') ? '伏神' : '';
   return `${prefix}${component} · ${labels[parts.at(-1)] ?? labels[parts.at(-2)] ?? parts.at(-1)}`;
 }
-export async function buildOutputContext(canonical, { rulesMode = 'on' } = {}) {
+export async function buildOutputContext(canonical, { rulesMode = 'on', conversation = null, includeMissingRecords = false } = {}) {
   const input = buildRulesAiInput(canonical, rulesMode);
   const evidence = [];
   function walk(value, path) {
     if (value !== null && typeof value === 'object') {
       for (const [key, child] of Object.entries(value)) walk(child, `${path}/${key}`);
-    } else if (value !== undefined && value !== null && value !== '') {
+    } else if ((value !== undefined && value !== null && value !== '') ||
+      (includeMissingRecords && value === null && /^\/lines\/\d+\/(hidden|changed)$/.test(path))) {
       evidence.push({ id: `fact:${path}`, kind: 'program_fact', path, value, label: factLabel(path) });
     }
   }
@@ -44,6 +45,7 @@ export async function buildOutputContext(canonical, { rulesMode = 'on' } = {}) {
   }
   const context = { output_version: OUTPUT_VERSION, prompt_version: OUTPUT_PROMPT_VERSION,
     input, evidence };
+  if (conversation !== null) context.conversation = structuredClone(conversation);
   const ids = new Set(evidence.map(e => e.id));
   if (ids.size !== evidence.length || evidence.some(e => e.kind === 'rule_result' && e.source_facts.some(id => !ids.has(id))))
     throw new Error('Output evidence registry is incomplete');

@@ -4,7 +4,7 @@ const assessment = { support: '支持因素', oppose: '不利因素', neutral: '
 const component = { primary: '本爻', changed: '变爻', hidden: '伏神' };
 const direction = { favorable: '偏有利', unfavorable: '偏不利', mixed: '利弊并存', unclear: '暂不明确' };
 function evidenceText(entry) {
-  if (entry.kind === 'program_fact') return `${entry.label}：${String(entry.value)}`;
+  if (entry.kind === 'program_fact') return `${entry.label}：${entry.value === null ? '未记载' : typeof entry.value === 'boolean' ? (entry.value ? '是' : '否') : String(entry.value)}`;
   const { from, to } = entry.result;
   const arrow = from && to ? `（第${from.line}爻${component[from.component]} → 第${to.line}爻${component[to.component]}）` : '';
   return `${entry.label}${arrow}`;

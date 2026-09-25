@@ -1041,3 +1041,19 @@ table.ref.ref-wide{min-width:480px;}
 .fact-check-panel .fact-check-answer{font-size:var(--fs-3,16px)}
 .fact-check-panel ul{margin:8px 0;padding-left:22px}
 .fact-check-panel label{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.reading-mode{margin:10px 0;color:var(--text)}
+.reading-mode select{margin-left:10px;max-width:100%;padding:8px;border-radius:8px;background:#f2e7d0;color:#2f281d}
+.reading-mode p,.reading-note{font-size:var(--fs-2);color:var(--text-dim);line-height:1.7}
+.reading-panel{margin-top:16px;border:1px solid var(--border);border-radius:12px;padding:16px;min-width:0;overflow-wrap:anywhere}
+.reading-panel[hidden],.reading-panel [hidden],.reading-mode [hidden]{display:none!important}
+.reading-panel article{border-bottom:1px solid var(--border);padding:8px 0 20px;margin-bottom:16px}
+.reading-panel p,.reading-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;line-height:1.8}
+.reading-panel pre{max-height:360px;overflow:auto;font-size:var(--fs-2)}
+.reading-panel h2{font-size:20px;margin:12px 0}
+.reading-panel h3{font-size:16px;margin:12px 0}
+.reading-panel details{padding:12px;background:rgba(170,130,70,.08);border-radius:8px}
+.reading-panel summary{cursor:pointer;line-height:1.8}
+.reading-panel textarea{box-sizing:border-box;width:100%;max-width:100%;margin:8px 0;min-height:90px}
+.reading-panel label{display:block;margin-top:12px;line-height:1.8}
+.reading-panel input[type=checkbox]{width:auto}
+.reading-panel .ai-row{flex-wrap:wrap;margin:10px 0}

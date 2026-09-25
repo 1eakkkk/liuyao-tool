@@ -1,4 +1,5 @@
 import { selectedRulesMode, buildRulesPair, buildRulesExportPrompt } from '../ai/rules-input.js';
+import { initializeReading, readingSelected, startReading, clearReading } from '../ui/reading.js';
 import { showRulesExportComparison } from '../ui/rules-debug.js';
 import { buildPairedPromptExports, buildStructuredExportPrompt } from '../ai/exports.js';
 import { showAiExportComparison } from '../ui/ai-debug.js';
@@ -457,6 +458,8 @@ window.addEventListener('storage', (e)=>{
   followUpBox.style.display = 'flex';
 })();
 
+initializeReading();
+
 styleSelect.addEventListener('change', ()=>{
   saveStyleChoice(styleSelect.value);
   customStyleWrap.style.display = (styleSelect.value === 'custom') ? 'block' : 'none';
@@ -668,6 +671,11 @@ interpretBtn.addEventListener('click', async (event)=>{
 
     aiStatus.textContent = '正在调用 DeepSeek 生成解卦回复…';
     showToast('正在调用 DeepSeek 生成解卦回复…');
+    if (readingSelected()) {
+      await startReading(castStore.canonical, 'api');
+      aiStatus.textContent = '结构化解读见下方';
+      return;
+    }
     const structuredCast = selectedAiInputMode() === 'structured' ? castStore.canonical : null;
     const castText = structuredCast ? null : formatCastDataForAI(castStore.canonical);
     // 这条历史记录id必须在调用 interpretWithDeepSeek 之前就生成好：interpretWithDeepSeek 内部
@@ -812,6 +820,12 @@ promptBtn.addEventListener('click', async (event)=>{
       await performBackgroundCast(physicalInput, (done,total)=>{ aiStatus.textContent = `正在后台起卦 · ${done}/${total} 爻`; });
     }
 
+    if (readingSelected()) {
+      await startReading(castStore.canonical, 'external');
+      aiStatus.textContent = '结构化提示词见下方';
+      return;
+    }
+    clearReading();
     const castText = formatCastDataForAI(castStore.canonical);
     state.lastExportCastText = castText;
     state.lastExportQuestion = question;

@@ -16,8 +16,9 @@ await build({ plugins: [{
           `Unapproved knowledge module in stable release: ${id}`);
         assert(!/\/src\/ai\/knowledge-[^/]+\.js/.test(id.replaceAll('\\', '/')),
           `Unapproved knowledge AI input in stable release: ${id}`);
-        assert(!/\/src\/ai\/output\//.test(id.replaceAll('\\', '/')),
-          `Offline structured output has not been approved for stable release: ${id}`);
+        if (/\/src\/ai\/output\//.test(id.replaceAll('\\', '/'))) {
+          assert(/\/(client|context|contract|parse|prompt|session|sse|view)\.js$/.test(id), `Unreviewed output module: ${id}`);
+        }
       }
     }
   },
@@ -36,6 +37,6 @@ fs.writeFileSync('test-results/release-manifest.json', JSON.stringify({
   createdAt: new Date().toISOString(),
   sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   workingTreeDirty: !!execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim(),
-  mode: 'stable-legacy-default-no-knowledge', artifacts,
+  mode: 'stable-legacy-default-optional-structured-reading-no-knowledge', artifacts,
 }, null, 2) + '\n');
 console.log(`Stable release boundary passed; ${artifacts.length} assets recorded in test-results/release-manifest.json`);
