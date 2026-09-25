@@ -78,6 +78,7 @@ try {
     await page.screenshot({ path: `${root}/${width}-settings.png`, fullPage: true });
     await page.locator('#toggleSettingsBtn').click();
     await page.locator('#readingMode').selectOption('structured');
+    await bounds('#readingMode'); await bounds('#readingModeNote'); await noOverflow();
     await page.screenshot({ path: `${root}/${width}-ai.png`, fullPage: true });
     await page.locator('#promptBtn').click();
     await page.locator('#readingPrompt').waitFor({ state: 'visible' });
@@ -95,8 +96,11 @@ try {
     }
     await page.locator('#helpFab').click(); await bounds('.onboard-card');
     await page.keyboard.press('Escape'); assert(await page.locator('#onboardOverlay').isHidden());
-    assert.deepEqual(errors, []); assert.deepEqual(api, []); assert.deepEqual(external, [], 'No external fonts or requests');
-    reports.push({ width, forms: 'consistent', keyboard: 'passed', touch_targets: 'passed', overflow: 'none', reduced_motion: true, errors });
+    // Cloudflare injects its existing analytics beacon on the production domain.
+    // Keep every other external request forbidden, including fonts and paid API.
+    const analytics = external.filter(url => target && new URL(target).hostname === 'gua.1eak.cool' && new URL(url).hostname === 'static.cloudflareinsights.com' && new URL(url).pathname.startsWith('/beacon.min.js/'));
+    assert.deepEqual(errors, []); assert.deepEqual(api, []); assert.deepEqual(external.filter(url => !analytics.includes(url)), [], 'No external fonts or unexpected requests');
+    reports.push({ width, forms: 'consistent', keyboard: 'passed', touch_targets: 'passed', overflow: 'none', reduced_motion: true, platform_analytics_requests: analytics.length, errors });
     await context.close();
   }
 } finally { await browser.close(); await server?.httpServer.close(); }
