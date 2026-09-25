@@ -1,0 +1,55 @@
+{
+  "network_calls": 0,
+  "results": [
+    {
+      "id": "reading-1-1",
+      "status": "validated",
+      "issues": []
+    },
+    {
+      "id": "reading-2-1",
+      "status": "validated",
+      "issues": []
+    },
+    {
+      "id": "reading-3-1",
+      "status": "validated",
+      "issues": []
+    },
+    {
+      "id": "reading-4-1",
+      "status": "validated",
+      "issues": []
+    },
+    {
+      "id": "reading-4-2",
+      "status": "validated",
+      "issues": []
+    },
+    {
+      "id": "reading-5-1",
+      "status": "fallback",
+      "issues": [
+        {
+          "code": "unknown_field",
+          "path": "$.evidence_ids"
+        }
+      ]
+    },
+    {
+      "id": "reading-6-1",
+      "status": "fallback",
+      "issues": [
+        {
+          "code": "duplicate_field",
+          "path": "$"
+        }
+      ]
+    },
+    {
+      "id": "reading-7-1",
+      "status": "validated",
+      "issues": []
+    }
+  ]
+}
