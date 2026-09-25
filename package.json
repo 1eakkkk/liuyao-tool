@@ -20,6 +20,7 @@
     "test:browser:output": "node scripts/verify-output-browser.js",
     "test:browser:facts": "node scripts/verify-fact-check-browser.js",
     "test:browser:reading": "node scripts/verify-reading-browser.js",
+    "test:browser:interface": "node scripts/verify-interface-browser.js",
     "ab:prepare:rules": "node scripts/phase5-ab.js --prepare"
   },
   "devDependencies": {

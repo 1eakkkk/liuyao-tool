@@ -1,5 +1,6 @@
 import { selectedRulesMode, buildRulesPair, buildRulesExportPrompt } from '../ai/rules-input.js';
 import { initializeReading, readingSelected, startReading, clearReading } from '../ui/reading.js';
+import { bindDisclosure } from '../ui/disclosure.js';
 import { showRulesExportComparison } from '../ui/rules-debug.js';
 import { buildPairedPromptExports, buildStructuredExportPrompt } from '../ai/exports.js';
 import { showAiExportComparison } from '../ui/ai-debug.js';
@@ -71,16 +72,16 @@ export function initializeApp(){
   → promptBtn 提示词导出主流程（复用同一套问题认领/重摇判断，但不调API、不写历史）
 ================================================================== */
 /* ---------------- 折叠区块：进阶/参考内容默认收起，点标题展开 ---------------- */
-document.querySelectorAll('section.block-collapse').forEach(sec=>{
+document.querySelectorAll('section.block-collapse').forEach((sec, index)=>{
   const h2 = sec.querySelector('h2');
   const hint = document.createElement('span');
   hint.className = 'collapse-hint';
   h2.appendChild(hint);
-  h2.addEventListener('click', ()=> sec.classList.toggle('open'));
+  bindDisclosure(h2, sec.querySelector('.block-collapse-body'), sec, `section-details-${index}`);
 });
-document.querySelectorAll('.settings-group.collapsible').forEach(group=>{
+document.querySelectorAll('.settings-group.collapsible').forEach((group, index)=>{
   const title = group.querySelector('.settings-group-title');
-  title.addEventListener('click', ()=> group.classList.toggle('open'));
+  bindDisclosure(title, group.querySelector('.settings-group-body'), group, `settings-details-${index}`);
 });
 // 供 AI 面板顶部状态条使用：有 castStore.legacy 就显示"当前排盘：卦名 · 日柱"，
 // 没有（还没摇过卦，或者数据被清空）就隐藏整条，不占位置。挂在 window 上是因为
@@ -522,7 +523,7 @@ closePromptBtn.addEventListener('click', ()=>{
 
 // 备用工具折叠入口：点一下展开/收起里面的"整理格式"和"生成追问提示词"，
 // 用法与页面里其它折叠区块（block-collapse / settings-group.collapsible）一致。
-promptExtraToggle.addEventListener('click', ()=> promptExtraTools.classList.toggle('open'));
+bindDisclosure(promptExtraToggle, promptExtraTools.querySelector('.prompt-extra-body'), promptExtraTools, 'prompt-extra-content');
 
 // ---- 贴回矫正：把对方AI回复原文本地跑一遍 stripMarkdown + annotateShichen + annotateGanzhiDay，
 // 不发任何网络请求，纯字符串处理，复用"AI 解读"清洗回复用的同一套函数，保证

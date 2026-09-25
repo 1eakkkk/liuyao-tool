@@ -7,7 +7,8 @@
   → toast 提示 → 新手教程弹层 → 通用确认弹层
   配色统一走 :root 里的 CSS 变量（墨/纸/朱砂/黄铜/青玉），改主题色只动这里。
 ================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+/* Layout compatibility layer. Current UI tokens and components: interface.css.
+   System fonts keep the interface available without an external font request. */
 
 /* 与上面 <script> 里的滚动恢复修复配套：关掉 CSS 的"滚动锚定"（scroll anchoring）。
    否则字体/图片异步加载导致上方内容高度变化时，浏览器会自动帮你"追着内容跳"，

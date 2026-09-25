@@ -36,6 +36,7 @@ if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
 window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 </script>
 <link rel="stylesheet" href="./src/styles/main.css">
+<link rel="stylesheet" href="./src/styles/interface.css">
 </head>
 <body>
 
@@ -419,7 +420,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
     <div class="current-cast-status" id="currentCastStatus" style="display:none;"></div>
     <div class="ai-box">
       <div class="ai-stats" id="aiStats"></div>
-      <textarea id="questionInput" maxlength="500" placeholder="想问的问题，比如：最近想跳槽，合不合适"></textarea>
+      <textarea id="questionInput" aria-label="想问的问题" maxlength="500" placeholder="想问的问题，比如：最近想跳槽，合不合适"></textarea>
       <div class="char-counter" id="questionCharCounter">0 / 500 字</div>
       <div class="reading-mode"><label for="readingMode">解读方式</label>
         <select id="readingMode"><option value="legacy">普通解读</option><option value="structured">结构化解读（试用）· 可查看依据</option></select>
@@ -575,9 +576,9 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
           <div class="settings-group-title">DeepSeek 计价单价覆盖（填闲时价）<span class="collapse-hint"></span></div>
           <div class="settings-group-body">
             <div class="price-override-grid">
-              <div><span>缓存命中</span><input type="number" id="priceHit" step="0.001" min="0" placeholder="0.05"></div>
-              <div><span>缓存未命中</span><input type="number" id="priceMiss" step="0.01" min="0" placeholder="1.5"></div>
-              <div><span>输出</span><input type="number" id="priceOutput" step="0.01" min="0" placeholder="4.5"></div>
+              <div><label for="priceHit">缓存命中</label><input type="number" id="priceHit" step="0.001" min="0" placeholder="0.05"></div>
+              <div><label for="priceMiss">缓存未命中</label><input type="number" id="priceMiss" step="0.01" min="0" placeholder="1.5"></div>
+              <div><label for="priceOutput">输出</label><input type="number" id="priceOutput" step="0.01" min="0" placeholder="4.5"></div>
             </div>
             <div class="ai-key-hint">跟着上面选的模型走，不确定就留空用默认值；这里填的是闲时单价，高峰单价会自动按2倍算，不用单独填。</div>
             <div class="ai-row">

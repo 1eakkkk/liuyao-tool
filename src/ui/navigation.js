@@ -20,6 +20,13 @@ function switchTab(tabName){
   });
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id === tabName));
   if(tabName === 'ai') window.updateCurrentCastStatus();
+  // Long readings should not leave the newly selected page scrolled halfway
+  // down. Keep the header when already at the top; return to content otherwise.
+  const main = document.querySelector('main');
+  if (main && window.scrollY > main.offsetTop) {
+    const inset = matchMedia('(max-width: 640px)').matches ? 16 : 88;
+    window.scrollTo({ top: Math.max(0, main.offsetTop - inset), behavior: 'instant' });
+  }
 }
 
 export { tabButtons, switchTab };
