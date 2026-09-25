@@ -25,7 +25,7 @@ function render() {
   for (const t of session.turns) {
     const block = document.createElement('article');
     const question = document.createElement('h3'); question.textContent = `问：${t.question}`;
-    const result = document.createElement('div'); renderOutputResult(result, t.result, t.context);
+    const result = document.createElement('div'); renderOutputResult(result, t.result, t.context, { collapseFallback: true });
     block.append(question, result);
     if (t.usage) {
       const usage = document.createElement('p'); usage.className = 'reading-note';

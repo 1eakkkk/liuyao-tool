@@ -48,7 +48,10 @@ export async function restoreReadingSession(raw) {
   for (const t of saved.turns) {
     if (typeof t.raw !== 'string' || t.raw.length > MAX_RESPONSE_CHARS + 1 || typeof t.completed !== 'boolean') throw Error('保存的回复损坏');
     const prepared = await prepareReadingTurn(session, t.question);
-    appendReadingTurn(session, prepared, t.raw, t.completed, t.source, null);
+    const u = t.usage;
+    const validUsage = u && Number.isFinite(u.seconds) && u.seconds >= 0 &&
+      ((u.total === null && u.cost === null) || (Number.isSafeInteger(u.total) && u.total >= 0 && Number.isFinite(u.cost) && u.cost >= 0));
+    appendReadingTurn(session, prepared, t.raw, t.completed, t.source, validUsage ? { total: u.total, cost: u.cost, seconds: u.seconds } : null);
   }
   const pending = saved.pendingQuestion == null ? null : await prepareReadingTurn(session, saved.pendingQuestion);
   return { session, pending };

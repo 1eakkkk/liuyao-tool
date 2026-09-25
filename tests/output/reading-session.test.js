@@ -36,11 +36,12 @@ test('follow-up binds history and rejects replay even when question repeats', as
 });
 test('restore revalidates raw answers and preserves pending export identity', async () => {
   const s = prepare(), p = await prepareReadingTurn(s, '初次问题');
-  appendReadingTurn(s, p, JSON.stringify(syntheticOutput(p.context)), true, 'external');
+  appendReadingTurn(s, p, JSON.stringify(syntheticOutput(p.context)), true, 'external', { total: 30, cost: 0.01, seconds: 1 });
   const next = await prepareReadingTurn(s, '继续说明依据');
   const restored = await restoreReadingSession(serializeReadingSession(s, next.question));
   expect(restored.pending.context.context_id).toBe(next.context.context_id);
   expect(restored.session.turns[0].result.status).toBe('validated');
+  expect(restored.session.turns[0].usage.cost).toBe(0.01);
   const damaged = JSON.parse(serializeReadingSession(s));
   const answer = JSON.parse(damaged.turns[0].raw); answer.factors[0].evidence_ids = ['fact:made-up'];
   damaged.turns[0].raw = JSON.stringify(answer); damaged.turns[0].result = { status: 'validated' };

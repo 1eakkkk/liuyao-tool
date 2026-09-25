@@ -11,12 +11,16 @@ function evidenceText(entry) {
 }
 
 // All model text uses textContent. Never render model HTML, Markdown or links.
-export function renderOutputResult(container, result, context) {
+export function renderOutputResult(container, result, context, { collapseFallback = false } = {}) {
   const doc = container.ownerDocument;
   const node = (tag, text) => { const el = doc.createElement(tag); if (text !== undefined) el.textContent = text; return el; };
   const fragment = doc.createDocumentFragment();
   if (result.status !== 'validated') {
-    fragment.append(node('p', '回复未完成或未通过格式与引用检查，保留原文供查看。'), node('pre', result.display_text));
+    fragment.append(node('p', '回复未完成或未通过格式与引用检查，保留原文供查看。'));
+    const raw = node('pre', result.display_text);
+    if (collapseFallback) {
+      const details = node('details'); details.append(node('summary', '查看未通过检查的原始回复'), raw); fragment.append(details);
+    } else fragment.append(raw);
   } else {
     validateOutputAnswer(result.answer, context);
     const answer = result.answer;
