@@ -20,7 +20,7 @@ jobs:
           node-version: '24.18.0'
           cache: npm
       - run: npm ci
-      - run: npm test
+      - run: npm test -- --maxWorkers=1
       - run: npm run release:check
       - run: npm run test:browser
       - run: npm run test:browser:structured
