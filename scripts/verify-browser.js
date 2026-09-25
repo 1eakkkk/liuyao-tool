@@ -27,7 +27,9 @@ try {
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));
       await page.route('https://fonts.googleapis.com/**', route => route.abort());
-      await page.clock.install({ time: EPOCH });
+      // Installing starts the clock ticking; leave room before pausing at the target
+      // so a busy browser cannot advance past it between these two calls.
+      await page.clock.install({ time: EPOCH - 60000 });
       await page.clock.pauseAt(EPOCH);
       await page.goto(url);
       await page.locator('#manualLine5').waitFor({ state: 'attached' });
