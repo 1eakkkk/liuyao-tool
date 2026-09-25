@@ -1,5 +1,7 @@
 # 2026-09-24 稳定网站发布记录
 
+后续正式版本：2026-09-25 已发布 [卦盘事实核对](FACT_CHECK_RELEASE.md)，以下保留 2026-09-24 的历史记录。
+
 ## 发布范围
 
 沿用 `gua.1eak.cool` 与 Cloudflare Worker `liuyao`，纯静态前端；默认 Legacy AI 输入，DeepSeek 用户自带 Key 与提示词导出。知识库自动注入不进入发布包。

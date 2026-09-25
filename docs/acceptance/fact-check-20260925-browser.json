@@ -1,0 +1,18 @@
+[
+  {
+    "width": 1280,
+    "explicit_scope": "passed",
+    "cast_replacement": "passed",
+    "evidence": "passed",
+    "api_requests": 0,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "explicit_scope": "passed",
+    "cast_replacement": "passed",
+    "evidence": "passed",
+    "api_requests": 0,
+    "errors": []
+  }
+]

@@ -23,4 +23,14 @@
 
 ## 发布记录
 
-发布前生产版本：`a174bd0d-8d82-4345-965d-e36d7ef78a5f`（已通过 Cloudflare 部署列表核实）。候选上传、完整回归与正式域名核验完成后补记版本和结果。出现发布问题可回滚至该版本。
+已于 2026-09-25 部署到 https://gua.1eak.cool/，Cloudflare Worker `liuyao` 的 100% 流量使用版本 `ba06b288-9ba3-40de-954c-920be2dab721`。源码提交 `f3fba06d53172f3ea92b8fa3ce1667cb27a55233`，已推送 GitHub 分支 `feature/fact-check-release`。
+
+- 自动测试：33 个文件、389/389 通过。
+- 发布边界：53 个模块、5 个发布文件通过检查；实验 AI 输出与知识注入没有进入生产包。
+- Legacy、Structured、Rules、输出原型和事实核对浏览器检查均通过；修复测试时钟在繁忙机器上偶发越过冻结时间的问题后，Legacy 回归重跑通过。
+- 候选地址与正式域名均通过文件 SHA-256、响应头、1280／390 宽度排盘和提示词导出核验。
+- 两个地址的新功能检查均通过：回答范围、依据展示、换卦更新、无页面错误、无 DeepSeek 请求。本轮未新增付费调用。
+
+发布清单和线上结果见 `acceptance/fact-check-20260925-*.json`。清单的 `workingTreeDirty: true` 来自发布前已存在、未纳入本次提交的 `docs/PHASE_8B_2_HOLDOUT.md`；构建源码已提交，线上资产与清单逐一一致。
+
+发布前生产版本：`a174bd0d-8d82-4345-965d-e36d7ef78a5f`（切换前再次核实）。出现发布问题可运行 `wrangler rollback a174bd0d-8d82-4345-965d-e36d7ef78a5f` 回滚。
