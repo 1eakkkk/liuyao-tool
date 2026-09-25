@@ -26,6 +26,7 @@ jobs:
       - run: npm run test:browser:structured
       - run: npm run test:browser:rules
       - run: npm run test:browser:output
+      - run: npm run test:browser:facts
       - uses: actions/upload-artifact@v4
         if: always()
         with:

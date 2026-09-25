@@ -1032,3 +1032,12 @@ table.ref.ref-wide{min-width:480px;}
 @media(max-width:640px){.physics-dialog{width:calc(100vw - 24px);max-height:calc(100dvh - 24px);border-radius:14px}.physics-header{padding:18px 18px 15px}.physics-heading{gap:12px}.physics-dialog h3{font-size:21px;letter-spacing:2px}.physics-eyebrow{font-size:9px;letter-spacing:2px}.physics-seal{font-size:14px}.physics-body{grid-template-columns:1fr}.physics-table-top{padding:14px 18px 0}.physics-scene{max-height:230px;min-height:170px}.physics-table-caption{padding-bottom:16px;font-size:11px}.physics-record{padding:14px 18px 12px;border-left:0;border-top:1px solid #b8944f26}.physics-record h4{font-size:14px}.physics-record-hint{display:none}.physics-count{font-size:20px}.physics-results{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:12px}.physics-results li{grid-template-columns:1fr;gap:9px;text-align:center;border-bottom:0;padding:0;grid-row:1}.physics-results [data-line="0"]{grid-column:1}.physics-results [data-line="1"]{grid-column:2}.physics-results [data-line="2"]{grid-column:3}.physics-results [data-line="3"]{grid-column:4}.physics-results [data-line="4"]{grid-column:5}.physics-results [data-line="5"]{grid-column:6}.physics-line-name{text-align:center}.physics-line-glyph{margin:0 1px;gap:5px;height:3px}.physics-record-foot{margin-top:12px;font-size:9px}.physics-footer{padding:16px 18px 12px;flex-direction:column;align-items:stretch;gap:14px}.physics-status{font-size:15px}.physics-guidance p{font-size:11px}.physics-throw{min-height:46px;justify-content:space-between}.physics-bottom-note{padding:0 18px 14px;font-size:9px}}
 @media(prefers-reduced-motion:reduce){.physics-dialog *{transition:none!important}.physics-dialog::backdrop{backdrop-filter:none}}
 
+
+/* Explicit-scope factual checks; never display model markup. */
+.fact-check-panel{margin-top:16px;padding:14px 16px;border:1px solid var(--line,#d8cbb5);border-radius:10px;line-height:1.8;overflow-wrap:anywhere}
+.fact-check-panel summary{cursor:pointer;font-weight:600}
+.fact-check-panel p{margin:10px 0;font-size:var(--fs-2,14px)}
+.fact-check-panel select{max-width:100%;font:inherit;padding:7px 10px;border:1px solid var(--line,#d8cbb5);border-radius:6px;background:#f2e7d0;color:#2f281d}
+.fact-check-panel .fact-check-answer{font-size:var(--fs-3,16px)}
+.fact-check-panel ul{margin:8px 0;padding-left:22px}
+.fact-check-panel label{display:flex;align-items:center;flex-wrap:wrap;gap:8px}

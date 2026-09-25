@@ -1,5 +1,6 @@
 import { castStore } from '../app/cast-store.js';
 import { renderPlate } from './casting-view.js';
+import { renderFactCheckPanel } from './fact-check-view.js';
 import { buildGuaDiagramHtml } from './plate-markup.js';
 import { showToast } from './dialogs.js';
 import { plateWrap, coinLog, manualLinesWrap } from './dom.js';
@@ -59,6 +60,7 @@ function buildManualLinesUI(){
 // castStore.legacy，跟"生成排盘"那条正式落盘的流程完全分开，纯展示、可以
 // 随便重画，不会误触发摇卦次数配额或者覆盖掉AI解读要用的排盘数据。 ----
 function renderManualPreview(){
+  renderFactCheckPanel(document.getElementById('factCheckPanel'), null);
   const touchedCount = manualLineTouched.filter(Boolean).length;
   const sums = [];
   for(let i = 0; i < 6; i++){

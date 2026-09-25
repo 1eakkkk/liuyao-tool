@@ -1,4 +1,5 @@
 import { castStore } from '../app/cast-store.js';
+import { renderFactCheckPanel } from './fact-check-view.js';
 import { resolveCastCalendar } from './calendar-input.js';
 import { resetConversation } from '../app/conversation.js';
 import { buildGuaDiagramHtml, structLineToDiagram, PLATE_LEGEND_HTML, buildPlateCardsHtml } from './plate-markup.js';
@@ -101,6 +102,7 @@ function renderPlate(lines, source='system'){
   // 应期换算只关心日历上的哪一天，跟起卦具体几点几分无关；overallTrendText是这次新增的
   // "证据速览"摘要，见上方注释，不判定吉凶，只给月令旺衰/回头生克/世应生克的收敛度参考）
   castStore.canonical = canonical;
+  renderFactCheckPanel(document.getElementById('factCheckPanel'), castStore.canonical);
   if(window.updateCurrentCastStatus) window.updateCurrentCastStatus();
   // 同步记一下这次摇卦时输入框里的问题文字和摇卦时间，
   // 供下次摇卦时判断是不是换了新问题、以及空问题的卦能否被后写的问题"认领"
@@ -202,6 +204,7 @@ function renderPlateFromCastData(castData, question, castTime){
   replayFadeIn(plateWrap);
 
   castStore.canonical = normalizeLegacyCast(castData, { question, createdAt: castTime || Date.now(), castId: priorCanonical?.meta.cast_id });
+  renderFactCheckPanel(document.getElementById('factCheckPanel'), castStore.canonical);
   castStore.question = question || '';
   castStore.time = castTime || Date.now();
   if(window.updateCurrentCastStatus) window.updateCurrentCastStatus();
