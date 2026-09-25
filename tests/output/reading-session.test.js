@@ -6,6 +6,17 @@ import { syntheticOutput } from '../../experiments/structured-output/example.js'
 import { readingRequestBody } from '../../src/ai/output/client.js';
 const canonical = JSON.parse(fs.readFileSync(new URL('../../experiments/phase7/fixtures/compat-1.json', import.meta.url)));
 const prepare = () => { const s = createReadingSession(canonical); return s; };
+test('repeated JSON keys including escaped names fail closed and retain raw text', async () => {
+  const s = prepare(), p = await prepareReadingTurn(s, '检查重复字段');
+  const valid = JSON.stringify(syntheticOutput(p.context));
+  for (const field of ['"answer"', '"answ\\u0065r"']) {
+    const raw = valid.slice(0, -1) + `,${field}:"覆盖结论"}`;
+    const t = appendReadingTurn(createReadingSession(canonical), p, raw, true, 'external');
+    expect(t.result.issues[0].code).toBe('duplicate_field'); expect(t.result.display_text).toBe(raw);
+  }
+  const nested = valid.replace('"assessment":"conditional"', '"assessment":"conditional","assessment":"neutral"');
+  expect(appendReadingTurn(createReadingSession(canonical), p, nested, true, 'external').result.status).toBe('fallback');
+});
 test('missing hidden and changed records have direct citations without inventing values', async () => {
   const p = await prepareReadingTurn(prepare(), '核对未记载的伏神');
   for (const [i, line] of p.context.input.C_canonical_cast.lines.entries()) {

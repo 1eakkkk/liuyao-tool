@@ -26,7 +26,7 @@ try {
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
-    await page.goto(base.href);
+    await page.goto(base.href, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await page.locator('#onboardCloseBtn').click();
     await page.locator('[data-tab="caster"]').click();
     await page.locator('[data-mode="manual"]').click();

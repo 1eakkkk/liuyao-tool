@@ -22,6 +22,29 @@ export function validateOutputAnswer(answer, context) {
 }
 
 // Strict JSON only. Never silently extract a fragment, repair fields, or retry a paid call.
+// JSON.parse silently accepts repeated keys. Reject ambiguous objects, including
+// escaped spellings of the same key, before treating any response as validated.
+function hasDuplicateKeys(raw) {
+  const stack = [];
+  for (let i = 0; i < raw.length; i++) {
+    const char = raw[i];
+    if (char === '{') stack.push({ keys: new Set(), keyExpected: true });
+    else if (char === '[') stack.push(null);
+    else if (char === '}' || char === ']') stack.pop();
+    else if (char === ',' && stack.at(-1)) stack.at(-1).keyExpected = true;
+    else if (char === '"') {
+      const start = i;
+      for (i++; i < raw.length; i++) { if (raw[i] === '\\') i++; else if (raw[i] === '"') break; }
+      const frame = stack.at(-1);
+      if (frame?.keyExpected) {
+        const key = JSON.parse(raw.slice(start, i + 1));
+        if (frame.keys.has(key)) return true;
+        frame.keys.add(key); frame.keyExpected = false;
+      }
+    }
+  }
+  return false;
+}
 export function parseOutputAnswer(rawText, context, { completed = false } = {}) {
   if (!isOutputContext(context)) throw new OutputError('untrusted_context');
   if (typeof rawText !== 'string') throw new OutputError('invalid_response_type');
@@ -33,6 +56,7 @@ export function parseOutputAnswer(rawText, context, { completed = false } = {}) 
   if (!completed) return plain('incomplete_response');
   let answer;
   try { answer = JSON.parse(rawText); } catch { return plain('invalid_json'); }
+  if (hasDuplicateKeys(rawText)) return plain('duplicate_field');
   try {
     validateOutputAnswer(answer, context);
     return { status: 'validated', validation: 'structure_and_references_only',
