@@ -1,0 +1,21 @@
+{
+  "url": "https://gua.1eak.cool/",
+  "checkedAt": "2026-09-26T02:46:05.986Z",
+  "assets": "sha256-match",
+  "headers": "passed",
+  "realApi": "not-tested",
+  "results": [
+    {
+      "width": 1280,
+      "manualCast": "passed",
+      "promptExport": "passed",
+      "pageErrors": []
+    },
+    {
+      "width": 390,
+      "manualCast": "passed",
+      "promptExport": "passed",
+      "pageErrors": []
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # 2026-09-24 稳定网站发布记录
 
-后续正式版本：2026-09-25 已发布 [卦盘事实核对](FACT_CHECK_RELEASE.md) 和 [结构化解读可选试用](STRUCTURED_READING_RELEASE.md)，以下保留 2026-09-24 的历史记录。
+后续正式版本：2026-09-25 已发布 [卦盘事实核对](FACT_CHECK_RELEASE.md) 和 [结构化解读可选试用](STRUCTURED_READING_RELEASE.md)，2026-09-26 完成 [界面改版](UI_REFRESH.md) 修正版发布。以下保留 2026-09-24 的历史记录。
 
 ## 发布范围
 

@@ -1,0 +1,42 @@
+[
+  {
+    "width": 320,
+    "forms": "consistent",
+    "keyboard": "passed",
+    "touch_targets": "passed",
+    "overflow": "none",
+    "reduced_motion": true,
+    "platform_analytics_requests": 0,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "forms": "consistent",
+    "keyboard": "passed",
+    "touch_targets": "passed",
+    "overflow": "none",
+    "reduced_motion": true,
+    "platform_analytics_requests": 0,
+    "errors": []
+  },
+  {
+    "width": 768,
+    "forms": "consistent",
+    "keyboard": "passed",
+    "touch_targets": "passed",
+    "overflow": "none",
+    "reduced_motion": true,
+    "platform_analytics_requests": 0,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "forms": "consistent",
+    "keyboard": "passed",
+    "touch_targets": "passed",
+    "overflow": "none",
+    "reduced_motion": true,
+    "platform_analytics_requests": 0,
+    "errors": []
+  }
+]

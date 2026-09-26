@@ -1,0 +1,33 @@
+{
+  "createdAt": "2026-09-25T10:32:36.596Z",
+  "sourceCommit": "f0bc7d216661d0454197a8f7de69cef04905911e",
+  "workingTreeDirty": true,
+  "mode": "stable-legacy-default-optional-structured-reading-no-knowledge",
+  "artifacts": [
+    {
+      "path": "_headers",
+      "bytes": 88,
+      "sha256": "7adfc9d081df47326b338a222a5b2cc931d6dcafd75581391fe36380ca40a1ca"
+    },
+    {
+      "path": "assets/index-AOjQKQY8.js",
+      "bytes": 170037,
+      "sha256": "5e6d339b0c1592b5faf7b6882e8c5d9af192a502106faa48cc1f38be40674f15"
+    },
+    {
+      "path": "assets/index-m6CHLH-9.css",
+      "bytes": 67965,
+      "sha256": "abc0dd07e73a699838207f5f9305413b1102fe6be1b47da5bb0b72cde1927ad2"
+    },
+    {
+      "path": "index.html",
+      "bytes": 51297,
+      "sha256": "7feadd1788e50390a1c0fce5df6ab94723f344f0f0d71eee1922d5b6657fd112"
+    },
+    {
+      "path": "vendor/cannon.js",
+      "bytes": 132230,
+      "sha256": "6968efb8ee824bdcb1b0627ee9cf518ff4b360aba606c135448a53684c73e14d"
+    }
+  ]
+}
