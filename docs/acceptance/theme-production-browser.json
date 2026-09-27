@@ -1,0 +1,28 @@
+[
+  {
+    "engine": "chromium",
+    "systemChanges": "passed",
+    "overrideAndPersistence": "passed",
+    "widths": [
+      320,
+      580,
+      1280
+    ],
+    "structuredSettings": "hidden",
+    "legacySettings": "available",
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "systemChanges": "passed",
+    "overrideAndPersistence": "passed",
+    "widths": [
+      320,
+      580,
+      1280
+    ],
+    "structuredSettings": "hidden",
+    "legacySettings": "available",
+    "errors": []
+  }
+]
