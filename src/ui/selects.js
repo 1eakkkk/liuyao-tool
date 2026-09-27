@@ -9,6 +9,7 @@ function closeMenu(focus = false) {
 }
 function sync() {
   for (const [select, button] of controls) {
+    if (!select.isConnected) {controls.delete(select);continue;}
     button.querySelector('span').textContent = select.selectedOptions[0]?.textContent || '请选择';
     button.disabled = select.disabled;
   }
@@ -54,21 +55,25 @@ function openMenu(select, button) {
     }
   });
 }
-export function initializeSelects() {
-  document.querySelectorAll('select').forEach(select=>{
+export function enhanceSelect(select) {
     if(controls.has(select)||select.multiple)return;
     const shell=document.createElement('div'); shell.className='select-shell'; select.before(shell); shell.append(select);
     const button=document.createElement('button'); button.type='button'; button.className='select-trigger';
     button.id=`${select.id}-trigger`; button.setAttribute('aria-haspopup','listbox'); button.setAttribute('aria-expanded','false');
     button.setAttribute('aria-controls',`${select.id}-menu`);
-    const labels=[...select.labels]; button.setAttribute('aria-label',labels.map(l=>l.textContent.trim()).join(' ')||select.getAttribute('aria-label')||'选择');
+    const labels=[...select.labels];
+    const labelText=labels.map(label=>{const copy=label.cloneNode(true);copy.querySelectorAll('select,button').forEach(n=>n.remove());return copy.textContent.trim();}).join(' ');
+    button.setAttribute('aria-label',labelText||select.getAttribute('aria-label')||'选择');
     button.innerHTML='<span></span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>';
     select.tabIndex=-1; select.setAttribute('aria-hidden','true'); shell.append(button); controls.set(select,button);
-    labels.forEach(label=>label.addEventListener('click',e=>{e.preventDefault();button.focus();}));
+    labels.forEach(label=>label.addEventListener('click',e=>{if(!shell.contains(e.target)){e.preventDefault();button.focus();}}));
     button.addEventListener('click',()=>openMenu(select,button));
     button.addEventListener('keydown',e=>{if(['ArrowDown','ArrowUp'].includes(e.key)){e.preventDefault();openMenu(select,button);}});
     new MutationObserver(sync).observe(select,{attributes:true,childList:true,subtree:true,characterData:true});
-  });
+  sync();
+}
+export function initializeSelects() {
+  document.querySelectorAll('select').forEach(enhanceSelect);
   document.addEventListener('change',sync);
   document.addEventListener('click',()=>queueMicrotask(sync));
   document.addEventListener('pointerdown',e=>{if(active&&!active.menu.contains(e.target)&&!active.button.contains(e.target))closeMenu();});

@@ -5,7 +5,7 @@ export function readingHistoryText(turn) {
   if (turn.result.status !== 'validated') return `未完成或未通过格式与引用检查：\n${turn.result.display_text}`;
   const answer = turn.result.answer;
   const evidence = new Map(turn.context.evidence.map(e => [e.id, e]));
-  const parts = [answer.answer, '以下为 AI 判断；格式与引用检查不代表预测正确。'];
+  const parts = [answer.answer, `判断倾向：${{favorable:'偏有利',unfavorable:'偏不利',mixed:'利弊并存',unclear:'暂不明确'}[answer.direction]}`, '以下为 AI 判断；格式与引用检查不代表预测正确。'];
   const add = (title, text, ids = []) => parts.push(`${title}：${text}\n${ids.map(id => evidenceText(evidence.get(id))).join('\n')}`);
   for (const factor of answer.factors) add('依据', factor.interpretation, factor.evidence_ids);
   for (const candidate of answer.yongshen_candidates) add(`用神候选 ${candidate.relative}`, `${candidate.targets.map(t => `第${t.line}爻（${{primary:'本爻',changed:'变爻',hidden:'伏神'}[t.component]}）`).join('、')}。${candidate.reason}`, candidate.evidence_ids);

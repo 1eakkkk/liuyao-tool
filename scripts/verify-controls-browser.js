@@ -21,6 +21,14 @@ try {
       await page.locator('#castPace-trigger').tap();await page.keyboard.press('Escape');
       assert.equal(await page.locator('.select-menu').count(),0);
       assert.equal(await page.locator('#castPace-trigger').evaluate(n=>n===document.activeElement),true);
+      await page.locator('[data-mode=manual]').tap();
+      for(let i=0;i<6;i++) await page.locator(`#manualLine${i}`).selectOption('8');
+      await page.locator('#manualCastBtn').tap();
+      await page.locator('#factCheckPanel > details > summary').tap();
+      await page.locator('#factCheckTopic-trigger').tap();
+      assert.equal(await page.locator('.select-menu [role=option]:focus').count(),1,'Nested labels must not steal menu focus');
+      await page.keyboard.press('End'); await page.keyboard.press('Enter');
+      assert((await page.locator('#factCheckResult').textContent()).length>10);
       await page.locator('[data-tab=basics]').tap();
       assert.equal(await page.locator('#basics .block-collapse').count(),5);
       assert.equal(await page.locator('#basics').evaluate(n=>getComputedStyle(n).animationName),'page-enter');
@@ -40,7 +48,7 @@ try {
         }
       }
       await page.setViewportSize({width:390,height:844});
-      await page.locator('[data-tab=caster]').tap();await page.locator('#castBtn').tap();
+      await page.locator('[data-tab=caster]').tap();await page.locator('[data-mode=system]').tap();await page.locator('#castBtn').tap();await page.locator('#confirmOkBtn').tap();
       assert.equal(await page.locator('.physics-throw').evaluate(n=>getComputedStyle(n).userSelect),'none');
       assert(!(await page.locator('.physics-dialog').textContent()).includes('拖动'));
       const close=await page.locator('.physics-close').boundingBox(), icon=await page.locator('.physics-close svg').boundingBox();

@@ -1,3 +1,4 @@
+import { enhanceSelect } from './selects.js';
 import { buildFactCheck, FACT_CHECK_TOPICS } from '../core/fact-check.js';
 
 export function renderFactCheckPanel(container, canonical) {
@@ -23,5 +24,5 @@ export function renderFactCheckPanel(container, canonical) {
       details.append(list); result.append(details, node('p', answer.scope));
     } catch (error) { result.append(node('p', `暂不能核对：${error.message}`)); }
   };
-  select.addEventListener('change', show); outer.append(result); container.append(outer); show();
+  select.addEventListener('change', show); outer.append(result); container.append(outer); enhanceSelect(select); show();
 }
