@@ -1,0 +1,26 @@
+[
+  {
+    "engine": "chromium",
+    "menus": "touch-and-keyboard",
+    "sizes": [
+      320,
+      580,
+      1280
+    ],
+    "animation": "respects-reduced-motion",
+    "physical": "single-tap-real-simulation",
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "menus": "touch-and-keyboard",
+    "sizes": [
+      320,
+      580,
+      1280
+    ],
+    "animation": "respects-reduced-motion",
+    "physical": "single-tap-real-simulation",
+    "errors": []
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "engine": "chromium",
+    "restoredWidths": [
+      320,
+      390,
+      580,
+      768,
+      1024,
+      1280
+    ],
+    "cancel": "preserved",
+    "newCast": "question-cleared",
+    "physicalSimulation": "real",
+    "castMs": 31143,
+    "exportStyle": "deep",
+    "paidRequests": 0,
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "restoredWidths": [
+      320,
+      390,
+      580,
+      768,
+      1024,
+      1280
+    ],
+    "cancel": "preserved",
+    "newCast": "question-cleared",
+    "physicalSimulation": "real",
+    "castMs": 29723,
+    "exportStyle": "deep",
+    "paidRequests": 0,
+    "errors": []
+  }
+]
