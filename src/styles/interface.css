@@ -394,4 +394,8 @@ body [hidden] { display:none !important; }
 :root[data-theme=dark] body .guide-list li { background:var(--ui-surface); }
 :root[data-theme=dark] body .onboard-fade { background:linear-gradient(transparent,var(--ui-surface)); }
 :root[data-theme=dark] body .physics-dialog { scrollbar-color:var(--ui-muted) var(--ui-surface); }
+:root[data-theme=dark] body .physics-results :is(.physics-line-name,.physics-line-number) { color:var(--ui-muted); }
+:root[data-theme=dark] body .physics-results .is-done :is(.physics-line-name,.physics-line-number) { color:var(--ui-text); }
+:root[data-theme=dark] body .physics-results .is-current :is(.physics-line-name,.physics-line-number) { color:var(--ui-accent); }
+:root[data-theme=dark] body .physics-results .is-moving .physics-line-name { color:var(--ui-danger); }
 :root[data-theme=dark] ::selection { background:#426759; color:#fff; }
