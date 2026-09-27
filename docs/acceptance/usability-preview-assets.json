@@ -1,0 +1,21 @@
+{
+  "url": "https://24f2ccf3-liuyao.zhou17749984708.workers.dev/",
+  "checkedAt": "2026-09-27T00:45:49.522Z",
+  "assets": "sha256-match",
+  "headers": "passed",
+  "realApi": "not-tested",
+  "results": [
+    {
+      "width": 1280,
+      "manualCast": "passed",
+      "promptExport": "passed",
+      "pageErrors": []
+    },
+    {
+      "width": 390,
+      "manualCast": "passed",
+      "promptExport": "passed",
+      "pageErrors": []
+    }
+  ]
+}
