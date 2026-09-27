@@ -20,6 +20,10 @@
   提 PR 时请维持这一约束，勿引入打包工具或拆分文件。
 ================================================================== -->
 <head>
+<script>
+// Apply before paint to avoid a light flash when restoring dark mode.
+(()=>{let choice="system";try{const saved=localStorage.getItem("liuyao_theme");if(["light","dark","system"].includes(saved))choice=saved;}catch{}document.documentElement.dataset.themeChoice=choice;document.documentElement.dataset.theme=choice==="system"?(window.matchMedia?.("(prefers-color-scheme: dark)")?.matches?"dark":"light"):choice;})();
+</script>
 <meta charset="UTF-8">
 <title>六爻入门 · 纳甲排盘与断卦速查</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23181611'/%3E%3Cpath d='M16,1 A7.5,7.5 0 0,1 16,16 A7.5,7.5 0 0,0 16,31 A15,15 0 0,0 16,1 Z' fill='%23ece4d0'/%3E%3Ccircle cx='16' cy='8.5' r='2.2' fill='%23181611'/%3E%3Ccircle cx='16' cy='23.5' r='2.2' fill='%23ece4d0'/%3E%3Ccircle cx='16' cy='16' r='15' fill='none' stroke='%23a8391f' stroke-width='1.2'/%3E%3C/svg%3E">
@@ -96,6 +100,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
   <div class="eyebrow">火珠林 · 京房纳甲</div>
   <h1>六爻入门</h1>
   <p class="sub">从阴阳、五行、八卦讲起，到起卦排盘、自动纳甲配六神 —— 一个网页把六爻的骨架搭起来。</p>
+  <div class="theme-switch" role="group" aria-label="界面主题"><button type="button" data-theme-choice-button="light" aria-pressed="false">日间</button><button type="button" data-theme-choice-button="dark" aria-pressed="false">夜间</button><button type="button" data-theme-choice-button="system" aria-pressed="true">跟随系统</button></div>
   <div class="bagua-ring" aria-hidden="true">
     <svg viewBox="0 0 200 200">
       <circle cx="100" cy="100" r="96" fill="none" stroke="var(--border)" stroke-width="1"/>
@@ -426,7 +431,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
       <div class="char-counter" id="questionCharCounter">0 / 500 字</div>
       <div class="reading-mode"><label for="readingMode">解读方式</label>
         <select id="readingMode"><option value="legacy">普通解读</option><option value="structured">结构化解读（试用）· 可查看依据</option></select>
-        <p id="readingModeNote" hidden>API 与提示词均支持。篇幅设置用于结论正文，依据可展开；纯事实核对保持简短。人设与推理档位不适用，API 使用所选模型的非思考模式。设置在新解读时生效，追问沿用本次设置。</p>
+        <p id="readingModeNote" hidden>API 与提示词均支持。篇幅设置用于结论正文，依据可展开；纯事实核对保持简短。API 使用所选模型的非思考模式。设置在新解读时生效，追问沿用本次设置。</p>
       </div>
       <div class="ai-row">
         <button class="ai-btn" id="interpretBtn">AI 解读</button>
@@ -503,7 +508,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
       </div>
 
       <div class="ai-settings" id="aiSettings">
-        <p id="structuredSettingsNote" class="note" hidden>结构化模式支持回复篇幅与自定义语气；人设、推理档位不生效。字数为生成目标，不保证精确达标，也不会为了凑数补造内容。</p>
+        <p id="structuredSettingsNote" class="note" hidden>结构化模式支持回复篇幅与自定义语气；字数为生成目标，不保证精确达标，也不会为了凑数补造内容。</p>
 
         <div class="settings-group">
           <div class="settings-group-title">DeepSeek API Key</div>

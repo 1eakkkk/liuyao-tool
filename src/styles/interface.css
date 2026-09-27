@@ -359,3 +359,39 @@ body .plate > .placeholder:not(:only-child) { min-height:0; border:0; background
 body .gua-name-row > div { min-width:0; max-width:100%; overflow-wrap:anywhere; }
 @media(max-width:900px){body .plate table {display:none} body .plate-cards {display:flex} }
 @media(max-width:640px){body .hero {padding:14px 20px} body .hero h1 {font-size:22px} body main {padding-top:16px} }
+
+/* Theme is applied before paint and shared by every product surface. */
+body .hero { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+body .theme-switch { display:flex; gap:4px; padding:4px; border:1px solid var(--ui-border); border-radius:14px; background:var(--ui-subtle); }
+body .theme-switch button { min-height:44px; padding:8px 14px; border:1px solid transparent; border-radius:10px; background:transparent; color:var(--ui-muted); font:inherit; font-size:14px; cursor:pointer; }
+body .theme-switch button[aria-pressed=true] { background:var(--ui-surface); color:var(--ui-accent); border-color:var(--ui-border); font-weight:600; }
+body .theme-switch button:hover { color:var(--ui-text); }
+body [hidden] { display:none !important; }
+@media(max-width:520px){body .theme-switch {width:100%;}body .theme-switch button {flex:1;padding-inline:8px;} }
+:root[data-theme=dark] {
+  color-scheme:dark;
+  --ui-bg:#11191f; --ui-surface:#1b262e; --ui-subtle:#25333d;
+  --ui-text:#e3edf2; --ui-muted:#afc0ca; --ui-border:#3b4e5b;
+  --ui-accent:#87d7b8; --ui-accent-hover:#a4e6cc; --ui-accent-soft:#263f38;
+  --ui-danger:#ffab9e; --ui-shadow:0 5px 20px #00000012;
+  --border-soft:#657e8b; --border-faint:#354651; --text-mid:#c2d1da;
+  --brass-dim:#9fc6b7; --jade:#8ed7b6; --vermilion-bright:#ef9a86; --vermilion-text:#ffb5a4;
+}
+:root[data-theme=dark] body :is(.hero,.tabs,.gua-card,.plate-card,.history-item,.onboard-card,.confirm-card,.onboard-actions,.physics-dialog,table.ref,.key-status.no-key,.toast) { background:var(--ui-surface); color:var(--ui-text); border-color:var(--ui-border); }
+:root[data-theme=dark] body :is(.ai-settings,.history-panel,.ai-result,.note,.plate > .placeholder:only-child,.fact-check-panel,section.block-collapse,table.ref.ref-cards tr) { background:var(--ui-surface); border-color:var(--ui-border); color:var(--ui-text); }
+:root[data-theme=dark] body :is(.current-cast-status,#readingStatus,.onboard-step .num,.physics-seal,.mode-btn.active,.tab-btn.active) { background:var(--ui-accent-soft); color:var(--ui-accent); border-color:var(--ui-border); }
+:root[data-theme=dark] body :is(.ai-btn,.cast-btn,.physics-throw) { color:#12291f; }
+:root[data-theme=dark] body :is(.ai-btn.ghost,.cast-btn.outline,.physics-close,.help-fab,.history-item-del) { color:var(--ui-text); }
+:root[data-theme=dark] body :is(.ai-btn.stop,.toast.error,.plate-card.moving) { background:#3e2b2a; color:var(--ui-danger); border-color:#7d5149; }
+:root[data-theme=dark] body .toast.success { background:var(--ui-accent-soft); color:var(--ui-text); }
+:root[data-theme=dark] body :is(input,textarea)::placeholder { color:var(--ui-muted); }
+:root[data-theme=dark] body :is(input,textarea)[readonly] { color:var(--ui-text); }
+:root[data-theme=dark] body select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%23afc0ca' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E"); }
+:root[data-theme=dark] body :is(input[type=checkbox],input[type=radio]):checked { background-color:#398567; border-color:var(--ui-accent); }
+:root[data-theme=dark] body :is(button,input,select,textarea,summary,a):focus-visible { outline-color:var(--ui-accent); }
+:root[data-theme=dark] body .disclosure-trigger:hover,
+:root[data-theme=dark] body table.ref tr:hover td { background:var(--ui-subtle); color:var(--ui-text); }
+:root[data-theme=dark] body .guide-list li { background:var(--ui-surface); }
+:root[data-theme=dark] body .onboard-fade { background:linear-gradient(transparent,var(--ui-surface)); }
+:root[data-theme=dark] body .physics-dialog { scrollbar-color:var(--ui-muted) var(--ui-surface); }
+:root[data-theme=dark] ::selection { background:#426759; color:#fff; }

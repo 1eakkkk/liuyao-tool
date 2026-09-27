@@ -22,6 +22,7 @@
     "test:browser:reading": "node scripts/verify-reading-browser.js",
     "test:browser:interface": "node scripts/verify-interface-browser.js",
     "test:browser:usability": "node scripts/verify-usability-browser.js",
+    "test:browser:theme": "node scripts/verify-theme-browser.js",
     "ab:prepare:rules": "node scripts/phase5-ab.js --prepare"
   },
   "devDependencies": {
