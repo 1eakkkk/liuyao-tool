@@ -204,7 +204,7 @@ castBtn.addEventListener('click', async ()=>{
   followUpBtn.disabled = true;
   clearResultBtn.disabled = true;
   try{
-    await performCast();
+    await performCast({ clearQuestionOnCommit: !!castStore.legacy });
   }catch(e){
     showToast(e.message, 'error');
   }finally{
@@ -259,9 +259,8 @@ manualCastBtn.addEventListener('click', async ()=>{
   performManualCast(false);
 });
 
-if(!safeGetItem(ONBOARD_KEY)){
-  openOnboard();
-}
+// Start with the tool; help remains available without blocking first use.
+switchTab('caster');
 onboardCloseBtn.addEventListener('click', ()=>{
   safeSetItem(ONBOARD_KEY, '1');
   closeOnboard();

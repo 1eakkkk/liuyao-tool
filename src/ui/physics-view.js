@@ -5,7 +5,11 @@ import { logCastEvent } from '../storage/cast-log.js';
 import { createCoinWorld, advanceCoinWorld } from '../core/physics.js';
 
 
-function commitPhysicsCast(lines){
+function commitPhysicsCast(lines, { clearQuestionOnCommit = false } = {}){
+  if (clearQuestionOnCommit) {
+    const question = document.getElementById('questionInput');
+    question.value = ''; question.dispatchEvent(new Event('input'));
+  }
   renderPlate(lines,'physics');logCastEvent();
   coinLog.textContent=lines.map((l,i)=>`${['初','二','三','四','五','上'][i]}爻 ${l.coins.join('')} · ${l.sum}`).join(' ｜ ');
   return castStore.legacy;
@@ -29,7 +33,8 @@ async function performBackgroundCast(input, onProgress){
       const sim=createCoinWorld({...input,duration:input.duration+attempt*.413},round);
       let result=null;
       while(!result){
-        for(let i=0;i<240&&!result;i++) result=advanceCoinWorld(sim);
+        const deadline = performance.now() + 8;
+        do { result=advanceCoinWorld(sim); } while (!result && performance.now() < deadline);
         await new Promise(resolve=>setTimeout(resolve,0));
       }
       line=result.line||null;
@@ -59,7 +64,7 @@ function physicsCoinSvg(id){
 }
 
 
-function performCast(){
+function performCast(options = {}){
   return new Promise((resolve,reject)=>{
     const labels=['初爻','二爻','三爻','四爻','五爻','上爻'];
     const auto=document.getElementById('castPace').value==='all';
@@ -82,7 +87,7 @@ function performCast(){
     const coinNodes=[...dialog.querySelectorAll('.physics-coin')],shadows=[...dialog.querySelectorAll('[data-shadow]')];
     const previousFocus=document.activeElement,previousOverflow=document.body.style.overflow;
     let lines=[],sim=null,frame=0,nextTimer=0,running=false,closed=false,complete=false,previousTime=0,accumulator=0;
-    let input={vx:0,vy:0,distance:0,duration:0},pointer=null,pressStart=0;
+    let input={vx:0,vy:0,distance:0,duration:0},pointer=null,pressStart=0,retries=0;
     function cleanup(){if(closed)return;closed=true;cancelAnimationFrame(frame);clearTimeout(nextTimer);dialog.close();dialog.remove();document.body.style.overflow=previousOverflow;previousFocus?.focus({preventScroll:true});}
     function cancel(){cleanup();if(!complete)reject(new Error('已取消本卦，未扣除摇卦次数'));}
     dialog.addEventListener('cancel',e=>{e.preventDefault();cancel();});dialog.querySelector('.physics-close').onclick=cancel;
@@ -118,17 +123,27 @@ function performCast(){
       if(closed||running||complete)return;
       try{sim=createCoinWorld(input,lines.length);accumulator=0;previousTime=0;running=true;launch.disabled=true;dialog.classList.add('is-rolling');coinNodes.forEach(n=>n.removeAttribute('transform'));status.textContent=`${labels[lines.length]} · 静候铜钱落定`;caption.textContent='铜钱翻转，卦象渐成';launch.querySelector('span').textContent='铜钱落定中';frame=requestAnimationFrame(tick);}catch(e){cleanup();reject(e);}
     }
-    function retry(){running=false;dialog.classList.remove('is-rolling');status.textContent='铜钱未平稳落定';caption.textContent='已成之爻保留，本爻请再投一次';launch.disabled=false;launch.querySelector('span').textContent='重投'+labels[lines.length];}
+    function retry(){
+      running=false;dialog.classList.remove('is-rolling');
+      if (retries < 3) {
+        retries++; input = {...input, phase: (input.phase || 0) + .731, duration: input.duration + .413};
+        status.textContent=`${labels[lines.length]}未平放，自动重投（${retries}/3）`;
+        caption.textContent='保留已完成的爻，不计为另起一卦';
+        nextTimer=setTimeout(begin,350); return;
+      }
+      status.textContent='铜钱未平稳落定';caption.textContent='已成之爻保留，本爻请再投一次';launch.disabled=false;launch.querySelector('span').textContent='重投'+labels[lines.length];
+    }
     function tick(time){
       if(closed)return;
       try{
         accumulator+=previousTime?Math.min(.05,(time-previousTime)/1000):1/60;previousTime=time;
-        while(accumulator>=1/120&&running){
+        const frameDeadline=performance.now()+8;
+        while(accumulator>=1/120&&running&&performance.now()<frameDeadline){
           const result=advanceCoinWorld(sim);accumulator-=1/120;
           if(result?.line){
-            lines.push(result.line);running=false;record(result.line);dialog.classList.remove('is-rolling');draw();
+            lines.push(result.line);retries=0;running=false;record(result.line);dialog.classList.remove('is-rolling');draw();
             if(lines.length===6){
-              const data=commitPhysicsCast(lines);complete=true;status.textContent='六爻已成，卦象已定';caption.textContent='一念有始，六爻有应';dialog.querySelector('#physics-description').textContent='查看本卦的纳甲、世应与动爻。';launch.disabled=false;launch.querySelector('span').textContent='查看排盘';dialog.classList.add('is-complete');launch.focus({preventScroll:true});resolve(data);return;
+              const data=commitPhysicsCast(lines,options);complete=true;status.textContent='六爻已成，卦象已定';caption.textContent='一念有始，六爻有应';dialog.querySelector('#physics-description').textContent='查看本卦的纳甲、世应与动爻。';launch.disabled=false;launch.querySelector('span').textContent='查看排盘';dialog.classList.add('is-complete');launch.focus({preventScroll:true});resolve(data);return;
             }
             status.textContent=`${labels[lines.length-1]}已成 · ${auto?'即将投掷':'下一爻为'}${labels[lines.length]}`;caption.textContent='铜钱已落定';launch.disabled=false;launch.querySelector('span').textContent='投掷'+labels[lines.length];
             if(auto){launch.disabled=true;nextTimer=setTimeout(begin,550);return;}
@@ -137,7 +152,7 @@ function performCast(){
         draw();if(running)frame=requestAnimationFrame(tick);
       }catch(e){cleanup();reject(e);}
     }
-    launch.onclick=(event)=>{if(complete){cleanup();return;}input.duration=Math.min(10,Math.max(.001,(performance.now()-(pressStart||performance.now()))/1000));input.phase=(event.timeStamp/1000)%(Math.PI*2);pressStart=0;begin();};
+    launch.onclick=(event)=>{if(complete){cleanup();return;}retries=0;input.duration=Math.min(10,Math.max(.001,(performance.now()-(pressStart||performance.now()))/1000));input.phase=(event.timeStamp/1000)%(Math.PI*2);pressStart=0;begin();};
     document.body.style.overflow='hidden';dialog.showModal();draw();launch.focus({preventScroll:true});
   });
 }

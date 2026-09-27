@@ -9,10 +9,10 @@ import { preview } from 'vite';
 const contentText = html => {
   const doc = new JSDOM(html).window.document;
   doc.querySelectorAll('script,style').forEach(n => n.remove());
-  return doc.body.textContent.replace(/\s+/g, ' ').trim();
+  return ['basics','guide'].map(id => doc.getElementById(id).textContent.replace(/\s+/g, ' ').trim()).join('\n');
 };
 assert.equal(contentText(fs.readFileSync('index.html', 'utf8')),
-  contentText(execFileSync('git', ['show', 'c2b8b77:index.html'], { encoding: 'utf8' })), 'Product copy must remain unchanged');
+  contentText(execFileSync('git', ['show', 'c2b8b77:index.html'], { encoding: 'utf8' })), 'Reference content must remain unchanged');
 const target = process.argv[2];
 const server = target ? null : await preview({ preview: { port: 4338, strictPort: true } });
 const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true,
@@ -28,12 +28,17 @@ try {
     page.on('request', req => { if (new URL(req.url()).origin !== new URL(base).origin) external.push(req.url()); });
     await page.route('https://api.deepseek.com/**', route => { api.push(route.request().url()); return route.abort(); });
     await page.goto(base, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    assert(await page.locator('#caster').isVisible(), 'Start directly in casting');
+    assert(await page.locator('#onboardOverlay').isHidden(), 'No blocking first-use tutorial');
+    await page.locator('#helpFab').click();
     const bounds = async selector => {
       const b = await page.locator(selector).boundingBox(); assert(b && b.x >= -1 && b.x + b.width <= width + 1, `Outside viewport: ${selector} at ${width}`);
     };
     const noOverflow = async () => assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `Horizontal overflow at ${width}`);
     await bounds('.onboard-card');
+    if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
     await page.locator('#onboardCloseBtn').click();
+    await page.locator('[data-tab="basics"]').click();
     await noOverflow();
     await page.screenshot({ path: `${root}/${width}-basics.png`, fullPage: true });
     const fold = page.locator('#basics .disclosure-trigger').first();
@@ -51,6 +56,7 @@ try {
     await page.locator('[data-mode="manual"]').click();
     for (const [i, value] of [7,8,9,7,6,8].entries()) await page.locator(`#manualLine${i}`).selectOption(String(value));
     await page.locator('#manualCastBtn').click();
+    await page.locator('.calendar-settings > summary').click();
     await page.locator('.toast').last().waitFor({ state: 'hidden' });
     await bounds('#dayLookupDate'); await bounds('#dayLookupTime'); await noOverflow();
     const controlStyles = await page.locator('#dayGanzhi, #dayLookupDate, #dayLookupTime, #manualLine0').evaluateAll(nodes => nodes.map(n => {

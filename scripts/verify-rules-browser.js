@@ -23,6 +23,7 @@ try {
       await route.fulfill({ status: 200, contentType: 'text/event-stream', body: chunks.map(c => `data: ${JSON.stringify(c)}\n\n`).join('') + 'data: [DONE]\n\n' });
     });
     await page.goto(`${url}?debug=1&ai_input=structured&ai_rules=off`);
+    if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
     await page.locator('#onboardCloseBtn').click();
     await page.locator('[data-tab="ai"]').click();
     await page.locator('#questionInput').fill('固定 Phase 5 对照问题');

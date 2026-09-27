@@ -15,7 +15,8 @@ try {
     const page = await context.newPage(), errors = [], requests = [];
     page.on('pageerror', e => errors.push(e.message));
     await page.route('https://api.deepseek.com/**', route => { requests.push(route.request().url()); return route.abort(); });
-    await page.goto(url); await page.locator('#onboardCloseBtn').click();
+    await page.goto(url); if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
+    await page.locator('#onboardCloseBtn').click();
     await page.locator('[data-tab="caster"]').click(); await page.locator('[data-mode="manual"]').click();
     assert(await page.locator('#factCheckPanel').isHidden());
     for (let i = 0; i < 6; i++) await page.locator(`#manualLine${i}`).selectOption('8');

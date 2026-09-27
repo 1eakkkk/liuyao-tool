@@ -27,6 +27,7 @@ try {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(base.href, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
     await page.locator('#onboardCloseBtn').click();
     await page.locator('[data-tab="caster"]').click();
     await page.locator('[data-mode="manual"]').click();

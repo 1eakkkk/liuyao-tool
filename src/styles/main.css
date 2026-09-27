@@ -581,7 +581,7 @@ table.ref.ref-wide{min-width:480px;}
    自动恢复默认布局，不影响表格本身的横向滚动。 */
 /* 手动填入的实时预览（.manual-preview-partial/.manual-preview-complete）跟.placeholder一样，
    摇卦前都会作为.plate唯一的子元素出现，蹭同一条居中规则，不用再单独写一遍。 */
-.plate:has(> .placeholder),
+.plate:has(> .placeholder:only-child),
 .plate:has(> .manual-preview-partial),
 .plate:has(> .manual-preview-complete){display:flex;align-items:center;justify-content:center;min-height:220px;}
 /* ---------- "摇卦中…"加载态：铜钱翻转小动效 ----------

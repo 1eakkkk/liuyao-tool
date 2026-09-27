@@ -73,3 +73,18 @@ test('versions, question bounds and turn bounds fail before paid requests', asyn
   const saved = JSON.parse(serializeReadingSession(s)); saved.version = 'future';
   await expect(restoreReadingSession(JSON.stringify(saved))).rejects.toThrow('版本');
 });
+
+
+test('structured length preferences reach API/export and survive reload and follow-up', async () => {
+  const session = createReadingSession(canonical, {style:'deep', custom:''});
+  const prepared = await prepareReadingTurn(session, '如何安排读书计划？');
+  expect(readingExport(prepared)).toContain('700–800 字');
+  expect(readingRequestBody(prepared).messages).toEqual(prepared.messages);
+  expect(prepared.messages[0].content).toContain('纯事实核对仍保持一至三句');
+  const saved = await restoreReadingSession(serializeReadingSession(session, prepared.question));
+  expect(saved.pending.messages).toEqual(prepared.messages);
+  expect((await prepareReadingTurn(saved.session, '如何落实？')).messages[0].content).toContain('700–800 字');
+  const brief = await prepareReadingTurn(createReadingSession(canonical,{style:'brief',custom:''}), prepared.question);
+  expect(brief.context.context_id).not.toBe(prepared.context.context_id);
+  expect(brief.messages[0].content).toContain('300–400 字');
+});

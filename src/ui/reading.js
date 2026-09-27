@@ -8,6 +8,7 @@ import { clearActiveConversationStorage } from '../storage/conversation.js';
 import { copyTextToClipboard } from './helpers.js';
 import { isLifespanQuestion } from '../app/question.js';
 import { state } from '../app/state.js';
+import { loadStyleChoice, loadCustomStyle } from '../storage/settings.js';
 
 const KEY = 'liuyao_structured_reading_v1';
 let session = null, pending = null, busy = false, epoch = 0;
@@ -27,6 +28,13 @@ function render() {
     const question = document.createElement('h3'); question.textContent = `问：${t.question}`;
     const result = document.createElement('div'); renderOutputResult(result, t.result, t.context, { collapseFallback: true });
     block.append(question, result);
+    if (t.result.answer?.answer && session.preferences) {
+      const size = document.createElement('p'); size.className = 'reading-note';
+      const count = [...t.result.answer.answer.replace(/\s/g,'')].length;
+      const goal = {brief:'300–400 字',deep:'700–800 字',custom:'自定义篇幅'}[session.preferences.style];
+      size.textContent = `正文约 ${count} 字 · 本次目标：${goal}（纯事实核对可简短；不含折叠依据）`;
+      block.append(size);
+    }
     if (t.usage) {
       const usage = document.createElement('p'); usage.className = 'reading-note';
       usage.textContent = t.usage.total == null ? '用量未收全，费用未知；以 DeepSeek 账单为准。' : `本轮 ${t.usage.total} tokens · 约 ¥${t.usage.cost.toFixed(4)} · 以 DeepSeek 账单为准`;
@@ -51,7 +59,7 @@ async function exclusive(work) {
   const controls = [...document.querySelectorAll('button,input,select,textarea')].filter(n => n.id !== 'stopGenBtn');
   const previous = controls.map(n => n.disabled); controls.forEach(n => { n.disabled = true; });
   try { await work(); } catch (e) { el('readingPanel').hidden = false; status(e.message || '操作失败，请稍后重试。'); }
-  finally { controls.forEach((n, i) => { n.disabled = previous[i]; }); busy = false; }
+  finally { controls.forEach((n, i) => { n.disabled = previous[i]; }); busy = false; el('readingMode').dispatchEvent(new Event('change')); }
 }
 function checkQuestion(question) {
   if (isLifespanQuestion(question)) throw Error('这里不解读生死寿数问题；如有真实健康担忧，请寻求专业帮助。');
@@ -80,7 +88,7 @@ export async function startReading(canonical, kind) {
     clearActiveConversationStorage(); state.currentConversation = null;
     for (const id of ['copyRow', 'followUpBox', 'promptOutputBox', 'promptExtraTools']) el(id).style.display = 'none';
     el('aiResult').textContent = ''; el('aiMeta').textContent = '';
-    session = createReadingSession(canonical);
+    session = createReadingSession(canonical, {style: loadStyleChoice(), custom: loadCustomStyle().slice(0,2000)});
     const prepared = await prepareReadingTurn(session, canonical.question.text);
     render();
     if (kind === 'api') await request(prepared);
@@ -89,8 +97,14 @@ export async function startReading(canonical, kind) {
   });
 }
 export function initializeReading() {
+  const syncSettings = () => {
+    const structured = readingSelected();
+    for (const id of ['roleSelect','customRoleInput','effortSelect']) el(id).disabled = structured;
+    el('structuredSettingsNote').hidden = !structured;
+  };
   document.addEventListener('reading:reset', clearReading);
   el('readingMode').addEventListener('change', () => {
+    syncSettings();
     el('readingModeNote').hidden = !readingSelected();
     el('readingPanel').hidden = !readingSelected() || !session;
   });
@@ -132,7 +146,9 @@ export function initializeReading() {
       el('questionInput').value = session.canonical.question.text;
       el('questionInput').dispatchEvent(new Event('input'));
       el('readingMode').value = 'structured'; el('readingModeNote').hidden = false;
+      syncSettings();
       render(); status('已恢复上次结构化解读，并重新核对格式与引用。');
     });
   }
+  syncSettings();
 }

@@ -23,3 +23,16 @@ test('six physical rounds preserve the original settling result and step count',
     }
   } finally { vi.unstubAllGlobals(); original.window.close(); }
 }, 30000);
+
+
+test('a reproducible edge-standing coin is rejected and a fresh physical throw can settle', () => {
+  const original = baseline(); vi.stubGlobal('CANNON', original.window.CANNON);
+  const settle = input => { const sim=createCoinWorld(input,1); let result; do { result=advanceCoinWorld(sim); } while(!result); return result; };
+  try {
+    const input={phase:7*.47,duration:.05,distance:0,vx:0,vy:0};
+    expect(settle(input)).toEqual({retry:true});
+    const next=settle({...input,phase:input.phase+.731,duration:input.duration+.413});
+    expect(next.line.coins).toHaveLength(3);
+    expect(next.line.sum).toBe(next.line.coins.reduce((sum,face)=>sum+(face==='字'?2:3),0));
+  } finally { vi.unstubAllGlobals(); original.window.close(); }
+},30000);

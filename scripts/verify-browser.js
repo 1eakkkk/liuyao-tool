@@ -44,8 +44,10 @@ try {
         await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo(0, 0); });
         outputs[name][tab] = await page.screenshot({ path: `${out}/${width}-${tab}.png`, fullPage: true });
       };
+      if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
       await capture('onboard');
-      await page.locator('#onboardCloseBtn').click();
+      if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
+    await page.locator('#onboardCloseBtn').click();
       for (const tab of ['basics', 'caster', 'guide', 'ai']) {
         await page.locator(`[data-tab="${tab}"]`).click();
         if (tab === 'caster') {

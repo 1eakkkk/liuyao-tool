@@ -31,14 +31,17 @@ try {
       await route.fulfill({ status: 200, contentType: 'text/event-stream', body: stream });
     });
     await page.goto(target || server.resolvedUrls.local[0], { waitUntil: 'domcontentloaded', timeout: 60000 });
+    if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
     await page.locator('#onboardCloseBtn').click();
     await page.locator('[data-tab="caster"]').click(); await page.locator('[data-mode="manual"]').click();
     for (let i = 0; i < 6; i++) await page.locator(`#manualLine${i}`).selectOption(i === 0 ? '6' : '8');
     await page.locator('#manualCastBtn').click();
     await page.locator('[data-tab="ai"]').click();
     await page.locator('#questionInput').fill('如何安排读书计划？');
+    await page.evaluate(() => localStorage.setItem('liuyao_reply_style','deep'));
     await page.locator('#readingMode').selectOption('structured');
     await page.locator('#promptBtn').click();
+    assert((await page.locator('#readingPrompt').inputValue()).includes('700–800 字'));
     const extract = text => JSON.parse(text.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
     let input = extract(await page.locator('#readingPrompt').inputValue());
     assert.equal(requests.length, 0);
@@ -64,6 +67,7 @@ try {
     await page.locator('#readingFollow').fill('请给一项建议'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 3);
     assert.equal(requests.length, 1); assert.equal(JSON.parse(requests[0].messages[1].content).conversation.history.length, 2);
+    assert(requests[0].messages[0].content.includes('700–800 字'));
     behavior = 'invalid'; await page.locator('#readingFollow').fill('再次检查依据'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 4);
     assert((await page.locator('#readingStatus').textContent()).includes('未通过'));

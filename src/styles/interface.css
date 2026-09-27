@@ -159,7 +159,7 @@ body .manual-line-row { gap: 12px; }
 body .manual-line-row label { width: 34px; }
 body .coin-log { background: var(--ui-subtle); border: 0; border-radius: 12px; padding: 14px; }
 body .plate { border-radius: 12px; }
-body .plate .placeholder { display: grid; place-content: center; min-height: 260px; padding: 28px; border: 1px dashed #cbd6dd; border-radius: 16px; background: #f9fbfc; }
+body .plate > .placeholder:only-child { display: grid; place-content: center; min-height: 260px; padding: 28px; border: 1px dashed #cbd6dd; border-radius: 16px; background: #f9fbfc; }
 body .plate th { background: var(--ui-subtle); color: var(--ui-muted); font-size: 13px; padding: 12px 6px; }
 body .plate td { padding: 13px 6px; border-color: var(--border-faint); }
 body .plate-card { background: white; border: 1px solid var(--ui-border); padding: 14px; border-radius: 12px; }
@@ -345,3 +345,17 @@ body .toast.success { background: #f0faf4; border-color: #a7cbbc; }
   :root body :is(button,input,select,textarea) { border: 1px solid ButtonText; }
   :root body input:is([type=checkbox],[type=radio]) { appearance: auto; }
 }
+
+/* Keep the first screen focused on casting and interpretation. */
+body .hero { padding-block: 16px; grid-template-columns: 1fr; }
+body .hero :is(.eyebrow,.sub,.bagua-ring) { display:none; }
+body .hero h1 { font-size:24px; margin:0; }
+body main { padding-top:20px; }
+body .calendar-settings { margin-bottom:12px; }
+body .calendar-settings > summary { cursor:pointer; min-height:48px; padding:10px 0; font-weight:500; }
+body .calendar-settings[open] > summary { margin-bottom:12px; }
+body .plate:has(> table) { display:block; }
+body .plate > .placeholder:not(:only-child) { min-height:0; border:0; background:transparent; }
+body .gua-name-row > div { min-width:0; max-width:100%; overflow-wrap:anywhere; }
+@media(max-width:900px){body .plate table {display:none} body .plate-cards {display:flex} }
+@media(max-width:640px){body .hero {padding:14px 20px} body .hero h1 {font-size:22px} body main {padding-top:16px} }

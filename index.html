@@ -128,8 +128,8 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
      代表"洞见/解读"。四个svg都加了aria-hidden+focusable="false"，屏幕阅读器和Tab键
      只会读到/停在按钮本身的文字上，不会把装饰性图标当成一个额外的可交互元素。 -->
 <nav class="tabs" role="tablist" aria-label="页面导航">
-  <button class="tab-btn active" data-tab="basics" role="tab" id="tabbtn-basics" aria-selected="true" aria-controls="basics" tabindex="0"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.3"/><path d="M8 1.7c1.74 0 3.15 1.41 3.15 3.15S9.74 8 8 8s-3.15 1.41-3.15 3.15S6.26 14.3 8 14.3" stroke-linecap="round"/><circle cx="8" cy="4.85" r="0.55" fill="currentColor" stroke="none"/><circle cx="8" cy="11.15" r="0.55" fill="currentColor" stroke="none"/></svg>基础知识</button>
-  <button class="tab-btn" data-tab="caster" role="tab" id="tabbtn-caster" aria-selected="false" aria-controls="caster" tabindex="-1"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true" focusable="false"><circle cx="6" cy="9.6" r="4.6"/><rect x="4.7" y="8.3" width="2.6" height="2.6"/><circle cx="10.6" cy="5.3" r="4.6"/><rect x="9.3" y="4" width="2.6" height="2.6"/></svg>起卦排盘</button>
+  <button class="tab-btn" data-tab="basics" role="tab" id="tabbtn-basics" aria-selected="false" aria-controls="basics" tabindex="-1"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.3"/><path d="M8 1.7c1.74 0 3.15 1.41 3.15 3.15S9.74 8 8 8s-3.15 1.41-3.15 3.15S6.26 14.3 8 14.3" stroke-linecap="round"/><circle cx="8" cy="4.85" r="0.55" fill="currentColor" stroke="none"/><circle cx="8" cy="11.15" r="0.55" fill="currentColor" stroke="none"/></svg>基础知识</button>
+  <button class="tab-btn active" data-tab="caster" role="tab" id="tabbtn-caster" aria-selected="true" aria-controls="caster" tabindex="0"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true" focusable="false"><circle cx="6" cy="9.6" r="4.6"/><rect x="4.7" y="8.3" width="2.6" height="2.6"/><circle cx="10.6" cy="5.3" r="4.6"/><rect x="9.3" y="4" width="2.6" height="2.6"/></svg>起卦排盘</button>
   <button class="tab-btn" data-tab="guide" role="tab" id="tabbtn-guide" aria-selected="false" aria-controls="guide" tabindex="-1"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 14.5L3.3 2.3"/><path d="M6.6 14.5L6.3 1.7"/><path d="M9.4 14.5L9.7 1.7"/><path d="M12 14.5L12.7 2.3"/><path d="M2.2 9.8h11.6" stroke-width="0.9"/></svg>断卦入门</button>
   <button class="tab-btn" data-tab="ai" role="tab" id="tabbtn-ai" aria-selected="false" aria-controls="ai" tabindex="-1"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 1.5c0.4 2.6 1.3 4.4 2.9 5.6 1.6 1.2 2.6 1.5 3.6 1.9-1 0.4-2 0.7-3.6 1.9-1.6 1.2-2.5 3-2.9 5.6-0.4-2.6-1.3-4.4-2.9-5.6C3.5 9.7 2.5 9.4 1.5 9c1-0.4 2-0.7 3.6-1.9C6.7 5.9 7.6 4.1 8 1.5z"/></svg>AI 解卦</button>
   <button class="help-fab" id="helpFab" title="使用教程" aria-label="使用教程">?</button>
@@ -138,7 +138,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 <main>
 
 <!-- ===================== TAB 1 ===================== -->
-<div class="panel active" id="basics" role="tabpanel" aria-labelledby="tabbtn-basics" tabindex="0">
+<div class="panel" id="basics" role="tabpanel" aria-labelledby="tabbtn-basics" tabindex="0">
 
   <section class="block">
     <h2>八卦：三爻定象</h2>
@@ -218,13 +218,14 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 </div>
 
 <!-- ===================== TAB 2 ===================== -->
-<div class="panel" id="caster" role="tabpanel" aria-labelledby="tabbtn-caster" tabindex="0">
+<div class="panel active" id="caster" role="tabpanel" aria-labelledby="tabbtn-caster" tabindex="0">
   <section class="block">
     <h2>摇卦 · 自动排盘</h2>
-    <p class="desc">通过拖动或按住按钮给铜钱初始运动，再由物理模拟读取落地正反面。可逐爻投掷，也可连续完成六爻；现实铜钱结果可在线下摇卦中录入。</p>
+    <p class="desc">心中想好一件事，开始摇卦；完成后可用 AI 解读或复制提示词。</p>
 
     <div class="caster-box">
       <div class="caster-controls">
+        <details class="calendar-settings"><summary>日期与时间（默认现在）</summary>
         <label for="dayGanzhi">起卦日的干支（用于起六神、算空亡）</label>
         <select id="dayGanzhi"></select>
         <div class="day-lookup-row">
@@ -233,6 +234,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         </div>
 
         <p class="desc" style="font-size:12px;margin:8px 0">按设备本地时间、零点换日，年/月柱按节气。交节时刻为近似计算；仅录入日柱时不推定年月时柱。</p>
+        </details>
         <div class="cast-mode-toggle" id="castModeToggle">
           <button type="button" class="mode-btn active" data-mode="system">系统摇卦</button>
           <button type="button" class="mode-btn" data-mode="manual">线下摇卦</button>
@@ -412,7 +414,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 <div class="panel" id="ai" role="tabpanel" aria-labelledby="tabbtn-ai" tabindex="0">
   <section class="block">
     <h2>AI 解卦</h2>
-    <p class="desc">在文本框内写下想问的事情：填了 DeepSeek API Key 的话，点"AI 解读"直接在本页面拿到解卦回复；没填 Key、或者想用别的AI软件解卦，就点"输出提示词"——网页会在后台自动完成物理起卦，再排卦、装卦，只是最后一步给你一段可以直接复制的完整提示词，粘贴去任意AI聊天软件发送即可。</p>
+    <p class="desc">写下问题，选择 AI 解读或输出提示词。没有排盘时会自动起卦。</p>
     <!-- 排盘数据虽然一直存在内存里的 window.lastCastData，但跳转过来之后界面上
          完全看不出来——用户点"AI 解读"之前只能凭记忆或信任系统。这里补一条
          轻量状态提示，有 lastCastData 就渲染当前是哪一卦，没有就不显示，
@@ -424,7 +426,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
       <div class="char-counter" id="questionCharCounter">0 / 500 字</div>
       <div class="reading-mode"><label for="readingMode">解读方式</label>
         <select id="readingMode"><option value="legacy">普通解读</option><option value="structured">结构化解读（试用）· 可查看依据</option></select>
-        <p id="readingModeNote" hidden>API 与提示词均支持。先看结论，再展开依据与不确定性。模型仍可能偏题或误解依据，请对照卦盘复核。采用固定解读要求；API 使用所选模型的非思考模式，不使用人设、风格和努力程度设置。</p>
+        <p id="readingModeNote" hidden>API 与提示词均支持。篇幅设置用于结论正文，依据可展开；纯事实核对保持简短。人设与推理档位不适用，API 使用所选模型的非思考模式。设置在新解读时生效，追问沿用本次设置。</p>
       </div>
       <div class="ai-row">
         <button class="ai-btn" id="interpretBtn">AI 解读</button>
@@ -501,6 +503,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
       </div>
 
       <div class="ai-settings" id="aiSettings">
+        <p id="structuredSettingsNote" class="note" hidden>结构化模式支持回复篇幅与自定义语气；人设、推理档位不生效。字数为生成目标，不保证精确达标，也不会为了凑数补造内容。</p>
 
         <div class="settings-group">
           <div class="settings-group-title">DeepSeek API Key</div>
