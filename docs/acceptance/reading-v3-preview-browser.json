@@ -1,0 +1,22 @@
+[
+  {
+    "width": 1280,
+    "api": "mocked",
+    "export_roundtrip": "passed",
+    "replay_rejected": true,
+    "restore": "passed",
+    "stop": "passed",
+    "replacement": "passed",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "api": "mocked",
+    "export_roundtrip": "passed",
+    "replay_rejected": true,
+    "restore": "passed",
+    "stop": "passed",
+    "replacement": "passed",
+    "errors": []
+  }
+]
