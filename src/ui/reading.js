@@ -9,7 +9,7 @@ import { copyTextToClipboard } from './helpers.js';
 import { isLifespanQuestion } from '../app/question.js';
 import { state } from '../app/state.js';
 import { loadStyleChoice, loadCustomStyle } from '../storage/settings.js';
-import { archiveReading } from '../storage/reading-history.js';
+import { archiveReading, readingHistoryText } from '../storage/reading-history.js';
 import { renderHistory } from './history-view.js';
 
 const KEY = 'liuyao_structured_reading_v1';
@@ -32,6 +32,11 @@ function render() {
     const question = document.createElement('h3'); question.textContent = `问：${t.question}`;
     const result = document.createElement('div'); renderOutputResult(result, t.result, t.context, { collapseFallback: true });
     block.append(question, result);
+    if(t.result.status !== 'validated') {
+      const copy=document.createElement('button'); copy.type='button'; copy.className='ai-btn ghost'; copy.textContent='复制原始回复';
+      copy.addEventListener('click',async()=>{try{await copyTextToClipboard(t.raw);status('已复制原始回复。');}catch{status('复制失败，请展开原文手动复制。');}});
+      block.append(copy);
+    }
     if (t.result.answer?.answer && session.preferences) {
       const size = document.createElement('p'); size.className = 'reading-note';
       const count = [...t.result.answer.answer.replace(/\s/g,'')].length;
@@ -125,7 +130,7 @@ export function initializeReading() {
     try { await copyTextToClipboard(getText()); status('已复制。'); } catch { status('自动复制失败，请选中文字手动复制。'); }
   });
   copy('readingCopyPrompt', () => el('readingPrompt').value);
-  copy('readingCopyAll', () => el('readingTurns').innerText);
+  copy('readingCopyAll', () => session?.turns.map(t=>`问：${t.question}\n\n${readingHistoryText(t)}`).join('\n\n────────\n\n') || '');
   el('readingClear').addEventListener('click', () => { clearReading(); status('已清空本次结构化解读。'); });
   el('readingImport').addEventListener('click', () => exclusive(async () => {
     if (!pending || !session) throw Error('请先生成本轮提示词。');

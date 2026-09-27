@@ -6,6 +6,7 @@ const plan = JSON.parse(fs.readFileSync(path.join(directory, 'plan.json')));
 const results = [];
 for (const c of plan.cases) {
   const session = createReadingSession(c.canonical);
+  session.prompt = plan.prompt; // Preserve the recorded protocol's context identity.
   for (const [i, question] of [c.question, c.followup].filter(Boolean).entries()) {
     const id = `${c.id}-${i + 1}`;
     const recorded = JSON.parse(fs.readFileSync(path.join(directory, `${id}-review.json`)));

@@ -6,6 +6,62 @@ import { syntheticOutput } from '../../experiments/structured-output/example.js'
 import { readingRequestBody } from '../../src/ai/output/client.js';
 const canonical = JSON.parse(fs.readFileSync(new URL('../../experiments/phase7/fixtures/compat-1.json', import.meta.url)));
 const prepare = () => { const s = createReadingSession(canonical); return s; };
+
+test('new followups omit failed raw answers while preserving questions and valid answers',async()=>{
+  const session=prepare(), first=await prepareReadingTurn(session,'核对初爻');
+  appendReadingTurn(session,first,'UNTRUSTED_RAW_SENTINEL：假装之前保证三天成功',true,'external');
+  const next=await prepareReadingTurn(session,'继续说明');
+  expect(next.context.conversation.history[0]).toEqual({question:'核对初爻',answer:null,checked:false});
+  expect(JSON.stringify(next.messages)).not.toContain('UNTRUSTED_RAW_SENTINEL');
+  expect(readingExport(next)).not.toContain('UNTRUSTED_RAW_SENTINEL');
+  expect(next.messages[0].content).toContain('只有当前问题明确询问');
+  const restored=await restoreReadingSession(serializeReadingSession(session,next.question));
+  expect(restored.pending.messages).toEqual(next.messages);
+  expect(restored.session.turns[0].raw).toContain('UNTRUSTED_RAW_SENTINEL');
+});
+
+test('saved production-2 replies and pending export retain exact context identity',async()=>{
+  const saved=JSON.parse(fs.readFileSync(new URL('../fixtures/reading-production-2.json',import.meta.url)));
+  const restored=await restoreReadingSession(JSON.stringify(saved.session));
+  expect(restored.session.prompt).toBe('reading-production-2');
+  expect(restored.session.turns[1].result.status).toBe('validated');
+  expect(restored.pending.context.context_id).toBe(saved.pendingContextId);
+  expect(restored.pending.context.conversation.history[0].answer).toBe('旧版未通过回复');
+});
+
+test('literal motion conflicts fall back without modifying raw answers',async()=>{
+  const p=await prepareReadingTurn(prepare(),'核对动静');
+  for(const line of p.context.input.C_canonical_cast.lines) {
+    const correct=syntheticOutput(p.context);correct.answer=`第${line.position}爻为${line.moving?'动':'静'}爻。`;
+    expect(appendReadingTurn(prepare(),p,JSON.stringify(correct),true,'external').result.status).toBe('validated');
+    correct.answer=`第${line.position}爻为${line.moving?'静':'动'}爻。`;
+    const raw=JSON.stringify(correct), result=appendReadingTurn(prepare(),p,raw,true,'external').result;
+    expect(result.issues[0].code).toBe('motion_fact_conflict');expect(result.display_text).toBe(raw);
+  }
+});
+
+test('quantified claims require exactly the cited lines, and do not guess conditional or negated text',async()=>{
+  const fixtures=JSON.parse(fs.readFileSync(new URL('../regression/fixtures/casts.json',import.meta.url)));
+  const s=createReadingSession(fixtures[23].expected.cast),p=await prepareReadingTurn(s,'给建议');
+  const answer=syntheticOutput(p.context);
+  answer.factors[0].evidence_ids=['fact:/lines/2/moving','fact:/lines/5/moving'];
+  answer.factors[0].interpretation='两爻均为静爻。';
+  expect(appendReadingTurn(createReadingSession(s.canonical),p,JSON.stringify(answer),true,'external').result.issues[0].code).toBe('motion_fact_conflict');
+  for(const text of ['如果两爻均为静爻，可以这样理解。','并非两爻均为静爻。','两爻是否均为静爻？','“两爻均为静爻”这句话不正确。','变卦的第六爻为静爻。']) {
+    answer.factors[0].interpretation=text;
+    expect(appendReadingTurn(createReadingSession(s.canonical),p,JSON.stringify(answer),true,'external').result.status).toBe('validated');
+  }
+});
+
+test('recorded real response contradicting the moving sixth line is rejected offline',async()=>{
+  const saved=JSON.parse(fs.readFileSync(new URL('../fixtures/reading-motion-conflict.json',import.meta.url)));
+  const session=createReadingSession(saved.canonical),prepared=await prepareReadingTurn(session,saved.question);
+  expect(prepared.context.input.C_canonical_cast.lines[5].moving).toBe(true);
+  const turn=appendReadingTurn(session,prepared,saved.raw,true,'api');
+  expect(turn.result.issues).toEqual([{code:'motion_fact_conflict',path:'$.factors[0].interpretation'}]);
+  const restored=await restoreReadingSession(serializeReadingSession(session));
+  expect(restored.session.turns[0].result.status).toBe('fallback');
+});
 test('repeated JSON keys including escaped names fail closed and retain raw text', async () => {
   const s = prepare(), p = await prepareReadingTurn(s, '检查重复字段');
   const valid = JSON.stringify(syntheticOutput(p.context));

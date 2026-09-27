@@ -1,0 +1,520 @@
+{
+  "scope": "Four exposed development calls, not blind or independent acceptance",
+  "network_calls": 4,
+  "conservative_cost_cny": 0.192618,
+  "exact_billed_cost": null,
+  "campaign_reserved_cny": 18.599638,
+  "campaign_limit_cny": 19.95,
+  "entries": [
+    {
+      "batch": "reading-live-03-small",
+      "question": "只核对有哪些动爻以及变出的六亲，无动爻直接说明。不要用神、成败或其他六亲。",
+      "transport": {
+        "id": "reading-1-1",
+        "model": "deepseek-flash",
+        "status": "validated",
+        "finish": "stop",
+        "done": true,
+        "error": null,
+        "usage": {
+          "prompt_tokens": 13127,
+          "completion_tokens": 310,
+          "total_tokens": 13437,
+          "prompt_tokens_details": {
+            "cached_tokens": 1024
+          },
+          "prompt_cache_hit_tokens": 1024,
+          "prompt_cache_miss_tokens": 12103
+        },
+        "conservative_cost_cny": 0.042481
+      },
+      "recheck": {
+        "id": "reading-1-1",
+        "status": "validated",
+        "issues": []
+      },
+      "raw": "{\"schema_version\":\"structured-answer-1.0\",\"context_id\":\"sha256:efd933f6c4fa724b2554d5f7441a2afb33c071fb113dac0cc8eea863c39f998c\",\"answer\":\"本卦六爻全部为静爻，没有任何动爻，因此也没有变爻，不存在变出的六亲。\",\"direction\":\"unclear\",\"yongshen_candidates\":[],\"factors\":[{\"assessment\":\"neutral\",\"interpretation\":\"初爻至六爻的动爻标记均为否，说明本卦六爻皆为静爻，没有动爻。\",\"evidence_ids\":[\"fact:/lines/0/moving\",\"fact:/lines/1/moving\",\"fact:/lines/2/moving\",\"fact:/lines/3/moving\",\"fact:/lines/4/moving\",\"fact:/lines/5/moving\"]},{\"assessment\":\"neutral\",\"interpretation\":\"六爻的变爻记录均未记载，与没有动爻、无可变出的六亲相符。\",\"evidence_ids\":[\"fact:/lines/0/changed\",\"fact:/lines/1/changed\",\"fact:/lines/2/changed\",\"fact:/lines/3/changed\",\"fact:/lines/4/changed\",\"fact:/lines/5/changed\"]}],\"timing_candidates\":[],\"uncertainties\":[\"本次仅核对动爻有无及变出六亲的记载情况，不涉及用神、成败或其他六亲。\"]}",
+      "quoted_evidence": [
+        {
+          "id": "fact:/lines/0/moving",
+          "kind": "program_fact",
+          "path": "/lines/0/moving",
+          "value": false,
+          "label": "第1爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/0/changed",
+          "kind": "program_fact",
+          "path": "/lines/0/changed",
+          "value": null,
+          "label": "第1爻变爻／变卦 · 变爻记录"
+        },
+        {
+          "id": "fact:/lines/1/moving",
+          "kind": "program_fact",
+          "path": "/lines/1/moving",
+          "value": false,
+          "label": "第2爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/1/changed",
+          "kind": "program_fact",
+          "path": "/lines/1/changed",
+          "value": null,
+          "label": "第2爻变爻／变卦 · 变爻记录"
+        },
+        {
+          "id": "fact:/lines/2/moving",
+          "kind": "program_fact",
+          "path": "/lines/2/moving",
+          "value": false,
+          "label": "第3爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/2/changed",
+          "kind": "program_fact",
+          "path": "/lines/2/changed",
+          "value": null,
+          "label": "第3爻变爻／变卦 · 变爻记录"
+        },
+        {
+          "id": "fact:/lines/3/moving",
+          "kind": "program_fact",
+          "path": "/lines/3/moving",
+          "value": false,
+          "label": "第4爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/3/changed",
+          "kind": "program_fact",
+          "path": "/lines/3/changed",
+          "value": null,
+          "label": "第4爻变爻／变卦 · 变爻记录"
+        },
+        {
+          "id": "fact:/lines/4/moving",
+          "kind": "program_fact",
+          "path": "/lines/4/moving",
+          "value": false,
+          "label": "第5爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/4/changed",
+          "kind": "program_fact",
+          "path": "/lines/4/changed",
+          "value": null,
+          "label": "第5爻变爻／变卦 · 变爻记录"
+        },
+        {
+          "id": "fact:/lines/5/moving",
+          "kind": "program_fact",
+          "path": "/lines/5/moving",
+          "value": false,
+          "label": "第6爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/5/changed",
+          "kind": "program_fact",
+          "path": "/lines/5/changed",
+          "value": null,
+          "label": "第6爻变爻／变卦 · 变爻记录"
+        }
+      ]
+    },
+    {
+      "batch": "reading-live-03-small",
+      "question": "我想周末和家人整理旧书，请给两项筹备建议，区分盘面事实与一般建议，不预测具体日期。",
+      "transport": {
+        "id": "reading-2-1",
+        "model": "deepseek-flash",
+        "status": "validated",
+        "finish": "stop",
+        "done": true,
+        "error": null,
+        "usage": {
+          "prompt_tokens": 14013,
+          "completion_tokens": 917,
+          "total_tokens": 14930,
+          "prompt_tokens_details": {
+            "cached_tokens": 1152
+          },
+          "prompt_cache_hit_tokens": 1152,
+          "prompt_cache_miss_tokens": 12861
+        },
+        "conservative_cost_cny": 0.051209
+      },
+      "recheck": {
+        "id": "reading-2-1",
+        "status": "validated",
+        "issues": []
+      },
+      "raw": "{\"schema_version\":\"structured-answer-1.0\",\"context_id\":\"sha256:4956a0bf8d3bb3851016fc6a68e78df88d7dab3d1aae6c32337f1f39673c9433\",\"answer\":\"针对周末和家人整理旧书，可先做两项筹备：一是先按用途或去留标准分组，把需要保留、转赠和处理的旧书分开放置，避免当天边翻边犹豫；二是提前准备搬运和分拣用品，如纸箱、标签、抹布或手套，并安排一个临时暂存区。盘面事实方面：第三爻为父母、应爻，安静且月令为旺；第六爻也是父母、世爻，为动爻，月令为旺，本爻变出仍为父母。父母在传统类象中常关联文书、书籍，因此盘面确有与旧书相关之象，但具体如何整理仍取决于家中实际藏书、人数与空间条件。以上建议属于一般筹备思路，不是对现实结果或具体日期的预测。\",\"direction\":\"mixed\",\"yongshen_candidates\":[{\"relative\":\"父母\",\"targets\":[{\"line\":3,\"component\":\"primary\"},{\"line\":6,\"component\":\"primary\"}],\"reason\":\"旧书在传统类象中可取父母爻为用神。本卦第三爻为父母且为应爻，第六爻为父母且为世爻，两处父母均可作为与旧书、文书相关的候选用神，故并列为候选而不唯一指定。\",\"evidence_ids\":[\"fact:/lines/2/relative\",\"fact:/lines/2/is_ying\",\"fact:/lines/5/relative\",\"fact:/lines/5/is_shi\"]}],\"factors\":[{\"assessment\":\"neutral\",\"interpretation\":\"盘面中确有父母爻落在第三爻与第六爻，父母在传统类象中对应文书、书籍，可视为旧书之象有据；但这只是类象层面的对应，不等于已经知道实际藏书数量或整理难度。\",\"evidence_ids\":[\"fact:/lines/2/relative\",\"fact:/lines/5/relative\"]},{\"assessment\":\"conditional\",\"interpretation\":\"第三爻父母为静爻且月令为旺，可理解为与旧书相关的这一部分相对稳定；第六爻父母为动爻且月令为旺，本爻变出仍为父母，说明所涉事项有变动推进之象。二者一静一动，宜按实际整理进度分步处理，不据此断定现实必然顺利或反复。\",\"evidence_ids\":[\"fact:/lines/2/moving\",\"fact:/lines/2/relations/month_strength\",\"fact:/lines/5/moving\",\"fact:/lines/5/relations/month_strength\",\"fact:/lines/5/changed/relative\"]},{\"assessment\":\"neutral\",\"interpretation\":\"第六爻为世爻，第三爻为应爻，两爻同为土，呈世应比和。这一关系可解释为家人协作层面彼此较能配合，但盘面并未提供人数、分工意愿等现实信息，只能作为一般参考。\",\"evidence_ids\":[\"fact:/hexagram/shi_line\",\"fact:/hexagram/ying_line\",\"rule:SHI-YING-SAME-ELEMENT-001:primary:6:3\"]},{\"assessment\":\"conditional\",\"interpretation\":\"第二爻妻财为动爻且旬空，第四爻官鬼为静爻，另有第一爻子孙动而回头克。这些与旧书整理无直接对应，不宜据此推断预算、人手或结果；若现实中存在时间紧、物品杂等情况，可考虑先易后难、分批整理。\",\"evidence_ids\":[\"fact:/lines/1/moving\",\"fact:/lines/1/is_kongwang\",\"fact:/lines/3/moving\",\"fact:/lines/0/moving\",\"fact:/lines/0/relations/return_relation\"]}],\"timing_candidates\":[],\"uncertainties\":[\"本次只依据所给卦盘做象意层面的解读，未获知实际藏书数量、家人分工、空间大小与整理目标，因此建议均为条件性筹备思路，不构成对具体日期或结果的预测。\",\"用神取父母爻为传统类象选择，并非程序唯一指定结果；若把旧书理解为其他事项或另有现实含义，解读角度可能随之变化。\"]}",
+      "quoted_evidence": [
+        {
+          "id": "fact:/hexagram/shi_line",
+          "kind": "program_fact",
+          "path": "/hexagram/shi_line",
+          "value": 6,
+          "label": "卦盘 · 世爻位置"
+        },
+        {
+          "id": "fact:/hexagram/ying_line",
+          "kind": "program_fact",
+          "path": "/hexagram/ying_line",
+          "value": 3,
+          "label": "卦盘 · 应爻位置"
+        },
+        {
+          "id": "fact:/lines/0/moving",
+          "kind": "program_fact",
+          "path": "/lines/0/moving",
+          "value": true,
+          "label": "第1爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/0/relations/return_relation",
+          "kind": "program_fact",
+          "path": "/lines/0/relations/return_relation",
+          "value": "回头克",
+          "label": "第1爻 · 回头关系"
+        },
+        {
+          "id": "fact:/lines/1/moving",
+          "kind": "program_fact",
+          "path": "/lines/1/moving",
+          "value": true,
+          "label": "第2爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/1/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/1/is_kongwang",
+          "value": true,
+          "label": "第2爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/2/moving",
+          "kind": "program_fact",
+          "path": "/lines/2/moving",
+          "value": false,
+          "label": "第3爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/2/relative",
+          "kind": "program_fact",
+          "path": "/lines/2/relative",
+          "value": "父母",
+          "label": "第3爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/2/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/2/is_ying",
+          "value": true,
+          "label": "第3爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/2/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/2/relations/month_strength",
+          "value": "旺",
+          "label": "第3爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/3/moving",
+          "kind": "program_fact",
+          "path": "/lines/3/moving",
+          "value": false,
+          "label": "第4爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/5/moving",
+          "kind": "program_fact",
+          "path": "/lines/5/moving",
+          "value": true,
+          "label": "第6爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/5/relative",
+          "kind": "program_fact",
+          "path": "/lines/5/relative",
+          "value": "父母",
+          "label": "第6爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/5/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/5/is_shi",
+          "value": true,
+          "label": "第6爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/5/changed/relative",
+          "kind": "program_fact",
+          "path": "/lines/5/changed/relative",
+          "value": "父母",
+          "label": "第6爻变爻／变卦 · 六亲"
+        },
+        {
+          "id": "fact:/lines/5/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/5/relations/month_strength",
+          "value": "旺",
+          "label": "第6爻 · 月令"
+        },
+        {
+          "id": "rule:SHI-YING-SAME-ELEMENT-001:primary:6:3",
+          "kind": "rule_result",
+          "rule_id": "SHI-YING-SAME-ELEMENT-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": 3
+          },
+          "result": {
+            "code": "shi_ying_same_element",
+            "label": "世应比和"
+          },
+          "source_facts": [
+            "fact:/hexagram/shi_line",
+            "fact:/hexagram/ying_line",
+            "fact:/lines/0/is_shi",
+            "fact:/lines/1/is_shi",
+            "fact:/lines/2/is_shi",
+            "fact:/lines/3/is_shi",
+            "fact:/lines/4/is_shi",
+            "fact:/lines/5/is_shi",
+            "fact:/lines/0/is_ying",
+            "fact:/lines/1/is_ying",
+            "fact:/lines/2/is_ying",
+            "fact:/lines/3/is_ying",
+            "fact:/lines/4/is_ying",
+            "fact:/lines/5/is_ying",
+            "fact:/lines/5/element",
+            "fact:/lines/2/element"
+          ],
+          "label": "SHI-YING-SAME-ELEMENT-001 · 第6爻 · 世应比和"
+        }
+      ]
+    },
+    {
+      "batch": "reading-live-03-small",
+      "question": "你刚才的建议依据是什么？请保持原先事实，不因为我不满意就改口保证成功。",
+      "transport": {
+        "id": "reading-2-2",
+        "model": "deepseek-flash",
+        "status": "validated",
+        "finish": "stop",
+        "done": true,
+        "error": null,
+        "usage": {
+          "prompt_tokens": 14957,
+          "completion_tokens": 560,
+          "total_tokens": 15517,
+          "prompt_tokens_details": {
+            "cached_tokens": 1152
+          },
+          "prompt_cache_hit_tokens": 1152,
+          "prompt_cache_miss_tokens": 13805
+        },
+        "conservative_cost_cny": 0.050471
+      },
+      "recheck": {
+        "id": "reading-2-2",
+        "status": "validated",
+        "issues": []
+      },
+      "raw": "{\"schema_version\":\"structured-answer-1.0\",\"context_id\":\"sha256:58112c0ebc583bf6dc0a9581f05420c0fa56de177b69f9c6f9fd90badb662c64\",\"answer\":\"原先那两项建议属于一般筹备思路：按去留标准先分组、备好搬运分拣用品并设临时暂存区；理由只依据盘面中父母爻与书籍、文书的传统类象对应，以及一动一静、世应比和等关系，并非已知家中实际藏书、人数或空间。我不会因追问就改口保证成功：这些关系不能推出整理必然顺利或必然反复，具体安排仍取决于实际条件。\",\"direction\":\"mixed\",\"yongshen_candidates\":[],\"factors\":[{\"assessment\":\"neutral\",\"interpretation\":\"原建议中“旧书”的依据是传统类象取父母爻：第三爻为父母且为应爻，第六爻为父母且为世爻，两处父母都与文书、书籍类象相关，可解释为何围绕旧书给筹备建议；这只是类象对应，不代表已知实际藏书数量。\",\"evidence_ids\":[\"fact:/lines/2/relative\",\"fact:/lines/2/is_ying\",\"fact:/lines/5/relative\",\"fact:/lines/5/is_shi\"]},{\"assessment\":\"conditional\",\"interpretation\":\"第三爻父母为静爻而第六爻父母为动爻，且第六爻本爻变出仍为父母，这一静一动是原建议采用分步、分批整理的依据；它只说明所涉事项有推进变化的象意，不能用来断定现实必然顺利或反复。\",\"evidence_ids\":[\"fact:/lines/2/moving\",\"fact:/lines/5/moving\",\"fact:/lines/5/changed/relative\"]},{\"assessment\":\"neutral\",\"interpretation\":\"第六爻为世爻、第三爻为应爻，两爻同属土，构成世应比和。原建议中“家人协作可先分组”的参考之一来自这一关系；盘面没有提供人数与分工意愿，因此只能作为一般参考。\",\"evidence_ids\":[\"fact:/hexagram/shi_line\",\"fact:/hexagram/ying_line\",\"rule:SHI-YING-SAME-ELEMENT-001:primary:6:3\"]}],\"timing_candidates\":[],\"uncertainties\":[\"本次只回答原先建议的依据并保持原事实边界，未新增实际藏书、人数、空间或整理目标的资料；建议均为条件性筹备思路。\",\"盘面依据只能支持类象与关系层面的解释，不能证明整理结果一定如何，也不能支持保证成功的说法。\"]}",
+      "quoted_evidence": [
+        {
+          "id": "fact:/hexagram/shi_line",
+          "kind": "program_fact",
+          "path": "/hexagram/shi_line",
+          "value": 6,
+          "label": "卦盘 · 世爻位置"
+        },
+        {
+          "id": "fact:/hexagram/ying_line",
+          "kind": "program_fact",
+          "path": "/hexagram/ying_line",
+          "value": 3,
+          "label": "卦盘 · 应爻位置"
+        },
+        {
+          "id": "fact:/lines/2/moving",
+          "kind": "program_fact",
+          "path": "/lines/2/moving",
+          "value": false,
+          "label": "第3爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/2/relative",
+          "kind": "program_fact",
+          "path": "/lines/2/relative",
+          "value": "父母",
+          "label": "第3爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/2/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/2/is_ying",
+          "value": true,
+          "label": "第3爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/5/moving",
+          "kind": "program_fact",
+          "path": "/lines/5/moving",
+          "value": true,
+          "label": "第6爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/5/relative",
+          "kind": "program_fact",
+          "path": "/lines/5/relative",
+          "value": "父母",
+          "label": "第6爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/5/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/5/is_shi",
+          "value": true,
+          "label": "第6爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/5/changed/relative",
+          "kind": "program_fact",
+          "path": "/lines/5/changed/relative",
+          "value": "父母",
+          "label": "第6爻变爻／变卦 · 六亲"
+        },
+        {
+          "id": "rule:SHI-YING-SAME-ELEMENT-001:primary:6:3",
+          "kind": "rule_result",
+          "rule_id": "SHI-YING-SAME-ELEMENT-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": 3
+          },
+          "result": {
+            "code": "shi_ying_same_element",
+            "label": "世应比和"
+          },
+          "source_facts": [
+            "fact:/hexagram/shi_line",
+            "fact:/hexagram/ying_line",
+            "fact:/lines/0/is_shi",
+            "fact:/lines/1/is_shi",
+            "fact:/lines/2/is_shi",
+            "fact:/lines/3/is_shi",
+            "fact:/lines/4/is_shi",
+            "fact:/lines/5/is_shi",
+            "fact:/lines/0/is_ying",
+            "fact:/lines/1/is_ying",
+            "fact:/lines/2/is_ying",
+            "fact:/lines/3/is_ying",
+            "fact:/lines/4/is_ying",
+            "fact:/lines/5/is_ying",
+            "fact:/lines/5/element",
+            "fact:/lines/2/element"
+          ],
+          "label": "SHI-YING-SAME-ELEMENT-001 · 第6爻 · 世应比和"
+        }
+      ]
+    },
+    {
+      "batch": "reading-live-03-advice",
+      "question": "我想周末和家人整理旧书，请给两项筹备建议，区分盘面事实与一般建议，不预测具体日期。",
+      "transport": {
+        "id": "reading-1-1",
+        "model": "deepseek-flash",
+        "status": "validated",
+        "finish": "stop",
+        "done": true,
+        "error": null,
+        "usage": {
+          "prompt_tokens": 14119,
+          "completion_tokens": 610,
+          "total_tokens": 14729,
+          "prompt_tokens_details": {
+            "cached_tokens": 1152
+          },
+          "prompt_cache_hit_tokens": 1152,
+          "prompt_cache_miss_tokens": 12967
+        },
+        "conservative_cost_cny": 0.048457
+      },
+      "recheck": {
+        "id": "reading-1-1",
+        "status": "fallback",
+        "issues": [
+          {
+            "code": "motion_fact_conflict",
+            "path": "$.factors[0].interpretation"
+          }
+        ]
+      },
+      "raw": "{\"schema_version\":\"structured-answer-1.0\",\"context_id\":\"sha256:4956a0bf8d3bb3851016fc6a68e78df88d7dab3d1aae6c32337f1f39673c9433\",\"answer\":\"可以按两项来筹备：第一，先把旧书按“保留、待定、处理”分成三类，再准备标签和纸箱，避免现场反复翻拣；第二，整理时让家人各自认领一部分，先清点再搬动，把易损书单独平放。以上是筹备建议，不是卦象对现实结果的断言。盘面上可以确认的是：第三爻（应爻）与第六爻（世爻）均为父母，五行同为土；两爻都属静爻，九二妻财旬空。是否有人愿意配合、旧书数量多少，这些未在卦盘中提供，不宜替现实下结论。\",\"direction\":\"unclear\",\"yongshen_candidates\":[{\"relative\":\"父母\",\"targets\":[{\"line\":3,\"component\":\"primary\"},{\"line\":6,\"component\":\"primary\"}],\"reason\":\"旧书整理涉及书籍、文书类物品，传统上多从父母爻着眼；第三爻与第六爻的六亲均为父母，因此列为可参考的取用候选。这只是选取角度，不代表卦盘已证明现实中有多少旧书或家人是否配合。\",\"evidence_ids\":[\"fact:/lines/2/relative\",\"fact:/lines/5/relative\"]}],\"factors\":[{\"assessment\":\"conditional\",\"interpretation\":\"第三爻父母与第六爻父母五行同为土，且两爻均为静爻；若从父母爻看书籍文书类象，可把这两爻当作整理旧书这一事项的盘面参照。它们只说明有父母爻存在，不能据此推断旧书数量或整理难度。\",\"evidence_ids\":[\"fact:/lines/2/relative\",\"fact:/lines/2/element\",\"fact:/lines/2/moving\",\"fact:/lines/5/relative\",\"fact:/lines/5/element\",\"fact:/lines/5/moving\"]},{\"assessment\":\"neutral\",\"interpretation\":\"第二爻妻财为旬空：这是当前卦盘的确定状态。就筹备建议而言，只可提醒若涉及分类花费、搬运或取舍，宜先确认再行动；旬空不等于现实中一定缺钱或一定没有物品。\",\"evidence_ids\":[\"fact:/lines/1/relative\",\"fact:/lines/1/is_kongwang\"]}],\"timing_candidates\":[],\"uncertainties\":[\"本次只核对当前卦盘中与旧书整理相关的父母爻位置和旬空状态，未提供家人意愿、旧书数量、住所空间等现实信息。\",\"卦盘显示的是既定排盘字段，不能据此断言现实中一定存在某类物品或某位家人会配合；上述建议以一般筹备原则为准。\"]}",
+      "quoted_evidence": [
+        {
+          "id": "fact:/lines/1/relative",
+          "kind": "program_fact",
+          "path": "/lines/1/relative",
+          "value": "妻财",
+          "label": "第2爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/1/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/1/is_kongwang",
+          "value": true,
+          "label": "第2爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/2/moving",
+          "kind": "program_fact",
+          "path": "/lines/2/moving",
+          "value": false,
+          "label": "第3爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/2/element",
+          "kind": "program_fact",
+          "path": "/lines/2/element",
+          "value": "土",
+          "label": "第3爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/2/relative",
+          "kind": "program_fact",
+          "path": "/lines/2/relative",
+          "value": "父母",
+          "label": "第3爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/5/moving",
+          "kind": "program_fact",
+          "path": "/lines/5/moving",
+          "value": true,
+          "label": "第6爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/5/element",
+          "kind": "program_fact",
+          "path": "/lines/5/element",
+          "value": "土",
+          "label": "第6爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/5/relative",
+          "kind": "program_fact",
+          "path": "/lines/5/relative",
+          "value": "父母",
+          "label": "第6爻 · 六亲"
+        }
+      ]
+    }
+  ]
+}

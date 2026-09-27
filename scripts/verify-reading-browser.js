@@ -55,18 +55,24 @@ try {
     await page.locator('#readingTurns h2').waitFor();
     assert.equal(await page.locator('#readingTurns img').count(), 0);
     assert.equal(await page.locator('#readingTurns details[open]').count(), 0);
+    await page.evaluate(()=>{Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>{window.__copiedReading=text;}}});});
+    await page.locator('#readingCopyAll').click();
+    assert((await page.evaluate(()=>window.__copiedReading)).includes('不确定性'),'Copy includes collapsed evidence and limitations');
     await page.locator('#readingFollow').fill('请继续说明依据'); await page.locator('#readingFollowExport').click();
     const next = extract(await page.locator('#readingPrompt').inputValue());
     assert.notEqual(next.context_id, input.context_id); assert.equal(next.conversation.history.length, 1);
     await page.locator('#readingPaste').fill(JSON.stringify(answer(input)));
     await page.locator('#readingComplete').check(); await page.locator('#readingImport').click();
     assert((await page.locator('#readingStatus').textContent()).includes('未通过'), await page.locator('#readingStatus').textContent());
+    assert((await page.locator('#readingTurns .reading-issue').textContent()).includes('问答轮次'));
+    assert.equal(await page.getByRole('button',{name:'复制原始回复',exact:true}).count(),1);
     // Saved test key never leaves the mocked route.
     await page.evaluate(() => localStorage.setItem('liuyao_deepseek_api_key', 'TEST_ONLY'));
     await page.reload(); await page.locator('[data-tab="ai"]').click();
     await page.locator('#readingFollow').fill('请给一项建议'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 3);
     assert.equal(requests.length, 1); assert.equal(JSON.parse(requests[0].messages[1].content).conversation.history.length, 2);
+    assert.equal(JSON.parse(requests[0].messages[1].content).conversation.history[1].answer,null,'Failed raw reply must not feed future readings');
     assert(requests[0].messages[0].content.includes('700–800 字'));
     behavior = 'invalid'; await page.locator('#readingFollow').fill('再次检查依据'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 4);

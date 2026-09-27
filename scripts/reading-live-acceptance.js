@@ -13,8 +13,8 @@ const write = (file, value) => fs.writeFileSync(path.join(dir, file), json(value
 const cap = 160000;
 const rates = model => model === 'deepseek-v4-pro' ? { input: 12, output: 32 } : { input: 3, output: 10 };
 const reserve = model => (cap * rates(model).input + 8192 * rates(model).output) / 1e6;
-if (!dir || !['prepare', 'execute'].includes(action)) throw Error('Use prepare|execute <new local directory>');
-if (action === 'prepare') {
+if (!dir || !['prepare', 'prepare-small', 'prepare-advice', 'execute'].includes(action)) throw Error('Use prepare|prepare-small|prepare-advice|execute <new local directory>');
+if (action.startsWith('prepare')) {
   const fixtures = JSON.parse(fs.readFileSync('tests/regression/fixtures/casts.json'));
   const specs = [
     [7, '只核对有哪些动爻以及变出的六亲，无动爻直接说明。不要用神、成败或其他六亲。'],
@@ -25,18 +25,19 @@ if (action === 'prepare') {
     [0, '日辰合是不是必然吉利，月破是不是必然失败？结合本盘已有标注说明事实与解释边界。'],
     [23, '我想安排周末整理旧书，请给两项条件性建议，注明事实和推论，不保证结果。', null, 'deepseek-v4-pro'],
   ];
-  const cases = specs.map(([index, question, followup = null, model = 'deepseek-flash'], i) => ({ id: `reading-${i + 1}`, model, question, followup,
+  const selected = action === 'prepare-advice' ? [[...specs[3].slice(0,2),null]] : action === 'prepare-small' ? [specs[0], specs[3]] : specs;
+  const cases = selected.map(([index, question, followup = null, model = 'deepseek-flash'], i) => ({ id: `reading-${i + 1}`, model, question, followup,
     canonical: normalizeLegacyCast(fixtures[index].expected.cast, { question, createdAt: 0 }) }));
-  const plan = { prompt: READING_PROMPT, selection: 'development regression, previously exposed fixtures; not blind holdout',
+  const plan = { prompt: READING_PROMPT, profile: action === 'prepare-advice' ? 'advice-1-call' : action === 'prepare-small' ? 'small-3-calls' : 'full-8-calls', selection: 'development regression, previously exposed fixtures; not blind holdout',
     criteria: ['complete_stream', 'schema_references', 'no_fact_contradiction', 'no_unrequested_scope', 'direct_evidence', 'conditional_advice', 'followup_consistency'],
     cap, reserve_cny: cases.reduce((sum, c) => sum + reserve(c.model) * (c.followup ? 2 : 1), 0), cases };
   fs.mkdirSync(dir); write('plan.json', plan); fs.writeFileSync(path.join(dir, 'plan.sha256'), hash(json(plan)), { flag: 'wx' });
-  console.log(JSON.stringify({ planned_calls: 8, reserve_cny: plan.reserve_cny, api_called: false }));
+  console.log(JSON.stringify({ planned_calls: cases.reduce((n,c)=>n+1+Number(!!c.followup),0), reserve_cny: plan.reserve_cny, api_called: false }));
 } else {
   const rawPlan = fs.readFileSync(path.join(dir, 'plan.json'));
   if (hash(rawPlan) !== fs.readFileSync(path.join(dir, 'plan.sha256'), 'utf8')) throw Error('Plan changed');
   const plan = JSON.parse(rawPlan);
-  if (plan.prompt !== READING_PROMPT || plan.cap !== cap || plan.cases.length !== 7 || fs.existsSync(path.join(dir, 'execution.json'))) throw Error('Plan/version/replay rejected');
+  if (plan.prompt !== READING_PROMPT || plan.cap !== cap || !((plan.profile === 'advice-1-call' && plan.cases.length === 1 && plan.cases[0].model==='deepseek-flash' && !plan.cases[0].followup) || (plan.profile === 'small-3-calls' && plan.cases.length === 2 && plan.cases.every(c=>c.model==='deepseek-flash') && plan.cases.filter(c=>c.followup).length === 1) || (plan.profile === 'full-8-calls' && plan.cases.length === 7)) || fs.existsSync(path.join(dir, 'execution.json'))) throw Error('Plan/version/replay rejected');
   const reservation = reserveCampaign('test-results/deepseek-campaign-budget.json', { run: path.resolve(dir), amount: plan.reserve_cny, planHash: hash(rawPlan) });
   process.loadEnvFile('.env.deepseek.local'); const key = process.env.DEEPSEEK_API_KEY?.trim();
   if (!key) throw Error('Local test credential missing');
@@ -48,6 +49,7 @@ if (action === 'prepare') {
       const id = `${c.id}-${turn + 1}`, prepared = await prepareReadingTurn(session, question);
       const body = readingRequestBody(prepared, c.model);
       if (Buffer.byteLength(JSON.stringify(body.messages)) + 4096 > cap) throw Error('Input exceeds reservation');
+      write(`${id}-request.json`, body);
       write(`${id}-attempt.json`, { model: c.model, request_hash: hash(json(body)) });
       try {
         const signal = AbortSignal.timeout(180000);

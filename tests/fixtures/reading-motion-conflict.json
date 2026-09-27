@@ -1,0 +1,408 @@
+{
+  "canonical": {
+    "schema_version": "1.0",
+    "meta": {
+      "cast_id": "legacy-91f03305",
+      "created_at": "1970-01-01T00:00:00.000Z",
+      "source": "manual",
+      "coin_convention": null
+    },
+    "question": {
+      "text": "我想周末和家人整理旧书，请给两项筹备建议，区分盘面事实与一般建议，不预测具体日期。",
+      "topic": null
+    },
+    "versions": {
+      "app": "2.0.0",
+      "engine": "desktop-2026-09-15-2",
+      "prompt": "p1",
+      "legacy_rules": "2026-09-15-2"
+    },
+    "calendar": {
+      "day_ganzhi": "乙巳",
+      "year_ganzhi": "甲辰",
+      "month_ganzhi": "丁丑",
+      "hour_ganzhi": "丁亥",
+      "anchor": {
+        "year": 2025,
+        "month": 2,
+        "day": 3
+      },
+      "month_branch": "丑",
+      "day_branch": "巳",
+      "kongwang": [
+        "寅",
+        "卯"
+      ]
+    },
+    "hexagram": {
+      "primary": {
+        "name": "乾为天",
+        "palace": "乾宫",
+        "lower_trigram": "乾",
+        "upper_trigram": "乾"
+      },
+      "changed": {
+        "name": "雷山小过"
+      },
+      "shi_line": 6,
+      "ying_line": 3
+    },
+    "display": {
+      "four_pillars_text": "年柱：甲辰　月柱：丁丑　日柱：乙巳　时柱：丁亥",
+      "kong_text": "空亡：寅、卯",
+      "date_text": "公历：2025年2月3日　农历：乙巳年正月初六",
+      "palace_text": "乾宫 · 八纯卦（本宫五行：金）",
+      "lower_upper_text": "下卦：☰ 乾　上卦：☰ 乾",
+      "day_kong_text": "日柱：乙巳　空亡：寅、卯",
+      "overall_trend_text": "当令得力(旺/相)3爻、当令减力(休/囚/死)3爻；动爻回头生0个、回头克1个；世应：世应比和——当令得力与减力的爻数相当，旺衰不算悬殊，具体判断还要结合用神细看"
+    },
+    "lines": [
+      {
+        "position": 1,
+        "yin_yang": "yang",
+        "changed": {
+          "ganzhi": "丙辰",
+          "element": "土",
+          "relative": "父母",
+          "branch": "辰"
+        },
+        "hidden": null,
+        "relations": {
+          "month_strength": "死",
+          "day_relation": "",
+          "return_relation": "回头克",
+          "advance_retreat": "",
+          "hidden_relation": ""
+        },
+        "position_label": "1爻",
+        "relative": "子孙",
+        "spirit": "青龙",
+        "ganzhi": "甲子",
+        "element": "水",
+        "state_text": "老阳→变阴",
+        "moving": true,
+        "is_shi": false,
+        "is_ying": false,
+        "is_kongwang": false,
+        "compatibility": {
+          "presence": [
+            "爻位",
+            "六亲",
+            "六神",
+            "纳甲",
+            "五行",
+            "状态",
+            "是否动爻",
+            "是否世爻",
+            "是否应爻",
+            "是否空亡",
+            "变纳甲",
+            "变五行",
+            "变六亲",
+            "伏神六亲",
+            "伏神纳甲",
+            "伏神五行",
+            "月令",
+            "日辰关系",
+            "回头",
+            "进退神",
+            "伏神与飞神关系"
+          ],
+          "extensions": {}
+        },
+        "branch": "子"
+      },
+      {
+        "position": 2,
+        "yin_yang": "yang",
+        "changed": {
+          "ganzhi": "丙午",
+          "element": "火",
+          "relative": "官鬼",
+          "branch": "午"
+        },
+        "hidden": null,
+        "relations": {
+          "month_strength": "囚",
+          "day_relation": "",
+          "return_relation": "",
+          "advance_retreat": "",
+          "hidden_relation": ""
+        },
+        "position_label": "2爻",
+        "relative": "妻财",
+        "spirit": "朱雀",
+        "ganzhi": "甲寅",
+        "element": "木",
+        "state_text": "老阳→变阴",
+        "moving": true,
+        "is_shi": false,
+        "is_ying": false,
+        "is_kongwang": true,
+        "compatibility": {
+          "presence": [
+            "爻位",
+            "六亲",
+            "六神",
+            "纳甲",
+            "五行",
+            "状态",
+            "是否动爻",
+            "是否世爻",
+            "是否应爻",
+            "是否空亡",
+            "变纳甲",
+            "变五行",
+            "变六亲",
+            "伏神六亲",
+            "伏神纳甲",
+            "伏神五行",
+            "月令",
+            "日辰关系",
+            "回头",
+            "进退神",
+            "伏神与飞神关系"
+          ],
+          "extensions": {}
+        },
+        "branch": "寅"
+      },
+      {
+        "position": 3,
+        "yin_yang": "yang",
+        "changed": null,
+        "hidden": null,
+        "relations": {
+          "month_strength": "旺",
+          "day_relation": "",
+          "return_relation": "",
+          "advance_retreat": "",
+          "hidden_relation": ""
+        },
+        "position_label": "3爻",
+        "relative": "父母",
+        "spirit": "勾陈",
+        "ganzhi": "甲辰",
+        "element": "土",
+        "state_text": "少阳",
+        "moving": false,
+        "is_shi": false,
+        "is_ying": true,
+        "is_kongwang": false,
+        "compatibility": {
+          "presence": [
+            "爻位",
+            "六亲",
+            "六神",
+            "纳甲",
+            "五行",
+            "状态",
+            "是否动爻",
+            "是否世爻",
+            "是否应爻",
+            "是否空亡",
+            "变纳甲",
+            "变五行",
+            "变六亲",
+            "伏神六亲",
+            "伏神纳甲",
+            "伏神五行",
+            "月令",
+            "日辰关系",
+            "回头",
+            "进退神",
+            "伏神与飞神关系"
+          ],
+          "extensions": {}
+        },
+        "branch": "辰"
+      },
+      {
+        "position": 4,
+        "yin_yang": "yang",
+        "changed": null,
+        "hidden": null,
+        "relations": {
+          "month_strength": "休",
+          "day_relation": "",
+          "return_relation": "",
+          "advance_retreat": "",
+          "hidden_relation": ""
+        },
+        "position_label": "4爻",
+        "relative": "官鬼",
+        "spirit": "螣蛇",
+        "ganzhi": "壬午",
+        "element": "火",
+        "state_text": "少阳",
+        "moving": false,
+        "is_shi": false,
+        "is_ying": false,
+        "is_kongwang": false,
+        "compatibility": {
+          "presence": [
+            "爻位",
+            "六亲",
+            "六神",
+            "纳甲",
+            "五行",
+            "状态",
+            "是否动爻",
+            "是否世爻",
+            "是否应爻",
+            "是否空亡",
+            "变纳甲",
+            "变五行",
+            "变六亲",
+            "伏神六亲",
+            "伏神纳甲",
+            "伏神五行",
+            "月令",
+            "日辰关系",
+            "回头",
+            "进退神",
+            "伏神与飞神关系"
+          ],
+          "extensions": {}
+        },
+        "branch": "午"
+      },
+      {
+        "position": 5,
+        "yin_yang": "yang",
+        "changed": {
+          "ganzhi": "庚申",
+          "element": "金",
+          "relative": "兄弟",
+          "branch": "申"
+        },
+        "hidden": null,
+        "relations": {
+          "month_strength": "相",
+          "day_relation": "日辰合",
+          "return_relation": "",
+          "advance_retreat": "",
+          "hidden_relation": ""
+        },
+        "position_label": "5爻",
+        "relative": "兄弟",
+        "spirit": "白虎",
+        "ganzhi": "壬申",
+        "element": "金",
+        "state_text": "老阳→变阴",
+        "moving": true,
+        "is_shi": false,
+        "is_ying": false,
+        "is_kongwang": false,
+        "compatibility": {
+          "presence": [
+            "爻位",
+            "六亲",
+            "六神",
+            "纳甲",
+            "五行",
+            "状态",
+            "是否动爻",
+            "是否世爻",
+            "是否应爻",
+            "是否空亡",
+            "变纳甲",
+            "变五行",
+            "变六亲",
+            "伏神六亲",
+            "伏神纳甲",
+            "伏神五行",
+            "月令",
+            "日辰关系",
+            "回头",
+            "进退神",
+            "伏神与飞神关系"
+          ],
+          "extensions": {}
+        },
+        "branch": "申"
+      },
+      {
+        "position": 6,
+        "yin_yang": "yang",
+        "changed": {
+          "ganzhi": "庚戌",
+          "element": "土",
+          "relative": "父母",
+          "branch": "戌"
+        },
+        "hidden": null,
+        "relations": {
+          "month_strength": "旺",
+          "day_relation": "",
+          "return_relation": "",
+          "advance_retreat": "",
+          "hidden_relation": ""
+        },
+        "position_label": "6爻",
+        "relative": "父母",
+        "spirit": "玄武",
+        "ganzhi": "壬戌",
+        "element": "土",
+        "state_text": "老阳→变阴",
+        "moving": true,
+        "is_shi": true,
+        "is_ying": false,
+        "is_kongwang": false,
+        "compatibility": {
+          "presence": [
+            "爻位",
+            "六亲",
+            "六神",
+            "纳甲",
+            "五行",
+            "状态",
+            "是否动爻",
+            "是否世爻",
+            "是否应爻",
+            "是否空亡",
+            "变纳甲",
+            "变五行",
+            "变六亲",
+            "伏神六亲",
+            "伏神纳甲",
+            "伏神五行",
+            "月令",
+            "日辰关系",
+            "回头",
+            "进退神",
+            "伏神与飞神关系"
+          ],
+          "extensions": {}
+        },
+        "branch": "戌"
+      }
+    ],
+    "compatibility": {
+      "presence": [
+        "ganzhi",
+        "yearGanzhi",
+        "monthGanzhi",
+        "hourGanzhi",
+        "fourPillarsText",
+        "kongText",
+        "dateText",
+        "palaceText",
+        "lowerUpperText",
+        "dayKongText",
+        "guaName",
+        "bianGuaName",
+        "source",
+        "rulesVersion",
+        "coinConvention",
+        "castAnchorY",
+        "castAnchorM",
+        "castAnchorD",
+        "overallTrendText"
+      ],
+      "extensions": {}
+    }
+  },
+  "question": "我想周末和家人整理旧书，请给两项筹备建议，区分盘面事实与一般建议，不预测具体日期。",
+  "raw": "{\"schema_version\":\"structured-answer-1.0\",\"context_id\":\"sha256:4956a0bf8d3bb3851016fc6a68e78df88d7dab3d1aae6c32337f1f39673c9433\",\"answer\":\"可以按两项来筹备：第一，先把旧书按“保留、待定、处理”分成三类，再准备标签和纸箱，避免现场反复翻拣；第二，整理时让家人各自认领一部分，先清点再搬动，把易损书单独平放。以上是筹备建议，不是卦象对现实结果的断言。盘面上可以确认的是：第三爻（应爻）与第六爻（世爻）均为父母，五行同为土；两爻都属静爻，九二妻财旬空。是否有人愿意配合、旧书数量多少，这些未在卦盘中提供，不宜替现实下结论。\",\"direction\":\"unclear\",\"yongshen_candidates\":[{\"relative\":\"父母\",\"targets\":[{\"line\":3,\"component\":\"primary\"},{\"line\":6,\"component\":\"primary\"}],\"reason\":\"旧书整理涉及书籍、文书类物品，传统上多从父母爻着眼；第三爻与第六爻的六亲均为父母，因此列为可参考的取用候选。这只是选取角度，不代表卦盘已证明现实中有多少旧书或家人是否配合。\",\"evidence_ids\":[\"fact:/lines/2/relative\",\"fact:/lines/5/relative\"]}],\"factors\":[{\"assessment\":\"conditional\",\"interpretation\":\"第三爻父母与第六爻父母五行同为土，且两爻均为静爻；若从父母爻看书籍文书类象，可把这两爻当作整理旧书这一事项的盘面参照。它们只说明有父母爻存在，不能据此推断旧书数量或整理难度。\",\"evidence_ids\":[\"fact:/lines/2/relative\",\"fact:/lines/2/element\",\"fact:/lines/2/moving\",\"fact:/lines/5/relative\",\"fact:/lines/5/element\",\"fact:/lines/5/moving\"]},{\"assessment\":\"neutral\",\"interpretation\":\"第二爻妻财为旬空：这是当前卦盘的确定状态。就筹备建议而言，只可提醒若涉及分类花费、搬运或取舍，宜先确认再行动；旬空不等于现实中一定缺钱或一定没有物品。\",\"evidence_ids\":[\"fact:/lines/1/relative\",\"fact:/lines/1/is_kongwang\"]}],\"timing_candidates\":[],\"uncertainties\":[\"本次只核对当前卦盘中与旧书整理相关的父母爻位置和旬空状态，未提供家人意愿、旧书数量、住所空间等现实信息。\",\"卦盘显示的是既定排盘字段，不能据此断言现实中一定存在某类物品或某位家人会配合；上述建议以一般筹备原则为准。\"]}"
+}

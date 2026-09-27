@@ -4,6 +4,33 @@ import { isOutputContext } from './context.js';
 function references(answer) {
   return [...answer.factors, ...answer.yongshen_candidates, ...answer.timing_candidates];
 }
+// A deliberately narrow consistency check, not a natural-language truth checker.
+// Only literal numbered-line claims and quantified cited motion facts are checked.
+// Questions, conditions, negations and quotations are left for human review.
+function checkMotionClaims(answer, context) {
+  if(context.conversation?.version !== 'reading-production-3') return;
+  const numbers={'一':1,'二':2,'三':3,'四':4,'五':5,'六':6,'两':2};
+  const number=s=>numbers[s] || Number(s);
+  const registry=new Map(context.evidence.map(e=>[e.id,e]));
+  const passages=[{text:answer.answer,path:'$.answer'},
+    ...answer.factors.map((f,i)=>({text:f.interpretation,ids:f.evidence_ids,path:`$.factors[${i}].interpretation`})),
+    ...answer.yongshen_candidates.map((c,i)=>({text:c.reason,ids:c.evidence_ids,path:`$.yongshen_candidates[${i}].reason`})),
+    ...answer.timing_candidates.map((c,i)=>({text:c.reason,ids:c.evidence_ids,path:`$.timing_candidates[${i}].reason`})),
+    ...answer.uncertainties.map((text,i)=>({text,path:`$.uncertainties[${i}]`}))];
+  for(const passage of passages) for(const clause of passage.text.split(/[。；;！？!?\n]/)) {
+    if(/[“”"‘’]|如果|假设|假如|若|并非|不是|并不|不一定|不能说|是否|未必|变卦|变爻|伏神/.test(clause)) continue;
+    for(const match of clause.matchAll(/第([一二三四五六1-6])爻(?:（[^）]{0,8}）)?(?:父母|兄弟|子孙|妻财|官鬼)?(?:为|是|属于|属)(动|静)爻/g)) {
+      const line=context.input.C_canonical_cast.lines[number(match[1])-1];
+      if(line.moving !== (match[2]==='动')) throw new OutputError('motion_fact_conflict',passage.path);
+    }
+    // "两爻均为静爻" can only be resolved when exactly two direct motion facts
+    // are cited in this item. Do not guess which lines an unbound pronoun denotes.
+    const motion=[...new Set(passage.ids || [])].map(id=>registry.get(id)).filter(e=>e?.kind==='program_fact' && /^\/lines\/[0-5]\/moving$/.test(e.path));
+    for(const match of clause.matchAll(/([一二三四五六两1-6])爻(?:全部|均|都)(?:为|是|属|属于)(动|静)爻/g)) {
+      if(motion.length===number(match[1]) && motion.some(e=>e.value !== (match[2]==='动'))) throw new OutputError('motion_fact_conflict',passage.path);
+    }
+  }
+}
 export function validateOutputAnswer(answer, context) {
   if (!isOutputContext(context)) throw new OutputError('untrusted_context');
   validateOutputShape(answer);
@@ -18,6 +45,7 @@ export function validateOutputAnswer(answer, context) {
     const pointer = `/lines/${target.line - 1}/${target.component === 'primary' ? '' : target.component + '/'}relative`;
     if (!candidate.evidence_ids.includes(`fact:${pointer}`)) throw new OutputError('missing_target_evidence', '$.yongshen_candidates');
   }
+  checkMotionClaims(answer,context);
   return answer;
 }
 
