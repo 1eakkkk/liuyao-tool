@@ -19,6 +19,7 @@ function switchTab(tabName){
     b.tabIndex = active ? 0 : -1;
   });
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id === tabName));
+  updateIndicator();
   if(tabName === 'ai') window.updateCurrentCastStatus();
   // Long readings should not leave the newly selected page scrolled halfway
   // down. Keep the header when already at the top; return to content otherwise.
@@ -30,3 +31,18 @@ function switchTab(tabName){
 }
 
 export { tabButtons, switchTab };
+
+const navigation = document.querySelector('.tabs');
+const indicator = document.createElement('span');
+indicator.className = 'tab-indicator'; indicator.setAttribute('aria-hidden','true');
+navigation?.prepend(indicator);
+function updateIndicator() {
+  const current=tabButtons.find(b=>b.classList.contains('active'));
+  if (!navigation || !current) return;
+  indicator.style.width=`${current.offsetWidth}px`;
+  indicator.style.height=`${current.offsetHeight}px`;
+  indicator.style.transform=`translate(${current.offsetLeft}px,${current.offsetTop}px)`;
+  navigation.classList.add('has-indicator');
+}
+if (navigation && typeof ResizeObserver !== 'undefined') new ResizeObserver(updateIndicator).observe(navigation);
+requestAnimationFrame(updateIndicator);

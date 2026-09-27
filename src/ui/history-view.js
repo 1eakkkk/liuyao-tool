@@ -101,7 +101,7 @@ function renderHistory(){
     const configLabel = r.roleLabel ? `${r.roleLabel}${r.styleLabel ? '·' + r.styleLabel : ''}` : '';
     const baseMetaText = isPrompt
       ? '未直接调用AI，仅生成提示词'
-      : `token共${r.totalTokens||0} · 约¥${(r.costYuan||0).toFixed(4)}`;
+      : r.externalOnly ? '外部 AI 回复，本站未产生 API 费用' : `token共${r.totalTokens||0} · 约¥${(r.costYuan||0).toFixed(4)}`;
     const metaText = configLabel ? `${baseMetaText} · ${configLabel}` : baseMetaText;
     const questionHtml = `<div class="history-turn history-turn-user history-q-top"><b>问：</b>${escapeHtml(firstQuestion)}</div>`;
     // roleCustomText/styleCustomText 是这次改动新加的字段，只有"当时选的正是自定义档"才会
@@ -114,10 +114,10 @@ function renderHistory(){
     if(r.styleCustomText) customConfigParts.push(`<div class="history-turn history-custom-config"><b>当时的自定义风格：</b>${escapeHtml(r.styleCustomText)}</div>`);
     const customConfigHtml = customConfigParts.join('');
     return `
-    <div class="history-item" data-id="${r.id}">
+    <div class="history-item" data-id="${escapeHtml(String(r.id))}">
       <div class="history-item-head" data-action="toggle">
         <span class="history-item-q">${escapeHtml(firstQuestion)}</span>
-        ${tagHtml}
+        ${r.readingMode === 'structured' ? '<span class="history-item-tag">结构化</span>' : ''}${tagHtml}
         <span class="history-item-time">${formatTime(r.ts)}</span>
       </div>
       <div class="history-item-meta">${metaText}</div>

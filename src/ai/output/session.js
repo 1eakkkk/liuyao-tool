@@ -1,5 +1,5 @@
 import { normalizeLegacyCast } from '../../core/normalize.js';
-import { buildOutputContext } from './context.js';
+import { buildOutputContext, hashOutput } from './context.js';
 import { buildOutputMessages } from './prompt.js';
 import { parseOutputAnswer } from './parse.js';
 import { MAX_RESPONSE_CHARS } from './contract.js';
@@ -9,7 +9,7 @@ export const READING_PROMPT = 'reading-production-2';
 export const MAX_TURNS = 8;
 export function createReadingSession(canonical, preferences = null) {
   if (preferences !== null && (!['brief', 'deep', 'custom'].includes(preferences.style) || typeof preferences.custom !== 'string' || preferences.custom.length > 2000)) throw Error('解读篇幅设置无效');
-  return { version: READING_VERSION, prompt: READING_PROMPT, canonical: normalizeLegacyCast(structuredClone(canonical)), preferences: preferences ? {style: preferences.style, custom: preferences.custom} : null, turns: [] };
+  return { version: READING_VERSION, prompt: READING_PROMPT, historyId: `reading-${globalThis.crypto.randomUUID()}`, historySuppressed: false, canonical: normalizeLegacyCast(structuredClone(canonical)), preferences: preferences ? {style: preferences.style, custom: preferences.custom} : null, turns: [] };
 }
 export async function prepareReadingTurn(session, question) {
   if (session.version !== READING_VERSION || session.prompt !== READING_PROMPT) throw Error('此解读版本暂不支持续接，请重新开始。');
@@ -45,6 +45,7 @@ export function appendReadingTurn(session, prepared, raw, completed, source, usa
 }
 export function serializeReadingSession(session, pendingQuestion = null) {
   return JSON.stringify({ version: session.version, prompt: session.prompt, canonical: session.canonical, preferences: session.preferences,
+    historyId:session.historyId, historySuppressed:session.historySuppressed,
     pendingQuestion, turns: session.turns.map(({ question, raw, completed, source, usage }) => ({ question, raw, completed, source, usage })) });
 }
 export async function restoreReadingSession(raw) {
@@ -52,6 +53,9 @@ export async function restoreReadingSession(raw) {
   const saved = JSON.parse(raw);
   if (saved.version !== READING_VERSION || saved.prompt !== READING_PROMPT || !Array.isArray(saved.turns) || saved.turns.length > MAX_TURNS) throw Error('保存的解读版本不兼容');
   const session = createReadingSession(saved.canonical, saved.preferences ?? null);
+  session.historyId = typeof saved.historyId === 'string' && /^reading-[a-zA-Z0-9:_-]{1,100}$/.test(saved.historyId)
+    ? saved.historyId : `reading-${await hashOutput(session.canonical)}`;
+  session.historySuppressed = saved.historySuppressed === true;
   for (const t of saved.turns) {
     if (typeof t.raw !== 'string' || t.raw.length > MAX_RESPONSE_CHARS + 1 || typeof t.completed !== 'boolean') throw Error('保存的回复损坏');
     const prepared = await prepareReadingTurn(session, t.question);

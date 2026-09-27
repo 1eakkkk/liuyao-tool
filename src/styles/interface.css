@@ -1,6 +1,6 @@
 /* Interface system: tokens → controls → surfaces → navigation → responsive.
    Keep business content and cast diagrams in their existing components.
-   Native selects/date pickers retain platform keyboard and touch behavior. */
+   Select menus retain native values; date pickers use platform behavior. */
 :root {
   color-scheme: light;
   --ui-bg: #f4f6f8;
@@ -399,3 +399,56 @@ body [hidden] { display:none !important; }
 :root[data-theme=dark] body .physics-results .is-current :is(.physics-line-name,.physics-line-number) { color:var(--ui-accent); }
 :root[data-theme=dark] body .physics-results .is-moving .physics-line-name { color:var(--ui-danger); }
 :root[data-theme=dark] ::selection { background:#426759; color:#fff; }
+
+/* Theme-aware menus and deliberate spacing, shared across all form layouts. */
+body .select-shell { position:relative; min-width:0; width:100%; flex:1; }
+:root body .select-shell > select { opacity:0; pointer-events:none; display:block; }
+:root body .select-trigger { position:absolute; inset:0; width:100%; min-height:48px; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 14px; border:1px solid var(--border-soft); border-radius:12px; background:var(--ui-surface); color:var(--ui-text); font:inherit; font-size:16px; text-align:left; cursor:pointer; touch-action:manipulation; }
+body .select-trigger span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+body .select-trigger svg { width:18px; height:18px; flex:none; fill:none; stroke:currentColor; stroke-width:1.5; transition:transform .2s; }
+body .select-trigger[aria-expanded=true] { border-color:var(--ui-accent); box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-accent) 12%,transparent); }
+body .select-trigger[aria-expanded=true] svg { transform:rotate(180deg); }
+body .select-menu { z-index:10000; box-sizing:border-box; overflow:auto; overscroll-behavior:contain; padding:6px; border:1px solid var(--ui-border); border-radius:14px; background:var(--ui-surface); box-shadow:0 12px 40px #102a3526; animation:menu-enter .16s ease-out; }
+:root body .select-option { display:block; width:100%; min-height:44px; padding:10px 12px; border:0; border-radius:8px; text-align:left; font:inherit; font-size:15px; background:transparent; color:var(--ui-text); cursor:pointer; touch-action:manipulation; }
+body .select-option:hover,body .select-option:focus { background:var(--ui-subtle); outline:none; }
+body .select-option[aria-selected=true] { background:var(--ui-accent-soft); color:var(--ui-accent); font-weight:600; }
+body .settings-group { padding:18px; border-radius:12px; }
+body .settings-field { min-width:0; }
+body .settings-field > label { display:block; margin:0 0 8px; }
+body .settings-group-title { margin-bottom:12px; }
+body .hero h1 { font-size:32px; font-weight:750; letter-spacing:.035em; line-height:1.4; }
+body .tab-icon { width:21px; height:21px; }
+body .help-fab svg { display:block; width:21px; height:21px; margin:auto; }
+body .tab-indicator { position:absolute; left:0; top:0; pointer-events:none; border:1px solid var(--ui-border); border-radius:12px; background:var(--ui-accent-soft); transition:transform .34s cubic-bezier(.22,1,.36,1),width .34s cubic-bezier(.22,1,.36,1),height .34s; }
+body .tabs .tab-btn { position:relative; z-index:1; }
+:root body .tabs.has-indicator .tab-btn.active { background:transparent; border-color:transparent; }
+body .panel.active { animation:page-enter .36s cubic-bezier(.22,1,.36,1) both; }
+body .panel.active > section:nth-child(2) { animation:page-enter .42s cubic-bezier(.22,1,.36,1) both; }
+@keyframes page-enter { from {opacity:0;transform:translateY(12px)} to {opacity:1;transform:translateY(0)} }
+@keyframes menu-enter { from {opacity:0;transform:translateY(-4px)} to {opacity:1;transform:translateY(0)} }
+body .physics-dialog { --stage-center:#f2f7f4; --stage-edge:#dde9e2; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; }
+:root[data-theme=dark] body .physics-dialog { --stage-center:#354e45; --stage-edge:#24382f; }
+body .physics-header { gap:16px; align-items:center; }
+:root body .physics-dialog .physics-close { position:static; flex:0 0 44px; width:44px; height:44px; margin:0 0 0 auto; padding:0; display:grid; place-items:center; }
+body .physics-close svg { display:block; margin:0; }
+body .physics-table { background:var(--stage-edge); }
+body .physics-table-top { color:var(--ui-muted); font-size:12px; letter-spacing:0; padding-bottom:8px; }
+body .physics-table-top > span:first-child { visibility:hidden; }
+body .physics-table-top > span:last-child { font-size:12px; border-color:var(--ui-border); color:var(--ui-text); }
+body .physics-scene { cursor:default; touch-action:pan-y; }
+body .physics-table-caption { display:none; }
+body .physics-record { background:var(--ui-surface); border-color:var(--ui-border); }
+body .physics-record h4,body .physics-count { color:var(--ui-text); font-family:var(--ui-font); letter-spacing:0; }
+body .physics-count small,body .physics-line-number,body .physics-line-name { color:var(--ui-muted); }
+body .physics-results { margin-top:16px; }
+body .physics-results li { border-color:var(--ui-border); }
+body .physics-results .is-done :is(.physics-line-number,.physics-line-name) { color:var(--ui-text); }
+body .physics-results .is-current :is(.physics-line-number,.physics-line-name) { color:var(--ui-accent); }
+body .physics-line-glyph i { background:var(--ui-accent); }
+body .is-moving .physics-line-glyph i { background:var(--ui-danger); }
+body .physics-results .is-moving .physics-line-name { color:var(--ui-danger); }
+body .physics-guidance p { font-size:13px; color:var(--ui-muted); }
+body .physics-dialog h3 { letter-spacing:0; }
+@media(max-width:640px) { body .hero h1 {font-size:28px} body .settings-group {padding:14px} body .physics-results {margin-top:12px} }
+
+body .physics-dialog button {user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}

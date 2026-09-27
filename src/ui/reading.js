@@ -9,6 +9,8 @@ import { copyTextToClipboard } from './helpers.js';
 import { isLifespanQuestion } from '../app/question.js';
 import { state } from '../app/state.js';
 import { loadStyleChoice, loadCustomStyle } from '../storage/settings.js';
+import { archiveReading } from '../storage/reading-history.js';
+import { renderHistory } from './history-view.js';
 
 const KEY = 'liuyao_structured_reading_v1';
 let session = null, pending = null, busy = false, epoch = 0;
@@ -18,6 +20,8 @@ function status(text) { el('readingStatus').textContent = text; }
 function persist() {
   if (!session) return;
   if (!safeSetItem(KEY, serializeReadingSession(session, pending?.question ?? null))) status('回复已保留在页面，但本地保存失败；请复制对话留存。');
+  if (!archiveReading(session, pending)) status('历史记录保存失败，请复制对话留存。');
+  renderHistory();
 }
 function render() {
   const root = el('readingPanel'); root.hidden = !session;
@@ -97,6 +101,11 @@ export async function startReading(canonical, kind) {
   });
 }
 export function initializeReading() {
+  document.addEventListener('history:deleted', ({detail}) => {
+    if (session && (detail.all || detail.id === session.historyId)) {
+      session.historySuppressed = true; persist();
+    }
+  });
   const syncSettings = () => {
     const structured = readingSelected();
     for (const id of ['roleSelect','customRoleInput','effortSelect']) el(id).disabled = structured;
@@ -152,6 +161,7 @@ export function initializeReading() {
       el('readingMode').value = 'structured'; el('readingModeNote').hidden = false;
       syncSettings();
       render(); status('已恢复上次结构化解读，并重新核对格式与引用。');
+      persist();
     });
   }
   syncSettings();

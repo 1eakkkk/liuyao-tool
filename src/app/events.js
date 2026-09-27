@@ -376,7 +376,7 @@ toggleHistoryBtn.addEventListener('click', ()=>{
   if(historyPanel.classList.contains('open')) renderHistory();
 });
 
-historyList.addEventListener('click', (e)=>{
+historyList.addEventListener('click', async (e)=>{
   const actionEl = e.target.closest('[data-action]');
   if(!actionEl) return;
   const item = e.target.closest('.history-item');
@@ -384,8 +384,10 @@ historyList.addEventListener('click', (e)=>{
   if(actionEl.dataset.action === 'toggle'){
     item.classList.toggle('expanded');
   }else if(actionEl.dataset.action === 'delete'){
+    if(!(await showConfirm('删除这条解读记录？删除后无法恢复。',{title:'删除记录',okText:'删除',cancelText:'保留'}))) return;
     const list = loadHistory().filter(r => String(r.id) !== id);
-    saveHistory(list);
+    if(!saveHistory(list)){showToast('删除失败，请稍后再试','error');return;}
+    document.dispatchEvent(new CustomEvent('history:deleted',{detail:{id}}));
     renderHistory();
     showToast('已删除这条记录');
   }
@@ -397,7 +399,8 @@ clearHistoryBtn.addEventListener('click', async ()=>{
     title: '清空历史记录', okText: '清空', cancelText: '取消'
   });
   if(!ok) return;
-  saveHistory([]);
+  if(!saveHistory([])){showToast('清空失败，请稍后再试','error');return;}
+  document.dispatchEvent(new CustomEvent('history:deleted',{detail:{all:true}}));
   clearLifetimeStats(); // 确认弹窗里说的是"清空历史记录和累计统计"，累计统计现在存在独立计数器里，这里得一并清掉
   renderHistory();
   renderStats();

@@ -60,7 +60,7 @@ try {
     assert.notEqual(next.context_id, input.context_id); assert.equal(next.conversation.history.length, 1);
     await page.locator('#readingPaste').fill(JSON.stringify(answer(input)));
     await page.locator('#readingComplete').check(); await page.locator('#readingImport').click();
-    assert((await page.locator('#readingStatus').textContent()).includes('未通过'));
+    assert((await page.locator('#readingStatus').textContent()).includes('未通过'), await page.locator('#readingStatus').textContent());
     // Saved test key never leaves the mocked route.
     await page.evaluate(() => localStorage.setItem('liuyao_deepseek_api_key', 'TEST_ONLY'));
     await page.reload(); await page.locator('[data-tab="ai"]').click();
@@ -70,7 +70,7 @@ try {
     assert(requests[0].messages[0].content.includes('700–800 字'));
     behavior = 'invalid'; await page.locator('#readingFollow').fill('再次检查依据'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 4);
-    assert((await page.locator('#readingStatus').textContent()).includes('未通过'));
+    assert((await page.locator('#readingStatus').textContent()).includes('未通过'), await page.locator('#readingStatus').textContent());
     behavior = 'truncated'; await page.locator('#readingFollow').fill('截断测试'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 5);
     assert((await page.locator('#readingTurns article').last().textContent()).includes('未完成'));
@@ -97,6 +97,23 @@ try {
     await page.reload(); await page.locator('[data-tab="ai"]').click();
     await page.locator('#readingTurns h2').waitFor();
     assert.equal(await page.locator('#readingTurns article').count(), 1);
+    await page.locator('#toggleHistoryBtn').click();
+    assert.equal(await page.locator('.history-item').count(),2);
+    await page.locator('.history-item-head').first().click();
+    assert((await page.locator('.history-item').first().textContent()).includes('结构化'));
+    assert((await page.locator('.history-item').first().textContent()).includes('可以先整理书目'));
+    await page.locator('.history-item-del').first().click();
+    await page.locator('#confirmCancelBtn').click();
+    assert.equal(await page.locator('.history-item').count(),2);
+    await page.locator('.history-item-del').first().click();
+    await page.locator('#confirmOkBtn').click();
+    assert.equal(await page.locator('.history-item').count(),1);
+    await page.reload(); await page.locator('[data-tab="ai"]').click();
+    await page.locator('#readingTurns h2').waitFor();
+    await page.locator('#toggleHistoryBtn').click();
+    assert.equal(await page.locator('.history-item').count(),1,'Deleted active reading must not reappear on restore');
+    const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_interpret_history')));
+    assert.equal(stored[0].turns.filter(t=>t.role==='assistant').length,6,'Followups belong to one history record');
     assert.deepEqual(errors, []);
     report.push({ width, api: 'mocked', export_roundtrip: 'passed', replay_rejected: true, restore: 'passed', stop: 'passed', replacement: 'passed', errors });
     await context.close();

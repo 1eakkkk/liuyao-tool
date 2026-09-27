@@ -1,0 +1,42 @@
+import {test, expect, beforeEach} from 'vitest';
+import fs from 'node:fs';
+import {createReadingSession, prepareReadingTurn, appendReadingTurn, serializeReadingSession, restoreReadingSession} from '../../src/ai/output/session.js';
+import {archiveReading} from '../../src/storage/reading-history.js';
+import {loadHistory, saveHistory, loadLifetimeStats, addLifetimeUsage} from '../../src/storage/history.js';
+import {syntheticOutput} from '../../experiments/structured-output/example.js';
+const canonical=JSON.parse(fs.readFileSync('experiments/phase7/fixtures/compat-1.json'));
+beforeEach(()=>localStorage.clear());
+test('export, imported answer, API followup and restore update one record without charging again',async()=>{
+  const session=createReadingSession(canonical), prepared=await prepareReadingTurn(session,'读书计划');
+  expect(archiveReading(session,prepared)).toBe(true);
+  expect(loadHistory()[0].type).toBe('prompt');
+  const answer=syntheticOutput(prepared.context);
+  appendReadingTurn(session,prepared,JSON.stringify(answer),true,'external');
+  archiveReading(session,null);
+  const followup=await prepareReadingTurn(session,'补充建议');
+  addLifetimeUsage(.01,50);
+  appendReadingTurn(session,followup,'截断原文',false,'api',{cost:.01,total:50,seconds:1});
+  archiveReading(session,null);
+  const restored=await restoreReadingSession(serializeReadingSession(session));
+  archiveReading(restored.session,restored.pending);
+  const records=loadHistory();
+  expect(records).toHaveLength(1); expect(records[0].turns).toHaveLength(4);
+  expect(records[0].turns[1].text).toContain(answer.answer);
+  expect(records[0].turns[1].text).toContain('不确定性');
+  expect(records[0].turns[3].text).toContain('未完成或未通过');
+  expect(loadLifetimeStats()).toEqual({cost:.01,tokens:50});
+});
+test('explicit deletion survives reload and further persistence',async()=>{
+  const session=createReadingSession(canonical), pending=await prepareReadingTurn(session,'读书计划');
+  archiveReading(session,pending); saveHistory([]); session.historySuppressed=true;
+  const restored=await restoreReadingSession(serializeReadingSession(session,pending.question));
+  archiveReading(restored.session,restored.pending);
+  expect(loadHistory()).toEqual([]);
+});
+test('pre-history active sessions receive a stable migration id',async()=>{
+  const saved=JSON.parse(serializeReadingSession(createReadingSession(canonical),'读书计划'));
+  delete saved.historyId;
+  const first=await restoreReadingSession(JSON.stringify(saved)), second=await restoreReadingSession(JSON.stringify(saved));
+  archiveReading(first.session,first.pending); archiveReading(second.session,second.pending);
+  expect(loadHistory()).toHaveLength(1);
+});

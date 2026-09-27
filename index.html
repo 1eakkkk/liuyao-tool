@@ -61,22 +61,9 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
   <div class="onboard-card">
     <div class="onboard-scroll" id="onboardScroll" tabindex="0">
       <h3 id="onboardTitle">怎么用这个工具</h3>
-      <div class="onboard-step">
-        <div class="num">1</div>
-        <div class="txt">先摇一卦感受一下：切到 <b>起卦排盘</b> 标签页，日柱已经帮你选好今天的了，不用管。直接点 <b>摇卦</b>，选择逐爻或连续模式，在弹出的桌面中投掷铜钱——这一步不花钱、不用注册任何东西，纯网页自己算的。（如果你更信自己现实里摇的铜钱结果，也可以切到旁边"线下摇卦"，把自己摇到的结果手动填进去——选的时候右边会同步画出卦来。）</div>
-      </div>
-      <div class="onboard-step">
-        <div class="num">2</div>
-        <div class="txt">想让 AI 帮你解读这一卦，需要一张"通行证"——<b>DeepSeek API Key</b>。说白了就是你自己去 DeepSeek 网站注册的一个身份凭证，让这个网页能替你去问一句 AI、拿到回答，每问一次扣一点点小钱（通常几分钱到几毛钱一次，很便宜，用多少扣多少，不用你多充）。</div>
-      </div>
-      <div class="onboard-step">
-        <div class="num">3</div>
-        <div class="txt">怎么弄到这张 Key：打开 <b>platform.deepseek.com</b>，手机号就能注册，随便充一点钱（比如5块钱够用很久）；在网站的"API keys"页面新建一个 Key、复制下来。回到这个页面，下滑到 <b>AI 解卦</b> 区块，点一次 <b>设置</b>，把复制的 Key 粘贴进去，点"保存 Key"——一次性的，以后不用再弄。</div>
-      </div>
-      <div class="onboard-step">
-        <div class="num">4</div>
-        <div class="txt">都弄好之后，<b>先写下你想问的问题</b>，再点 <b>AI 解读</b> 就行——会在后台自动起卦，完成六爻后继续解读；之后想问新的事，直接改问题再点一次就够了。Key 保存在本机，请求解读时会发送给 DeepSeek 用于认证。想了解六爻的基础知识（世应、六亲、空亡这些词到底啥意思），切到另外两个标签页看看，从头讲起。</div>
-      </div>
+      <div class="onboard-step"><div class="num">1</div><div class="txt">想好一件事，点击 <b>摇卦</b>。已有线下结果，可直接录入六爻。</div></div>
+      <div class="onboard-step"><div class="num">2</div><div class="txt">到 <b>AI 解卦</b> 写下问题。使用自己的 DeepSeek Key 解读，或复制提示词给其他 AI，再贴回回复。</div></div>
+      <div class="onboard-step"><div class="num">3</div><div class="txt">同一件事继续追问，新事另起一卦。<b>历史记录保存在当前浏览器</b>，重要内容请自行复制留存。</div></div>
       <div class="onboard-fade" id="onboardFade" aria-hidden="true"></div>
     </div>
     <div class="onboard-actions">
@@ -133,11 +120,11 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
      代表"洞见/解读"。四个svg都加了aria-hidden+focusable="false"，屏幕阅读器和Tab键
      只会读到/停在按钮本身的文字上，不会把装饰性图标当成一个额外的可交互元素。 -->
 <nav class="tabs" role="tablist" aria-label="页面导航">
-  <button class="tab-btn" data-tab="basics" role="tab" id="tabbtn-basics" aria-selected="false" aria-controls="basics" tabindex="-1"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.3"/><path d="M8 1.7c1.74 0 3.15 1.41 3.15 3.15S9.74 8 8 8s-3.15 1.41-3.15 3.15S6.26 14.3 8 14.3" stroke-linecap="round"/><circle cx="8" cy="4.85" r="0.55" fill="currentColor" stroke="none"/><circle cx="8" cy="11.15" r="0.55" fill="currentColor" stroke="none"/></svg>基础知识</button>
-  <button class="tab-btn active" data-tab="caster" role="tab" id="tabbtn-caster" aria-selected="true" aria-controls="caster" tabindex="0"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true" focusable="false"><circle cx="6" cy="9.6" r="4.6"/><rect x="4.7" y="8.3" width="2.6" height="2.6"/><circle cx="10.6" cy="5.3" r="4.6"/><rect x="9.3" y="4" width="2.6" height="2.6"/></svg>起卦排盘</button>
-  <button class="tab-btn" data-tab="guide" role="tab" id="tabbtn-guide" aria-selected="false" aria-controls="guide" tabindex="-1"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 14.5L3.3 2.3"/><path d="M6.6 14.5L6.3 1.7"/><path d="M9.4 14.5L9.7 1.7"/><path d="M12 14.5L12.7 2.3"/><path d="M2.2 9.8h11.6" stroke-width="0.9"/></svg>断卦入门</button>
-  <button class="tab-btn" data-tab="ai" role="tab" id="tabbtn-ai" aria-selected="false" aria-controls="ai" tabindex="-1"><svg class="tab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 1.5c0.4 2.6 1.3 4.4 2.9 5.6 1.6 1.2 2.6 1.5 3.6 1.9-1 0.4-2 0.7-3.6 1.9-1.6 1.2-2.5 3-2.9 5.6-0.4-2.6-1.3-4.4-2.9-5.6C3.5 9.7 2.5 9.4 1.5 9c1-0.4 2-0.7 3.6-1.9C6.7 5.9 7.6 4.1 8 1.5z"/></svg>AI 解卦</button>
-  <button class="help-fab" id="helpFab" title="使用教程" aria-label="使用教程">?</button>
+  <button class="tab-btn" data-tab="basics" role="tab" id="tabbtn-basics" aria-selected="false" aria-controls="basics" tabindex="-1"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5C9 3 5 3 3 4v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-2-1-6-1-9 1Zm0 0v15"/></svg>基础知识</button>
+  <button class="tab-btn active" data-tab="caster" role="tab" id="tabbtn-caster" aria-selected="true" aria-controls="caster" tabindex="0"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="14" r="7"/><path d="M6 3a7 7 0 0 1 14 8M7 12h4v4H7zM15 5h3v3"/></svg>起卦排盘</button>
+  <button class="tab-btn" data-tab="guide" role="tab" id="tabbtn-guide" aria-selected="false" aria-controls="guide" tabindex="-1"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5Z"/></svg>断卦入门</button>
+  <button class="tab-btn" data-tab="ai" role="tab" id="tabbtn-ai" aria-selected="false" aria-controls="ai" tabindex="-1"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v5a3 3 0 0 1-3 3H8l-5 2V6a3 3 0 0 1 3-3h7M7 10h4M7 15h8M18 2v6M15 5h6"/></svg>AI 解卦</button>
+  <button class="help-fab" id="helpFab" title="使用教程" aria-label="使用教程"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg></button>
 </nav>
 
 <main>
@@ -145,14 +132,17 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 <!-- ===================== TAB 1 ===================== -->
 <div class="panel" id="basics" role="tabpanel" aria-labelledby="tabbtn-basics" tabindex="0">
 
-  <section class="block">
+  <section class="block block-collapse">
     <h2>八卦：三爻定象</h2>
+    <div class="block-collapse-body">
     <p class="desc">每个卦由三条爻组成，阳爻为"—"，阴爻为"- -"。八种组合对应八卦，是六爻排盘的最小单位。</p>
     <div class="gua-grid" id="baguaGrid"></div>
+  </div>
   </section>
 
-  <section class="block">
+  <section class="block block-collapse">
     <h2>五行生克</h2>
+    <div class="block-collapse-body">
     <p class="desc">木火土金水五者循环相生，隔位相克。点击任意一个字，看它生谁、被谁生、克谁、被谁克 —— 这是判断爻位旺衰、六亲关系的根基。</p>
     <div class="wuxing-wrap">
       <svg class="wuxing-svg" id="wuxingSvg" viewBox="0 0 280 280">
@@ -168,10 +158,12 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         <div class="row" style="border-left-color:var(--vermilion-bright)">红线 = 相克（制约）</div>
       </div>
     </div>
+  </div>
   </section>
 
-  <section class="block">
+  <section class="block block-collapse">
     <h2>天干地支</h2>
+    <div class="block-collapse-body">
     <p class="desc">纳甲就是把十天干、十二地支"装"到卦爻上。先认脸熟。</p>
     <table class="ref" style="margin-bottom:14px;">
       <tr><th>十天干</th><td colspan="10">甲　乙　丙　丁　戊　己　庚　辛　壬　癸</td></tr>
@@ -186,10 +178,12 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
       <thead><tr><th>地支</th><th>午</th><th>未</th><th>申</th><th>酉</th><th>戌</th><th>亥</th></tr></thead>
       <tbody><tr><th>五行</th><td>火</td><td>土</td><td>金</td><td>金</td><td>土</td><td>水</td></tr></tbody>
     </table>
+  </div>
   </section>
 
-  <section class="block">
+  <section class="block block-collapse">
     <h2>六神</h2>
+    <div class="block-collapse-body">
     <p class="desc">六神按起卦当天的天干起排，从初爻开始向上依次循环，用来辅助判断事情的性质（喜庆、口舌、疑虑、缠绕、阻力、暗昧等），不是吉凶本身。</p>
     <table class="ref ref-cards">
       <thead><tr><th>日干</th><th>初爻起</th><th>顺序（初→上）</th></tr></thead>
@@ -202,6 +196,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         <tr><td data-th="日干">壬、癸日</td><td data-th="初爻起">玄武</td><td data-th="顺序（初→上）">玄武 青龙 朱雀 勾陈 螣蛇 白虎</td></tr>
       </tbody>
     </table>
+  </div>
   </section>
 
   <section class="block block-collapse">
