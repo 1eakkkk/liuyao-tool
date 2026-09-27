@@ -1,0 +1,29 @@
+[
+  {
+    "width": 320,
+    "layout": "grid",
+    "numberDisplay": "grid",
+    "numberWidth": "32px",
+    "paragraphWidth": 250,
+    "cardWidth": 288,
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "layout": "grid",
+    "numberDisplay": "grid",
+    "numberWidth": "32px",
+    "paragraphWidth": 320,
+    "cardWidth": 358,
+    "overflow": false
+  },
+  {
+    "width": 580,
+    "layout": "grid",
+    "numberDisplay": "grid",
+    "numberWidth": "32px",
+    "paragraphWidth": 510,
+    "cardWidth": 548,
+    "overflow": false
+  }
+]
