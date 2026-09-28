@@ -48,7 +48,7 @@ try {
         }
       }
       await page.setViewportSize({width:390,height:844});
-      await page.locator('[data-tab=caster]').tap();await page.locator('[data-mode=system]').tap();await page.locator('#castBtn').tap();await page.locator('#confirmOkBtn').tap();
+      await page.locator('[data-tab=caster]').tap();await page.locator('[data-mode=system]').tap();await page.locator('#castBtn').tap();assert(await page.locator('#confirmOverlay').isHidden());
       assert.equal(await page.locator('.physics-throw').evaluate(n=>getComputedStyle(n).userSelect),'none');
       assert(!(await page.locator('.physics-dialog').textContent()).includes('拖动'));
       const close=await page.locator('.physics-close').boundingBox(), icon=await page.locator('.physics-close svg').boundingBox();

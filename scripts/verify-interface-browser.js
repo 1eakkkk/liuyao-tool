@@ -86,7 +86,7 @@ try {
     await page.locator('#readingMode').selectOption('structured');
     await bounds('#readingMode'); await bounds('#readingModeNote'); await noOverflow();
     await page.screenshot({ path: `${root}/${width}-ai.png`, fullPage: true });
-    await page.locator('#promptBtn').click();
+    await page.locator('#readingMode').selectOption('legacy'); await page.locator('#promptBtn').click();
     await page.locator('#readingPrompt').waitFor({ state: 'visible' });
     await bounds('#readingPrompt'); await bounds('#readingPaste');
     await page.locator('#readingComplete').check();

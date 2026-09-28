@@ -124,7 +124,7 @@ export function initializeReading() {
   el('readingMode').addEventListener('change', () => {
     syncSettings();
     el('readingModeNote').hidden = !readingSelected();
-    el('readingPanel').hidden = !readingSelected() || !session;
+    el('readingPanel').hidden = el('readingMode').value === 'legacy' || !session;
   });
   const copy = (id, getText) => el(id).addEventListener('click', async () => {
     try { await copyTextToClipboard(getText()); status('已复制。'); } catch { status('自动复制失败，请选中文字手动复制。'); }
@@ -161,9 +161,7 @@ export function initializeReading() {
       session = restored.session; pending = restored.pending;
       renderPlateFromCastData(session.canonical, session.canonical.question.text,
         new Date(session.canonical.meta.created_at || Date.now()).getTime());
-      el('questionInput').value = session.canonical.question.text;
-      el('questionInput').dispatchEvent(new Event('input'));
-      el('readingMode').value = 'structured'; el('readingModeNote').hidden = false;
+      // Restore the conversation, never refill a fresh question or mode selection.
       syncSettings();
       render(); status('已恢复上次结构化解读，并重新核对格式与引用。');
       persist();

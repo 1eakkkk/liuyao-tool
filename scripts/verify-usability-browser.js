@@ -45,6 +45,8 @@ try {
         await page.screenshot({path:`test-results/usability/${engine}-${width}-restored.png`,fullPage:true});
       }
       await page.setViewportSize({width:390,height:844});
+      assert.equal(await page.locator('#questionInput').inputValue(),'');
+      await page.locator('#questionInput').fill(canonical.question.text);
       await page.locator('#castPace').selectOption('all');
       await page.locator('#castBtn').click();
       await page.locator('#confirmCancelBtn').click();

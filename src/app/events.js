@@ -104,14 +104,16 @@ tabButtons.forEach((btn, i)=>{
   // 左右方向键 / Home / End 在标签之间移动焦点并直接切换面板（标准tablist行为，
   // 不需要用户额外按Tab/Enter）；上下方向键留给页面自身滚动，不拦截。
   btn.addEventListener('keydown', (e)=>{
+    const peers = tabButtons.filter(b => b.parentElement === btn.parentElement);
+    const localIndex = peers.indexOf(btn);
     let targetIndex = null;
-    if(e.key === 'ArrowRight') targetIndex = (i + 1) % tabButtons.length;
-    else if(e.key === 'ArrowLeft') targetIndex = (i - 1 + tabButtons.length) % tabButtons.length;
+    if(e.key === 'ArrowRight') targetIndex = (localIndex + 1) % peers.length;
+    else if(e.key === 'ArrowLeft') targetIndex = (localIndex - 1 + peers.length) % peers.length;
     else if(e.key === 'Home') targetIndex = 0;
-    else if(e.key === 'End') targetIndex = tabButtons.length - 1;
+    else if(e.key === 'End') targetIndex = peers.length - 1;
     if(targetIndex === null) return;
     e.preventDefault();
-    const target = tabButtons[targetIndex];
+    const target = peers[targetIndex];
     switchTab(target.dataset.tab);
     target.focus();
   });
@@ -462,6 +464,17 @@ window.addEventListener('storage', (e)=>{
 })();
 
 initializeReading();
+function resetEntryDrafts() {
+  for (const id of ['questionInput','followUpInput','readingFollow','readingPaste','cleanupInputText','followUpExportInput']) {
+    const input=document.getElementById(id);
+    if(input) { input.value=''; input.dispatchEvent(new Event('input')); }
+  }
+  document.getElementById('readingComplete').checked=false;
+  const mode=document.getElementById('readingMode'); mode.value=''; mode.dispatchEvent(new Event('change'));
+}
+resetEntryDrafts();
+window.addEventListener('pageshow', resetEntryDrafts);
+
 
 styleSelect.addEventListener('change', ()=>{
   saveStyleChoice(styleSelect.value);
@@ -587,6 +600,7 @@ copyFollowUpExportBtn.addEventListener('click', ()=>{
 
 interpretBtn.addEventListener('click', async (event)=>{
   const physicalInput = castInputFromEvent(event);
+  if (!document.getElementById('readingMode').value) { showToast('先选择解读方式', 'error'); return; }
   const question = questionInput.value.trim();
   if(!question){
     showToast('先写一下想问的问题', 'error');
@@ -761,6 +775,7 @@ interpretBtn.addEventListener('click', async (event)=>{
 // castStore.legacy / 摇卦次数配额；反过来 interpretBtn 点击时也会顺带锁住摇卦按钮，
 // 这里额外检查 interpretBtn.disabled，防止"AI解读"正在跑的时候被"输出提示词"插队。
 promptBtn.addEventListener('click', async (event)=>{
+  if (!document.getElementById('readingMode').value) { showToast('先选择解读方式', 'error'); return; }
   const physicalInput = castInputFromEvent(event);
   if(interpretBtn.disabled){
     showToast('"AI 解读"正在进行中，请稍等它结束', 'error');

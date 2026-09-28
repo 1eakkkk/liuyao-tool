@@ -33,7 +33,7 @@ try {
     for (const [i, sum] of [7, 8, 9, 7, 6, 8].entries()) await page.locator(`#manualLine${i}`).selectOption(String(sum));
     await page.locator('#manualCastBtn').click();
     await page.locator('[data-tab="ai"]').click();
-    await page.locator('#promptBtn').click();
+    await page.locator('#readingMode').selectOption('legacy'); await page.locator('#promptBtn').click();
     await page.locator('#export-structured').waitFor();
     const exports = {};
     for (const mode of ['legacy', 'structured']) {

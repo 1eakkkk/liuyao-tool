@@ -15,10 +15,12 @@ function switchTab(tabName){
   tabButtons.forEach(b=>{
     const active = b.dataset.tab === tabName;
     b.classList.toggle('active', active);
-    b.setAttribute('aria-selected', active ? 'true' : 'false');
-    b.tabIndex = active ? 0 : -1;
+    const isTab=b.getAttribute('role')==='tab';
+    b.setAttribute(isTab?'aria-selected':'aria-pressed', active ? 'true' : 'false');
+    b.tabIndex = !isTab || active ? 0 : -1;
   });
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id === tabName));
+  if (!document.querySelector('.tabs .tab-btn.active')) document.querySelector('.tabs .tab-btn').tabIndex=0;
   updateIndicator();
   if(tabName === 'ai') window.updateCurrentCastStatus();
   // Long readings should not leave the newly selected page scrolled halfway
@@ -37,7 +39,8 @@ const indicator = document.createElement('span');
 indicator.className = 'tab-indicator'; indicator.setAttribute('aria-hidden','true');
 navigation?.prepend(indicator);
 function updateIndicator() {
-  const current=tabButtons.find(b=>b.classList.contains('active'));
+  const current=navigation?.querySelector('.tab-btn.active');
+  indicator.hidden=!current;
   if (!navigation || !current) return;
   indicator.style.width=`${current.offsetWidth}px`;
   indicator.style.height=`${current.offsetHeight}px`;

@@ -37,7 +37,7 @@ try {
     assert((await page.locator('#plateWrap table').textContent()).length > 20);
     await page.locator('[data-tab="ai"]').click();
     await page.locator('#questionInput').fill('发布验证：当前计划应如何安排？');
-    await page.locator('#promptBtn').click();
+    await page.locator('#readingMode').selectOption('legacy'); await page.locator('#promptBtn').click();
     assert((await page.locator('#promptOutputText').inputValue()).length > 100);
     assert.deepEqual(errors, []);
     results.push({ width, manualCast: 'passed', promptExport: 'passed', pageErrors: errors });

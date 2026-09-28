@@ -95,6 +95,8 @@ try {
     assert.equal(await page.evaluate(() => localStorage.getItem('liuyao_structured_reading_v1')), null);
     assert(await page.locator('#readingPanel').isHidden());
     await page.locator('[data-tab="ai"]').click();
+    await page.locator('#questionInput').fill('如何安排读书计划？');
+    await page.locator('#readingMode').selectOption('structured');
     behavior = 'valid'; await page.locator('#interpretBtn').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 1);
     assert((await page.locator('#readingTurns h2').textContent()).includes('结论'));

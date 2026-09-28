@@ -65,7 +65,7 @@ async function guardBeforeCast(opts = {}){
     return false;
   }
   if(castStore.legacy){
-    if(!skipCastConfirm){
+    if(!skipCastConfirm && document.getElementById('questionInput')?.value.trim()){
       const wantsNewCast = await showConfirm(
         '上一卦还在。按"一事不问二卦"的规矩，同一件事不重复起卦——你是否需要再次起卦？',
         { title: '再次起卦？', okText: '是，重新起卦', cancelText: '不用了' }

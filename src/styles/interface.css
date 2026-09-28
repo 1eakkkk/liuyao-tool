@@ -486,3 +486,28 @@ body .history-item-body {
 .history-long-turn .history-turn { white-space: pre-wrap; }
 .history-long-turn > summary:focus-visible,
 body .history-item-body:focus-visible { outline: 2px solid var(--ui-accent); outline-offset: 2px; }
+
+/* Primary actions below; learning and help stay in normal header flow. */
+body .hero {display:grid;grid-template-columns:1fr auto;gap:16px 24px;}
+body .hero .site-brand {gap:14px;margin:0;}
+body .brand-seal {display:grid;place-items:center;width:42px;height:48px;border:1px solid currentColor;border-radius:12px 5px 12px 5px;color:var(--ui-accent);font:24px "KaiTi","STKaiti",serif;transform:rotate(-5deg);}
+body .hero .site-brand h1 {font-family:"STKaiti","KaiTi","Noto Serif SC",serif;font-size:32px;font-weight:500;letter-spacing:.16em;}
+body .brand-dot {font-size:.5em;padding-inline:4px;vertical-align:middle;color:var(--ui-accent);}
+body .brand-caption {font-size:11px;letter-spacing:.24em;color:var(--ui-muted);margin:5px 0 0;}
+body .header-help {justify-self:end;align-self:start;}
+:root body .header-help .help-fab {width:36px;height:36px;min-height:36px;margin:0;padding:0;}
+body .learning-nav {display:flex;gap:8px;align-items:center;}
+:root body .learning-nav .tab-btn {flex-direction:row;min-height:44px;padding:8px 12px;font-size:13px;}
+body .learning-nav .tab-icon {width:16px;height:16px;}
+body .theme-switch {justify-self:end;margin:0;}
+@media(max-width:640px){
+ body .hero {padding:18px 16px;gap:12px;}
+ body .hero .site-brand h1 {font-size:28px;}
+ body .tabs {grid-template-columns:repeat(2,minmax(0,1fr));padding-inline:20px;}
+ :root body .tabs .tab-btn {flex-direction:row;gap:10px;font-size:14px;}
+ body .learning-nav {grid-column:1 / -1;}
+ body .theme-switch {grid-column:1 / -1;width:100%;}
+ body .theme-switch button {flex:1;}
+}
+
+body .header-help .help-fab svg {flex:none;width:20px;height:20px;}

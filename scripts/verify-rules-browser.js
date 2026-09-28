@@ -32,7 +32,7 @@ try {
     for (const [i, sum] of [7, 8, 9, 7, 6, 8].entries()) await page.locator(`#manualLine${i}`).selectOption(String(sum));
     await page.locator('#manualCastBtn').click();
     await page.locator('[data-tab="ai"]').click();
-    await page.locator('#promptBtn').click();
+    await page.locator('#readingMode').selectOption('legacy'); await page.locator('#promptBtn').click();
     await page.locator('#export-rules-off').waitFor();
     const exports = {};
     for (const mode of ['off', 'on']) {
@@ -91,7 +91,7 @@ try {
     const offAgain = await send('off', '#interpretBtn');
     assert.deepEqual(offAgain.messages, off.messages);
     await page.evaluate(() => history.replaceState(null, '', '?debug=1&ai_input=structured'));
-    await page.locator('#promptBtn').click();
+    await page.locator('#readingMode').selectOption('legacy'); await page.locator('#promptBtn').click();
     assert.equal(await page.locator('#rulesInputComparison').isVisible(), false);
     assert.ok(!(await page.locator('#promptOutputText').inputValue()).includes('E_rule_results'));
     assert.deepEqual(errors, []);
