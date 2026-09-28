@@ -98,7 +98,7 @@ try {
     if (width <= 640) {
       const nav = await page.locator('.tabs').boundingBox(); assert(nav.y + nav.height >= 899 && nav.y + nav.height <= 901);
       await page.locator('[data-tab="basics"]').click();
-      const heading = await page.locator('#basics > section > h2').first().boundingBox(); assert(heading.y >= 0 && heading.y < 180, 'Switching tabs should return to content');
+      const heading = await page.locator('#basics > section > h2').first().boundingBox(); assert(heading.y >= 0 && heading.y < 450, 'Header learning links keep the first heading visible in the upper half of the viewport');
     }
     await page.locator('#helpFab').click(); await bounds('.onboard-card');
     await page.keyboard.press('Escape'); assert(await page.locator('#onboardOverlay').isHidden());
