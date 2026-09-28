@@ -539,3 +539,7 @@ body .term-guide p {font-size:13px;line-height:1.7;color:var(--ui-text);margin:0
 
 body .theme-picker > summary {min-width:44px;justify-content:center;}
 body .term-guide details[open] {flex-basis:100%;}
+
+/* Allow the theme popover to extend beyond the old decorative hero clipping. */
+body .hero:has(.theme-picker[open]) {overflow:visible;z-index:50;}
+body .theme-picker .theme-switch {box-shadow:0 12px 32px #102a3533;}

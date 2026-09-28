@@ -13,7 +13,15 @@ try {
       const page=await context.newPage(), errors=[];
       page.on('pageerror',e=>errors.push(e.message));
       await page.goto(target||server.resolvedUrls.local[0]);
-      const openTheme=()=>page.locator('.theme-picker').evaluate(n=>n.open=true);
+      const openTheme=async()=>{
+        await page.locator('.theme-picker > summary').scrollIntoViewIfNeeded();
+        await page.locator('.theme-picker').evaluate(n=>n.open=true);
+        assert(await page.locator('[data-theme-choice-button]').evaluateAll(buttons=>buttons.every(button=>{
+          const r=button.getBoundingClientRect();
+          return r.left>=0 && r.right<=innerWidth && r.top>=0 && r.bottom<=innerHeight &&
+            button.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));
+        })), 'Every theme choice must be fully inside viewport and unobscured');
+      };
       const theme=()=>page.locator('html').getAttribute('data-theme');
       assert.equal(await theme(),'dark');
       assert.equal(await page.locator('[data-theme-choice-button=system]').getAttribute('aria-pressed'),'true');
