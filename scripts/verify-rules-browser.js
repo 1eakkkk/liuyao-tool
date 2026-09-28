@@ -58,6 +58,7 @@ try {
     const send = async (mode, selector, followUp = null) => {
       if (followUp) await page.locator('#followUpInput').fill(followUp);
       const start = performance.now(), index = requests.length;
+      if(selector === '#interpretBtn') await page.locator('#readingMode').selectOption('legacy');
       await page.locator(selector).click();
       await page.waitForFunction(selector => !document.querySelector(selector).disabled, selector);
       assert.equal(requests.length, index + 1);
