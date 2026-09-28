@@ -117,7 +117,7 @@ export function initializeReading() {
     el('roleSelect').closest('.settings-group').hidden = structured;
     el('customRoleWrap').hidden = structured;
     el('effortSelect').closest('.settings-group').hidden = structured;
-    el('styleSelect').closest('.settings-group').querySelector('.settings-group-title').textContent = structured ? '回复风格' : '人设与回复风格';
+    el('styleSelect').closest('.settings-group').querySelector('.settings-group-title').textContent = '回复风格';
     el('structuredSettingsNote').hidden = !structured;
   };
   document.addEventListener('reading:reset', clearReading);
