@@ -495,7 +495,7 @@ body .hero .site-brand h1 {font-family:"STKaiti","KaiTi","Noto Serif SC",serif;f
 body .brand-dot {font-size:.5em;padding-inline:4px;vertical-align:middle;color:var(--ui-accent);}
 body .brand-caption {font-size:11px;letter-spacing:.24em;color:var(--ui-muted);margin:5px 0 0;}
 body .header-help {justify-self:end;align-self:start;}
-:root body .header-help .help-fab {width:36px;height:36px;min-height:36px;margin:0;padding:0;}
+:root body .header-help .help-fab {width:44px;height:44px;min-height:44px;margin:0;padding:0;}
 body .learning-nav {display:flex;gap:8px;align-items:center;}
 :root body .learning-nav .tab-btn {flex-direction:row;min-height:44px;padding:8px 12px;font-size:13px;}
 body .learning-nav .tab-icon {width:16px;height:16px;}
