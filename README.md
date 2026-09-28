@@ -16,7 +16,7 @@
 
 ![桌面端起卦首页：日间主题与起卦操作](docs/images/desktop-casting.png)
 
-> 本文按 **2026-09-28 已上线的网页功能**编写。正式地址为 **https://gua.1eak.cool/**。当前网站开发源码位于 [`feature/interface-refresh`](https://github.com/1eakkkk/liuyao-tool/tree/feature/interface-refresh)；默认分支的源码可能落后于线上版本。知识库自动注入仍处于研究阶段，未进入生产。
+> 本文按 **2026-09-28 已上线的网页功能**编写。正式地址为 **https://gua.1eak.cool/**。当前网站源码统一维护在 [`main`](https://github.com/1eakkkk/liuyao-tool/tree/main)，功能开发使用短期分支。知识库自动注入仍处于研究阶段，未进入生产。
 
 ## 目录
 
@@ -179,7 +179,7 @@ flowchart TD
 ### 启动当前网站源码
 
 ```sh
-git clone --branch feature/interface-refresh https://github.com/1eakkkk/liuyao-tool.git
+git clone --branch main https://github.com/1eakkkk/liuyao-tool.git
 cd liuyao-tool
 npm ci
 npm run dev
@@ -210,7 +210,7 @@ npm run test:browser:usability
 npm run test:browser:controls
 ```
 
-完整检查列表见当前源码分支的 [GitHub Actions 工作流](https://github.com/1eakkkk/liuyao-tool/blob/feature/interface-refresh/.github/workflows/verify.yml)。部分脚本固定使用 Edge，不应假设所有脚本都能在未安装 Edge 的系统上直接运行。
+完整检查列表见当前源码分支的 [GitHub Actions 工作流](https://github.com/1eakkkk/liuyao-tool/blob/main/.github/workflows/verify.yml)。部分脚本固定使用 Edge，不应假设所有脚本都能在未安装 Edge 的系统上直接运行。
 
 自动化界面测试主要使用模拟 API，不等同于真实模型验收。真实 DeepSeek 测试单独管理 Key、调用预算与结果记录，不是启动或构建网站的必需步骤。
 
@@ -265,13 +265,13 @@ wrangler.jsonc   Cloudflare 静态资源配置
 
 | 文档 | 内容 |
 | --- | --- |
-| [项目状态与路线](https://github.com/1eakkkk/liuyao-tool/blob/feature/interface-refresh/docs/PROJECT_STATUS.md) | 各 Phase 的真实进度、已完成与未完成事项 |
-| [架构说明](https://github.com/1eakkkk/liuyao-tool/blob/feature/interface-refresh/docs/ARCHITECTURE.md) | 模块组织与演进背景 |
-| [数据结构](https://github.com/1eakkkk/liuyao-tool/blob/feature/interface-refresh/docs/DATA_SCHEMA.md) | 卦盘数据与迁移约定 |
-| [结构化输出](https://github.com/1eakkkk/liuyao-tool/blob/feature/interface-refresh/docs/STRUCTURED_OUTPUT.md) | 输出协议与校验设计 |
-| [结构化解读 v3](https://github.com/1eakkkk/liuyao-tool/blob/feature/interface-refresh/docs/STRUCTURED_READING_V3.md) | 新版行为、真实测试发现与发布验收 |
-| [生产范围](https://github.com/1eakkkk/liuyao-tool/blob/feature/interface-refresh/docs/PRODUCTION_PLAN.md) | 稳定版与实验功能边界 |
-| [验收资料](https://github.com/1eakkkk/liuyao-tool/tree/feature/interface-refresh/docs/acceptance) | 各次发布的检查报告 |
+| [项目状态与路线](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/PROJECT_STATUS.md) | 各 Phase 的真实进度、已完成与未完成事项 |
+| [架构说明](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/ARCHITECTURE.md) | 模块组织与演进背景 |
+| [数据结构](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/DATA_SCHEMA.md) | 卦盘数据与迁移约定 |
+| [结构化输出](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/STRUCTURED_OUTPUT.md) | 输出协议与校验设计 |
+| [结构化解读 v3](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/STRUCTURED_READING_V3.md) | 新版行为、真实测试发现与发布验收 |
+| [生产范围](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/PRODUCTION_PLAN.md) | 稳定版与实验功能边界 |
+| [验收资料](https://github.com/1eakkkk/liuyao-tool/tree/main/docs/acceptance) | 各次发布的检查报告 |
 
 阶段文档保留了当时的上下文，历史的「未发布」结论不应直接当作当前状态。请结合项目状态和对应版本的发布记录阅读。
 
