@@ -20,3 +20,5 @@
 可以增加 OpenAI、Anthropic 等，但本轮不把可行性问题当作正式接入授权。建议统一服务商适配层，再分别处理鉴权、请求、流式结束状态、结构化协议、用量与历史来源；不能只换 API 地址。
 
 继续纯前端、自带 Key 的模式时，需逐家验证浏览器直连和跨域条件；不承诺全部服务商均可直接访问。统一提供共享 Key 则需要受控服务端转发，并另行确认架构。OpenAI 官方要求不要在浏览器代码中暴露秘密 API Key：[官方接口说明](https://developers.openai.com/api/reference/overview)。共享 Key 不能写入静态资源。外部 AI 提示词方式继续可用，不受本站供应商适配范围限制。
+
+正式发布已完成：上述候选切换为 100% 流量，线上资产核对通过；Chromium／WebKit 320、390、1280px 刷新、返回、空问题重摇与双入口导航全部通过，无页面错误。报告见 acceptance/entry-navigation-production-browser.json 与 acceptance/entry-navigation-production-assets.json。

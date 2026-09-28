@@ -1,0 +1,50 @@
+[
+  {
+    "engine": "chromium",
+    "width": 320,
+    "reset": "reload-and-back",
+    "emptyRecast": "no-confirmation",
+    "navigation": "two-primary",
+    "errors": []
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "reset": "reload-and-back",
+    "emptyRecast": "no-confirmation",
+    "navigation": "two-primary",
+    "errors": []
+  },
+  {
+    "engine": "chromium",
+    "width": 1280,
+    "reset": "reload-and-back",
+    "emptyRecast": "no-confirmation",
+    "navigation": "two-primary",
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "width": 320,
+    "reset": "reload-and-back",
+    "emptyRecast": "no-confirmation",
+    "navigation": "two-primary",
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "reset": "reload-and-back",
+    "emptyRecast": "no-confirmation",
+    "navigation": "two-primary",
+    "errors": []
+  },
+  {
+    "engine": "webkit",
+    "width": 1280,
+    "reset": "reload-and-back",
+    "emptyRecast": "no-confirmation",
+    "navigation": "two-primary",
+    "errors": []
+  }
+]
