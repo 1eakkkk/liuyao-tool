@@ -21,3 +21,14 @@ test('offline reviews cannot silently outlive edited raw replies or unmatched an
   const missing=structuredClone(reviews[0]);missing.claims[0].facts[0].id='fact:missing';
   expect(()=>auditReading(source.entries[0],missing)).toThrow('annotated fact');
 });
+
+test('six lines separate incorrect facts, wrong citations and cross-factor borrowed citations',async()=>{
+  const {buildQualityCases}=await import('../../experiments/reading-quality/cases.js');
+  const canonical=JSON.parse(fs.readFileSync(new URL('../../experiments/phase7/fixtures/compat-1.json',import.meta.url)));
+  const cases=await buildQualityCases(canonical);
+  expect(cases).toHaveLength(102);
+  for(const {entry,review,expected} of cases) {
+    const r=auditReading(entry,review).annotated_facts;
+    expect([r.checked,r.conflicts,r.missing_direct_citations],review.id).toEqual([expected.checked,expected.conflicts,expected.missing]);
+  }
+});

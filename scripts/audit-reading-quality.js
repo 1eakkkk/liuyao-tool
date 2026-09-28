@@ -9,3 +9,14 @@ const report = { version: reviews.version, network_calls: 0, scope: reviews.scop
 fs.mkdirSync('test-results/reading-quality', { recursive: true });
 fs.writeFileSync('test-results/reading-quality/development-baseline.json', JSON.stringify(report, null, 2) + '\n');
 console.log(JSON.stringify(entries.map(e => ({id:e.id,mechanical:e.mechanical.status,...e.annotated_facts,scope:e.scope.rating,support:e.support.rating})), null, 2));
+
+const { buildQualityCases } = await import('../experiments/reading-quality/cases.js');
+const canonical=JSON.parse(fs.readFileSync(new URL('../experiments/phase7/fixtures/compat-1.json',import.meta.url)));
+const controls=await buildQualityCases(canonical);
+const results=controls.map(({entry,review,expected})=>{
+  const result=auditReading(entry,review), f=result.annotated_facts;
+  if(f.checked!==expected.checked || f.conflicts!==expected.conflicts || f.missing_direct_citations!==expected.missing) throw Error(`Control mismatch: ${review.id}`);
+  return {id:review.id,expected,actual:f,mechanical:result.mechanical};
+});
+fs.writeFileSync('test-results/reading-quality/relative-role-controls.json',JSON.stringify({network_calls:0,kind:'Synthetic annotated development controls, not automatic language recognition',cases:results},null,2)+'\n');
+console.log(`Relative/role controls: ${results.length} passed; no model calls.`);
