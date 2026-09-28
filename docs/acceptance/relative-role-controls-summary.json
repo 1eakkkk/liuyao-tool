@@ -1,0 +1,13 @@
+{
+  "kind": "Synthetic annotated development controls, not automatic language recognition",
+  "network_calls": 0,
+  "cases": 102,
+  "annotated_fact_checks": 72,
+  "expected_conflicts": 18,
+  "expected_missing_direct_citations": 36,
+  "unannotated_cases": 30,
+  "all_expected_results_matched": true,
+  "reproduce": "npm run audit:reading",
+  "source_commit": "ceb8a25",
+  "limitations": "Synthetic developer-annotated controls, not model evaluation or automatic language recognition; 17 related tests passed."
+}
