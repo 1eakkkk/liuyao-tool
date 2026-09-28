@@ -46,6 +46,8 @@ try {
     let input = extract(await page.locator('#readingPrompt').inputValue());
     assert.equal(requests.length, 0);
     await page.reload(); await page.locator('[data-tab="ai"]').click();
+    assert.equal(await page.locator('#questionInput').inputValue(),'');
+    assert.equal(await page.locator('#readingMode').inputValue(),'');
     await page.locator('#readingPanel').waitFor({ state: 'visible' });
     assert.equal(extract(await page.locator('#readingPrompt').inputValue()).context_id, input.context_id);
     await page.locator('#readingPaste').fill(JSON.stringify(answer(input)));
@@ -69,6 +71,8 @@ try {
     // Saved test key never leaves the mocked route.
     await page.evaluate(() => localStorage.setItem('liuyao_deepseek_api_key', 'TEST_ONLY'));
     await page.reload(); await page.locator('[data-tab="ai"]').click();
+    assert.equal(await page.locator('#questionInput').inputValue(),'');
+    assert.equal(await page.locator('#readingMode').inputValue(),'');
     await page.locator('#readingFollow').fill('请给一项建议'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 3);
     assert.equal(requests.length, 1); assert.equal(JSON.parse(requests[0].messages[1].content).conversation.history.length, 2);
@@ -103,6 +107,8 @@ try {
     const initial = JSON.parse(requests.at(-1).messages[1].content);
     assert.equal(initial.conversation.history.length, 0);
     await page.reload(); await page.locator('[data-tab="ai"]').click();
+    assert.equal(await page.locator('#questionInput').inputValue(),'');
+    assert.equal(await page.locator('#readingMode').inputValue(),'');
     await page.locator('#readingTurns h2').waitFor();
     assert.equal(await page.locator('#readingTurns article').count(), 1);
     await page.locator('#toggleHistoryBtn').click();
@@ -117,6 +123,8 @@ try {
     await page.locator('#confirmOkBtn').click();
     assert.equal(await page.locator('.history-item').count(),1);
     await page.reload(); await page.locator('[data-tab="ai"]').click();
+    assert.equal(await page.locator('#questionInput').inputValue(),'');
+    assert.equal(await page.locator('#readingMode').inputValue(),'');
     await page.locator('#readingTurns h2').waitFor();
     await page.locator('#toggleHistoryBtn').click();
     assert.equal(await page.locator('.history-item').count(),1,'Deleted active reading must not reappear on restore');
