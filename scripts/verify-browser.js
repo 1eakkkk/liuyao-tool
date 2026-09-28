@@ -59,7 +59,7 @@ try {
         await capture(tab);
       }
       await page.locator('#questionInput').fill('固定浏览器回归问题');
-      await page.locator('#readingMode').selectOption('legacy'); await page.locator('#promptBtn').click();
+      if (await page.locator('#readingMode').count()) await page.locator('#readingMode').selectOption('legacy'); await page.locator('#promptBtn').click();
       await page.waitForFunction(() => document.getElementById('promptOutputText').value.length > 100);
       outputs[name].prompt = await page.locator('#promptOutputText').inputValue();
       const requests = [];
@@ -75,7 +75,7 @@ try {
       await page.locator('#apiKeyInput').fill('synthetic-browser-key');
       await page.locator('#saveKeyBtn').click();
       await page.locator('#toggleSettingsBtn').click();
-      await page.locator('#readingMode').selectOption('legacy'); await page.locator('#interpretBtn').click();
+      if (await page.locator('#readingMode').count()) await page.locator('#readingMode').selectOption('legacy'); await page.locator('#interpretBtn').click();
       await page.waitForFunction(() => !document.getElementById('interpretBtn').disabled && document.getElementById('aiResult').textContent.includes('固定流式回复'));
       await page.locator('#followUpInput').fill('固定追问');
       await page.locator('#followUpBtn').click();
