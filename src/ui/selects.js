@@ -38,10 +38,11 @@ function openMenu(select, button) {
   const width=Math.min(Math.max(box.width,200),innerWidth-24);
   Object.assign(menu.style,{position:'fixed',width:`${width}px`,maxHeight:`${height}px`,left:`${Math.max(12,Math.min(box.left,innerWidth-width-12))}px`,
     ...(below?{top:`${box.bottom+6}px`}:{bottom:`${innerHeight-box.top+6}px`})});
-  active={select,button,menu}; button.setAttribute('aria-expanded','true');
+  active={select,button,menu,anchor:box}; button.setAttribute('aria-expanded','true');
   const available=items.filter(i=>!i.disabled);
   (available.find(i=>i.getAttribute('aria-selected')==='true') || available[0])?.focus({preventScroll:true});
-  document.activeElement?.scrollIntoView({block:'nearest'});
+  const selected = document.activeElement;
+  if (selected && menu.contains(selected)) menu.scrollTop = Math.max(0, selected.offsetTop - menu.clientHeight + selected.offsetHeight);
   menu.addEventListener('keydown',e=>{
     let index=available.indexOf(document.activeElement);
     if(e.key==='Escape'){e.preventDefault();closeMenu(true);return;}
@@ -78,6 +79,10 @@ export function initializeSelects() {
   document.addEventListener('click',()=>queueMicrotask(sync));
   document.addEventListener('pointerdown',e=>{if(active&&!active.menu.contains(e.target)&&!active.button.contains(e.target))closeMenu();});
   window.addEventListener('resize',()=>closeMenu());
-  document.addEventListener('scroll',e=>{if(active&&!active.menu.contains(e.target))closeMenu();},true);
+  document.addEventListener('scroll',e=>{
+    if (!active || active.menu.contains(e.target)) return;
+    const box=active.button.getBoundingClientRect();
+    if (Math.abs(box.top-active.anchor.top)>1 || Math.abs(box.left-active.anchor.left)>1) closeMenu();
+  },true);
   sync();
 }

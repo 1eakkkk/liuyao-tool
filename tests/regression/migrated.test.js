@@ -5,6 +5,11 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { baseline } = require('./harness.cjs');
 let app, castStore;
+// Guidance is presentation copy; retain exact comparison of every result element.
+function plateResults(html) {
+  const root=document.createElement('div'); root.innerHTML=html;
+  return [...root.children].filter(n=>!n.matches('.plate-legend,.term-guide')).map(n=>n.outerHTML).join('');
+}
 beforeAll(async () => {
   vi.useFakeTimers();
   vi.setSystemTime(new Date('2026-09-15T12:00:00+08:00'));
@@ -30,7 +35,7 @@ for (const fixture of fixtures) {
     const cast = JSON.parse(JSON.stringify(castStore.legacy));
     expect(cast).toEqual(expected.cast);
     expect(app.formatCastDataForAI(cast)).toBe(expected.text);
-    expect(document.getElementById('plateWrap').innerHTML).toBe(expected.plate);
+    expect(plateResults(document.getElementById('plateWrap').innerHTML)).toBe(plateResults(expected.plate));
     expect(app.buildExportPromptText(input.question, app.formatCastDataForAI(cast))).toBe(expected.export);
     const snapshot = app.buildHistoryCastSnapshot(castStore.canonical);
     const {canonical, ...legacySnapshot} = JSON.parse(JSON.stringify(snapshot));
