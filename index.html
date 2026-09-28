@@ -7,7 +7,7 @@
 (()=>{let choice="system";try{const saved=localStorage.getItem("liuyao_theme");if(["light","dark","system"].includes(saved))choice=saved;}catch{}document.documentElement.dataset.themeChoice=choice;document.documentElement.dataset.theme=choice==="system"?(window.matchMedia?.("(prefers-color-scheme: dark)")?.matches?"dark":"light"):choice;})();
 </script>
 <meta charset="UTF-8">
-<title>六爻入门 · 纳甲排盘与断卦速查</title>
+<title>六爻问卦 · 起卦排盘与 AI 解读</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23181611'/%3E%3Cpath d='M16,1 A7.5,7.5 0 0,1 16,16 A7.5,7.5 0 0,0 16,31 A15,15 0 0,0 16,1 Z' fill='%23ece4d0'/%3E%3Ccircle cx='16' cy='8.5' r='2.2' fill='%23181611'/%3E%3Ccircle cx='16' cy='23.5' r='2.2' fill='%23ece4d0'/%3E%3Ccircle cx='16' cy='16' r='15' fill='none' stroke='%23a8391f' stroke-width='1.2'/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <script>
@@ -69,9 +69,9 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
   <div class="eyebrow">火珠林 · 京房纳甲</div>
   <div class="site-brand"><span class="brand-seal" aria-hidden="true">易</span><div><h1>六爻<span class="brand-dot">·</span>问卦</h1><p class="brand-caption">一念起，六爻成</p></div></div>
   <p class="sub">从阴阳、五行、八卦讲起，到起卦排盘、自动纳甲配六神 —— 一个网页把六爻的骨架搭起来。</p>
-  <div class="header-help">  <button class="help-fab" id="helpFab" title="使用教程" aria-label="使用教程"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg></button></div>
+  <div class="header-help">  <button class="help-fab" id="helpFab" title="使用帮助" aria-label="使用帮助"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg></button></div>
   <nav class="learning-nav" aria-label="学习资料">  <button class="tab-btn" data-tab="basics" role="button" id="tabbtn-basics" aria-pressed="false" aria-controls="basics" tabindex="0"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5C9 3 5 3 3 4v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-2-1-6-1-9 1Zm0 0v15"/></svg>基础知识</button>  <button class="tab-btn" data-tab="guide" role="button" id="tabbtn-guide" aria-pressed="false" aria-controls="guide" tabindex="0"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5Z"/></svg>断卦入门</button></nav>
-  <div class="theme-switch" role="group" aria-label="界面主题"><button type="button" data-theme-choice-button="light" aria-pressed="false">日间</button><button type="button" data-theme-choice-button="dark" aria-pressed="false">夜间</button><button type="button" data-theme-choice-button="system" aria-pressed="true">跟随系统</button></div>
+  <details class="theme-picker"><summary title="切换主题" aria-label="切换主题"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/></svg><span>主题</span></summary><div class="theme-switch" role="group" aria-label="界面主题"><button type="button" data-theme-choice-button="light" aria-pressed="false">日间</button><button type="button" data-theme-choice-button="dark" aria-pressed="false">夜间</button><button type="button" data-theme-choice-button="system" aria-pressed="true">跟随系统</button></div></details>
   <div class="bagua-ring" aria-hidden="true">
     <svg viewBox="0 0 200 200">
       <circle cx="100" cy="100" r="96" fill="none" stroke="var(--border)" stroke-width="1"/>
@@ -220,17 +220,17 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         <p class="desc" style="font-size:12px;margin:8px 0">按设备本地时间、零点换日，年/月柱按节气。交节时刻为近似计算；仅录入日柱时不推定年月时柱。</p>
         </details>
         <div class="cast-mode-toggle" id="castModeToggle">
-          <button type="button" class="mode-btn active" data-mode="system">系统摇卦</button>
-          <button type="button" class="mode-btn" data-mode="manual">线下摇卦</button>
+          <button type="button" class="mode-btn active" data-mode="system">铜钱摇卦</button>
+          <button type="button" class="mode-btn" data-mode="manual">手动录入</button>
         </div>
 
         <!-- 摇卦频率配额（10分钟内最多3次）常驻提示：之前只有点击被拦下时才弹toast告知，
              用户不知道自己还剩几次、容易"莫名其妙"被拦。这里常态显示剩余次数，
-             系统摇卦和线下摇卦手动填入共用同一个配额、共用同一处提示。 -->
+             铜钱摇卦和线下摇卦手动填入共用同一个配额、共用同一处提示。 -->
         <div class="cast-quota-hint" id="castQuotaHint"></div>
 
         <div id="systemCastPanel">
-          <label for="castPace">物理投掷节奏</label><select id="castPace"><option value="step">逐爻投掷 · 每次一爻</option><option value="all">一次完成 · 连续六爻</option></select><button class="cast-btn" id="castBtn">开始物理摇卦</button>
+          <label for="castPace">投掷方式</label><select id="castPace"><option value="step">逐爻投掷 · 每次一爻</option><option value="all">一次完成 · 连续六爻</option></select><button class="cast-btn" id="castBtn">开始摇卦</button>
           <div class="coin-log" id="coinLog"></div>
         </div>
 
@@ -240,7 +240,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         </div>
       </div>
       <div class="plate" id="plateWrap">
-        <div class="placeholder">选好日柱和摇卦方式，从初爻开始生成六爻</div>
+        <div class="placeholder"><div class="empty-lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div><strong>你的卦象将出现在这里</strong><span>点击「开始摇卦」，从初爻逐步生成</span></div>
       </div>
       <div id="factCheckPanel" class="fact-check-panel" hidden></div>
     </div>
@@ -410,7 +410,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
       <div class="char-counter" id="questionCharCounter">0 / 500 字</div>
       <div class="reading-mode"><label for="readingMode">解读方式</label>
         <select id="readingMode" autocomplete="off"><option value="" selected disabled>选择</option><option value="legacy">普通解读</option><option value="structured">结构化解读（试用）· 可查看依据</option></select>
-        <p id="readingModeNote" hidden>API 与提示词均支持。篇幅设置用于结论正文，依据可展开；纯事实核对保持简短。API 使用所选模型的非思考模式。设置在新解读时生效，追问沿用本次设置。</p>
+        <p id="readingModeNote" hidden>先读结论，依据可展开。API 与提示词均支持；设置在新解读时生效。</p>
       </div>
       <div class="ai-row">
         <button class="ai-btn" id="interpretBtn">AI 解读</button>
@@ -428,8 +428,8 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
            的要求——因为普通AI对话框没有系统/用户角色区分，只能靠这种"分隔符+首尾呼应"的排版技巧提高对方AI
            照办的概率，具体拼法见 buildExportPromptText。 -->
       <div class="prompt-output-box" id="promptOutputBox" style="display:none;">
-        <span class="ai-status">提示词已生成 · 复制后粘贴到其他AI聊天软件里发送，即可获得解卦回复</span>
-        <p class="prompt-followup-tip">发送之后想继续追问，直接在对方AI自己的聊天框里接着问就行，它自己有上下文记忆，不用回这里再操作一遍——只有换一个AI软件接着问、或者对方AI没有记忆时，才需要用到下面"备用工具"里的"生成追问提示词"。</p>
+        <span class="ai-status">① 复制提示词　→　② 发给外部 AI　→　③ 阅读回复</span>
+        <p class="prompt-followup-tip">继续追问可留在同一 AI 对话中；换平台时再用下方辅助工具。</p>
         <textarea id="promptOutputText" class="prompt-output-text" readonly></textarea>
         <div class="ai-row" style="margin-top:8px;">
           <button class="ai-btn ghost" id="copyPromptBtn">复制提示词</button>
@@ -443,7 +443,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
            这类情况下才用得上，收起来当一个可选入口，不占主流程的地方。 -->
       <div class="prompt-extra-tools" id="promptExtraTools" style="display:none;">
         <div class="prompt-extra-toggle" id="promptExtraToggle">
-          <span>用不上可以不点：整理对方AI的回复格式 / 换个AI软件接着追问</span>
+          <span>辅助工具 · 整理回复 / 换平台追问</span>
           <span class="collapse-hint"></span>
         </div>
         <div class="prompt-extra-body">
@@ -455,7 +455,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
                告诉对方AI"干支日期换算不用你管、系统会自动补上"，这个承诺只有用户走了这一步才会兑现，
                如果说明文案只提前两道清洗，用户很容易看不出这步还兜着这层作用，顺手跳过。 -->
           <div class="prompt-output-box" id="promptCleanupBox">
-            <span class="ai-status">对方AI的回复贴到这里，帮你顺手清掉Markdown符号、给时辰补上现代时间括注、把提到的干支日换算成具体日期</span>
+            <span class="ai-status">贴入回复，整理格式并补充时辰、干支日的日期说明。</span>
             <textarea id="cleanupInputText" class="prompt-output-text" placeholder="把对方AI回复的原文粘贴到这里…"></textarea>
             <div class="ai-row" style="margin-top:8px;">
               <button class="ai-btn ghost" id="cleanupRunBtn">整理格式</button>
@@ -472,7 +472,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
                只在"换一个AI软件接着问"或"对方AI没有上下文记忆"时才需要——还在同一个对话里的话，
                直接跟对方AI接着聊就行，不用来回复制这一步。 -->
           <div class="prompt-output-box" id="promptFollowupExportBox">
-            <span class="ai-status">想换个AI软件接着问？上面先贴一次对方AI上一轮的回复，再写这次想问的内容</span>
+            <span class="ai-status">换平台追问：先在上方贴入旧回复，再填写新问题。</span>
             <textarea id="followUpExportInput" class="prompt-output-text" placeholder="这次想追问的内容…"></textarea>
             <div class="ai-row" style="margin-top:8px;">
               <button class="ai-btn ghost" id="followUpExportBtn">生成追问提示词</button>
@@ -503,8 +503,23 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         </div>
 
         <div class="settings-group">
-          <div class="settings-group-title">人设与回复风格</div>
+          <div class="settings-group-title">回复风格</div>
           <div class="settings-field">
+            <label for="styleSelect">回复风格（字数与展开程度）</label>
+            <select id="styleSelect">
+              <option value="brief">精简（300-400字）</option>
+              <option value="deep">深究（700-800字·展开分析）</option>
+              <option value="custom">自定义</option>
+            </select>
+          </div>
+          <div class="settings-field" id="customStyleWrap" style="display:none;">
+            <label for="customStyleInput">自定义回复风格说明</label>
+            <textarea id="customStyleInput" placeholder="比如：语气冷静克制，只给结论不铺垫，控制在150字以内"></textarea>
+          </div>
+        </div>
+
+        <details class="advanced-settings" id="advancedSettings"><summary>高级设置 <span>模型、普通解读人设与费用估算</span></summary>
+        <div class="settings-group"><div class="settings-group-title">普通解读人设</div>          <div class="settings-field">
             <label for="roleSelect">卜者人设（说话方式与性格）</label>
             <select id="roleSelect">
               <option value="classic">沉稳直断（默认）</option>
@@ -521,29 +536,16 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
             <label for="customRoleInput">自定义人设说明</label>
             <textarea id="customRoleInput" placeholder="比如：像个话不多的老先生，只在关键处开口，语气沉稳"></textarea>
           </div>
-          <div class="settings-field">
-            <label for="styleSelect">回复风格（字数与展开程度）</label>
-            <select id="styleSelect">
-              <option value="brief">精简（300-400字）</option>
-              <option value="deep">深究（700-800字·展开分析）</option>
-              <option value="custom">自定义</option>
-            </select>
-          </div>
-          <div class="settings-field" id="customStyleWrap" style="display:none;">
-            <label for="customStyleInput">自定义回复风格说明</label>
-            <textarea id="customStyleInput" placeholder="比如：语气冷静克制，只给结论不铺垫，控制在150字以内"></textarea>
-          </div>
-        </div>
-
+</div>
         <div class="settings-group">
           <div class="settings-group-title">模型</div>
           <div class="settings-field">
             <label for="modelSelect">用哪个 DeepSeek 模型解卦</label>
             <select id="modelSelect">
               <option value="deepseek-flash">V4.1-Flash（默认·便宜·快速）</option>
-              <option value="deepseek-v4-pro">V4-Pro（更贵·更准·更慢）</option>
+              <option value="deepseek-v4-pro">V4-Pro</option>
             </select>
-            <div class="ai-key-hint">Pro 正式版已发布，解读更准；Flash 依旧够用，价格约为 Pro 的1/3。</div>
+            <div class="ai-key-hint">不同模型的速度与费用不同，实际结果及账单以服务商为准。</div>
           </div>
         </div>
 
@@ -560,7 +562,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         </div>
 
         <div class="settings-group collapsible" id="priceOverrideGroup">
-          <div class="settings-group-title">DeepSeek 计价单价覆盖（填闲时价）<span class="collapse-hint"></span></div>
+          <div class="settings-group-title">费用估算单价（可选）<span class="collapse-hint"></span></div>
           <div class="settings-group-body">
             <div class="price-override-grid">
               <div><label for="priceHit">缓存命中</label><input type="number" id="priceHit" step="0.001" min="0" placeholder="0.05"></div>
@@ -575,6 +577,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
           </div>
         </div>
 
+        </details>
       </div>
 
       <div class="history-panel" id="historyPanel">

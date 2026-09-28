@@ -24,3 +24,7 @@ window.addEventListener('storage', event => {
   }
 });
 apply();
+
+const picker=document.querySelector('.theme-picker');
+document.addEventListener('click',event=>{if(picker && !picker.contains(event.target))picker.open=false;});
+picker?.addEventListener('keydown',event=>{if(event.key==='Escape'){picker.open=false;picker.querySelector('summary').focus();}});

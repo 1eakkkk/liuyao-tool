@@ -52,7 +52,12 @@ function structLineToDiagram(ln){
 // 不一定能马上反应过来这个颜色和上面五行轮盘里的"朱砂=当前选中"是不是一回事、具体代表
 // 什么，而五行生克那个板块反而专门做了图例卡片，唯独这里没有。<table>版和.plate-cards
 // 移动端卡片版共用同一份图例，插在两种布局最上面，不用为每种布局各写一遍。 ----
-const PLATE_LEGEND_HTML = '<div class="plate-legend"><span class="plate-legend-swatch"></span>红色 = 动爻（老阳/老阴，这一爻会变，对照"变出"看它变成了什么）</div>';
+const PLATE_LEGEND_HTML = `<div class="plate-legend"><span class="plate-legend-swatch"></span>红色为动爻，可对照变卦查看变化。</div>
+<div class="term-guide" aria-label="排盘术语解释">
+<details><summary>世应</summary><p>世爻通常代表问卦者，应爻通常代表对方或所问环境；具体含义需结合问题判断。</p></details>
+<details><summary>空亡</summary><p>日柱所在旬中未配到天干的两个地支称为旬空。标记为空不等于事情必然落空，需结合旺衰、动变与时间判断。</p></details>
+<details><summary>伏神</summary><p>本卦未出现的六亲，可从本宫首卦对应爻位取出，称为伏神；其上本卦的爻称为飞神。</p></details>
+</div>`;
 
 
 // ---- 排盘表格的"移动端卡片"版本：renderPlate() / renderPlateFromCastData() 共用，

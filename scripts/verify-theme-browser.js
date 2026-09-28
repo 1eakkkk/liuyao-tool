@@ -13,17 +13,20 @@ try {
       const page=await context.newPage(), errors=[];
       page.on('pageerror',e=>errors.push(e.message));
       await page.goto(target||server.resolvedUrls.local[0]);
+      const openTheme=()=>page.locator('.theme-picker').evaluate(n=>n.open=true);
       const theme=()=>page.locator('html').getAttribute('data-theme');
       assert.equal(await theme(),'dark');
       assert.equal(await page.locator('[data-theme-choice-button=system]').getAttribute('aria-pressed'),'true');
-      await page.locator('[data-theme-choice-button=light]').click(); assert.equal(await theme(),'light');
+      await openTheme(); await page.locator('[data-theme-choice-button=light]').click(); assert.equal(await theme(),'light');
       await page.reload(); assert.equal(await theme(),'light');
       await page.emulateMedia({colorScheme:'light'}); await page.emulateMedia({colorScheme:'dark'}); assert.equal(await theme(),'light');
-      await page.locator('[data-theme-choice-button=system]').click(); assert.equal(await theme(),'dark');
+      await openTheme(); await page.locator('[data-theme-choice-button=system]').click(); assert.equal(await theme(),'dark');
       await page.emulateMedia({colorScheme:'light'}); await page.waitForFunction(()=>document.documentElement.dataset.theme==='light');
-      await page.locator('[data-theme-choice-button=dark]').click(); await page.reload(); assert.equal(await theme(),'dark');
+      await openTheme(); await page.locator('[data-theme-choice-button=dark]').click(); await page.reload(); assert.equal(await theme(),'dark');
       await page.locator('[data-tab=ai]').click(); await page.locator('#questionInput').fill('切换主题保留问题');
       await page.locator('#toggleSettingsBtn').click();
+      assert(await page.locator('#modelSelect').isHidden());
+      await page.locator('#advancedSettings > summary').click();
       await page.locator('#readingMode').selectOption('structured');
       assert(await page.locator('#roleSelect').isHidden()); assert(await page.locator('#effortSelect').isHidden());
       assert(await page.locator('#styleSelect').isVisible());
@@ -32,7 +35,7 @@ try {
       for(const width of [320,580,1280]) {
         await page.setViewportSize({width,height:900});
         for(const mode of ['light','dark']) {
-          await page.locator(`[data-theme-choice-button=${mode}]`).click();
+          await openTheme(); await page.locator(`[data-theme-choice-button=${mode}]`).click();
           assert.equal(await page.locator('#questionInput').inputValue(),'切换主题保留问题');
           assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
           for(const button of await page.locator('[data-theme-choice-button]').all()) assert((await button.boundingBox()).height>=44);

@@ -114,7 +114,7 @@ export function initializeReading() {
   const syncSettings = () => {
     const structured = readingSelected();
     for (const id of ['roleSelect','customRoleInput','effortSelect']) el(id).disabled = structured;
-    el('roleSelect').closest('.settings-field').hidden = structured;
+    el('roleSelect').closest('.settings-group').hidden = structured;
     el('customRoleWrap').hidden = structured;
     el('effortSelect').closest('.settings-group').hidden = structured;
     el('styleSelect').closest('.settings-group').querySelector('.settings-group-title').textContent = structured ? '回复风格' : '人设与回复风格';

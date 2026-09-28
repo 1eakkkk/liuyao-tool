@@ -38,6 +38,7 @@ try {
       for(const width of [320,580,1280]) {
         await page.setViewportSize({width,height:900});
         for(const mode of ['light','dark']) {
+          await page.locator('.theme-picker').evaluate(n=>n.open=true);
           await page.locator(`[data-theme-choice-button=${mode}]`).tap();
           await page.locator('#styleSelect-trigger').tap();
           const box=await page.locator('.select-menu').boundingBox();

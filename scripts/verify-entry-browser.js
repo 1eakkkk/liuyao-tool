@@ -10,6 +10,12 @@ try {for(const engine of [chromium,webkit]) {
  try {for(const width of [320,390,1280]) {
   const page=await browser.newPage({viewport:{width,height:900}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(target||server.resolvedUrls.local[0]);
+  assert.equal(await page.locator('.empty-lines span').count(),6);
+  assert(await page.locator('.theme-switch').isHidden());
+  await page.locator('.theme-picker > summary').click();
+  assert(await page.locator('.theme-switch').isVisible());
+  await page.keyboard.press('Escape');
+  assert(await page.locator('.theme-switch').isHidden());
   assert.equal(await page.locator('.tabs .tab-btn').count(),2);
   assert.equal(await page.locator('.header-help #helpFab').count(),1);
   await page.locator('[data-tab=ai]').click();
@@ -24,7 +30,9 @@ try {for(const engine of [chromium,webkit]) {
   await page.locator('[data-tab=ai]').click();assert.equal(await page.locator('#questionInput').inputValue(),'');
   await page.locator('[data-tab=caster]').click();await page.locator('[data-mode=manual]').click();
   for(let i=0;i<6;i++)await page.locator(`#manualLine${i}`).selectOption('8');
-  await page.locator('#manualCastBtn').click();await page.locator('[data-mode=system]').click();
+  await page.locator('#manualCastBtn').click();
+  await page.locator('.term-guide details').first().locator('summary').click();
+  assert(await page.locator('.term-guide p').first().isVisible());await page.locator('[data-mode=system]').click();
   await page.locator('#castBtn').click();await page.locator('.physics-dialog').waitFor();assert(await page.locator('#confirmOverlay').isHidden());
   await page.locator('.physics-close').click();
   await page.locator('[data-tab=basics]').click();assert(await page.locator('#basics').isVisible());

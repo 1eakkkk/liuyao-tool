@@ -71,6 +71,7 @@ try {
     await page.locator('[data-tab="ai"]').click();
     await page.locator('#questionInput').fill('界面验收：仅检查排盘事实');
     await page.locator('#toggleSettingsBtn').click();
+    await page.locator('#advancedSettings > summary').click();
     for (const button of await page.locator('.settings-group.collapsible .disclosure-trigger').all()) await button.click();
     await page.locator('#roleSelect').selectOption('custom');
     await page.locator('#styleSelect').selectOption('custom');
