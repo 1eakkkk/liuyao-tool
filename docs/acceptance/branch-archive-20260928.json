@@ -1,0 +1,62 @@
+[
+  {
+    "branch": "evaluation/luna-output-pilot",
+    "commit": "0ba138bcde01512cbcd6733101fd6e3f9d8e994b",
+    "archive_tag": "archive/2026-09-28/evaluation/luna-output-pilot"
+  },
+  {
+    "branch": "feature/fact-check-release",
+    "commit": "be2b4f346c34b751989474e1c0eaeafcc68a0dd9",
+    "archive_tag": "archive/2026-09-28/feature/fact-check-release"
+  },
+  {
+    "branch": "feature/interface-refresh",
+    "commit": "2cac8dc3088ff886a850ace78f83a5944209d73f",
+    "archive_tag": "archive/2026-09-28/feature/interface-refresh"
+  },
+  {
+    "branch": "feature/structured-reading-release",
+    "commit": "c2b8b77407470629b6dceab0050752cc2caf9138",
+    "archive_tag": "archive/2026-09-28/feature/structured-reading-release"
+  },
+  {
+    "branch": "phase-next/structured-output",
+    "commit": "2806e8f7cad8e1f67465fc6eb50fb7a6c2ad03e2",
+    "archive_tag": "archive/2026-09-28/phase-next/structured-output"
+  },
+  {
+    "branch": "phase5/rule-engine",
+    "commit": "f79ac42bd61f7856971d03de23894c4f5e36b94c",
+    "archive_tag": "archive/2026-09-28/phase5/rule-engine"
+  },
+  {
+    "branch": "phase6/rules-ab",
+    "commit": "68356d0c71ccfb45ce1d0dc8597745404029ae6a",
+    "archive_tag": "archive/2026-09-28/phase6/rules-ab"
+  },
+  {
+    "branch": "phase7/knowledge",
+    "commit": "4af85097dc164ce3a48c31d40d4c3ffb9a5ea76b",
+    "archive_tag": "archive/2026-09-28/phase7/knowledge"
+  },
+  {
+    "branch": "phase8/knowledge-hardening",
+    "commit": "537a920ab9c904f25a3e3e3eaeb8c9e757323cc2",
+    "archive_tag": "archive/2026-09-28/phase8/knowledge-hardening"
+  },
+  {
+    "branch": "phase8/task-scope-revision",
+    "commit": "929b8711b359564be71bf3e83a8b0f3b8be9fe6d",
+    "archive_tag": "archive/2026-09-28/phase8/task-scope-revision"
+  },
+  {
+    "branch": "refactor/v2",
+    "commit": "bcb39aa7940accbc1306873972c509357d66e51d",
+    "archive_tag": "archive/2026-09-28/refactor/v2"
+  },
+  {
+    "branch": "release/stable-20260924",
+    "commit": "d371f86ad3654d25f97005428af613af850d3770",
+    "archive_tag": "archive/2026-09-28/release/stable-20260924"
+  }
+]
