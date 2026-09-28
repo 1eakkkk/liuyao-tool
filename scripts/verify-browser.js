@@ -83,7 +83,10 @@ try {
       outputs[name].conversation = await page.locator('#aiResult').innerHTML();
       await page.reload();
       await page.waitForFunction(() => document.getElementById('aiResult').textContent.includes('固定追问'));
-      outputs[name].restoredPlate = await page.locator('#plateWrap').innerHTML();
+      // Compare every restored result element; the intentional UI guidance differs from v1.
+      outputs[name].restoredPlate = await page.locator('#plateWrap').evaluate(root =>
+        [...root.children].filter(n => !n.matches('.plate-legend,.term-guide')).map(n => n.outerHTML).join(''));
+      if (name !== 'baseline') assert.equal(await page.locator('#plateWrap .term-guide details').count(), 3);
       outputs[name].restoredConversation = await page.locator('#aiResult').innerHTML();
       outputs[name].requests = requests;
       assert.equal(requests.length, 2);
@@ -105,7 +108,7 @@ try {
       }
       assert.equal(outputs[name].prompt, outputs.baseline.prompt, `${name} exported prompt`);
       for (const key of ['conversation', 'restoredConversation', 'restoredPlate', 'requests']) assert.deepEqual(outputs[name][key], outputs.baseline[key], `${name} ${key}`);
-      report.push({ width, target: name, screenshots: 5, prompt: 'identical', mockApiRequests: 2, conversation: 'identical', restoredPlate: 'identical', errors: 0 });
+      report.push({ width, target: name, screenshots: 5, prompt: 'identical', mockApiRequests: 2, conversation: 'identical', restoredPlate: 'result-elements-identical', errors: 0 });
     }
   }
   fs.writeFileSync(`${outputRoot}/browser-report.json`, JSON.stringify(report, null, 2) + '\n');
