@@ -144,3 +144,15 @@ test('structured length preferences reach API/export and survive reload and foll
   expect(brief.context.context_id).not.toBe(prepared.context.context_id);
   expect(brief.messages[0].content).toContain('300–400 字');
 });
+
+ test('motion questions are not treated as assertions, but following assertions are checked', async () => {
+  const p=await prepareReadingTurn(prepare(),'核对动静');
+  const line=p.context.input.C_canonical_cast.lines[0];
+  const opposite=line.moving?'静':'动';
+  for(const text of [`第1爻为${opposite}爻？`,`第1爻为${opposite}爻?`,`第1爻为${opposite}爻吗。`,`请确认第1爻为${opposite}爻。`]) {
+    const a=syntheticOutput(p.context);a.answer=text;
+    expect(appendReadingTurn(prepare(),p,JSON.stringify(a),true,'external').result.status,text).toBe('validated');
+  }
+  const a=syntheticOutput(p.context);a.answer=`第1爻为${opposite}爻？第1爻为${opposite}爻。`;
+  expect(appendReadingTurn(prepare(),p,JSON.stringify(a),true,'external').result.issues[0].code).toBe('motion_fact_conflict');
+});

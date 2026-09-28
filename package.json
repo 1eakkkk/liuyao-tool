@@ -24,7 +24,8 @@
     "test:browser:usability": "node scripts/verify-usability-browser.js",
     "test:browser:controls": "node scripts/verify-controls-browser.js",
     "test:browser:theme": "node scripts/verify-theme-browser.js",
-    "ab:prepare:rules": "node scripts/phase5-ab.js --prepare"
+    "ab:prepare:rules": "node scripts/phase5-ab.js --prepare",
+    "audit:reading": "node scripts/audit-reading-quality.js"
   },
   "devDependencies": {
     "jsdom": "30.0.1",

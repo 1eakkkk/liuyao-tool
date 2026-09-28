@@ -1,0 +1,154 @@
+{
+  "version": "reading-quality-review-1",
+  "scope": "Exposed development samples; annotated claims only; no accuracy or independent acceptance claim",
+  "reviews": [
+    {
+      "id": "reading-live-03-small/reading-1-1",
+      "raw_sha256": "df31658782c205cb674fa6a5eb3a9d797e7642aedb7fb65672f08992d7c007e7",
+      "reviewer": "development-agent; not independent human review",
+      "scope": {
+        "rating": "pass",
+        "reason": "仅核对动静及变爻记录，未扩展成败。"
+      },
+      "support": {
+        "rating": "pass",
+        "reason": "本条事实解释与直接引用相符。"
+      },
+      "claims": [
+        {
+          "path": "/factors/0/interpretation",
+          "quote": "本卦六爻皆为静爻",
+          "facts": [
+            {
+              "id": "fact:/lines/0/moving",
+              "asserted": false
+            },
+            {
+              "id": "fact:/lines/1/moving",
+              "asserted": false
+            },
+            {
+              "id": "fact:/lines/2/moving",
+              "asserted": false
+            },
+            {
+              "id": "fact:/lines/3/moving",
+              "asserted": false
+            },
+            {
+              "id": "fact:/lines/4/moving",
+              "asserted": false
+            },
+            {
+              "id": "fact:/lines/5/moving",
+              "asserted": false
+            }
+          ]
+        }
+      ],
+      "evidence_sha256": "4cc7c59e40b455143a0c395144f386350649c38577f8b9a2c3a11da86747a3a3"
+    },
+    {
+      "id": "reading-live-03-small/reading-2-1",
+      "raw_sha256": "913bbba9932b9e0291b4cebed66bcba38e981de66a1abab2f8d10c67b0e9f32d",
+      "reviewer": "development-agent; not independent human review",
+      "scope": {
+        "rating": "partial",
+        "reason": "给出两项建议，但第四因素展开了自称无关的爻。"
+      },
+      "support": {
+        "rating": "fail",
+        "reason": "第二因素重复六亲却未在本段引用；世应关系不能证明家人愿意配合。"
+      },
+      "claims": [
+        {
+          "path": "/factors/1/interpretation",
+          "quote": "第三爻父母为静爻且月令为旺",
+          "facts": [
+            {
+              "id": "fact:/lines/2/relative",
+              "asserted": "父母"
+            },
+            {
+              "id": "fact:/lines/2/moving",
+              "asserted": false
+            },
+            {
+              "id": "fact:/lines/2/relations/month_strength",
+              "asserted": "旺"
+            }
+          ]
+        }
+      ],
+      "evidence_sha256": "e2a3481d84c159e3dc385d78fdcf4a7a8a584d80ec5cf27a211334b392d670c6"
+    },
+    {
+      "id": "reading-live-03-small/reading-2-2",
+      "raw_sha256": "da2b0c5f968b9b3f09ea32b39f2722b5e73a142ec96b75a46cb45d60f6ed07bb",
+      "reviewer": "development-agent; not independent human review",
+      "scope": {
+        "rating": "pass",
+        "reason": "回应追问且没有因不满意而保证成功。"
+      },
+      "support": {
+        "rating": "partial",
+        "reason": "部分事实引用跨因素借用；分组等常识建议与象意的因果关系仍无法确认。"
+      },
+      "claims": [
+        {
+          "path": "/factors/1/interpretation",
+          "quote": "第三爻父母为静爻而第六爻父母为动爻",
+          "facts": [
+            {
+              "id": "fact:/lines/2/relative",
+              "asserted": "父母"
+            },
+            {
+              "id": "fact:/lines/2/moving",
+              "asserted": false
+            },
+            {
+              "id": "fact:/lines/5/relative",
+              "asserted": "父母"
+            },
+            {
+              "id": "fact:/lines/5/moving",
+              "asserted": true
+            }
+          ]
+        }
+      ],
+      "evidence_sha256": "12793fc4f1e42f671c219279dfbe60663dc6883615a606508725ec75bdc4a150"
+    },
+    {
+      "id": "reading-live-03-advice/reading-1-1",
+      "raw_sha256": "fa578d9c6f7596715ccc02a03129e235021dc5afd6fe6da37265607b961dae89",
+      "reviewer": "development-agent; not independent human review",
+      "scope": {
+        "rating": "partial",
+        "reason": "给出两项建议，但又扩展妻财旬空作为筹备依据。"
+      },
+      "support": {
+        "rating": "fail",
+        "reason": "明确把实际动爻说成静爻，引用存在却与陈述冲突。"
+      },
+      "claims": [
+        {
+          "path": "/factors/0/interpretation",
+          "quote": "两爻均为静爻",
+          "facts": [
+            {
+              "id": "fact:/lines/2/moving",
+              "asserted": false
+            },
+            {
+              "id": "fact:/lines/5/moving",
+              "asserted": false
+            }
+          ]
+        }
+      ],
+      "evidence_sha256": "e21000ce97b743749658f9e75953e8750ab5b58f90c718a2aaa7abcb1c3b0dac"
+    }
+  ]
+}

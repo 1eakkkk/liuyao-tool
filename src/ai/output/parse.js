@@ -17,7 +17,9 @@ function checkMotionClaims(answer, context) {
     ...answer.yongshen_candidates.map((c,i)=>({text:c.reason,ids:c.evidence_ids,path:`$.yongshen_candidates[${i}].reason`})),
     ...answer.timing_candidates.map((c,i)=>({text:c.reason,ids:c.evidence_ids,path:`$.timing_candidates[${i}].reason`})),
     ...answer.uncertainties.map((text,i)=>({text,path:`$.uncertainties[${i}]`}))];
-  for(const passage of passages) for(const clause of passage.text.split(/[。；;！？!?\n]/)) {
+  for(const passage of passages) for(const clause of passage.text.match(/[^。；;！？!?\n]+[。；;！？!?\n]?/g) || []) {
+    // Keep sentence endings: removing '?' turns a question into a false assertion.
+    if (/[？?]|请(?:问|确认|核对)|能否/.test(clause) || /[吗么呢][。！!]?\s*$/.test(clause)) continue;
     if(/[“”"‘’]|如果|假设|假如|若|并非|不是|并不|不一定|不能说|是否|未必|变卦|变爻|伏神/.test(clause)) continue;
     for(const match of clause.matchAll(/第([一二三四五六1-6])爻(?:（[^）]{0,8}）)?(?:父母|兄弟|子孙|妻财|官鬼)?(?:为|是|属于|属)(动|静)爻/g)) {
       const line=context.input.C_canonical_cast.lines[number(match[1])-1];
