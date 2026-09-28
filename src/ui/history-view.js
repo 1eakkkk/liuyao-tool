@@ -89,9 +89,13 @@ function renderHistory(){
     // 剩下的turns（第一轮的"答"、以及后续追问的"问/答"）照旧排在卦象信息下面——
     // 呼应"问题要在上面"的要求：先看清问的是什么事，再看卦象数据和回复。
     const firstQuestion = turns[0]?.text || r.question || '';
-    const restTurnsHtml = turns.slice(1).map(t =>
-      `<div class="history-turn history-turn-${t.role}"><b>${t.role==='user'?'问':'答'}：</b>${escapeHtml(t.text)}</div>`
-    ).join('');
+    const restTurnsHtml = turns.slice(1).map(t => {
+      const text = String(t.text || '');
+      const label = t.role === 'user' ? '问' : '答';
+      if (text.length <= 300) return `<div class="history-turn history-turn-${t.role}"><b>${label}：</b>${escapeHtml(text)}</div>`;
+      const preview = text.replace(/\s+/g, ' ').slice(0, 100);
+      return `<details class="history-long-turn"><summary><b>${label}：</b><span class="history-turn-preview">${escapeHtml(preview)}…</span><span class="history-expand-label">展开全文</span><span class="history-collapse-label">收起全文</span></summary><div class="history-turn history-turn-${t.role}">${escapeHtml(text)}</div></details>`;
+    }).join('');
     const isPrompt = r.type === 'prompt';
     const tagHtml = isPrompt
       ? `<span class="history-item-tag">提示词导出</span>`
@@ -121,7 +125,7 @@ function renderHistory(){
         <span class="history-item-time">${formatTime(r.ts)}</span>
       </div>
       <div class="history-item-meta">${metaText}</div>
-      <div class="history-item-body">${questionHtml}${customConfigHtml}${historyCastHtml(r.cast, r.ts)}${restTurnsHtml}</div>
+      <div class="history-item-body" tabindex="0" role="region" aria-label="历史记录详情，可滚动">${questionHtml}${customConfigHtml}${historyCastHtml(r.cast, r.ts)}${restTurnsHtml}</div>
       <button class="history-item-del" data-action="delete">删除这条</button>
     </div>
   `;
