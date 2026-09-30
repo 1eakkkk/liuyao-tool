@@ -27,3 +27,5 @@
 3. 准备固定评测材料时标明已曝光程度。独立验收需未参与调参的外部材料；真实模型复测前重新核对原累计费用账本，不能视为新增 20 元。
 
 实现位于 experiments/reading-quality/explicit-facts.js；开发材料位于 explicit-controls.js；可追溯摘要见 acceptance/reading-explicit-primary-development.json。实验模块未被网站入口导入。
+
+工程收尾：38 个测试文件、427 项测试通过；生产构建边界检查通过。站点运行目录 src、index.html 与发布配置相对本轮前没有差异。
