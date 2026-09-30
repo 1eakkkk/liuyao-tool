@@ -4,6 +4,7 @@ import { collectEvidencePresentation } from './evidence-presentation.js';
 const assessment = { support: '支持因素', oppose: '不利因素', neutral: '中性因素', conditional: '条件因素' };
 const component = { primary: '本爻', changed: '变爻', hidden: '伏神' };
 const direction = { favorable: '偏有利', unfavorable: '偏不利', mixed: '利弊并存', unclear: '暂不明确' };
+let conclusionId = 0;
 export function outputIssueText(result) {
   const code=result.issues?.[0]?.code;
   return ({
@@ -49,7 +50,21 @@ export function renderOutputResult(container, result, context, { collapseFallbac
   } else {
     validateOutputAnswer(result.answer, context);
     const answer = result.answer;
-    fragment.append(node('h2', '解读结论'), node('p', answer.answer));
+    const conclusion = node('p', answer.answer); conclusion.className = 'reading-conclusion';
+    fragment.append(node('h2', '解读结论'), conclusion);
+    const characters = [...answer.answer];
+    if (characters.length > 400) {
+      const preview = characters.slice(0, 240).join('') + '…';
+      conclusion.textContent = preview; conclusion.id = `reading-conclusion-${++conclusionId}`;
+      const toggle = node('button', '展开完整结论'); toggle.type = 'button'; toggle.className = 'reading-text-toggle';
+      toggle.setAttribute('aria-controls', conclusion.id); toggle.setAttribute('aria-expanded', 'false');
+      toggle.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') !== 'true';
+        conclusion.textContent = open ? answer.answer : preview;
+        toggle.setAttribute('aria-expanded', String(open)); toggle.textContent = open ? '收起完整结论' : '展开完整结论';
+      });
+      fragment.append(toggle);
+    }
     fragment.append(node('p', `判断倾向：${direction[answer.direction]} · 属于 AI 推论`));
     const details = node('details');
     details.append(node('summary', answer.timing_candidates.length ? '查看依据、应期候选与不确定性' : '查看依据与不确定性'));

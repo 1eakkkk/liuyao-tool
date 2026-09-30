@@ -72,3 +72,11 @@ body .settings-feedback:empty {display:none;}
 body .settings-feedback[data-type=error] {color:var(--ui-danger);}
 body #ai .reading-panel details {border:0;border-top:1px solid var(--ui-border);border-radius:0;background:transparent;padding:12px 0;}
 body .plate-cards .plate-card, :root[data-theme=dark] body .plate-cards .plate-card {border:0;border-bottom:1px solid var(--ui-border);border-radius:0;background:transparent;box-shadow:none;padding:16px 0;}
+
+/* Reading controls stay in the text flow, without another enclosing card. */
+body .reading-conclusion {white-space:pre-wrap;overflow-wrap:anywhere;}
+body .reading-text-toggle {display:block;min-height:44px;padding:8px 0;border:0;background:transparent;color:var(--ui-accent);font:inherit;cursor:pointer;text-align:left;}
+body .history-item-head {width:100%;padding:0;border:0;border-radius:0;background:transparent;color:var(--ui-text);font:inherit;text-align:left;}
+body .history-plate {margin-top:16px;white-space:normal;}
+body .history-plate > summary {min-height:44px;padding:10px 0;cursor:pointer;color:var(--ui-accent);}
+body :is(.reading-text-toggle,.history-item-head,.history-plate > summary):focus-visible {outline:3px solid var(--ui-accent);outline-offset:3px;}

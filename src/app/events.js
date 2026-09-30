@@ -401,6 +401,7 @@ historyList.addEventListener('click', async (e)=>{
   const id = item?.dataset.id;
   if(actionEl.dataset.action === 'toggle'){
     item.classList.toggle('expanded');
+    actionEl.setAttribute('aria-expanded', String(item.classList.contains('expanded')));
   }else if(actionEl.dataset.action === 'delete'){
     if(!(await showConfirm('删除这条解读记录？删除后无法恢复。',{title:'删除记录',okText:'删除',cancelText:'保留'}))) return;
     const list = loadHistory().filter(r => String(r.id) !== id);

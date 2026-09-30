@@ -66,3 +66,21 @@ test('direct fact plus rule displays the source once with local references, with
   expect(section.querySelector('details')).toBeNull();
   expect(container.querySelector('details').open).toBe(false);
 });
+
+test('long conclusions expand without splitting Unicode, rendering HTML or changing the saved answer', () => {
+  const answer=syntheticOutput(context);
+  answer.answer='🙂'.repeat(241)+'<img src=x onerror="bad()">'+'长结论。'.repeat(120);
+  const raw=JSON.stringify(answer), result=parseOutputAnswer(raw,context,{completed:true});
+  expect(result.status).toBe('validated');
+  const container=document.createElement('div'); renderOutputResult(container,result,context);
+  const toggle=container.querySelector('.reading-text-toggle'), conclusion=container.querySelector('.reading-conclusion');
+  expect(conclusion.textContent).toBe('🙂'.repeat(240)+'…');
+  expect(toggle.getAttribute('aria-controls')).toBe(conclusion.id);
+  toggle.click();
+  expect(toggle.getAttribute('aria-expanded')).toBe('true');
+  expect(conclusion.textContent).toBe(answer.answer);
+  expect(container.querySelector('img')).toBeNull();
+  toggle.click();
+  expect(toggle.getAttribute('aria-expanded')).toBe('false');
+  expect(JSON.stringify(result.answer)).toBe(raw);
+});

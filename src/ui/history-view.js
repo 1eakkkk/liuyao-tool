@@ -78,23 +78,31 @@ function renderStats(){
 // 每条历史记录是一整次摇卦对应的会话（首次解读+若干次追问都在同一条里），不是每次AI调用一条平铺记录。
 // 旧版本存的是扁平记录（question/text字段，没有turns），historyTurnsOf已经做了兼容读取，这里不用管新旧格式。
 function renderHistory(){
+  const views = new Map([...historyList.querySelectorAll('.history-item')].map(item => [item.dataset.id, {
+    expanded: item.classList.contains('expanded'),
+    open: [...item.querySelectorAll('details[open]')].map(d => d.dataset.view),
+    scroll: item.querySelector('.history-item-body')?.scrollTop || 0,
+  }]));
+  const active = historyList.contains(document.activeElement) ? document.activeElement : null;
+  const focusId = active?.closest('.history-item')?.dataset.id;
+  const focusView = active?.closest('details')?.dataset.view;
+  const focusAction = active?.dataset.action;
   const list = loadHistory().slice().reverse(); // 最新的在最上面
   historyCount.textContent = list.length;
   historyEmpty.style.display = list.length ? 'none' : 'flex';
-  historyList.innerHTML = list.map(r => {
+  historyList.innerHTML = list.map((r, index) => {
     const turns = historyTurnsOf(r);
     const roundCount = turns.filter(t=>t.role==='assistant').length;
     // historyTurnsOf()两条分支里turns[0]永远是这一条记录最初的那个"问"（不管是prompt类型
     // 只有一轮，还是AI解读类型有问有答），这里单独摘出来放在展开正文最上面，
-    // 剩下的turns（第一轮的"答"、以及后续追问的"问/答"）照旧排在卦象信息下面——
-    // 呼应"问题要在上面"的要求：先看清问的是什么事，再看卦象数据和回复。
+    // 问答优先，完整卦盘放在独立的按需展开入口。
     const firstQuestion = turns[0]?.text || r.question || '';
-    const restTurnsHtml = turns.slice(1).map(t => {
+    const restTurnsHtml = turns.slice(1).map((t, turnIndex) => {
       const text = String(t.text || '');
       const label = t.role === 'user' ? '问' : '答';
       if (text.length <= 300) return `<div class="history-turn history-turn-${t.role}"><b>${label}：</b>${escapeHtml(text)}</div>`;
       const preview = text.replace(/\s+/g, ' ').slice(0, 100);
-      return `<details class="history-long-turn"><summary><b>${label}：</b><span class="history-turn-preview">${escapeHtml(preview)}…</span><span class="history-expand-label">展开全文</span><span class="history-collapse-label">收起全文</span></summary><div class="history-turn history-turn-${t.role}">${escapeHtml(text)}</div></details>`;
+      return `<details class="history-long-turn" data-view="turn-${turnIndex}"><summary><b>${label}：</b><span class="history-turn-preview">${escapeHtml(preview)}…</span><span class="history-expand-label">展开全文</span><span class="history-collapse-label">收起全文</span></summary><div class="history-turn history-turn-${t.role}">${escapeHtml(text)}</div></details>`;
     }).join('');
     const isPrompt = r.type === 'prompt';
     const tagHtml = isPrompt
@@ -117,19 +125,35 @@ function renderHistory(){
     if(r.roleCustomText) customConfigParts.push(`<div class="history-turn history-custom-config"><b>当时的自定义人设：</b>${escapeHtml(r.roleCustomText)}</div>`);
     if(r.styleCustomText) customConfigParts.push(`<div class="history-turn history-custom-config"><b>当时的自定义风格：</b>${escapeHtml(r.styleCustomText)}</div>`);
     const customConfigHtml = customConfigParts.join('');
+    const castHtml = historyCastHtml(r.cast, r.ts);
+    const plateHtml = castHtml ? `<details class="history-plate" data-view="plate"><summary>查看当时卦盘</summary>${castHtml}</details>` : '';
     return `
     <div class="history-item" data-id="${escapeHtml(String(r.id))}">
-      <div class="history-item-head" data-action="toggle">
+      <button type="button" class="history-item-head" data-action="toggle" aria-expanded="false" aria-controls="history-body-${index}">
         <span class="history-item-q">${escapeHtml(firstQuestion)}</span>
         ${r.readingMode === 'structured' ? '<span class="history-item-tag">结构化</span>' : ''}${tagHtml}
         <span class="history-item-time">${formatTime(r.ts)}</span>
-      </div>
+      </button>
       <div class="history-item-meta">${metaText}</div>
-      <div class="history-item-body" tabindex="0" role="region" aria-label="历史记录详情，可滚动">${questionHtml}${customConfigHtml}${historyCastHtml(r.cast, r.ts)}${restTurnsHtml}</div>
+      <div id="history-body-${index}" class="history-item-body" tabindex="0" role="region" aria-label="历史记录详情，可滚动">${questionHtml}${restTurnsHtml}${customConfigHtml}${plateHtml}</div>
       <button class="history-item-del" data-action="delete">删除这条</button>
     </div>
   `;
   }).join('');
+  for (const item of historyList.querySelectorAll('.history-item')) {
+    const view = views.get(item.dataset.id);
+    if (view) {
+      item.classList.toggle('expanded', view.expanded);
+      item.querySelector('.history-item-head').setAttribute('aria-expanded', String(view.expanded));
+      for (const details of item.querySelectorAll('details')) details.open = view.open.includes(details.dataset.view);
+      item.querySelector('.history-item-body').scrollTop = view.scroll;
+    }
+    if (item.dataset.id === focusId) {
+      const target = focusView ? [...item.querySelectorAll('details')].find(d => d.dataset.view === focusView)?.querySelector('summary')
+        : focusAction ? [...item.querySelectorAll('[data-action]')].find(n => n.dataset.action === focusAction) : item.querySelector('.history-item-body');
+      target?.focus({preventScroll: true});
+    }
+  }
   renderStats();
 }
 

@@ -13,13 +13,13 @@ const report = [];
 fs.mkdirSync('test-results/reading', { recursive: true });
 function answer(input) {
   const rule=input.evidence.find(e=>e.kind==='rule_result');
-  return { schema_version: OUTPUT_VERSION, context_id: input.context_id, answer: '可以先整理书目，再安排阅读。<img src=x onerror=alert(1)>',
+  return { schema_version: OUTPUT_VERSION, context_id: input.context_id, answer: '可以先整理书目，再安排阅读。<img src=x onerror=alert(1)>' + '请先梳理现有资料，再按自己的时间安排分阶段阅读；这只是阅读建议，不代表真实结果。'.repeat(18),
     direction: 'unclear', yongshen_candidates: [], factors: [{ assessment: 'neutral', interpretation: '仅核对第一爻的六亲，不断言现实结果。', evidence_ids: ['fact:/lines/0/relative'] },
       ...(rule ? [{assessment:'neutral',interpretation:'规则标注及其来源事实不重复计为依据。',evidence_ids:[rule.source_facts[0],rule.id]}] : [])],
     timing_candidates: [], uncertainties: ['这是模拟回复，格式核对不代表预测正确。'] };
 }
 try {
-  for (const width of [1280, 390]) {
+  for (const width of [1280, 390, 320]) {
     const context = await browser.newContext({ viewport: { width, height: 1000 } });
     const page = await context.newPage(), errors = [], requests = [];
     page.on('pageerror', e => errors.push(e.message));
@@ -61,6 +61,13 @@ try {
     await page.locator('#readingTurns h2').waitFor();
     assert.equal(await page.locator('#readingTurns img').count(), 0);
     assert.equal(await page.locator('#readingTurns details[open]').count(), 0);
+    const conclusionToggle=page.locator('#readingTurns .reading-text-toggle').first();
+    assert.equal(await conclusionToggle.getAttribute('aria-expanded'),'false');
+    assert((await page.locator('#readingTurns .reading-conclusion').first().textContent()).endsWith('…'));
+    await conclusionToggle.focus(); await page.keyboard.press('Enter');
+    assert.equal(await page.locator('#readingTurns .reading-conclusion').first().textContent(),answer(input).answer);
+    await page.keyboard.press('Space');
+    assert.equal(await conclusionToggle.getAttribute('aria-expanded'),'false');
     const citedRule=input.evidence.find(e=>e.kind==='rule_result');
     assert(citedRule,'Fixture has a rule citation');
     const ruleSection=page.locator('#readingTurns article').first().locator('section').nth(1);
@@ -71,11 +78,29 @@ try {
     await page.locator('#readingTurns details').first().evaluate(node=>{node.open=true;});
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
     await page.locator('#readingTurns article').first().screenshot({path:`test-results/reading/evidence-${engine}-${width}.png`});
-    await page.locator('#readingTurns details').first().evaluate(node=>{node.open=false;});
+    // Keep the disclosure open while another turn is prepared.
     await page.evaluate(()=>{Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>{window.__copiedReading=text;}}});});
     await page.locator('#readingCopyAll').click();
     assert((await page.evaluate(()=>window.__copiedReading)).includes('不确定性'),'Copy includes collapsed evidence and limitations');
+    assert((await page.evaluate(()=>window.__copiedReading)).includes(answer(input).answer),'Copy retains the entire shortened conclusion');
+    await page.locator('#toggleHistoryBtn').click();
+    const historyHead=page.locator('.history-item-head').first();
+    await historyHead.focus(); await page.keyboard.press('Enter');
+    assert.equal(await historyHead.getAttribute('aria-expanded'),'true');
+    assert.equal(await page.locator('.history-plate').first().getAttribute('open'),null);
+    const historyBody=page.locator('.history-item-body').first();
+    assert(await historyBody.evaluate(n=>n.querySelector('.history-long-turn').compareDocumentPosition(n.querySelector('.history-plate')) & Node.DOCUMENT_POSITION_FOLLOWING));
+    await page.locator('.history-long-turn > summary').first().click();
+    await historyBody.evaluate(n=>{n.scrollTop=75;});
+    const savedScroll=await historyBody.evaluate(n=>n.scrollTop);
     await page.locator('#readingFollow').fill('请继续说明依据'); await page.locator('#readingFollowExport').click();
+    assert.equal(await page.locator('#readingTurns details').first().evaluate(n=>n.open),true,'Followup export preserves existing evidence disclosure');
+    assert.equal(await historyHead.getAttribute('aria-expanded'),'true','History refresh preserves the selected record');
+    assert.equal(await page.locator('.history-long-turn').first().evaluate(n=>n.open),true);
+    assert.equal(await historyBody.evaluate(n=>n.scrollTop),savedScroll);
+    await historyHead.focus(); await page.keyboard.press('Space');
+    assert.equal(await historyHead.getAttribute('aria-expanded'),'false');
+    await page.locator('#toggleHistoryBtn').click();
     const next = extract(await page.locator('#readingPrompt').inputValue());
     assert.notEqual(next.context_id, input.context_id); assert.equal(next.conversation.history.length, 1);
     await page.locator('#readingPaste').fill(JSON.stringify(answer(input)));
@@ -147,6 +172,7 @@ try {
     assert.equal(stored[0].turns.filter(t=>t.role==='assistant').length,6,'Followups belong to one history record');
     assert.deepEqual(errors, []);
     report.push({ width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', nested_provenance: false,
+      long_conclusion: 'passed', history_keyboard: 'passed', disclosure_preservation: 'passed', history_scroll_preservation: 'passed',
       replay_rejected: true, restore: 'passed', stop: 'passed', replacement: 'passed', errors });
     await context.close();
   }

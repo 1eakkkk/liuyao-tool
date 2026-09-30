@@ -14,6 +14,7 @@ import { renderHistory } from './history-view.js';
 
 const KEY = 'liuyao_structured_reading_v1';
 let session = null, pending = null, busy = false, epoch = 0;
+let renderedSession = null;
 const el = id => document.getElementById(id);
 export const readingSelected = () => el('readingMode')?.value === 'structured';
 function status(text) { el('readingStatus').textContent = text; }
@@ -26,8 +27,10 @@ function persist() {
 function render() {
   const root = el('readingPanel'); root.hidden = !session;
   if (!session) return;
-  el('readingTurns').replaceChildren();
-  for (const t of session.turns) {
+  const turnsRoot = el('readingTurns');
+  if (renderedSession !== session) { turnsRoot.replaceChildren(); renderedSession = session; }
+  // Completed turns are immutable. Keep their nodes, disclosure states and focus during followups.
+  for (const t of session.turns.slice(turnsRoot.childElementCount)) {
     const block = document.createElement('article');
     const question = document.createElement('h3'); question.textContent = `问：${t.question}`;
     const result = document.createElement('div'); renderOutputResult(result, t.result, t.context, { collapseFallback: true });
@@ -49,7 +52,7 @@ function render() {
       usage.textContent = t.usage.total == null ? '用量未收全，费用未知；以 DeepSeek 账单为准。' : `本轮 ${t.usage.total} tokens · 约 ¥${t.usage.cost.toFixed(4)} · 以 DeepSeek 账单为准`;
       block.append(usage);
     }
-    el('readingTurns').append(block);
+    turnsRoot.append(block);
   }
   el('readingExportArea').hidden = !pending;
   el('readingPrompt').value = pending ? readingExport(pending) : '';
@@ -58,7 +61,7 @@ function render() {
   el('readingComplete').checked = false;
 }
 export function clearReading() {
-  epoch++; session = null; pending = null;
+  epoch++; session = null; pending = null; renderedSession = null;
   safeRemoveItem(KEY);
   if (el('readingPanel')) { el('readingPanel').hidden = true; el('readingTurns').replaceChildren(); }
 }
