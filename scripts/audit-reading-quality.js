@@ -20,3 +20,26 @@ const results=controls.map(({entry,review,expected})=>{
 });
 fs.writeFileSync('test-results/reading-quality/relative-role-controls.json',JSON.stringify({network_calls:0,kind:'Synthetic annotated development controls, not automatic language recognition',cases:results},null,2)+'\n');
 console.log(`Relative/role controls: ${results.length} passed; no model calls.`);
+
+const {checkExplicitPrimaryFacts}=await import('../experiments/reading-quality/explicit-facts.js');
+const {buildExplicitContextControls}=await import('../experiments/reading-quality/explicit-controls.js');
+const registry=controls[0].entry.quoted_evidence;
+const candidates=[...controls.map(({entry,review,expected})=>({id:review.id,answer:JSON.parse(entry.raw),expected})),
+  ...buildExplicitContextControls(registry)];
+const candidateCases=candidates.map(({id,answer,expected})=>{
+  const result=checkExplicitPrimaryFacts(answer,registry);
+  if(result.checked!==expected.checked || result.conflicts!==expected.conflicts || result.missing_direct_citations!==expected.missing)
+    throw Error(`Explicit fact candidate mismatch: ${id}`);
+  return {id,expected,result};
+});
+const exposedReplies=source.entries.map(entry=>({id:`${entry.batch}/${entry.transport.id}`,
+  result:checkExplicitPrimaryFacts(JSON.parse(entry.raw),entry.quoted_evidence)}));
+const candidateReport={network_calls:0,production_changes:false,kind:'Exposed synthetic development controls; not blind acceptance',
+  limitations:['Only whole-factor standalone primary-line relative/shi/ying assertions are recognized',
+    'Unassessed prose is not passed; main answer and other output fields are outside coverage',
+    'Rule mentions of a fact do not establish semantic support',
+    'No automated scope/advice/real-world prediction judgment'],
+  case_count:candidateCases.length,cases:candidateCases,exposed_replies:exposedReplies};
+fs.writeFileSync('test-results/reading-quality/explicit-primary-candidate.json',JSON.stringify(candidateReport,null,2)+'\n');
+console.log(`Explicit primary fact candidate: ${candidateCases.length} development controls passed; production unchanged.`);
+console.log(JSON.stringify(exposedReplies.map(e=>({id:e.id,checked:e.result.checked,unassessed:e.result.unassessed,conflicts:e.result.conflicts}))));

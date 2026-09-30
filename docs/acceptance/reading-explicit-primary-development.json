@@ -1,0 +1,2402 @@
+{
+  "network_calls": 0,
+  "production_changes": false,
+  "kind": "Exposed synthetic development controls; not blind acceptance",
+  "limitations": [
+    "Only whole-factor standalone primary-line relative/shi/ying assertions are recognized",
+    "Unassessed prose is not passed; main answer and other output fields are outside coverage",
+    "Rule mentions of a fact do not establish semantic support",
+    "No automated scope/advice/real-world prediction judgment"
+  ],
+  "case_count": 168,
+  "totals": {
+    "checked": 90,
+    "conflicts": 18,
+    "missing_direct_citations": 36,
+    "unassessed": 96
+  },
+  "cases": [
+    {
+      "id": "synthetic-relative-role/1-relative-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-relative-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-relative-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-relative-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-is_shi-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-is_shi-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-is_shi-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-is_shi-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-is_ying-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-is_ying-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-is_ying-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-is_ying-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-conditional",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-quotation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/1-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-relative-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-relative-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-relative-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-relative-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-is_shi-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-is_shi-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-is_shi-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-is_shi-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-is_ying-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-is_ying-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-is_ying-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-is_ying-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-conditional",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-quotation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/2-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-relative-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-relative-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-relative-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-relative-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-is_shi-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-is_shi-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-is_shi-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-is_shi-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-is_ying-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-is_ying-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-is_ying-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-is_ying-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-conditional",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-quotation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/3-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-relative-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-relative-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-relative-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-relative-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-is_shi-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-is_shi-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-is_shi-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-is_shi-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-is_ying-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-is_ying-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-is_ying-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-is_ying-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-conditional",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-quotation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/4-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-relative-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-relative-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-relative-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-relative-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-is_shi-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-is_shi-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-is_shi-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-is_shi-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-is_ying-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-is_ying-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-is_ying-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-is_ying-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-conditional",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-quotation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/5-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-relative-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-relative-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-relative-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-relative-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-is_shi-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-is_shi-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-is_shi-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-is_shi-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-is_ying-correct",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-is_ying-conflict",
+      "expected": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 1,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-is_ying-wrong-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-is_ying-borrowed-citation",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 1
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 1,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-conditional",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-quotation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "synthetic-relative-role/6-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "1-relative-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "1-is_shi-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "1-is_ying-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "1-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "1-hypothesis",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "1-quote",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "1-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "1-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "1-quote-negation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "1-multiple-sentences",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "1-uncertain",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "2-relative-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "2-is_shi-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "2-is_ying-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "2-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "2-hypothesis",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "2-quote",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "2-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "2-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "2-quote-negation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "2-multiple-sentences",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "2-uncertain",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "3-relative-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "3-is_shi-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "3-is_ying-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "3-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "3-hypothesis",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "3-quote",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "3-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "3-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "3-quote-negation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "3-multiple-sentences",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "3-uncertain",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "4-relative-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "4-is_shi-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "4-is_ying-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "4-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "4-hypothesis",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "4-quote",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "4-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "4-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "4-quote-negation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "4-multiple-sentences",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "4-uncertain",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "5-relative-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "5-is_shi-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "5-is_ying-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "5-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "5-hypothesis",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "5-quote",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "5-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "5-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "5-quote-negation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "5-multiple-sentences",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "5-uncertain",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "6-relative-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "6-is_shi-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "6-is_ying-variant",
+      "expected": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 1,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 0
+      }
+    },
+    {
+      "id": "6-question",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "6-hypothesis",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "6-quote",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "6-changed",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "6-hidden",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "6-quote-negation",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "6-multiple-sentences",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    },
+    {
+      "id": "6-uncertain",
+      "expected": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing": 0
+      },
+      "actual": {
+        "checked": 0,
+        "conflicts": 0,
+        "missing_direct_citations": 0,
+        "unassessed": 1
+      }
+    }
+  ],
+  "exposed_replies": [
+    {
+      "id": "reading-live-03-small/reading-1-1",
+      "checked": 0,
+      "conflicts": 0,
+      "missing_direct_citations": 0,
+      "unassessed": 2
+    },
+    {
+      "id": "reading-live-03-small/reading-2-1",
+      "checked": 0,
+      "conflicts": 0,
+      "missing_direct_citations": 0,
+      "unassessed": 4
+    },
+    {
+      "id": "reading-live-03-small/reading-2-2",
+      "checked": 0,
+      "conflicts": 0,
+      "missing_direct_citations": 0,
+      "unassessed": 3
+    },
+    {
+      "id": "reading-live-03-advice/reading-1-1",
+      "checked": 0,
+      "conflicts": 0,
+      "missing_direct_citations": 0,
+      "unassessed": 2
+    }
+  ]
+}
