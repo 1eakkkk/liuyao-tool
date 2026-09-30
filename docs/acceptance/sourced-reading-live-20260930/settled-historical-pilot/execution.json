@@ -1,0 +1,8 @@
+{
+  "started_at": "2026-09-30T10:07:21.988Z",
+  "reservation": {
+    "reserved_cny": 19.745397999999998,
+    "remaining_unreserved_cny": 0.20460200000000128
+  },
+  "automatic_retries": false
+}

@@ -1,0 +1,15 @@
+{
+  "model": "deepseek-flash",
+  "finish_reason": "stop",
+  "content": "{\"schema_version\":\"layered-reading-dev-1\",\"conclusion\":\"本盘第三爻（位于应位、纳甲乙卯、五行木）与月建酉相冲，程序标注为“月破（与月建六冲）”，这是对月支与爻支六冲关系的命名。不能据此断言该爻永久无用或事情必然失败；本次请求也未提供用神、成败或应期方面的依据。\",\"facts\":[{\"evidence_id\":\"fact:/lines/2/position\",\"value\":3},{\"evidence_id\":\"fact:/lines/2/ganzhi\",\"value\":\"乙卯\"},{\"evidence_id\":\"fact:/lines/2/branch\",\"value\":\"卯\"},{\"evidence_id\":\"fact:/lines/2/element\",\"value\":\"木\"},{\"evidence_id\":\"fact:/lines/2/relative\",\"value\":\"官鬼\"},{\"evidence_id\":\"fact:/lines/2/moving\",\"value\":false},{\"evidence_id\":\"fact:/lines/2/is_ying\",\"value\":true},{\"evidence_id\":\"fact:/lines/2/relations/month_strength\",\"value\":\"死\"},{\"evidence_id\":\"fact:/calendar/month_branch\",\"value\":\"酉\"},{\"evidence_id\":\"fact:/calendar/month_ganzhi\",\"value\":\"丁酉\"},{\"evidence_id\":\"fact:/calendar/day_ganzhi\",\"value\":\"甲子\"},{\"evidence_id\":\"rule:MONTH-CLASH-001:primary:3:-\",\"value\":{\"code\":\"month_clash\",\"label\":\"月破（与月建六冲）\"}}],\"interpretations\":[{\"text\":\"“月破”是本盘所用术语，指第三爻地支卯与月建地支酉构成六冲；卯木在酉月为月令“死”位，程序同时给出这一状态。该名称对应的是月支与爻支的冲关系，而非对该爻效力的最终判定。\",\"fact_ids\":[\"fact:/lines/2/branch\",\"fact:/lines/2/element\",\"fact:/calendar/month_branch\",\"fact:/lines/2/relations/month_strength\",\"rule:MONTH-CLASH-001:primary:3:-\"],\"literature_ids\":[],\"applicability\":\"文献包为空（cards 为空），没有可供引用的古籍或解释背景，因此仅依据程序事实说明标注含义。\",\"uncertainties\":[\"缺少文献来源，无法在本协议内给出“月破”的传统定义对比。\",\"未提供用神，故无法说明该爻在具体问事中是否被取用。\",\"未提供日辰对第三爻的生克合冲关系，程序事实中该爻无 day_relation 字段。\"]},{\"text\":\"关于“永久无用”：不能把“月破”读成时间上永久失效的结论。已知事实只包括卯酉相冲、该爻非动爻、月令死；这些描述月建对爻的作用标签，不等于宣告该爻在所有时点都无效。\",\"fact_ids\":[\"rule:MONTH-CLASH-001:primary:3:-\",\"fact:/lines/2/moving\",\"fact:/lines/2/relations/month_strength\"],\"literature_ids\":[],\"applicability\":\"依据程序标注与动爻字段本身；不引入用神、月建其他作用规则或应期推断。\",\"uncertainties\":[\"是否需要结合日辰、动爻变化或其他爻的生克才能评估实际影响，本协议未展开。\"]},{\"text\":\"关于“必然失败”：程序给出的只有月破与月令死，没有给出所问事项的用神、世应生克结论或成败规则结果，因此不能从这些事实推导出“事情必然失败”。\",\"fact_ids\":[\"rule:MONTH-CLASH-001:primary:3:-\",\"fact:/lines/2/relative\",\"fact:/lines/2/relations/month_strength\"],\"literature_ids\":[],\"applicability\":\"本回答限定为核对标注与解释名称，不涉及成败判断；无适用文献可引。\",\"uncertainties\":[\"事项性质未知，无法判断该爻是否与所问之事相关。\",\"世应关系标签虽存在（世克应），但与本问题无关，未将其纳入解释。\"]}],\"advice\":[{\"text\":\"若在阅读盘面时遇到“月破”，可把它先当作一条关系标签记录：月建酉与第三爻卯相冲，并标注月令死；在讨论其实际影响时，应明确说明仍需结合用神、日辰与动变等条件另行判断，避免直接写成“此爻无用”或“事必败”。\",\"basis\":\"general_advice\"}]}",
+  "usage": {
+    "prompt_tokens": 5710,
+    "completion_tokens": 970,
+    "total_tokens": 6680,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 5710
+  }
+}

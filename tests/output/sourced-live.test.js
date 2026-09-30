@@ -14,8 +14,9 @@ function temporary(work){const root=fs.mkdtempSync(path.join(os.tmpdir(),'source
   if(!path.resolve(root).startsWith(path.resolve(os.tmpdir())+path.sep)) throw Error('Unexpected cleanup path');fs.rmSync(root,{recursive:true,force:true});}}
 const write=(file,v)=>fs.writeFileSync(file,JSON.stringify(v));
 function oldPilot(root){const dir=path.join(root,'pilot');fs.mkdirSync(dir);
-  for(const f of fs.readdirSync(path.join(repo,'test-results/knowledge-reading-pilot-01')).filter(f=>f.endsWith('.json')))
-    fs.copyFileSync(path.join(repo,'test-results/knowledge-reading-pilot-01',f),path.join(dir,f));return dir;}
+  const fixture=path.join(repo,'docs/acceptance/sourced-reading-live-20260930/settled-historical-pilot');
+  for(const f of fs.readdirSync(fixture).filter(f=>f.endsWith('.json')))
+    fs.copyFileSync(path.join(fixture,f),path.join(dir,f));return dir;}
 test('explicit settlement preserves reservations and accounts only complete recorded usage plus padding',()=>temporary(root=>{
   const dir=oldPilot(root),audit=auditCompletedPilot(dir),ledger=path.join(root,'ledger.json');
   expect(audit.accounted_cny).toBe(0.03683);expect(audit.unattempted_calls).toBe(5);

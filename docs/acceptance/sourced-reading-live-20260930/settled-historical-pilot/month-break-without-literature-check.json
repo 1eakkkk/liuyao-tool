@@ -1,0 +1,113 @@
+{
+  "id": "month-break-without-literature",
+  "case_id": "month-break",
+  "arm": "without-literature",
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 5710,
+    "completion_tokens": 970,
+    "total_tokens": 6680,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 5710
+  },
+  "conservative_peak_cost_cny": 0.01918,
+  "within_reserve": true,
+  "check": {
+    "version": "layered-reading-dev-1",
+    "facts": [
+      {
+        "evidence_id": "fact:/lines/2/position",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/lines/2/ganzhi",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/lines/2/branch",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/lines/2/element",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/lines/2/relative",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/lines/2/moving",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/lines/2/is_ying",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/lines/2/relations/month_strength",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/calendar/month_branch",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/calendar/month_ganzhi",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/calendar/day_ganzhi",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "rule:MONTH-CLASH-001:primary:3:-",
+        "status": "invalid_fact_source"
+      }
+    ],
+    "interpretations": [
+      {
+        "position": 0,
+        "mechanical_status": "invalid_references",
+        "invalid_fact_ids": [
+          "rule:MONTH-CLASH-001:primary:3:-"
+        ],
+        "unknown_literature_ids": [],
+        "semantic_support": "unassessed",
+        "question_relevance": "unassessed",
+        "independent_literature_evidence": false
+      },
+      {
+        "position": 1,
+        "mechanical_status": "invalid_references",
+        "invalid_fact_ids": [
+          "rule:MONTH-CLASH-001:primary:3:-"
+        ],
+        "unknown_literature_ids": [],
+        "semantic_support": "unassessed",
+        "question_relevance": "unassessed",
+        "independent_literature_evidence": false
+      },
+      {
+        "position": 2,
+        "mechanical_status": "invalid_references",
+        "invalid_fact_ids": [
+          "rule:MONTH-CLASH-001:primary:3:-"
+        ],
+        "unknown_literature_ids": [],
+        "semantic_support": "unassessed",
+        "question_relevance": "unassessed",
+        "independent_literature_evidence": false
+      }
+    ],
+    "advice_count": 1,
+    "mechanical_ok": false,
+    "conclusion_support": "unassessed",
+    "advice_semantics": "unassessed",
+    "acceptance": "not_established"
+  },
+  "target_facts_omitted": [],
+  "model_quality": "manual_review_pending"
+}
