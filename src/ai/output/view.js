@@ -1,4 +1,5 @@
 import { validateOutputAnswer } from './parse.js';
+import { collectEvidencePresentation } from './evidence-presentation.js';
 
 const assessment = { support: '支持因素', oppose: '不利因素', neutral: '中性因素', conditional: '条件因素' };
 const component = { primary: '本爻', changed: '变爻', hidden: '伏神' };
@@ -29,7 +30,8 @@ export function evidenceText(entry) {
   if (entry.kind === 'program_fact') return `${entry.label}：${entry.value === null ? '未记载' : typeof entry.value === 'boolean' ? (entry.value ? '是' : '否') : String(entry.value)}`;
   const { from, to } = entry.result;
   const arrow = from && to ? `（第${from.line}爻${component[from.component]} → 第${to.line}爻${component[to.component]}）` : '';
-  return `${entry.label}${arrow}`;
+  const location = entry.target ? `第${entry.target.line}爻${component[entry.target.component]} · ` : '';
+  return `${location}${entry.result.label}${arrow}`;
 }
 
 // All model text uses textContent. Never render model HTML, Markdown or links.
@@ -51,25 +53,26 @@ export function renderOutputResult(container, result, context, { collapseFallbac
     fragment.append(node('p', `判断倾向：${direction[answer.direction]} · 属于 AI 推论`));
     const details = node('details');
     details.append(node('summary', answer.timing_candidates.length ? '查看依据、应期候选与不确定性' : '查看依据与不确定性'));
-    details.append(node('p', '下列解释由 AI 生成；程序仅核对格式和引用，不能证明判断正确。'));
-    const registry = new Map(context.evidence.map(e => [e.id, e]));
+    details.append(node('p', '下列解释由 AI 生成；格式与引用核对不能证明判断正确。规则和其来源事实不重复计为依据。'));
     const item = (title, text, ids) => {
       const section = node('section'); section.append(node('h3', title), node('p', text));
       if (ids?.length) {
-        const ul = node('ul');
-        for (const id of ids) {
-          const entry=registry.get(id), li=node('li');
-          li.append(node('strong',entry.kind==='program_fact'?'程序事实：':'规则标注：'),doc.createTextNode(evidenceText(entry)));
-          if(entry.kind==='rule_result') {
-            const sources=node('ul'); sources.className='reading-evidence-sources';
-            for(const factId of [...new Set(entry.source_facts)]) sources.append(node('li',evidenceText(registry.get(factId))));
-            const provenance=node('details');
-            provenance.append(node('summary',`查看来源事实（${new Set(entry.source_facts).size}）`),sources);
-            li.append(provenance);
-          }
-          ul.append(li);
+        const presentation = collectEvidencePresentation(context.evidence, ids);
+        const facts = node('ol'); facts.className = 'reading-evidence-sources';
+        for (const fact of presentation.facts) {
+          const li = node('li'); li.append(node('strong', '程序事实：'), doc.createTextNode(evidenceText(fact.entry)));
+          facts.append(li);
         }
-        section.append(ul);
+        section.append(facts);
+        if (presentation.rules.length) {
+          const rules = node('ul'); rules.className = 'reading-evidence-rules';
+          for (const rule of presentation.rules) {
+            const li = node('li'); li.append(node('strong', '规则标注：'), doc.createTextNode(evidenceText(rule.entry)),
+              node('p', `来源：${rule.sourceNumbers.map(n => `事实 ${n}`).join('、')}（见上方列表）`));
+            rules.append(li);
+          }
+          section.append(rules);
+        }
       }
       details.append(section);
     };

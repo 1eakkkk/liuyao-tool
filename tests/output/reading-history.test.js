@@ -1,7 +1,8 @@
 import {test, expect, beforeEach} from 'vitest';
 import fs from 'node:fs';
 import {createReadingSession, prepareReadingTurn, appendReadingTurn, serializeReadingSession, restoreReadingSession} from '../../src/ai/output/session.js';
-import {archiveReading} from '../../src/storage/reading-history.js';
+import {archiveReading, readingHistoryText} from '../../src/storage/reading-history.js';
+import { evidenceText } from '../../src/ai/output/view.js';
 import {loadHistory, saveHistory, loadLifetimeStats, addLifetimeUsage} from '../../src/storage/history.js';
 import {syntheticOutput} from '../../experiments/structured-output/example.js';
 const canonical=JSON.parse(fs.readFileSync('experiments/phase7/fixtures/compat-1.json'));
@@ -39,4 +40,16 @@ test('pre-history active sessions receive a stable migration id',async()=>{
   const first=await restoreReadingSession(JSON.stringify(saved)), second=await restoreReadingSession(JSON.stringify(saved));
   archiveReading(first.session,first.pending); archiveReading(second.session,second.pending);
   expect(loadHistory()).toHaveLength(1);
+});
+test('copied history deduplicates direct and derived facts within each factor and keeps every rule source',async()=>{
+  const session=createReadingSession(canonical),prepared=await prepareReadingTurn(session,'依据核对');
+  const rule=prepared.context.evidence.find(e=>e.kind==='rule_result');
+  const answer=syntheticOutput(prepared.context); answer.factors=[{...answer.factors[0],evidence_ids:[rule.id,...rule.source_facts]}];
+  answer.yongshen_candidates=[];
+  const turn=appendReadingTurn(session,prepared,JSON.stringify(answer),true,'external');
+  expect(turn.result.status).toBe('validated');
+  const text=readingHistoryText(turn),registry=new Map(prepared.context.evidence.map(e=>[e.id,e]));
+  for(const id of rule.source_facts) expect(text.split(evidenceText(registry.get(id))).length-1).toBe(1);
+  expect(text).toContain('规则标注');expect(text).toContain('来源：事实 1');
+  expect(text).toContain('不确定性'); expect(turn.raw).toBe(JSON.stringify(answer));
 });

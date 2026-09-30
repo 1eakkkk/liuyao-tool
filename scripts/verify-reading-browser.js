@@ -1,17 +1,21 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
-import { chromium } from 'playwright';
+import { chromium, webkit } from 'playwright';
 import { preview } from 'vite';
 import { OUTPUT_VERSION } from '../src/ai/output/contract.js';
 const target = process.argv[2];
 const server = target ? null : await preview({ preview: { port: 4337, strictPort: true } });
-const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true,
+const engine = process.env.BROWSER_ENGINE || 'chromium';
+if (!['chromium', 'webkit'].includes(engine)) throw Error('Unsupported test browser');
+const browser = await (engine === 'webkit' ? webkit : chromium).launch({ ...(engine === 'chromium' ? { channel: process.env.BROWSER_CHANNEL || 'msedge' } : {}), headless: true,
   ...(target && process.env.HTTPS_PROXY ? { proxy: { server: process.env.HTTPS_PROXY } } : {}) });
 const report = [];
 fs.mkdirSync('test-results/reading', { recursive: true });
 function answer(input) {
+  const rule=input.evidence.find(e=>e.kind==='rule_result');
   return { schema_version: OUTPUT_VERSION, context_id: input.context_id, answer: '可以先整理书目，再安排阅读。<img src=x onerror=alert(1)>',
-    direction: 'unclear', yongshen_candidates: [], factors: [{ assessment: 'neutral', interpretation: '仅核对第一爻的六亲，不断言现实结果。', evidence_ids: ['fact:/lines/0/relative'] }],
+    direction: 'unclear', yongshen_candidates: [], factors: [{ assessment: 'neutral', interpretation: '仅核对第一爻的六亲，不断言现实结果。', evidence_ids: ['fact:/lines/0/relative'] },
+      ...(rule ? [{assessment:'neutral',interpretation:'规则标注及其来源事实不重复计为依据。',evidence_ids:[rule.source_facts[0],rule.id]}] : [])],
     timing_candidates: [], uncertainties: ['这是模拟回复，格式核对不代表预测正确。'] };
 }
 try {
@@ -57,6 +61,17 @@ try {
     await page.locator('#readingTurns h2').waitFor();
     assert.equal(await page.locator('#readingTurns img').count(), 0);
     assert.equal(await page.locator('#readingTurns details[open]').count(), 0);
+    const citedRule=input.evidence.find(e=>e.kind==='rule_result');
+    assert(citedRule,'Fixture has a rule citation');
+    const ruleSection=page.locator('#readingTurns article').first().locator('section').nth(1);
+    assert.equal(await ruleSection.locator('.reading-evidence-sources li').count(),new Set(citedRule.source_facts).size);
+    assert.equal(await ruleSection.locator('.reading-evidence-rules li').count(),1);
+    assert.equal(await ruleSection.locator('details').count(),0,'Source facts do not require another disclosure');
+    assert((await ruleSection.textContent()).includes('来源：事实 1'));
+    await page.locator('#readingTurns details').first().evaluate(node=>{node.open=true;});
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+    await page.locator('#readingTurns article').first().screenshot({path:`test-results/reading/evidence-${engine}-${width}.png`});
+    await page.locator('#readingTurns details').first().evaluate(node=>{node.open=false;});
     await page.evaluate(()=>{Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>{window.__copiedReading=text;}}});});
     await page.locator('#readingCopyAll').click();
     assert((await page.evaluate(()=>window.__copiedReading)).includes('不确定性'),'Copy includes collapsed evidence and limitations');
@@ -131,9 +146,10 @@ try {
     const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_interpret_history')));
     assert.equal(stored[0].turns.filter(t=>t.role==='assistant').length,6,'Followups belong to one history record');
     assert.deepEqual(errors, []);
-    report.push({ width, api: 'mocked', export_roundtrip: 'passed', replay_rejected: true, restore: 'passed', stop: 'passed', replacement: 'passed', errors });
+    report.push({ width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', nested_provenance: false,
+      replay_rejected: true, restore: 'passed', stop: 'passed', replacement: 'passed', errors });
     await context.close();
   }
 } finally { await browser.close(); await server?.httpServer.close(); }
-fs.writeFileSync(`test-results/reading/${target ? new URL(target).hostname : 'local'}-report.json`, JSON.stringify(report, null, 2));
+fs.writeFileSync(`test-results/reading/${target ? new URL(target).hostname : 'local'}${engine==='webkit'?'-webkit':''}-report.json`, JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report));

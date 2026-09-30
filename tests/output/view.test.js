@@ -48,6 +48,21 @@ test('rule citations disclose source facts and do not create an empty timing sec
   const result=parseOutputAnswer(JSON.stringify(answer),context,{completed:true});
   const container=document.createElement('div');renderOutputResult(container,result,context);
   expect(container.textContent).toContain('规则标注');expect(container.textContent).toContain('程序事实');
-  expect(container.querySelectorAll('.reading-evidence-sources li').length).toBe(new Set(rule.source_facts).size);
+  expect(container.querySelector('.reading-evidence-rules').textContent).not.toContain(rule.rule_id);
+  expect(container.querySelector('.reading-evidence-rules').textContent).toContain(rule.result.label);
+  expect(container.querySelector('details section .reading-evidence-sources').children.length).toBe(new Set(rule.source_facts).size);
   expect(container.textContent).not.toContain('应期候选');
+});
+test('direct fact plus rule displays the source once with local references, without inner disclosure nesting', () => {
+  const rule=context.evidence.find(e=>e.kind==='rule_result');
+  const answer=syntheticOutput(context); answer.factors= [{...answer.factors[0],evidence_ids:[rule.source_facts[0],rule.id]}];
+  answer.yongshen_candidates=[];
+  const result=parseOutputAnswer(JSON.stringify(answer),context,{completed:true});
+  const container=document.createElement('div'); renderOutputResult(container,result,context);
+  const section=container.querySelector('details section');
+  expect(section.querySelectorAll('.reading-evidence-sources li')).toHaveLength(new Set(rule.source_facts).size);
+  expect(section.querySelectorAll('.reading-evidence-rules li')).toHaveLength(1);
+  expect(section.textContent).toContain('来源：事实 1');
+  expect(section.querySelector('details')).toBeNull();
+  expect(container.querySelector('details').open).toBe(false);
 });
