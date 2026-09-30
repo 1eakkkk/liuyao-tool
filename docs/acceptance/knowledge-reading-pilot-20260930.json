@@ -1,0 +1,3121 @@
+{
+  "scope": "Three exposed development calls; one dev-1 failure and one dev-2 pair; author self-review, not independent acceptance",
+  "live_calls": 3,
+  "conservative_peak_cost_cny": 0.05974,
+  "exact_billed_cost_cny": null,
+  "price_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "campaign_limit_cny": 19.95,
+  "campaign_reserved_cny": 19.930933999999997,
+  "campaign_remaining_unreserved_cny": 0.019066000000002248,
+  "reservation_is_not_actual_spend": true,
+  "production_changes": false,
+  "conclusion": "New rule lane resolves mechanical defect in this exposed pair; knowledge arm narrows explanation but misattributes editorial restrictions. No production readiness or general improvement established.",
+  "entries": [
+    {
+      "batch": "knowledge-reading-pilot-01",
+      "id": "month-break-without-literature",
+      "question": "仅核对本盘第三爻与月建相冲的标注，解释月破名称。月破是否意味着这个爻永久无用、事情必然失败？不选用神、不判断成败、不推应期。",
+      "plan_hash": "sha256:418bde5ac2a9dcd23df37eae1e39017a29b3f5aac4f2d1d0fe18b32772f6c127",
+      "output_version": "layered-reading-dev-1",
+      "raw_hash": "sha256:e8811e4d77c4af17a5d811ad1a825cccf35ebb959e57ab1069305bb7984ed01a",
+      "raw": "{\"schema_version\":\"layered-reading-dev-1\",\"conclusion\":\"本盘第三爻（位于应位、纳甲乙卯、五行木）与月建酉相冲，程序标注为“月破（与月建六冲）”，这是对月支与爻支六冲关系的命名。不能据此断言该爻永久无用或事情必然失败；本次请求也未提供用神、成败或应期方面的依据。\",\"facts\":[{\"evidence_id\":\"fact:/lines/2/position\",\"value\":3},{\"evidence_id\":\"fact:/lines/2/ganzhi\",\"value\":\"乙卯\"},{\"evidence_id\":\"fact:/lines/2/branch\",\"value\":\"卯\"},{\"evidence_id\":\"fact:/lines/2/element\",\"value\":\"木\"},{\"evidence_id\":\"fact:/lines/2/relative\",\"value\":\"官鬼\"},{\"evidence_id\":\"fact:/lines/2/moving\",\"value\":false},{\"evidence_id\":\"fact:/lines/2/is_ying\",\"value\":true},{\"evidence_id\":\"fact:/lines/2/relations/month_strength\",\"value\":\"死\"},{\"evidence_id\":\"fact:/calendar/month_branch\",\"value\":\"酉\"},{\"evidence_id\":\"fact:/calendar/month_ganzhi\",\"value\":\"丁酉\"},{\"evidence_id\":\"fact:/calendar/day_ganzhi\",\"value\":\"甲子\"},{\"evidence_id\":\"rule:MONTH-CLASH-001:primary:3:-\",\"value\":{\"code\":\"month_clash\",\"label\":\"月破（与月建六冲）\"}}],\"interpretations\":[{\"text\":\"“月破”是本盘所用术语，指第三爻地支卯与月建地支酉构成六冲；卯木在酉月为月令“死”位，程序同时给出这一状态。该名称对应的是月支与爻支的冲关系，而非对该爻效力的最终判定。\",\"fact_ids\":[\"fact:/lines/2/branch\",\"fact:/lines/2/element\",\"fact:/calendar/month_branch\",\"fact:/lines/2/relations/month_strength\",\"rule:MONTH-CLASH-001:primary:3:-\"],\"literature_ids\":[],\"applicability\":\"文献包为空（cards 为空），没有可供引用的古籍或解释背景，因此仅依据程序事实说明标注含义。\",\"uncertainties\":[\"缺少文献来源，无法在本协议内给出“月破”的传统定义对比。\",\"未提供用神，故无法说明该爻在具体问事中是否被取用。\",\"未提供日辰对第三爻的生克合冲关系，程序事实中该爻无 day_relation 字段。\"]},{\"text\":\"关于“永久无用”：不能把“月破”读成时间上永久失效的结论。已知事实只包括卯酉相冲、该爻非动爻、月令死；这些描述月建对爻的作用标签，不等于宣告该爻在所有时点都无效。\",\"fact_ids\":[\"rule:MONTH-CLASH-001:primary:3:-\",\"fact:/lines/2/moving\",\"fact:/lines/2/relations/month_strength\"],\"literature_ids\":[],\"applicability\":\"依据程序标注与动爻字段本身；不引入用神、月建其他作用规则或应期推断。\",\"uncertainties\":[\"是否需要结合日辰、动爻变化或其他爻的生克才能评估实际影响，本协议未展开。\"]},{\"text\":\"关于“必然失败”：程序给出的只有月破与月令死，没有给出所问事项的用神、世应生克结论或成败规则结果，因此不能从这些事实推导出“事情必然失败”。\",\"fact_ids\":[\"rule:MONTH-CLASH-001:primary:3:-\",\"fact:/lines/2/relative\",\"fact:/lines/2/relations/month_strength\"],\"literature_ids\":[],\"applicability\":\"本回答限定为核对标注与解释名称，不涉及成败判断；无适用文献可引。\",\"uncertainties\":[\"事项性质未知，无法判断该爻是否与所问之事相关。\",\"世应关系标签虽存在（世克应），但与本问题无关，未将其纳入解释。\"]}],\"advice\":[{\"text\":\"若在阅读盘面时遇到“月破”，可把它先当作一条关系标签记录：月建酉与第三爻卯相冲，并标注月令死；在讨论其实际影响时，应明确说明仍需结合用神、日辰与动变等条件另行判断，避免直接写成“此爻无用”或“事必败”。\",\"basis\":\"general_advice\"}]}",
+      "evidence": [
+        {
+          "id": "fact:/calendar/year_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/year_ganzhi",
+          "value": "丙午",
+          "label": "历法 · 年柱"
+        },
+        {
+          "id": "fact:/calendar/month_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/month_ganzhi",
+          "value": "丁酉",
+          "label": "历法 · 月柱"
+        },
+        {
+          "id": "fact:/calendar/day_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/day_ganzhi",
+          "value": "甲子",
+          "label": "历法 · 日柱"
+        },
+        {
+          "id": "fact:/calendar/hour_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/hour_ganzhi",
+          "value": "庚午",
+          "label": "历法 · 时柱"
+        },
+        {
+          "id": "fact:/calendar/day_branch",
+          "kind": "program_fact",
+          "path": "/calendar/day_branch",
+          "value": "子",
+          "label": "历法 · 日支"
+        },
+        {
+          "id": "fact:/calendar/month_branch",
+          "kind": "program_fact",
+          "path": "/calendar/month_branch",
+          "value": "酉",
+          "label": "历法 · 月支"
+        },
+        {
+          "id": "fact:/calendar/kongwang/0",
+          "kind": "program_fact",
+          "path": "/calendar/kongwang/0",
+          "value": "戌",
+          "label": "历法 · 空亡"
+        },
+        {
+          "id": "fact:/calendar/kongwang/1",
+          "kind": "program_fact",
+          "path": "/calendar/kongwang/1",
+          "value": "亥",
+          "label": "历法 · 空亡"
+        },
+        {
+          "id": "fact:/calendar/anchor/year",
+          "kind": "program_fact",
+          "path": "/calendar/anchor/year",
+          "value": 2026,
+          "label": "历法 · year"
+        },
+        {
+          "id": "fact:/calendar/anchor/month",
+          "kind": "program_fact",
+          "path": "/calendar/anchor/month",
+          "value": 9,
+          "label": "历法 · month"
+        },
+        {
+          "id": "fact:/calendar/anchor/day",
+          "kind": "program_fact",
+          "path": "/calendar/anchor/day",
+          "value": 15,
+          "label": "历法 · day"
+        },
+        {
+          "id": "fact:/hexagram/primary/name",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/name",
+          "value": "坤为地",
+          "label": "卦盘 · 卦名"
+        },
+        {
+          "id": "fact:/hexagram/primary/palace",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/palace",
+          "value": "坤宫",
+          "label": "卦盘 · 卦宫"
+        },
+        {
+          "id": "fact:/hexagram/primary/lower_trigram",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/lower_trigram",
+          "value": "坤",
+          "label": "卦盘 · lower_trigram"
+        },
+        {
+          "id": "fact:/hexagram/primary/upper_trigram",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/upper_trigram",
+          "value": "坤",
+          "label": "卦盘 · upper_trigram"
+        },
+        {
+          "id": "fact:/hexagram/shi_line",
+          "kind": "program_fact",
+          "path": "/hexagram/shi_line",
+          "value": 6,
+          "label": "卦盘 · 世爻位置"
+        },
+        {
+          "id": "fact:/hexagram/ying_line",
+          "kind": "program_fact",
+          "path": "/hexagram/ying_line",
+          "value": 3,
+          "label": "卦盘 · 应爻位置"
+        },
+        {
+          "id": "fact:/lines/0/position",
+          "kind": "program_fact",
+          "path": "/lines/0/position",
+          "value": 1,
+          "label": "第1爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/0/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/0/yin_yang",
+          "value": "yin",
+          "label": "第1爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/0/moving",
+          "kind": "program_fact",
+          "path": "/lines/0/moving",
+          "value": false,
+          "label": "第1爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/0/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/0/ganzhi",
+          "value": "乙未",
+          "label": "第1爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/0/branch",
+          "kind": "program_fact",
+          "path": "/lines/0/branch",
+          "value": "未",
+          "label": "第1爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/0/element",
+          "kind": "program_fact",
+          "path": "/lines/0/element",
+          "value": "土",
+          "label": "第1爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/0/relative",
+          "kind": "program_fact",
+          "path": "/lines/0/relative",
+          "value": "兄弟",
+          "label": "第1爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/0/spirit",
+          "kind": "program_fact",
+          "path": "/lines/0/spirit",
+          "value": "青龙",
+          "label": "第1爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/0/state_text",
+          "kind": "program_fact",
+          "path": "/lines/0/state_text",
+          "value": "少阴",
+          "label": "第1爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/0/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/0/is_shi",
+          "value": false,
+          "label": "第1爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/0/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/0/is_ying",
+          "value": false,
+          "label": "第1爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/0/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/0/is_kongwang",
+          "value": false,
+          "label": "第1爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/0/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/0/relations/month_strength",
+          "value": "休",
+          "label": "第1爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/1/position",
+          "kind": "program_fact",
+          "path": "/lines/1/position",
+          "value": 2,
+          "label": "第2爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/1/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/1/yin_yang",
+          "value": "yin",
+          "label": "第2爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/1/moving",
+          "kind": "program_fact",
+          "path": "/lines/1/moving",
+          "value": false,
+          "label": "第2爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/1/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/1/ganzhi",
+          "value": "乙巳",
+          "label": "第2爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/1/branch",
+          "kind": "program_fact",
+          "path": "/lines/1/branch",
+          "value": "巳",
+          "label": "第2爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/1/element",
+          "kind": "program_fact",
+          "path": "/lines/1/element",
+          "value": "火",
+          "label": "第2爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/1/relative",
+          "kind": "program_fact",
+          "path": "/lines/1/relative",
+          "value": "父母",
+          "label": "第2爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/1/spirit",
+          "kind": "program_fact",
+          "path": "/lines/1/spirit",
+          "value": "朱雀",
+          "label": "第2爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/1/state_text",
+          "kind": "program_fact",
+          "path": "/lines/1/state_text",
+          "value": "少阴",
+          "label": "第2爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/1/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/1/is_shi",
+          "value": false,
+          "label": "第2爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/1/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/1/is_ying",
+          "value": false,
+          "label": "第2爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/1/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/1/is_kongwang",
+          "value": false,
+          "label": "第2爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/1/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/1/relations/month_strength",
+          "value": "囚",
+          "label": "第2爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/2/position",
+          "kind": "program_fact",
+          "path": "/lines/2/position",
+          "value": 3,
+          "label": "第3爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/2/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/2/yin_yang",
+          "value": "yin",
+          "label": "第3爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/2/moving",
+          "kind": "program_fact",
+          "path": "/lines/2/moving",
+          "value": false,
+          "label": "第3爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/2/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/2/ganzhi",
+          "value": "乙卯",
+          "label": "第3爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/2/branch",
+          "kind": "program_fact",
+          "path": "/lines/2/branch",
+          "value": "卯",
+          "label": "第3爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/2/element",
+          "kind": "program_fact",
+          "path": "/lines/2/element",
+          "value": "木",
+          "label": "第3爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/2/relative",
+          "kind": "program_fact",
+          "path": "/lines/2/relative",
+          "value": "官鬼",
+          "label": "第3爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/2/spirit",
+          "kind": "program_fact",
+          "path": "/lines/2/spirit",
+          "value": "勾陈",
+          "label": "第3爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/2/state_text",
+          "kind": "program_fact",
+          "path": "/lines/2/state_text",
+          "value": "少阴",
+          "label": "第3爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/2/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/2/is_shi",
+          "value": false,
+          "label": "第3爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/2/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/2/is_ying",
+          "value": true,
+          "label": "第3爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/2/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/2/is_kongwang",
+          "value": false,
+          "label": "第3爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/2/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/2/relations/month_strength",
+          "value": "死",
+          "label": "第3爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/3/position",
+          "kind": "program_fact",
+          "path": "/lines/3/position",
+          "value": 4,
+          "label": "第4爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/3/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/3/yin_yang",
+          "value": "yin",
+          "label": "第4爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/3/moving",
+          "kind": "program_fact",
+          "path": "/lines/3/moving",
+          "value": false,
+          "label": "第4爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/3/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/3/ganzhi",
+          "value": "癸丑",
+          "label": "第4爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/3/branch",
+          "kind": "program_fact",
+          "path": "/lines/3/branch",
+          "value": "丑",
+          "label": "第4爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/3/element",
+          "kind": "program_fact",
+          "path": "/lines/3/element",
+          "value": "土",
+          "label": "第4爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/3/relative",
+          "kind": "program_fact",
+          "path": "/lines/3/relative",
+          "value": "兄弟",
+          "label": "第4爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/3/spirit",
+          "kind": "program_fact",
+          "path": "/lines/3/spirit",
+          "value": "螣蛇",
+          "label": "第4爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/3/state_text",
+          "kind": "program_fact",
+          "path": "/lines/3/state_text",
+          "value": "少阴",
+          "label": "第4爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/3/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/3/is_shi",
+          "value": false,
+          "label": "第4爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/3/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/3/is_ying",
+          "value": false,
+          "label": "第4爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/3/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/3/is_kongwang",
+          "value": false,
+          "label": "第4爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/3/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/3/relations/month_strength",
+          "value": "休",
+          "label": "第4爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/3/relations/day_relation",
+          "kind": "program_fact",
+          "path": "/lines/3/relations/day_relation",
+          "value": "日辰合",
+          "label": "第4爻 · 日辰关系"
+        },
+        {
+          "id": "fact:/lines/4/position",
+          "kind": "program_fact",
+          "path": "/lines/4/position",
+          "value": 5,
+          "label": "第5爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/4/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/4/yin_yang",
+          "value": "yin",
+          "label": "第5爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/4/moving",
+          "kind": "program_fact",
+          "path": "/lines/4/moving",
+          "value": false,
+          "label": "第5爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/4/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/4/ganzhi",
+          "value": "癸亥",
+          "label": "第5爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/4/branch",
+          "kind": "program_fact",
+          "path": "/lines/4/branch",
+          "value": "亥",
+          "label": "第5爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/4/element",
+          "kind": "program_fact",
+          "path": "/lines/4/element",
+          "value": "水",
+          "label": "第5爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/4/relative",
+          "kind": "program_fact",
+          "path": "/lines/4/relative",
+          "value": "妻财",
+          "label": "第5爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/4/spirit",
+          "kind": "program_fact",
+          "path": "/lines/4/spirit",
+          "value": "白虎",
+          "label": "第5爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/4/state_text",
+          "kind": "program_fact",
+          "path": "/lines/4/state_text",
+          "value": "少阴",
+          "label": "第5爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/4/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/4/is_shi",
+          "value": false,
+          "label": "第5爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/4/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/4/is_ying",
+          "value": false,
+          "label": "第5爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/4/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/4/is_kongwang",
+          "value": true,
+          "label": "第5爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/4/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/4/relations/month_strength",
+          "value": "相",
+          "label": "第5爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/5/position",
+          "kind": "program_fact",
+          "path": "/lines/5/position",
+          "value": 6,
+          "label": "第6爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/5/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/5/yin_yang",
+          "value": "yin",
+          "label": "第6爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/5/moving",
+          "kind": "program_fact",
+          "path": "/lines/5/moving",
+          "value": false,
+          "label": "第6爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/5/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/5/ganzhi",
+          "value": "癸酉",
+          "label": "第6爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/5/branch",
+          "kind": "program_fact",
+          "path": "/lines/5/branch",
+          "value": "酉",
+          "label": "第6爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/5/element",
+          "kind": "program_fact",
+          "path": "/lines/5/element",
+          "value": "金",
+          "label": "第6爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/5/relative",
+          "kind": "program_fact",
+          "path": "/lines/5/relative",
+          "value": "子孙",
+          "label": "第6爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/5/spirit",
+          "kind": "program_fact",
+          "path": "/lines/5/spirit",
+          "value": "玄武",
+          "label": "第6爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/5/state_text",
+          "kind": "program_fact",
+          "path": "/lines/5/state_text",
+          "value": "少阴",
+          "label": "第6爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/5/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/5/is_shi",
+          "value": true,
+          "label": "第6爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/5/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/5/is_ying",
+          "value": false,
+          "label": "第6爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/5/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/5/is_kongwang",
+          "value": false,
+          "label": "第6爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/5/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/5/relations/month_strength",
+          "value": "旺",
+          "label": "第6爻 · 月令"
+        },
+        {
+          "id": "rule:LINE-VOID-001:primary:5:-",
+          "kind": "rule_result",
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 5,
+            "component": "primary"
+          },
+          "result": {
+            "code": "line_void",
+            "label": "旬空"
+          },
+          "source_facts": [
+            "fact:/lines/4/is_kongwang"
+          ],
+          "label": "LINE-VOID-001 · 第5爻 · 旬空"
+        },
+        {
+          "id": "rule:DAY-COMBINE-001:primary:4:-",
+          "kind": "rule_result",
+          "rule_id": "DAY-COMBINE-001",
+          "target": {
+            "line": 4,
+            "component": "primary"
+          },
+          "result": {
+            "code": "day_combine",
+            "label": "与日辰六合"
+          },
+          "source_facts": [
+            "fact:/lines/3/relations/day_relation",
+            "fact:/lines/3/branch",
+            "fact:/calendar/day_branch"
+          ],
+          "label": "DAY-COMBINE-001 · 第4爻 · 与日辰六合"
+        },
+        {
+          "id": "rule:MONTH-STATE-WANG-001:primary:6:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-WANG-001",
+          "target": {
+            "line": 6,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_wang",
+            "label": "月令旺"
+          },
+          "source_facts": [
+            "fact:/lines/5/relations/month_strength",
+            "fact:/lines/5/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-WANG-001 · 第6爻 · 月令旺"
+        },
+        {
+          "id": "rule:MONTH-STATE-XIANG-001:primary:5:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-XIANG-001",
+          "target": {
+            "line": 5,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_xiang",
+            "label": "月令相"
+          },
+          "source_facts": [
+            "fact:/lines/4/relations/month_strength",
+            "fact:/lines/4/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-XIANG-001 · 第5爻 · 月令相"
+        },
+        {
+          "id": "rule:MONTH-STATE-XIU-001:primary:1:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-XIU-001",
+          "target": {
+            "line": 1,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_xiu",
+            "label": "月令休"
+          },
+          "source_facts": [
+            "fact:/lines/0/relations/month_strength",
+            "fact:/lines/0/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-XIU-001 · 第1爻 · 月令休"
+        },
+        {
+          "id": "rule:MONTH-STATE-XIU-001:primary:4:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-XIU-001",
+          "target": {
+            "line": 4,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_xiu",
+            "label": "月令休"
+          },
+          "source_facts": [
+            "fact:/lines/3/relations/month_strength",
+            "fact:/lines/3/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-XIU-001 · 第4爻 · 月令休"
+        },
+        {
+          "id": "rule:MONTH-STATE-QIU-001:primary:2:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-QIU-001",
+          "target": {
+            "line": 2,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_qiu",
+            "label": "月令囚"
+          },
+          "source_facts": [
+            "fact:/lines/1/relations/month_strength",
+            "fact:/lines/1/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-QIU-001 · 第2爻 · 月令囚"
+        },
+        {
+          "id": "rule:MONTH-STATE-SI-001:primary:3:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-SI-001",
+          "target": {
+            "line": 3,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_si",
+            "label": "月令死"
+          },
+          "source_facts": [
+            "fact:/lines/2/relations/month_strength",
+            "fact:/lines/2/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-SI-001 · 第3爻 · 月令死"
+        },
+        {
+          "id": "rule:SHI-CONTROL-YING-001:primary:6:3",
+          "kind": "rule_result",
+          "rule_id": "SHI-CONTROL-YING-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": 3
+          },
+          "result": {
+            "code": "shi_control_ying",
+            "label": "世克应",
+            "from": {
+              "line": 6,
+              "component": "primary"
+            },
+            "to": {
+              "line": 3,
+              "component": "primary"
+            }
+          },
+          "source_facts": [
+            "fact:/hexagram/shi_line",
+            "fact:/hexagram/ying_line",
+            "fact:/lines/0/is_shi",
+            "fact:/lines/1/is_shi",
+            "fact:/lines/2/is_shi",
+            "fact:/lines/3/is_shi",
+            "fact:/lines/4/is_shi",
+            "fact:/lines/5/is_shi",
+            "fact:/lines/0/is_ying",
+            "fact:/lines/1/is_ying",
+            "fact:/lines/2/is_ying",
+            "fact:/lines/3/is_ying",
+            "fact:/lines/4/is_ying",
+            "fact:/lines/5/is_ying",
+            "fact:/lines/5/element",
+            "fact:/lines/2/element"
+          ],
+          "label": "SHI-CONTROL-YING-001 · 第6爻 · 世克应"
+        },
+        {
+          "id": "rule:MONTH-CLASH-001:primary:3:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-CLASH-001",
+          "target": {
+            "line": 3,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_clash",
+            "label": "月破（与月建六冲）"
+          },
+          "source_facts": [
+            "fact:/calendar/month_branch",
+            "fact:/lines/2/branch"
+          ],
+          "label": "MONTH-CLASH-001 · 第3爻 · 月破（与月建六冲）"
+        }
+      ],
+      "literature_packet": {
+        "version": "explicit-literature-packet-dev-1",
+        "corpus_version": "phase8a-month-combine-hardening-1",
+        "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+        "mode": "offline_explicit_review",
+        "selection_semantics": "Caller-reviewed applicability; not automatic or independently verified",
+        "independent_evidence": false,
+        "cards": []
+      },
+      "transport": {
+        "prompt_tokens": 5710,
+        "completion_tokens": 970,
+        "total_tokens": 6680,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5710
+      },
+      "mechanical_result_as_executed": {
+        "version": "layered-reading-dev-1",
+        "facts": [
+          {
+            "evidence_id": "fact:/lines/2/position",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/ganzhi",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/element",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/relative",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/moving",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/is_ying",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/relations/month_strength",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/month_branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/month_ganzhi",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/day_ganzhi",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "rule:MONTH-CLASH-001:primary:3:-",
+            "status": "invalid_fact_source"
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "invalid_references",
+            "invalid_fact_ids": [
+              "rule:MONTH-CLASH-001:primary:3:-"
+            ],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          },
+          {
+            "position": 1,
+            "mechanical_status": "invalid_references",
+            "invalid_fact_ids": [
+              "rule:MONTH-CLASH-001:primary:3:-"
+            ],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          },
+          {
+            "position": 2,
+            "mechanical_status": "invalid_references",
+            "invalid_fact_ids": [
+              "rule:MONTH-CLASH-001:primary:3:-"
+            ],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": false,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established"
+      },
+      "self_review": {
+        "scope": "partial",
+        "source_support": "unassessed",
+        "source_attribution": "not_applicable",
+        "annotations": [
+          {
+            "section": "facts",
+            "quote": "rule:MONTH-CLASH-001:primary:3:-",
+            "finding": "Rule result placed in program facts; missing rule lane in dev-1 protocol exposed."
+          }
+        ]
+      }
+    },
+    {
+      "batch": "knowledge-reading-pilot-02",
+      "id": "month-break-without-literature",
+      "question": "仅核对本盘第三爻与月建相冲的标注，解释月破名称。月破是否意味着这个爻永久无用、事情必然失败？不选用神、不判断成败、不推应期。",
+      "plan_hash": "sha256:937ffa8c8eb5986f56034d3ebcfb55ac67cada55a779c892bea88edfb8b67a6f",
+      "output_version": "layered-reading-dev-2",
+      "raw_hash": "sha256:8ac71043070f3b6e078769b75a381c81c203803c6919e14d3bf52dd94b9f25b1",
+      "raw": "{\n  \"schema_version\": \"layered-reading-dev-2\",\n  \"conclusion\": \"本盘第三爻（乙卯，官鬼，应爻）确实被程序标注为“月破（与月建六冲）”，其依据是该爻地支“卯”与月建地支“酉”构成六冲。月破是五行旺衰与地支关系的一种状态标记，表示该爻当月受月建冲击、处于衰弱受损的状态，但并非“永久无用”的定性；六冲会随月令更替而变化，出月后或逢合、逢生等条件可改变其状态。月破也不等于事情必然失败——卦爻的吉凶需要结合用神、动变、生克等多重因素综合判断，本回答仅核对标注与解释名称，不选用神、不判断成败、不推应期。\",\n  \"facts\": [\n    {\"evidence_id\": \"fact:/calendar/month_branch\", \"value\": \"酉\"},\n    {\"evidence_id\": \"fact:/calendar/day_branch\", \"value\": \"子\"},\n    {\"evidence_id\": \"fact:/lines/2/position\", \"value\": 3},\n    {\"evidence_id\": \"fact:/lines/2/branch\", \"value\": \"卯\"},\n    {\"evidence_id\": \"fact:/lines/2/element\", \"value\": \"木\"},\n    {\"evidence_id\": \"fact:/lines/2/relative\", \"value\": \"官鬼\"},\n    {\"evidence_id\": \"fact:/lines/2/is_ying\", \"value\": true},\n    {\"evidence_id\": \"fact:/lines/2/is_shi\", \"value\": false},\n    {\"evidence_id\": \"fact:/lines/2/moving\", \"value\": false},\n    {\"evidence_id\": \"fact:/lines/2/relations/month_strength\", \"value\": \"死\"},\n    {\"evidence_id\": \"fact:/lines/2/ganzhi\", \"value\": \"乙卯\"}\n  ],\n  \"rules\": [\n    {\n      \"evidence_id\": \"rule:MONTH-CLASH-001:primary:3:-\",\n      \"result\": {\n        \"code\": \"month_clash\",\n        \"label\": \"月破（与月建六冲）\"\n      }\n    }\n  ],\n  \"interpretations\": [\n    {\n      \"text\": \"程序将第三爻标注为“月破（与月建六冲）”，其判定逻辑是该爻地支“卯”与月建地支“酉”构成卯酉六冲。在月令旺衰体系中，该爻同时被标为月令“死”态（木在酉月为死），月破与月令死共同反映该爻当月受制、力量衰弱。名称上“月破”指爻与月建相冲而受损，属于月令层面的状态术语，并非对爻的永久定性。六冲是地支关系的周期性现象，月建轮转后，冲的关系解除，该爻的旺衰会重新由新月令衡量；若后续逢地支相合（如卯戌合）或得日辰、动爻生扶，其受制状态也可能缓解。此外，本爻为静爻（moving 为 false），无动变信息可供进一步观察。\",\n      \"fact_ids\": [\n        \"fact:/calendar/month_branch\",\n        \"fact:/lines/2/position\",\n        \"fact:/lines/2/branch\",\n        \"fact:/lines/2/element\",\n        \"fact:/lines/2/relative\",\n        \"fact:/lines/2/moving\",\n        \"fact:/lines/2/relations/month_strength\",\n        \"fact:/lines/2/ganzhi\"\n      ],\n      \"rule_ids\": [\"rule:MONTH-CLASH-001:primary:3:-\"],\n      \"literature_ids\": [],\n      \"applicability\": \"月破成立于该爻地支与月建地支相冲，且月令旺衰标注为“死”，说明程序按当月时令对该爻作出受制判定。问题仅要求核对标注与解释名称，故引用此项规则及来源事实，不延伸至用神选取或吉凶推断。\",\n      \"uncertainties\": [\n        \"月破的持续时长与缓解条件需结合具体月令轮转及日辰生合判断，本回答未推演后续月日变化。\",\n        \"静爻月破在古法中有“逢合填实”等不同处理意见，本回答未展开比较。\",\n        \"本回答未引入用神，故无法就该爻对具体事项的实际影响下结论。\"\n      ]\n    }\n  ],\n  \"advice\": [\n    {\n      \"text\": \"若需进一步判断该爻在具体事项中的作用，应结合所问事项确定用神，并观察该爻是否动变、有无日辰生合等条件，不宜仅凭“月破”二字断定永久无用或事情必败。\",\n      \"basis\": \"general_advice\"\n    }\n  ]\n}",
+      "evidence": [
+        {
+          "id": "fact:/calendar/year_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/year_ganzhi",
+          "value": "丙午",
+          "label": "历法 · 年柱"
+        },
+        {
+          "id": "fact:/calendar/month_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/month_ganzhi",
+          "value": "丁酉",
+          "label": "历法 · 月柱"
+        },
+        {
+          "id": "fact:/calendar/day_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/day_ganzhi",
+          "value": "甲子",
+          "label": "历法 · 日柱"
+        },
+        {
+          "id": "fact:/calendar/hour_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/hour_ganzhi",
+          "value": "庚午",
+          "label": "历法 · 时柱"
+        },
+        {
+          "id": "fact:/calendar/day_branch",
+          "kind": "program_fact",
+          "path": "/calendar/day_branch",
+          "value": "子",
+          "label": "历法 · 日支"
+        },
+        {
+          "id": "fact:/calendar/month_branch",
+          "kind": "program_fact",
+          "path": "/calendar/month_branch",
+          "value": "酉",
+          "label": "历法 · 月支"
+        },
+        {
+          "id": "fact:/calendar/kongwang/0",
+          "kind": "program_fact",
+          "path": "/calendar/kongwang/0",
+          "value": "戌",
+          "label": "历法 · 空亡"
+        },
+        {
+          "id": "fact:/calendar/kongwang/1",
+          "kind": "program_fact",
+          "path": "/calendar/kongwang/1",
+          "value": "亥",
+          "label": "历法 · 空亡"
+        },
+        {
+          "id": "fact:/calendar/anchor/year",
+          "kind": "program_fact",
+          "path": "/calendar/anchor/year",
+          "value": 2026,
+          "label": "历法 · year"
+        },
+        {
+          "id": "fact:/calendar/anchor/month",
+          "kind": "program_fact",
+          "path": "/calendar/anchor/month",
+          "value": 9,
+          "label": "历法 · month"
+        },
+        {
+          "id": "fact:/calendar/anchor/day",
+          "kind": "program_fact",
+          "path": "/calendar/anchor/day",
+          "value": 15,
+          "label": "历法 · day"
+        },
+        {
+          "id": "fact:/hexagram/primary/name",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/name",
+          "value": "坤为地",
+          "label": "卦盘 · 卦名"
+        },
+        {
+          "id": "fact:/hexagram/primary/palace",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/palace",
+          "value": "坤宫",
+          "label": "卦盘 · 卦宫"
+        },
+        {
+          "id": "fact:/hexagram/primary/lower_trigram",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/lower_trigram",
+          "value": "坤",
+          "label": "卦盘 · lower_trigram"
+        },
+        {
+          "id": "fact:/hexagram/primary/upper_trigram",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/upper_trigram",
+          "value": "坤",
+          "label": "卦盘 · upper_trigram"
+        },
+        {
+          "id": "fact:/hexagram/shi_line",
+          "kind": "program_fact",
+          "path": "/hexagram/shi_line",
+          "value": 6,
+          "label": "卦盘 · 世爻位置"
+        },
+        {
+          "id": "fact:/hexagram/ying_line",
+          "kind": "program_fact",
+          "path": "/hexagram/ying_line",
+          "value": 3,
+          "label": "卦盘 · 应爻位置"
+        },
+        {
+          "id": "fact:/lines/0/position",
+          "kind": "program_fact",
+          "path": "/lines/0/position",
+          "value": 1,
+          "label": "第1爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/0/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/0/yin_yang",
+          "value": "yin",
+          "label": "第1爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/0/moving",
+          "kind": "program_fact",
+          "path": "/lines/0/moving",
+          "value": false,
+          "label": "第1爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/0/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/0/ganzhi",
+          "value": "乙未",
+          "label": "第1爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/0/branch",
+          "kind": "program_fact",
+          "path": "/lines/0/branch",
+          "value": "未",
+          "label": "第1爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/0/element",
+          "kind": "program_fact",
+          "path": "/lines/0/element",
+          "value": "土",
+          "label": "第1爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/0/relative",
+          "kind": "program_fact",
+          "path": "/lines/0/relative",
+          "value": "兄弟",
+          "label": "第1爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/0/spirit",
+          "kind": "program_fact",
+          "path": "/lines/0/spirit",
+          "value": "青龙",
+          "label": "第1爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/0/state_text",
+          "kind": "program_fact",
+          "path": "/lines/0/state_text",
+          "value": "少阴",
+          "label": "第1爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/0/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/0/is_shi",
+          "value": false,
+          "label": "第1爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/0/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/0/is_ying",
+          "value": false,
+          "label": "第1爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/0/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/0/is_kongwang",
+          "value": false,
+          "label": "第1爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/0/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/0/relations/month_strength",
+          "value": "休",
+          "label": "第1爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/1/position",
+          "kind": "program_fact",
+          "path": "/lines/1/position",
+          "value": 2,
+          "label": "第2爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/1/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/1/yin_yang",
+          "value": "yin",
+          "label": "第2爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/1/moving",
+          "kind": "program_fact",
+          "path": "/lines/1/moving",
+          "value": false,
+          "label": "第2爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/1/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/1/ganzhi",
+          "value": "乙巳",
+          "label": "第2爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/1/branch",
+          "kind": "program_fact",
+          "path": "/lines/1/branch",
+          "value": "巳",
+          "label": "第2爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/1/element",
+          "kind": "program_fact",
+          "path": "/lines/1/element",
+          "value": "火",
+          "label": "第2爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/1/relative",
+          "kind": "program_fact",
+          "path": "/lines/1/relative",
+          "value": "父母",
+          "label": "第2爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/1/spirit",
+          "kind": "program_fact",
+          "path": "/lines/1/spirit",
+          "value": "朱雀",
+          "label": "第2爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/1/state_text",
+          "kind": "program_fact",
+          "path": "/lines/1/state_text",
+          "value": "少阴",
+          "label": "第2爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/1/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/1/is_shi",
+          "value": false,
+          "label": "第2爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/1/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/1/is_ying",
+          "value": false,
+          "label": "第2爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/1/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/1/is_kongwang",
+          "value": false,
+          "label": "第2爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/1/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/1/relations/month_strength",
+          "value": "囚",
+          "label": "第2爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/2/position",
+          "kind": "program_fact",
+          "path": "/lines/2/position",
+          "value": 3,
+          "label": "第3爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/2/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/2/yin_yang",
+          "value": "yin",
+          "label": "第3爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/2/moving",
+          "kind": "program_fact",
+          "path": "/lines/2/moving",
+          "value": false,
+          "label": "第3爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/2/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/2/ganzhi",
+          "value": "乙卯",
+          "label": "第3爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/2/branch",
+          "kind": "program_fact",
+          "path": "/lines/2/branch",
+          "value": "卯",
+          "label": "第3爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/2/element",
+          "kind": "program_fact",
+          "path": "/lines/2/element",
+          "value": "木",
+          "label": "第3爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/2/relative",
+          "kind": "program_fact",
+          "path": "/lines/2/relative",
+          "value": "官鬼",
+          "label": "第3爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/2/spirit",
+          "kind": "program_fact",
+          "path": "/lines/2/spirit",
+          "value": "勾陈",
+          "label": "第3爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/2/state_text",
+          "kind": "program_fact",
+          "path": "/lines/2/state_text",
+          "value": "少阴",
+          "label": "第3爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/2/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/2/is_shi",
+          "value": false,
+          "label": "第3爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/2/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/2/is_ying",
+          "value": true,
+          "label": "第3爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/2/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/2/is_kongwang",
+          "value": false,
+          "label": "第3爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/2/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/2/relations/month_strength",
+          "value": "死",
+          "label": "第3爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/3/position",
+          "kind": "program_fact",
+          "path": "/lines/3/position",
+          "value": 4,
+          "label": "第4爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/3/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/3/yin_yang",
+          "value": "yin",
+          "label": "第4爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/3/moving",
+          "kind": "program_fact",
+          "path": "/lines/3/moving",
+          "value": false,
+          "label": "第4爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/3/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/3/ganzhi",
+          "value": "癸丑",
+          "label": "第4爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/3/branch",
+          "kind": "program_fact",
+          "path": "/lines/3/branch",
+          "value": "丑",
+          "label": "第4爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/3/element",
+          "kind": "program_fact",
+          "path": "/lines/3/element",
+          "value": "土",
+          "label": "第4爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/3/relative",
+          "kind": "program_fact",
+          "path": "/lines/3/relative",
+          "value": "兄弟",
+          "label": "第4爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/3/spirit",
+          "kind": "program_fact",
+          "path": "/lines/3/spirit",
+          "value": "螣蛇",
+          "label": "第4爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/3/state_text",
+          "kind": "program_fact",
+          "path": "/lines/3/state_text",
+          "value": "少阴",
+          "label": "第4爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/3/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/3/is_shi",
+          "value": false,
+          "label": "第4爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/3/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/3/is_ying",
+          "value": false,
+          "label": "第4爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/3/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/3/is_kongwang",
+          "value": false,
+          "label": "第4爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/3/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/3/relations/month_strength",
+          "value": "休",
+          "label": "第4爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/3/relations/day_relation",
+          "kind": "program_fact",
+          "path": "/lines/3/relations/day_relation",
+          "value": "日辰合",
+          "label": "第4爻 · 日辰关系"
+        },
+        {
+          "id": "fact:/lines/4/position",
+          "kind": "program_fact",
+          "path": "/lines/4/position",
+          "value": 5,
+          "label": "第5爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/4/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/4/yin_yang",
+          "value": "yin",
+          "label": "第5爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/4/moving",
+          "kind": "program_fact",
+          "path": "/lines/4/moving",
+          "value": false,
+          "label": "第5爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/4/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/4/ganzhi",
+          "value": "癸亥",
+          "label": "第5爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/4/branch",
+          "kind": "program_fact",
+          "path": "/lines/4/branch",
+          "value": "亥",
+          "label": "第5爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/4/element",
+          "kind": "program_fact",
+          "path": "/lines/4/element",
+          "value": "水",
+          "label": "第5爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/4/relative",
+          "kind": "program_fact",
+          "path": "/lines/4/relative",
+          "value": "妻财",
+          "label": "第5爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/4/spirit",
+          "kind": "program_fact",
+          "path": "/lines/4/spirit",
+          "value": "白虎",
+          "label": "第5爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/4/state_text",
+          "kind": "program_fact",
+          "path": "/lines/4/state_text",
+          "value": "少阴",
+          "label": "第5爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/4/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/4/is_shi",
+          "value": false,
+          "label": "第5爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/4/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/4/is_ying",
+          "value": false,
+          "label": "第5爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/4/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/4/is_kongwang",
+          "value": true,
+          "label": "第5爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/4/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/4/relations/month_strength",
+          "value": "相",
+          "label": "第5爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/5/position",
+          "kind": "program_fact",
+          "path": "/lines/5/position",
+          "value": 6,
+          "label": "第6爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/5/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/5/yin_yang",
+          "value": "yin",
+          "label": "第6爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/5/moving",
+          "kind": "program_fact",
+          "path": "/lines/5/moving",
+          "value": false,
+          "label": "第6爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/5/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/5/ganzhi",
+          "value": "癸酉",
+          "label": "第6爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/5/branch",
+          "kind": "program_fact",
+          "path": "/lines/5/branch",
+          "value": "酉",
+          "label": "第6爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/5/element",
+          "kind": "program_fact",
+          "path": "/lines/5/element",
+          "value": "金",
+          "label": "第6爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/5/relative",
+          "kind": "program_fact",
+          "path": "/lines/5/relative",
+          "value": "子孙",
+          "label": "第6爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/5/spirit",
+          "kind": "program_fact",
+          "path": "/lines/5/spirit",
+          "value": "玄武",
+          "label": "第6爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/5/state_text",
+          "kind": "program_fact",
+          "path": "/lines/5/state_text",
+          "value": "少阴",
+          "label": "第6爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/5/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/5/is_shi",
+          "value": true,
+          "label": "第6爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/5/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/5/is_ying",
+          "value": false,
+          "label": "第6爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/5/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/5/is_kongwang",
+          "value": false,
+          "label": "第6爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/5/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/5/relations/month_strength",
+          "value": "旺",
+          "label": "第6爻 · 月令"
+        },
+        {
+          "id": "rule:LINE-VOID-001:primary:5:-",
+          "kind": "rule_result",
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 5,
+            "component": "primary"
+          },
+          "result": {
+            "code": "line_void",
+            "label": "旬空"
+          },
+          "source_facts": [
+            "fact:/lines/4/is_kongwang"
+          ],
+          "label": "LINE-VOID-001 · 第5爻 · 旬空"
+        },
+        {
+          "id": "rule:DAY-COMBINE-001:primary:4:-",
+          "kind": "rule_result",
+          "rule_id": "DAY-COMBINE-001",
+          "target": {
+            "line": 4,
+            "component": "primary"
+          },
+          "result": {
+            "code": "day_combine",
+            "label": "与日辰六合"
+          },
+          "source_facts": [
+            "fact:/lines/3/relations/day_relation",
+            "fact:/lines/3/branch",
+            "fact:/calendar/day_branch"
+          ],
+          "label": "DAY-COMBINE-001 · 第4爻 · 与日辰六合"
+        },
+        {
+          "id": "rule:MONTH-STATE-WANG-001:primary:6:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-WANG-001",
+          "target": {
+            "line": 6,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_wang",
+            "label": "月令旺"
+          },
+          "source_facts": [
+            "fact:/lines/5/relations/month_strength",
+            "fact:/lines/5/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-WANG-001 · 第6爻 · 月令旺"
+        },
+        {
+          "id": "rule:MONTH-STATE-XIANG-001:primary:5:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-XIANG-001",
+          "target": {
+            "line": 5,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_xiang",
+            "label": "月令相"
+          },
+          "source_facts": [
+            "fact:/lines/4/relations/month_strength",
+            "fact:/lines/4/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-XIANG-001 · 第5爻 · 月令相"
+        },
+        {
+          "id": "rule:MONTH-STATE-XIU-001:primary:1:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-XIU-001",
+          "target": {
+            "line": 1,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_xiu",
+            "label": "月令休"
+          },
+          "source_facts": [
+            "fact:/lines/0/relations/month_strength",
+            "fact:/lines/0/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-XIU-001 · 第1爻 · 月令休"
+        },
+        {
+          "id": "rule:MONTH-STATE-XIU-001:primary:4:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-XIU-001",
+          "target": {
+            "line": 4,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_xiu",
+            "label": "月令休"
+          },
+          "source_facts": [
+            "fact:/lines/3/relations/month_strength",
+            "fact:/lines/3/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-XIU-001 · 第4爻 · 月令休"
+        },
+        {
+          "id": "rule:MONTH-STATE-QIU-001:primary:2:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-QIU-001",
+          "target": {
+            "line": 2,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_qiu",
+            "label": "月令囚"
+          },
+          "source_facts": [
+            "fact:/lines/1/relations/month_strength",
+            "fact:/lines/1/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-QIU-001 · 第2爻 · 月令囚"
+        },
+        {
+          "id": "rule:MONTH-STATE-SI-001:primary:3:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-SI-001",
+          "target": {
+            "line": 3,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_si",
+            "label": "月令死"
+          },
+          "source_facts": [
+            "fact:/lines/2/relations/month_strength",
+            "fact:/lines/2/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-SI-001 · 第3爻 · 月令死"
+        },
+        {
+          "id": "rule:SHI-CONTROL-YING-001:primary:6:3",
+          "kind": "rule_result",
+          "rule_id": "SHI-CONTROL-YING-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": 3
+          },
+          "result": {
+            "code": "shi_control_ying",
+            "label": "世克应",
+            "from": {
+              "line": 6,
+              "component": "primary"
+            },
+            "to": {
+              "line": 3,
+              "component": "primary"
+            }
+          },
+          "source_facts": [
+            "fact:/hexagram/shi_line",
+            "fact:/hexagram/ying_line",
+            "fact:/lines/0/is_shi",
+            "fact:/lines/1/is_shi",
+            "fact:/lines/2/is_shi",
+            "fact:/lines/3/is_shi",
+            "fact:/lines/4/is_shi",
+            "fact:/lines/5/is_shi",
+            "fact:/lines/0/is_ying",
+            "fact:/lines/1/is_ying",
+            "fact:/lines/2/is_ying",
+            "fact:/lines/3/is_ying",
+            "fact:/lines/4/is_ying",
+            "fact:/lines/5/is_ying",
+            "fact:/lines/5/element",
+            "fact:/lines/2/element"
+          ],
+          "label": "SHI-CONTROL-YING-001 · 第6爻 · 世克应"
+        },
+        {
+          "id": "rule:MONTH-CLASH-001:primary:3:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-CLASH-001",
+          "target": {
+            "line": 3,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_clash",
+            "label": "月破（与月建六冲）"
+          },
+          "source_facts": [
+            "fact:/calendar/month_branch",
+            "fact:/lines/2/branch"
+          ],
+          "label": "MONTH-CLASH-001 · 第3爻 · 月破（与月建六冲）"
+        }
+      ],
+      "literature_packet": {
+        "version": "explicit-literature-packet-dev-1",
+        "corpus_version": "phase8a-month-combine-hardening-1",
+        "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+        "mode": "offline_explicit_review",
+        "selection_semantics": "Caller-reviewed applicability; not automatic or independently verified",
+        "independent_evidence": false,
+        "cards": []
+      },
+      "transport": {
+        "prompt_tokens": 5830,
+        "completion_tokens": 1056,
+        "total_tokens": 6886,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5830
+      },
+      "mechanical_result_as_executed": {
+        "version": "layered-reading-dev-2",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/month_branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/day_branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/position",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/element",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/relative",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/is_ying",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/is_shi",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/moving",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/relations/month_strength",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/ganzhi",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:MONTH-CLASH-001:primary:3:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established"
+      },
+      "self_review": {
+        "scope": "partial",
+        "source_support": "partial",
+        "source_attribution": "not_applicable",
+        "annotations": [
+          {
+            "section": "interpretations",
+            "quote": "如卯戌合",
+            "finding": "Adds a traditional detail outside the requested naming scope without a supplied literature citation; not judged false here."
+          },
+          {
+            "section": "interpretations",
+            "quote": "逢合填实",
+            "finding": "Names an unsourced traditional treatment in uncertainties; qualification does not provide a source."
+          }
+        ]
+      }
+    },
+    {
+      "batch": "knowledge-reading-pilot-02",
+      "id": "month-break-with-literature",
+      "question": "仅核对本盘第三爻与月建相冲的标注，解释月破名称。月破是否意味着这个爻永久无用、事情必然失败？不选用神、不判断成败、不推应期。",
+      "plan_hash": "sha256:937ffa8c8eb5986f56034d3ebcfb55ac67cada55a779c892bea88edfb8b67a6f",
+      "output_version": "layered-reading-dev-2",
+      "raw_hash": "sha256:724004d5089f48d7b7d75e4e54b4b230a54aee6813980c3254ee1db024316fe9",
+      "raw": "{\n  \"schema_version\": \"layered-reading-dev-2\",\n  \"conclusion\": \"本盘第三爻（官鬼、乙卯木）确实被程序标注为“月破（与月建六冲）”，即其地支卯与月建酉相冲。据《增删卜易》相关段落，月破之名源于月建相冲，是术语定义，不包含此爻永久失效或事情必然失败的判断。本次仅核对标注、解释名称，不作任何用神、成败或应期推论。\",\n  \"facts\": [\n    {\"evidence_id\": \"fact:/calendar/month_branch\", \"value\": \"酉\"},\n    {\"evidence_id\": \"fact:/lines/2/position\", \"value\": 3},\n    {\"evidence_id\": \"fact:/lines/2/branch\", \"value\": \"卯\"},\n    {\"evidence_id\": \"fact:/lines/2/element\", \"value\": \"木\"},\n    {\"evidence_id\": \"fact:/lines/2/relative\", \"value\": \"官鬼\"},\n    {\"evidence_id\": \"fact:/lines/2/yin_yang\", \"value\": \"yin\"},\n    {\"evidence_id\": \"fact:/lines/2/moving\", \"value\": false},\n    {\"evidence_id\": \"fact:/lines/2/is_shi\", \"value\": false},\n    {\"evidence_id\": \"fact:/lines/2/is_ying\", \"value\": true},\n    {\"evidence_id\": \"fact:/lines/2/is_kongwang\", \"value\": false},\n    {\"evidence_id\": \"fact:/lines/2/relations/month_strength\", \"value\": \"死\"},\n    {\"evidence_id\": \"fact:/lines/2/ganzhi\", \"value\": \"乙卯\"},\n    {\"evidence_id\": \"fact:/lines/2/spirit\", \"value\": \"勾陈\"},\n    {\"evidence_id\": \"fact:/lines/2/state_text\", \"value\": \"少阴\"}\n  ],\n  \"rules\": [\n    {\n      \"evidence_id\": \"rule:MONTH-CLASH-001:primary:3:-\",\n      \"result\": {\n        \"code\": \"month_clash\",\n        \"label\": \"月破（与月建六冲）\"\n      }\n    }\n  ],\n  \"interpretations\": [\n    {\n      \"text\": \"程序已明确将第三爻标注为月破，其依据是该爻地支卯与月建酉相冲；此标注属于结构核对结果，表示存在月建相冲的术语关系。\",\n      \"fact_ids\": [\n        \"fact:/calendar/month_branch\",\n        \"fact:/lines/2/position\",\n        \"fact:/lines/2/branch\",\n        \"fact:/lines/2/element\",\n        \"fact:/lines/2/relative\",\n        \"fact:/lines/2/yin_yang\",\n        \"fact:/lines/2/moving\",\n        \"fact:/lines/2/is_shi\",\n        \"fact:/lines/2/is_ying\",\n        \"fact:/lines/2/is_kongwang\",\n        \"fact:/lines/2/relations/month_strength\",\n        \"fact:/lines/2/ganzhi\",\n        \"fact:/lines/2/spirit\",\n        \"fact:/lines/2/state_text\"\n      ],\n      \"rule_ids\": [\n        \"rule:MONTH-CLASH-001:primary:3:-\"\n      ],\n      \"literature_ids\": [\n        \"literature:zsby-month-clash-001\"\n      ],\n      \"applicability\": \"《增删卜易》该段落以月建之冲解释月破名称，属于术语定义，不涉及个案效力判断，因此适用于解释本盘月破名称；该段也明确不推定无用、永久失效或吉凶。\",\n      \"uncertainties\": [\n        \"月破的实际效力需要结合用神、日月动变、生克制化及时间条件进一步分析，本次不涉及这些判断。\",\n        \"该文献为古籍原典，无现代实证预测验证，仅作术语背景使用。\"\n      ]\n    }\n  ],\n  \"advice\": [\n    {\n      \"text\": \"月破是一个结构性术语标注，不等于该爻永久无用或事情必然失败；如需进一步了解实际影响，应结合用神、旺衰、动变和具体问事背景整体分析，避免单凭一个标记下结论。\",\n      \"basis\": \"general_advice\"\n    }\n  ]\n}",
+      "evidence": [
+        {
+          "id": "fact:/calendar/year_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/year_ganzhi",
+          "value": "丙午",
+          "label": "历法 · 年柱"
+        },
+        {
+          "id": "fact:/calendar/month_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/month_ganzhi",
+          "value": "丁酉",
+          "label": "历法 · 月柱"
+        },
+        {
+          "id": "fact:/calendar/day_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/day_ganzhi",
+          "value": "甲子",
+          "label": "历法 · 日柱"
+        },
+        {
+          "id": "fact:/calendar/hour_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/hour_ganzhi",
+          "value": "庚午",
+          "label": "历法 · 时柱"
+        },
+        {
+          "id": "fact:/calendar/day_branch",
+          "kind": "program_fact",
+          "path": "/calendar/day_branch",
+          "value": "子",
+          "label": "历法 · 日支"
+        },
+        {
+          "id": "fact:/calendar/month_branch",
+          "kind": "program_fact",
+          "path": "/calendar/month_branch",
+          "value": "酉",
+          "label": "历法 · 月支"
+        },
+        {
+          "id": "fact:/calendar/kongwang/0",
+          "kind": "program_fact",
+          "path": "/calendar/kongwang/0",
+          "value": "戌",
+          "label": "历法 · 空亡"
+        },
+        {
+          "id": "fact:/calendar/kongwang/1",
+          "kind": "program_fact",
+          "path": "/calendar/kongwang/1",
+          "value": "亥",
+          "label": "历法 · 空亡"
+        },
+        {
+          "id": "fact:/calendar/anchor/year",
+          "kind": "program_fact",
+          "path": "/calendar/anchor/year",
+          "value": 2026,
+          "label": "历法 · year"
+        },
+        {
+          "id": "fact:/calendar/anchor/month",
+          "kind": "program_fact",
+          "path": "/calendar/anchor/month",
+          "value": 9,
+          "label": "历法 · month"
+        },
+        {
+          "id": "fact:/calendar/anchor/day",
+          "kind": "program_fact",
+          "path": "/calendar/anchor/day",
+          "value": 15,
+          "label": "历法 · day"
+        },
+        {
+          "id": "fact:/hexagram/primary/name",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/name",
+          "value": "坤为地",
+          "label": "卦盘 · 卦名"
+        },
+        {
+          "id": "fact:/hexagram/primary/palace",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/palace",
+          "value": "坤宫",
+          "label": "卦盘 · 卦宫"
+        },
+        {
+          "id": "fact:/hexagram/primary/lower_trigram",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/lower_trigram",
+          "value": "坤",
+          "label": "卦盘 · lower_trigram"
+        },
+        {
+          "id": "fact:/hexagram/primary/upper_trigram",
+          "kind": "program_fact",
+          "path": "/hexagram/primary/upper_trigram",
+          "value": "坤",
+          "label": "卦盘 · upper_trigram"
+        },
+        {
+          "id": "fact:/hexagram/shi_line",
+          "kind": "program_fact",
+          "path": "/hexagram/shi_line",
+          "value": 6,
+          "label": "卦盘 · 世爻位置"
+        },
+        {
+          "id": "fact:/hexagram/ying_line",
+          "kind": "program_fact",
+          "path": "/hexagram/ying_line",
+          "value": 3,
+          "label": "卦盘 · 应爻位置"
+        },
+        {
+          "id": "fact:/lines/0/position",
+          "kind": "program_fact",
+          "path": "/lines/0/position",
+          "value": 1,
+          "label": "第1爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/0/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/0/yin_yang",
+          "value": "yin",
+          "label": "第1爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/0/moving",
+          "kind": "program_fact",
+          "path": "/lines/0/moving",
+          "value": false,
+          "label": "第1爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/0/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/0/ganzhi",
+          "value": "乙未",
+          "label": "第1爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/0/branch",
+          "kind": "program_fact",
+          "path": "/lines/0/branch",
+          "value": "未",
+          "label": "第1爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/0/element",
+          "kind": "program_fact",
+          "path": "/lines/0/element",
+          "value": "土",
+          "label": "第1爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/0/relative",
+          "kind": "program_fact",
+          "path": "/lines/0/relative",
+          "value": "兄弟",
+          "label": "第1爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/0/spirit",
+          "kind": "program_fact",
+          "path": "/lines/0/spirit",
+          "value": "青龙",
+          "label": "第1爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/0/state_text",
+          "kind": "program_fact",
+          "path": "/lines/0/state_text",
+          "value": "少阴",
+          "label": "第1爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/0/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/0/is_shi",
+          "value": false,
+          "label": "第1爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/0/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/0/is_ying",
+          "value": false,
+          "label": "第1爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/0/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/0/is_kongwang",
+          "value": false,
+          "label": "第1爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/0/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/0/relations/month_strength",
+          "value": "休",
+          "label": "第1爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/1/position",
+          "kind": "program_fact",
+          "path": "/lines/1/position",
+          "value": 2,
+          "label": "第2爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/1/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/1/yin_yang",
+          "value": "yin",
+          "label": "第2爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/1/moving",
+          "kind": "program_fact",
+          "path": "/lines/1/moving",
+          "value": false,
+          "label": "第2爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/1/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/1/ganzhi",
+          "value": "乙巳",
+          "label": "第2爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/1/branch",
+          "kind": "program_fact",
+          "path": "/lines/1/branch",
+          "value": "巳",
+          "label": "第2爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/1/element",
+          "kind": "program_fact",
+          "path": "/lines/1/element",
+          "value": "火",
+          "label": "第2爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/1/relative",
+          "kind": "program_fact",
+          "path": "/lines/1/relative",
+          "value": "父母",
+          "label": "第2爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/1/spirit",
+          "kind": "program_fact",
+          "path": "/lines/1/spirit",
+          "value": "朱雀",
+          "label": "第2爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/1/state_text",
+          "kind": "program_fact",
+          "path": "/lines/1/state_text",
+          "value": "少阴",
+          "label": "第2爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/1/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/1/is_shi",
+          "value": false,
+          "label": "第2爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/1/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/1/is_ying",
+          "value": false,
+          "label": "第2爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/1/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/1/is_kongwang",
+          "value": false,
+          "label": "第2爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/1/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/1/relations/month_strength",
+          "value": "囚",
+          "label": "第2爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/2/position",
+          "kind": "program_fact",
+          "path": "/lines/2/position",
+          "value": 3,
+          "label": "第3爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/2/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/2/yin_yang",
+          "value": "yin",
+          "label": "第3爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/2/moving",
+          "kind": "program_fact",
+          "path": "/lines/2/moving",
+          "value": false,
+          "label": "第3爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/2/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/2/ganzhi",
+          "value": "乙卯",
+          "label": "第3爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/2/branch",
+          "kind": "program_fact",
+          "path": "/lines/2/branch",
+          "value": "卯",
+          "label": "第3爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/2/element",
+          "kind": "program_fact",
+          "path": "/lines/2/element",
+          "value": "木",
+          "label": "第3爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/2/relative",
+          "kind": "program_fact",
+          "path": "/lines/2/relative",
+          "value": "官鬼",
+          "label": "第3爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/2/spirit",
+          "kind": "program_fact",
+          "path": "/lines/2/spirit",
+          "value": "勾陈",
+          "label": "第3爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/2/state_text",
+          "kind": "program_fact",
+          "path": "/lines/2/state_text",
+          "value": "少阴",
+          "label": "第3爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/2/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/2/is_shi",
+          "value": false,
+          "label": "第3爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/2/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/2/is_ying",
+          "value": true,
+          "label": "第3爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/2/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/2/is_kongwang",
+          "value": false,
+          "label": "第3爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/2/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/2/relations/month_strength",
+          "value": "死",
+          "label": "第3爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/3/position",
+          "kind": "program_fact",
+          "path": "/lines/3/position",
+          "value": 4,
+          "label": "第4爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/3/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/3/yin_yang",
+          "value": "yin",
+          "label": "第4爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/3/moving",
+          "kind": "program_fact",
+          "path": "/lines/3/moving",
+          "value": false,
+          "label": "第4爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/3/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/3/ganzhi",
+          "value": "癸丑",
+          "label": "第4爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/3/branch",
+          "kind": "program_fact",
+          "path": "/lines/3/branch",
+          "value": "丑",
+          "label": "第4爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/3/element",
+          "kind": "program_fact",
+          "path": "/lines/3/element",
+          "value": "土",
+          "label": "第4爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/3/relative",
+          "kind": "program_fact",
+          "path": "/lines/3/relative",
+          "value": "兄弟",
+          "label": "第4爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/3/spirit",
+          "kind": "program_fact",
+          "path": "/lines/3/spirit",
+          "value": "螣蛇",
+          "label": "第4爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/3/state_text",
+          "kind": "program_fact",
+          "path": "/lines/3/state_text",
+          "value": "少阴",
+          "label": "第4爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/3/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/3/is_shi",
+          "value": false,
+          "label": "第4爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/3/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/3/is_ying",
+          "value": false,
+          "label": "第4爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/3/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/3/is_kongwang",
+          "value": false,
+          "label": "第4爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/3/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/3/relations/month_strength",
+          "value": "休",
+          "label": "第4爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/3/relations/day_relation",
+          "kind": "program_fact",
+          "path": "/lines/3/relations/day_relation",
+          "value": "日辰合",
+          "label": "第4爻 · 日辰关系"
+        },
+        {
+          "id": "fact:/lines/4/position",
+          "kind": "program_fact",
+          "path": "/lines/4/position",
+          "value": 5,
+          "label": "第5爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/4/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/4/yin_yang",
+          "value": "yin",
+          "label": "第5爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/4/moving",
+          "kind": "program_fact",
+          "path": "/lines/4/moving",
+          "value": false,
+          "label": "第5爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/4/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/4/ganzhi",
+          "value": "癸亥",
+          "label": "第5爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/4/branch",
+          "kind": "program_fact",
+          "path": "/lines/4/branch",
+          "value": "亥",
+          "label": "第5爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/4/element",
+          "kind": "program_fact",
+          "path": "/lines/4/element",
+          "value": "水",
+          "label": "第5爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/4/relative",
+          "kind": "program_fact",
+          "path": "/lines/4/relative",
+          "value": "妻财",
+          "label": "第5爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/4/spirit",
+          "kind": "program_fact",
+          "path": "/lines/4/spirit",
+          "value": "白虎",
+          "label": "第5爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/4/state_text",
+          "kind": "program_fact",
+          "path": "/lines/4/state_text",
+          "value": "少阴",
+          "label": "第5爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/4/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/4/is_shi",
+          "value": false,
+          "label": "第5爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/4/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/4/is_ying",
+          "value": false,
+          "label": "第5爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/4/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/4/is_kongwang",
+          "value": true,
+          "label": "第5爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/4/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/4/relations/month_strength",
+          "value": "相",
+          "label": "第5爻 · 月令"
+        },
+        {
+          "id": "fact:/lines/5/position",
+          "kind": "program_fact",
+          "path": "/lines/5/position",
+          "value": 6,
+          "label": "第6爻 · 爻位"
+        },
+        {
+          "id": "fact:/lines/5/yin_yang",
+          "kind": "program_fact",
+          "path": "/lines/5/yin_yang",
+          "value": "yin",
+          "label": "第6爻 · 阴阳"
+        },
+        {
+          "id": "fact:/lines/5/moving",
+          "kind": "program_fact",
+          "path": "/lines/5/moving",
+          "value": false,
+          "label": "第6爻 · 动爻"
+        },
+        {
+          "id": "fact:/lines/5/ganzhi",
+          "kind": "program_fact",
+          "path": "/lines/5/ganzhi",
+          "value": "癸酉",
+          "label": "第6爻 · 纳甲"
+        },
+        {
+          "id": "fact:/lines/5/branch",
+          "kind": "program_fact",
+          "path": "/lines/5/branch",
+          "value": "酉",
+          "label": "第6爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/5/element",
+          "kind": "program_fact",
+          "path": "/lines/5/element",
+          "value": "金",
+          "label": "第6爻 · 五行"
+        },
+        {
+          "id": "fact:/lines/5/relative",
+          "kind": "program_fact",
+          "path": "/lines/5/relative",
+          "value": "子孙",
+          "label": "第6爻 · 六亲"
+        },
+        {
+          "id": "fact:/lines/5/spirit",
+          "kind": "program_fact",
+          "path": "/lines/5/spirit",
+          "value": "玄武",
+          "label": "第6爻 · 六神"
+        },
+        {
+          "id": "fact:/lines/5/state_text",
+          "kind": "program_fact",
+          "path": "/lines/5/state_text",
+          "value": "少阴",
+          "label": "第6爻 · 爻状态"
+        },
+        {
+          "id": "fact:/lines/5/is_shi",
+          "kind": "program_fact",
+          "path": "/lines/5/is_shi",
+          "value": true,
+          "label": "第6爻 · 世爻"
+        },
+        {
+          "id": "fact:/lines/5/is_ying",
+          "kind": "program_fact",
+          "path": "/lines/5/is_ying",
+          "value": false,
+          "label": "第6爻 · 应爻"
+        },
+        {
+          "id": "fact:/lines/5/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/5/is_kongwang",
+          "value": false,
+          "label": "第6爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/5/relations/month_strength",
+          "kind": "program_fact",
+          "path": "/lines/5/relations/month_strength",
+          "value": "旺",
+          "label": "第6爻 · 月令"
+        },
+        {
+          "id": "rule:LINE-VOID-001:primary:5:-",
+          "kind": "rule_result",
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 5,
+            "component": "primary"
+          },
+          "result": {
+            "code": "line_void",
+            "label": "旬空"
+          },
+          "source_facts": [
+            "fact:/lines/4/is_kongwang"
+          ],
+          "label": "LINE-VOID-001 · 第5爻 · 旬空"
+        },
+        {
+          "id": "rule:DAY-COMBINE-001:primary:4:-",
+          "kind": "rule_result",
+          "rule_id": "DAY-COMBINE-001",
+          "target": {
+            "line": 4,
+            "component": "primary"
+          },
+          "result": {
+            "code": "day_combine",
+            "label": "与日辰六合"
+          },
+          "source_facts": [
+            "fact:/lines/3/relations/day_relation",
+            "fact:/lines/3/branch",
+            "fact:/calendar/day_branch"
+          ],
+          "label": "DAY-COMBINE-001 · 第4爻 · 与日辰六合"
+        },
+        {
+          "id": "rule:MONTH-STATE-WANG-001:primary:6:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-WANG-001",
+          "target": {
+            "line": 6,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_wang",
+            "label": "月令旺"
+          },
+          "source_facts": [
+            "fact:/lines/5/relations/month_strength",
+            "fact:/lines/5/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-WANG-001 · 第6爻 · 月令旺"
+        },
+        {
+          "id": "rule:MONTH-STATE-XIANG-001:primary:5:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-XIANG-001",
+          "target": {
+            "line": 5,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_xiang",
+            "label": "月令相"
+          },
+          "source_facts": [
+            "fact:/lines/4/relations/month_strength",
+            "fact:/lines/4/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-XIANG-001 · 第5爻 · 月令相"
+        },
+        {
+          "id": "rule:MONTH-STATE-XIU-001:primary:1:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-XIU-001",
+          "target": {
+            "line": 1,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_xiu",
+            "label": "月令休"
+          },
+          "source_facts": [
+            "fact:/lines/0/relations/month_strength",
+            "fact:/lines/0/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-XIU-001 · 第1爻 · 月令休"
+        },
+        {
+          "id": "rule:MONTH-STATE-XIU-001:primary:4:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-XIU-001",
+          "target": {
+            "line": 4,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_xiu",
+            "label": "月令休"
+          },
+          "source_facts": [
+            "fact:/lines/3/relations/month_strength",
+            "fact:/lines/3/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-XIU-001 · 第4爻 · 月令休"
+        },
+        {
+          "id": "rule:MONTH-STATE-QIU-001:primary:2:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-QIU-001",
+          "target": {
+            "line": 2,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_qiu",
+            "label": "月令囚"
+          },
+          "source_facts": [
+            "fact:/lines/1/relations/month_strength",
+            "fact:/lines/1/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-QIU-001 · 第2爻 · 月令囚"
+        },
+        {
+          "id": "rule:MONTH-STATE-SI-001:primary:3:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-STATE-SI-001",
+          "target": {
+            "line": 3,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_state_si",
+            "label": "月令死"
+          },
+          "source_facts": [
+            "fact:/lines/2/relations/month_strength",
+            "fact:/lines/2/element",
+            "fact:/calendar/month_branch"
+          ],
+          "label": "MONTH-STATE-SI-001 · 第3爻 · 月令死"
+        },
+        {
+          "id": "rule:SHI-CONTROL-YING-001:primary:6:3",
+          "kind": "rule_result",
+          "rule_id": "SHI-CONTROL-YING-001",
+          "target": {
+            "line": 6,
+            "component": "primary",
+            "related_line": 3
+          },
+          "result": {
+            "code": "shi_control_ying",
+            "label": "世克应",
+            "from": {
+              "line": 6,
+              "component": "primary"
+            },
+            "to": {
+              "line": 3,
+              "component": "primary"
+            }
+          },
+          "source_facts": [
+            "fact:/hexagram/shi_line",
+            "fact:/hexagram/ying_line",
+            "fact:/lines/0/is_shi",
+            "fact:/lines/1/is_shi",
+            "fact:/lines/2/is_shi",
+            "fact:/lines/3/is_shi",
+            "fact:/lines/4/is_shi",
+            "fact:/lines/5/is_shi",
+            "fact:/lines/0/is_ying",
+            "fact:/lines/1/is_ying",
+            "fact:/lines/2/is_ying",
+            "fact:/lines/3/is_ying",
+            "fact:/lines/4/is_ying",
+            "fact:/lines/5/is_ying",
+            "fact:/lines/5/element",
+            "fact:/lines/2/element"
+          ],
+          "label": "SHI-CONTROL-YING-001 · 第6爻 · 世克应"
+        },
+        {
+          "id": "rule:MONTH-CLASH-001:primary:3:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-CLASH-001",
+          "target": {
+            "line": 3,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_clash",
+            "label": "月破（与月建六冲）"
+          },
+          "source_facts": [
+            "fact:/calendar/month_branch",
+            "fact:/lines/2/branch"
+          ],
+          "label": "MONTH-CLASH-001 · 第3爻 · 月破（与月建六冲）"
+        }
+      ],
+      "literature_packet": {
+        "version": "explicit-literature-packet-dev-1",
+        "corpus_version": "phase8a-month-combine-hardening-1",
+        "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+        "mode": "offline_explicit_review",
+        "selection_semantics": "Caller-reviewed applicability; not automatic or independently verified",
+        "independent_evidence": false,
+        "cards": [
+          {
+            "knowledge_id": "zsby-month-clash-001",
+            "literature_id": "literature:zsby-month-clash-001",
+            "source_type": "classical_body",
+            "original_text": "月建沖之爲月破逐月之破日是也。",
+            "editorial_summary": "本段以月建之冲解释月破名称；这是术语定义，不含具体占问中的效力结论。",
+            "applicable_conditions": {
+              "status": "specified",
+              "statements": [
+                "仅解释月建相冲的命名。"
+              ]
+            },
+            "exclusions": {
+              "status": "specified",
+              "statements": [
+                "不推定无用、永久失效或吉凶；后文动态与时间条件不在本命题内。"
+              ]
+            },
+            "exceptions": {
+              "status": "none_stated",
+              "statements": []
+            },
+            "citation": {
+              "knowledge_id": "zsby-month-clash-001",
+              "source_id": "zsby-nlc-12jh005345",
+              "source_revision": 1,
+              "edition_id": "zsby-wenming-1925-11-nlc-12jh005345",
+              "title": "增刪卜易",
+              "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+              "segment_ref": {
+                "segment_id": "zsby-1925-s2",
+                "revision": 1,
+                "span": {
+                  "start": 0,
+                  "end": 15,
+                  "unit": "unicode_code_point"
+                }
+              },
+              "locator": {
+                "volume": "二",
+                "chapter": "月破章第二十七",
+                "section": null,
+                "page": "三四",
+                "leaf": null,
+                "image_page": 104,
+                "anchor": "月建沖之起，是也止；承前页月破表之后"
+              },
+              "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+              "text_hash": "sha256:0ff3d82a37f1dda70d3a2bb7f3713bf60985392e0dbd46fcb302f359f7e3f842"
+            },
+            "same_proposition_ids": [
+              "zsby-month-clash-001"
+            ],
+            "independent_evidence": false,
+            "predictive_validation": "not_established",
+            "editorial_guidance": {
+              "kind": "modern_editorial_guidance",
+              "review_status": "development_self_review",
+              "independent_evidence": false,
+              "checks": [
+                "程序是否明确标记月建相冲？",
+                "此处仅需解释月破名称，还是在判断实际效力？"
+              ],
+              "careful_example": "程序标记与月建相冲，本段可用于解释月破名称；不能仅凭名称断定此爻无用。",
+              "overreach_example": "月破就是永久失效，所以此事没有机会。"
+            },
+            "applicability_review": {
+              "status": "confirmed",
+              "reason": "问题明确要求解释月破名称；当前程序已有第三爻月建相冲记录，不借此判断个案效力。"
+            }
+          }
+        ]
+      },
+      "transport": {
+        "prompt_tokens": 6466,
+        "completion_tokens": 940,
+        "total_tokens": 7406,
+        "prompt_tokens_details": {
+          "cached_tokens": 5504
+        },
+        "prompt_cache_hit_tokens": 5504,
+        "prompt_cache_miss_tokens": 962
+      },
+      "mechanical_result_as_executed": {
+        "version": "layered-reading-dev-2",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/month_branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/position",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/element",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/relative",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/yin_yang",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/moving",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/is_shi",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/is_ying",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/is_kongwang",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/relations/month_strength",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/ganzhi",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/spirit",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/state_text",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:MONTH-CLASH-001:primary:3:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established"
+      },
+      "self_review": {
+        "scope": "partial",
+        "source_support": "partial",
+        "source_attribution": "fail",
+        "annotations": [
+          {
+            "section": "interpretations",
+            "quote": "该段也明确不推定无用、永久失效或吉凶",
+            "finding": "Attributes modern editorial exclusions to the source passage. Original quotation defines the term; exclusions are editorial metadata, not an explicit statement in this quotation."
+          },
+          {
+            "section": "facts",
+            "quote": "fact:/lines/2/spirit",
+            "finding": "Unneeded spirit fact included despite a narrow term-definition question; value is mechanically correct."
+          }
+        ]
+      }
+    }
+  ]
+}

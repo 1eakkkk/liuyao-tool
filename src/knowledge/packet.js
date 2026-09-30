@@ -4,7 +4,7 @@ import { stableJson, textHash } from './validate.js';
 import { editorialGuidance } from './guidance.js';
 import { compareIds } from './dedupe.js';
 
-export const LITERATURE_PACKET_VERSION = 'explicit-literature-packet-dev-1';
+export const LITERATURE_PACKET_VERSION = 'explicit-literature-packet-dev-2';
 const length = value => [...stableJson(value)].length;
 
 export function literatureCards(index) {
@@ -21,7 +21,13 @@ export function literatureCards(index) {
     same_proposition_ids: [...same_proposition_ids],
     independent_evidence: false,
     predictive_validation: 'not_established',
-    editorial_guidance: editorialGuidance(unit.knowledge_id)
+    editorial_guidance: editorialGuidance(unit.knowledge_id),
+    field_origins: {
+      original_text: 'source_transcription',
+      editorial_summary: 'modern_editorial',
+      applicable_conditions: 'modern_editorial', exclusions: 'modern_editorial', exceptions: 'modern_editorial',
+      editorial_guidance: 'modern_editorial'
+    }
   }));
 }
 

@@ -9,12 +9,13 @@ const index = loadCorpus(undefined, { ruleIds: RULES.map(r => r.rule_id), rulese
 const decision = (knowledge_id, status = 'confirmed') => ({ knowledge_id, status, reason: '开发用显式条件复核，不代表真实问题验收' });
 const makePacket = () => buildLiteraturePacket(index, [decision('zsby-shiying-scope-001')]).packet;
 const registry = [{ id: 'fact:/lines/0/relative', kind: 'program_fact', value: '兄弟' },
-  { id: 'rule:example', kind: 'rule_result', value: '兄弟' }];
+  { id: 'rule:example', kind: 'rule_result', result: { code: 'example', label: '示例规则' }, source_facts: ['fact:/lines/0/relative'] }];
 function answer() {
   return { schema_version: LAYERED_OUTPUT_VERSION, conclusion: '还需结合问题判断。',
     facts: [{ evidence_id: registry[0].id, value: '兄弟' }],
+    rules: [],
     interpretations: [{ text: '世应方向需要结合彼此之事。', fact_ids: [registry[0].id],
-      literature_ids: ['literature:zsby-shiying-scope-001'], applicability: '开发对照，检查彼此关系方向。', uncertainties: ['无法由引用确认成败。'] }],
+      rule_ids: [], literature_ids: ['literature:zsby-shiying-scope-001'], applicability: '开发对照，检查彼此关系方向。', uncertainties: ['无法由引用确认成败。'] }],
     advice: [{ text: '可以先确认双方意愿。', basis: 'general_advice' }] };
 }
 describe('offline explicit literature packets', () => {
@@ -27,6 +28,8 @@ describe('offline explicit literature packets', () => {
     expect(card.citation.segment_ref.span.unit).toBe('unicode_code_point');
     expect(cards.every(c => c.editorial_guidance?.kind === 'modern_editorial_guidance')).toBe(true);
     expect(card.editorial_guidance.overreach_example).toContain('必成');
+    expect(card.field_origins.original_text).toBe('source_transcription');
+    expect(card.field_origins.exclusions).toBe('modern_editorial');
   });
   it('defaults to no injection and excludes pending, unknown and uncertain selections', () => {
     expect(buildLiteraturePacket(index, []).packet.cards).toEqual([]);
@@ -101,5 +104,26 @@ describe('offline layered output contract', () => {
     expect(() => checkLayeredOutput(answer(), [...registry, registry[0]], makePacket())).toThrow();
     const a = answer(); a.schema_version = 'future';
     expect(() => checkLayeredOutput(a, registry, makePacket())).toThrow();
+  });
+  it('keeps rule results separate with complete source fact binding', () => {
+    const a = answer(); a.rules = [{ evidence_id: registry[1].id, result: registry[1].result }];
+    a.interpretations[0].rule_ids = [registry[1].id];
+    const result = checkLayeredOutput(a, registry, makePacket());
+    expect(result.mechanical_ok).toBe(true);
+    expect(result.rules[0].independent_evidence).toBe(false);
+    a.interpretations[0].fact_ids = [];
+    expect(checkLayeredOutput(a, registry, makePacket()).interpretations[0].missing_rule_fact_ids).toEqual([registry[0].id]);
+  });
+  it.each(['changed_result', 'missing_fact', 'fact_as_rule', 'unknown_rule', 'duplicate_rule'])('rejects rule defect %s', kind => {
+    const a = answer(); a.rules = [{ evidence_id: registry[1].id, result: structuredClone(registry[1].result) }];
+    if (kind === 'changed_result') a.rules[0].result.label = '成功';
+    if (kind === 'missing_fact') a.facts = [];
+    if (kind === 'fact_as_rule') a.rules[0].evidence_id = registry[0].id;
+    if (kind === 'unknown_rule') a.rules[0].evidence_id = 'rule:unknown';
+    if (kind === 'duplicate_rule') {
+      a.rules.push(a.rules[0]);
+      expect(() => checkLayeredOutput(a, registry, makePacket())).toThrow(); return;
+    }
+    expect(checkLayeredOutput(a, registry, makePacket()).mechanical_ok).toBe(false);
   });
 });
