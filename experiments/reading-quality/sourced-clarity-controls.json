@@ -1,0 +1,143 @@
+{
+  "version": "sourced-clarity-controls-dev-1",
+  "kind": "handwritten_synthetic_development_controls",
+  "automatic_semantic_validation": false,
+  "production_ready": false,
+  "slots": [
+    "conclusion",
+    "text",
+    "applicability",
+    "uncertainties",
+    "advice"
+  ],
+  "controls": [
+    {
+      "id": "combine-not-generation",
+      "case_id": "month-combine",
+      "premise": "只提供六合记录",
+      "examples": [
+        {
+          "text": "程序标注为六合；现有证据未提供生克判断。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "程序标注为六合，因此两者相生。",
+          "expected_review": "fail"
+        }
+      ],
+      "reason": "六合不能单独推出相生。"
+    },
+    {
+      "id": "clash-not-strength",
+      "case_id": "month-break",
+      "premise": "只提供月建六冲记录",
+      "examples": [
+        {
+          "text": "六冲记录的是相冲关系，不能据此确认力量衰弱。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "六冲表示此爻力量衰弱。",
+          "expected_review": "fail"
+        }
+      ],
+      "reason": "相冲标注不直接支持强弱结论。"
+    },
+    {
+      "id": "void-not-failure",
+      "case_id": "void",
+      "premise": "只提供旬空标注",
+      "examples": [
+        {
+          "text": "程序标注为旬空；不能仅凭此标注判断事情成败。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "程序标注为旬空，所以事情必败。",
+          "expected_review": "fail"
+        }
+      ],
+      "reason": "旬空标注不直接支持事件失败。"
+    },
+    {
+      "id": "missing-not-absent",
+      "case_id": "month-break",
+      "premise": "未提供生克或旺衰证据",
+      "examples": [
+        {
+          "text": "当前材料没有提供生克、旺衰结论。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "本盘不存在生克、旺衰关系。",
+          "expected_review": "fail"
+        }
+      ],
+      "reason": "缺少输入不是盘中不存在。"
+    },
+    {
+      "id": "fragment-not-whole",
+      "case_id": "month-break",
+      "premise": "原文转录只给出名称；限制来自现代整理",
+      "examples": [
+        {
+          "text": "这段原文转录只提供命名信息；现代整理将本次引用限于命名，不据此判断效力。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "这段短句只定义名称，因此古籍全体系永远不讨论月破效力。",
+          "expected_review": "fail"
+        }
+      ],
+      "reason": "局部转录不能支持整个传统体系永远不讨论的断言。"
+    },
+    {
+      "id": "editorial-not-original",
+      "case_id": "month-break",
+      "premise": "排除条件属于现代整理",
+      "examples": [
+        {
+          "text": "现代整理的排除条件要求本次不推定永久失效或吉凶。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "古籍原文明确要求不推定永久失效或吉凶。",
+          "expected_review": "fail"
+        }
+      ],
+      "reason": "使用限制应归给现代整理。"
+    },
+    {
+      "id": "prose-not-claim",
+      "case_id": "month-break",
+      "premise": "source_claims 已正确标注现代整理；仍检查自由文字",
+      "examples": [
+        {
+          "text": "现代整理要求本次只解释名称。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "古籍要求本次只解释名称。",
+          "expected_review": "fail"
+        }
+      ],
+      "reason": "正确的字段连接不能抵消自由文字错误归属。"
+    },
+    {
+      "id": "match-not-authentic",
+      "case_id": "month-break",
+      "premise": "转录逐字匹配输入，未核查外部影印本",
+      "examples": [
+        {
+          "text": "引文与提供的转录一致；外部真实性尚未核查。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "引文逐字匹配，证明古籍出处真实。",
+          "expected_review": "fail"
+        }
+      ],
+      "reason": "输入匹配不证明外部真实性。"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "version": "sourced-clarity-rubric-dev-1",
+  "review_kind": "retrospective_nonblind",
+  "evaluated_fields": [
+    "conclusion",
+    "interpretations.text",
+    "interpretations.applicability",
+    "interpretations.uncertainties",
+    "advice.text"
+  ],
+  "criteria": {
+    "facts": "盘面陈述与输入一致；未提供不等于盘中不存在。",
+    "scope": "仅回答当前窄问题，限制说明不展开用神、应期或成败判断。",
+    "support": "六合、六冲、旬空不自动支持生克、旺衰、效力或成败；否定句和条件句按实际含义检查。",
+    "attribution": "本次引用的使用限制明确归给现代整理；自由文字与逐字引文字段归属一致。",
+    "verification": "逐字匹配只证明输入连接，不证明外部古籍真实性、整个古法体系或预测结果。"
+  },
+  "uncertain_policy": "无法确认则 uncertain；仅无输入文献且完整输出无来源声明时，出处可 not_applicable。",
+  "automatic_semantic_validation": false,
+  "production_ready": false
+}
