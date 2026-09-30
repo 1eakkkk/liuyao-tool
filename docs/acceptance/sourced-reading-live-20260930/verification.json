@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-30",
+  "executor_source_commit": "f03bd6e7e27eb0d47d733c8da8620d124c517ecb",
+  "executor_full_regression": {"files": 46, "tests": 534, "status": "passed", "maxWorkers": 1},
+  "archived_full_regression": {"files": 47, "tests": 536, "status": "passed", "maxWorkers": 1},
+  "fixture_path_revision": "e39ea20",
+  "final_related_regression": {"files": 2, "tests": 17, "status": "passed", "maxWorkers": 1},
+  "earlier_dirty_worktree_run": {"failed": 3, "reason": "Dirty tracked worktree during V2 verification", "assertions_relaxed": false},
+  "actual_chat_calls": 2,
+  "automatic_retries": 0,
+  "mechanical_passed": 2,
+  "production_changes": false,
+  "github_ci": "Not asserted by this local verification record"
+}
