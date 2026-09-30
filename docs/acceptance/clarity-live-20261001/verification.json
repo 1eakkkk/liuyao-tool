@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-01",
+  "source_commit": "5de4f69e96a14ed95c7ba868d404e5c9e0c9567e",
+  "files": 48,
+  "tests": 564,
+  "status": "passed",
+  "maxWorkers": 1,
+  "mechanical_passed": 4,
+  "actual_chat_calls": 4,
+  "automatic_retries": 0,
+  "model_improvement_established": false,
+  "production_ready": false,
+  "semantic_dimensions": {
+    "facts": {
+      "pass": 8,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "scope": {
+      "pass": 8,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "support": {
+      "pass": 6,
+      "fail": 1,
+      "uncertain": 1,
+      "not_applicable": 0
+    },
+    "attribution": {
+      "pass": 1,
+      "fail": 3,
+      "uncertain": 0,
+      "not_applicable": 4
+    }
+  },
+  "disagreements": [
+    {
+      "id": "sourced-clarity-live-01/month-combine-with-literature",
+      "dimension": "support",
+      "verdicts": [
+        {
+          "reviewer": "agent-a",
+          "verdict": "fail"
+        },
+        {
+          "reviewer": "agent-b",
+          "verdict": "uncertain"
+        }
+      ]
+    },
+    {
+      "id": "sourced-clarity-live-01/void-with-literature",
+      "dimension": "attribution",
+      "verdicts": [
+        {
+          "reviewer": "agent-a",
+          "verdict": "fail"
+        },
+        {
+          "reviewer": "agent-b",
+          "verdict": "pass"
+        }
+      ]
+    }
+  ],
+  "conservative_peak_cost_cny": 0.039448,
+  "exact_billed_cost_cny": null,
+  "latest_balance_cny": 18.95,
+  "accounted_campaign_reservations_cny": 19.77138,
+  "remaining_unreserved_cny": 0.17862,
+  "production_changes": false,
+  "current_github_ci": "not asserted by local verification"
+}
