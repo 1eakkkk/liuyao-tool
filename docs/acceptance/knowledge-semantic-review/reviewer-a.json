@@ -1,0 +1,360 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:fca01e20aee7cd3efdb7ae8d6d02b3dd0d7094952618b482f3f8771c9746f903",
+  "reviewer_id": "agent-a",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "knowledge-reading-pilot-01/month-break-without-literature",
+      "facts": {
+        "verdict": "fail",
+        "reason": "第三爻的爻位、纳甲、五行、六亲、静爻、应位和月令死以及卯酉月冲均与包内事实一致。但是第三项解释明确说程序没有给出世应生克结论，而包内已提供 rule:SHI-CONTROL-YING-001:primary:6:3 的世克应结果；同一回复的 uncertainties 又承认该标签存在。所问事项并未确定，不能据此否认结构关系结果已提供。此处只判提供内容的事实冲突，不评判现实成败。",
+        "quotes": [
+          {
+            "start": 56,
+            "end": 99,
+            "text": "本盘第三爻（位于应位、纳甲乙卯、五行木）与月建酉相冲，程序标注为“月破（与月建六冲）”",
+            "evidence_ids": [
+              "fact:/lines/2/position",
+              "fact:/lines/2/is_ying",
+              "fact:/lines/2/ganzhi",
+              "fact:/lines/2/element",
+              "fact:/calendar/month_branch",
+              "fact:/lines/2/branch",
+              "rule:MONTH-CLASH-001:primary:3:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1723,
+            "end": 1762,
+            "text": "程序给出的只有月破与月令死，没有给出所问事项的用神、世应生克结论或成败规则结果",
+            "evidence_ids": [
+              "rule:SHI-CONTROL-YING-001:primary:6:3"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 2015,
+            "end": 2046,
+            "text": "世应关系标签虽存在（世克应），但与本问题无关，未将其纳入解释。",
+            "evidence_ids": [
+              "rule:SHI-CONTROL-YING-001:primary:6:3"
+            ],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "回答聚焦第三爻的月冲标注与名称，并对永久无用、必然失败作证据不足的限制说明；没有选用神、作个案成败判断或给出应期。一般建议说明另行判断所需条件，未给当前事项下结论。",
+        "quotes": [
+          {
+            "start": 1937,
+            "end": 1969,
+            "text": "本回答限定为核对标注与解释名称，不涉及成败判断；无适用文献可引。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 2070,
+            "end": 2171,
+            "text": "若在阅读盘面时遇到“月破”，可把它先当作一条关系标签记录：月建酉与第三爻卯相冲，并标注月令死；在讨论其实际影响时，应明确说明仍需结合用神、日辰与动变等条件另行判断，避免直接写成“此爻无用”或“事必败”。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "逐项检查三段解释：第一段所引卯、木、酉、月令死及月冲规则确实支持结构和标签说明；第二段所引月冲、静爻及月令死可支持仅凭这些标签不能推出永久失效的证据边界，而非验证所有时点的实际效力。第三段所引月冲、六亲与月令死没有支持“程序只有这些、没有世应生克结论”的完整陈述，且包内反例是世克应规则。拒绝必然失败的最终边界本身合理，但不能以不实的证据缺席作为依据。机械ID存在不能弥补这一语义支持缺口。",
+        "quotes": [
+          {
+            "start": 909,
+            "end": 963,
+            "text": "“月破”是本盘所用术语，指第三爻地支卯与月建地支酉构成六冲；卯木在酉月为月令“死”位，程序同时给出这一状态。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/2/branch",
+              "rule:MONTH-CLASH-001:primary:3:-",
+              "fact:/lines/2/element",
+              "fact:/lines/2/relations/month_strength"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1379,
+            "end": 1460,
+            "text": "关于“永久无用”：不能把“月破”读成时间上永久失效的结论。已知事实只包括卯酉相冲、该爻非动爻、月令死；这些描述月建对爻的作用标签，不等于宣告该爻在所有时点都无效。",
+            "evidence_ids": [
+              "rule:MONTH-CLASH-001:primary:3:-",
+              "fact:/lines/2/moving",
+              "fact:/lines/2/relations/month_strength"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1714,
+            "end": 1784,
+            "text": "关于“必然失败”：程序给出的只有月破与月令死，没有给出所问事项的用神、世应生克结论或成败规则结果，因此不能从这些事实推导出“事情必然失败”。",
+            "evidence_ids": [
+              "rule:MONTH-CLASH-001:primary:3:-",
+              "fact:/lines/2/relative",
+              "fact:/lines/2/relations/month_strength",
+              "rule:SHI-CONTROL-YING-001:primary:6:3"
+            ],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "重新通读完整raw中的结论、三项解释、适用性、限制和建议，未发现将具体内容归于古籍、作者、章节或历史文献的来源主张。回复明确说文献包为空，传统定义无法对比；程序标注及一般证据限制不是古籍归属。因为输入无文献且输出归属主张明确为none，出处维度不适用。",
+        "quotes": [
+          {
+            "start": 1198,
+            "end": 1245,
+            "text": "文献包为空（cards 为空），没有可供引用的古籍或解释背景，因此仅依据程序事实说明标注含义。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 1265,
+            "end": 1293,
+            "text": "缺少文献来源，无法在本协议内给出“月破”的传统定义对比。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution_claims": "none"
+    },
+    {
+      "id": "knowledge-reading-pilot-02/month-break-without-literature",
+      "facts": {
+        "verdict": "pass",
+        "reason": "列出的月支、日支与第三爻全部事实字段及月冲规则结果与包内值一致；文字所说乙卯、官鬼、应爻、静爻和月令死也一致。程序未提供的缓解条件与古法处理意见归入支持度问题，不能凭本包认定这些传统说法本身真假；此pass只表示可核对的盘面事实没有冲突。",
+        "quotes": [
+          {
+            "start": 64,
+            "end": 123,
+            "text": "本盘第三爻（乙卯，官鬼，应爻）确实被程序标注为“月破（与月建六冲）”，其依据是该爻地支“卯”与月建地支“酉”构成六冲。",
+            "evidence_ids": [
+              "fact:/lines/2/ganzhi",
+              "fact:/lines/2/relative",
+              "fact:/lines/2/is_ying",
+              "fact:/calendar/month_branch",
+              "fact:/lines/2/branch",
+              "rule:MONTH-CLASH-001:primary:3:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1256,
+            "end": 1286,
+            "text": "在月令旺衰体系中，该爻同时被标为月令“死”态（木在酉月为死）",
+            "evidence_ids": [
+              "fact:/lines/2/element",
+              "fact:/lines/2/relations/month_strength"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1429,
+            "end": 1464,
+            "text": "本爻为静爻（moving 为 false），无动变信息可供进一步观察。",
+            "evidence_ids": [
+              "fact:/lines/2/moving"
+            ],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "fail",
+        "reason": "虽然没有选用神或给出具体成败、应期，回复却从仅核对标注和解释名称扩展到该爻受损、力量衰弱、出月后的状态以及具体相合和生扶缓解条件。这是个案效力及动态条件的说明，超出问题限定的命名核对范围；并非因出现“月”字或一般限制提醒而判fail。",
+        "quotes": [
+          {
+            "start": 123,
+            "end": 209,
+            "text": "月破是五行旺衰与地支关系的一种状态标记，表示该爻当月受月建冲击、处于衰弱受损的状态，但并非“永久无用”的定性；六冲会随月令更替而变化，出月后或逢合、逢生等条件可改变其状态。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 1391,
+            "end": 1426,
+            "text": "若后续逢地支相合（如卯戌合）或得日辰、动爻生扶，其受制状态也可能缓解。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "逐句检查唯一解释：所引月支、第三爻地支及月冲规则支持卯酉六冲和月破标注，月令死与静爻字段支持对应状态。但这些引用不包含力量衰弱的实际效力、月建轮转后的旺衰重算、卯戌合或日辰动爻生扶缓解规则；文献包为空，故后半段并无引用支持。applicability又把程序标签说成程序已作受制判定，超出该规则只记录相冲的结果。uncertainties声称古法有“逢合填实”等不同意见也没有来源。不能据机械linked判语义支持通过。上述传统说法本身是否成立在本包内无法确认；fail指支持缺口。",
+        "quotes": [
+          {
+            "start": 1207,
+            "end": 1256,
+            "text": "程序将第三爻标注为“月破（与月建六冲）”，其判定逻辑是该爻地支“卯”与月建地支“酉”构成卯酉六冲。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/2/branch",
+              "rule:MONTH-CLASH-001:primary:3:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1287,
+            "end": 1309,
+            "text": "月破与月令死共同反映该爻当月受制、力量衰弱。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/2/branch",
+              "rule:MONTH-CLASH-001:primary:3:-",
+              "fact:/lines/2/relations/month_strength"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1349,
+            "end": 1426,
+            "text": "六冲是地支关系的周期性现象，月建轮转后，冲的关系解除，该爻的旺衰会重新由新月令衡量；若后续逢地支相合（如卯戌合）或得日辰、动爻生扶，其受制状态也可能缓解。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/2/branch",
+              "rule:MONTH-CLASH-001:primary:3:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 2070,
+            "end": 2102,
+            "text": "静爻月破在古法中有“逢合填实”等不同处理意见，本回答未展开比较。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "uncertain",
+        "reason": "重新通读完整raw，发现“静爻月破在古法中有‘逢合填实’等不同处理意见”的实质来源归属：它将特定处理意见归于古法，并非只是泛称传统术语。没有给出书名、作者、段落或文献ID，输入文献包也为空，故无法确定这些处理意见的具体出处、原文及是否存在所称不同意见；不能由本包认定它编造了某一本古籍，出处判uncertain而非不适用。其引用支持缺口仍在support维度判fail。其他程序标注不是古籍来源主张。",
+        "quotes": [
+          {
+            "start": 1843,
+            "end": 1863,
+            "text": "\"literature_ids\": []",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 2070,
+            "end": 2102,
+            "text": "静爻月破在古法中有“逢合填实”等不同处理意见，本回答未展开比较。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution_claims": "present"
+    },
+    {
+      "id": "knowledge-reading-pilot-02/month-break-with-literature",
+      "facts": {
+        "verdict": "pass",
+        "reason": "第三爻的全部列出字段与程序事实相符，月冲结果与规则相符；文字的官鬼、乙卯木、卯酉相冲和程序已标注月破也没有盘面冲突。对古籍陈述的归属另在支持度与出处评判。",
+        "quotes": [
+          {
+            "start": 64,
+            "end": 109,
+            "text": "本盘第三爻（官鬼、乙卯木）确实被程序标注为“月破（与月建六冲）”，即其地支卯与月建酉相冲。",
+            "evidence_ids": [
+              "fact:/lines/2/position",
+              "fact:/lines/2/relative",
+              "fact:/lines/2/ganzhi",
+              "fact:/lines/2/element",
+              "fact:/calendar/month_branch",
+              "fact:/lines/2/branch",
+              "rule:MONTH-CLASH-001:primary:3:-"
+            ],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "回复只核对标注、解释月破名称并说明不能从命名推出永久失效或必然失败，没有选用神或作成败、应期推论；建议只是进一步分析的一般条件。",
+        "quotes": [
+          {
+            "start": 158,
+            "end": 186,
+            "text": "本次仅核对标注、解释名称，不作任何用神、成败或应期推论。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 2301,
+            "end": 2378,
+            "text": "月破是一个结构性术语标注，不等于该爻永久无用或事情必然失败；如需进一步了解实际影响，应结合用神、旺衰、动变和具体问事背景整体分析，避免单凭一个标记下结论。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "唯一解释的text所引事实、月冲规则及古籍原句“月建沖之爲月破逐月之破日是也。”确实支持月建相冲的命名；不是仅确认ID存在。结论说该句不包含永久失效或必然失败的判断，可作为对该短句范围的说明。但是applicability说“该段也明确不推定无用、永久失效或吉凶”，古籍原句并未明确说这一禁止性边界；这是卡片exclusions/编辑摘要的适用限制，被升级成古籍段落的明示主张。部分陈述因此超过其引用支持。此fail不评判古法整体或预测有效性。",
+        "quotes": [
+          {
+            "start": 1302,
+            "end": 1359,
+            "text": "程序已明确将第三爻标注为月破，其依据是该爻地支卯与月建酉相冲；此标注属于结构核对结果，表示存在月建相冲的术语关系。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/2/branch",
+              "rule:MONTH-CLASH-001:primary:3:-"
+            ],
+            "literature_ids": [
+              "literature:zsby-month-clash-001"
+            ]
+          },
+          {
+            "start": 2053,
+            "end": 2124,
+            "text": "《增删卜易》该段落以月建之冲解释月破名称，属于术语定义，不涉及个案效力判断，因此适用于解释本盘月破名称；该段也明确不推定无用、永久失效或吉凶。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-clash-001"
+            ]
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "fail",
+        "reason": "书名与literature_id对应所给《增刪卜易》卡，命名内容也与original_text对应；但回复未区分古籍原句和现代编辑的适用边界。“该段也明确不推定无用、永久失效或吉凶”把卡片exclusions的约束归为古籍段落自身的明确意见，原句并无这些字句或相当的明示意思，构成出处层级混淆。仅核对包内文本和出处归属，没有外部验证影印本或断法全体系。 重新通读完整raw后确认conclusion与applicability均明确归于《增删卜易》相关段落，故attribution_claims为present；保持原fail判断。",
+        "quotes": [
+          {
+            "start": 109,
+            "end": 158,
+            "text": "据《增删卜易》相关段落，月破之名源于月建相冲，是术语定义，不包含此爻永久失效或事情必然失败的判断。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-clash-001"
+            ]
+          },
+          {
+            "start": 2105,
+            "end": 2124,
+            "text": "该段也明确不推定无用、永久失效或吉凶。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-clash-001"
+            ]
+          }
+        ]
+      },
+      "attribution_claims": "present"
+    }
+  ]
+}

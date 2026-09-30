@@ -1,0 +1,59 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:fca01e20aee7cd3efdb7ae8d6d02b3dd0d7094952618b482f3f8771c9746f903",
+  "review_kind": "retrospective_nonblind",
+  "responses": 3,
+  "reviewers": [
+    "agent-a",
+    "agent-b"
+  ],
+  "dimensions": {
+    "facts": {
+      "pass": 4,
+      "fail": 2,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "scope": {
+      "pass": 4,
+      "fail": 2,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "support": {
+      "pass": 0,
+      "fail": 6,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "attribution": {
+      "pass": 0,
+      "fail": 2,
+      "uncertain": 1,
+      "not_applicable": 3
+    }
+  },
+  "disagreements": [
+    {
+      "id": "knowledge-reading-pilot-02/month-break-without-literature",
+      "dimension": "attribution",
+      "verdicts": [
+        {
+          "reviewer": "agent-a",
+          "verdict": "uncertain"
+        },
+        {
+          "reviewer": "agent-b",
+          "verdict": "not_applicable"
+        }
+      ]
+    }
+  ],
+  "mechanical_failures": [
+    "knowledge-reading-pilot-01/month-break-without-literature"
+  ],
+  "production_ready": false,
+  "model_improvement_established": false,
+  "network_calls": 0,
+  "limitation": "Counts are retrospective human/agent judgments, not prediction accuracy or independent unseen-case acceptance."
+}
