@@ -1,0 +1,39 @@
+{
+  "version": "sourced-reading-pairs-dev-1",
+  "plan_hash": "sha256:3d06ac03f3e55527954649655e153914c1658c348fd2875dc4a569d7c7f9593f",
+  "base_plan_hash": "sha256:91e37f273234005795ffe8cf7fa3ff5e780c8840bb72ea15bf831dbef47dad2a",
+  "output_version": "layered-reading-sourced-dev-1",
+  "network_calls": 0,
+  "reservation_made": false,
+  "production_ready": false,
+  "response_source": "program-generated contract examples; no model outputs",
+  "cases": [
+    {
+      "id": "month-break",
+      "evidence_count": 4,
+      "api_prompt_parity": true,
+      "only_literature_varies": true,
+      "synthetic_valid_linkage": true,
+      "synthetic_editorial_as_original_rejected": true,
+      "model_quality": "unassessed"
+    },
+    {
+      "id": "month-combine",
+      "evidence_count": 4,
+      "api_prompt_parity": true,
+      "only_literature_varies": true,
+      "synthetic_valid_linkage": true,
+      "synthetic_editorial_as_original_rejected": true,
+      "model_quality": "unassessed"
+    },
+    {
+      "id": "void",
+      "evidence_count": 7,
+      "api_prompt_parity": true,
+      "only_literature_varies": true,
+      "synthetic_valid_linkage": true,
+      "synthetic_editorial_as_original_rejected": true,
+      "model_quality": "unassessed"
+    }
+  ]
+}
