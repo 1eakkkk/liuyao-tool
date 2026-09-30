@@ -53,3 +53,9 @@ prepare 复制既有原始输出、原始机械结果、问题、计划哈希、
 记录：[审查 A](acceptance/knowledge-semantic-review/reviewer-a.json)、[审查 B](acceptance/knowledge-semantic-review/reviewer-b.json)、[汇总](acceptance/knowledge-semantic-review/summary.json)。可由 prepare 重建审查包，再用这两份记录 summarize 复现同一汇总。原始回复来源是既有 [真实试测归档](acceptance/knowledge-reading-pilot-20260930.json)。
 
 结论：已有回复的语义问题被两名审查者独立复现，知识增强仍不得上线；这不是修订后 dev-3 提示的真实效果评估。新范围输入和出处提示是否有效，仍需后续真实对照及未参与调参的新样例。
+
+## 工程验收
+
+11 项新增检查保护原始失败不被覆盖、包与引文绑定、漏评和重复拒绝、引用归属、缺少文献仍检查输出主张、未确认不能标通过，以及真实审查分歧的可复现性。第三名代理独立检查最终工具约束与 CLI 无覆盖行为，复验通过；这不证明人工判断本身正确。
+
+源代码 `7625618eb61f748be3f16e630145312d621134b9` 的全量测试为 44 文件、498 项通过（4 workers）。发布边界检查通过；五个稳定构建资产与此前已上线的阅读体验版本哈希完全一致，见 [边界记录](acceptance/knowledge-semantic-review/stable-boundary.json)。本轮仅增加离线工具、测试和审查归档，不部署知识功能。
