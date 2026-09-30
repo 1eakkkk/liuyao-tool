@@ -1,0 +1,57 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:638bff8f13d547665d018317f297e5a84b05453eaf8dcb134fcc20e2164dbf46",
+  "review_kind": "retrospective_nonblind",
+  "responses": 2,
+  "reviewers": [
+    "agent-a",
+    "agent-b"
+  ],
+  "dimensions": {
+    "facts": {
+      "pass": 4,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "scope": {
+      "pass": 4,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "support": {
+      "pass": 3,
+      "fail": 0,
+      "uncertain": 1,
+      "not_applicable": 0
+    },
+    "attribution": {
+      "pass": 2,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 2
+    }
+  },
+  "disagreements": [
+    {
+      "id": "sourced-reading-live-01/month-break-without-literature",
+      "dimension": "support",
+      "verdicts": [
+        {
+          "reviewer": "agent-a",
+          "verdict": "pass"
+        },
+        {
+          "reviewer": "agent-b",
+          "verdict": "uncertain"
+        }
+      ]
+    }
+  ],
+  "mechanical_failures": [],
+  "production_ready": false,
+  "model_improvement_established": false,
+  "network_calls": 0,
+  "limitation": "Counts are retrospective human/agent judgments, not prediction accuracy or independent unseen-case acceptance."
+}

@@ -1,0 +1,35 @@
+{
+  "source_commit": "f03bd6e7e27eb0d47d733c8da8620d124c517ecb",
+  "release_check": "passed",
+  "unchanged_stable_assets": 5,
+  "artifacts": [
+    {
+      "path": "_headers",
+      "bytes": 91,
+      "sha256": "46280e238bbf53cdfba49f7d1737c7b652181107293e9f8825a980787ea8ba39"
+    },
+    {
+      "path": "assets/index-CCql43zm.js",
+      "bytes": 189326,
+      "sha256": "fcdc0bbad79e597702d70c0160c79badea79491a211f121be96ef268234ea950"
+    },
+    {
+      "path": "assets/index-Cv__8OY9.css",
+      "bytes": 92052,
+      "sha256": "cfbc87283e0a23a62545c7241dd6741bc841acd6d82d8c253c277d14da361663"
+    },
+    {
+      "path": "index.html",
+      "bytes": 50171,
+      "sha256": "6e3316d7bc16115d6f70f96482ee267fde83702dcbf73ecf9f927fee99358481"
+    },
+    {
+      "path": "vendor/cannon.js",
+      "bytes": 132230,
+      "sha256": "6968efb8ee824bdcb1b0627ee9cf518ff4b360aba606c135448a53684c73e14d"
+    }
+  ],
+  "knowledge_not_bundled": true,
+  "production_changes": false,
+  "working_tree_dirty_reason": "User-owned untracked document excluded; no tracked source changes at build time"
+}

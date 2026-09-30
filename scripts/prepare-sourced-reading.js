@@ -13,4 +13,5 @@ write('seal.json',JSON.stringify({hash:sealPlan(candidate)},null,2)+'\n');
 for(const c of candidate.cases) for(const arm of c.arms)
   write(`${arm.id}-prompt.txt`,`${arm.body.messages[0].content}\n\n【输入数据】\n${arm.body.messages[1].content}\n`);
 console.log(JSON.stringify({cases:candidate.cases.length,planned_calls:candidate.cases.length*2,network_calls:0,
-  reservation_made:false,live_executor_available:false,plan_hash:sealPlan(candidate)}));
+  reservation_made:false,live_executor_available:profile==='one-pair',
+  live_executor_scope:'one-pair only; separate explicit execution',plan_hash:sealPlan(candidate)}));

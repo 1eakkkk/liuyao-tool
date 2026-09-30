@@ -1,0 +1,203 @@
+{
+  "plan_hash": "sha256:d65227193ba85e604f441a134909f311faaa19e8d5b0dd121b819d25c973413c",
+  "planned_calls": 2,
+  "attempted_calls": 2,
+  "results": [
+    {
+      "id": "month-break-without-literature",
+      "case_id": "month-break",
+      "arm": "without-literature",
+      "usage": {
+        "prompt_tokens": 1232,
+        "completion_tokens": 596,
+        "total_tokens": 1828,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 1232
+      },
+      "check": {
+        "version": "layered-reading-sourced-dev-1",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/month_branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/branch",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:MONTH-CLASH-001:primary:3:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established",
+        "sources": [
+          {
+            "position": 0,
+            "claims": [],
+            "missing_literature_claims": [],
+            "mechanical_ok": true,
+            "free_text_attribution": "unassessed",
+            "semantic_support": "unassessed"
+          }
+        ],
+        "production_ready": false
+      },
+      "model_quality": "manual_review_pending",
+      "conservative_peak_cost_cny": 0.007232
+    },
+    {
+      "id": "month-break-with-literature",
+      "case_id": "month-break",
+      "arm": "with-literature",
+      "usage": {
+        "prompt_tokens": 1928,
+        "completion_tokens": 776,
+        "total_tokens": 2704,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 1032
+      },
+      "check": {
+        "version": "layered-reading-sourced-dev-1",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/month_branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/2/position",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:MONTH-CLASH-001:primary:3:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          },
+          {
+            "position": 1,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established",
+        "sources": [
+          {
+            "position": 0,
+            "claims": [
+              {
+                "literature_id": "literature:zsby-month-clash-001",
+                "field": "/original_text",
+                "origin": "source_transcription",
+                "quote": "月建沖之爲月破逐月之破日是也。",
+                "status": "consistent"
+              }
+            ],
+            "missing_literature_claims": [],
+            "mechanical_ok": true,
+            "free_text_attribution": "unassessed",
+            "semantic_support": "unassessed"
+          },
+          {
+            "position": 1,
+            "claims": [
+              {
+                "literature_id": "literature:zsby-month-clash-001",
+                "field": "/editorial_summary",
+                "origin": "modern_editorial",
+                "quote": "本段以月建之冲解释月破名称；这是术语定义，不含具体占问中的效力结论。",
+                "status": "consistent"
+              },
+              {
+                "literature_id": "literature:zsby-month-clash-001",
+                "field": "/exclusions/statements/0",
+                "origin": "modern_editorial",
+                "quote": "不推定无用、永久失效或吉凶；后文动态与时间条件不在本命题内。",
+                "status": "consistent"
+              }
+            ],
+            "missing_literature_claims": [],
+            "mechanical_ok": true,
+            "free_text_attribution": "unassessed",
+            "semantic_support": "unassessed"
+          }
+        ],
+        "production_ready": false
+      },
+      "model_quality": "manual_review_pending",
+      "conservative_peak_cost_cny": 0.010064
+    }
+  ],
+  "reservation": {
+    "reserved_cny": 19.007539999999995,
+    "remaining_unreserved_cny": 0.9424600000000041
+  },
+  "balance_before": {
+    "available": true,
+    "total_cny": 18.97
+  },
+  "balance_after": {
+    "available": true,
+    "total_cny": 18.97
+  },
+  "balance_difference_cny": 0,
+  "balance_difference_is_not_exact_attributed_cost": true,
+  "exact_billed_cost_cny": null,
+  "production_changes": false
+}
