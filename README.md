@@ -305,6 +305,7 @@ wrangler.jsonc   Cloudflare 静态资源配置
 | [知识候选真实试测](docs/SOURCED_READING_LIVE_PILOT.md) | 两次真实接口调用、独立审查与预算边界 |
 | [整理后的真实对照](docs/CLARITY_LIVE_EVALUATION.md) | 四次月合／旬空测试，保留支持与出处问题；尚未满足知识上线验收 |
 | [术语与出处候选](docs/SOURCED_CLARITY_CANDIDATE.md) | 新提示与评价准备，尚不证明模型已改善 |
+| [程序出处绑定候选](docs/BOUND_SOURCE_CANDIDATE.md) | 程序保存完整引文与出处、模型声明实际引用；仅离线，语义尚未验收 |
 
 阶段文档保留了当时的上下文，历史的「未发布」结论不应直接当作当前状态。请结合项目状态和对应版本的发布记录阅读。
 
