@@ -1,0 +1,503 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:5d1246f492eb3d4f11f60ec47d24f5d81e6eed531f717a542687d0f189aaf9cc",
+  "reviewer_id": "agent-b",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "sourced-clarity-live-01/month-combine-without-literature",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "pass",
+        "reason": "全文与 facts、rules 逐项核对：月建丑、初爻子、爻位1及与月建六合均与包内证据一致。没有把未提供生克或旺衰改写为盘中不存在，未引入其他爻字段。",
+        "quotes": [
+          {
+            "start": 80,
+            "end": 100,
+            "text": "月建为丑；程序据此标注第1爻与月建六合。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/0/branch",
+              "fact:/lines/0/position",
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 949,
+            "end": 979,
+            "text": "当前证据没有提供本爻的生克、旺衰、是否得助或其他实际效力判断",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/0/branch",
+              "fact:/lines/0/position",
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "结论、解释、适用条件、两条不确定性及建议均限定标注核对和名称，拒绝单凭六合推 actual effect 或必成；未选用神、判断本事成败、推日期或给正面生克规律。建议仅请求另补资料，不执行范围外分析。",
+        "quotes": [
+          {
+            "start": 1003,
+            "end": 1034,
+            "text": "本次仅核对程序标注及名称，不涉及用神选取、成败判断和应期推算。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 1077,
+            "end": 1138,
+            "text": "若需要判断本爻实际有用或事情成败，应另行补充相应的事实、规则与文献依据；仅凭“与月建六合”这一程序标注不足以推出这些结论。",
+            "evidence_ids": [
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "月支、爻支、位置及月合规则直接支持当前标注的解释。包内无生克、旺衰、个案效力或成败规则，故月合标注本身不足以证明实际有用或必成是合理证据边界。没有生造六合即相生；把“只是关系名称标签”放在当前程序语境，没有声称所有传统文献只有命名。一般建议要求补充依据，未以条件句加入效力定律。",
+        "quotes": [
+          {
+            "start": 538,
+            "end": 579,
+            "text": "因此，本次要解释的“月合”名称，指的就是程序在这一条件下给出的“与月建六合”标签。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/0/branch",
+              "fact:/lines/0/position",
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 579,
+            "end": 626,
+            "text": "它说明的是当前程序所列事实与该规则之间的对应关系，并不说明本爻在生克、旺衰或实际效用上的状态。",
+            "evidence_ids": [
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 121,
+            "end": 149,
+            "text": "月合标注本身并不证明本爻实际有用，也不证明事情一定成功。",
+            "evidence_ids": [
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "通读所有自由文字、适用条件、不确定性、建议与 source_claims 后，未见具体古籍、作者、篇章或段落出处主张；source_claims 与 literature_ids 为空，且明确说明空包不引古籍。结合输入 cards 为空才判 not_applicable，不能由空包自动推定。",
+        "quotes": [
+          {
+            "start": 905,
+            "end": 929,
+            "text": "资料包为空，因此不作任何文献引用或古籍原文归属。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 1037,
+            "end": 1055,
+            "text": "\"source_claims\":[]",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "sourced-clarity-live-01/month-combine-with-literature",
+      "attribution_claims": "present",
+      "facts": {
+        "verdict": "pass",
+        "reason": "月支丑、初爻子、位置1和月建六合结果在结构化与自由文字中均一致。没有引入相生、旺衰、已发挥作用或事情成功的盘面事实；缺少个案效力证据的表述符合当前窄包内容，并没有否认原典作为文献的存在。",
+        "quotes": [
+          {
+            "start": 79,
+            "end": 127,
+            "text": "月支为丑，初爻（第1爻）地支为子；规则 MONTH-COMBINE-001 记录「与月建六合」。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/0/branch",
+              "fact:/lines/0/position",
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 753,
+            "end": 789,
+            "text": "不表示当前证据已提供生克、旺衰判断，也不表示本爻实际有用或事情一定成功。",
+            "evidence_ids": [
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "所有自由文字围绕月合名称及能否据此证明个案有用或成功。未实际选用神、下成败结论或推应期，也未给月合化解或相生机制。建议另补依据并复核，保持本次范围。原文评价说明不足计入 support，不将其等同于范围越界。",
+        "quotes": [
+          {
+            "start": 1199,
+            "end": 1219,
+            "text": "当前初爻已有月建六合记录，故命名部分适用",
+            "evidence_ids": [
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 2035,
+            "end": 2057,
+            "text": "如需判断个案效力，应另行补充相关依据并复核。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "uncertain",
+        "reason": "命名原文、程序六合和现代排除条件确实支持核心回答：标签不能单独证明本爻实际有用或事情必成。现代适用条件与排除条件的自由文字也在卡片中找得到，未生造。问题是原文确含“爻逢月合而有用”“乃有用之爻也”及月破无用对举，回复只引用命名短句，虽泛提作者评价措辞，却未如实说明这些有用/无用措辞及其与个案效力的区别。无法确定这种省略是否足以满足冻结提示第6条，保留 uncertain；不把未明说评价认作直接否认原文。另有明确 source_claims 字段覆盖缺陷，见 attribution。",
+        "quotes": [
+          {
+            "start": 707,
+            "end": 739,
+            "text": "该规则的名称「月合」可从此段原文转录得到支持：月建合爻称为月合。",
+            "evidence_ids": [
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1148,
+            "end": 1199,
+            "text": "现代整理的适用条件指出：仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1408,
+            "end": 1450,
+            "text": "这段原文转录没有给出月合关系能否单独决定个案成败的结论；现代整理限制了本次引用范围。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "fail",
+        "reason": "两项 source_claims 本身逐字匹配 original_text 命名短句和 exclusions/statements/0，origin 均正确，正文也明确说现代整理，没有直接冒称古籍限制。但 applicability 实际使用 applicable_conditions/statements/0 的命名及作者评价限制，以及 exclusions/statements/1 的不推成功或最终吉凶，source_claims 中只有 original_text 和 exclusions/statements/0，缺少这两个现代字段的短引文。冻结 dev-2 提示要求使用现代字段时另列对应字段的 modern_editorial 引文，故覆盖不完整判 fail；一个有效 literature_id 或第一条排除引文不能自动覆盖其他实际引用字段。未核验外部影印本真实性。",
+        "quotes": [
+          {
+            "start": 1148,
+            "end": 1199,
+            "text": "现代整理的适用条件指出：仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1278,
+            "end": 1300,
+            "text": "也不能据此直接推出事情有利、成功或最终吉凶。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1570,
+            "end": 1670,
+            "text": "\"field\": \"/original_text\",\n          \"origin\": \"source_transcription\",\n          \"quote\": \"月建合爻則爲月合\"",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1766,
+            "end": 1908,
+            "text": "\"field\": \"/exclusions/statements/0\",\n          \"origin\": \"modern_editorial\",\n          \"quote\": \"本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。\"",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sourced-clarity-live-01/void-without-literature",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "pass",
+        "reason": "甲子日、旬空戌亥、第五爻亥、is_kongwang=true、位置5及 line_void 结果逐项一致；解释没有串爻或改变日柱。将当前输入无生克、旺衰和应期判断说成证据缺失，符合包内内容。",
+        "quotes": [
+          {
+            "start": 78,
+            "end": 101,
+            "text": "该爻地支为亥，落在日柱甲子所辖戌、亥旬空之内。",
+            "evidence_ids": [
+              "fact:/calendar/day_ganzhi",
+              "fact:/calendar/kongwang/0",
+              "fact:/calendar/kongwang/1",
+              "fact:/lines/4/branch",
+              "fact:/lines/4/position",
+              "fact:/lines/4/is_kongwang",
+              "rule:LINE-VOID-001:primary:5:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1011,
+            "end": 1069,
+            "text": "所给事实包含日柱甲子、空亡戌亥、第五爻地支亥及 is_kongwang=true，以及一个仅把该爻标为旬空的规则结果",
+            "evidence_ids": [
+              "fact:/calendar/day_ganzhi",
+              "fact:/calendar/kongwang/0",
+              "fact:/calendar/kongwang/1",
+              "fact:/lines/4/branch",
+              "fact:/lines/4/position",
+              "fact:/lines/4/is_kongwang",
+              "rule:LINE-VOID-001:primary:5:-"
+            ],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "全文解释甲子旬空名称和第五爻标注，拒绝将其推出完全无用或出空必成。没有实际讨论真空假空、选用神或推算出空日期；不确定性与条件性建议仅指出进一步判断缺少依据。",
+        "quotes": [
+          {
+            "start": 1154,
+            "end": 1191,
+            "text": "当前证据没有提供出空时间或“出空当天必成”的规则或原文，不能据此推断应期。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 1194,
+            "end": 1223,
+            "text": "未选用神，也未讨论真空、假空，故不对该爻的实际作用下定论。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 1316,
+            "end": 1353,
+            "text": "若需讨论旬空的实际效力或应期，应另行提供相应规则、出处与适用条件再作判断。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "程序给出甲子日、戌亥空亡、亥爻和旬空标记，支持当前历法名称与标注对应的解释。没有文献可补充古典理论，回复也没有装作已引古籍。“不等于完全无用”结合后文明确缺少效力判断，读为不能由标签单独推出无用，未肯定此爻实际有用；出空必成被正确限定为无依据。建议未承诺日期或结果。",
+        "quotes": [
+          {
+            "start": 625,
+            "end": 690,
+            "text": "日柱为甲子，其旬（甲子旬）所空亡的地支为戌、亥，所以地支为亥的第五爻落在旬空范围，程序据此把该爻标注为旬空（line_void）。",
+            "evidence_ids": [
+              "fact:/calendar/day_ganzhi",
+              "fact:/calendar/kongwang/0",
+              "fact:/calendar/kongwang/1",
+              "fact:/lines/4/branch",
+              "fact:/lines/4/position",
+              "fact:/lines/4/is_kongwang",
+              "rule:LINE-VOID-001:primary:5:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1110,
+            "end": 1151,
+            "text": "当前证据没有提供生克、旺衰判断，“旬空”是否等于完全无用，缺少可用规则或文献支持。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 1291,
+            "end": 1315,
+            "text": "不要写成“第五爻完全无用”或“出空当天必然成事”",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "人工通读 conclusion、解释、适用条件、不确定性及建议，没有书名、作者、篇章或段落归属声明，也没有虚构某古籍原文；source_claims 和 literature_ids 为空。结合输入 cards 为空判 not_applicable；历法称谓自身不是具体出处主张。",
+        "quotes": [
+          {
+            "start": 1226,
+            "end": 1244,
+            "text": "\"source_claims\":[]",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 1154,
+            "end": 1191,
+            "text": "当前证据没有提供出空时间或“出空当天必成”的规则或原文，不能据此推断应期。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "sourced-clarity-live-01/void-with-literature",
+      "attribution_claims": "present",
+      "facts": {
+        "verdict": "pass",
+        "reason": "全部事实字段和自由文字中的甲子日、戌亥旬空、第五爻亥、旬空标注与包内一致。未新增生克旺衰或实际效力事实；“本盘也没有提供”在全文当前证据语境中表示所提供盘面包未含判断，不是说盘中不存在相关关系。",
+        "quotes": [
+          {
+            "start": 75,
+            "end": 114,
+            "text": "程序显示日柱为甲子，其旬空为戌、亥，而第五爻地支为亥，故第五爻的旬空标注成立。",
+            "evidence_ids": [
+              "fact:/calendar/day_ganzhi",
+              "fact:/calendar/kongwang/0",
+              "fact:/calendar/kongwang/1",
+              "fact:/lines/4/branch",
+              "fact:/lines/4/position",
+              "fact:/lines/4/is_kongwang",
+              "rule:LINE-VOID-001:primary:5:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1214,
+            "end": 1265,
+            "text": "当前证据没有提供生克、旺衰、用神及应期判断，因此无法判断该爻在实际事项中的有用无用或出空当天是否必成。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "甲子至癸酉十日的解释属于用户要求的历法名称，未把它当作出空应期预测。全文未给真空假空处理规则、选用神或判成败；提到冲空、出空效力是说明本次不延伸，建议要求另补依据。",
+        "quotes": [
+          {
+            "start": 1167,
+            "end": 1194,
+            "text": "引用仅限旬空名称，不延伸到真空、假空、冲空或出空效力。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-void-definition-001"
+            ]
+          },
+          {
+            "start": 1858,
+            "end": 1903,
+            "text": "若后续要谈实际效力或应期，应另行补充所需事实与规则，不能仅凭此标注推断完全无用或出空必成。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "甲子至癸酉十日不含戌亥、逢戌亥为空亡、又称旬空及其余类推都在包内原文中；程序事实支持本爻对应。现代 summary 和 exclusions 支持仅解释历法名义、不推实际效力的引用边界。结论正确说该段未涉及出空应期，而不是宣称整部古籍从不讨论；引文匹配不证明外部真实性也被明确承认。条件性建议没有新增效力规则。",
+        "quotes": [
+          {
+            "start": 727,
+            "end": 778,
+            "text": "以甲子至癸酉为一旬，这十日之内没有戌、亥，所以爻逢戌、亥称为“空亡”，又称“旬空”，其余旬依此例类推。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-void-definition-001"
+            ]
+          },
+          {
+            "start": 204,
+            "end": 249,
+            "text": "这段原文转录只说明旬空名称，没有涉及出空及应期效力；现代整理把本次引用范围限制在历法名义。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-void-definition-001"
+            ]
+          },
+          {
+            "start": 1268,
+            "end": 1294,
+            "text": "引文只作逐字字段连接，未核查影印本或外部来源真实性。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-void-definition-001"
+            ]
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "pass",
+        "reason": "三项 source_claims 分别对应 original_text、exclusions/statements/0、editorial_summary，逐字存在且 origin 与包内 field_origins 一致。自由文字使用的历法名称与现代边界均能在这些对应字段找到依据，结论明确把本次限制归于现代整理。原文短引文只截至为空亡，未引出末尾“又名旬空餘倣此”；同一 original_text 字段确有该尾句，且已列出的完整 editorial_summary 引文覆盖名称说明与其余类推，因此未据此认定字段归属错误。若要求每一个转述子句也必须被所选短引文逐字覆盖，原文短引文可补全；本判定依据字段及实际内容覆盖，不把短引文匹配当成全文语义验证。没有像月合侧直接引用另一个未列 source_claim 的适用条件或排除项。仅评价包内出处关系，未独立核验扫描页。",
+        "quotes": [
+          {
+            "start": 1369,
+            "end": 1472,
+            "text": "\"field\":\"/original_text\",\"origin\":\"source_transcription\",\"quote\":\"何謂旬空如甲子至癸酉日爲一旬。此十日之內。並無戌亥。所以爻逢戌亥爲空亡。\"",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-void-definition-001"
+            ]
+          },
+          {
+            "start": 1529,
+            "end": 1628,
+            "text": "\"field\":\"/exclusions/statements/0\",\"origin\":\"modern_editorial\",\"quote\":\"不由旬空推出无用；不整理真空、假空、冲空或出空效力。\"",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-void-definition-001"
+            ]
+          },
+          {
+            "start": 1685,
+            "end": 1797,
+            "text": "\"field\":\"/editorial_summary\",\"origin\":\"modern_editorial\",\"quote\":\"本段以甲子至癸酉十日不含戌亥说明旬空名称，并说其余类推；这里只说明历法名义，不论实际效力。\"",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-void-definition-001"
+            ]
+          },
+          {
+            "start": 230,
+            "end": 249,
+            "text": "现代整理把本次引用范围限制在历法名义。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-void-definition-001"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

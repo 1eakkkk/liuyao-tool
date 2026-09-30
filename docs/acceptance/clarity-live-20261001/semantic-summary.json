@@ -1,0 +1,71 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:5d1246f492eb3d4f11f60ec47d24f5d81e6eed531f717a542687d0f189aaf9cc",
+  "review_kind": "retrospective_nonblind",
+  "responses": 4,
+  "reviewers": [
+    "agent-a",
+    "agent-b"
+  ],
+  "dimensions": {
+    "facts": {
+      "pass": 8,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "scope": {
+      "pass": 8,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "support": {
+      "pass": 6,
+      "fail": 1,
+      "uncertain": 1,
+      "not_applicable": 0
+    },
+    "attribution": {
+      "pass": 1,
+      "fail": 3,
+      "uncertain": 0,
+      "not_applicable": 4
+    }
+  },
+  "disagreements": [
+    {
+      "id": "sourced-clarity-live-01/month-combine-with-literature",
+      "dimension": "support",
+      "verdicts": [
+        {
+          "reviewer": "agent-a",
+          "verdict": "fail"
+        },
+        {
+          "reviewer": "agent-b",
+          "verdict": "uncertain"
+        }
+      ]
+    },
+    {
+      "id": "sourced-clarity-live-01/void-with-literature",
+      "dimension": "attribution",
+      "verdicts": [
+        {
+          "reviewer": "agent-a",
+          "verdict": "fail"
+        },
+        {
+          "reviewer": "agent-b",
+          "verdict": "pass"
+        }
+      ]
+    }
+  ],
+  "mechanical_failures": [],
+  "production_ready": false,
+  "model_improvement_established": false,
+  "network_calls": 0,
+  "limitation": "Counts are retrospective human/agent judgments, not prediction accuracy or independent unseen-case acceptance."
+}

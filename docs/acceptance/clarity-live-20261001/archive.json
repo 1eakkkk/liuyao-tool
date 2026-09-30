@@ -1,0 +1,801 @@
+{
+  "scope": "Four exposed development responses; independent retrospective review, not blind or old-versus-new acceptance",
+  "instructions_version": "sourced-instructions-dev-2",
+  "evaluation": {
+    "version": "sourced-clarity-rubric-dev-1",
+    "review_kind": "retrospective_nonblind",
+    "evaluated_fields": [
+      "conclusion",
+      "interpretations.text",
+      "interpretations.applicability",
+      "interpretations.uncertainties",
+      "advice.text"
+    ],
+    "criteria": {
+      "facts": "盘面陈述与输入一致；未提供不等于盘中不存在。",
+      "scope": "仅回答当前窄问题，限制说明不展开用神、应期或成败判断。",
+      "support": "六合、六冲、旬空不自动支持生克、旺衰、效力或成败；否定句和条件句按实际含义检查。",
+      "attribution": "本次引用的使用限制明确归给现代整理；自由文字与逐字引文字段归属一致。",
+      "verification": "逐字匹配只证明输入连接，不证明外部古籍真实性、整个古法体系或预测结果。"
+    },
+    "uncertain_policy": "无法确认则 uncertain；仅无输入文献且完整输出无来源声明时，出处可 not_applicable。",
+    "automatic_semantic_validation": false,
+    "production_ready": false
+  },
+  "entries": [
+    {
+      "batch": "sourced-clarity-live-01",
+      "id": "month-combine-without-literature",
+      "question": "仅核对本盘初爻与月建六合的标注，解释月合名称。月合是否就证明本爻实际有用、事情一定成功？不选用神、不判断成败、不推应期。",
+      "plan_hash": "sha256:fc35883540ef0725c9c5c393bbbbc4df379a05949041406a00f04c96f82b3a3c",
+      "output_version": "layered-reading-sourced-dev-1",
+      "raw": "{\"schema_version\":\"layered-reading-sourced-dev-1\",\"conclusion\":\"本盘初爻为本爻位第1爻、地支子，月建为丑；程序据此标注第1爻与月建六合。“六合”只是该程序给出的一个关系名称标签，月合标注本身并不证明本爻实际有用，也不证明事情一定成功。\",\"facts\":[{\"evidence_id\":\"fact:/calendar/month_branch\",\"value\":\"丑\"},{\"evidence_id\":\"fact:/lines/0/branch\",\"value\":\"子\"},{\"evidence_id\":\"fact:/lines/0/position\",\"value\":1}],\"rules\":[{\"evidence_id\":\"rule:MONTH-COMBINE-001:primary:1:-\",\"result\":{\"code\":\"month_combine\",\"label\":\"与月建六合\"}}],\"interpretations\":[{\"text\":\"已核对的程序事实为：月支为丑，第1爻爻位为1、地支为子。基于月支丑与爻支子，程序规则 MONTH-COMBINE-001 把第1爻标注为“与月建六合”。因此，本次要解释的“月合”名称，指的就是程序在这一条件下给出的“与月建六合”标签。它说明的是当前程序所列事实与该规则之间的对应关系，并不说明本爻在生克、旺衰或实际效用上的状态。\",\"fact_ids\":[\"fact:/calendar/month_branch\",\"fact:/lines/0/branch\",\"fact:/lines/0/position\"],\"rule_ids\":[\"rule:MONTH-COMBINE-001:primary:1:-\"],\"literature_ids\":[],\"applicability\":\"当前问题仅要求核对初爻与月建六合的标注并解释月合名称。程序规则 MONTH-COMBINE-001 的来源事实为月支丑与初爻地支子，这两项事实均已列入 facts；该规则结果直接给出“与月建六合”。资料包为空，因此不作任何文献引用或古籍原文归属。\",\"uncertainties\":[\"当前证据没有提供本爻的生克、旺衰、是否得助或其他实际效力判断，无法确认“实际有用”或“事情一定成功”。\",\"本次仅核对程序标注及名称，不涉及用神选取、成败判断和应期推算。\"],\"source_claims\":[]}],\"advice\":[{\"text\":\"若需要判断本爻实际有用或事情成败，应另行补充相应的事实、规则与文献依据；仅凭“与月建六合”这一程序标注不足以推出这些结论。\",\"basis\":\"general_advice\"}]}",
+      "raw_hash": "sha256:22eb400816d02d2b66142a8e71d2e91c14881928b13efdd43b2f9524cfe1757b",
+      "evidence": [
+        {
+          "id": "fact:/calendar/month_branch",
+          "kind": "program_fact",
+          "path": "/calendar/month_branch",
+          "value": "丑",
+          "label": "历法 · 月支"
+        },
+        {
+          "id": "fact:/lines/0/branch",
+          "kind": "program_fact",
+          "path": "/lines/0/branch",
+          "value": "子",
+          "label": "第1爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/0/position",
+          "kind": "program_fact",
+          "path": "/lines/0/position",
+          "value": 1,
+          "label": "第1爻 · 爻位"
+        },
+        {
+          "id": "rule:MONTH-COMBINE-001:primary:1:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-COMBINE-001",
+          "target": {
+            "line": 1,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_combine",
+            "label": "与月建六合"
+          },
+          "source_facts": [
+            "fact:/calendar/month_branch",
+            "fact:/lines/0/branch"
+          ],
+          "label": "MONTH-COMBINE-001 · 第1爻 · 与月建六合"
+        }
+      ],
+      "literature_packet": {
+        "version": "explicit-literature-packet-dev-2",
+        "corpus_version": "phase8a-month-combine-hardening-1",
+        "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+        "mode": "offline_explicit_review",
+        "selection_semantics": "Caller-reviewed applicability; not automatic or independently verified",
+        "independent_evidence": false,
+        "cards": []
+      },
+      "transport": {
+        "model": "deepseek-flash",
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 1586,
+          "completion_tokens": 540,
+          "total_tokens": 2126,
+          "prompt_tokens_details": {
+            "cached_tokens": 384
+          },
+          "prompt_cache_hit_tokens": 384,
+          "prompt_cache_miss_tokens": 1202
+        }
+      },
+      "mechanical_result_as_executed": {
+        "version": "layered-reading-sourced-dev-1",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/month_branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/0/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/0/position",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:MONTH-COMBINE-001:primary:1:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established",
+        "sources": [
+          {
+            "position": 0,
+            "claims": [],
+            "missing_literature_claims": [],
+            "mechanical_ok": true,
+            "free_text_attribution": "unassessed",
+            "semantic_support": "unassessed"
+          }
+        ],
+        "production_ready": false
+      }
+    },
+    {
+      "batch": "sourced-clarity-live-01",
+      "id": "month-combine-with-literature",
+      "question": "仅核对本盘初爻与月建六合的标注，解释月合名称。月合是否就证明本爻实际有用、事情一定成功？不选用神、不判断成败、不推应期。",
+      "plan_hash": "sha256:fc35883540ef0725c9c5c393bbbbc4df379a05949041406a00f04c96f82b3a3c",
+      "output_version": "layered-reading-sourced-dev-1",
+      "raw": "{\n  \"schema_version\": \"layered-reading-sourced-dev-1\",\n  \"conclusion\": \"本盘程序标注：月支为丑，初爻（第1爻）地支为子；规则 MONTH-COMBINE-001 记录「与月建六合」。就名称而言，所属资料将月建合爻称为「月合」。但月合标注本身不证明本爻实际有用，也不证明事情一定成功；当前证据没有提供生克、旺衰或个案效力的判断。\",\n  \"facts\": [\n    {\n      \"evidence_id\": \"fact:/calendar/month_branch\",\n      \"value\": \"丑\"\n    },\n    {\n      \"evidence_id\": \"fact:/lines/0/branch\",\n      \"value\": \"子\"\n    },\n    {\n      \"evidence_id\": \"fact:/lines/0/position\",\n      \"value\": 1\n    }\n  ],\n  \"rules\": [\n    {\n      \"evidence_id\": \"rule:MONTH-COMBINE-001:primary:1:-\",\n      \"result\": {\n        \"code\": \"month_combine\",\n        \"label\": \"与月建六合\"\n      }\n    }\n  ],\n  \"interpretations\": [\n    {\n      \"text\": \"程序事实显示月支为丑、初爻地支为子，对应规则记录为「与月建六合」。该规则的名称「月合」可从此段原文转录得到支持：月建合爻称为月合。但该程序标注仅表示六合关系，不表示当前证据已提供生克、旺衰判断，也不表示本爻实际有用或事情一定成功。\",\n      \"fact_ids\": [\n        \"fact:/calendar/month_branch\",\n        \"fact:/lines/0/branch\",\n        \"fact:/lines/0/position\"\n      ],\n      \"rule_ids\": [\n        \"rule:MONTH-COMBINE-001:primary:1:-\"\n      ],\n      \"literature_ids\": [\n        \"literature:zsby-month-combine-001\"\n      ],\n      \"applicability\": \"该文献片段讨论了月合的名称，与当前询问「月合名称」直接相关，因此可引用以说明月合一词的出处。现代整理的适用条件指出：仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。当前初爻已有月建六合记录，故命名部分适用；但现代整理的排除条件还声明：本条不单独判定当前具体卦中该爻是否实际发挥作用，不能仅凭月合关系或该段措辞确认个案效力，也不能据此直接推出事情有利、成功或最终吉凶。因此该文献不被用于支持「一定成功」或「实际有用」的结论。\",\n      \"uncertainties\": [\n        \"当前证据没有提供生克、旺衰判断，无法确认本爻实际是否发挥作用。\",\n        \"这段原文转录没有给出月合关系能否单独决定个案成败的结论；现代整理限制了本次引用范围。\"\n      ],\n      \"source_claims\": [\n        {\n          \"literature_id\": \"literature:zsby-month-combine-001\",\n          \"field\": \"/original_text\",\n          \"origin\": \"source_transcription\",\n          \"quote\": \"月建合爻則爲月合\"\n        },\n        {\n          \"literature_id\": \"literature:zsby-month-combine-001\",\n          \"field\": \"/exclusions/statements/0\",\n          \"origin\": \"modern_editorial\",\n          \"quote\": \"本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。\"\n        }\n      ]\n    }\n  ],\n  \"advice\": [\n    {\n      \"text\": \"报告或解读时，可以依照程序标注说明「月建六合」或「月合」这一关系名称，但应同时声明该关系本身不等于已判定实际有用或事情成功；如需判断个案效力，应另行补充相关依据并复核。\",\n      \"basis\": \"general_advice\"\n    }\n  ]\n}",
+      "raw_hash": "sha256:a8a4465b71c802cc580dce34f24db5ec317bcec1940e9693cb08d3c6539d4ae1",
+      "evidence": [
+        {
+          "id": "fact:/calendar/month_branch",
+          "kind": "program_fact",
+          "path": "/calendar/month_branch",
+          "value": "丑",
+          "label": "历法 · 月支"
+        },
+        {
+          "id": "fact:/lines/0/branch",
+          "kind": "program_fact",
+          "path": "/lines/0/branch",
+          "value": "子",
+          "label": "第1爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/0/position",
+          "kind": "program_fact",
+          "path": "/lines/0/position",
+          "value": 1,
+          "label": "第1爻 · 爻位"
+        },
+        {
+          "id": "rule:MONTH-COMBINE-001:primary:1:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-COMBINE-001",
+          "target": {
+            "line": 1,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_combine",
+            "label": "与月建六合"
+          },
+          "source_facts": [
+            "fact:/calendar/month_branch",
+            "fact:/lines/0/branch"
+          ],
+          "label": "MONTH-COMBINE-001 · 第1爻 · 与月建六合"
+        }
+      ],
+      "literature_packet": {
+        "version": "explicit-literature-packet-dev-2",
+        "corpus_version": "phase8a-month-combine-hardening-1",
+        "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+        "mode": "offline_explicit_review",
+        "selection_semantics": "Caller-reviewed applicability; not automatic or independently verified",
+        "independent_evidence": false,
+        "cards": [
+          {
+            "knowledge_id": "zsby-month-combine-001",
+            "literature_id": "literature:zsby-month-combine-001",
+            "source_type": "classical_body",
+            "original_text": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻。卽爲月破無用之爻也。",
+            "editorial_summary": "该段将月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞。",
+            "applicable_conditions": {
+              "status": "specified",
+              "statements": [
+                "仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。"
+              ]
+            },
+            "exclusions": {
+              "status": "specified",
+              "statements": [
+                "本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
+                "不能据此直接推出事情有利、成功或最终吉凶；不以相邻无用句取代月破章的条件。"
+              ]
+            },
+            "exceptions": {
+              "status": "none_stated",
+              "statements": []
+            },
+            "citation": {
+              "knowledge_id": "zsby-month-combine-001",
+              "source_id": "zsby-nlc-12jh005345",
+              "source_revision": 1,
+              "edition_id": "zsby-wenming-1925-11-nlc-12jh005345",
+              "title": "增刪卜易",
+              "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+              "segment_ref": {
+                "segment_id": "zsby-1925-s3",
+                "revision": 2,
+                "span": {
+                  "start": 0,
+                  "end": 47,
+                  "unit": "unicode_code_point"
+                }
+              },
+              "locator": {
+                "volume": "一",
+                "chapter": "月將章第十六",
+                "section": null,
+                "page": "四一",
+                "leaf": null,
+                "image_page": 61,
+                "anchor": "爻逢月合起，无用之爻也止"
+              },
+              "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+              "text_hash": "sha256:8e85035cffbcad00db63922b34bfa08e93b076f8b8245a1e7a01744ff94e69b3"
+            },
+            "same_proposition_ids": [
+              "zsby-month-combine-001"
+            ],
+            "independent_evidence": false,
+            "predictive_validation": "not_established",
+            "editorial_guidance": {
+              "kind": "modern_editorial_guidance",
+              "review_status": "development_self_review",
+              "independent_evidence": false,
+              "checks": [
+                "程序是否明确标记月建六合？",
+                "是否把作者的评价措辞误当当前个案已确认的事实？"
+              ],
+              "careful_example": "月合名称可由本段说明；文献评价不能单独证明此爻在本卦发挥作用或事情成功。",
+              "overreach_example": "月合代表有用，所以这个项目必然成功。"
+            },
+            "field_origins": {
+              "original_text": "source_transcription",
+              "editorial_summary": "modern_editorial",
+              "applicable_conditions": "modern_editorial",
+              "exclusions": "modern_editorial",
+              "exceptions": "modern_editorial",
+              "editorial_guidance": "modern_editorial"
+            },
+            "applicability_review": {
+              "status": "confirmed",
+              "reason": "问题明确要求解释月合名称与评价边界；当前初爻已有月建六合记录，不能据此确认个案效力。"
+            }
+          }
+        ]
+      },
+      "transport": {
+        "model": "deepseek-flash",
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 2363,
+          "completion_tokens": 871,
+          "total_tokens": 3234,
+          "prompt_tokens_details": {
+            "cached_tokens": 1152
+          },
+          "prompt_cache_hit_tokens": 1152,
+          "prompt_cache_miss_tokens": 1211
+        }
+      },
+      "mechanical_result_as_executed": {
+        "version": "layered-reading-sourced-dev-1",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/month_branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/0/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/0/position",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:MONTH-COMBINE-001:primary:1:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established",
+        "sources": [
+          {
+            "position": 0,
+            "claims": [
+              {
+                "literature_id": "literature:zsby-month-combine-001",
+                "field": "/original_text",
+                "origin": "source_transcription",
+                "quote": "月建合爻則爲月合",
+                "status": "consistent"
+              },
+              {
+                "literature_id": "literature:zsby-month-combine-001",
+                "field": "/exclusions/statements/0",
+                "origin": "modern_editorial",
+                "quote": "本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
+                "status": "consistent"
+              }
+            ],
+            "missing_literature_claims": [],
+            "mechanical_ok": true,
+            "free_text_attribution": "unassessed",
+            "semantic_support": "unassessed"
+          }
+        ],
+        "production_ready": false
+      }
+    },
+    {
+      "batch": "sourced-clarity-live-01",
+      "id": "void-without-literature",
+      "question": "仅核对本盘第五爻旬空标注，解释甲子旬空亡的历法名称。旬空是否等于完全无用，出空当天是否必成？不讨论真空假空、不选用神、不推日期。",
+      "plan_hash": "sha256:fc35883540ef0725c9c5c393bbbbc4df379a05949041406a00f04c96f82b3a3c",
+      "output_version": "layered-reading-sourced-dev-1",
+      "raw": "{\"schema_version\":\"layered-reading-sourced-dev-1\",\"conclusion\":\"本盘第五爻被程序标注为旬空：该爻地支为亥，落在日柱甲子所辖戌、亥旬空之内。按当前证据，“旬空”只是历法层面的名称标注，不等于完全无用；证据中也没有任何规则或文献支持“出空当天必成”。\",\"facts\":[{\"evidence_id\":\"fact:/calendar/day_ganzhi\",\"value\":\"甲子\"},{\"evidence_id\":\"fact:/calendar/kongwang/0\",\"value\":\"戌\"},{\"evidence_id\":\"fact:/calendar/kongwang/1\",\"value\":\"亥\"},{\"evidence_id\":\"fact:/lines/4/branch\",\"value\":\"亥\"},{\"evidence_id\":\"fact:/lines/4/is_kongwang\",\"value\":true},{\"evidence_id\":\"fact:/lines/4/position\",\"value\":5}],\"rules\":[{\"evidence_id\":\"rule:LINE-VOID-001:primary:5:-\",\"result\":{\"code\":\"line_void\",\"label\":\"旬空\"}}],\"interpretations\":[{\"text\":\"日柱为甲子，其旬（甲子旬）所空亡的地支为戌、亥，所以地支为亥的第五爻落在旬空范围，程序据此把该爻标注为旬空（line_void）。这里“旬空”是历法标名，来自日柱旬的固定配置，不是对爻之强弱、生克或效力的判断。\",\"fact_ids\":[\"fact:/calendar/day_ganzhi\",\"fact:/calendar/kongwang/0\",\"fact:/calendar/kongwang/1\",\"fact:/lines/4/branch\",\"fact:/lines/4/is_kongwang\",\"fact:/lines/4/position\"],\"rule_ids\":[\"rule:LINE-VOID-001:primary:5:-\"],\"literature_ids\":[],\"applicability\":\"当前问题只要求核对第五爻的旬空标注与历法名称。所给事实包含日柱甲子、空亡戌亥、第五爻地支亥及 is_kongwang=true，以及一个仅把该爻标为旬空的规则结果，因此足以支持“该爻被标注旬空”这一结论。\",\"uncertainties\":[\"当前证据没有提供生克、旺衰判断，“旬空”是否等于完全无用，缺少可用规则或文献支持。\",\"当前证据没有提供出空时间或“出空当天必成”的规则或原文，不能据此推断应期。\",\"未选用神，也未讨论真空、假空，故不对该爻的实际作用下定论。\"],\"source_claims\":[]}],\"advice\":[{\"text\":\"对外表述时，可写“第五爻（亥）被程序标注为旬空”，不要写成“第五爻完全无用”或“出空当天必然成事”；若需讨论旬空的实际效力或应期，应另行提供相应规则、出处与适用条件再作判断。\",\"basis\":\"general_advice\"}]}",
+      "raw_hash": "sha256:a404e640299c64968c959d5901f9d74372a0e5b45086b367f82fc83fc57f0b57",
+      "evidence": [
+        {
+          "id": "fact:/calendar/day_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/day_ganzhi",
+          "value": "甲子",
+          "label": "历法 · 日柱"
+        },
+        {
+          "id": "fact:/calendar/kongwang/0",
+          "kind": "program_fact",
+          "path": "/calendar/kongwang/0",
+          "value": "戌",
+          "label": "历法 · 空亡"
+        },
+        {
+          "id": "fact:/calendar/kongwang/1",
+          "kind": "program_fact",
+          "path": "/calendar/kongwang/1",
+          "value": "亥",
+          "label": "历法 · 空亡"
+        },
+        {
+          "id": "fact:/lines/4/branch",
+          "kind": "program_fact",
+          "path": "/lines/4/branch",
+          "value": "亥",
+          "label": "第5爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/4/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/4/is_kongwang",
+          "value": true,
+          "label": "第5爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/4/position",
+          "kind": "program_fact",
+          "path": "/lines/4/position",
+          "value": 5,
+          "label": "第5爻 · 爻位"
+        },
+        {
+          "id": "rule:LINE-VOID-001:primary:5:-",
+          "kind": "rule_result",
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 5,
+            "component": "primary"
+          },
+          "result": {
+            "code": "line_void",
+            "label": "旬空"
+          },
+          "source_facts": [
+            "fact:/lines/4/is_kongwang"
+          ],
+          "label": "LINE-VOID-001 · 第5爻 · 旬空"
+        }
+      ],
+      "literature_packet": {
+        "version": "explicit-literature-packet-dev-2",
+        "corpus_version": "phase8a-month-combine-hardening-1",
+        "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+        "mode": "offline_explicit_review",
+        "selection_semantics": "Caller-reviewed applicability; not automatic or independently verified",
+        "independent_evidence": false,
+        "cards": []
+      },
+      "transport": {
+        "model": "deepseek-flash",
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 1705,
+          "completion_tokens": 627,
+          "total_tokens": 2332,
+          "prompt_tokens_details": {
+            "cached_tokens": 1024
+          },
+          "prompt_cache_hit_tokens": 1024,
+          "prompt_cache_miss_tokens": 681
+        }
+      },
+      "mechanical_result_as_executed": {
+        "version": "layered-reading-sourced-dev-1",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/day_ganzhi",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/kongwang/0",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/kongwang/1",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/is_kongwang",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/position",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:LINE-VOID-001:primary:5:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established",
+        "sources": [
+          {
+            "position": 0,
+            "claims": [],
+            "missing_literature_claims": [],
+            "mechanical_ok": true,
+            "free_text_attribution": "unassessed",
+            "semantic_support": "unassessed"
+          }
+        ],
+        "production_ready": false
+      }
+    },
+    {
+      "batch": "sourced-clarity-live-01",
+      "id": "void-with-literature",
+      "question": "仅核对本盘第五爻旬空标注，解释甲子旬空亡的历法名称。旬空是否等于完全无用，出空当天是否必成？不讨论真空假空、不选用神、不推日期。",
+      "plan_hash": "sha256:fc35883540ef0725c9c5c393bbbbc4df379a05949041406a00f04c96f82b3a3c",
+      "output_version": "layered-reading-sourced-dev-1",
+      "raw": "{\"schema_version\":\"layered-reading-sourced-dev-1\",\"conclusion\":\"本盘第五爻标注为旬空：程序显示日柱为甲子，其旬空为戌、亥，而第五爻地支为亥，故第五爻的旬空标注成立。这里的“旬空”是历法名义上的标注，即甲子至癸酉十日之内不含戌亥，所以逢戌亥称为空亡；这不等于“完全无用”，本盘也没有提供任何判断实际效力的证据。出空当天是否必成，当前证据无法回答：这段原文转录只说明旬空名称，没有涉及出空及应期效力；现代整理把本次引用范围限制在历法名义。\",\"facts\":[{\"evidence_id\":\"fact:/calendar/day_ganzhi\",\"value\":\"甲子\"},{\"evidence_id\":\"fact:/calendar/kongwang/0\",\"value\":\"戌\"},{\"evidence_id\":\"fact:/calendar/kongwang/1\",\"value\":\"亥\"},{\"evidence_id\":\"fact:/lines/4/branch\",\"value\":\"亥\"},{\"evidence_id\":\"fact:/lines/4/is_kongwang\",\"value\":true},{\"evidence_id\":\"fact:/lines/4/position\",\"value\":5}],\"rules\":[{\"evidence_id\":\"rule:LINE-VOID-001:primary:5:-\",\"result\":{\"code\":\"line_void\",\"label\":\"旬空\"}}],\"interpretations\":[{\"text\":\"旬空的历法含义：以甲子至癸酉为一旬，这十日之内没有戌、亥，所以爻逢戌、亥称为“空亡”，又称“旬空”，其余旬依此例类推。本盘程序给出的日柱为甲子，旬空为戌、亥；第五爻地支为亥，因而第五爻的旬空标注可由这一历法名称层面说明。\",\"fact_ids\":[\"fact:/calendar/day_ganzhi\",\"fact:/calendar/kongwang/0\",\"fact:/calendar/kongwang/1\",\"fact:/lines/4/branch\",\"fact:/lines/4/is_kongwang\",\"fact:/lines/4/position\"],\"rule_ids\":[\"rule:LINE-VOID-001:primary:5:-\"],\"literature_ids\":[\"literature:zsby-void-definition-001\"],\"applicability\":\"本段文献正以甲子旬例说明旬空名称，与本盘甲子日、旬空为戌亥、第五爻地支为亥的记载相合；引用仅限旬空名称，不延伸到真空、假空、冲空或出空效力。\",\"uncertainties\":[\"当前证据没有提供生克、旺衰、用神及应期判断，因此无法判断该爻在实际事项中的有用无用或出空当天是否必成。\",\"引文只作逐字字段连接，未核查影印本或外部来源真实性。\"],\"source_claims\":[{\"literature_id\":\"literature:zsby-void-definition-001\",\"field\":\"/original_text\",\"origin\":\"source_transcription\",\"quote\":\"何謂旬空如甲子至癸酉日爲一旬。此十日之內。並無戌亥。所以爻逢戌亥爲空亡。\"},{\"literature_id\":\"literature:zsby-void-definition-001\",\"field\":\"/exclusions/statements/0\",\"origin\":\"modern_editorial\",\"quote\":\"不由旬空推出无用；不整理真空、假空、冲空或出空效力。\"},{\"literature_id\":\"literature:zsby-void-definition-001\",\"field\":\"/editorial_summary\",\"origin\":\"modern_editorial\",\"quote\":\"本段以甲子至癸酉十日不含戌亥说明旬空名称，并说其余类推；这里只说明历法名义，不论实际效力。\"}]}],\"advice\":[{\"text\":\"就当前问题而言，只需把第五爻记为旬空，并把它理解为甲子旬历法名称上的空亡；若后续要谈实际效力或应期，应另行补充所需事实与规则，不能仅凭此标注推断完全无用或出空必成。\",\"basis\":\"general_advice\"}]}",
+      "raw_hash": "sha256:591ac5388ea1016d0b7fc36e012b407005509ff407baedf2b59f60e3b3686b41",
+      "evidence": [
+        {
+          "id": "fact:/calendar/day_ganzhi",
+          "kind": "program_fact",
+          "path": "/calendar/day_ganzhi",
+          "value": "甲子",
+          "label": "历法 · 日柱"
+        },
+        {
+          "id": "fact:/calendar/kongwang/0",
+          "kind": "program_fact",
+          "path": "/calendar/kongwang/0",
+          "value": "戌",
+          "label": "历法 · 空亡"
+        },
+        {
+          "id": "fact:/calendar/kongwang/1",
+          "kind": "program_fact",
+          "path": "/calendar/kongwang/1",
+          "value": "亥",
+          "label": "历法 · 空亡"
+        },
+        {
+          "id": "fact:/lines/4/branch",
+          "kind": "program_fact",
+          "path": "/lines/4/branch",
+          "value": "亥",
+          "label": "第5爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/4/is_kongwang",
+          "kind": "program_fact",
+          "path": "/lines/4/is_kongwang",
+          "value": true,
+          "label": "第5爻 · 旬空"
+        },
+        {
+          "id": "fact:/lines/4/position",
+          "kind": "program_fact",
+          "path": "/lines/4/position",
+          "value": 5,
+          "label": "第5爻 · 爻位"
+        },
+        {
+          "id": "rule:LINE-VOID-001:primary:5:-",
+          "kind": "rule_result",
+          "rule_id": "LINE-VOID-001",
+          "target": {
+            "line": 5,
+            "component": "primary"
+          },
+          "result": {
+            "code": "line_void",
+            "label": "旬空"
+          },
+          "source_facts": [
+            "fact:/lines/4/is_kongwang"
+          ],
+          "label": "LINE-VOID-001 · 第5爻 · 旬空"
+        }
+      ],
+      "literature_packet": {
+        "version": "explicit-literature-packet-dev-2",
+        "corpus_version": "phase8a-month-combine-hardening-1",
+        "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+        "mode": "offline_explicit_review",
+        "selection_semantics": "Caller-reviewed applicability; not automatic or independently verified",
+        "independent_evidence": false,
+        "cards": [
+          {
+            "knowledge_id": "zsby-void-definition-001",
+            "literature_id": "literature:zsby-void-definition-001",
+            "source_type": "classical_body",
+            "original_text": "何謂旬空如甲子至癸酉日爲一旬。此十日之內。並無戌亥。所以爻逢戌亥爲空亡。\n又名旬空餘倣此。",
+            "editorial_summary": "本段以甲子至癸酉十日不含戌亥说明旬空名称，并说其余类推；这里只说明历法名义，不论实际效力。",
+            "applicable_conditions": {
+              "status": "specified",
+              "statements": [
+                "限本段甲子旬例及旬空名称。"
+              ]
+            },
+            "exclusions": {
+              "status": "specified",
+              "statements": [
+                "不由旬空推出无用；不整理真空、假空、冲空或出空效力。"
+              ]
+            },
+            "exceptions": {
+              "status": "none_stated",
+              "statements": []
+            },
+            "citation": {
+              "knowledge_id": "zsby-void-definition-001",
+              "source_id": "zsby-nlc-12jh005345",
+              "source_revision": 1,
+              "edition_id": "zsby-wenming-1925-11-nlc-12jh005345",
+              "title": "增刪卜易",
+              "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+              "segment_ref": {
+                "segment_id": "zsby-1925-s9",
+                "revision": 1,
+                "span": {
+                  "start": 0,
+                  "end": 45,
+                  "unit": "unicode_code_point"
+                }
+              },
+              "locator": {
+                "volume": "二",
+                "chapter": "旬空章第二十六",
+                "section": null,
+                "page": "二三",
+                "leaf": null,
+                "image_page": 93,
+                "anchor": "何謂旬空起，餘倣此止；不含真空假空讨论"
+              },
+              "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+              "text_hash": "sha256:2a8fd39202a132799c17a1b471e179b5e54157bfab40ce93accb5001403abfd9"
+            },
+            "same_proposition_ids": [
+              "zsby-void-definition-001"
+            ],
+            "independent_evidence": false,
+            "predictive_validation": "not_established",
+            "editorial_guidance": {
+              "kind": "modern_editorial_guidance",
+              "review_status": "development_self_review",
+              "independent_evidence": false,
+              "checks": [
+                "旬空是否来自程序的历法计算？",
+                "是否仅解释名称，而没有越界推断真空、假空或实际效力？"
+              ],
+              "careful_example": "本段说明旬空的历法名义；旬空标签本身不证明无用，也不能独自确定出空后的结果。",
+              "overreach_example": "旬空就是完全没用，出空当天事情一定成功。"
+            },
+            "field_origins": {
+              "original_text": "source_transcription",
+              "editorial_summary": "modern_editorial",
+              "applicable_conditions": "modern_editorial",
+              "exclusions": "modern_editorial",
+              "exceptions": "modern_editorial",
+              "editorial_guidance": "modern_editorial"
+            },
+            "applicability_review": {
+              "status": "confirmed",
+              "reason": "程序日柱为甲子，问题仅要求甲子旬空亡的名称，第五爻已有旬空记录；与原文甲子旬例对应，不扩展到实际效力。"
+            }
+          }
+        ]
+      },
+      "transport": {
+        "model": "deepseek-flash",
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 2458,
+          "completion_tokens": 865,
+          "total_tokens": 3323,
+          "prompt_tokens_details": {
+            "cached_tokens": 1280
+          },
+          "prompt_cache_hit_tokens": 1280,
+          "prompt_cache_miss_tokens": 1178
+        }
+      },
+      "mechanical_result_as_executed": {
+        "version": "layered-reading-sourced-dev-1",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/day_ganzhi",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/kongwang/0",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/kongwang/1",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/is_kongwang",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/position",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:LINE-VOID-001:primary:5:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established",
+        "sources": [
+          {
+            "position": 0,
+            "claims": [
+              {
+                "literature_id": "literature:zsby-void-definition-001",
+                "field": "/original_text",
+                "origin": "source_transcription",
+                "quote": "何謂旬空如甲子至癸酉日爲一旬。此十日之內。並無戌亥。所以爻逢戌亥爲空亡。",
+                "status": "consistent"
+              },
+              {
+                "literature_id": "literature:zsby-void-definition-001",
+                "field": "/exclusions/statements/0",
+                "origin": "modern_editorial",
+                "quote": "不由旬空推出无用；不整理真空、假空、冲空或出空效力。",
+                "status": "consistent"
+              },
+              {
+                "literature_id": "literature:zsby-void-definition-001",
+                "field": "/editorial_summary",
+                "origin": "modern_editorial",
+                "quote": "本段以甲子至癸酉十日不含戌亥说明旬空名称，并说其余类推；这里只说明历法名义，不论实际效力。",
+                "status": "consistent"
+              }
+            ],
+            "missing_literature_claims": [],
+            "mechanical_ok": true,
+            "free_text_attribution": "unassessed",
+            "semantic_support": "unassessed"
+          }
+        ],
+        "production_ready": false
+      }
+    }
+  ],
+  "conservative_peak_cost_cny": 0.039448,
+  "balance_difference_is_not_exact_attributed_cost": true,
+  "exact_billed_cost_cny": null,
+  "production_changes": false
+}

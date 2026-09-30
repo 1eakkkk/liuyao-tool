@@ -1,0 +1,368 @@
+{
+  "plan_hash": "sha256:fc35883540ef0725c9c5c393bbbbc4df379a05949041406a00f04c96f82b3a3c",
+  "planned_calls": 4,
+  "attempted_calls": 4,
+  "results": [
+    {
+      "id": "month-combine-without-literature",
+      "case_id": "month-combine",
+      "arm": "without-literature",
+      "usage": {
+        "prompt_tokens": 1586,
+        "completion_tokens": 540,
+        "total_tokens": 2126,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "prompt_cache_hit_tokens": 384,
+        "prompt_cache_miss_tokens": 1202
+      },
+      "check": {
+        "version": "layered-reading-sourced-dev-1",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/month_branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/0/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/0/position",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:MONTH-COMBINE-001:primary:1:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established",
+        "sources": [
+          {
+            "position": 0,
+            "claims": [],
+            "missing_literature_claims": [],
+            "mechanical_ok": true,
+            "free_text_attribution": "unassessed",
+            "semantic_support": "unassessed"
+          }
+        ],
+        "production_ready": false
+      },
+      "model_quality": "manual_review_pending",
+      "conservative_peak_cost_cny": 0.007492
+    },
+    {
+      "id": "month-combine-with-literature",
+      "case_id": "month-combine",
+      "arm": "with-literature",
+      "usage": {
+        "prompt_tokens": 2363,
+        "completion_tokens": 871,
+        "total_tokens": 3234,
+        "prompt_tokens_details": {
+          "cached_tokens": 1152
+        },
+        "prompt_cache_hit_tokens": 1152,
+        "prompt_cache_miss_tokens": 1211
+      },
+      "check": {
+        "version": "layered-reading-sourced-dev-1",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/month_branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/0/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/0/position",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:MONTH-COMBINE-001:primary:1:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established",
+        "sources": [
+          {
+            "position": 0,
+            "claims": [
+              {
+                "literature_id": "literature:zsby-month-combine-001",
+                "field": "/original_text",
+                "origin": "source_transcription",
+                "quote": "月建合爻則爲月合",
+                "status": "consistent"
+              },
+              {
+                "literature_id": "literature:zsby-month-combine-001",
+                "field": "/exclusions/statements/0",
+                "origin": "modern_editorial",
+                "quote": "本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
+                "status": "consistent"
+              }
+            ],
+            "missing_literature_claims": [],
+            "mechanical_ok": true,
+            "free_text_attribution": "unassessed",
+            "semantic_support": "unassessed"
+          }
+        ],
+        "production_ready": false
+      },
+      "model_quality": "manual_review_pending",
+      "conservative_peak_cost_cny": 0.011694
+    },
+    {
+      "id": "void-without-literature",
+      "case_id": "void",
+      "arm": "without-literature",
+      "usage": {
+        "prompt_tokens": 1705,
+        "completion_tokens": 627,
+        "total_tokens": 2332,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024
+        },
+        "prompt_cache_hit_tokens": 1024,
+        "prompt_cache_miss_tokens": 681
+      },
+      "check": {
+        "version": "layered-reading-sourced-dev-1",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/day_ganzhi",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/kongwang/0",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/kongwang/1",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/is_kongwang",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/position",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:LINE-VOID-001:primary:5:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established",
+        "sources": [
+          {
+            "position": 0,
+            "claims": [],
+            "missing_literature_claims": [],
+            "mechanical_ok": true,
+            "free_text_attribution": "unassessed",
+            "semantic_support": "unassessed"
+          }
+        ],
+        "production_ready": false
+      },
+      "model_quality": "manual_review_pending",
+      "conservative_peak_cost_cny": 0.008426
+    },
+    {
+      "id": "void-with-literature",
+      "case_id": "void",
+      "arm": "with-literature",
+      "usage": {
+        "prompt_tokens": 2458,
+        "completion_tokens": 865,
+        "total_tokens": 3323,
+        "prompt_tokens_details": {
+          "cached_tokens": 1280
+        },
+        "prompt_cache_hit_tokens": 1280,
+        "prompt_cache_miss_tokens": 1178
+      },
+      "check": {
+        "version": "layered-reading-sourced-dev-1",
+        "facts": [
+          {
+            "evidence_id": "fact:/calendar/day_ganzhi",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/kongwang/0",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/calendar/kongwang/1",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/branch",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/is_kongwang",
+            "status": "consistent"
+          },
+          {
+            "evidence_id": "fact:/lines/4/position",
+            "status": "consistent"
+          }
+        ],
+        "rules": [
+          {
+            "evidence_id": "rule:LINE-VOID-001:primary:5:-",
+            "status": "consistent",
+            "missing_fact_ids": [],
+            "independent_evidence": false
+          }
+        ],
+        "interpretations": [
+          {
+            "position": 0,
+            "mechanical_status": "linked",
+            "invalid_fact_ids": [],
+            "invalid_rule_ids": [],
+            "missing_rule_fact_ids": [],
+            "unknown_literature_ids": [],
+            "semantic_support": "unassessed",
+            "question_relevance": "unassessed",
+            "independent_literature_evidence": false
+          }
+        ],
+        "advice_count": 1,
+        "mechanical_ok": true,
+        "conclusion_support": "unassessed",
+        "advice_semantics": "unassessed",
+        "acceptance": "not_established",
+        "sources": [
+          {
+            "position": 0,
+            "claims": [
+              {
+                "literature_id": "literature:zsby-void-definition-001",
+                "field": "/original_text",
+                "origin": "source_transcription",
+                "quote": "何謂旬空如甲子至癸酉日爲一旬。此十日之內。並無戌亥。所以爻逢戌亥爲空亡。",
+                "status": "consistent"
+              },
+              {
+                "literature_id": "literature:zsby-void-definition-001",
+                "field": "/exclusions/statements/0",
+                "origin": "modern_editorial",
+                "quote": "不由旬空推出无用；不整理真空、假空、冲空或出空效力。",
+                "status": "consistent"
+              },
+              {
+                "literature_id": "literature:zsby-void-definition-001",
+                "field": "/editorial_summary",
+                "origin": "modern_editorial",
+                "quote": "本段以甲子至癸酉十日不含戌亥说明旬空名称，并说其余类推；这里只说明历法名义，不论实际效力。",
+                "status": "consistent"
+              }
+            ],
+            "missing_literature_claims": [],
+            "mechanical_ok": true,
+            "free_text_attribution": "unassessed",
+            "semantic_support": "unassessed"
+          }
+        ],
+        "production_ready": false
+      },
+      "model_quality": "manual_review_pending",
+      "conservative_peak_cost_cny": 0.011836
+    }
+  ],
+  "reservation": {
+    "reserved_cny": 19.771379999999994,
+    "remaining_unreserved_cny": 0.17862000000000577
+  },
+  "balance_before": {
+    "available": true,
+    "total_cny": 18.96
+  },
+  "balance_after": {
+    "available": true,
+    "total_cny": 18.96
+  },
+  "balance_difference_cny": 0,
+  "balance_difference_is_not_exact_attributed_cost": true,
+  "exact_billed_cost_cny": null,
+  "production_changes": false
+}

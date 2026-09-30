@@ -303,6 +303,7 @@ wrangler.jsonc   Cloudflare 静态资源配置
 | [生产范围](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/PRODUCTION_PLAN.md) | 稳定版与实验功能边界 |
 | [验收资料](https://github.com/1eakkkk/liuyao-tool/tree/main/docs/acceptance) | 各次发布的检查报告 |
 | [知识候选真实试测](docs/SOURCED_READING_LIVE_PILOT.md) | 两次真实接口调用、独立审查与预算边界 |
+| [整理后的真实对照](docs/CLARITY_LIVE_EVALUATION.md) | 四次月合／旬空测试，保留支持与出处问题；尚未满足知识上线验收 |
 | [术语与出处候选](docs/SOURCED_CLARITY_CANDIDATE.md) | 新提示与评价准备，尚不证明模型已改善 |
 
 阶段文档保留了当时的上下文，历史的「未发布」结论不应直接当作当前状态。请结合项目状态和对应版本的发布记录阅读。
