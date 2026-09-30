@@ -1,0 +1,60 @@
+{
+  "version": "sourced-clarity-independent-development-resolved-review-1",
+  "reviewer_id": "agent-a",
+  "review_kind": "independent_development_review",
+  "retrospective_nonblind": true,
+  "review_scope": "Only revised preserve-source-evaluation positive and final controls file hash",
+  "prior_review": {
+    "path": "test-results/sourced-clarity-review-a-final.json",
+    "hash": "sha256:98bb94bcc4e4589532d75c119de5824a6fd0c1cb08efc789309db2135b11947d",
+    "preserved": true,
+    "previous_verdict": "uncertain"
+  },
+  "controls": {
+    "path": "experiments/reading-quality/sourced-clarity-controls.json",
+    "hash": "sha256:0113fa2ebec978d6d2d92f38fb365160a99901279b2982ff41dad9c57ecc4228",
+    "count": 12
+  },
+  "review": {
+    "id": "preserve-source-evaluation",
+    "verdict": "pass",
+    "positive_text": "原文转录含有“有用／无用”的评价措辞；现代整理允许解释该段命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实，不能据此确认本爻实际效力。",
+    "literature_id": "literature:zsby-month-combine-001",
+    "source_fields": {
+      "original_text": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻。卽爲月破無用之爻也。",
+      "applicable_conditions": {
+        "status": "specified",
+        "statements": [
+          "仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。"
+        ]
+      },
+      "exclusions": {
+        "status": "specified",
+        "statements": [
+          "本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
+          "不能据此直接推出事情有利、成功或最终吉凶；不以相邻无用句取代月破章的条件。"
+        ]
+      }
+    },
+    "reason": "修订正例准确保留原文有用/无用评价，明确将允许解释命名及作者评价、以及不把评价当作当前程序事实的限制归现代整理；与实际applicable_conditions/statements/0一致。不能据此确认当前实际效力亦与exclusions/statements/0一致。此前“只核对名称”抹窄现代条件的疑点已解除。"
+  },
+  "remaining_uncertainty_from_prior": "该处无剩余不确定；上一份记录的占位合成输出、仅有文献侧机械对照、外部真实性未核查等证据范围限制仍适用。",
+  "verification": {
+    "json_readback": true,
+    "network_calls": 0,
+    "new_real_model_responses": 0,
+    "tests_run_by_this_reviewer": false,
+    "source_files_modified": false,
+    "previous_reviews_overwritten": false
+  },
+  "test_context": {
+    "reported_by_parent": "稳定源 fe1f117 全量550项通过；修订后候选14项通过。",
+    "independently_reexecuted": false
+  },
+  "semantic_acceptance": false,
+  "generated_output_acceptance": false,
+  "blind_acceptance": false,
+  "production_ready": false,
+  "model_improvement_established": false,
+  "limitation": "仅独立开发材料复核，未运行真实API或生成新回答；通过仅确认该句归属及支持与输入一致，不证明模型语义验收、外部古籍真实性或总体提升。"
+}

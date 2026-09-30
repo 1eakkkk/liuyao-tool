@@ -1,0 +1,316 @@
+{
+  "version": "sourced-clarity-independent-development-final-review-1",
+  "reviewer_id": "agent-a",
+  "review_kind": "independent_development_review",
+  "retrospective_nonblind": true,
+  "generated_output_acceptance": false,
+  "semantic_acceptance": false,
+  "blind_acceptance": false,
+  "production_ready": false,
+  "model_improvement_established": false,
+  "network_calls": 0,
+  "reviewed_files": [
+    {
+      "path": "experiments/reading-quality/sourced-clarity-controls.json",
+      "hash": "sha256:73b87cf01f1832abae18344fcf8685379b9f905a43e9eeca1880b7d7d7ead60e"
+    },
+    {
+      "path": "experiments/reading-quality/sourced-clarity.js",
+      "hash": "sha256:6d852140433da67cf75962c0dd69c7acecc3fac38297881bf26e223018698cad"
+    },
+    {
+      "path": "tests/knowledge/sourced-clarity.test.js",
+      "hash": "sha256:f0034423ab0be45c408aa0bb95542b2504e3e9243e023db1f72e95c513067072"
+    }
+  ],
+  "instructions_version": "sourced-instructions-dev-2",
+  "instructions_hash": "sha256:63370e3167b64cbe5c73d7e428d4c9a68a3eb5cb3c512788a279d15a9e452862",
+  "correction_of_initial_review": [
+    {
+      "finding": "字段实例未构造",
+      "corrected_verdict": "pass",
+      "reason": "初审未读取测试，结论不完整。实际test.each循环每个例句和每个slot，将句子嵌入conclusion、text、applicability、uncertainties或advice.text。原8组确有80个组合；最终12组120个组合。"
+    },
+    {
+      "finding": "有无文献臂未绑定",
+      "corrected_verdict": "pass",
+      "reason": "synthetic(c)及checkSourcedOutput都使用c.arms[1]的卡与packet，实际测试明确绑定with-literature；JSON没有arm_id并非当前测试混用。"
+    },
+    {
+      "finding": "source_claims前提未实际提供",
+      "corrected_verdict": "pass",
+      "reason": "synthetic(c)构造原文及现代摘要各一项逐字引用，field/origin正确。正误句只改自由文字，跨字段连接前提真实存在。"
+    }
+  ],
+  "controls": [
+    {
+      "id": "combine-not-generation",
+      "case_id": "month-combine",
+      "tested_arm": "month-combine-with-literature",
+      "verdict": "pass",
+      "reason": "月合实际输入含子丑六合规则，没有相生规则；原文作者有用评价也不等于相生。正例允许生克否定词，误例越界推出相生。",
+      "examples": [
+        {
+          "text": "程序标注为六合；现有证据未提供生克判断。",
+          "expected_review": "pass",
+          "label_confirmed": true
+        },
+        {
+          "text": "程序标注为六合，因此两者相生。",
+          "expected_review": "fail",
+          "label_confirmed": true
+        }
+      ]
+    },
+    {
+      "id": "clash-not-strength",
+      "case_id": "month-break",
+      "tested_arm": "month-break-with-literature",
+      "verdict": "pass",
+      "reason": "月破输入无旺衰字段或力量规则，卯酉六冲及原文命名不能直接支持衰弱判定。",
+      "examples": [
+        {
+          "text": "六冲记录的是相冲关系，不能据此确认力量衰弱。",
+          "expected_review": "pass",
+          "label_confirmed": true
+        },
+        {
+          "text": "六冲表示此爻力量衰弱。",
+          "expected_review": "fail",
+          "label_confirmed": true
+        }
+      ]
+    },
+    {
+      "id": "void-not-failure",
+      "case_id": "void",
+      "tested_arm": "void-with-literature",
+      "verdict": "pass",
+      "reason": "旬空输入与甲子旬定义支持标注及名称，不含事情失败结论，单凭标签必败无依据。",
+      "examples": [
+        {
+          "text": "程序标注为旬空；不能仅凭此标注判断事情成败。",
+          "expected_review": "pass",
+          "label_confirmed": true
+        },
+        {
+          "text": "程序标注为旬空，所以事情必败。",
+          "expected_review": "fail",
+          "label_confirmed": true
+        }
+      ]
+    },
+    {
+      "id": "missing-not-absent",
+      "case_id": "month-break",
+      "tested_arm": "month-break-with-literature",
+      "verdict": "pass",
+      "reason": "month-break精选输入无生克旺衰结论；scope_note明确未提供不代表不存在。",
+      "examples": [
+        {
+          "text": "当前材料没有提供生克、旺衰结论。",
+          "expected_review": "pass",
+          "label_confirmed": true
+        },
+        {
+          "text": "本盘不存在生克、旺衰关系。",
+          "expected_review": "fail",
+          "label_confirmed": true
+        }
+      ]
+    },
+    {
+      "id": "fragment-not-whole",
+      "case_id": "month-break",
+      "tested_arm": "month-break-with-literature",
+      "verdict": "pass",
+      "reason": "该组实际绑定month-break-with-literature的命名短句，并非月合评价原文；局部未给结论不能扩成全体系永远不讨论。",
+      "examples": [
+        {
+          "text": "这段原文转录只提供命名信息；现代整理将本次引用限于命名，不据此判断效力。",
+          "expected_review": "pass",
+          "label_confirmed": true
+        },
+        {
+          "text": "这段短句只定义名称，因此古籍全体系永远不讨论月破效力。",
+          "expected_review": "fail",
+          "label_confirmed": true
+        }
+      ]
+    },
+    {
+      "id": "editorial-not-original",
+      "case_id": "month-break",
+      "tested_arm": "month-break-with-literature",
+      "verdict": "pass",
+      "reason": "排除条件由field_origins标modern_editorial，古籍命名原句没有明确禁止推永久失效或吉凶的规定。",
+      "examples": [
+        {
+          "text": "现代整理的排除条件要求本次不推定永久失效或吉凶。",
+          "expected_review": "pass",
+          "label_confirmed": true
+        },
+        {
+          "text": "古籍原文明确要求不推定永久失效或吉凶。",
+          "expected_review": "fail",
+          "label_confirmed": true
+        }
+      ]
+    },
+    {
+      "id": "prose-not-claim",
+      "case_id": "month-break",
+      "tested_arm": "month-break-with-literature",
+      "verdict": "pass",
+      "reason": "synthetic(c)确实含逐字original_text/source_transcription和editorial_summary/modern_editorial；自由文字仍不能把现代限制归给古籍，正确字段连接不能抵消错误 prose。",
+      "examples": [
+        {
+          "text": "现代整理要求本次只解释名称。",
+          "expected_review": "pass",
+          "label_confirmed": true
+        },
+        {
+          "text": "古籍要求本次只解释名称。",
+          "expected_review": "fail",
+          "label_confirmed": true
+        }
+      ]
+    },
+    {
+      "id": "match-not-authentic",
+      "case_id": "month-break",
+      "tested_arm": "month-break-with-literature",
+      "verdict": "pass",
+      "reason": "逐字匹配本地转录不证实外部影印本真实性，本轮未作外部校勘。",
+      "examples": [
+        {
+          "text": "引文与提供的转录一致；外部真实性尚未核查。",
+          "expected_review": "pass",
+          "label_confirmed": true
+        },
+        {
+          "text": "引文逐字匹配，证明古籍出处真实。",
+          "expected_review": "fail",
+          "label_confirmed": true
+        }
+      ]
+    },
+    {
+      "id": "ambiguous-origin",
+      "case_id": "month-break",
+      "tested_arm": "month-break-with-literature",
+      "verdict": "pass",
+      "reason": "资料一词同时可能指整张阅读卡或古籍原文，未明确现代整理，符合保留uncertain的语义归属尺度；明确现代整理的对照归属正确。此uncertain不表示满足明确来源表达要求。",
+      "examples": [
+        {
+          "text": "现代整理明确限制本次只解释名称。",
+          "expected_review": "pass",
+          "label_confirmed": true
+        },
+        {
+          "text": "资料明确规定本次只解释名称。",
+          "expected_review": "uncertain",
+          "label_confirmed": true
+        }
+      ]
+    },
+    {
+      "id": "conditional-new-rule",
+      "case_id": "month-combine",
+      "tested_arm": "month-combine-with-literature",
+      "verdict": "pass",
+      "reason": "六合事实与原文作者评价均未提供相生规则；条件句必然相生仍是新普遍规则。正例只否定可从标签确认相生。",
+      "examples": [
+        {
+          "text": "即使程序标注六合，也不能据此确认相生。",
+          "expected_review": "pass",
+          "label_confirmed": true
+        },
+        {
+          "text": "若为六合便必然相生。",
+          "expected_review": "fail",
+          "label_confirmed": true
+        }
+      ]
+    },
+    {
+      "id": "advice-outcome",
+      "case_id": "void",
+      "tested_arm": "void-with-literature",
+      "verdict": "pass",
+      "reason": "旬空问题禁止推日期及成败，原文与规则没有出空必成证据。建议不能承诺出空当天成功，新增对照覆盖该缺口。",
+      "examples": [
+        {
+          "text": "建议只核对旬空标注，不据此承诺出空后的成败。",
+          "expected_review": "pass",
+          "label_confirmed": true
+        },
+        {
+          "text": "建议放心等到出空当天，事情必成。",
+          "expected_review": "fail",
+          "label_confirmed": true
+        }
+      ]
+    },
+    {
+      "id": "preserve-source-evaluation",
+      "case_id": "month-combine",
+      "tested_arm": "month-combine-with-literature",
+      "verdict": "uncertain",
+      "reason": "原文确含有用、无用与无功，误例否认存在这些评价可确定为fail；正例准确保留评价且不推当前实际效力。但其“现代整理限制本次只核对名称”并不精确对应实际applicable_conditions，后者明确允许解释命名及作者评价措辞，故正例标签需要修订或补充语境。",
+      "examples": [
+        {
+          "text": "原文转录含有“有用／无用”的评价措辞；现代整理限制本次只核对名称，不能据此确认本爻实际效力。",
+          "expected_review": "pass",
+          "label_confirmed": "uncertain"
+        },
+        {
+          "text": "月合原文只定义名称，根本没有提及有用或无用。",
+          "expected_review": "fail",
+          "label_confirmed": true
+        }
+      ]
+    }
+  ],
+  "prompt_review": {
+    "verdict": "pass",
+    "reason": "最终第6项明确保留作者有用/无用评价、区分现代应用限制与古籍实际措辞；原有规则明确覆盖所有五字段、合理否定句、条件新规则、模糊归属及转录真实性边界。没有将局部命名一概扩大为整体系没有效力论述。"
+  },
+  "remaining_findings": [
+    {
+      "priority": "low",
+      "id": "preserve-source-evaluation-positive",
+      "verdict": "uncertain",
+      "quote": "现代整理限制本次只核对名称",
+      "actual_field": "/applicable_conditions/statements/0",
+      "actual_text": "仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。",
+      "reason": "正例抹窄现代整理实际允许的作者评价解释范围，虽结论不推个案效力正确，仍不宜作为字段归属精确的无条件pass。",
+      "suggestion": "改成“原文转录含有‘有用／无用’的评价措辞；现代整理允许解释命名及作者评价，但不将其当作当前卦盘已发生的事实，不能仅凭其确认本爻实际效力。”"
+    },
+    {
+      "priority": "informational",
+      "id": "sentence-label-vs-whole-output",
+      "reason": "synthetic(c)保留合成解释、合成适用性等占位语，现代source_claims只固定引用editorial_summary。它适合证明机械连接可通过正误自由文字，不能把每个expected_review=pass视为完整合成输出的所有引用支持已审查通过。"
+    },
+    {
+      "priority": "informational",
+      "id": "no-literature-side",
+      "reason": "全部120个控制组合绑定有文献臂，三类无文献输入仍由prepareClarityPairs提供；该测试并未把对照句放入无文献侧。不能宣称无文献的来源归属表现已被真实输出验证。"
+    }
+  ],
+  "verification": {
+    "local_prepare_cases": 3,
+    "local_prepare_arms": 6,
+    "mechanical_combinations_checked": 120,
+    "mechanical_failures": [],
+    "free_text_semantics": "unassessed_by_checker",
+    "full_vitest_suite_run": false,
+    "source_modified": false,
+    "initial_review_overwritten": false
+  },
+  "overall": {
+    "verdict": "one_positive_needs_wording_review",
+    "reason": "11组标注方向确认；第12组误例fail确认，正例作者评价与效力边界正确，但现代适用范围用词偏窄，标uncertain并建议精确改写。初审的三个实施覆盖疑点已由测试源码与本地120组合核对解除。"
+  },
+  "limitation": "独立开发对照和提示审查，未生成新的真实模型回复，不是语义验收、盲测、预测验证或总体改善证据。未核查外部古籍影印本。"
+}

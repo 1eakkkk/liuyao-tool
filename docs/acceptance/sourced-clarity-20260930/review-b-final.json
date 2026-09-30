@@ -1,0 +1,93 @@
+{
+  "version": "sourced-clarity-review-b-final-dev-1",
+  "reviewer_id": "agent-b",
+  "review_kind": "retrospective_nonblind",
+  "reviewed_at": "2026-09-30T15:47:07.880Z",
+  "input_plan": "docs/acceptance/sourced-clarity-20260930/plan.json",
+  "input_seal": "docs/acceptance/sourced-clarity-20260930/seal.json",
+  "input_plan_hash": "sha256:05f71f58deea1a53f1db4ff358eb2304f9496ca5fbf7a58b6e0be5429fc074ec",
+  "input_seal_hash": "sha256:05f71f58deea1a53f1db4ff358eb2304f9496ca5fbf7a58b6e0be5429fc074ec",
+  "initial_plan_hash": "sha256:016a2cc32209352a224a41dc14a8b406439aaeef0c1492a94bea82f56a14e509",
+  "initial_seal_hash": "sha256:016a2cc32209352a224a41dc14a8b406439aaeef0c1492a94bea82f56a14e509",
+  "source_hashes": [
+    {
+      "path": "experiments/reading-quality/sourced-clarity.js",
+      "hash": "sha256:6d852140433da67cf75962c0dd69c7acecc3fac38297881bf26e223018698cad"
+    },
+    {
+      "path": "experiments/reading-quality/sourced-clarity-controls.json",
+      "hash": "sha256:0113fa2ebec978d6d2d92f38fb365160a99901279b2982ff41dad9c57ecc4228"
+    },
+    {
+      "path": "scripts/prepare-sourced-clarity.js",
+      "hash": "sha256:01a2b798c7c57f2ea5d3a1abf354084db3f218c12f42433446d04a24a47c2db3"
+    },
+    {
+      "path": "tests/knowledge/sourced-clarity.test.js",
+      "hash": "sha256:f0034423ab0be45c408aa0bb95542b2504e3e9243e023db1f72e95c513067072"
+    }
+  ],
+  "verdict": "pass_for_offline_preparation_only",
+  "blocking_findings": [],
+  "checks": [
+    {
+      "id": "sealed_final_matches_source",
+      "verdict": "pass",
+      "reason": "最终 plan 的 sealPlan 与 seal.hash 一致；六条 system 提示与当前 clarityInstructions 完全一致，均包含新增第6条。初稿 seal 也有效，且不同于最终 seal。"
+    },
+    {
+      "id": "request_and_budget_boundary",
+      "verdict": "pass",
+      "reason": "与保留初稿逐项比较，六个请求除 system content 外保持一致，事实和材料包不变；reserve_cny、reservation_cny_per_million、checked_peak_cny_per_million、input_token_allowance、max_output_tokens、model 均保持一致，六臂估算未超 allowance。旧 dev-1 文件本轮未修改。"
+    },
+    {
+      "id": "preserve_actual_source_evaluation",
+      "verdict": "pass",
+      "reason": "最终计划月合 original_text 实含有用、無用。新增第6条明确要求保留这些文献措辞，同时区分其文本评价、本次现代整理使用限制和当前爻实际效力。新 preserve-source-evaluation 控制针对否认原文评价的错误，不抹去原文。"
+    },
+    {
+      "id": "new_controls",
+      "verdict": "pass",
+      "reason": "共12组、每组2例、5个自由文字槽，共120个合成组合。新增模糊归属 uncertain、条件句新规则、建议成败承诺、保留原文评价四组；标注是人工开发控制，不是真实模型成绩。"
+    },
+    {
+      "id": "modern_claim_fixtures",
+      "verdict": "pass",
+      "reason": "synthetic 现在附 original_text、editorial_summary 以及存在时的 applicable_conditions/statements/0、exclusions/statements/0 真实输入短引文；modern_editorial 类型明确。测试仍要求好坏自由文字均可 mechanical_ok，free_text_attribution=unassessed、production_ready=false，不将120组合机械通过当语义通过。"
+    },
+    {
+      "id": "offline_and_executor_boundary",
+      "verdict": "pass",
+      "reason": "准备脚本无凭据、网络或账本读写，写入新目录且拒绝覆盖；最终测试代码追加旧执行器拒绝 Plan/version/date/replay 的断言。本人此前临时隔离检查已验证旧执行器在 loadEnvFile/fetch 前拒绝候选；本轮未执行准备或执行器、未运行新测试。"
+    }
+  ],
+  "test_evidence": [
+    {
+      "suite": "tests/knowledge/sourced-clarity.test.js",
+      "candidate_stage": "initial",
+      "tests_passed": 10,
+      "source": "agent-b independently ran earlier in this conversation",
+      "independently_run_by_this_reviewer": true
+    },
+    {
+      "suite": "tests/knowledge/sourced-clarity.test.js",
+      "candidate_stage": "final",
+      "tests_passed": 14,
+      "source": "root agent reported passing in task message",
+      "independently_run_by_this_reviewer": false,
+      "verification": "not rerun by agent-b; source inspected only"
+    }
+  ],
+  "production_ready": false,
+  "automatic_semantic_validation": false,
+  "model_improvement_established": false,
+  "real_api_calls_by_reviewer": 0,
+  "credentials_read": false,
+  "original_records_modified": false,
+  "limitations": [
+    "仅离线候选与合成字段控制，未获取新增真实模型回复。",
+    "未独立运行最终14项或全量测试，不能将根代理报告说成本审查者实跑。",
+    "人工 expected_review 尚未由真实输出内容验收证实；逐字匹配不核验外部古籍真实性。",
+    "计划为已曝光开发题，不能宣称盲测、总体提升或生产验收；后续付费执行仍须单独冻结与复核价格、预算。"
+  ]
+}

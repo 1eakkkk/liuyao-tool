@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-30",
+  "full_regression": {
+    "source_commit": "fe1f117",
+    "files": 48,
+    "tests": 550,
+    "status": "passed",
+    "maxWorkers": 1
+  },
+  "final_control_text_regression": {
+    "tests": 14,
+    "status": "passed"
+  },
+  "controls_hash": "sha256:0113fa2ebec978d6d2d92f38fb365160a99901279b2982ff41dad9c57ecc4228",
+  "plan_hash": "sha256:05f71f58deea1a53f1db4ff358eb2304f9496ca5fbf7a58b6e0be5429fc074ec",
+  "development_review_only": true,
+  "new_model_responses": 0,
+  "network_calls": 0,
+  "reservation_made": false,
+  "production_ready": false,
+  "earlier_plan_identity_mismatch_preserved": true,
+  "previous_github_ci": {
+    "source_commit": "a6ba502",
+    "conclusion": "success",
+    "url": "https://github.com/1eakkkk/liuyao-tool/actions/runs/36730000981"
+  },
+  "current_github_ci": "not asserted by local verification"
+}
