@@ -34,18 +34,20 @@ try {
       assert.equal(await page.locator('#basics').evaluate(n=>getComputedStyle(n).animationName),'page-enter');
       await page.locator('#basics .disclosure-trigger').first().tap();
       assert.equal(await page.locator('#basics .disclosure-trigger').first().getAttribute('aria-expanded'),'true');
-      await page.locator('[data-tab=ai]').tap();await page.locator('#toggleSettingsBtn').tap();
+      await page.locator('[data-tab=ai]').tap();
       for(const width of [320,580,1280]) {
         await page.setViewportSize({width,height:900});
         for(const mode of ['light','dark']) {
           await page.locator('.theme-picker').evaluate(n=>n.open=true);
           await page.locator(`[data-theme-choice-button=${mode}]`).tap();
+          await page.locator('#toggleSettingsBtn').tap();
           await page.locator('#styleSelect-trigger').tap();
           const box=await page.locator('.select-menu').boundingBox();
           assert(box.x>=0&&box.x+box.width<=width+1&&box.y>=0&&box.y+box.height<=901);
           assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
           await page.screenshot({animations:'disabled',path:`test-results/controls/${engine}-${width}-${mode}-menu.png`});
           await page.keyboard.press('Escape');
+          await page.locator('#closeSettingsBtn').tap();
         }
       }
       await page.setViewportSize({width:390,height:844});

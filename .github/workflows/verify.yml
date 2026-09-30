@@ -31,6 +31,7 @@ jobs:
       - run: npm run test:browser:interface
       - run: npx playwright install webkit
       - run: node scripts/verify-entry-browser.js
+      - run: node scripts/verify-editorial-browser.js
       - run: npm run test:browser:usability
       - run: npm run test:browser:theme
       - run: npm run test:browser:controls

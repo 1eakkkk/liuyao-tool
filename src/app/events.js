@@ -346,9 +346,25 @@ modelSelect.addEventListener('change', ()=>{
   refreshPriceOverridePlaceholders();
 });
 
+let settingsScrollStyle = '';
 toggleSettingsBtn.addEventListener('click', ()=>{
-  aiSettings.classList.toggle('open');
-  toggleSettingsBtn.setAttribute('aria-expanded', aiSettings.classList.contains('open') ? 'true' : 'false');
+  if (aiSettings.open) { aiSettings.close(); return; }
+  settingsScrollStyle = document.documentElement.style.overflow;
+  document.documentElement.style.overflow = 'hidden';
+  document.getElementById('settingsFeedback').textContent = '';
+  aiSettings.showModal();
+  toggleSettingsBtn.setAttribute('aria-expanded', 'true');
+  document.getElementById('closeSettingsBtn').focus({preventScroll:true});
+});
+document.getElementById('closeSettingsBtn').addEventListener('click', ()=>aiSettings.close());
+aiSettings.addEventListener('close', ()=>{
+  document.documentElement.style.overflow = settingsScrollStyle;
+  toggleSettingsBtn.setAttribute('aria-expanded', 'false');
+  toggleSettingsBtn.focus({preventScroll:true});
+});
+aiSettings.addEventListener('click', event=>{
+  const rect=aiSettings.getBoundingClientRect();
+  if(event.target===aiSettings && (event.clientX<rect.left || event.clientX>rect.right || event.clientY<rect.top || event.clientY>rect.bottom)) aiSettings.close();
 });
 
 saveKeyBtn.addEventListener('click', ()=>{

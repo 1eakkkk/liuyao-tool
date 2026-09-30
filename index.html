@@ -23,6 +23,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 </script>
 <link rel="stylesheet" href="./src/styles/main.css">
 <link rel="stylesheet" href="./src/styles/interface.css">
+<link rel="stylesheet" href="./src/styles/editorial.css">
 </head>
 <body>
 
@@ -412,10 +413,12 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         <select id="readingMode" autocomplete="off"><option value="" selected disabled>选择</option><option value="legacy">普通解读</option><option value="structured">结构化解读（试用）· 可查看依据</option></select>
         <p id="readingModeNote" hidden>先读结论，依据可展开。API 与提示词均支持；设置在新解读时生效。</p>
       </div>
-      <div class="ai-row">
+      <div class="ai-row compose-actions">
         <button class="ai-btn" id="interpretBtn">AI 解读</button>
         <button class="ai-btn ghost" id="promptBtn">输出提示词</button>
         <button class="ai-btn stop" id="stopGenBtn" style="display:none;">停止生成</button>
+      </div>
+      <div class="ai-row compose-tools">
         <button class="ai-btn ghost" id="toggleSettingsBtn" aria-expanded="false" aria-controls="aiSettings">设置</button>
         <button class="ai-btn ghost" id="toggleHistoryBtn" aria-expanded="false" aria-controls="historyPanel">历史记录</button>
         <span class="ai-status" id="aiStatus"></span>
@@ -486,7 +489,9 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         </div>
       </div>
 
-      <div class="ai-settings" id="aiSettings">
+      <dialog class="ai-settings" id="aiSettings" aria-labelledby="settingsTitle">
+        <header class="settings-header"><div><h2 id="settingsTitle">解读设置</h2><p>按你的习惯，设置一次即可。</p></div><button type="button" id="closeSettingsBtn" class="settings-close" aria-label="关闭设置">✕</button></header>
+        <div class="settings-content">
         <p id="structuredSettingsNote" class="note" hidden>结构化模式支持回复篇幅与自定义语气；字数为生成目标，不保证精确达标，也不会为了凑数补造内容。</p>
 
         <div class="settings-group">
@@ -579,6 +584,8 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 
         </details>
       </div>
+        <p id="settingsFeedback" class="settings-feedback" role="status" aria-live="polite"></p>
+      </dialog>
 
       <div class="history-panel" id="historyPanel">
         <div class="history-toolbar">

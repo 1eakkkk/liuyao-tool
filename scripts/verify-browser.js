@@ -71,10 +71,10 @@ try {
         ];
         await route.fulfill({ status: 200, contentType: 'text/event-stream', body: chunks.map(chunk => `data: ${JSON.stringify(chunk)}\n\n`).join('') + 'data: [DONE]\n\n' });
       });
-      await page.locator('#toggleSettingsBtn').click();
+      await page.locator('#toggleSettingsBtn, #aiSettings[open] #closeSettingsBtn').last().click();
       await page.locator('#apiKeyInput').fill('synthetic-browser-key');
       await page.locator('#saveKeyBtn').click();
-      await page.locator('#toggleSettingsBtn').click();
+      await page.locator('#toggleSettingsBtn, #aiSettings[open] #closeSettingsBtn').last().click();
       if (await page.locator('#readingMode').count()) await page.locator('#readingMode').selectOption('legacy'); await page.locator('#interpretBtn').click();
       await page.waitForFunction(() => !document.getElementById('interpretBtn').disabled && document.getElementById('aiResult').textContent.includes('固定流式回复'));
       await page.locator('#followUpInput').fill('固定追问');

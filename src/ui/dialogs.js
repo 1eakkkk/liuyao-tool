@@ -3,6 +3,14 @@ import { state } from '../app/state.js';
 
 
 function showToast(message, type = 'info', duration = 3200){
+  // Native modal dialogs render above page-level toasts; keep feedback in that layer.
+  const settings = document.getElementById('aiSettings');
+  const feedback = document.getElementById('settingsFeedback');
+  if (settings?.open && feedback) {
+    feedback.textContent = message;
+    feedback.dataset.type = type;
+    return;
+  }
   const el = document.createElement('div');
   el.className = `toast ${type === 'error' ? 'error' : (type === 'success' ? 'success' : '')}`;
   el.textContent = message;

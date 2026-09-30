@@ -50,10 +50,10 @@ try {
     await page.locator('#followUpExportInput').fill('请解释世应依据');
     await page.locator('#followUpExportBtn').click();
     assert.ok((await page.locator('#followUpExportOutput').inputValue()).includes('C_canonical_cast'));
-    await page.locator('#toggleSettingsBtn').click();
+    await page.locator('#toggleSettingsBtn, #aiSettings[open] #closeSettingsBtn').last().click();
     await page.locator('#apiKeyInput').fill('synthetic-phase5-key');
     await page.locator('#saveKeyBtn').click();
-    await page.locator('#toggleSettingsBtn').click();
+    await page.locator('#toggleSettingsBtn, #aiSettings[open] #closeSettingsBtn').last().click();
     const cast = await page.evaluate(() => JSON.parse(localStorage.getItem('liuyao_interpret_history')).at(-1).cast.canonical);
     const send = async (mode, selector, followUp = null) => {
       if (followUp) await page.locator('#followUpInput').fill(followUp);

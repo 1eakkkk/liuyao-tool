@@ -35,11 +35,16 @@ try {
       await page.locator('#toggleSettingsBtn').click();
       assert(await page.locator('#modelSelect').isHidden());
       await page.locator('#advancedSettings > summary').click();
+      await page.locator('#closeSettingsBtn').click();
       await page.locator('#readingMode').selectOption('structured');
+      await page.locator('#toggleSettingsBtn').click();
       assert(await page.locator('#roleSelect').isHidden()); assert(await page.locator('#effortSelect').isHidden());
       assert(await page.locator('#styleSelect').isVisible());
+      await page.locator('#closeSettingsBtn').click();
       await page.locator('#readingMode').selectOption('legacy');
+      await page.locator('#toggleSettingsBtn').click();
       assert(await page.locator('#roleSelect').isVisible()); assert(await page.locator('#effortSelect').isVisible());
+      await page.locator('#closeSettingsBtn').click();
       for(const width of [320,580,1280]) {
         await page.setViewportSize({width,height:900});
         for(const mode of ['light','dark']) {
@@ -51,10 +56,10 @@ try {
         }
       }
       await page.locator('#helpFab').click();
-      assert.equal(await page.locator('.onboard-card').evaluate(n=>getComputedStyle(n).backgroundColor),'rgb(27, 38, 46)');
+      assert.equal(await page.locator('.onboard-card').evaluate(n=>getComputedStyle(n).backgroundColor),'rgb(32, 39, 35)');
       await page.locator('#onboardCloseBtn').click(); await page.locator('[data-tab=caster]').click();
       await page.locator('#castBtn').click();
-      assert.equal(await page.locator('.physics-dialog').evaluate(n=>getComputedStyle(n).backgroundColor),'rgb(27, 38, 46)');
+      assert.equal(await page.locator('.physics-dialog').evaluate(n=>getComputedStyle(n).backgroundColor),'rgb(32, 39, 35)');
       await page.locator('.physics-close').click();
       assert.deepEqual(errors,[]);
       reports.push({engine,systemChanges:'passed',overrideAndPersistence:'passed',widths:[320,580,1280],structuredSettings:'hidden',legacySettings:'available',errors});

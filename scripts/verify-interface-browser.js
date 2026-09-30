@@ -70,7 +70,7 @@ try {
     await page.screenshot({ path: `${root}/${width}-guide.png`, fullPage: true });
     await page.locator('[data-tab="ai"]').click();
     await page.locator('#questionInput').fill('界面验收：仅检查排盘事实');
-    await page.locator('#toggleSettingsBtn').click();
+    await page.locator('#toggleSettingsBtn, #aiSettings[open] #closeSettingsBtn').last().click();
     await page.locator('#advancedSettings > summary').click();
     for (const button of await page.locator('.settings-group.collapsible .disclosure-trigger').all()) await button.click();
     await page.locator('#roleSelect').selectOption('custom');
@@ -83,7 +83,7 @@ try {
     for (const value of settingsStyles) assert.deepEqual(value, settingsStyles[0], `Inconsistent settings fields at ${width}`);
     await bounds('#apiKeyInput'); await bounds('#priceHit'); await noOverflow();
     await page.screenshot({ path: `${root}/${width}-settings.png`, fullPage: true });
-    await page.locator('#toggleSettingsBtn').click();
+    await page.locator('#toggleSettingsBtn, #aiSettings[open] #closeSettingsBtn').last().click();
     await page.locator('#readingMode').selectOption('structured');
     await bounds('#readingMode'); await bounds('#readingModeNote'); await noOverflow();
     await page.screenshot({ path: `${root}/${width}-ai.png`, fullPage: true });
