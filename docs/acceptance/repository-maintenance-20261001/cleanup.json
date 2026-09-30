@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-01",
+  "previous_commit": "d0f3dcc9245ccd4bb921ec48ce8ce16fc5c691a2",
+  "removed": [
+    {
+      "path": "README_代码结构导览片段.md",
+      "bytes": 862,
+      "sha256": "ef54600b95685ddfd2fb9cc4f99b535ba0fb19a0ce4dffc9f45fbf3e527ef2ae",
+      "reason": "Obsolete unreferenced structure fragment merged into main README"
+    },
+    {
+      "path": "test-results/editorial-extra.mjs",
+      "bytes": 1649,
+      "sha256": "97e37ad2af2df40397f704382d45e5cbd797c5d4e904f1381c69765f68c1ebe4",
+      "reason": "Unreferenced one-off UI review script; retained final screenshots and reports"
+    },
+    {
+      "path": "test-results/review-screens.mjs",
+      "bytes": 624,
+      "sha256": "86b0e47401c265b06ef795397cd8786891bd1b80f5c5a9dc31ffd4a9f341ec6c",
+      "reason": "Unreferenced one-off UI review script; retained final screenshots and reports"
+    }
+  ],
+  "archived": [
+    "assets/screenshot-ai.png",
+    "assets/screenshot-basics.png",
+    "assets/screenshot-plate.png",
+    "assets/screenshot-prompt_output.png"
+  ],
+  "branches": {
+    "local": [
+      "main"
+    ],
+    "remote": [
+      "main"
+    ],
+    "deleted": []
+  },
+  "preserved": [
+    "production source and dependencies",
+    "frozen benchmarks and baseline",
+    "historical corpora and acceptance failures",
+    "all paid runs and campaign ledger",
+    "user-owned untracked document",
+    "credentials and local configuration",
+    "rollback and archival tags"
+  ],
+  "history_rewritten": false
+}
