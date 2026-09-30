@@ -19,11 +19,10 @@ it('pairs differ only by explicit literature while preserving target facts, budg
     expect(b.input_bytes_with_allowance).toBeLessThanOrEqual(plan.input_token_allowance);
   }
 });
-it('small revised-protocol pilot stays within the remaining original campaign authorization', async () => {
+it('small preparation has a fixed reservation, not a claim that current remaining funds suffice', async () => {
   const plan = await prepareKnowledgePairs({ profile: 'one-pair' });
   expect(plan.cases).toHaveLength(1);
   expect(plan.reserve_cny).toBeCloseTo(0.185536, 6);
-  expect(plan.reserve_cny).toBeLessThan(0.204602);
   expect(plan.cases[0].arms.every(a => a.input_bytes_with_allowance <= plan.input_token_allowance)).toBe(true);
   await expect(prepareKnowledgePairs({ profile: 'unbounded' })).rejects.toThrow();
 });

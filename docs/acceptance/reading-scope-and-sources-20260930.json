@@ -1,0 +1,549 @@
+{
+  "version": "explicit-literature-pairs-dev-3",
+  "plan_hash": "sha256:91e37f273234005795ffe8cf7fa3ff5e780c8840bb72ea15bf831dbef47dad2a",
+  "network_calls": 0,
+  "production_changes": false,
+  "scope": "Exposed manually scoped development cases; no automatic intent understanding or live quality improvement established",
+  "semantic_support": "unassessed",
+  "source_attribution_in_model_prose": "unassessed",
+  "cases": [
+    {
+      "id": "month-break",
+      "question": "仅核对本盘第三爻与月建相冲的标注，解释月破名称。月破是否意味着这个爻永久无用、事情必然失败？不选用神、不判断成败、不推应期。",
+      "scope_audit": {
+        "version": "reviewed-evidence-scope-dev-1",
+        "method": "explicit_development_review",
+        "reason": "问题明确要求解释月破名称；当前程序已有第三爻月建相冲记录，不借此判断个案效力。",
+        "original_count": 106,
+        "selected_count": 4,
+        "selected": [
+          {
+            "id": "fact:/calendar/month_branch",
+            "reasons": [
+              "source_of:rule:MONTH-CLASH-001:primary:3:-"
+            ]
+          },
+          {
+            "id": "fact:/lines/2/branch",
+            "reasons": [
+              "source_of:rule:MONTH-CLASH-001:primary:3:-"
+            ]
+          },
+          {
+            "id": "fact:/lines/2/position",
+            "reasons": [
+              "explicit_fact"
+            ]
+          },
+          {
+            "id": "rule:MONTH-CLASH-001:primary:3:-",
+            "reasons": [
+              "explicit_rule"
+            ]
+          }
+        ],
+        "excluded_ids": [
+          "fact:/calendar/anchor/day",
+          "fact:/calendar/anchor/month",
+          "fact:/calendar/anchor/year",
+          "fact:/calendar/day_branch",
+          "fact:/calendar/day_ganzhi",
+          "fact:/calendar/hour_ganzhi",
+          "fact:/calendar/kongwang/0",
+          "fact:/calendar/kongwang/1",
+          "fact:/calendar/month_ganzhi",
+          "fact:/calendar/year_ganzhi",
+          "fact:/hexagram/primary/lower_trigram",
+          "fact:/hexagram/primary/name",
+          "fact:/hexagram/primary/palace",
+          "fact:/hexagram/primary/upper_trigram",
+          "fact:/hexagram/shi_line",
+          "fact:/hexagram/ying_line",
+          "fact:/lines/0/branch",
+          "fact:/lines/0/element",
+          "fact:/lines/0/ganzhi",
+          "fact:/lines/0/is_kongwang",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/0/is_ying",
+          "fact:/lines/0/moving",
+          "fact:/lines/0/position",
+          "fact:/lines/0/relations/month_strength",
+          "fact:/lines/0/relative",
+          "fact:/lines/0/spirit",
+          "fact:/lines/0/state_text",
+          "fact:/lines/0/yin_yang",
+          "fact:/lines/1/branch",
+          "fact:/lines/1/element",
+          "fact:/lines/1/ganzhi",
+          "fact:/lines/1/is_kongwang",
+          "fact:/lines/1/is_shi",
+          "fact:/lines/1/is_ying",
+          "fact:/lines/1/moving",
+          "fact:/lines/1/position",
+          "fact:/lines/1/relations/month_strength",
+          "fact:/lines/1/relative",
+          "fact:/lines/1/spirit",
+          "fact:/lines/1/state_text",
+          "fact:/lines/1/yin_yang",
+          "fact:/lines/2/element",
+          "fact:/lines/2/ganzhi",
+          "fact:/lines/2/is_kongwang",
+          "fact:/lines/2/is_shi",
+          "fact:/lines/2/is_ying",
+          "fact:/lines/2/moving",
+          "fact:/lines/2/relations/month_strength",
+          "fact:/lines/2/relative",
+          "fact:/lines/2/spirit",
+          "fact:/lines/2/state_text",
+          "fact:/lines/2/yin_yang",
+          "fact:/lines/3/branch",
+          "fact:/lines/3/element",
+          "fact:/lines/3/ganzhi",
+          "fact:/lines/3/is_kongwang",
+          "fact:/lines/3/is_shi",
+          "fact:/lines/3/is_ying",
+          "fact:/lines/3/moving",
+          "fact:/lines/3/position",
+          "fact:/lines/3/relations/day_relation",
+          "fact:/lines/3/relations/month_strength",
+          "fact:/lines/3/relative",
+          "fact:/lines/3/spirit",
+          "fact:/lines/3/state_text",
+          "fact:/lines/3/yin_yang",
+          "fact:/lines/4/branch",
+          "fact:/lines/4/element",
+          "fact:/lines/4/ganzhi",
+          "fact:/lines/4/is_kongwang",
+          "fact:/lines/4/is_shi",
+          "fact:/lines/4/is_ying",
+          "fact:/lines/4/moving",
+          "fact:/lines/4/position",
+          "fact:/lines/4/relations/month_strength",
+          "fact:/lines/4/relative",
+          "fact:/lines/4/spirit",
+          "fact:/lines/4/state_text",
+          "fact:/lines/4/yin_yang",
+          "fact:/lines/5/branch",
+          "fact:/lines/5/element",
+          "fact:/lines/5/ganzhi",
+          "fact:/lines/5/is_kongwang",
+          "fact:/lines/5/is_shi",
+          "fact:/lines/5/is_ying",
+          "fact:/lines/5/moving",
+          "fact:/lines/5/position",
+          "fact:/lines/5/relations/month_strength",
+          "fact:/lines/5/relative",
+          "fact:/lines/5/spirit",
+          "fact:/lines/5/state_text",
+          "fact:/lines/5/yin_yang",
+          "rule:DAY-COMBINE-001:primary:4:-",
+          "rule:LINE-VOID-001:primary:5:-",
+          "rule:MONTH-STATE-QIU-001:primary:2:-",
+          "rule:MONTH-STATE-SI-001:primary:3:-",
+          "rule:MONTH-STATE-WANG-001:primary:6:-",
+          "rule:MONTH-STATE-XIANG-001:primary:5:-",
+          "rule:MONTH-STATE-XIU-001:primary:1:-",
+          "rule:MONTH-STATE-XIU-001:primary:4:-",
+          "rule:SHI-CONTROL-YING-001:primary:6:3"
+        ],
+        "omitted_is_not_absent": true,
+        "question_relevance": "caller_reviewed_not_independently_validated"
+      },
+      "target_fact_ids": [
+        "fact:/calendar/month_branch",
+        "fact:/lines/2/branch"
+      ],
+      "missing_required_facts": [],
+      "source_labels": [
+        {
+          "id": "literature:zsby-month-clash-001",
+          "original": "原文转录",
+          "editorial": "现代整理（不是古籍原文）"
+        }
+      ],
+      "inputs": [
+        {
+          "id": "month-break-without-literature",
+          "input_bytes_with_allowance": 8149,
+          "packet_hash": "sha256:238dd4930ac42cfd70a0517f6fbc9b59e7b9095f9420c2cb0f27bcfbf7af0058"
+        },
+        {
+          "id": "month-break-with-literature",
+          "input_bytes_with_allowance": 10723,
+          "packet_hash": "sha256:20741ea43ddd59812db9fb2582f998dd8419a102ee05fa3cc14a63e6125dbfa5"
+        }
+      ]
+    },
+    {
+      "id": "month-combine",
+      "question": "仅核对本盘初爻与月建六合的标注，解释月合名称。月合是否就证明本爻实际有用、事情一定成功？不选用神、不判断成败、不推应期。",
+      "scope_audit": {
+        "version": "reviewed-evidence-scope-dev-1",
+        "method": "explicit_development_review",
+        "reason": "问题明确要求解释月合名称与评价边界；当前初爻已有月建六合记录，不能据此确认个案效力。",
+        "original_count": 129,
+        "selected_count": 4,
+        "selected": [
+          {
+            "id": "fact:/calendar/month_branch",
+            "reasons": [
+              "source_of:rule:MONTH-COMBINE-001:primary:1:-"
+            ]
+          },
+          {
+            "id": "fact:/lines/0/branch",
+            "reasons": [
+              "source_of:rule:MONTH-COMBINE-001:primary:1:-"
+            ]
+          },
+          {
+            "id": "fact:/lines/0/position",
+            "reasons": [
+              "explicit_fact"
+            ]
+          },
+          {
+            "id": "rule:MONTH-COMBINE-001:primary:1:-",
+            "reasons": [
+              "explicit_rule"
+            ]
+          }
+        ],
+        "excluded_ids": [
+          "fact:/calendar/anchor/day",
+          "fact:/calendar/anchor/month",
+          "fact:/calendar/anchor/year",
+          "fact:/calendar/day_branch",
+          "fact:/calendar/day_ganzhi",
+          "fact:/calendar/hour_ganzhi",
+          "fact:/calendar/kongwang/0",
+          "fact:/calendar/kongwang/1",
+          "fact:/calendar/month_ganzhi",
+          "fact:/calendar/year_ganzhi",
+          "fact:/hexagram/changed/name",
+          "fact:/hexagram/primary/lower_trigram",
+          "fact:/hexagram/primary/name",
+          "fact:/hexagram/primary/palace",
+          "fact:/hexagram/primary/upper_trigram",
+          "fact:/hexagram/shi_line",
+          "fact:/hexagram/ying_line",
+          "fact:/lines/0/changed/branch",
+          "fact:/lines/0/changed/element",
+          "fact:/lines/0/changed/ganzhi",
+          "fact:/lines/0/changed/relative",
+          "fact:/lines/0/element",
+          "fact:/lines/0/ganzhi",
+          "fact:/lines/0/is_kongwang",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/0/is_ying",
+          "fact:/lines/0/moving",
+          "fact:/lines/0/relations/month_strength",
+          "fact:/lines/0/relations/return_relation",
+          "fact:/lines/0/relative",
+          "fact:/lines/0/spirit",
+          "fact:/lines/0/state_text",
+          "fact:/lines/0/yin_yang",
+          "fact:/lines/1/branch",
+          "fact:/lines/1/changed/branch",
+          "fact:/lines/1/changed/element",
+          "fact:/lines/1/changed/ganzhi",
+          "fact:/lines/1/changed/relative",
+          "fact:/lines/1/element",
+          "fact:/lines/1/ganzhi",
+          "fact:/lines/1/is_kongwang",
+          "fact:/lines/1/is_shi",
+          "fact:/lines/1/is_ying",
+          "fact:/lines/1/moving",
+          "fact:/lines/1/position",
+          "fact:/lines/1/relations/month_strength",
+          "fact:/lines/1/relative",
+          "fact:/lines/1/spirit",
+          "fact:/lines/1/state_text",
+          "fact:/lines/1/yin_yang",
+          "fact:/lines/2/branch",
+          "fact:/lines/2/element",
+          "fact:/lines/2/ganzhi",
+          "fact:/lines/2/is_kongwang",
+          "fact:/lines/2/is_shi",
+          "fact:/lines/2/is_ying",
+          "fact:/lines/2/moving",
+          "fact:/lines/2/position",
+          "fact:/lines/2/relations/month_strength",
+          "fact:/lines/2/relative",
+          "fact:/lines/2/spirit",
+          "fact:/lines/2/state_text",
+          "fact:/lines/2/yin_yang",
+          "fact:/lines/3/branch",
+          "fact:/lines/3/element",
+          "fact:/lines/3/ganzhi",
+          "fact:/lines/3/is_kongwang",
+          "fact:/lines/3/is_shi",
+          "fact:/lines/3/is_ying",
+          "fact:/lines/3/moving",
+          "fact:/lines/3/position",
+          "fact:/lines/3/relations/month_strength",
+          "fact:/lines/3/relative",
+          "fact:/lines/3/spirit",
+          "fact:/lines/3/state_text",
+          "fact:/lines/3/yin_yang",
+          "fact:/lines/4/branch",
+          "fact:/lines/4/changed/branch",
+          "fact:/lines/4/changed/element",
+          "fact:/lines/4/changed/ganzhi",
+          "fact:/lines/4/changed/relative",
+          "fact:/lines/4/element",
+          "fact:/lines/4/ganzhi",
+          "fact:/lines/4/is_kongwang",
+          "fact:/lines/4/is_shi",
+          "fact:/lines/4/is_ying",
+          "fact:/lines/4/moving",
+          "fact:/lines/4/position",
+          "fact:/lines/4/relations/day_relation",
+          "fact:/lines/4/relations/month_strength",
+          "fact:/lines/4/relative",
+          "fact:/lines/4/spirit",
+          "fact:/lines/4/state_text",
+          "fact:/lines/4/yin_yang",
+          "fact:/lines/5/branch",
+          "fact:/lines/5/changed/branch",
+          "fact:/lines/5/changed/element",
+          "fact:/lines/5/changed/ganzhi",
+          "fact:/lines/5/changed/relative",
+          "fact:/lines/5/element",
+          "fact:/lines/5/ganzhi",
+          "fact:/lines/5/is_kongwang",
+          "fact:/lines/5/is_shi",
+          "fact:/lines/5/is_ying",
+          "fact:/lines/5/moving",
+          "fact:/lines/5/position",
+          "fact:/lines/5/relations/month_strength",
+          "fact:/lines/5/relative",
+          "fact:/lines/5/spirit",
+          "fact:/lines/5/state_text",
+          "fact:/lines/5/yin_yang",
+          "rule:DAY-COMBINE-001:primary:5:-",
+          "rule:LINE-MOVING-001:primary:1:-",
+          "rule:LINE-MOVING-001:primary:2:-",
+          "rule:LINE-MOVING-001:primary:5:-",
+          "rule:LINE-MOVING-001:primary:6:-",
+          "rule:LINE-VOID-001:primary:5:-",
+          "rule:MONTH-STATE-QIU-001:primary:2:-",
+          "rule:MONTH-STATE-SI-001:primary:1:-",
+          "rule:MONTH-STATE-WANG-001:primary:3:-",
+          "rule:MONTH-STATE-WANG-001:primary:6:-",
+          "rule:MONTH-STATE-XIANG-001:primary:5:-",
+          "rule:MONTH-STATE-XIU-001:primary:4:-",
+          "rule:MOVE-RETURN-CONTROL-001:primary:1:-",
+          "rule:SHI-YING-SAME-ELEMENT-001:primary:6:3"
+        ],
+        "omitted_is_not_absent": true,
+        "question_relevance": "caller_reviewed_not_independently_validated"
+      },
+      "target_fact_ids": [
+        "fact:/calendar/month_branch",
+        "fact:/lines/0/branch"
+      ],
+      "missing_required_facts": [],
+      "source_labels": [
+        {
+          "id": "literature:zsby-month-combine-001",
+          "original": "原文转录",
+          "editorial": "现代整理（不是古籍原文）"
+        }
+      ],
+      "inputs": [
+        {
+          "id": "month-combine-without-literature",
+          "input_bytes_with_allowance": 8127,
+          "packet_hash": "sha256:238dd4930ac42cfd70a0517f6fbc9b59e7b9095f9420c2cb0f27bcfbf7af0058"
+        },
+        {
+          "id": "month-combine-with-literature",
+          "input_bytes_with_allowance": 11049,
+          "packet_hash": "sha256:956f16e305079b569f36d048b1f106ce921c15bb9e48138f82777f8dd42750e5"
+        }
+      ]
+    },
+    {
+      "id": "void",
+      "question": "仅核对本盘第五爻旬空标注，解释甲子旬空亡的历法名称。旬空是否等于完全无用，出空当天是否必成？不讨论真空假空、不选用神、不推日期。",
+      "scope_audit": {
+        "version": "reviewed-evidence-scope-dev-1",
+        "method": "explicit_development_review",
+        "reason": "程序日柱为甲子，问题仅要求甲子旬空亡的名称，第五爻已有旬空记录；与原文甲子旬例对应，不扩展到实际效力。",
+        "original_count": 106,
+        "selected_count": 7,
+        "selected": [
+          {
+            "id": "fact:/calendar/day_ganzhi",
+            "reasons": [
+              "explicit_fact"
+            ]
+          },
+          {
+            "id": "fact:/calendar/kongwang/0",
+            "reasons": [
+              "explicit_fact"
+            ]
+          },
+          {
+            "id": "fact:/calendar/kongwang/1",
+            "reasons": [
+              "explicit_fact"
+            ]
+          },
+          {
+            "id": "fact:/lines/4/branch",
+            "reasons": [
+              "explicit_fact"
+            ]
+          },
+          {
+            "id": "fact:/lines/4/is_kongwang",
+            "reasons": [
+              "source_of:rule:LINE-VOID-001:primary:5:-"
+            ]
+          },
+          {
+            "id": "fact:/lines/4/position",
+            "reasons": [
+              "explicit_fact"
+            ]
+          },
+          {
+            "id": "rule:LINE-VOID-001:primary:5:-",
+            "reasons": [
+              "explicit_rule"
+            ]
+          }
+        ],
+        "excluded_ids": [
+          "fact:/calendar/anchor/day",
+          "fact:/calendar/anchor/month",
+          "fact:/calendar/anchor/year",
+          "fact:/calendar/day_branch",
+          "fact:/calendar/hour_ganzhi",
+          "fact:/calendar/month_branch",
+          "fact:/calendar/month_ganzhi",
+          "fact:/calendar/year_ganzhi",
+          "fact:/hexagram/primary/lower_trigram",
+          "fact:/hexagram/primary/name",
+          "fact:/hexagram/primary/palace",
+          "fact:/hexagram/primary/upper_trigram",
+          "fact:/hexagram/shi_line",
+          "fact:/hexagram/ying_line",
+          "fact:/lines/0/branch",
+          "fact:/lines/0/element",
+          "fact:/lines/0/ganzhi",
+          "fact:/lines/0/is_kongwang",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/0/is_ying",
+          "fact:/lines/0/moving",
+          "fact:/lines/0/position",
+          "fact:/lines/0/relations/month_strength",
+          "fact:/lines/0/relative",
+          "fact:/lines/0/spirit",
+          "fact:/lines/0/state_text",
+          "fact:/lines/0/yin_yang",
+          "fact:/lines/1/branch",
+          "fact:/lines/1/element",
+          "fact:/lines/1/ganzhi",
+          "fact:/lines/1/is_kongwang",
+          "fact:/lines/1/is_shi",
+          "fact:/lines/1/is_ying",
+          "fact:/lines/1/moving",
+          "fact:/lines/1/position",
+          "fact:/lines/1/relations/month_strength",
+          "fact:/lines/1/relative",
+          "fact:/lines/1/spirit",
+          "fact:/lines/1/state_text",
+          "fact:/lines/1/yin_yang",
+          "fact:/lines/2/branch",
+          "fact:/lines/2/element",
+          "fact:/lines/2/ganzhi",
+          "fact:/lines/2/is_kongwang",
+          "fact:/lines/2/is_shi",
+          "fact:/lines/2/is_ying",
+          "fact:/lines/2/moving",
+          "fact:/lines/2/position",
+          "fact:/lines/2/relations/month_strength",
+          "fact:/lines/2/relative",
+          "fact:/lines/2/spirit",
+          "fact:/lines/2/state_text",
+          "fact:/lines/2/yin_yang",
+          "fact:/lines/3/branch",
+          "fact:/lines/3/element",
+          "fact:/lines/3/ganzhi",
+          "fact:/lines/3/is_kongwang",
+          "fact:/lines/3/is_shi",
+          "fact:/lines/3/is_ying",
+          "fact:/lines/3/moving",
+          "fact:/lines/3/position",
+          "fact:/lines/3/relations/day_relation",
+          "fact:/lines/3/relations/month_strength",
+          "fact:/lines/3/relative",
+          "fact:/lines/3/spirit",
+          "fact:/lines/3/state_text",
+          "fact:/lines/3/yin_yang",
+          "fact:/lines/4/element",
+          "fact:/lines/4/ganzhi",
+          "fact:/lines/4/is_shi",
+          "fact:/lines/4/is_ying",
+          "fact:/lines/4/moving",
+          "fact:/lines/4/relations/month_strength",
+          "fact:/lines/4/relative",
+          "fact:/lines/4/spirit",
+          "fact:/lines/4/state_text",
+          "fact:/lines/4/yin_yang",
+          "fact:/lines/5/branch",
+          "fact:/lines/5/element",
+          "fact:/lines/5/ganzhi",
+          "fact:/lines/5/is_kongwang",
+          "fact:/lines/5/is_shi",
+          "fact:/lines/5/is_ying",
+          "fact:/lines/5/moving",
+          "fact:/lines/5/position",
+          "fact:/lines/5/relations/month_strength",
+          "fact:/lines/5/relative",
+          "fact:/lines/5/spirit",
+          "fact:/lines/5/state_text",
+          "fact:/lines/5/yin_yang",
+          "rule:DAY-COMBINE-001:primary:4:-",
+          "rule:MONTH-CLASH-001:primary:3:-",
+          "rule:MONTH-STATE-QIU-001:primary:2:-",
+          "rule:MONTH-STATE-SI-001:primary:3:-",
+          "rule:MONTH-STATE-WANG-001:primary:6:-",
+          "rule:MONTH-STATE-XIANG-001:primary:5:-",
+          "rule:MONTH-STATE-XIU-001:primary:1:-",
+          "rule:MONTH-STATE-XIU-001:primary:4:-",
+          "rule:SHI-CONTROL-YING-001:primary:6:3"
+        ],
+        "omitted_is_not_absent": true,
+        "question_relevance": "caller_reviewed_not_independently_validated"
+      },
+      "target_fact_ids": [
+        "fact:/lines/4/is_kongwang"
+      ],
+      "missing_required_facts": [],
+      "source_labels": [
+        {
+          "id": "literature:zsby-void-definition-001",
+          "original": "原文转录",
+          "editorial": "现代整理（不是古籍原文）"
+        }
+      ],
+      "inputs": [
+        {
+          "id": "void-without-literature",
+          "input_bytes_with_allowance": 8519,
+          "packet_hash": "sha256:238dd4930ac42cfd70a0517f6fbc9b59e7b9095f9420c2cb0f27bcfbf7af0058"
+        },
+        {
+          "id": "void-with-literature",
+          "input_bytes_with_allowance": 11297,
+          "packet_hash": "sha256:a7fbdb3a802824b8800b22ca429f08fba201f90d8e2ef2a37c9638e2fcbbb19d"
+        }
+      ]
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import { loadCorpus } from '../../src/knowledge/load.js';
 import { literatureCards, buildLiteraturePacket } from '../../src/knowledge/packet.js';
 import { RULES, RULESET_VERSION } from '../../src/rules/registry.js';
 import { layeredOutputInstructions } from '../../experiments/reading-quality/layered-output.js';
+import { literatureSourceViews } from '../../src/knowledge/source-view.js';
 
 const index = loadCorpus(undefined, { ruleIds: RULES.map(r => r.rule_id), rulesetVersion: RULESET_VERSION });
 const cards = literatureCards(index);
@@ -11,6 +12,9 @@ const out = new URL('../../test-results/knowledge-reading/', import.meta.url);
 fs.mkdirSync(out, { recursive: true });
 fs.writeFileSync(new URL('cards.json', out), JSON.stringify({ ...index, network_calls: 0, cards }, null, 2) + '\n');
 fs.writeFileSync(new URL('empty-packet.json', out), JSON.stringify(empty, null, 2) + '\n');
+// Review display of all admitted materials, not a model input or automatic selection.
+const views = cards.map(c => literatureSourceViews({ ...empty.packet, cards: [c] }, [c.literature_id])[0]);
+fs.writeFileSync(new URL('source-views.json', out), JSON.stringify({ mode: 'offline_catalog_review', views }, null, 2) + '\n');
 fs.writeFileSync(new URL('output-instructions.txt', out), layeredOutputInstructions() + '\n');
 const conditions = value => value.status === 'none_stated' ? '原文片段未陈述；不代表不存在。' : value.statements.join('；');
 const lines = ['# 离线文献阅读卡', '',
@@ -19,11 +23,11 @@ const lines = ['# 离线文献阅读卡', '',
   '使用顺序：核对问题与程序事实 → 阅读适用／禁用条件 → 明确记录适用理由 → 按预算选取资料 → 分开检查事实、解释和现实建议。', '',
   '不确定是否适用时选择 uncertain；未选择时生成空资料包。不得因命中关键词或规则 ID 自动判断适用。', ''];
 for (const c of cards) {
-  lines.push(`## ${c.knowledge_id}`, '', c.editorial_summary, '',
-    `原文：${c.original_text}`, '',
-    `适用条件：${conditions(c.applicable_conditions)}`, '',
-    `禁用边界：${conditions(c.exclusions)}`, '',
-    `例外记录：${conditions(c.exceptions)}`, '',
+  lines.push(`## ${c.knowledge_id}`, '', `现代整理摘要（不是原文）：${c.editorial_summary}`, '',
+    `原文转录：${c.original_text}`, '',
+    `适用条件（现代整理）：${conditions(c.applicable_conditions)}`, '',
+    `禁用边界（现代整理）：${conditions(c.exclusions)}`, '',
+    `例外记录（现代整理）：${conditions(c.exceptions)}`, '',
     `出处：[${c.citation.title}](${c.citation.source_url})；扫描第 ${c.citation.locator.image_page} 页；片段 ${c.citation.segment_ref.segment_id}@${c.citation.segment_ref.revision}。`, '',
     `原文片段哈希：${c.citation.text_hash}；文献类型：${c.source_type}。`, '',
     '用途：文献解释背景；独立证据增量为零；现实预测表现未建立。', '');
