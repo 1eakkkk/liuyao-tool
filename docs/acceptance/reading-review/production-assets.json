@@ -1,0 +1,34 @@
+[
+  {
+    "local_sha256": "fcdc0bbad79e597702d70c0160c79badea79491a211f121be96ef268234ea950",
+    "remote_sha256": "fcdc0bbad79e597702d70c0160c79badea79491a211f121be96ef268234ea950",
+    "path": "assets/index-CCql43zm.js",
+    "comparison": "Exact bytes",
+    "match": true,
+    "raw_match": true
+  },
+  {
+    "local_sha256": "cfbc87283e0a23a62545c7241dd6741bc841acd6d82d8c253c277d14da361663",
+    "remote_sha256": "cfbc87283e0a23a62545c7241dd6741bc841acd6d82d8c253c277d14da361663",
+    "path": "assets/index-Cv__8OY9.css",
+    "comparison": "Exact bytes",
+    "match": true,
+    "raw_match": true
+  },
+  {
+    "local_sha256": "6e3316d7bc16115d6f70f96482ee267fde83702dcbf73ecf9f927fee99358481",
+    "remote_sha256": "23b9c743cc6d4fda34d4ad6d58c0ae796efc4378fe7c8a68608d296917c38b0a",
+    "path": "index.html",
+    "comparison": "CR normalization and exactly one observed Cloudflare Insights script removed",
+    "match": true,
+    "raw_match": false
+  },
+  {
+    "local_sha256": "6968efb8ee824bdcb1b0627ee9cf518ff4b360aba606c135448a53684c73e14d",
+    "remote_sha256": "db455862532568091020d9a954f27dd9a73bdef245ba5c3aab629dbab39f6ace",
+    "path": "vendor/cannon.js",
+    "comparison": "CR normalization",
+    "match": true,
+    "raw_match": false
+  }
+]

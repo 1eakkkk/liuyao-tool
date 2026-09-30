@@ -1,0 +1,53 @@
+[
+  {
+    "width": 1280,
+    "browser_engine": "chromium",
+    "api": "mocked",
+    "export_roundtrip": "passed",
+    "evidence_deduplication": "passed",
+    "nested_provenance": false,
+    "long_conclusion": "passed",
+    "history_keyboard": "passed",
+    "disclosure_preservation": "passed",
+    "history_scroll_preservation": "passed",
+    "replay_rejected": true,
+    "restore": "passed",
+    "stop": "passed",
+    "replacement": "passed",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "browser_engine": "chromium",
+    "api": "mocked",
+    "export_roundtrip": "passed",
+    "evidence_deduplication": "passed",
+    "nested_provenance": false,
+    "long_conclusion": "passed",
+    "history_keyboard": "passed",
+    "disclosure_preservation": "passed",
+    "history_scroll_preservation": "passed",
+    "replay_rejected": true,
+    "restore": "passed",
+    "stop": "passed",
+    "replacement": "passed",
+    "errors": []
+  },
+  {
+    "width": 320,
+    "browser_engine": "chromium",
+    "api": "mocked",
+    "export_roundtrip": "passed",
+    "evidence_deduplication": "passed",
+    "nested_provenance": false,
+    "long_conclusion": "passed",
+    "history_keyboard": "passed",
+    "disclosure_preservation": "passed",
+    "history_scroll_preservation": "passed",
+    "replay_rejected": true,
+    "restore": "passed",
+    "stop": "passed",
+    "replacement": "passed",
+    "errors": []
+  }
+]
