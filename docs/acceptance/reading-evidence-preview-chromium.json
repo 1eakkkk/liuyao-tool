@@ -1,0 +1,28 @@
+[
+  {
+    "width": 1280,
+    "browser_engine": "chromium",
+    "api": "mocked",
+    "export_roundtrip": "passed",
+    "evidence_deduplication": "passed",
+    "nested_provenance": false,
+    "replay_rejected": true,
+    "restore": "passed",
+    "stop": "passed",
+    "replacement": "passed",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "browser_engine": "chromium",
+    "api": "mocked",
+    "export_roundtrip": "passed",
+    "evidence_deduplication": "passed",
+    "nested_provenance": false,
+    "replay_rejected": true,
+    "restore": "passed",
+    "stop": "passed",
+    "replacement": "passed",
+    "errors": []
+  }
+]

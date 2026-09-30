@@ -1,0 +1,8 @@
+{
+  "path": "index.html",
+  "raw_sha256": "ff2e51389aabec9aab653f6cac651cd0954c64097ed86bafa15b87c8612da20e",
+  "comparison": "Remove carriage returns and exactly one observed Cloudflare Insights script; no other HTML normalization",
+  "normalized_sha256": "3532002a02a3bc78c3d4ed83374a77bd6d0169de79bbc97926d9ef773e34eb6e",
+  "expected_normalized_sha256": "3532002a02a3bc78c3d4ed83374a77bd6d0169de79bbc97926d9ef773e34eb6e",
+  "match": true
+}

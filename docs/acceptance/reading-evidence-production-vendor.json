@@ -1,0 +1,8 @@
+{
+  "path": "vendor/cannon.js",
+  "raw_sha256": "db455862532568091020d9a954f27dd9a73bdef245ba5c3aab629dbab39f6ace",
+  "comparison": "Carriage-return normalization only",
+  "normalized_sha256": "db455862532568091020d9a954f27dd9a73bdef245ba5c3aab629dbab39f6ace",
+  "expected_normalized_sha256": "db455862532568091020d9a954f27dd9a73bdef245ba5c3aab629dbab39f6ace",
+  "match": true
+}
