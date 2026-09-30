@@ -8,6 +8,7 @@ import {test,expect} from 'vitest';
 import {auditCompletedPilot,settlePilot} from '../../scripts/settle-knowledge-pilot.js';
 import {accountedCampaignAmount,reserveCampaign} from '../../scripts/deepseek-campaign-budget.js';
 import {prepareSourcedPairs} from '../../experiments/reading-quality/sourced-pairs.js';
+import {prepareLiveClarityPairs} from '../../experiments/reading-quality/clarity-live-pairs.js';
 import {sealPlan} from '../../experiments/reading-quality/knowledge-pairs.js';
 const repo=fileURLToPath(new URL('../../',import.meta.url));
 function temporary(work){const root=fs.mkdtempSync(path.join(os.tmpdir(),'sourced-live-'));try{return work(root);}finally{
@@ -43,14 +44,17 @@ test('ledger lock rejects reconciliation and preserves bytes',()=>temporary(root
   const ledger=path.join(root,'ledger.json');write(ledger,{limit_cny:2,reservations:[]});const before=fs.readFileSync(ledger,'utf8');
   fs.writeFileSync(ledger+'.lock','');expect(()=>settlePilot(ledger,root)).toThrow();expect(fs.readFileSync(ledger,'utf8')).toBe(before);
 }));
-test.each(['valid','duplicate','escaped_duplicate','truncated','invalid_origin','wrong_seal','insufficient_balance'])('paid executor mocked: %s, replay rejected without further calls',async kind=>{
-  const plan=await prepareSourcedPairs('one-pair');
+const kinds=['valid','duplicate','escaped_duplicate','truncated','invalid_origin','wrong_seal','insufficient_balance','missing_usage','unknown_model'];
+const pilots=['original','clarity'].flatMap(pilot=>[...kinds,...(pilot==='clarity'?['third_case_failure']:[])].map(kind=>({pilot,kind})));
+test.each(pilots)('paid executor mocked: $pilot $kind, replay rejected without further calls',async ({pilot,kind})=>{
+  const plan=pilot==='original'?await prepareSourcedPairs('one-pair'):await prepareLiveClarityPairs();
   temporary(root=>{
     const dir=path.join(root,'run');fs.mkdirSync(dir);write(path.join(dir,'plan.json'),plan);write(path.join(dir,'seal.json'),{hash:sealPlan(plan)});
     if(kind==='wrong_seal') write(path.join(dir,'seal.json'),{hash:'wrong'});
     fs.mkdirSync(path.join(root,'test-results'));write(path.join(root,'test-results/deepseek-campaign-budget.json'),{limit_cny:19.95,reservations:[]});
     fs.writeFileSync(path.join(root,'.env.deepseek.local'),'DEEPSEEK_API_KEY=MOCK_ONLY\n');
     const mock=path.join(root,'mock.mjs');fs.writeFileSync(mock,`import fs from 'node:fs';
+const RealDate=globalThis.Date;globalThis.Date=class extends RealDate{constructor(...args){super(...(args.length?args:[${JSON.stringify(plan.price_checked+'T12:00:00.000Z')}]));}static now(){return new RealDate(${JSON.stringify(plan.price_checked+'T12:00:00.000Z')}).valueOf();}};
 globalThis.fetch=async(url,options)=>{
  if(url==='https://api.deepseek.com/user/balance')return{ok:true,json:async()=>({is_available:true,balance_infos:[{currency:'CNY',total_balance:${JSON.stringify(kind==='insufficient_balance'?'0':'20')}}]})};
  if(url!=='https://api.deepseek.com/chat/completions')throw Error('Unexpected endpoint');
@@ -58,9 +62,10 @@ globalThis.fetch=async(url,options)=>{
  const a={schema_version:'layered-reading-sourced-dev-1',conclusion:'模拟协议检查，不是模型评价。',facts:input.evidence.filter(e=>e.kind==='program_fact').map(e=>({evidence_id:e.id,value:e.value})),rules:input.evidence.filter(e=>e.kind==='rule_result').map(e=>({evidence_id:e.id,result:e.result})),interpretations:[{text:'仅核对字段。',fact_ids:input.evidence.filter(e=>e.kind==='program_fact').map(e=>e.id),rule_ids:input.evidence.filter(e=>e.kind==='rule_result').map(e=>e.id),literature_ids:card?[card.literature_id]:[],applicability:'开发检查。',uncertainties:['语义未确认。'],source_claims:card?[{literature_id:card.literature_id,field:'/original_text',origin:${JSON.stringify(kind==='invalid_origin'?'modern_editorial':'source_transcription')},quote:card.original_text}]:[]}],advice:[]};
  let content=JSON.stringify(a);if(${JSON.stringify(kind)}==='duplicate')content=content.replace('"conclusion":','"conclusion":"重复", "conclusion":');
  if(${JSON.stringify(kind)}==='escaped_duplicate')content=content.replace('"conclusion":','"concl'+String.fromCharCode(92)+'u0075sion":"重复","conclusion":');
- return{ok:true,json:async()=>({model:'deepseek-flash',choices:[{finish_reason:${JSON.stringify(kind==='truncated'?'length':'stop')},message:{content}}],usage:{prompt_tokens:100,completion_tokens:200,total_tokens:300}})};
+ if(${JSON.stringify(kind)}==='third_case_failure' && input.question.includes('第五爻'))content=content.replace('"conclusion":','"conclusion":"重复","conclusion":');
+ return{ok:true,json:async()=>({model:${JSON.stringify(kind==='unknown_model'?'unknown':'deepseek-flash')},choices:[{finish_reason:${JSON.stringify(kind==='truncated'?'length':'stop')},message:{content}}],usage:${kind==='missing_usage'?'null':'{prompt_tokens:100,completion_tokens:200,total_tokens:300}'}})};
 };`);
-    const args=['--import',pathToFileURL(mock).href,path.join(repo,'scripts/execute-sourced-reading.js'),dir];
+    const args=['--import',pathToFileURL(mock).href,...(pilot==='original'?[path.join(repo,'scripts/execute-sourced-reading.js'),dir]:[path.join(repo,'scripts/clarity-live-pilot.js'),'execute',dir])];
     const run=()=>execFileSync(process.execPath,args,{cwd:root,stdio:'pipe'});
     if(kind==='valid') expect(()=>run()).not.toThrow();else expect(()=>run()).toThrow();
     if(['wrong_seal','insufficient_balance'].includes(kind)) {
@@ -69,7 +74,8 @@ globalThis.fetch=async(url,options)=>{
       expect(JSON.parse(fs.readFileSync(path.join(root,'test-results/deepseek-campaign-budget.json'))).reservations).toHaveLength(0);
       return;
     }
-    const calls=fs.readFileSync(path.join(root,'calls.txt'),'utf8');expect(calls.trim().split('\n')).toHaveLength(['valid','invalid_origin'].includes(kind)?2:1);
+    const calls=fs.readFileSync(path.join(root,'calls.txt'),'utf8');
+    expect(calls.trim().split('\n')).toHaveLength(kind==='valid'?(pilot==='original'?2:4):kind==='invalid_origin'?2:kind==='third_case_failure'?3:1);
     const summary=JSON.parse(fs.readFileSync(path.join(dir,'summary.json')));expect(summary.production_changes).toBe(false);
     if(kind==='duplicate') expect(summary.results[0].status).toBe('request_or_processing_failed');
     expect(()=>run()).toThrow();expect(fs.readFileSync(path.join(root,'calls.txt'),'utf8')).toBe(calls);
