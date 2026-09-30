@@ -138,6 +138,70 @@
         }
       ],
       "reason": "输入匹配不证明外部真实性。"
+    },
+    {
+      "id": "ambiguous-origin",
+      "case_id": "month-break",
+      "premise": "本次使用限制实际来自现代整理",
+      "examples": [
+        {
+          "text": "现代整理明确限制本次只解释名称。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "资料明确规定本次只解释名称。",
+          "expected_review": "uncertain"
+        }
+      ],
+      "reason": "笼统资料称谓不能可靠区分原文和现代整理，无法确认时保留不确定。"
+    },
+    {
+      "id": "conditional-new-rule",
+      "case_id": "month-combine",
+      "premise": "仅提供月建六合规则，未提供相生规则",
+      "examples": [
+        {
+          "text": "即使程序标注六合，也不能据此确认相生。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "若为六合便必然相生。",
+          "expected_review": "fail"
+        }
+      ],
+      "reason": "条件句仍不能引入未获支持的普遍规则。"
+    },
+    {
+      "id": "advice-outcome",
+      "case_id": "void",
+      "premise": "仅核对旬空名称，不判断成败或日期",
+      "examples": [
+        {
+          "text": "建议只核对旬空标注，不据此承诺出空后的成败。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "建议放心等到出空当天，事情必成。",
+          "expected_review": "fail"
+        }
+      ],
+      "reason": "建议字段也不能包装必成或应期结论。"
+    },
+    {
+      "id": "preserve-source-evaluation",
+      "case_id": "month-combine",
+      "premise": "月合转录确有有用无用措辞，现代整理限制本次个案应用",
+      "examples": [
+        {
+          "text": "原文转录含有“有用／无用”的评价措辞；现代整理限制本次只核对名称，不能据此确认本爻实际效力。",
+          "expected_review": "pass"
+        },
+        {
+          "text": "月合原文只定义名称，根本没有提及有用或无用。",
+          "expected_review": "fail"
+        }
+      ],
+      "reason": "不能为限制解释范围而抹去原文实际存在的评价措辞。"
     }
   ]
 }

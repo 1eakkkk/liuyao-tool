@@ -35,7 +35,9 @@ function synthetic(c){const card=c.arms[1].material.packet.cards[0];
     interpretations:[{text:'合成解释。',fact_ids:facts.map(e=>e.id),rule_ids:rules.map(e=>e.id),literature_ids:[card.literature_id],
       applicability:'合成适用性。',uncertainties:['尚未验证。'],source_claims:[
         {literature_id:card.literature_id,field:'/original_text',origin:'source_transcription',quote:card.original_text},
-        {literature_id:card.literature_id,field:'/editorial_summary',origin:'modern_editorial',quote:card.editorial_summary}]}],advice:[]};
+        {literature_id:card.literature_id,field:'/editorial_summary',origin:'modern_editorial',quote:card.editorial_summary},
+        ...['applicable_conditions','exclusions'].filter(field=>typeof card[field]?.statements?.[0]==='string')
+          .map(field=>({literature_id:card.literature_id,field:`/${field}/statements/0`,origin:'modern_editorial',quote:card[field].statements[0]}))]}],advice:[]};
 }
 test.each(controls.controls)('retains the semantic limitation in every free-text field: $id',control=>{
   const c=plan.cases.find(c=>c.id===control.case_id);

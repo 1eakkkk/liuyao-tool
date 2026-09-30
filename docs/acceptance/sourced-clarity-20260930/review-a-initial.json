@@ -1,0 +1,373 @@
+{
+  "version": "sourced-clarity-independent-development-review-1",
+  "reviewer_id": "agent-a",
+  "review_kind": "independent_development_review",
+  "assessment_target": "Handwritten controls, prompt candidate and locally prepared inputs; not generated model responses",
+  "retrospective_nonblind": true,
+  "blind_acceptance": false,
+  "generated_output_acceptance": false,
+  "production_ready": false,
+  "model_improvement_established": false,
+  "network_calls": 0,
+  "inputs_reviewed": {
+    "controls_path": "experiments/reading-quality/sourced-clarity-controls.json",
+    "controls_hash": "sha256:8fa07549e257185d10143d66f52f6088815ba060ccdfa9d58f4208336cb001ad",
+    "source_path": "experiments/reading-quality/sourced-clarity.js",
+    "source_hash": "sha256:3a6f82548bd59c25f8ffd1cc1649fb3b95f43b5762d2169d47e3a2bb19e5a33d",
+    "instructions_version": "sourced-instructions-dev-2",
+    "instructions_hash": "sha256:53760751d423ebf376e5dd6334ef23b60794a555e658112f5e0fcac2412bb117",
+    "prepared_inputs": [
+      {
+        "case_id": "month-break",
+        "arms": [
+          {
+            "arm_id": "month-break-without-literature",
+            "input_hash": "sha256:086e57d047af06356094b20343119342af5e9e567308a88d854a439b4fa87fd1",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/2/branch",
+              "fact:/lines/2/position",
+              "rule:MONTH-CLASH-001:primary:3:-"
+            ],
+            "cards": []
+          },
+          {
+            "arm_id": "month-break-with-literature",
+            "input_hash": "sha256:d4bd6c342daca2836918a992b583221c2e94e95f1b04eefafa918837fb7b1527",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/2/branch",
+              "fact:/lines/2/position",
+              "rule:MONTH-CLASH-001:primary:3:-"
+            ],
+            "cards": [
+              {
+                "literature_id": "literature:zsby-month-clash-001",
+                "original_text": "月建沖之爲月破逐月之破日是也。",
+                "applicable_conditions": {
+                  "statements": [
+                    "仅解释月建相冲的命名。"
+                  ],
+                  "status": "specified"
+                },
+                "exclusions": {
+                  "statements": [
+                    "不推定无用、永久失效或吉凶；后文动态与时间条件不在本命题内。"
+                  ],
+                  "status": "specified"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "case_id": "month-combine",
+        "arms": [
+          {
+            "arm_id": "month-combine-without-literature",
+            "input_hash": "sha256:d076bc7a1e746cd176a9c6a32262fb3ad30a409e4da98d16072d56644901f752",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/0/branch",
+              "fact:/lines/0/position",
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "cards": []
+          },
+          {
+            "arm_id": "month-combine-with-literature",
+            "input_hash": "sha256:8e8d5a119a2fbc142a16b65ac57e34532a81d10ec24637003697b3402f686637",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/0/branch",
+              "fact:/lines/0/position",
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "cards": [
+              {
+                "literature_id": "literature:zsby-month-combine-001",
+                "original_text": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻。卽爲月破無用之爻也。",
+                "applicable_conditions": {
+                  "statements": [
+                    "仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。"
+                  ],
+                  "status": "specified"
+                },
+                "exclusions": {
+                  "statements": [
+                    "本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
+                    "不能据此直接推出事情有利、成功或最终吉凶；不以相邻无用句取代月破章的条件。"
+                  ],
+                  "status": "specified"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "case_id": "void",
+        "arms": [
+          {
+            "arm_id": "void-without-literature",
+            "input_hash": "sha256:6466d38af57b2775698e5c3816d83bb6125d39f5e415f655a7cf1f533e10683b",
+            "evidence_ids": [
+              "fact:/calendar/day_ganzhi",
+              "fact:/calendar/kongwang/0",
+              "fact:/calendar/kongwang/1",
+              "fact:/lines/4/branch",
+              "fact:/lines/4/is_kongwang",
+              "fact:/lines/4/position",
+              "rule:LINE-VOID-001:primary:5:-"
+            ],
+            "cards": []
+          },
+          {
+            "arm_id": "void-with-literature",
+            "input_hash": "sha256:5f9238d649b524147a98f8f59b56e268faf8a64c90b05db88961c9340018e169",
+            "evidence_ids": [
+              "fact:/calendar/day_ganzhi",
+              "fact:/calendar/kongwang/0",
+              "fact:/calendar/kongwang/1",
+              "fact:/lines/4/branch",
+              "fact:/lines/4/is_kongwang",
+              "fact:/lines/4/position",
+              "rule:LINE-VOID-001:primary:5:-"
+            ],
+            "cards": [
+              {
+                "literature_id": "literature:zsby-void-definition-001",
+                "original_text": "何謂旬空如甲子至癸酉日爲一旬。此十日之內。並無戌亥。所以爻逢戌亥爲空亡。\n又名旬空餘倣此。",
+                "applicable_conditions": {
+                  "statements": [
+                    "限本段甲子旬例及旬空名称。"
+                  ],
+                  "status": "specified"
+                },
+                "exclusions": {
+                  "statements": [
+                    "不由旬空推出无用；不整理真空、假空、冲空或出空效力。"
+                  ],
+                  "status": "specified"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "overall": {
+    "verdict": "pass_with_revision_risks",
+    "reason": "8组正误文字的标签均可由各自题目的实际精选输入及相应文献字段支持，未发现把month-break局部命名推成全体系从不讨论效力的正例。候选规则覆盖全部自由文字、否定条件句、出处分层和外部真实性。但字段覆盖及完整跨字段场景仍只声明未构造，不能称这些场景已验收。"
+  },
+  "controls": [
+    {
+      "id": "combine-not-generation",
+      "case_id": "month-combine",
+      "verdict": "pass",
+      "reason": "月合两臂仅提供丑、子、初爻位置及MONTH-COMBINE六合规则，无生克规则；有文献臂原文评价有用/无用也未说相生。正例否定的是现有证据支持，不否定全盘存在生克；误例将六合推成相生，支持不足。",
+      "positive": {
+        "text": "程序标注为六合；现有证据未提供生克判断。",
+        "expected_review": "pass",
+        "label_confirmed": true
+      },
+      "negative": {
+        "text": "程序标注为六合，因此两者相生。",
+        "expected_review": "fail",
+        "label_confirmed": true
+      },
+      "revision_risk": "只提供六合记录是规则层面的简写，并非完整资料包只含一个记录；建议标明该前提不否认有文献臂含作者评价。"
+    },
+    {
+      "id": "clash-not-strength",
+      "case_id": "month-break",
+      "verdict": "pass",
+      "reason": "月破两臂只有酉、卯、第三爻及月冲规则，无月令旺衰或力量判断；月破短句提供命名。正例准确否定从这一关系确认力量的推断；误例把相冲定义成力量衰弱，引用不能支持。",
+      "positive": {
+        "text": "六冲记录的是相冲关系，不能据此确认力量衰弱。",
+        "expected_review": "pass",
+        "label_confirmed": true
+      },
+      "negative": {
+        "text": "六冲表示此爻力量衰弱。",
+        "expected_review": "fail",
+        "label_confirmed": true
+      },
+      "revision_risk": "须保持不能据此确认，不改成六冲从来不影响力量等全体系断言。"
+    },
+    {
+      "id": "void-not-failure",
+      "case_id": "void",
+      "verdict": "pass",
+      "reason": "旬空两臂有甲子日、戌亥空亡、第五爻亥及is_kongwang=true和旬空规则；有文献臂原文说明甲子旬戌亥未出现而名空亡，没有事项失败结论。正例只拒绝单凭标签断成败；误例必败无依据。",
+      "positive": {
+        "text": "程序标注为旬空；不能仅凭此标注判断事情成败。",
+        "expected_review": "pass",
+        "label_confirmed": true
+      },
+      "negative": {
+        "text": "程序标注为旬空，所以事情必败。",
+        "expected_review": "fail",
+        "label_confirmed": true
+      },
+      "revision_risk": "当前只覆盖失败，未加入该问题另外直接询问的出空当天必成误例。"
+    },
+    {
+      "id": "missing-not-absent",
+      "case_id": "month-break",
+      "verdict": "pass",
+      "reason": "month-break实际精选输入没有生克和旺衰结论，scope_note明确未提供不代表盘中不存在。正例陈述输入缺席；误例从精选输入缺席升级为全盘不存在，证据范围不支持。",
+      "positive": {
+        "text": "当前材料没有提供生克、旺衰结论。",
+        "expected_review": "pass",
+        "label_confirmed": true
+      },
+      "negative": {
+        "text": "本盘不存在生克、旺衰关系。",
+        "expected_review": "fail",
+        "label_confirmed": true
+      },
+      "revision_risk": "不得把该正例套到未来已提供生克或旺衰规则的输入。"
+    },
+    {
+      "id": "fragment-not-whole",
+      "case_id": "month-break",
+      "verdict": "pass",
+      "reason": "该组case_id是month-break，其with-literature原文转录“月建沖之爲月破逐月之破日是也。”支持命名，现代条件明确仅解释命名，排除条件不推效力。正例局限这段转录及本次引用；误例把局部信息扩成古籍全体系永远不讨论，完全超出资料。",
+      "positive": {
+        "text": "这段原文转录只提供命名信息；现代整理将本次引用限于命名，不据此判断效力。",
+        "expected_review": "pass",
+        "label_confirmed": true
+      },
+      "negative": {
+        "text": "这段短句只定义名称，因此古籍全体系永远不讨论月破效力。",
+        "expected_review": "fail",
+        "label_confirmed": true
+      },
+      "revision_risk": "此组必须绑定month-break-with-literature；不能泛化至month-combine-with-literature，后者原文确实含有用、无用、无功评价。"
+    },
+    {
+      "id": "editorial-not-original",
+      "case_id": "month-break",
+      "verdict": "pass",
+      "reason": "month-break卡的exclusions/statements/0由field_origins标为modern_editorial；原句并未明确要求不推永久失效或吉凶。正例准确归现代整理，误例归古籍原文，出处层级错误。",
+      "positive": {
+        "text": "现代整理的排除条件要求本次不推定永久失效或吉凶。",
+        "expected_review": "pass",
+        "label_confirmed": true
+      },
+      "negative": {
+        "text": "古籍原文明确要求不推定永久失效或吉凶。",
+        "expected_review": "fail",
+        "label_confirmed": true
+      },
+      "revision_risk": "只有有文献臂才具备该前提；应写明arm_id及对应来源字段。"
+    },
+    {
+      "id": "prose-not-claim",
+      "case_id": "month-break",
+      "verdict": "pass",
+      "reason": "month-break卡的适用条件属于modern_editorial；现代整理要求本次只解释名称有依据，古籍要求本次只解释名称并无原文支持。即使存在正确source_claims，自由文字错误归属仍不能通过。",
+      "positive": {
+        "text": "现代整理要求本次只解释名称。",
+        "expected_review": "pass",
+        "label_confirmed": true
+      },
+      "negative": {
+        "text": "古籍要求本次只解释名称。",
+        "expected_review": "fail",
+        "label_confirmed": true
+      },
+      "revision_risk": "文字正误标签可确认，但“source_claims已正确”的前提目前没有实际JSON fixture，无法确认跨字段对照已经实现。"
+    },
+    {
+      "id": "match-not-authentic",
+      "case_id": "month-break",
+      "verdict": "pass",
+      "reason": "prepareClarityPairs提供转录、字段起源、定位、哈希及来源URL，未在本轮实施外部影印本核查。正例仅说明匹配与核查边界；误例从输入逐字匹配推出外部真实性，推理无依据。",
+      "positive": {
+        "text": "引文与提供的转录一致；外部真实性尚未核查。",
+        "expected_review": "pass",
+        "label_confirmed": true
+      },
+      "negative": {
+        "text": "引文逐字匹配，证明古籍出处真实。",
+        "expected_review": "fail",
+        "label_confirmed": true
+      },
+      "revision_risk": "适用于本轮未核查前提；未来若独立核查过，应记录核查证据，不能让该正例变成永恒否认真实性已核查。"
+    }
+  ],
+  "coverage_review": {
+    "declared_fields": [
+      "conclusion",
+      "interpretations.text",
+      "interpretations.applicability",
+      "interpretations.uncertainties",
+      "advice.text"
+    ],
+    "prompt_field_coverage": "pass",
+    "prompt_field_reason": "clarityInstructions正文明确适用于conclusion、解释、applicability、uncertainties和advice，规则2保留合理生克否定句，规则1禁止未经支持的条件推断，规则3和4要求使用限制归现代整理，规则5拒绝匹配证明外部真实性。",
+    "instantiated_field_scenarios": "uncertain",
+    "instantiated_field_reason": "controls仅有slots字符串列表及单句text，没有把16个例句真正嵌入五个字段的完整输出样本，也没有定义相同句子在不同字段的上下文。只能确认要求宣告，不能确认所有自由文字场景已实际覆盖。",
+    "cross_field_fixture": "uncertain",
+    "cross_field_reason": "prose-not-claim的premise宣称source_claims正确，但examples只有text，没有literature_ids/source_claims/field/origin/quote组成的实际正确连接，无法核验所宣称的跨字段最小差异。",
+    "ambiguous_attribution_fixture": "uncertain",
+    "ambiguous_attribution_reason": "指令明确禁止资料明确规定这一模糊归属，但对照集没有资料亦明确其适用范围、据古法有不同意见等模糊主语的最小场景，不能确认边缘归属处理已覆盖。"
+  },
+  "revision_risks": [
+    {
+      "priority": "medium",
+      "id": "bind-literature-arm",
+      "finding": "controls仅用case_id，不区分有无文献；fragment/editorial/prose/match四组的前提需要有文献臂。",
+      "suggestion": "增加arm_id和来源字段绑定；无文献臂单独核对没有出处主张，避免把缺文献错判成古籍内容已可确认。"
+    },
+    {
+      "priority": "medium",
+      "id": "instantiate-slots",
+      "finding": "slots是元数据，不能证明每字段实际执行；跨字段对照没有source_claims fixture。",
+      "suggestion": "为字段位置构造完整最小JSON，source_claims保持相同且可逐字匹配，只替换目标自由句，记录位置与期望理由。"
+    },
+    {
+      "priority": "medium",
+      "id": "preserve-author-evaluation",
+      "finding": "月合原文“爻逢月合而有用…無功…有用之爻…無用之爻”确有评价，不能一概称三类原文只定义名称。",
+      "suggestion": "补正例“提供的月合转录使用有用评价；现代整理不将此评价当作当前个案已验证事实”，配误例“原文只定义名称，从未评价效力”。候选规则应允许准确转述作者评价同时拒绝推定当前实际效力。"
+    },
+    {
+      "priority": "medium",
+      "id": "local-gap-not-global-gap",
+      "finding": "基础提示说原文没有讲个案效力时应如何回答，是条件性规则；模型仍可能套用为三份原文统一无评价。",
+      "suggestion": "明确“先检查该片段实际内容；若含作者评价须如实归属，不把局部未谈该结论说成全书或体系未谈”。"
+    },
+    {
+      "priority": "low",
+      "id": "no-literature-limit-origin",
+      "finding": "规则3谈本次引用限制须归现代整理；没有文献臂也需要准确说明程序证据范围，不能虚构存在现代文献整理。",
+      "suggestion": "明确来自文献包条件/排除字段的限制标现代整理；来自当前程序证据不足的限制明确归当前证据范围。"
+    },
+    {
+      "priority": "medium",
+      "id": "ambiguous-and-conditional",
+      "finding": "controls缺模糊“资料/古法”归属与条件句引入新规则的具体最小对照。",
+      "suggestion": "增加“资料明确限制本次引用”模糊例及“若为六合便必相生”条件误例；允许“当前没有生克证据，不能确认相生”的否定正例，不按词触发。"
+    },
+    {
+      "priority": "low",
+      "id": "advice-and-void-success",
+      "finding": "建议字段没有带实际建议语境的对照，旬空未覆盖出空当天必成。",
+      "suggestion": "补“建议出空当天执行，必成”与“当前证据不能支持出空当天必成”的配对，禁止建议借条件或措辞转移成败结论。"
+    }
+  ],
+  "uncertainty": "未运行候选模型、未独立校勘外部影印本、不评判传统断法全体系或现实预测结果。所有8组标签通过仅表示人工开发对照的正误依据可确认。",
+  "verification": {
+    "prepareClarityPairs": "completed_locally",
+    "cases": 3,
+    "arms": 6,
+    "controls": 8,
+    "source_files_modified": false,
+    "original_records_modified": false
+  }
+}
