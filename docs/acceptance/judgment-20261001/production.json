@@ -1,0 +1,56 @@
+{
+  "verified_at": "2026-10-01T15:36:12.094Z",
+  "url": "https://gua.1eak.cool/",
+  "version": "4214f6d6-23dc-4dae-9c16-62b5c062497a",
+  "source_commit": "84bc6083f6a48191c9af438db3f3f1b0c4d7065c",
+  "assets": [
+    {
+      "path": "assets/index-BWhucIHm.js",
+      "sha256": "3e82a8db351b53a819a0c702b719111d816e29887d3114ee62f51bb9f4ed9db6",
+      "bytes": 193077,
+      "status": 200
+    },
+    {
+      "path": "assets/index-Cv__8OY9.css",
+      "sha256": "cfbc87283e0a23a62545c7241dd6741bc841acd6d82d8c253c277d14da361663",
+      "bytes": 92052,
+      "status": 200
+    },
+    {
+      "path": "index.html",
+      "sha256": "c9799192acd1ace48ca6d3e2b4b5b97470d7583479feefbe740d62e0f346f68c",
+      "bytes": 50080,
+      "status": 200
+    },
+    {
+      "path": "vendor/cannon.js",
+      "sha256": "6968efb8ee824bdcb1b0627ee9cf518ff4b360aba606c135448a53684c73e14d",
+      "bytes": 132230,
+      "status": 200
+    }
+  ],
+  "views": [
+    {
+      "width": 320,
+      "opposite_overview_counts": "passed",
+      "structured_prompt": "reading-production-4",
+      "overflow": false,
+      "page_errors": []
+    },
+    {
+      "width": 390,
+      "opposite_overview_counts": "passed",
+      "structured_prompt": "reading-production-4",
+      "overflow": false,
+      "page_errors": []
+    },
+    {
+      "width": 1280,
+      "opposite_overview_counts": "passed",
+      "structured_prompt": "reading-production-4",
+      "overflow": false,
+      "page_errors": []
+    }
+  ],
+  "model_calls": 0
+}
