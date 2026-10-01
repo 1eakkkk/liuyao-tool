@@ -1,0 +1,15 @@
+{
+  "model": "deepseek-flash",
+  "finish_reason": "stop",
+  "content": "{\"schema_version\":\"layered-reading-sourced-dev-2\",\"source_catalog_hash\":\"sha256:70e765bd3db03ad2a043c1dff2a484ef7270f49f00cb8c8816fee20a73667dac\",\"conclusion\":\"本盘初爻与月建六合的标注可以核对：程序事实为月支丑、初爻地支子，规则结果为“与月建六合”。月合只是六合关系的名称，不等于本爻实际有用，更不证明事情一定成功。\",\"facts\":[{\"evidence_id\":\"fact:/calendar/month_branch\",\"value\":\"丑\"},{\"evidence_id\":\"fact:/lines/0/branch\",\"value\":\"子\"},{\"evidence_id\":\"fact:/lines/0/position\",\"value\":1}],\"rules\":[{\"evidence_id\":\"rule:MONTH-COMBINE-001:primary:1:-\",\"result\":{\"code\":\"month_combine\",\"label\":\"与月建六合\"}}],\"interpretations\":[{\"text\":\"月支为丑，初爻地支为子，程序据此把初爻标记为与月建六合。关于“月合”这个名称，《增刪卜易》原文转录写作“月建合爻則爲月合乃有用之爻也”，并把月合与月破对举，用“有用／無用”来表述。现代整理把这段概括为：将月建合爻称为月合，并使用“有用／无用”等文献评价措辞。要注意这是文献的措辞，不是对本盘初爻实际效力的确认。本段没有提供生克、旺衰等判断，也没有提供成功与否的判断依据。\",\"fact_ids\":[\"fact:/calendar/month_branch\",\"fact:/lines/0/branch\",\"fact:/lines/0/position\"],\"rule_ids\":[\"rule:MONTH-COMBINE-001:primary:1:-\"],\"literature_ids\":[\"literature:zsby-month-combine-001\"],\"source_ids\":[\"literature:zsby-month-combine-001#/original_text\",\"literature:zsby-month-combine-001#/editorial_summary\",\"literature:zsby-month-combine-001#/applicable_conditions/statements/0\",\"literature:zsby-month-combine-001#/exclusions/statements/0\",\"literature:zsby-month-combine-001#/exclusions/statements/1\"],\"applicability\":{\"program\":\"程序将月支丑与初爻地支子这一组事实匹配到规则 MONTH-COMBINE-001，得到“与月建六合”的结果；这只说明六合关系成立，不说明其他效力。\",\"editorial\":[{\"source_id\":\"literature:zsby-month-combine-001#/editorial_summary\",\"explanation\":\"现代整理指出该段把月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞；本段只引用这一命名与措辞，不把它当作本盘的效力结论。\"},{\"source_id\":\"literature:zsby-month-combine-001#/applicable_conditions/statements/0\",\"explanation\":\"现代整理限定：仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。\"},{\"source_id\":\"literature:zsby-month-combine-001#/exclusions/statements/0\",\"explanation\":\"现代整理排除：本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。\"},{\"source_id\":\"literature:zsby-month-combine-001#/exclusions/statements/1\",\"explanation\":\"现代整理排除：不能据此直接推出事情有利、成功或最终吉凶。\"}]},\"uncertainties\":[\"这段原文转录没有给出本盘初爻实际发挥作用或事情成功的结论。\",\"材料未说明月合相关例外；未说明不等于不存在例外。\",\"未提供生克、旺衰等判断事实与规则，无法据此判断该爻实际有用或事情成败。\"]}],\"advice\":[{\"text\":\"核对标注时，可分别检查月支、初爻地支与六合结果；解释月合时只交代其名称及文献措辞，不把它当作本爻实际有用或事情成功的证明。\",\"basis\":\"general_advice\"}]}",
+  "usage": {
+    "prompt_tokens": 3215,
+    "completion_tokens": 945,
+    "total_tokens": 4160,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 3215
+  }
+}

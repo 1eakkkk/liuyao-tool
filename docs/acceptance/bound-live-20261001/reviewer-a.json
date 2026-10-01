@@ -1,0 +1,212 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:8979f6d7176293ea4bd39fddb46812f01bd40389e575ee1111750849bec1b359",
+  "reviewer_id": "agent-a",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "bound-live-20261001/month-combine-with-literature",
+      "attribution_claims": "present",
+      "facts": {
+        "verdict": "pass",
+        "reason": "全部列出事实与输入一致：月支丑、初爻地支子、position=1；MONTH-COMBINE-001的month_combine代码、与月建六合标签及两项来源事实对应。结论、text、program适用说明未把六合扩成相生、旺衰或当前爻实际有效的程序判断。未提供生克旺衰指本次精选事实与规则没有这些判断，不是全盘不存在。正文古籍措辞另作为文献评价处理，没有加入盘面事实。",
+        "quotes": [
+          {
+            "start": 177,
+            "end": 205,
+            "text": "程序事实为月支丑、初爻地支子，规则结果为“与月建六合”。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/0/branch",
+              "fact:/lines/0/position",
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1277,
+            "end": 1350,
+            "text": "程序将月支丑与初爻地支子这一组事实匹配到规则 MONTH-COMBINE-001，得到“与月建六合”的结果；这只说明六合关系成立，不说明其他效力。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/0/branch",
+              "fact:/lines/0/position",
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 2010,
+            "end": 2045,
+            "text": "未提供生克、旺衰等判断事实与规则，无法据此判断该爻实际有用或事情成败。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/0/branch",
+              "fact:/lines/0/position",
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "完整核对conclusion、text、program、四条editorial说明、三项uncertainties及advice：回答初爻月合标注、名称与是否仅凭标注证明实际有用/必成，未选用神、推日期或作当前事情成败判定。现代排除第二项只转述不推有利成功吉凶的相关部分，未展开月破章节细则。建议只给名称与措辞的表述方式，不引入新条件规则。",
+        "quotes": [
+          {
+            "start": 160,
+            "end": 238,
+            "text": "本盘初爻与月建六合的标注可以核对：程序事实为月支丑、初爻地支子，规则结果为“与月建六合”。月合只是六合关系的名称，不等于本爻实际有用，更不证明事情一定成功。",
+            "evidence_ids": [
+              "fact:/calendar/month_branch",
+              "fact:/lines/0/branch",
+              "fact:/lines/0/position",
+              "rule:MONTH-COMBINE-001:primary:1:-"
+            ],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1951,
+            "end": 1980,
+            "text": "这段原文转录没有给出本盘初爻实际发挥作用或事情成功的结论。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 2069,
+            "end": 2130,
+            "text": "核对标注时，可分别检查月支、初爻地支与六合结果；解释月合时只交代其名称及文献措辞，不把它当作本爻实际有用或事情成功的证明。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "逐句核对而非依据ID存在：程序事实及规则确实支持子丑月建六合；原文转录确有“月建合爻則爲月合乃有用之爻也”，并以月合有用与月破无用对举，text实际说明了这些评价，没有只在附录保留。现代摘要转述符合/editorial_summary。适用条件、两项排除的相关内容分别由已声明的/applicable_conditions/statements/0、/exclusions/statements/0、/exclusions/statements/1支持，四个现代条目各有独立note。结论的“只是…不等于实际有用”结合正文文献评价及不确认个案效力，应理解为标签不能证明实际效力，不是古籍从未评价效力或本爻已经无用的断言。异常说明来自输入exceptions.status=none_stated及catalog状态，正确说材料未说明不等于不存在；该状态没有条目source_id，不据此认定未声明字段遗漏。未发现实际使用的可绑定字段遗漏或未声明条件混入。第二排除项后半句“不以相邻无用句取代月破章条件”未在自由文字使用，不要求重复全部背景。",
+        "quotes": [
+          {
+            "start": 590,
+            "end": 641,
+            "text": "《增刪卜易》原文转录写作“月建合爻則爲月合乃有用之爻也”，并把月合与月破对举，用“有用／無用”来表述。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 680,
+            "end": 706,
+            "text": "要注意这是文献的措辞，不是对本盘初爻实际效力的确认。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1619,
+            "end": 1665,
+            "text": "现代整理限定：仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1757,
+            "end": 1808,
+            "text": "现代整理排除：本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1900,
+            "end": 1928,
+            "text": "现代整理排除：不能据此直接推出事情有利、成功或最终吉凶。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1983,
+            "end": 2007,
+            "text": "材料未说明月合相关例外；未说明不等于不存在例外。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "pass",
+        "reason": "有明确文献归属主张，attribution_claims=present。书名与原文短引对应所给citation及完整转录，相关作者有用/无用评价被准确归原文；摘要及全部适用/排除notes都明确写现代整理，没有把现代限制归古籍。实际声明五个source_id与本次catalog逐一对应，四个modern_editorial字段各有独立source_id说明，source_catalog_hash与实际输入一致；没有模型自创字段路径、来源标签或另一本书的观点。uncertainties关于例外缺席是材料状态说明，不声称古籍没有例外。结论和advice的不能证明属于当前依据边界，与正文已明确归属的现代限制一致，不构成新增古籍禁止判断主张。外部真实性没有被声称已验证；此次pass只核对包内内容及来源分层，未校勘影印本。",
+        "quotes": [
+          {
+            "start": 590,
+            "end": 618,
+            "text": "《增刪卜易》原文转录写作“月建合爻則爲月合乃有用之爻也”",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 641,
+            "end": 680,
+            "text": "现代整理把这段概括为：将月建合爻称为月合，并使用“有用／无用”等文献评价措辞。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1448,
+            "end": 1516,
+            "text": "现代整理指出该段把月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞；本段只引用这一命名与措辞，不把它当作本盘的效力结论。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1619,
+            "end": 1665,
+            "text": "现代整理限定：仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1757,
+            "end": 1808,
+            "text": "现代整理排除：本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          },
+          {
+            "start": 1900,
+            "end": 1928,
+            "text": "现代整理排除：不能据此直接推出事情有利、成功或最终吉凶。",
+            "evidence_ids": [],
+            "literature_ids": [
+              "literature:zsby-month-combine-001"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

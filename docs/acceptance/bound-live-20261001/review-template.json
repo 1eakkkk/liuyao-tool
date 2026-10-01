@@ -1,0 +1,32 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:8979f6d7176293ea4bd39fddb46812f01bd40389e575ee1111750849bec1b359",
+  "reviewer_id": "",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "bound-live-20261001/month-combine-with-literature",
+      "attribution_claims": "uncertain",
+      "facts": {
+        "verdict": "uncertain",
+        "reason": "",
+        "quotes": []
+      },
+      "scope": {
+        "verdict": "uncertain",
+        "reason": "",
+        "quotes": []
+      },
+      "support": {
+        "verdict": "uncertain",
+        "reason": "",
+        "quotes": []
+      },
+      "attribution": {
+        "verdict": "uncertain",
+        "reason": "",
+        "quotes": []
+      }
+    }
+  ]
+}

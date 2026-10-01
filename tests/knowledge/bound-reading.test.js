@@ -10,8 +10,32 @@ import {buildSourceCatalog} from '../../experiments/reading-quality/source-bindi
 import {checkBoundOutput,BOUND_OUTPUT_VERSION} from '../../experiments/reading-quality/bound-reading.js';
 import {checkSourcedOutput} from '../../experiments/reading-quality/sourced-output.js';
 import {prepareClarityPairs} from '../../experiments/reading-quality/sourced-clarity.js';
+import {textHash} from '../../src/knowledge/validate.js';
+import {prepareReviewPacket,summarizeReviews} from '../../experiments/reading-quality/semantic-review.js';
 const plan=await prepareBoundPairs(),old=await prepareClarityPairs();
 const c=plan.cases[1],packet=c.arms[1].material.packet;
+const liveRead=name=>JSON.parse(fs.readFileSync(new URL('../../docs/acceptance/bound-live-20261001/'+name,import.meta.url),'utf8'));
+test('replays the single actual bound reply against its exact frozen input without promoting it to production',()=>{
+  const p=liveRead('plan.json'),seal=liveRead('seal.json'),archive=liveRead('archive.json');
+  expect(sealPlan(p)).toBe(seal.hash);expect(p.cases).toHaveLength(1);expect(p.cases[0].arms).toHaveLength(1);
+  const entry=archive.entries[0],input=JSON.parse(p.cases[0].arms[0].body.messages[1].content);
+  expect(entry.plan_hash).toBe(seal.hash);expect(textHash(entry.raw)).toBe(entry.raw_hash);
+  expect(entry.question).toBe(input.question);expect(entry.evidence).toEqual(input.evidence);
+  expect(entry.literature_packet).toEqual(input.literature_packet);
+  expect(input.source_catalog).toEqual(buildSourceCatalog(entry.literature_packet));
+  const result=checkBoundOutput(JSON.parse(entry.raw),entry.evidence,entry.literature_packet);
+  expect(result).toEqual(entry.mechanical_result_as_executed);expect(result.mechanical_ok).toBe(true);
+  expect(result.bindings[0].sources).toHaveLength(5);expect(result.bindings[0].editorial).toHaveLength(4);
+  expect(result.production_ready).toBe(false);expect(result.bindings[0].semantic_support).toBe('unassessed');
+});
+test('reproduces two independent source reviews while retaining the exposed single-sample limitation',()=>{
+  const packet=prepareReviewPacket(liveRead('archive.json'));
+  expect(packet).toEqual(liveRead('review-packet.json'));
+  const summary=summarizeReviews(packet,[liveRead('reviewer-a.json'),liveRead('reviewer-b.json')]);
+  expect(summary).toEqual(liveRead('semantic-summary.json'));
+  expect(summary.responses).toBe(1);expect(summary.production_ready).toBe(false);
+  expect(summary.model_improvement_established).toBe(false);expect(summary.review_kind).toBe('retrospective_nonblind');
+});
 test('reproduces the archived offline inputs and exports identical API messages without overwriting a run',()=>{
   const archive=new URL('../../docs/acceptance/bound-reading-20261001/',import.meta.url);
   const frozen=JSON.parse(fs.readFileSync(new URL('plan.json',archive),'utf8'));

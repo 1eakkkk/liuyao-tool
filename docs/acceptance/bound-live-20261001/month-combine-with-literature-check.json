@@ -1,0 +1,304 @@
+{
+  "id": "month-combine-with-literature",
+  "case_id": "month-combine",
+  "arm": "with-literature",
+  "usage": {
+    "prompt_tokens": 3215,
+    "completion_tokens": 945,
+    "total_tokens": 4160,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 3215
+  },
+  "check": {
+    "version": "layered-reading-sourced-dev-2",
+    "facts": [
+      {
+        "evidence_id": "fact:/calendar/month_branch",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/lines/0/branch",
+        "status": "consistent"
+      },
+      {
+        "evidence_id": "fact:/lines/0/position",
+        "status": "consistent"
+      }
+    ],
+    "rules": [
+      {
+        "evidence_id": "rule:MONTH-COMBINE-001:primary:1:-",
+        "status": "consistent",
+        "missing_fact_ids": [],
+        "independent_evidence": false
+      }
+    ],
+    "interpretations": [
+      {
+        "position": 0,
+        "mechanical_status": "linked",
+        "invalid_fact_ids": [],
+        "invalid_rule_ids": [],
+        "missing_rule_fact_ids": [],
+        "unknown_literature_ids": [],
+        "semantic_support": "unassessed",
+        "question_relevance": "unassessed",
+        "independent_literature_evidence": false
+      }
+    ],
+    "advice_count": 1,
+    "mechanical_ok": true,
+    "conclusion_support": "unassessed",
+    "advice_semantics": "unassessed",
+    "acceptance": "not_established",
+    "sources": [
+      {
+        "position": 0,
+        "claims": [
+          {
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/original_text",
+            "origin": "source_transcription",
+            "quote": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻。卽爲月破無用之爻也。",
+            "status": "consistent"
+          },
+          {
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/editorial_summary",
+            "origin": "modern_editorial",
+            "quote": "该段将月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞。",
+            "status": "consistent"
+          },
+          {
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/applicable_conditions/statements/0",
+            "origin": "modern_editorial",
+            "quote": "仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。",
+            "status": "consistent"
+          },
+          {
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/exclusions/statements/0",
+            "origin": "modern_editorial",
+            "quote": "本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
+            "status": "consistent"
+          },
+          {
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/exclusions/statements/1",
+            "origin": "modern_editorial",
+            "quote": "不能据此直接推出事情有利、成功或最终吉凶；不以相邻无用句取代月破章的条件。",
+            "status": "consistent"
+          }
+        ],
+        "missing_literature_claims": [],
+        "mechanical_ok": true,
+        "free_text_attribution": "unassessed",
+        "semantic_support": "unassessed"
+      }
+    ],
+    "production_ready": false,
+    "source_catalog_hash": "sha256:70e765bd3db03ad2a043c1dff2a484ef7270f49f00cb8c8816fee20a73667dac",
+    "bindings": [
+      {
+        "position": 0,
+        "program": "程序将月支丑与初爻地支子这一组事实匹配到规则 MONTH-COMBINE-001，得到“与月建六合”的结果；这只说明六合关系成立，不说明其他效力。",
+        "editorial": [
+          {
+            "source_id": "literature:zsby-month-combine-001#/editorial_summary",
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/editorial_summary",
+            "origin": "modern_editorial",
+            "label": "现代整理（不是古籍原文）",
+            "text": "该段将月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞。",
+            "explanation": "现代整理指出该段把月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞；本段只引用这一命名与措辞，不把它当作本盘的效力结论。",
+            "semantic_support": "unassessed"
+          },
+          {
+            "source_id": "literature:zsby-month-combine-001#/applicable_conditions/statements/0",
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/applicable_conditions/statements/0",
+            "origin": "modern_editorial",
+            "label": "现代整理（不是古籍原文）",
+            "text": "仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。",
+            "explanation": "现代整理限定：仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。",
+            "semantic_support": "unassessed"
+          },
+          {
+            "source_id": "literature:zsby-month-combine-001#/exclusions/statements/0",
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/exclusions/statements/0",
+            "origin": "modern_editorial",
+            "label": "现代整理（不是古籍原文）",
+            "text": "本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
+            "explanation": "现代整理排除：本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
+            "semantic_support": "unassessed"
+          },
+          {
+            "source_id": "literature:zsby-month-combine-001#/exclusions/statements/1",
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/exclusions/statements/1",
+            "origin": "modern_editorial",
+            "label": "现代整理（不是古籍原文）",
+            "text": "不能据此直接推出事情有利、成功或最终吉凶；不以相邻无用句取代月破章的条件。",
+            "explanation": "现代整理排除：不能据此直接推出事情有利、成功或最终吉凶。",
+            "semantic_support": "unassessed"
+          }
+        ],
+        "sources": [
+          {
+            "source_id": "literature:zsby-month-combine-001#/original_text",
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/original_text",
+            "origin": "source_transcription",
+            "label": "原文转录",
+            "text": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻。卽爲月破無用之爻也。"
+          },
+          {
+            "source_id": "literature:zsby-month-combine-001#/editorial_summary",
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/editorial_summary",
+            "origin": "modern_editorial",
+            "label": "现代整理（不是古籍原文）",
+            "text": "该段将月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞。"
+          },
+          {
+            "source_id": "literature:zsby-month-combine-001#/applicable_conditions/statements/0",
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/applicable_conditions/statements/0",
+            "origin": "modern_editorial",
+            "label": "现代整理（不是古籍原文）",
+            "text": "仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。"
+          },
+          {
+            "source_id": "literature:zsby-month-combine-001#/exclusions/statements/0",
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/exclusions/statements/0",
+            "origin": "modern_editorial",
+            "label": "现代整理（不是古籍原文）",
+            "text": "本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。"
+          },
+          {
+            "source_id": "literature:zsby-month-combine-001#/exclusions/statements/1",
+            "literature_id": "literature:zsby-month-combine-001",
+            "field": "/exclusions/statements/1",
+            "origin": "modern_editorial",
+            "label": "现代整理（不是古籍原文）",
+            "text": "不能据此直接推出事情有利、成功或最终吉凶；不以相邻无用句取代月破章的条件。"
+          }
+        ],
+        "declared_sources_linked": true,
+        "undeclared_source_mentions": "unassessed",
+        "free_text_attribution": "unassessed",
+        "semantic_support": "unassessed"
+      }
+    ],
+    "source_background": {
+      "version": "source-field-catalog-dev-1",
+      "packet_hash": "sha256:956f16e305079b569f36d048b1f106ce921c15bb9e48138f82777f8dd42750e5",
+      "citations": [
+        {
+          "literature_id": "literature:zsby-month-combine-001",
+          "source_type": "classical_body",
+          "citation": {
+            "knowledge_id": "zsby-month-combine-001",
+            "source_id": "zsby-nlc-12jh005345",
+            "source_revision": 1,
+            "edition_id": "zsby-wenming-1925-11-nlc-12jh005345",
+            "title": "增刪卜易",
+            "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+            "segment_ref": {
+              "segment_id": "zsby-1925-s3",
+              "revision": 2,
+              "span": {
+                "start": 0,
+                "end": 47,
+                "unit": "unicode_code_point"
+              }
+            },
+            "locator": {
+              "volume": "一",
+              "chapter": "月將章第十六",
+              "section": null,
+              "page": "四一",
+              "leaf": null,
+              "image_page": 61,
+              "anchor": "爻逢月合起，无用之爻也止"
+            },
+            "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+            "text_hash": "sha256:8e85035cffbcad00db63922b34bfa08e93b076f8b8245a1e7a01744ff94e69b3"
+          }
+        }
+      ],
+      "items": [
+        {
+          "source_id": "literature:zsby-month-combine-001#/original_text",
+          "literature_id": "literature:zsby-month-combine-001",
+          "field": "/original_text",
+          "origin": "source_transcription",
+          "label": "原文转录",
+          "text": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻。卽爲月破無用之爻也。"
+        },
+        {
+          "source_id": "literature:zsby-month-combine-001#/editorial_summary",
+          "literature_id": "literature:zsby-month-combine-001",
+          "field": "/editorial_summary",
+          "origin": "modern_editorial",
+          "label": "现代整理（不是古籍原文）",
+          "text": "该段将月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞。"
+        },
+        {
+          "source_id": "literature:zsby-month-combine-001#/applicable_conditions/statements/0",
+          "literature_id": "literature:zsby-month-combine-001",
+          "field": "/applicable_conditions/statements/0",
+          "origin": "modern_editorial",
+          "label": "现代整理（不是古籍原文）",
+          "text": "仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。"
+        },
+        {
+          "source_id": "literature:zsby-month-combine-001#/exclusions/statements/0",
+          "literature_id": "literature:zsby-month-combine-001",
+          "field": "/exclusions/statements/0",
+          "origin": "modern_editorial",
+          "label": "现代整理（不是古籍原文）",
+          "text": "本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。"
+        },
+        {
+          "source_id": "literature:zsby-month-combine-001#/exclusions/statements/1",
+          "literature_id": "literature:zsby-month-combine-001",
+          "field": "/exclusions/statements/1",
+          "origin": "modern_editorial",
+          "label": "现代整理（不是古籍原文）",
+          "text": "不能据此直接推出事情有利、成功或最终吉凶；不以相邻无用句取代月破章的条件。"
+        }
+      ],
+      "statuses": [
+        {
+          "literature_id": "literature:zsby-month-combine-001",
+          "field": "applicable_conditions",
+          "status": "specified",
+          "label": "材料中有明确条目"
+        },
+        {
+          "literature_id": "literature:zsby-month-combine-001",
+          "field": "exclusions",
+          "status": "specified",
+          "label": "材料中有明确条目"
+        },
+        {
+          "literature_id": "literature:zsby-month-combine-001",
+          "field": "exceptions",
+          "status": "none_stated",
+          "label": "当前材料未说明"
+        }
+      ],
+      "catalog_hash": "sha256:70e765bd3db03ad2a043c1dff2a484ef7270f49f00cb8c8816fee20a73667dac"
+    },
+    "background_is_not_used_evidence": true
+  },
+  "model_quality": "manual_review_pending",
+  "conservative_peak_cost_cny": 0.01399
+}

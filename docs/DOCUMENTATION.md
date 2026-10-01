@@ -9,7 +9,7 @@
 | 模块与数据 | [ARCHITECTURE](ARCHITECTURE.md)、[MIGRATION_MAP](MIGRATION_MAP.md)、[DATA_SCHEMA](DATA_SCHEMA.md) |
 | 生产范围与部署 | [PRODUCTION_PLAN](PRODUCTION_PLAN.md)、[DEPLOYMENT](DEPLOYMENT.md)；当前配置以 `wrangler.jsonc` 和 README 为准 |
 | 结构化阅读现状 | [STRUCTURED_READING_V3](STRUCTURED_READING_V3.md)、[依据展示](READING_EVIDENCE_PRESENTATION.md)、[长正文与历史](READING_REVIEW_UX.md) |
-| 知识研究进展 | [最新出处绑定候选](BOUND_SOURCE_CANDIDATE.md)、[四次真实对照](CLARITY_LIVE_EVALUATION.md)、[早期真实试测](SOURCED_READING_LIVE_PILOT.md) |
+| 知识研究进展 | [最新单条真实检查](BOUND_LIVE_EVALUATION.md)、[出处绑定候选](BOUND_SOURCE_CANDIDATE.md)、[四次真实对照](CLARITY_LIVE_EVALUATION.md) |
 | 检查证据与失败记录 | [acceptance](acceptance/)；既有失败、不确定和修订前后均保留 |
 | 原始大阶段方案 | [REFACTOR_PLAN](../REFACTOR_PLAN.md)；是历史规划，不能直接当作当前功能清单 |
 

@@ -1,0 +1,42 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:8979f6d7176293ea4bd39fddb46812f01bd40389e575ee1111750849bec1b359",
+  "review_kind": "retrospective_nonblind",
+  "responses": 1,
+  "reviewers": [
+    "agent-a",
+    "agent-b"
+  ],
+  "dimensions": {
+    "facts": {
+      "pass": 2,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "scope": {
+      "pass": 2,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "support": {
+      "pass": 2,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "attribution": {
+      "pass": 2,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 0
+    }
+  },
+  "disagreements": [],
+  "mechanical_failures": [],
+  "production_ready": false,
+  "model_improvement_established": false,
+  "network_calls": 0,
+  "limitation": "Counts are retrospective human/agent judgments, not prediction accuracy or independent unseen-case acceptance."
+}

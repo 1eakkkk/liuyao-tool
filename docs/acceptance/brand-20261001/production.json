@@ -1,0 +1,55 @@
+{
+  "verified_at": "2026-10-01T02:02:15.712Z",
+  "url": "https://gua.1eak.cool/",
+  "version": "59a64f8f-3781-48a4-9ab4-80d90155cc96",
+  "assets": [
+    {
+      "path": "assets/index-CCql43zm.js",
+      "sha256": "fcdc0bbad79e597702d70c0160c79badea79491a211f121be96ef268234ea950",
+      "bytes": 189326,
+      "status": 200
+    },
+    {
+      "path": "assets/index-Cv__8OY9.css",
+      "sha256": "cfbc87283e0a23a62545c7241dd6741bc841acd6d82d8c253c277d14da361663",
+      "bytes": 92052,
+      "status": 200
+    },
+    {
+      "path": "index.html",
+      "sha256": "81784b36fcc51ea29505d695f8b1b61ff21ee7e32e920b280621a529603920f3",
+      "bytes": 50080,
+      "status": 200
+    },
+    {
+      "path": "vendor/cannon.js",
+      "sha256": "6968efb8ee824bdcb1b0627ee9cf518ff4b360aba606c135448a53684c73e14d",
+      "bytes": 132230,
+      "status": 200
+    }
+  ],
+  "views": [
+    {
+      "width": 320,
+      "title": "一念六爻 · 起卦与解读",
+      "favicon_decoded": true,
+      "overflow": false,
+      "page_errors": []
+    },
+    {
+      "width": 390,
+      "title": "一念六爻 · 起卦与解读",
+      "favicon_decoded": true,
+      "overflow": false,
+      "page_errors": []
+    },
+    {
+      "width": 1280,
+      "title": "一念六爻 · 起卦与解读",
+      "favicon_decoded": true,
+      "overflow": false,
+      "page_errors": []
+    }
+  ],
+  "model_calls": 0
+}

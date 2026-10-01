@@ -1,0 +1,395 @@
+{
+  "version": "source-bound-one-live-dev-3",
+  "profile": "bound-month-combine-one",
+  "output_version": "layered-reading-sourced-dev-2",
+  "instructions_version": "sourced-instructions-dev-3",
+  "scope": "One exposed development reply, not a paired, blind or old-versus-new comparison",
+  "model": "deepseek-flash",
+  "price_checked": "2026-10-01",
+  "price_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "checked_peak_cny_per_million": {
+    "input": 2,
+    "output": 8
+  },
+  "reservation_cny_per_million": {
+    "input": 3,
+    "output": 10
+  },
+  "input_token_allowance": 20000,
+  "max_output_tokens": 4096,
+  "reserve_cny": 0.10096,
+  "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+  "cases": [
+    {
+      "id": "month-combine",
+      "question": "仅核对本盘初爻与月建六合的标注，解释月合名称。月合是否就证明本爻实际有用、事情一定成功？不选用神、不判断成败、不推应期。",
+      "context_id": "sha256:24e3a0b500f6886e52ab50dcc58c716e49c041bfdb5d82ee3f2aed82899e7bae",
+      "evidence": [
+        {
+          "id": "fact:/calendar/month_branch",
+          "kind": "program_fact",
+          "path": "/calendar/month_branch",
+          "value": "丑",
+          "label": "历法 · 月支"
+        },
+        {
+          "id": "fact:/lines/0/branch",
+          "kind": "program_fact",
+          "path": "/lines/0/branch",
+          "value": "子",
+          "label": "第1爻 · 地支"
+        },
+        {
+          "id": "fact:/lines/0/position",
+          "kind": "program_fact",
+          "path": "/lines/0/position",
+          "value": 1,
+          "label": "第1爻 · 爻位"
+        },
+        {
+          "id": "rule:MONTH-COMBINE-001:primary:1:-",
+          "kind": "rule_result",
+          "rule_id": "MONTH-COMBINE-001",
+          "target": {
+            "line": 1,
+            "component": "primary"
+          },
+          "result": {
+            "code": "month_combine",
+            "label": "与月建六合"
+          },
+          "source_facts": [
+            "fact:/calendar/month_branch",
+            "fact:/lines/0/branch"
+          ],
+          "label": "MONTH-COMBINE-001 · 第1爻 · 与月建六合"
+        }
+      ],
+      "scope_audit": {
+        "version": "reviewed-evidence-scope-dev-1",
+        "method": "explicit_development_review",
+        "reason": "问题明确要求解释月合名称与评价边界；当前初爻已有月建六合记录，不能据此确认个案效力。",
+        "original_count": 129,
+        "selected_count": 4,
+        "selected": [
+          {
+            "id": "fact:/calendar/month_branch",
+            "reasons": [
+              "source_of:rule:MONTH-COMBINE-001:primary:1:-"
+            ]
+          },
+          {
+            "id": "fact:/lines/0/branch",
+            "reasons": [
+              "source_of:rule:MONTH-COMBINE-001:primary:1:-"
+            ]
+          },
+          {
+            "id": "fact:/lines/0/position",
+            "reasons": [
+              "explicit_fact"
+            ]
+          },
+          {
+            "id": "rule:MONTH-COMBINE-001:primary:1:-",
+            "reasons": [
+              "explicit_rule"
+            ]
+          }
+        ],
+        "excluded_ids": [
+          "fact:/calendar/anchor/day",
+          "fact:/calendar/anchor/month",
+          "fact:/calendar/anchor/year",
+          "fact:/calendar/day_branch",
+          "fact:/calendar/day_ganzhi",
+          "fact:/calendar/hour_ganzhi",
+          "fact:/calendar/kongwang/0",
+          "fact:/calendar/kongwang/1",
+          "fact:/calendar/month_ganzhi",
+          "fact:/calendar/year_ganzhi",
+          "fact:/hexagram/changed/name",
+          "fact:/hexagram/primary/lower_trigram",
+          "fact:/hexagram/primary/name",
+          "fact:/hexagram/primary/palace",
+          "fact:/hexagram/primary/upper_trigram",
+          "fact:/hexagram/shi_line",
+          "fact:/hexagram/ying_line",
+          "fact:/lines/0/changed/branch",
+          "fact:/lines/0/changed/element",
+          "fact:/lines/0/changed/ganzhi",
+          "fact:/lines/0/changed/relative",
+          "fact:/lines/0/element",
+          "fact:/lines/0/ganzhi",
+          "fact:/lines/0/is_kongwang",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/0/is_ying",
+          "fact:/lines/0/moving",
+          "fact:/lines/0/relations/month_strength",
+          "fact:/lines/0/relations/return_relation",
+          "fact:/lines/0/relative",
+          "fact:/lines/0/spirit",
+          "fact:/lines/0/state_text",
+          "fact:/lines/0/yin_yang",
+          "fact:/lines/1/branch",
+          "fact:/lines/1/changed/branch",
+          "fact:/lines/1/changed/element",
+          "fact:/lines/1/changed/ganzhi",
+          "fact:/lines/1/changed/relative",
+          "fact:/lines/1/element",
+          "fact:/lines/1/ganzhi",
+          "fact:/lines/1/is_kongwang",
+          "fact:/lines/1/is_shi",
+          "fact:/lines/1/is_ying",
+          "fact:/lines/1/moving",
+          "fact:/lines/1/position",
+          "fact:/lines/1/relations/month_strength",
+          "fact:/lines/1/relative",
+          "fact:/lines/1/spirit",
+          "fact:/lines/1/state_text",
+          "fact:/lines/1/yin_yang",
+          "fact:/lines/2/branch",
+          "fact:/lines/2/element",
+          "fact:/lines/2/ganzhi",
+          "fact:/lines/2/is_kongwang",
+          "fact:/lines/2/is_shi",
+          "fact:/lines/2/is_ying",
+          "fact:/lines/2/moving",
+          "fact:/lines/2/position",
+          "fact:/lines/2/relations/month_strength",
+          "fact:/lines/2/relative",
+          "fact:/lines/2/spirit",
+          "fact:/lines/2/state_text",
+          "fact:/lines/2/yin_yang",
+          "fact:/lines/3/branch",
+          "fact:/lines/3/element",
+          "fact:/lines/3/ganzhi",
+          "fact:/lines/3/is_kongwang",
+          "fact:/lines/3/is_shi",
+          "fact:/lines/3/is_ying",
+          "fact:/lines/3/moving",
+          "fact:/lines/3/position",
+          "fact:/lines/3/relations/month_strength",
+          "fact:/lines/3/relative",
+          "fact:/lines/3/spirit",
+          "fact:/lines/3/state_text",
+          "fact:/lines/3/yin_yang",
+          "fact:/lines/4/branch",
+          "fact:/lines/4/changed/branch",
+          "fact:/lines/4/changed/element",
+          "fact:/lines/4/changed/ganzhi",
+          "fact:/lines/4/changed/relative",
+          "fact:/lines/4/element",
+          "fact:/lines/4/ganzhi",
+          "fact:/lines/4/is_kongwang",
+          "fact:/lines/4/is_shi",
+          "fact:/lines/4/is_ying",
+          "fact:/lines/4/moving",
+          "fact:/lines/4/position",
+          "fact:/lines/4/relations/day_relation",
+          "fact:/lines/4/relations/month_strength",
+          "fact:/lines/4/relative",
+          "fact:/lines/4/spirit",
+          "fact:/lines/4/state_text",
+          "fact:/lines/4/yin_yang",
+          "fact:/lines/5/branch",
+          "fact:/lines/5/changed/branch",
+          "fact:/lines/5/changed/element",
+          "fact:/lines/5/changed/ganzhi",
+          "fact:/lines/5/changed/relative",
+          "fact:/lines/5/element",
+          "fact:/lines/5/ganzhi",
+          "fact:/lines/5/is_kongwang",
+          "fact:/lines/5/is_shi",
+          "fact:/lines/5/is_ying",
+          "fact:/lines/5/moving",
+          "fact:/lines/5/position",
+          "fact:/lines/5/relations/month_strength",
+          "fact:/lines/5/relative",
+          "fact:/lines/5/spirit",
+          "fact:/lines/5/state_text",
+          "fact:/lines/5/yin_yang",
+          "rule:DAY-COMBINE-001:primary:5:-",
+          "rule:LINE-MOVING-001:primary:1:-",
+          "rule:LINE-MOVING-001:primary:2:-",
+          "rule:LINE-MOVING-001:primary:5:-",
+          "rule:LINE-MOVING-001:primary:6:-",
+          "rule:LINE-VOID-001:primary:5:-",
+          "rule:MONTH-STATE-QIU-001:primary:2:-",
+          "rule:MONTH-STATE-SI-001:primary:1:-",
+          "rule:MONTH-STATE-WANG-001:primary:3:-",
+          "rule:MONTH-STATE-WANG-001:primary:6:-",
+          "rule:MONTH-STATE-XIANG-001:primary:5:-",
+          "rule:MONTH-STATE-XIU-001:primary:4:-",
+          "rule:MOVE-RETURN-CONTROL-001:primary:1:-",
+          "rule:SHI-YING-SAME-ELEMENT-001:primary:6:3"
+        ],
+        "omitted_is_not_absent": true,
+        "question_relevance": "caller_reviewed_not_independently_validated"
+      },
+      "target_fact_ids": [
+        "fact:/calendar/month_branch",
+        "fact:/lines/0/branch"
+      ],
+      "selections": [
+        {
+          "knowledge_id": "zsby-month-combine-001",
+          "status": "confirmed",
+          "reason": "问题明确要求解释月合名称与评价边界；当前初爻已有月建六合记录，不能据此确认个案效力。"
+        }
+      ],
+      "arms": [
+        {
+          "id": "month-combine-with-literature",
+          "arm": "with-literature",
+          "material": {
+            "packet": {
+              "version": "explicit-literature-packet-dev-2",
+              "corpus_version": "phase8a-month-combine-hardening-1",
+              "corpus_hash": "sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3",
+              "mode": "offline_explicit_review",
+              "selection_semantics": "Caller-reviewed applicability; not automatic or independently verified",
+              "independent_evidence": false,
+              "cards": [
+                {
+                  "knowledge_id": "zsby-month-combine-001",
+                  "literature_id": "literature:zsby-month-combine-001",
+                  "source_type": "classical_body",
+                  "original_text": "爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻。卽爲月破無用之爻也。",
+                  "editorial_summary": "该段将月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞。",
+                  "applicable_conditions": {
+                    "status": "specified",
+                    "statements": [
+                      "仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。"
+                    ]
+                  },
+                  "exclusions": {
+                    "status": "specified",
+                    "statements": [
+                      "本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。",
+                      "不能据此直接推出事情有利、成功或最终吉凶；不以相邻无用句取代月破章的条件。"
+                    ]
+                  },
+                  "exceptions": {
+                    "status": "none_stated",
+                    "statements": []
+                  },
+                  "citation": {
+                    "knowledge_id": "zsby-month-combine-001",
+                    "source_id": "zsby-nlc-12jh005345",
+                    "source_revision": 1,
+                    "edition_id": "zsby-wenming-1925-11-nlc-12jh005345",
+                    "title": "增刪卜易",
+                    "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+                    "segment_ref": {
+                      "segment_id": "zsby-1925-s3",
+                      "revision": 2,
+                      "span": {
+                        "start": 0,
+                        "end": 47,
+                        "unit": "unicode_code_point"
+                      }
+                    },
+                    "locator": {
+                      "volume": "一",
+                      "chapter": "月將章第十六",
+                      "section": null,
+                      "page": "四一",
+                      "leaf": null,
+                      "image_page": 61,
+                      "anchor": "爻逢月合起，无用之爻也止"
+                    },
+                    "artifact_hash": "sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+                    "text_hash": "sha256:8e85035cffbcad00db63922b34bfa08e93b076f8b8245a1e7a01744ff94e69b3"
+                  },
+                  "same_proposition_ids": [
+                    "zsby-month-combine-001"
+                  ],
+                  "independent_evidence": false,
+                  "predictive_validation": "not_established",
+                  "editorial_guidance": {
+                    "kind": "modern_editorial_guidance",
+                    "review_status": "development_self_review",
+                    "independent_evidence": false,
+                    "checks": [
+                      "程序是否明确标记月建六合？",
+                      "是否把作者的评价措辞误当当前个案已确认的事实？"
+                    ],
+                    "careful_example": "月合名称可由本段说明；文献评价不能单独证明此爻在本卦发挥作用或事情成功。",
+                    "overreach_example": "月合代表有用，所以这个项目必然成功。"
+                  },
+                  "field_origins": {
+                    "original_text": "source_transcription",
+                    "editorial_summary": "modern_editorial",
+                    "applicable_conditions": "modern_editorial",
+                    "exclusions": "modern_editorial",
+                    "exceptions": "modern_editorial",
+                    "editorial_guidance": "modern_editorial"
+                  },
+                  "applicability_review": {
+                    "status": "confirmed",
+                    "reason": "问题明确要求解释月合名称与评价边界；当前初爻已有月建六合记录，不能据此确认个案效力。"
+                  }
+                }
+              ]
+            },
+            "packet_hash": "sha256:956f16e305079b569f36d048b1f106ce921c15bb9e48138f82777f8dd42750e5",
+            "code_points": 2361,
+            "excluded": []
+          },
+          "body": {
+            "model": "deepseek-flash",
+            "thinking": {
+              "type": "disabled"
+            },
+            "max_tokens": 4096,
+            "response_format": {
+              "type": "json_object"
+            },
+            "stream": false,
+            "messages": [
+              {
+                "role": "system",
+                "content": "离线候选 layered-reading-sourced-dev-2，提示 sourced-instructions-dev-3，不用于生产。返回 JSON：\n{\"schema_version\":\"layered-reading-sourced-dev-2\",\"source_catalog_hash\":\"输入 source_catalog.catalog_hash 原值\",\"conclusion\":\"简短回答及限制\",\"facts\":[{\"evidence_id\":\"输入 program_fact ID\",\"value\":\"保持原值与类型\"}],\"rules\":[{\"evidence_id\":\"输入 rule_result ID\",\"result\":{\"code\":\"原始 code\",\"label\":\"原始 label\"}}],\"interpretations\":[{\"text\":\"解释当前问题\",\"fact_ids\":[\"facts 的 ID\"],\"rule_ids\":[\"rules 的 ID\"],\"literature_ids\":[\"被引用的 literature ID\"],\"source_ids\":[\"该文献原文字段的 source_id\",\"该文献某现代条件字段的 source_id\"],\"applicability\":{\"program\":\"当前程序事实如何命中规则\",\"editorial\":[{\"source_id\":\"上面列出的现代条件 source_id\",\"explanation\":\"仅说明这个条件为何适用或有何限制\"}]},\"uncertainties\":[\"不能确认的结论\"]}],\"advice\":[{\"text\":\"一般建议\",\"basis\":\"general_advice\"}]}\n\nfacts 只复制 program_fact；rules 完整复制 rule_result.result，包含所有原字段。引用规则的全部 source_facts 必须列入 facts 和本段 fact_ids。\nsource_catalog 由程序根据本次资料包生成；复制 catalog_hash，选择实际使用的 source_id，不输出 source_claims，不自己抄写或改造引文、字段路径及来源标签。每个 source_id 的 literature_id 必须出现在本段 literature_ids。\n资料的完整原文、条件、排除及例外由程序作为背景保留，不要求每段使用全部资料，不将背景条数当证据数量。\napplicability.program 只解释程序事实与规则；现代摘要、适用条件、排除条件及例外分别放 applicability.editorial。每个实际使用的现代条目分别填写一个 source_id 与 explanation，不在一项解释里混入另一条未引用条件。摘要条目说明其含义与本段关系，不把摘要自动当作适用条件。每个现代 source_id 必须有独立 editorial 条目；不使用的背景不要虚列为依据。\n解释使用原文时列原文字段 source_id；程序将显示完整转录片段。正文仍须如实说明相关作者评价，不能用完整资料附录代替正文说明，也不能将文献评价当已发生的排盘事实。\n没有引用文献时 literature_ids、source_ids、applicability.editorial 都为空，不虚构出处。没有声明例外只表示材料未说明，不能说没有例外。\n未标注的自由文字、条件是否真的适用、解释支持度和外部真实性仍需独立审查；字段绑定通过不证明这些内容。\n结论、解释、不确定性和建议只回答当前窄问题，不将现代限制在这些自由文字里冒充原文。\n术语与出处边界修订（适用于 conclusion、解释、applicability、uncertainties 及 advice 全部文字）：\n1. 程序标注六合就称六合，六冲就称相冲，旬空就称旬空。未提供另一个关系的事实与规则时，不把它们扩写成相生、相克、冲克、旺衰、实际有用无用或事情成败。不得以条件句引入未经支持的新规则。\n2. 可说“当前证据没有提供生克、旺衰判断”，不能说“盘中不存在生克、旺衰”；可以明确否定未经支持的推断，不需要回避这些词。\n3. 原文转录只支持其确实写出的内容；谈本次引用的适用条件、排除条件或使用限制，须明确写“现代整理”。若使用这些现代字段作依据，将每个对应字段的 source_id 单独绑定到 applicability.editorial，不能只绑定原文字段。\n4. 不能笼统写“资料明确规定”而使现代限制被当成古籍规定。原文未谈某结论，应说“这段原文转录没有给出该结论”，不推成整部古籍或整个体系永远没有该结论。\n5. 引文逐字匹配输入不代表已核查影印本或外部来源真实性。建议仍须遵守以上边界；没有文献的对照侧不虚构出处。\n6. 原文若含“有用／无用”等评价，应如实说明这是文献的措辞，不能抹去或宣称所有原文都只定义名称。现代整理限制的是本次引用与个案应用，不重新定义古籍写了什么；引用文献评价不等于已证实当前爻的实际效力。\n先简短回答问题，再解释名称与限制；不为凑字数新增推断。"
+              },
+              {
+                "role": "user",
+                "content": "{\"evidence\":[{\"id\":\"fact:/calendar/month_branch\",\"kind\":\"program_fact\",\"label\":\"历法 · 月支\",\"path\":\"/calendar/month_branch\",\"value\":\"丑\"},{\"id\":\"fact:/lines/0/branch\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 地支\",\"path\":\"/lines/0/branch\",\"value\":\"子\"},{\"id\":\"fact:/lines/0/position\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 爻位\",\"path\":\"/lines/0/position\",\"value\":1},{\"id\":\"rule:MONTH-COMBINE-001:primary:1:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-COMBINE-001 · 第1爻 · 与月建六合\",\"result\":{\"code\":\"month_combine\",\"label\":\"与月建六合\"},\"rule_id\":\"MONTH-COMBINE-001\",\"source_facts\":[\"fact:/calendar/month_branch\",\"fact:/lines/0/branch\"],\"target\":{\"component\":\"primary\",\"line\":1}}],\"literature_packet\":{\"cards\":[{\"applicability_review\":{\"reason\":\"问题明确要求解释月合名称与评价边界；当前初爻已有月建六合记录，不能据此确认个案效力。\",\"status\":\"confirmed\"},\"applicable_conditions\":{\"statements\":[\"仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。\"],\"status\":\"specified\"},\"citation\":{\"artifact_hash\":\"sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa\",\"edition_id\":\"zsby-wenming-1925-11-nlc-12jh005345\",\"knowledge_id\":\"zsby-month-combine-001\",\"locator\":{\"anchor\":\"爻逢月合起，无用之爻也止\",\"chapter\":\"月將章第十六\",\"image_page\":61,\"leaf\":null,\"page\":\"四一\",\"section\":null,\"volume\":\"一\"},\"segment_ref\":{\"revision\":2,\"segment_id\":\"zsby-1925-s3\",\"span\":{\"end\":47,\"start\":0,\"unit\":\"unicode_code_point\"}},\"source_id\":\"zsby-nlc-12jh005345\",\"source_revision\":1,\"source_url\":\"https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf\",\"text_hash\":\"sha256:8e85035cffbcad00db63922b34bfa08e93b076f8b8245a1e7a01744ff94e69b3\",\"title\":\"增刪卜易\"},\"editorial_guidance\":{\"careful_example\":\"月合名称可由本段说明；文献评价不能单独证明此爻在本卦发挥作用或事情成功。\",\"checks\":[\"程序是否明确标记月建六合？\",\"是否把作者的评价措辞误当当前个案已确认的事实？\"],\"independent_evidence\":false,\"kind\":\"modern_editorial_guidance\",\"overreach_example\":\"月合代表有用，所以这个项目必然成功。\",\"review_status\":\"development_self_review\"},\"editorial_summary\":\"该段将月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞。\",\"exceptions\":{\"statements\":[],\"status\":\"none_stated\"},\"exclusions\":{\"statements\":[\"本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。\",\"不能据此直接推出事情有利、成功或最终吉凶；不以相邻无用句取代月破章的条件。\"],\"status\":\"specified\"},\"field_origins\":{\"applicable_conditions\":\"modern_editorial\",\"editorial_guidance\":\"modern_editorial\",\"editorial_summary\":\"modern_editorial\",\"exceptions\":\"modern_editorial\",\"exclusions\":\"modern_editorial\",\"original_text\":\"source_transcription\"},\"independent_evidence\":false,\"knowledge_id\":\"zsby-month-combine-001\",\"literature_id\":\"literature:zsby-month-combine-001\",\"original_text\":\"爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻。卽爲月破無用之爻也。\",\"predictive_validation\":\"not_established\",\"same_proposition_ids\":[\"zsby-month-combine-001\"],\"source_type\":\"classical_body\"}],\"corpus_hash\":\"sha256:aa3522aebb7e4ad18b54e144ea26499323e55838f79856fdd59f2c53baadcda3\",\"corpus_version\":\"phase8a-month-combine-hardening-1\",\"independent_evidence\":false,\"mode\":\"offline_explicit_review\",\"selection_semantics\":\"Caller-reviewed applicability; not automatic or independently verified\",\"version\":\"explicit-literature-packet-dev-2\"},\"question\":\"仅核对本盘初爻与月建六合的标注，解释月合名称。月合是否就证明本爻实际有用、事情一定成功？不选用神、不判断成败、不推应期。\",\"scope_note\":\"这些是人工复核后为当前窄问题选取的事实；未提供的字段不代表盘中不存在。仅核对所提供事实，不能据此作全盘综合解读。\",\"source_catalog\":{\"catalog_hash\":\"sha256:70e765bd3db03ad2a043c1dff2a484ef7270f49f00cb8c8816fee20a73667dac\",\"citations\":[{\"citation\":{\"artifact_hash\":\"sha256:caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa\",\"edition_id\":\"zsby-wenming-1925-11-nlc-12jh005345\",\"knowledge_id\":\"zsby-month-combine-001\",\"locator\":{\"anchor\":\"爻逢月合起，无用之爻也止\",\"chapter\":\"月將章第十六\",\"image_page\":61,\"leaf\":null,\"page\":\"四一\",\"section\":null,\"volume\":\"一\"},\"segment_ref\":{\"revision\":2,\"segment_id\":\"zsby-1925-s3\",\"span\":{\"end\":47,\"start\":0,\"unit\":\"unicode_code_point\"}},\"source_id\":\"zsby-nlc-12jh005345\",\"source_revision\":1,\"source_url\":\"https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf\",\"text_hash\":\"sha256:8e85035cffbcad00db63922b34bfa08e93b076f8b8245a1e7a01744ff94e69b3\",\"title\":\"增刪卜易\"},\"literature_id\":\"literature:zsby-month-combine-001\",\"source_type\":\"classical_body\"}],\"items\":[{\"field\":\"/original_text\",\"label\":\"原文转录\",\"literature_id\":\"literature:zsby-month-combine-001\",\"origin\":\"source_transcription\",\"source_id\":\"literature:zsby-month-combine-001#/original_text\",\"text\":\"爻逢月合而有用。爻逢月破而無功。○月建合爻則爲月合乃有用之爻也。月沖之爻。卽爲月破無用之爻也。\"},{\"field\":\"/editorial_summary\",\"label\":\"现代整理（不是古籍原文）\",\"literature_id\":\"literature:zsby-month-combine-001\",\"origin\":\"modern_editorial\",\"source_id\":\"literature:zsby-month-combine-001#/editorial_summary\",\"text\":\"该段将月建合爻称为月合，并与月破对举，使用“有用／无用”等文献评价措辞。\"},{\"field\":\"/applicable_conditions/statements/0\",\"label\":\"现代整理（不是古籍原文）\",\"literature_id\":\"literature:zsby-month-combine-001\",\"origin\":\"modern_editorial\",\"source_id\":\"literature:zsby-month-combine-001#/applicable_conditions/statements/0\",\"text\":\"仅解释该段月合的命名及作者评价措辞，不将文献评价当作当前卦盘已发生的程序事实。\"},{\"field\":\"/exclusions/statements/0\",\"label\":\"现代整理（不是古籍原文）\",\"literature_id\":\"literature:zsby-month-combine-001\",\"origin\":\"modern_editorial\",\"source_id\":\"literature:zsby-month-combine-001#/exclusions/statements/0\",\"text\":\"本条不单独判定当前具体卦中该爻是否实际发挥作用；不能仅凭月合关系或该段措辞确认个案效力。\"},{\"field\":\"/exclusions/statements/1\",\"label\":\"现代整理（不是古籍原文）\",\"literature_id\":\"literature:zsby-month-combine-001\",\"origin\":\"modern_editorial\",\"source_id\":\"literature:zsby-month-combine-001#/exclusions/statements/1\",\"text\":\"不能据此直接推出事情有利、成功或最终吉凶；不以相邻无用句取代月破章的条件。\"}],\"packet_hash\":\"sha256:956f16e305079b569f36d048b1f106ce921c15bb9e48138f82777f8dd42750e5\",\"statuses\":[{\"field\":\"applicable_conditions\",\"label\":\"材料中有明确条目\",\"literature_id\":\"literature:zsby-month-combine-001\",\"status\":\"specified\"},{\"field\":\"exclusions\",\"label\":\"材料中有明确条目\",\"literature_id\":\"literature:zsby-month-combine-001\",\"status\":\"specified\"},{\"field\":\"exceptions\",\"label\":\"当前材料未说明\",\"literature_id\":\"literature:zsby-month-combine-001\",\"status\":\"none_stated\"}],\"version\":\"source-field-catalog-dev-1\"}}"
+              }
+            ]
+          },
+          "input_bytes_with_allowance": 16773
+        }
+      ]
+    }
+  ],
+  "base_plan_hash": "sha256:e401636c33176750b4bafef41cdbf6cb07a4c336cc54f4b3543da3d721348307",
+  "evaluation": {
+    "version": "sourced-clarity-rubric-dev-1",
+    "review_kind": "retrospective_nonblind",
+    "evaluated_fields": [
+      "conclusion",
+      "interpretations.text",
+      "interpretations.applicability",
+      "interpretations.uncertainties",
+      "advice.text"
+    ],
+    "criteria": {
+      "facts": "盘面陈述与输入一致；未提供不等于盘中不存在。",
+      "scope": "仅回答当前窄问题，限制说明不展开用神、应期或成败判断。",
+      "support": "六合、六冲、旬空不自动支持生克、旺衰、效力或成败；否定句和条件句按实际含义检查。",
+      "attribution": "本次引用的使用限制明确归给现代整理；自由文字与逐字引文字段归属一致。",
+      "verification": "逐字匹配只证明输入连接，不证明外部古籍真实性、整个古法体系或预测结果。"
+    },
+    "uncertain_policy": "无法确认则 uncertain；仅无输入文献且完整输出无来源声明时，出处可 not_applicable。",
+    "automatic_semantic_validation": false,
+    "production_ready": false
+  },
+  "execution_policy": {
+    "preparation_only": false,
+    "live_executor_available": true,
+    "automatic_retries": false,
+    "max_calls": 1,
+    "stopping_rule": "Stop after one attempt. Preserve raw reply and failures; independent reviews of omissions, attribution and support. No production promotion."
+  }
+}
