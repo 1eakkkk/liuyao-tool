@@ -1,7 +1,7 @@
 import { beforeAll, afterAll, test, expect, vi } from 'vitest';
 import fs from 'node:fs';
 import fixtures from './fixtures/casts.json';
-import {overviewPresentation} from './overview-compat.js';
+import {overviewPresentation,overviewCastText,overviewPlateHtml,overviewExportPrompt} from './overview-compat.js';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { baseline } = require('./harness.cjs');
@@ -27,21 +27,21 @@ beforeAll(async () => {
 afterAll(() => { vi.clearAllTimers(); vi.useRealTimers(); });
 for (const fixture of fixtures) {
   test(`migrated code equals authoritative ${fixture.id}`, () => {
-    const { input } = fixture;const expected=overviewPresentation(fixture.expected);
+    const { input,expected } = fixture;
     document.getElementById('questionInput').value = input.question;
     document.getElementById('dayGanzhi').value = String(input.dayIndex);
     app.setTestCalendar(new Date(input.date));
     document.getElementById('dayLookupTime').value = '12:00';
     app.renderPlate(input.sums.map(app.lineFromSum), input.source);
     const cast = JSON.parse(JSON.stringify(castStore.legacy));
-    expect(cast).toEqual(expected.cast);
-    expect(app.formatCastDataForAI(cast)).toBe(expected.text);
-    expect(plateResults(document.getElementById('plateWrap').innerHTML)).toBe(plateResults(expected.plate));
-    expect(app.buildExportPromptText(input.question, app.formatCastDataForAI(cast))).toBe(expected.export);
+    expect(cast).toEqual(overviewPresentation(expected.cast));
+    expect(app.formatCastDataForAI(cast)).toBe(overviewCastText(expected.text));
+    expect(plateResults(document.getElementById('plateWrap').innerHTML)).toBe(plateResults(overviewPlateHtml(expected.plate)));
+    expect(app.buildExportPromptText(input.question, app.formatCastDataForAI(cast))).toBe(overviewExportPrompt(expected.export));
     const snapshot = app.buildHistoryCastSnapshot(castStore.canonical);
     const {canonical, ...legacySnapshot} = JSON.parse(JSON.stringify(snapshot));
     expect(canonical.schema_version).toBe('1.0');
-    expect(legacySnapshot).toEqual(expected.history);
+    expect(legacySnapshot).toEqual(overviewPresentation(expected.history));
   });
 }
 

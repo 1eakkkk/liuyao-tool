@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { buildCanonicalCast } from '../../src/core/normalize.js';
+import { upgradeOverviewText } from '../../src/core/overview.js';
 import { lineFromSum } from '../../src/core/physics.js';
 import { JIAZI60 } from '../../src/core/constants.js';
 import { buildYearMonthHourPillars, buildDateDisplayText, getTodayJiaziIndex } from '../../src/core/ganzhi.js';
@@ -75,7 +76,9 @@ export function loadCases() {
   assertFresh(data.cases);
   const corpus=readCorpus();
   for(const c of data.cases){
-    assert.deepEqual(regenerate(c.recipe,c.question,c.case_id),c.canonical);
+    const presentationCompatible=structuredClone(c.canonical);
+    presentationCompatible.display.overall_trend_text=upgradeOverviewText(presentationCompatible.display.overall_trend_text);
+    assert.deepEqual(regenerate(c.recipe,c.question,c.case_id),presentationCompatible);
     assert.deepEqual(evaluateRules(c.canonical),c.rule_result);
     need(conditionHits(c.canonical,c.rule_result,c.condition).length,'Case condition not satisfied');
     const pair=buildKnowledgePair({canonical:c.canonical,corpus,case_id:c.case_id,query:c.query});

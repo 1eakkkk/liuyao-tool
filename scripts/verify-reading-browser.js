@@ -27,6 +27,8 @@ try {
     await page.route('https://api.deepseek.com/**', async route => {
       const body = route.request().postDataJSON(); requests.push(body);
       assert.equal(body.response_format.type, 'json_object');
+      assert(body.messages[0].content.includes('本轮判断指引 reading-production-4'));
+      assert(body.messages[0].content.includes('一般建议，不当成盘面支持'));
       const input = JSON.parse(body.messages[1].content), response = answer(input);
       if (behavior === 'invalid') response.factors[0].evidence_ids = ['fact:fake'];
       if (behavior === 'delayed') await new Promise(resolve => setTimeout(resolve, 1200));
@@ -46,6 +48,7 @@ try {
     await page.locator('#readingMode').selectOption('structured');
     await page.locator('#promptBtn').click();
     assert((await page.locator('#readingPrompt').inputValue()).includes('700–800 字'));
+    assert((await page.locator('#readingPrompt').inputValue()).includes('本轮判断指引 reading-production-4'));
     const extract = text => JSON.parse(text.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
     let input = extract(await page.locator('#readingPrompt').inputValue());
     assert.equal(requests.length, 0);

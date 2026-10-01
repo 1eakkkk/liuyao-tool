@@ -11,6 +11,7 @@ import { buildKnowledgePair, commonBase, KNOWLEDGE_SYSTEM_PROMPT } from '../../s
 import { readCorpus } from '../../src/knowledge/load.js';
 import { evaluateRules } from '../../src/rules/engine.js';
 import { validateAiValue } from '../../src/ai/schemas.js';
+import { upgradeOverviewText } from '../../src/core/overview.js';
 const priorCorpusVersion = process.env.LIUYAO_KNOWLEDGE_CORPUS_VERSION;
 process.env.LIUYAO_KNOWLEDGE_CORPUS_VERSION = 'phase7.1-initial-1';
 afterAll(() => {
@@ -49,7 +50,9 @@ test('12 fixed unique cases, exact 8/2/2 strata and no historical recipes or fix
  expect(()=>assertFresh([{recipe:{sums:[7,7,7,7,7,7]},canonical:read('experiments/phase7/fixtures/compat-1.json')}])).toThrow(/Reused/);
 });
 for(const c of data.cases)test(`${c.case_id}: Core/r1 replay, actual retrieval, budget and common input remain frozen`,()=>{
- expect(regenerate(c.recipe,c.question,c.case_id)).toEqual(c.canonical);expect(evaluateRules(c.canonical)).toEqual(c.rule_result);
+ const presentationCompatible=structuredClone(c.canonical);
+ presentationCompatible.display.overall_trend_text=upgradeOverviewText(presentationCompatible.display.overall_trend_text);
+ expect(regenerate(c.recipe,c.question,c.case_id)).toEqual(presentationCompatible);expect(evaluateRules(c.canonical)).toEqual(c.rule_result);
  expect(conditionHits(c.canonical,c.rule_result,c.condition).length).toBeGreaterThan(0);
  const pair=buildKnowledgePair({canonical:c.canonical,corpus,case_id:c.case_id,query:c.query});
  expect(pair.archive).toEqual(c.expected.archive);expect(pair.archive.selected_knowledge_ids).toEqual(c.expected.selected_ids);

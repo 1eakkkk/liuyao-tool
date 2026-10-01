@@ -11,6 +11,7 @@ import { normalizeLegacyCast, buildCanonicalCast } from '../../src/core/normaliz
 import { lineFromSum } from '../../src/core/physics.js';
 import { JIAZI60 } from '../../src/core/constants.js';
 import { buildYearMonthHourPillars, buildDateDisplayText } from '../../src/core/ganzhi.js';
+import { upgradeOverviewText } from '../../src/core/overview.js';
 const dirs = [];
 afterEach(() => { for (const dir of dirs.splice(0)) fs.rmSync(dir, { recursive:true, force:true }); });
 const read = p => JSON.parse(fs.readFileSync(p,'utf8'));
@@ -46,7 +47,10 @@ test('eight frozen casts reproduce source recipes and cover 24 natural rules, no
       const now=new Date(c.source.timestamp),day=JIAZI60[c.source.explicit_day_index];
       expected=buildCanonicalCast({lines:c.source.sums.map(lineFromSum),source:'manual',createdAt:0,castId:'advance-fixture',calendar:{now,day,ymh:buildYearMonthHourPillars(day.stem,now),dateText:buildDateDisplayText(now)}});expected.question.text=c.question;
     }else expected=normalizeLegacyCast(c.source.kind==='legacy'?legacy[c.source.index].expected.cast:staticData.cases[c.source.index].expected,{question:c.question,createdAt:0});
-    expect(expected).toEqual(c.canonical);
+    const frozen=structuredClone(c.canonical);
+    // Current recipes use the corrected presentation copy; every other field remains exact.
+    if(c.source.kind==='core_recipe') frozen.display.overall_trend_text=upgradeOverviewText(frozen.display.overall_trend_text);
+    expect(expected).toEqual(frozen);
   }
   expect(ids.size).toBe(24);expect(ids.has('HIDDEN-SAME-ELEMENT-001')).toBe(false);
 });
