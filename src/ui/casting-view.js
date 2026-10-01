@@ -1,4 +1,5 @@
 import { castStore } from '../app/cast-store.js';
+import {upgradeOverviewText} from '../core/overview.js';
 import { renderFactCheckPanel } from './fact-check-view.js';
 import { resolveCastCalendar } from './calendar-input.js';
 import { resetConversation } from '../app/conversation.js';
@@ -90,7 +91,7 @@ function renderPlate(lines, source='system'){
       <div class="gua-date-row">${boldDateHtml(dateText)}</div>
       <div>${boldPillarsHtml(fourPillarsText)}</div>
       <div>${boldPillarsHtml(kongText)}</div>
-      <div class="gua-trend-row">证据速览：${overallTrendText}</div>
+      <div class="gua-trend-row">证据速览：${upgradeOverviewText(overallTrendText)}</div>
     </div>`;
   replayFadeIn(plateWrap);
 
@@ -198,7 +199,7 @@ function renderPlateFromCastData(castData, question, castTime){
       <div>${lowerUpperText}</div>
       ${resumeDateText ? `<div class="gua-date-row">${boldDateHtml(resumeDateText)}</div>` : ''}
       <div>${dayKongHtml}</div>
-      ${castData.overallTrendText ? `<div class="gua-trend-row">证据速览：${castData.overallTrendText}</div>` : ''}
+      ${castData.overallTrendText ? `<div class="gua-trend-row">证据速览：${upgradeOverviewText(castData.overallTrendText)}</div>` : ''}
     </div>
     <div class="placeholder" style="padding:10px 0 0;font-size:var(--fs-2);">（以上是刷新前留存的排盘，对应下面正在续接的追问）</div>`;
   replayFadeIn(plateWrap);

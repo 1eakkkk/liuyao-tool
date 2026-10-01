@@ -1,4 +1,5 @@
 import { toLegacyCast } from '../core/normalize.js';
+import {upgradeOverviewText} from '../core/overview.js';
 import { buildGuaDiagramHtml, structLineToDiagram } from './plate-markup.js';
 import { spiritDotHtml, boldDateHtml, boldPillarsHtml, formatTime, escapeHtml } from './helpers.js';
 import { aiStats, historyList, historyEmpty, historyCount } from './dom.js';
@@ -54,7 +55,7 @@ function historyCastHtml(cast, ts){
     ${dateHtml ? `<div class="history-cast-head">${dateHtml}</div>` : ''}
     <div class="history-cast-head">${pillarsKongHtml}</div>
     <div class="history-cast-lines">${linesRows}</div>
-    ${cast.overallTrendText ? `<div class="history-cast-head">证据速览：${escapeHtml(cast.overallTrendText)}</div>` : ''}
+    ${cast.overallTrendText ? `<div class="history-cast-head">证据速览：${escapeHtml(upgradeOverviewText(cast.overallTrendText))}</div>` : ''}
   </div>`;
 }
 

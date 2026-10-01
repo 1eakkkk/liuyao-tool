@@ -2,6 +2,7 @@ import { test, expect } from 'vitest';
 import { createRequire } from 'node:module';
 import fixtures from './fixtures/static-casts.json';
 import { calculateCast } from '../../src/core/casting.js';
+import {overviewPresentation} from './overview-compat.js';
 import { lineFromSum } from '../../src/core/physics.js';
 import { JIAZI60 } from '../../src/core/constants.js';
 import { buildYearMonthHourPillars, buildDateDisplayText } from '../../src/core/ganzhi.js';
@@ -21,7 +22,7 @@ test('64 frozen static hexagrams and 384 single-moving variants match original, 
       const now = new Date(input.date), day = JIAZI60[input.dayIndex];
       const { cast } = calculateCast(input.sums.map(lineFromSum), input.source,
         { now, day, ymh: buildYearMonthHourPillars(day.stem, now), dateText: buildDateDisplayText(now) }, 'date');
-      expect(JSON.parse(JSON.stringify(cast)), `bits=${bits}, moving=${moving}`).toEqual(expected);
+      expect(JSON.parse(JSON.stringify(cast)), `bits=${bits}, moving=${moving}`).toEqual(overviewPresentation(expected));
       if (moving < 0) {
         expect(fixtures.cases[bits].bits).toBe(bits);
         expect(fixtures.cases[bits].input).toEqual(input);

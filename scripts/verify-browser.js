@@ -4,6 +4,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { PNG } from 'pngjs';
+import {overviewPresentation} from '../tests/regression/overview-compat.js';
 
 const EPOCH = new Date('2026-09-15T12:00:00+08:00').getTime();
 const outputRoot = process.argv.includes('--record') ? 'docs/acceptance' : 'test-results/browser';
@@ -106,9 +107,9 @@ try {
         assert.ok(maximumChannelDifference <= 2, `${name} ${width} ${tab}: channel difference ${maximumChannelDifference}`);
         report.push({ width, target: name, tab, maximumChannelDifference });
       }
-      assert.equal(outputs[name].prompt, outputs.baseline.prompt, `${name} exported prompt`);
-      for (const key of ['conversation', 'restoredConversation', 'restoredPlate', 'requests']) assert.deepEqual(outputs[name][key], outputs.baseline[key], `${name} ${key}`);
-      report.push({ width, target: name, screenshots: 5, prompt: 'identical', mockApiRequests: 2, conversation: 'identical', restoredPlate: 'result-elements-identical', errors: 0 });
+      assert.equal(outputs[name].prompt, overviewPresentation(outputs.baseline.prompt), `${name} exported prompt`);
+      for (const key of ['conversation', 'restoredConversation', 'restoredPlate', 'requests']) assert.deepEqual(outputs[name][key], overviewPresentation(outputs.baseline[key]), `${name} ${key}`);
+      report.push({ width, target: name, screenshots: 5, prompt: 'identical-except-overview-copy', mockApiRequests: 2, conversation: 'identical', restoredPlate: 'identical-except-overview-copy', errors: 0 });
     }
   }
   fs.writeFileSync(`${outputRoot}/browser-report.json`, JSON.stringify(report, null, 2) + '\n');

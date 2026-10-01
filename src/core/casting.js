@@ -1,5 +1,6 @@
 import { sixRelative, computeJinTuiShen, getYuelingState, getDayRelation, getHuitouRelation, getShiYingRelation, getFeishenFushenRelation } from './relations.js';
 import { NAJIA, BRANCH_EL, SIX_SPIRITS, TRIGRAM_BY_KEY, EIGHT_PALACE_MAP, STEM_SPIRIT_GROUP, KONG_PAIRS } from './constants.js';
+import {overviewEnding} from './overview.js';
 
 
 
@@ -142,12 +143,7 @@ function calculateCast(lines, source, calendar, daySelectionMode){
   if(shiYingRelation){
     overallTrendText += `；世应：${shiYingRelation}`;
   }
-  const strongLean = yuelingStrongCount - yuelingWeakCount;
-  if(Math.abs(strongLean) >= 3){
-    overallTrendText += strongLean > 0 ? '——整体当令气象偏旺，迹象比较集中' : '——整体当令气象偏弱，迹象比较集中';
-  } else {
-    overallTrendText += '——当令得力与减力的爻数相当，旺衰不算悬殊，具体判断还要结合用神细看';
-  }
+  overallTrendText += overviewEnding(yuelingStrongCount,yuelingWeakCount);
 
   const palaceText = `${palaceInfo.palace} · ${palaceInfo.type}卦（本宫五行：${palaceInfo.element}）`;
   const lowerUpperText = `下卦：${lower.sym} ${lower.name}　上卦：${upper.sym} ${upper.name}`;

@@ -1,6 +1,7 @@
 import { beforeAll, afterAll, test, expect, vi } from 'vitest';
 import fs from 'node:fs';
 import fixtures from './fixtures/casts.json';
+import {overviewPresentation} from './overview-compat.js';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { baseline } = require('./harness.cjs');
@@ -26,7 +27,7 @@ beforeAll(async () => {
 afterAll(() => { vi.clearAllTimers(); vi.useRealTimers(); });
 for (const fixture of fixtures) {
   test(`migrated code equals authoritative ${fixture.id}`, () => {
-    const { input, expected } = fixture;
+    const { input } = fixture;const expected=overviewPresentation(fixture.expected);
     document.getElementById('questionInput').value = input.question;
     document.getElementById('dayGanzhi').value = String(input.dayIndex);
     app.setTestCalendar(new Date(input.date));
@@ -65,7 +66,7 @@ test('date-only, solar-term, manual day and automatic mode preserve original beh
       const sums = [6, 7, 8, 9, 8, 7];
       original.window.renderPlate(sums.map(original.window.lineFromSum), 'manual');
       app.renderPlate(sums.map(app.lineFromSum), 'manual');
-      expect(JSON.parse(JSON.stringify(castStore.legacy))).toEqual(JSON.parse(JSON.stringify(original.window.lastCastData)));
+      expect(JSON.parse(JSON.stringify(castStore.legacy))).toEqual(overviewPresentation(JSON.parse(JSON.stringify(original.window.lastCastData))));
     }
   } finally { original.window.close(); }
 });

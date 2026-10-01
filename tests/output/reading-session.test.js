@@ -55,7 +55,8 @@ test('quantified claims require exactly the cited lines, and do not guess condit
 
 test('recorded real response contradicting the moving sixth line is rejected offline',async()=>{
   const saved=JSON.parse(fs.readFileSync(new URL('../fixtures/reading-motion-conflict.json',import.meta.url)));
-  const session=createReadingSession(saved.canonical),prepared=await prepareReadingTurn(session,saved.question);
+  const session=createReadingSession(saved.canonical);session.prompt='reading-production-3';
+  const prepared=await prepareReadingTurn(session,saved.question);
   expect(prepared.context.input.C_canonical_cast.lines[5].moving).toBe(true);
   const turn=appendReadingTurn(session,prepared,saved.raw,true,'api');
   expect(turn.result.issues).toEqual([{code:'motion_fact_conflict',path:'$.factors[0].interpretation'}]);

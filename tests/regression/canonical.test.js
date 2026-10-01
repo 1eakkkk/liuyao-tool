@@ -2,6 +2,7 @@ import { test, expect } from 'vitest';
 import fixtures from './fixtures/casts.json';
 import { normalizeLegacyCast, toLegacyCast, assertCanonicalCast, buildCanonicalCast, toPlateLineData } from '../../src/core/normalize.js';
 import { lineFromSum } from '../../src/core/physics.js';
+import {overviewPresentation} from './overview-compat.js';
 import { JIAZI60 } from '../../src/core/constants.js';
 import { buildYearMonthHourPillars, buildDateDisplayText } from '../../src/core/ganzhi.js';
 
@@ -17,7 +18,7 @@ for (const { id, input, expected } of fixtures) {
       createdAt: 0, castId: id,
       calendar: { now, day, ymh: buildYearMonthHourPillars(day.stem, now), dateText: buildDateDisplayText(now) },
     });
-    expect(toLegacyCast(built)).toEqual(expected.cast);
+    expect(toLegacyCast(built)).toEqual(overviewPresentation(expected.cast));
     expect(built.meta.cast_id).toBe(id);
   });
 }

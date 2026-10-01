@@ -8,7 +8,7 @@ function references(answer) {
 // Only literal numbered-line claims and quantified cited motion facts are checked.
 // Questions, conditions, negations and quotations are left for human review.
 function checkMotionClaims(answer, context) {
-  if(context.conversation?.version !== 'reading-production-3') return;
+  if(!['reading-production-3','reading-production-4'].includes(context.conversation?.version)) return;
   const numbers={'一':1,'二':2,'三':3,'四':4,'五':5,'六':6,'两':2};
   const number=s=>numbers[s] || Number(s);
   const registry=new Map(context.evidence.map(e=>[e.id,e]));

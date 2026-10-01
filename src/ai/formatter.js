@@ -1,4 +1,5 @@
 import { toLegacyCast } from '../core/normalize.js';
+import {upgradeOverviewText} from '../core/overview.js';
 
 
 
@@ -58,7 +59,7 @@ function formatCastDataForAI(castData){
   // 但卦名是解卦回复里"这一卦是什么卦"的常规交代，古籍（比如"地水师"卦辞、大象）也常按卦名
   // 整体取象，缺了这行AI就只能回避不提、或者自己瞎编一个卦名，都不合适，这里补上。
   const guaNameText = `本卦：${castData.guaName || ''}` + (castData.bianGuaName ? `　变卦：${castData.bianGuaName}` : '');
-  const trendText = castData.overallTrendText ? `\n\n证据速览（月令旺衰/回头生克/世应生克的收敛度参考，不是吉凶结论）：${castData.overallTrendText}` : '';
+  const trendText = castData.overallTrendText ? `\n\n证据速览（月令旺衰/回头生克/世应生克的收敛度参考，不是吉凶结论）：${upgradeOverviewText(castData.overallTrendText)}` : '';
   return `${sourceText}\n${guaNameText}\n${castData.palaceText}\n${castData.lowerUpperText}\n${pillarsAndKongText(castData)}\n\n` +
     `各爻明细（从初爻到上爻，六亲/世应/空亡已由系统自动标注）：\n${linesText}${trendText}`;
 }
