@@ -17,3 +17,5 @@
 知识增强继续离线，本次品牌发布不包含新模型协议、目录或文献注入。
 
 正式域名 https://gua.1eak.cool/ 的 320、390、1280px 浏览器标题、页头、图标解码与横向溢出检查通过，无页面异常或模型调用。四个公开资源与本机构建 SHA256 一致；`_headers` 是配置文件，不是公开资源，实际响应的 `nosniff` 与 `strict-origin-when-cross-origin` 已核对。记录见 [production.json](acceptance/brand-20261001/production.json)。
+
+归档提交 `226b35e` 的最终单进程全量复验：49 个文件、**597 项全部通过**。品牌实现提交 `ed19961` 的 [GitHub 完整检查](https://github.com/1eakkkk/liuyao-tool/actions/runs/36803187124)已成功；后续文档与回放归档提交的自动检查按新运行结果另行判断。
