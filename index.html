@@ -7,8 +7,8 @@
 (()=>{let choice="system";try{const saved=localStorage.getItem("liuyao_theme");if(["light","dark","system"].includes(saved))choice=saved;}catch{}document.documentElement.dataset.themeChoice=choice;document.documentElement.dataset.theme=choice==="system"?(window.matchMedia?.("(prefers-color-scheme: dark)")?.matches?"dark":"light"):choice;})();
 </script>
 <meta charset="UTF-8">
-<title>六爻问卦 · 起卦排盘与 AI 解读</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23181611'/%3E%3Cpath d='M16,1 A7.5,7.5 0 0,1 16,16 A7.5,7.5 0 0,0 16,31 A15,15 0 0,0 16,1 Z' fill='%23ece4d0'/%3E%3Ccircle cx='16' cy='8.5' r='2.2' fill='%23181611'/%3E%3Ccircle cx='16' cy='23.5' r='2.2' fill='%23ece4d0'/%3E%3Ccircle cx='16' cy='16' r='15' fill='none' stroke='%23a8391f' stroke-width='1.2'/%3E%3C/svg%3E">
+<title>一念六爻 · 起卦与解读</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='1' width='30' height='30' rx='8' fill='%23226859'/%3E%3Cpath d='M8 6h16M8 10h6m4 0h6M8 14h16M8 22h16M8 26h6m4 0h6' fill='none' stroke='%23f5f0e5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M8 18h6m4 0h6' fill='none' stroke='%23e2a090' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <script>
 /* ==================================================================
@@ -68,7 +68,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 
 <div class="hero">
   <div class="eyebrow">火珠林 · 京房纳甲</div>
-  <div class="site-brand"><span class="brand-seal" aria-hidden="true">易</span><div><h1>六爻<span class="brand-dot">·</span>问卦</h1><p class="brand-caption">一念起，六爻成</p></div></div>
+  <div class="site-brand"><span class="brand-seal" aria-hidden="true">易</span><div><h1>一念六爻</h1><p class="brand-caption">一念起，六爻成</p></div></div>
   <p class="sub">从阴阳、五行、八卦讲起，到起卦排盘、自动纳甲配六神 —— 一个网页把六爻的骨架搭起来。</p>
   <div class="header-help">  <button class="help-fab" id="helpFab" title="使用帮助" aria-label="使用帮助"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg></button></div>
   <nav class="learning-nav" aria-label="学习资料">  <button class="tab-btn" data-tab="basics" role="button" id="tabbtn-basics" aria-pressed="false" aria-controls="basics" tabindex="0"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5C9 3 5 3 3 4v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-2-1-6-1-9 1Zm0 0v15"/></svg>基础知识</button>  <button class="tab-btn" data-tab="guide" role="button" id="tabbtn-guide" aria-pressed="false" aria-controls="guide" tabindex="0"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5Z"/></svg>断卦入门</button></nav>
@@ -646,7 +646,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 </div>
 
 </main>
-<div class="note">六爻问卦 · 内容整理自传统火珠林纳甲体系，供学习参考</div>
+<div class="note">一念六爻 · 内容整理自传统火珠林纳甲体系，供学习参考</div>
 
 <script src="./vendor/cannon.js"></script>
 <script type="module" src="./src/main.js"></script>

@@ -4,7 +4,8 @@ import path from 'node:path';
 import {sealPlan} from '../experiments/reading-quality/knowledge-pairs.js';
 import {checkSourcedOutput} from '../experiments/reading-quality/sourced-output.js';
 import {reserveCampaign} from './deepseek-campaign-budget.js';
-export async function executeFixedSourcedPilot(directory,expectedPlan){
+export async function executeFixedSourcedPilot(directory,expectedPlan,checkOutput=checkSourcedOutput){
+if(typeof checkOutput!=='function')throw Error('Trusted output checker missing');
 const dir=path.resolve(directory),read=name=>JSON.parse(fs.readFileSync(path.join(dir,name),'utf8'));
 const write=(name,value)=>fs.writeFileSync(path.join(dir,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
 const plan=read('plan.json'),seal=read('seal.json');
@@ -46,7 +47,7 @@ for(const c of plan.cases) for(const arm of c.arms) {
       else if(ch==='"') {const start=i;for(i++;i<raw.length;i++){if(raw[i]==='\\') i++;else if(raw[i]==='"') break;}
         const frame=frames.at(-1);if(frame?.expect){const name=JSON.parse(raw.slice(start,i+1));if(frame.keys.has(name)) throw Error('Duplicate field');frame.keys.add(name);frame.expect=false;}}
     }
-    const check=checkSourcedOutput(JSON.parse(raw),c.evidence,arm.material.packet);
+    const check=checkOutput(JSON.parse(raw),c.evidence,arm.material.packet);
     const result={id:arm.id,case_id:c.id,arm:arm.arm,usage:u,check,model_quality:'manual_review_pending',
       conservative_peak_cost_cny:(u.prompt_tokens*2+u.completion_tokens*8)/1e6};
     write(`${arm.id}-check.json`,result);results.push(result);console.log(JSON.stringify({id:arm.id,mechanical_ok:check.mechanical_ok}));

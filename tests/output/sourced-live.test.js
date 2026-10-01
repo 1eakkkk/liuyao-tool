@@ -9,6 +9,7 @@ import {auditCompletedPilot,settlePilot} from '../../scripts/settle-knowledge-pi
 import {accountedCampaignAmount,reserveCampaign} from '../../scripts/deepseek-campaign-budget.js';
 import {prepareSourcedPairs} from '../../experiments/reading-quality/sourced-pairs.js';
 import {prepareLiveClarityPairs} from '../../experiments/reading-quality/clarity-live-pairs.js';
+import {prepareLiveBoundOne} from '../../experiments/reading-quality/bound-live-one.js';
 import {sealPlan} from '../../experiments/reading-quality/knowledge-pairs.js';
 const repo=fileURLToPath(new URL('../../',import.meta.url));
 function temporary(work){const root=fs.mkdtempSync(path.join(os.tmpdir(),'sourced-live-'));try{return work(root);}finally{
@@ -45,9 +46,9 @@ test('ledger lock rejects reconciliation and preserves bytes',()=>temporary(root
   fs.writeFileSync(ledger+'.lock','');expect(()=>settlePilot(ledger,root)).toThrow();expect(fs.readFileSync(ledger,'utf8')).toBe(before);
 }));
 const kinds=['valid','duplicate','escaped_duplicate','truncated','invalid_origin','wrong_seal','insufficient_balance','missing_usage','unknown_model'];
-const pilots=['original','clarity'].flatMap(pilot=>[...kinds,...(pilot==='clarity'?['third_case_failure']:[])].map(kind=>({pilot,kind})));
+const pilots=['original','clarity','bound'].flatMap(pilot=>[...kinds,...(pilot==='clarity'?['third_case_failure']:pilot==='bound'?['missing_note']:[])].map(kind=>({pilot,kind})));
 test.each(pilots)('paid executor mocked: $pilot $kind, replay rejected without further calls',async ({pilot,kind})=>{
-  const plan=pilot==='original'?await prepareSourcedPairs('one-pair'):await prepareLiveClarityPairs();
+  const plan=pilot==='original'?await prepareSourcedPairs('one-pair'):pilot==='clarity'?await prepareLiveClarityPairs():await prepareLiveBoundOne();
   temporary(root=>{
     const dir=path.join(root,'run');fs.mkdirSync(dir);write(path.join(dir,'plan.json'),plan);write(path.join(dir,'seal.json'),{hash:sealPlan(plan)});
     if(kind==='wrong_seal') write(path.join(dir,'seal.json'),{hash:'wrong'});
@@ -60,12 +61,20 @@ globalThis.fetch=async(url,options)=>{
  if(url!=='https://api.deepseek.com/chat/completions')throw Error('Unexpected endpoint');
  fs.appendFileSync('calls.txt','POST\\n');const input=JSON.parse(JSON.parse(options.body).messages[1].content),card=input.literature_packet.cards[0];
  const a={schema_version:'layered-reading-sourced-dev-1',conclusion:'模拟协议检查，不是模型评价。',facts:input.evidence.filter(e=>e.kind==='program_fact').map(e=>({evidence_id:e.id,value:e.value})),rules:input.evidence.filter(e=>e.kind==='rule_result').map(e=>({evidence_id:e.id,result:e.result})),interpretations:[{text:'仅核对字段。',fact_ids:input.evidence.filter(e=>e.kind==='program_fact').map(e=>e.id),rule_ids:input.evidence.filter(e=>e.kind==='rule_result').map(e=>e.id),literature_ids:card?[card.literature_id]:[],applicability:'开发检查。',uncertainties:['语义未确认。'],source_claims:card?[{literature_id:card.literature_id,field:'/original_text',origin:${JSON.stringify(kind==='invalid_origin'?'modern_editorial':'source_transcription')},quote:card.original_text}]:[]}],advice:[]};
+ if(${JSON.stringify(pilot)}==='bound'){
+   a.schema_version='layered-reading-sourced-dev-2';a.source_catalog_hash=input.source_catalog.catalog_hash;
+   const i=a.interpretations[0];delete i.source_claims;
+   i.source_ids=input.source_catalog.items.map(s=>s.source_id);
+   i.applicability={program:'模拟程序依据。',editorial:input.source_catalog.items.filter(s=>s.origin==='modern_editorial').map(s=>({source_id:s.source_id,explanation:'模拟现代整理说明。'}))};
+   if(${JSON.stringify(kind)}==='invalid_origin')i.applicability.editorial[0].origin='source_transcription';
+   if(${JSON.stringify(kind)}==='missing_note')i.applicability.editorial.pop();
+ }
  let content=JSON.stringify(a);if(${JSON.stringify(kind)}==='duplicate')content=content.replace('"conclusion":','"conclusion":"重复", "conclusion":');
  if(${JSON.stringify(kind)}==='escaped_duplicate')content=content.replace('"conclusion":','"concl'+String.fromCharCode(92)+'u0075sion":"重复","conclusion":');
  if(${JSON.stringify(kind)}==='third_case_failure' && input.question.includes('第五爻'))content=content.replace('"conclusion":','"conclusion":"重复","conclusion":');
  return{ok:true,json:async()=>({model:${JSON.stringify(kind==='unknown_model'?'unknown':'deepseek-flash')},choices:[{finish_reason:${JSON.stringify(kind==='truncated'?'length':'stop')},message:{content}}],usage:${kind==='missing_usage'?'null':'{prompt_tokens:100,completion_tokens:200,total_tokens:300}'}})};
 };`);
-    const args=['--import',pathToFileURL(mock).href,...(pilot==='original'?[path.join(repo,'scripts/execute-sourced-reading.js'),dir]:[path.join(repo,'scripts/clarity-live-pilot.js'),'execute',dir])];
+    const args=['--import',pathToFileURL(mock).href,...(pilot==='original'?[path.join(repo,'scripts/execute-sourced-reading.js'),dir]:[path.join(repo,pilot==='bound'?'scripts/bound-live-pilot.js':'scripts/clarity-live-pilot.js'),'execute',dir])];
     const run=()=>execFileSync(process.execPath,args,{cwd:root,stdio:'pipe'});
     if(kind==='valid') expect(()=>run()).not.toThrow();else expect(()=>run()).toThrow();
     if(['wrong_seal','insufficient_balance'].includes(kind)) {
@@ -75,7 +84,7 @@ globalThis.fetch=async(url,options)=>{
       return;
     }
     const calls=fs.readFileSync(path.join(root,'calls.txt'),'utf8');
-    expect(calls.trim().split('\n')).toHaveLength(kind==='valid'?(pilot==='original'?2:4):kind==='invalid_origin'?2:kind==='third_case_failure'?3:1);
+    expect(calls.trim().split('\n')).toHaveLength(kind==='valid'?(pilot==='original'?2:pilot==='clarity'?4:1):kind==='invalid_origin'&&pilot!=='bound'?2:kind==='third_case_failure'?3:1);
     const summary=JSON.parse(fs.readFileSync(path.join(dir,'summary.json')));expect(summary.production_changes).toBe(false);
     if(kind==='duplicate') expect(summary.results[0].status).toBe('request_or_processing_failed');
     expect(()=>run()).toThrow();expect(fs.readFileSync(path.join(root,'calls.txt'),'utf8')).toBe(calls);
