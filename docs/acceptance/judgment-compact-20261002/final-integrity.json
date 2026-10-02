@@ -1,0 +1,178 @@
+{
+  "version": "judgment-compact-final-integrity-review-1",
+  "reviewer_id": "agent-a",
+  "review_kind": "offline_integrity_review",
+  "reviewed_commit": "432b631",
+  "archive": "docs/acceptance/judgment-compact-20261002",
+  "replay": {
+    "version": "judgment-review-replay-1",
+    "plan_hash": "e9066727ecc9f219dba140822eebdaa38c5bff5086e88ac0e57b357cd91bfe5c",
+    "quote_integrity": "passed",
+    "cases": [
+      {
+        "case_id": "game-rank",
+        "mechanical": "validated",
+        "model_direction": "mixed",
+        "dimensions": {
+          "facts": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          },
+          "scope": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          },
+          "support": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          },
+          "priority": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "uncertain"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "uncertain"
+              }
+            ],
+            "conservative_status": "uncertain"
+          },
+          "direction": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          }
+        }
+      },
+      {
+        "case_id": "private-project",
+        "mechanical": "validated",
+        "model_direction": "mixed",
+        "dimensions": {
+          "facts": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          },
+          "scope": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "pass"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "pass"
+              }
+            ],
+            "conservative_status": "pass"
+          },
+          "support": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          },
+          "priority": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "uncertain"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "uncertain"
+              }
+            ],
+            "conservative_status": "uncertain"
+          },
+          "direction": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          }
+        }
+      }
+    ],
+    "semantic_acceptance": "not_established",
+    "forecast_accuracy": "unassessed",
+    "blind": false,
+    "overall_improvement": "unassessed"
+  },
+  "semantic_review_unchanged": true,
+  "network_calls": 0,
+  "actual_credentials_or_ledger_read": false,
+  "scope": "只核验冻结归档和已有审查记录的连接，不重做语义、不证明预测或总体改善。",
+  "related_tests": {
+    "files": [
+      "tests/output/judgment-live-pilot.test.js",
+      "tests/output/judgment-replay.test.js"
+    ],
+    "passed": 25,
+    "failed": 0,
+    "max_workers": 2,
+    "resealed_changed_compact_system_rejected": true
+  },
+  "result": "passed_integrity_semantic_acceptance_not_established",
+  "findings": []
+}
