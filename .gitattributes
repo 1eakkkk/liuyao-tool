@@ -1,0 +1,2 @@
+# Frozen response hashes must survive checkout on Windows and CI.
+docs/acceptance/judgment-live-20261002/** -text

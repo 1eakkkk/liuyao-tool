@@ -1,0 +1,532 @@
+{
+  "version": "judgment-semantic-review-1",
+  "reviewer_id": "agent-a",
+  "review_kind": "retrospective_nonblind",
+  "plan_version": "production-judgment-development-1",
+  "review_criteria": [
+    {
+      "id": "facts",
+      "requirement": "具体爻位、动静、六亲、五行和关系方向与当前程序数据一致；引用须覆盖该段所述属性。"
+    },
+    {
+      "id": "scope",
+      "requirement": "回答当前目标，不把私人免费娱乐换成盈利、人气或商业成功，不假装了解未说明的游戏机制。"
+    },
+    {
+      "id": "support",
+      "requirement": "类象解释与现实事实分开；普通练习、心态、试用建议不当作盘面支持。生克影响须结合对象角色，不从关系名称直接判现实好坏。"
+    },
+    {
+      "id": "priority",
+      "requirement": "说明主要取用、备选角度和相关因素主次；若取法无法确定且影响方向，坦然保留不确定性。"
+    },
+    {
+      "id": "direction",
+      "requirement": "方向标签与正文及因素一致；mixed 须说明具体牵制和不能确定主次的理由，不因存在两面因素自动采用，不要求固定吉凶。"
+    }
+  ],
+  "scope": "两条已曝光开发案例的独立内容回顾；不是盲测、随机对照、总体改善或预测验证。",
+  "evidence_policy": "只能核对冻结输入内事实、ID与文字支持关系；不新增事实、文献或传统取法。quotes引用response.txt原始UTF-16半开区间。",
+  "coverage": [
+    "answer",
+    "direction",
+    "all yongshen_candidates.reason and targets",
+    "all factors.interpretation and assessment",
+    "all timing_candidates (empty)",
+    "all uncertainties"
+  ],
+  "cases": [
+    {
+      "case_id": "game-rank",
+      "dimensions": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "未发现已给盘面值或回头克/应克世方向的直接反转；但冻结标准要求每段所提属性都有本段引用，存在多处缺失。用神理由第3爻“静”缺 moving、酉金缺 branch/element，第5爻酉缺 branch；该理由“动而生世”没有本段世位和世爻五行。因素0亥、变出丑与妻财、应爻丑与妻财缺对应 branch/relative。因素1酉金与变出亥水缺 branch/element，不能由父母六亲引文代替。其他段或引用目录里存在这些ID不补足本段。",
+          "quotes": [
+            {
+              "field": "yongshen_candidates.0.reason",
+              "start": 904,
+              "end": 916,
+              "text": "第3爻官鬼酉金静而月令旺",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "yongshen_candidates.0.reason",
+              "start": 978,
+              "end": 985,
+              "text": "第5爻动而生世",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.0.interpretation",
+              "start": 1455,
+              "end": 1471,
+              "text": "第4爻父母亥水发动，变出丑土妻财",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.0.interpretation",
+              "start": 1493,
+              "end": 1506,
+              "text": "同时第1爻应爻丑土妻财克世",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.interpretation",
+              "start": 2000,
+              "end": 2013,
+              "text": "第5爻官鬼酉金发动且月令旺",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.interpretation",
+              "start": 2029,
+              "end": 2038,
+              "text": "它动而变出父母亥水",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            }
+          ],
+          "evidence_ids": [
+            "fact:/lines/2/moving",
+            "fact:/lines/2/branch",
+            "fact:/lines/2/element",
+            "fact:/lines/4/branch",
+            "fact:/hexagram/shi_line",
+            "fact:/lines/3/element",
+            "fact:/lines/3/branch",
+            "fact:/lines/3/changed/branch",
+            "fact:/lines/3/changed/relative",
+            "fact:/lines/0/branch",
+            "fact:/lines/0/relative",
+            "fact:/lines/4/element",
+            "fact:/lines/4/changed/branch",
+            "fact:/lines/4/changed/element",
+            "fact:/lines/3/relations/return_relation",
+            "rule:YING-CONTROL-SHI-001:primary:4:1"
+          ]
+        },
+        "scope": {
+          "verdict": "fail",
+          "reason": "确实回答段位目标且没有另推日期；但用户未说明游戏机制，正文仍断言王者段位是长期排位累积，并两处直接套用固定英雄池/节奏管理。不能从未知游戏名确认这些机制。uncertainties承认机制未提供，未能消除前文越界。这里不裁定该游戏实际上有无这些机制。",
+          "quotes": [
+            {
+              "field": "answer",
+              "start": 534,
+              "end": 580,
+              "text": "固定复盘失误和英雄池，减少连败后硬冲；王者段位是长期排位累积，单靠一两次爆发不足以稳定跨过。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.interpretation",
+              "start": 2082,
+              "end": 2096,
+              "text": "固定英雄池和节奏管理持续投入",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "uncertainties.2",
+              "start": 2533,
+              "end": 2563,
+              "text": "王者万象棋的段位机制、对局环境和你的实际水平、投入时间未提供",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            }
+          ],
+          "evidence_ids": []
+        },
+        "support": {
+          "verdict": "fail",
+          "reason": "关系对象交代了世爻、应爻及官鬼，并没有把所有官鬼或回头克机械地归为一方向，这是有保留的部分。失败在于由官鬼旺直接确认现实门槛、对手环境和竞争压力，再由生世/变父母确认会逼出积累、已经带动适应；程序引用只支持这些局部属性和关系，不提供现实竞争或心理行为事实。普通复盘/英雄池投入又放进conditional因素，成为转化帮助的盘面论证，而没有清楚区分一般建议。末尾总免责声明不足以修正具体肯定句。",
+          "quotes": [
+            {
+              "field": "yongshen_candidates.0.reason",
+              "start": 927,
+              "end": 950,
+              "text": "官鬼逢旺说明目标段位本身要求高、对手或环境不弱",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.interpretation",
+              "start": 2014,
+              "end": 2027,
+              "text": "说明外部竞争与规则压力较强",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.interpretation",
+              "start": 2046,
+              "end": 2068,
+              "text": "也带动了对规则、段位机制和自身打法的重新适应",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.interpretation",
+              "start": 2069,
+              "end": 2109,
+              "text": "若你确实愿意围绕对局复盘、固定英雄池和节奏管理持续投入，这个条件才可能转化为帮助",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "answer",
+              "start": 389,
+              "end": 414,
+              "text": "说明高段竞争虽然强，但也会反过来逼出你的应对和积累",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            }
+          ],
+          "evidence_ids": [
+            "fact:/lines/4/relative",
+            "fact:/lines/4/relations/month_strength",
+            "fact:/lines/4/changed/relative",
+            "fact:/lines/4/element",
+            "fact:/lines/3/element"
+          ]
+        },
+        "priority": {
+          "verdict": "uncertain",
+          "reason": "文字明确把官鬼作为段位门槛的主要用神，并把世爻受制列作主要不利、官鬼生世列为有限转机，没有按因素条数评分。可是输入未提供传统取用依据，无法独立确认以官鬼代表该未知游戏段位门槛、以及世受制优先于官生世的取舍是否成立；没有实质备选取法及其改变结论的影响说明。保留无法确认，不另行选用神或改断。",
+          "quotes": [
+            {
+              "field": "yongshen_candidates.0.reason",
+              "start": 1002,
+              "end": 1030,
+              "text": "所以取官鬼为主要用神，是取它在段位问题中的门槛与竞争含义",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.0.interpretation",
+              "start": 1527,
+              "end": 1538,
+              "text": "是当前不利的主要依据。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "answer",
+              "start": 415,
+              "end": 422,
+              "text": "并非全然无路。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            }
+          ],
+          "evidence_ids": [
+            "fact:/lines/4/relative",
+            "fact:/lines/2/relative",
+            "fact:/lines/3/relations/return_relation"
+          ]
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "仅就内部文字一致性：unfavorable与正文整体偏为难、主要oppose及有限conditional转机相容，未因正负两面而自动mixed，也未保证现实结果。本项通过不抵消事实引用/范围/支持失败，不认证取法正确或现实段位结果。",
+          "quotes": [
+            {
+              "field": "direction",
+              "start": 599,
+              "end": 610,
+              "text": "unfavorable",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "answer",
+              "start": 170,
+              "end": 197,
+              "text": "整体信号偏为难，不是一路顺遂、可以较有把握达成的卦象。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "answer",
+              "start": 489,
+              "end": 514,
+              "text": "能争、但阻力与消耗明显，需要实打实投入且结果不确定",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.0.assessment",
+              "start": 1402,
+              "end": 1408,
+              "text": "oppose",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.assessment",
+              "start": 1950,
+              "end": 1961,
+              "text": "conditional",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            }
+          ],
+          "evidence_ids": []
+        }
+      },
+      "mechanical_status": "validated",
+      "response_sha256": "9ccdd50726f1d13124c4b4a2f597df1ce604a887ca7217bd6446fb1dd6a13c23",
+      "archive_complete": true
+    },
+    {
+      "case_id": "private-project",
+      "dimensions": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "所述世应位置、世克应、旬空/月破、上爻动且日冲回头克、财水相与父母伏藏，均能在冻结输入找到，未发现关系方向颠倒。失败是属性引用覆盖：父母候选说丙午却仅引六亲和五行，缺 hidden/ganzhi；因素1说世爻和月令死却无本段 shi_line/is_shi 和 month_strength（月破规则只证明六冲，不证明季节月令死）；因素2同时说三、五爻月令相，仅引用第三爻month_strength，缺第五爻对应属性。",
+          "quotes": [
+            {
+              "field": "yongshen_candidates.0.reason",
+              "start": 740,
+              "end": 751,
+              "text": "第二爻所伏丙午火为父母",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.interpretation",
+              "start": 1522,
+              "end": 1537,
+              "text": "且世爻初爻旬空、月破、月令为死",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.2.interpretation",
+              "start": 1923,
+              "end": 1940,
+              "text": "第三爻与第五爻妻财在水位、月令为相",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            }
+          ],
+          "evidence_ids": [
+            "fact:/lines/1/hidden/ganzhi",
+            "fact:/lines/1/hidden/relative",
+            "fact:/lines/1/hidden/element",
+            "fact:/hexagram/shi_line",
+            "fact:/lines/0/is_shi",
+            "fact:/lines/0/relations/month_strength",
+            "rule:MONTH-CLASH-001:primary:1:-",
+            "fact:/lines/2/relations/month_strength",
+            "fact:/lines/4/relations/month_strength"
+          ]
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "保留免费、自娱、朋友间小项目目标，未换为盈利或商业成功；关注度取法被明确降为备选，不把人气收益写成结论。建议围绕开奖实现和反馈入口，明确是一般建议。未提供应期或日期推断。uncertainties的“具体游戏机制”措辞偏泛化，但同时明确不了解实现，没有肯定另一游戏机制，因此不据此判范围失败。",
+          "quotes": [
+            {
+              "field": "answer",
+              "start": 173,
+              "end": 184,
+              "text": "不必按商业产品来期待。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "answer",
+              "start": 541,
+              "end": 562,
+              "text": "这两项是一般性建议，不代表卦里已保证成效。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "yongshen_candidates.1.reason",
+              "start": 1058,
+              "end": 1080,
+              "text": "不能当成盈利或人气预测，也不优先于项目本体。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "uncertainties.0",
+              "start": 2215,
+              "end": 2264,
+              "text": "我不了解你所指的具体游戏机制和“摇奖机器”实现方式，这里只按你描述的免费、自娱、朋友间使用来理解。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            }
+          ],
+          "evidence_ids": []
+        },
+        "support": {
+          "verdict": "uncertain",
+          "reason": "一般建议没有被伪装为盘面证据，且全文明确不能证明代码质量、稳定性或实际反馈。仍无法确认世克应可以直接支持创作者主动权/少依赖外部、空破死可以支持原型阶段或项目起步弱、妻财相可以支持趣味关注的传统解释。第六爻官鬼受制在answer中称“不一定是坏事”，在oppose因素中与世弱合并为主要阻碍，却未解释该爻角色及利弊如何取舍，不能确认引用实际支持这一综合陈述。不把可能/更像的类比句直接当现实事实断言，也不凭自己取法断定相反方向，故保留uncertain。",
+          "quotes": [
+            {
+              "field": "factors.0.interpretation",
+              "start": 1260,
+              "end": 1303,
+              "text": "这是支持“小项目可以自己慢慢做”的直接依据，但它只支持主导关系，不证明现实中一定顺利。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "answer",
+              "start": 287,
+              "end": 306,
+              "text": "现实含义更像是项目还处在原型或试玩阶段",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "answer",
+              "start": 363,
+              "end": 385,
+              "text": "那么这个动爻被制，对“稳定运行”不一定是坏事",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.interpretation",
+              "start": 1545,
+              "end": 1582,
+              "text": "这说明项目起步这条线眼下不强，可能出现反复调整或外部变化，作为主要阻碍看待",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "uncertainties.1",
+              "start": 2267,
+              "end": 2306,
+              "text": "卦盘只能给出传统取象下的参考，不能证明代码质量、运行稳定性、朋友数量或实际反馈",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            }
+          ],
+          "evidence_ids": [
+            "rule:SHI-CONTROL-YING-001:primary:1:4",
+            "rule:MOVE-RETURN-CONTROL-001:primary:6:-",
+            "rule:DAY-CLASH-001:primary:6:-",
+            "fact:/lines/0/is_kongwang",
+            "fact:/lines/0/relations/month_strength"
+          ]
+        },
+        "priority": {
+          "verdict": "fail",
+          "reason": "文本层面同时将父母项目本体和妻财趣味反馈列为备选，只说妻财不优先于项目本体，没有明确本次实际采用的主要取用或不取用后的判断路径，也没有说明不同备选如何改变当前方向。其oppose已称主要阻碍，却未与support主导关系比较何者优先。此为冻结主次标准的明确缺漏；父母/妻财这些传统映射的正确性另外无法核实，不替模型补选或改断。",
+          "quotes": [
+            {
+              "field": "yongshen_candidates.0.reason",
+              "start": 783,
+              "end": 805,
+              "text": "故仅列为备选取法，不据此断言技术或上线效果。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "yongshen_candidates.1.reason",
+              "start": 1009,
+              "end": 1015,
+              "text": "妻财可作备选",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "yongshen_candidates.1.reason",
+              "start": 1070,
+              "end": 1080,
+              "text": "也不优先于项目本体。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.interpretation",
+              "start": 1574,
+              "end": 1582,
+              "text": "作为主要阻碍看待",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            }
+          ],
+          "evidence_ids": [
+            "fact:/lines/1/hidden/relative",
+            "fact:/lines/2/relative",
+            "fact:/lines/4/relative"
+          ]
+        },
+        "direction": {
+          "verdict": "fail",
+          "reason": "mixed没有说明相关利弊具体怎样牵制、为什么难分主次而不能选偏有利/偏不利或unclear；正文反而结论为兴趣小项目可行，oppose又宣称主要阻碍。上爻受制在正文和因素中的作用未交代一致性。仅有support/oppose/neutral分类不构成mixed的充分理由。这一失败是标签及解释流程不合冻结标准，不意味着实际应判哪一种方向。",
+          "quotes": [
+            {
+              "field": "direction",
+              "start": 577,
+              "end": 582,
+              "text": "mixed",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "answer",
+              "start": 463,
+              "end": 478,
+              "text": "整体上，作为兴趣小项目是可行的",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.0.assessment",
+              "start": 1177,
+              "end": 1184,
+              "text": "support",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.assessment",
+              "start": 1479,
+              "end": 1485,
+              "text": "oppose",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.1.interpretation",
+              "start": 1574,
+              "end": 1582,
+              "text": "作为主要阻碍看待",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            },
+            {
+              "field": "factors.2.interpretation",
+              "start": 1996,
+              "end": 2014,
+              "text": "所以只做中性记录，不据此下吉凶结论。",
+              "offset_unit": "UTF-16",
+              "end_exclusive": true
+            }
+          ],
+          "evidence_ids": []
+        }
+      },
+      "mechanical_status": "validated",
+      "response_sha256": "6ba6d56bdb8955b92890616320351de7909e590861ff5aaea32628ab1dd29aad",
+      "archive_complete": true
+    }
+  ],
+  "overall": "acceptance_not_established",
+  "limitations": [
+    "没有外部传统取法材料，不验证完整六爻体系及映射正确性。",
+    "未观察现实成败、模型总体表现或旧新随机比较。",
+    "机械validated只表示格式及ID存在，审查保留实际失败与不确定性。",
+    "archive文件只核对其元数据与check中的对应项；按只读范围未另读raw.sse。"
+  ]
+}

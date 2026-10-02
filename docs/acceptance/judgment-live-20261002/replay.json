@@ -1,0 +1,155 @@
+{
+  "version": "judgment-review-replay-1",
+  "plan_hash": "b180d61d1e55c4fe0b784e6400eaaad83fe001602ad14e9ff4568c4c80ea5bf0",
+  "quote_integrity": "passed",
+  "cases": [
+    {
+      "case_id": "game-rank",
+      "mechanical": "validated",
+      "model_direction": "unfavorable",
+      "dimensions": {
+        "facts": {
+          "by_reviewer": [
+            {
+              "reviewer": "agent-a",
+              "verdict": "fail"
+            },
+            {
+              "reviewer": "agent-b",
+              "verdict": "fail"
+            }
+          ],
+          "conservative_status": "fail"
+        },
+        "scope": {
+          "by_reviewer": [
+            {
+              "reviewer": "agent-a",
+              "verdict": "fail"
+            },
+            {
+              "reviewer": "agent-b",
+              "verdict": "fail"
+            }
+          ],
+          "conservative_status": "fail"
+        },
+        "support": {
+          "by_reviewer": [
+            {
+              "reviewer": "agent-a",
+              "verdict": "fail"
+            },
+            {
+              "reviewer": "agent-b",
+              "verdict": "fail"
+            }
+          ],
+          "conservative_status": "fail"
+        },
+        "priority": {
+          "by_reviewer": [
+            {
+              "reviewer": "agent-a",
+              "verdict": "uncertain"
+            },
+            {
+              "reviewer": "agent-b",
+              "verdict": "uncertain"
+            }
+          ],
+          "conservative_status": "uncertain"
+        },
+        "direction": {
+          "by_reviewer": [
+            {
+              "reviewer": "agent-a",
+              "verdict": "pass"
+            },
+            {
+              "reviewer": "agent-b",
+              "verdict": "pass"
+            }
+          ],
+          "conservative_status": "pass"
+        }
+      }
+    },
+    {
+      "case_id": "private-project",
+      "mechanical": "validated",
+      "model_direction": "mixed",
+      "dimensions": {
+        "facts": {
+          "by_reviewer": [
+            {
+              "reviewer": "agent-a",
+              "verdict": "fail"
+            },
+            {
+              "reviewer": "agent-b",
+              "verdict": "fail"
+            }
+          ],
+          "conservative_status": "fail"
+        },
+        "scope": {
+          "by_reviewer": [
+            {
+              "reviewer": "agent-a",
+              "verdict": "pass"
+            },
+            {
+              "reviewer": "agent-b",
+              "verdict": "pass"
+            }
+          ],
+          "conservative_status": "pass"
+        },
+        "support": {
+          "by_reviewer": [
+            {
+              "reviewer": "agent-a",
+              "verdict": "uncertain"
+            },
+            {
+              "reviewer": "agent-b",
+              "verdict": "fail"
+            }
+          ],
+          "conservative_status": "fail"
+        },
+        "priority": {
+          "by_reviewer": [
+            {
+              "reviewer": "agent-a",
+              "verdict": "fail"
+            },
+            {
+              "reviewer": "agent-b",
+              "verdict": "fail"
+            }
+          ],
+          "conservative_status": "fail"
+        },
+        "direction": {
+          "by_reviewer": [
+            {
+              "reviewer": "agent-a",
+              "verdict": "fail"
+            },
+            {
+              "reviewer": "agent-b",
+              "verdict": "fail"
+            }
+          ],
+          "conservative_status": "fail"
+        }
+      }
+    }
+  ],
+  "semantic_acceptance": "not_established",
+  "forecast_accuracy": "unassessed",
+  "blind": false,
+  "overall_improvement": "unassessed"
+}

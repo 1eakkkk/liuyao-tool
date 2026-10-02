@@ -1,0 +1,95 @@
+{
+  "id": "game-rank",
+  "status": "validated",
+  "issues": [],
+  "finish_reason": "stop",
+  "saw_done": true,
+  "transport_error": null,
+  "http_status": 200,
+  "archive": {
+    "complete": true,
+    "error": null,
+    "redacted": false,
+    "bytes": 346694,
+    "sha256": "8f9c124bde8cfa34a28049eed143e57945c8ba205c60ed9990cf4074f0ba4f56"
+  },
+  "usage": {
+    "prompt_tokens": 14693,
+    "completion_tokens": 1196,
+    "total_tokens": 15889,
+    "prompt_tokens_details": {
+      "cached_tokens": 1408
+    },
+    "prompt_cache_hit_tokens": 1408,
+    "prompt_cache_miss_tokens": 13285
+  },
+  "usage_ok": true,
+  "conservative_peak_cost_cny": 0.038954,
+  "semantic_review": "pending",
+  "raw_sha256": "9ccdd50726f1d13124c4b4a2f597df1ce604a887ca7217bd6446fb1dd6a13c23",
+  "response": {
+    "schema_version": "structured-answer-1.0",
+    "context_id": "sha256:9cd5c74bff7edc6b0c086cba18b0ce847830d5501db4c10ccdc5ee0764f42a97",
+    "answer": "从这份卦盘看，问“能否打到王者段位”，整体信号偏为难，不是一路顺遂、可以较有把握达成的卦象。核心原因在于世爻——也就是第4爻父母亥水发动，本可视为你在段位进程中所依赖的某种基础或积累，但它回头被变出的丑土妻财所克；同时第1爻应爻丑土妻财又克制世爻。世爻被两头牵制，说明你想冲上王者，过程里会有持续消耗或现实条件的牵扯，而不是那种顺水推舟、越打越稳的走势。另一方面，第5爻官鬼酉金发动且逢月令旺，官鬼在段位问题上可理解为“段位门槛、竞争强度或规则压力”，它动了并去生第4爻世爻，说明高段竞争虽然强，但也会反过来逼出你的应对和积累，并非全然无路。第3爻官鬼酉金也是静而逢月令旺，说明外部竞争、对手段位或门槛本身是比较“硬”的存在。综合看，这份卦象不支持“稳上王者”的结论，更接近“能争、但阻力与消耗明显，需要实打实投入且结果不确定”。现实层面，建议把目标拆成阶段小目标，固定复盘失误和英雄池，减少连败后硬冲；王者段位是长期排位累积，单靠一两次爆发不足以稳定跨过。",
+    "direction": "unfavorable",
+    "yongshen_candidates": [
+      {
+        "relative": "官鬼",
+        "targets": [
+          {
+            "line": 5,
+            "component": "primary"
+          },
+          {
+            "line": 3,
+            "component": "primary"
+          }
+        ],
+        "reason": "段位晋升目标可从官鬼取象：第5爻官鬼酉金发动且逢月令旺，代表段位门槛与竞争强度；第3爻官鬼酉金静而月令旺，也是同类的门槛信息。官鬼逢旺说明目标段位本身要求高、对手或环境不弱，这与“打到王者有难度”的方向相关。但官鬼并非只作阻力，第5爻动而生世，也提示高门槛可能激发应对与积累，所以取官鬼为主要用神，是取它在段位问题中的门槛与竞争含义，而不是把它单判为吉或凶。",
+        "evidence_ids": [
+          "fact:/lines/4/relative",
+          "fact:/lines/4/moving",
+          "fact:/lines/4/element",
+          "fact:/lines/4/relations/month_strength",
+          "fact:/lines/2/relative",
+          "fact:/lines/2/relations/month_strength",
+          "fact:/calendar/month_branch"
+        ]
+      }
+    ],
+    "factors": [
+      {
+        "assessment": "oppose",
+        "interpretation": "世爻代表问卦人自身在段位进程中的状态。第4爻父母亥水发动，变出丑土妻财，程序给出回头克，即变动结果反过来克制世爻；同时第1爻应爻丑土妻财克世。自己的积累或投入被消耗、被现实因素牵制，是当前不利的主要依据。",
+        "evidence_ids": [
+          "fact:/hexagram/shi_line",
+          "fact:/lines/3/relative",
+          "fact:/lines/3/moving",
+          "fact:/lines/3/element",
+          "fact:/lines/3/changed/element",
+          "fact:/lines/3/relations/return_relation",
+          "fact:/hexagram/ying_line",
+          "fact:/lines/0/element",
+          "rule:YING-CONTROL-SHI-001:primary:4:1"
+        ]
+      },
+      {
+        "assessment": "conditional",
+        "interpretation": "段位门槛可用官鬼取象。第5爻官鬼酉金发动且月令旺，说明外部竞争与规则压力较强；但它动而变出父母亥水，反映门槛虽强，也带动了对规则、段位机制和自身打法的重新适应。若你确实愿意围绕对局复盘、固定英雄池和节奏管理持续投入，这个条件才可能转化为帮助，并非自动有利。",
+        "evidence_ids": [
+          "fact:/lines/4/relative",
+          "fact:/lines/4/moving",
+          "fact:/lines/4/relations/month_strength",
+          "fact:/lines/4/changed/relative",
+          "fact:/calendar/month_branch"
+        ]
+      }
+    ],
+    "timing_candidates": [],
+    "uncertainties": [
+      "本次问题没有明确询问时间或日期，因此不给出应期候选，也没有把卦中月日干支换算成公历日期。",
+      "“打到王者段位”具体指当前赛季、某一段时间内还是长期目标，未在问题中说明，卦象只就当前盘面作整体倾向判断，不代表现实结果。",
+      "王者万象棋的段位机制、对局环境和你的实际水平、投入时间未提供，以上解释以传统六爻类象为角度，不能替代现实中的练习与复盘。"
+    ]
+  }
+}

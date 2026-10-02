@@ -6,7 +6,8 @@ import {sealPlan} from '../experiments/reading-quality/knowledge-pairs.js';
 import {textHash,stableJson} from '../src/knowledge/validate.js';
 import {accountedCampaignAmount} from './deepseek-campaign-budget.js';
 const require=(ok,msg)=>{if(!ok) throw Error(msg);};
-export function auditCompletedPilot(directory) {
+export function auditCompletedPilot(directory,{format='knowledge'}={}) {
+  require(['knowledge','sourced-complete'].includes(format),'Unknown settlement format');
   const dir=path.resolve(directory),files=[];
   const read=name=>{const raw=fs.readFileSync(path.join(dir,name),'utf8');files.push({name,sha256:textHash(raw)});return JSON.parse(raw);};
   const plan=read('plan.json'),seal=read('seal.json'),execution=read('execution.json'),summary=read('summary.json');
@@ -18,15 +19,21 @@ export function auditCompletedPilot(directory) {
   const attempts=fs.readdirSync(dir).filter(f=>f.endsWith('-attempt.json')).map(f=>f.slice(0,-13)).sort();
   require(new Set(expected).size===expected.length && !fs.readdirSync(dir).some(f=>f.endsWith('-failure.json')) &&
     JSON.stringify(attempts)===JSON.stringify(summary.results.map(r=>r.id).sort()),'Unknown or unaccounted attempt');
+  if(format==='sourced-complete') require(summary.results.length===expected.length && execution.plan_hash===seal.hash &&
+    summary.plan_hash===seal.hash && summary.production_changes===false &&
+    summary.balance_difference_is_not_exact_attributed_cost===true,'Sourced pilot is not fully closed and sealed');
   let upper=0;
   const seen=new Set();
   for(const [i,r] of summary.results.entries()) {
-    require(r.id===expected[i] && !seen.has(r.id) && r.within_reserve===true && !r.cost_unknown,'Unknown call status');seen.add(r.id);
+    const recordedStatus=format==='knowledge'?r.within_reserve===true:
+      r.model_quality==='manual_review_pending' && typeof r.check?.mechanical_ok==='boolean';
+    require(r.id===expected[i] && !seen.has(r.id) && recordedStatus && !r.cost_unknown,'Unknown call status');seen.add(r.id);
     const attempt=read(`${r.id}-attempt.json`),response=read(`${r.id}-response.json`),check=read(`${r.id}-check.json`),u=response.usage;
     require(attempt.model===plan.model && response.model===plan.model && response.finish_reason==='stop' && check.id===r.id &&
       stableJson(check)===stableJson(r) && stableJson(u)===stableJson(r.usage),'Response or check mismatch');
     require(Number.isSafeInteger(u?.prompt_tokens) && u.prompt_tokens>=0 && u.prompt_tokens<=plan.input_token_allowance &&
       Number.isSafeInteger(u?.completion_tokens) && u.completion_tokens>=0 && u.completion_tokens<=plan.max_output_tokens,'Unknown usage');
+    if(format==='sourced-complete') require(r.conservative_peak_cost_cny===(u.prompt_tokens*2+u.completion_tokens*8)/1e6,'Sourced usage estimate mismatch');
     upper+=(u.prompt_tokens*plan.reservation_cny_per_million.input+u.completion_tokens*plan.reservation_cny_per_million.output)/1e6;
   }
   // Keep one fen for rounding. This is a conservative usage estimate, not exact billed cost.
@@ -37,11 +44,11 @@ export function auditCompletedPilot(directory) {
     unattempted_calls:expected.length-summary.results.length,files};
   return {...audit,evidence_hash:textHash(stableJson(audit))};
 }
-export function settlePilot(ledger,directory) {
+export function settlePilot(ledger,directory,options) {
   const fd=fs.openSync(`${ledger}.lock`,'wx');
   try {
     const state=JSON.parse(fs.readFileSync(ledger,'utf8'));accountedCampaignAmount(state);
-    const audit=auditCompletedPilot(directory),r=state.reservations.find(r=>r.run===audit.run);
+    const audit=auditCompletedPilot(directory,options),r=state.reservations.find(r=>r.run===audit.run);
     require(r && r.planHash===audit.planHash && r.amount===audit.original_amount,'Reservation mismatch');
     require(!(state.settlements??[]).some(s=>s.run===audit.run),'Pilot already settled');
     state.settlements=[...(state.settlements??[]),{...audit,settled_at:new Date().toISOString()}];
@@ -54,5 +61,7 @@ if(process.argv[1] && import.meta.url===pathToFileURL(path.resolve(process.argv[
   const [mode,dir,ledger]=process.argv.slice(2);
   if(mode==='audit' && dir && !ledger) console.log(JSON.stringify(auditCompletedPilot(dir)));
   else if(mode==='settle' && dir && ledger) console.log(JSON.stringify(settlePilot(ledger,dir)));
-  else throw Error('Use audit <pilot-directory> or settle <pilot-directory> <ledger>');
+  else if(mode==='audit-sourced' && dir && !ledger) console.log(JSON.stringify(auditCompletedPilot(dir,{format:'sourced-complete'})));
+  else if(mode==='settle-sourced' && dir && ledger) console.log(JSON.stringify(settlePilot(ledger,dir,{format:'sourced-complete'})));
+  else throw Error('Use audit[-sourced] <pilot-directory> or settle[-sourced] <pilot-directory> <ledger>');
 }

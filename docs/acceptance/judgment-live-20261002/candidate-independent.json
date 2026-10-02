@@ -1,0 +1,153 @@
+{
+  "reviewer_id": "agent-b",
+  "review_kind": "offline_independent_code_and_instruction_review",
+  "reviewed_at": "2026-10-02",
+  "inputs": [
+    {
+      "file": "experiments/judgment-review/candidate.js",
+      "sha256": "5143afa1119e8f9568606835618c50085756ad40574b3d35bacf016480433fed"
+    },
+    {
+      "file": "experiments/judgment-review/plan.js",
+      "sha256": "d7e14727cf493acdfd325fbfadd746d4a1035d22d935f151e7ab669b23238f22"
+    }
+  ],
+  "base_plan_hash": "b180d61d1e55c4fe0b784e6400eaaad83fe001602ad14e9ff4568c4c80ea5bf0",
+  "candidate_plan_hash": "925601219e995e581d59cf6e9146b6f6c42e89647a73ab9816ff0edde75e9295",
+  "overall_status": "offline_candidate_review_pass",
+  "findings": [
+    {
+      "id": "instruction_logic",
+      "status": "pass",
+      "reason": "提示要求局部事实引用、假设与现实区分、明确作用对象、主次取舍及独立一般建议；允许favorable/unfavorable/mixed/unclear，没有要求两个案例给特定方向，也没有把受克一律定好坏。未发现阻断性逻辑矛盾。仅核验文字要求，不证明模型会遵循。"
+    },
+    {
+      "id": "offline_boundary",
+      "status": "pass",
+      "reason": "本次实际运行的仅是离线准备函数。两份模块未导出付费执行器、未调用网络或加载凭据，也没有账本/存储写入。候选明确标production=false、live_execution_available=false、network_calls=0、budget_reserved=false。这些旗标是离线计划描述，不是通用调用者不可绕过的安全沙箱。",
+      "flags": {
+        "production": false,
+        "live_execution_available": false,
+        "network_calls": 0,
+        "budget_reserved": false
+      }
+    },
+    {
+      "id": "input_and_cap",
+      "status": "pass",
+      "reason": "离线逐字比较确认两例canonical和完整user消息不变，request除system外相同；system确实替换正式会话叠加说明，8192输出上限不变。估算保留正数，不能当作已授权或已预留预算。",
+      "checks": [
+        {
+          "case_id": "game-rank",
+          "user_message_exact": true,
+          "canonical_exact": true,
+          "request_except_system_exact": true,
+          "system_changed": true,
+          "max_tokens": 8192,
+          "estimated_reserve_cny": 0.17555
+        },
+        {
+          "case_id": "private-project",
+          "user_message_exact": true,
+          "canonical_exact": true,
+          "request_except_system_exact": true,
+          "system_changed": true,
+          "max_tokens": 8192,
+          "estimated_reserve_cny": 0.180046
+        }
+      ],
+      "estimated_total_cny": 0.355596
+    },
+    {
+      "id": "candidate_identity_and_description",
+      "status": "pass",
+      "reason": "独立复验确认候选身份和来源身份已分离；provenance明确完整user输入用于假设比较且不是正式production4请求；stop_policy明确纯准备、无网络/凭据/预留/付费执行器，未来live需独立冻结审查。原失败发现及输入哈希保存在review_history。",
+      "quotes": [
+        {
+          "source": "experiments/judgment-review/candidate.js",
+          "text": "Alternative compact system instructions; exact full production4 user input is retained only to compare the instruction hypothesis. This is not the production4 request or a deployed session."
+        },
+        {
+          "source": "experiments/judgment-review/candidate.js",
+          "text": "Preparation only: zero network calls, no credentials, no reservation and no paid executor. Any future live plan must be separately frozen and reviewed."
+        }
+      ]
+    },
+    {
+      "id": "historical_evidence",
+      "status": "pass",
+      "reason": "所审两个模块不覆写旧P4真实失败文件，不接入生产会话，不上线候选。本次仅生成内存计划及本审查文件。"
+    },
+    {
+      "id": "real_model_adherence",
+      "status": "unassessed",
+      "reason": "未调用模型，未产生候选回复；无法证明已修复此前语义失败、减少模板或提高预测准确。"
+    }
+  ],
+  "limitations": [
+    "仅审核两份离线候选模块及离线计划比较；不是全仓库执行器安全认证。",
+    "两条已曝光开发案例，非盲测，无随机旧新比较。",
+    "正数预估和历史价格字段不授权付费；没有重新核对当前价格或访问账本。",
+    "精简指导可能删除正式P4特有的其他可靠性提醒，不能宣传为完整生产行为等价替代。"
+  ],
+  "actions_taken": {
+    "network_calls": 0,
+    "credentials_accessed": false,
+    "ledger_accessed": false,
+    "protected_files_accessed": false,
+    "source_modified": false,
+    "files_created": [],
+    "files_updated": [
+      "test-results/judgment-candidate-independent.json"
+    ]
+  },
+  "review_history": [
+    {
+      "reviewed_at": "2026-10-02",
+      "overall_status": "requires_metadata_correction",
+      "inputs": [
+        {
+          "file": "experiments/judgment-review/candidate.js",
+          "sha256": "3cc00bb98ddf935670cd12c7c98eb5f800e1f49e2742e15aa503a5ddf1272671"
+        },
+        {
+          "file": "experiments/judgment-review/plan.js",
+          "sha256": "d7e14727cf493acdfd325fbfadd746d4a1035d22d935f151e7ab669b23238f22"
+        }
+      ],
+      "base_plan_hash": "b180d61d1e55c4fe0b784e6400eaaad83fe001602ad14e9ff4568c4c80ea5bf0",
+      "candidate_plan_hash": "3d5a13ac20eba85ad2df4fbc009ea4d2f422262dc29825bb827b2371a08c5536",
+      "finding": {
+        "id": "candidate_identity_and_description",
+        "status": "fail",
+        "reason": "候选覆写version与scope，但继承provenance仍称otherwise full production messages，reading_prompt仍reading-production-4，stop_policy仍描述最多两次paid calls。候选system已不同，且没有可用付费执行入口；这组继承描述与离线候选边界不一致，易使后续比较错误声称正式P4请求相同。",
+        "quotes": [
+          {
+            "source": "experiments/judgment-review/plan.js",
+            "text": "Short response preference; otherwise full production messages, SSE, model, schema and 8192-token cap."
+          },
+          {
+            "source": "experiments/judgment-review/plan.js",
+            "text": "At most two paid calls; stop after transport, usage, completion or mechanical failure. Preserve failures. No retries or automatic repairs."
+          }
+        ],
+        "concrete_correction": "在candidate计划中覆写provenance为源自P4输入但system为独立实验指引；覆写stop_policy为offline-only/no paid execution；添加独立candidate prompt身份，保留production4为base/source身份而非称候选正式生产版本。"
+      }
+    }
+  ],
+  "identity": {
+    "version": "compact-judgment-offline-candidate-1",
+    "source_reading_prompt": "reading-production-4",
+    "reading_prompt": "compact-judgment-candidate-1"
+  },
+  "reverification": {
+    "reviewed_at": "2026-10-02",
+    "independently_performed": "Static review of corrected candidate metadata plus two offline prepare/comparison runs; no model invocation.",
+    "root_reported_tests": {
+      "count": 12,
+      "status": "passed",
+      "independently_rerun": false
+    },
+    "real_model_adherence": "unassessed"
+  }
+}

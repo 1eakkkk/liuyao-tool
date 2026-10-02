@@ -1,0 +1,400 @@
+{
+  "version": "judgment-replay-independent-review-2",
+  "reviewer_id": "agent-a",
+  "review_kind": "offline_integrity_review",
+  "scope": "归档及回放实现审查；不是新的模型生成验收、盲测或预测验证。",
+  "existing_tests": {
+    "file": "tests/output/judgment-replay.test.js",
+    "passed": 12
+  },
+  "original_archive": {
+    "replay": {
+      "version": "judgment-review-replay-1",
+      "plan_hash": "b180d61d1e55c4fe0b784e6400eaaad83fe001602ad14e9ff4568c4c80ea5bf0",
+      "quote_integrity": "passed",
+      "cases": [
+        {
+          "case_id": "game-rank",
+          "mechanical": "validated",
+          "model_direction": "unfavorable",
+          "dimensions": {
+            "facts": {
+              "by_reviewer": [
+                {
+                  "reviewer": "agent-a",
+                  "verdict": "fail"
+                },
+                {
+                  "reviewer": "agent-b",
+                  "verdict": "fail"
+                }
+              ],
+              "conservative_status": "fail"
+            },
+            "scope": {
+              "by_reviewer": [
+                {
+                  "reviewer": "agent-a",
+                  "verdict": "fail"
+                },
+                {
+                  "reviewer": "agent-b",
+                  "verdict": "fail"
+                }
+              ],
+              "conservative_status": "fail"
+            },
+            "support": {
+              "by_reviewer": [
+                {
+                  "reviewer": "agent-a",
+                  "verdict": "fail"
+                },
+                {
+                  "reviewer": "agent-b",
+                  "verdict": "fail"
+                }
+              ],
+              "conservative_status": "fail"
+            },
+            "priority": {
+              "by_reviewer": [
+                {
+                  "reviewer": "agent-a",
+                  "verdict": "uncertain"
+                },
+                {
+                  "reviewer": "agent-b",
+                  "verdict": "uncertain"
+                }
+              ],
+              "conservative_status": "uncertain"
+            },
+            "direction": {
+              "by_reviewer": [
+                {
+                  "reviewer": "agent-a",
+                  "verdict": "pass"
+                },
+                {
+                  "reviewer": "agent-b",
+                  "verdict": "pass"
+                }
+              ],
+              "conservative_status": "pass"
+            }
+          }
+        },
+        {
+          "case_id": "private-project",
+          "mechanical": "validated",
+          "model_direction": "mixed",
+          "dimensions": {
+            "facts": {
+              "by_reviewer": [
+                {
+                  "reviewer": "agent-a",
+                  "verdict": "fail"
+                },
+                {
+                  "reviewer": "agent-b",
+                  "verdict": "fail"
+                }
+              ],
+              "conservative_status": "fail"
+            },
+            "scope": {
+              "by_reviewer": [
+                {
+                  "reviewer": "agent-a",
+                  "verdict": "pass"
+                },
+                {
+                  "reviewer": "agent-b",
+                  "verdict": "pass"
+                }
+              ],
+              "conservative_status": "pass"
+            },
+            "support": {
+              "by_reviewer": [
+                {
+                  "reviewer": "agent-a",
+                  "verdict": "uncertain"
+                },
+                {
+                  "reviewer": "agent-b",
+                  "verdict": "fail"
+                }
+              ],
+              "conservative_status": "fail"
+            },
+            "priority": {
+              "by_reviewer": [
+                {
+                  "reviewer": "agent-a",
+                  "verdict": "fail"
+                },
+                {
+                  "reviewer": "agent-b",
+                  "verdict": "fail"
+                }
+              ],
+              "conservative_status": "fail"
+            },
+            "direction": {
+              "by_reviewer": [
+                {
+                  "reviewer": "agent-a",
+                  "verdict": "fail"
+                },
+                {
+                  "reviewer": "agent-b",
+                  "verdict": "fail"
+                }
+              ],
+              "conservative_status": "fail"
+            }
+          }
+        }
+      ],
+      "semantic_acceptance": "not_established",
+      "forecast_accuracy": "unassessed",
+      "blind": false,
+      "overall_improvement": "unassessed"
+    },
+    "sse_to_response_links": [
+      {
+        "case_id": "game-rank",
+        "text_matches": true,
+        "usage_matches": true,
+        "finish_reason_matches": true,
+        "done_matches": true,
+        "error": null
+      },
+      {
+        "case_id": "private-project",
+        "text_matches": true,
+        "usage_matches": true,
+        "finish_reason_matches": true,
+        "done_matches": true,
+        "error": null
+      }
+    ]
+  },
+  "findings": [],
+  "result": "offline_replay_integrity_passed_semantic_acceptance_not_established",
+  "semantic_acceptance": "not_established",
+  "forecast_accuracy": "unassessed",
+  "blind": false,
+  "overall_improvement": "unassessed",
+  "limitations": [
+    "本轮通过的是离线归档和审查回放完整性，原始语义失败及uncertain未改变。",
+    "按UTF16原始字符串范围验证偏移，direction属性键引用仅允许自己的完整key/value区间；程序不会自动评判文字支持程度或审查独立性。",
+    "保留不同reviewer意见并采用fail优先于uncertain/pass；预测结果和总体改善仍unassessed。",
+    "仅更新此审查文件；临时副本已删除；未修改源码、访问凭据/holdout/真实账本或调用API。"
+  ],
+  "original_findings": [
+    {
+      "id": "quote_field_offset_not_bound",
+      "severity": "blocking_for_claimed_field_integrity",
+      "file": "experiments/judgment-review/replay.js",
+      "reason": "field.includes(q.text)只证明相同文字在声明字段出现，不证明q.start/end所在原始JSON字串就是该字段。同一句重复于answer和factor时可把answer偏移错标到factor且通过。应建立原始JSON字符串token与字段路径的位置映射，检查偏移处于声明字段token范围；支持UTF16和JSON转义。",
+      "status": "resolved",
+      "resolution": "真实JSON字符串token区间与声明字段绑定，重复文字的另一字段偏移被拒绝；direction属性键特例仍限制在该字段key/value区间。"
+    },
+    {
+      "id": "sse_not_connected_to_response",
+      "severity": "blocking_for_claimed_full_replay_integrity",
+      "file": "experiments/judgment-review/replay.js",
+      "reason": "SSE仅校验自身archive元数据，不对冻结SSE重新parse并比较rawText、usage、finishReason、sawDone、error与response/check，也不核对check.archive同archive。替换成只有DONE的流并更新archive的大小/hash会通过，回复仍原值。应从完整SSE重建回复并核对连接。",
+      "status": "resolved",
+      "resolution": "冻结完整SSE重新解析并对照rawText/usage/finish/done/error，同时核对check.archive元数据；连双方metadata一致改写也不能绕过回复连接。"
+    }
+  ],
+  "original_temporary_copy_proofs": {
+    "misplaced_quote": {
+      "actual_field": "answer",
+      "declared_field": "factors.1.interpretation",
+      "text": "第5爻官鬼酉金发动且",
+      "start": 333,
+      "end": 343,
+      "incorrectly_accepted": true
+    },
+    "unlinked_sse": {
+      "replacement": "data: [DONE]\\n\\n",
+      "archive_digest_recomputed": true,
+      "check_and_response_unchanged": true,
+      "incorrectly_accepted": true
+    }
+  },
+  "original_test_result": {
+    "file": "tests/output/judgment-replay.test.js",
+    "passed": 10
+  },
+  "final_verification": {
+    "misplaced_quote": {
+      "rejected": true,
+      "reason": "Quote offset belongs to different field"
+    },
+    "disconnected_sse_even_with_matching_check_archive": {
+      "rejected": true,
+      "reason": "SSE replay differs from recorded reply"
+    }
+  },
+  "final_replay": {
+    "version": "judgment-review-replay-1",
+    "plan_hash": "b180d61d1e55c4fe0b784e6400eaaad83fe001602ad14e9ff4568c4c80ea5bf0",
+    "quote_integrity": "passed",
+    "cases": [
+      {
+        "case_id": "game-rank",
+        "mechanical": "validated",
+        "model_direction": "unfavorable",
+        "dimensions": {
+          "facts": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          },
+          "scope": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          },
+          "support": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          },
+          "priority": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "uncertain"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "uncertain"
+              }
+            ],
+            "conservative_status": "uncertain"
+          },
+          "direction": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "pass"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "pass"
+              }
+            ],
+            "conservative_status": "pass"
+          }
+        }
+      },
+      {
+        "case_id": "private-project",
+        "mechanical": "validated",
+        "model_direction": "mixed",
+        "dimensions": {
+          "facts": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          },
+          "scope": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "pass"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "pass"
+              }
+            ],
+            "conservative_status": "pass"
+          },
+          "support": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "uncertain"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          },
+          "priority": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          },
+          "direction": {
+            "by_reviewer": [
+              {
+                "reviewer": "agent-a",
+                "verdict": "fail"
+              },
+              {
+                "reviewer": "agent-b",
+                "verdict": "fail"
+              }
+            ],
+            "conservative_status": "fail"
+          }
+        }
+      }
+    ],
+    "semantic_acceptance": "not_established",
+    "forecast_accuracy": "unassessed",
+    "blind": false,
+    "overall_improvement": "unassessed"
+  }
+}

@@ -1,0 +1,460 @@
+{
+  "schema_version": "judgment-human-review-1",
+  "reviewer_id": "agent-b",
+  "review_kind": "retrospective_nonblind",
+  "reviewed_at": "2026-10-02",
+  "reading_prompt": "reading-production-4",
+  "criteria": [
+    {
+      "id": "facts",
+      "requirement": "具体爻位、动静、六亲、五行和关系方向与当前程序数据一致；引用须覆盖该段所述属性。"
+    },
+    {
+      "id": "scope",
+      "requirement": "回答当前目标，不把私人免费娱乐换成盈利、人气或商业成功，不假装了解未说明的游戏机制。"
+    },
+    {
+      "id": "support",
+      "requirement": "类象解释与现实事实分开；普通练习、心态、试用建议不当作盘面支持。生克影响须结合对象角色，不从关系名称直接判现实好坏。"
+    },
+    {
+      "id": "priority",
+      "requirement": "说明主要取用、备选角度和相关因素主次；若取法无法确定且影响方向，坦然保留不确定性。"
+    },
+    {
+      "id": "direction",
+      "requirement": "方向标签与正文及因素一致；mixed 须说明具体牵制和不能确定主次的理由，不因存在两面因素自动采用，不要求固定吉凶。"
+    }
+  ],
+  "inputs": {
+    "plan_sha256": "45e157b121ed4db5e00b5e41d0395d484b39e23ff3b62fd75d57f824c218ae20",
+    "responses": [
+      {
+        "case_id": "game-rank",
+        "file": "game-rank-response.txt",
+        "raw_sha256": "9ccdd50726f1d13124c4b4a2f597df1ce604a887ca7217bd6446fb1dd6a13c23",
+        "mechanical_status": "validated",
+        "mechanical_issues": [],
+        "context_id": "sha256:9cd5c74bff7edc6b0c086cba18b0ce847830d5501db4c10ccdc5ee0764f42a97"
+      },
+      {
+        "case_id": "private-project",
+        "file": "private-project-response.txt",
+        "raw_sha256": "6ba6d56bdb8955b92890616320351de7909e590861ff5aaea32628ab1dd29aad",
+        "mechanical_status": "validated",
+        "mechanical_issues": [],
+        "context_id": "sha256:519b4a99a6bca44476eb683f1784f9723a083b4d13c7b9df3668571d690c6b41"
+      }
+    ]
+  },
+  "method": {
+    "coverage": "Independently reviewed all answer, yongshen candidate reasons, factor interpretations, direction and uncertainties against frozen question, canonical and evidence in plan; did not inspect other reviewer.",
+    "quote_offsets": "Exact original response.txt UTF-16 code-unit offsets, end exclusive; quotes are raw file substrings, not normalized JSON field offsets.",
+    "criteria_pass_meaning": "Dimension-specific manual acceptance only; facts includes local citation coverage, direction checks internal consistency only; no direction is predetermined.",
+    "failure_policy": "Any explicit violated criterion is fail; unverifiable justification is uncertain; mechanical validation and disclaimers do not override local semantic failures."
+  },
+  "cases": [
+    {
+      "case_id": "game-rank",
+      "overall_status": "fail",
+      "model_direction": "unfavorable",
+      "dimensions": {
+        "facts": {
+          "status": "fail",
+          "reason": "本条提及的核心盘面事实与冻结输入大体一致，金生水的方向也不反转；但冻结标准同时要求每段引用覆盖所述属性，多个候选/因素不满足。候选称第3爻静却未引该爻moving，称第5动而生世却未引世位及世爻五行；第一因素称变爻丑土妻财、应爻丑土妻财，却缺changed/relative、相关branch和应爻relative；第二因素称酉金及变父母亥水，却只有relative/月令/动静，没有对应branch/element。这是引用覆盖失败，不是说原盘被算错。",
+          "evidence_ids": [
+            "fact:/lines/2/moving",
+            "fact:/hexagram/shi_line",
+            "fact:/lines/3/element",
+            "fact:/lines/3/changed/relative",
+            "fact:/lines/0/relative",
+            "fact:/lines/4/element",
+            "fact:/lines/4/changed/element"
+          ],
+          "quotes": [
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.yongshen_candidates[0].reason",
+              "start": 904,
+              "end": 927,
+              "text": "第3爻官鬼酉金静而月令旺，也是同类的门槛信息。"
+            },
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.factors[0].interpretation",
+              "start": 1455,
+              "end": 1479,
+              "text": "第4爻父母亥水发动，变出丑土妻财，程序给出回头克"
+            },
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.factors[1].interpretation",
+              "start": 2000,
+              "end": 2013,
+              "text": "第5爻官鬼酉金发动且月令旺"
+            },
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.factors[1].interpretation",
+              "start": 2029,
+              "end": 2038,
+              "text": "它动而变出父母亥水"
+            }
+          ],
+          "concrete_corrections": [
+            "删除未需要的纳甲细节，或为本段每项所述属性补上实际对应的引用；金生世的关系还需本段所述双方五行和世位。"
+          ]
+        },
+        "scope": {
+          "status": "fail",
+          "reason": "虽然回答升段目标且承认机制未知，但正文仍假定英雄池、连败后硬冲及长期排位累积，因素也要求固定英雄池/节奏管理。输入没有这些游戏机制，尾部不确定性并不能撤销正文的具体断言。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.answer",
+              "start": 534,
+              "end": 580,
+              "text": "固定复盘失误和英雄池，减少连败后硬冲；王者段位是长期排位累积，单靠一两次爆发不足以稳定跨过。"
+            },
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.uncertainties[2]",
+              "start": 2533,
+              "end": 2563,
+              "text": "王者万象棋的段位机制、对局环境和你的实际水平、投入时间未提供"
+            }
+          ],
+          "concrete_corrections": [
+            "不确认游戏机制前只给机制无关的一般建议，或明确先询问对应机制。"
+          ]
+        },
+        "support": {
+          "status": "fail",
+          "reason": "核心盘→现实断言仍未克制：官鬼旺被写成外部竞争确实较强，金生水被写成竞争必将逼出应对与积累，世受克被写成过程会有持续现实消耗。conditional因素把复盘、英雄池、节奏投入列为盘面条件帮助，仍将一般练习建议嵌入支持链。虽有传统类象与结果不确定的免责声明，具体段落没有明确区分假设和已知现实；程序事实只确认关系，不确认现实竞争或练习的转化。",
+          "evidence_ids": [
+            "fact:/lines/4/relations/month_strength",
+            "fact:/lines/4/element",
+            "fact:/lines/3/element",
+            "fact:/lines/3/relations/return_relation"
+          ],
+          "quotes": [
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.answer",
+              "start": 292,
+              "end": 309,
+              "text": "过程里会有持续消耗或现实条件的牵扯"
+            },
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.answer",
+              "start": 389,
+              "end": 414,
+              "text": "说明高段竞争虽然强，但也会反过来逼出你的应对和积累"
+            },
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.factors[1].interpretation",
+              "start": 2014,
+              "end": 2027,
+              "text": "说明外部竞争与规则压力较强"
+            },
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.factors[1].interpretation",
+              "start": 2069,
+              "end": 2117,
+              "text": "若你确实愿意围绕对局复盘、固定英雄池和节奏管理持续投入，这个条件才可能转化为帮助，并非自动有利。"
+            }
+          ],
+          "concrete_corrections": [
+            "将现实竞争/消耗/适应写成取象假设，不声称盘确认；把练习建议移到一般建议，不能用它填充conditional盘面帮助或抵消阻碍。"
+          ]
+        },
+        "priority": {
+          "status": "uncertain",
+          "reason": "已明确官鬼为主要用神，并点名世受双重克为主要不利，优于无主次并列；但没有说明为何官鬼优先于自身世爻的取用角度，也未说明强旺发动且生世的作用为何低于世受克。称“主要/核心”提供了排序声明，尚不足以核实取舍理由；不据此替模型指定必然偏吉或偏凶。",
+          "evidence_ids": [
+            "fact:/lines/4/relative",
+            "fact:/lines/3/relations/return_relation",
+            "rule:YING-CONTROL-SHI-001:primary:4:1"
+          ],
+          "quotes": [
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.yongshen_candidates[0].reason",
+              "start": 1002,
+              "end": 1043,
+              "text": "所以取官鬼为主要用神，是取它在段位问题中的门槛与竞争含义，而不是把它单判为吉或凶。"
+            },
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.factors[0].interpretation",
+              "start": 1507,
+              "end": 1538,
+              "text": "自己的积累或投入被消耗、被现实因素牵制，是当前不利的主要依据。"
+            }
+          ],
+          "concrete_corrections": [
+            "说明主要取用相对自身角度的选择理由，以及两组相关作用的取舍依据；不能只用“核心”字样替代论证。"
+          ]
+        },
+        "direction": {
+          "status": "pass",
+          "reason": "仅就内部标签一致性而言，unfavorable与开头偏为难、主要oppose及有限conditional转机一致，正文未保证永远上不了，也未用mixed回避主次。此pass不认可支持链、取用权重或预测正确；“不稳上”本身不足以证明“不利”，这里只依据明确的整体偏难和主要阻碍表述判断标签匹配。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.answer",
+              "start": 170,
+              "end": 197,
+              "text": "整体信号偏为难，不是一路顺遂、可以较有把握达成的卦象。"
+            },
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.direction",
+              "start": 585,
+              "end": 611,
+              "text": "\"direction\": \"unfavorable\""
+            },
+            {
+              "file": "game-rank-response.txt",
+              "path": "$.answer",
+              "start": 489,
+              "end": 514,
+              "text": "能争、但阻力与消耗明显，需要实打实投入且结果不确定"
+            }
+          ],
+          "concrete_corrections": []
+        }
+      },
+      "additional_checks": {
+        "general_advice_as_chart_support": "fail",
+        "role_and_object_reasoning": "fail",
+        "traditional_forecast_correctness": "unassessed"
+      }
+    },
+    {
+      "case_id": "private-project",
+      "overall_status": "fail",
+      "model_direction": "mixed",
+      "dimensions": {
+        "facts": {
+          "status": "fail",
+          "reason": "核心盘面陈述（世应、空破、上爻动冲回头克、财相、伏父母）符合输入，但段落引用覆盖不足。oppose因素写世爻月令死未引month_strength，neutral因素同时称第三和第五月令相却只引第三month_strength，父母候选称丙午未引hidden/ganzhi或branch；都不能由六亲/五行或其他关系引用补齐。",
+          "evidence_ids": [
+            "fact:/lines/0/relations/month_strength",
+            "fact:/lines/4/relations/month_strength",
+            "fact:/lines/1/hidden/ganzhi"
+          ],
+          "quotes": [
+            {
+              "file": "private-project-response.txt",
+              "path": "$.factors[1].interpretation",
+              "start": 1522,
+              "end": 1537,
+              "text": "且世爻初爻旬空、月破、月令为死"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.factors[2].interpretation",
+              "start": 1923,
+              "end": 1940,
+              "text": "第三爻与第五爻妻财在水位、月令为相"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.yongshen_candidates[0].reason",
+              "start": 740,
+              "end": 751,
+              "text": "第二爻所伏丙午火为父母"
+            }
+          ],
+          "concrete_corrections": [
+            "在各段补对应属性引用或删减细节，不能把引用存在当充分覆盖。"
+          ]
+        },
+        "scope": {
+          "status": "pass",
+          "reason": "主要目标保留为免费、个人和熟人娱乐，明确不按商业产品期待，不把营收当验收目标，两项建议服务小项目本身。关注/趣味的盘面预测仍有support问题，但并没有把盈利或商业成功改成主要任务。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "file": "private-project-response.txt",
+              "path": "$.answer",
+              "start": 173,
+              "end": 184,
+              "text": "不必按商业产品来期待。"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.yongshen_candidates[1].reason",
+              "start": 1017,
+              "end": 1034,
+              "text": "用户明确是免费娱乐，不以收益为目标"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.uncertainties[0]",
+              "start": 2241,
+              "end": 2264,
+              "text": "这里只按你描述的免费、自娱、朋友间使用来理解。"
+            }
+          ],
+          "concrete_corrections": []
+        },
+        "support": {
+          "status": "fail",
+          "reason": "正文从空破死推断项目原型/试玩阶段，用户实际已说明部署而阶段未提供；从财相推出可能的小趣味/关注；从世克应称现实主动权/外部依赖。后续免责声明不替代每段假设边界。更关键是正文把官鬼作为外部阻力时受制说成不一定坏，oppose段却把同一组动冲回头克与世弱合并作为主要阻碍，没有解释对象角色、受制效果及日冲的不同作用。两项现实建议明确为一般建议，这一局部符合要求，但不能抵消以上失败。",
+          "evidence_ids": [
+            "fact:/lines/0/is_kongwang",
+            "fact:/lines/0/relations/month_strength",
+            "fact:/lines/5/relations/return_relation",
+            "fact:/lines/5/relations/day_relation",
+            "fact:/lines/2/relations/month_strength",
+            "rule:SHI-CONTROL-YING-001:primary:1:4"
+          ],
+          "quotes": [
+            {
+              "file": "private-project-response.txt",
+              "path": "$.answer",
+              "start": 287,
+              "end": 306,
+              "text": "现实含义更像是项目还处在原型或试玩阶段"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.answer",
+              "start": 436,
+              "end": 450,
+              "text": "有一点小趣味、小关注是可能的"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.answer",
+              "start": 343,
+              "end": 385,
+              "text": "如果把它理解成外部阻力、规则或技术问题，那么这个动爻被制，对“稳定运行”不一定是坏事"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.factors[1].interpretation",
+              "start": 1505,
+              "end": 1582,
+              "text": "上爻官鬼为动爻，受日冲，又回头克，且世爻初爻旬空、月破、月令为死，整体主位偏虚。这说明项目起步这条线眼下不强，可能出现反复调整或外部变化，作为主要阻碍看待"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.answer",
+              "start": 541,
+              "end": 562,
+              "text": "这两项是一般性建议，不代表卦里已保证成效。"
+            }
+          ],
+          "concrete_corrections": [
+            "不由空破确定开发阶段或由财相预测关注；官鬼作用与世弱分段，说明受克作用于何种角色、为何动冲另构成障碍或为何无法确认，不机械归好坏。"
+          ]
+        },
+        "priority": {
+          "status": "fail",
+          "reason": "父母和财都标成备选，没有明确主要取用。财理由说不优先于项目本体，但项目本体父母又只列备选且不据此断技术效果；最终趋势究竟依据何角度未交代。support的控制关系与oppose的世弱没有相对取舍说明，仅给出一个主要阻碍名义。若不需要趋势可给一般建议；若仍给mixed趋势，则须交代主要角度或为何取用不确定而采用unclear。",
+          "evidence_ids": [
+            "fact:/lines/1/hidden/relative",
+            "fact:/lines/2/relative",
+            "fact:/lines/4/relative"
+          ],
+          "quotes": [
+            {
+              "file": "private-project-response.txt",
+              "path": "$.yongshen_candidates[0].reason",
+              "start": 783,
+              "end": 805,
+              "text": "故仅列为备选取法，不据此断言技术或上线效果。"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.yongshen_candidates[1].reason",
+              "start": 1058,
+              "end": 1080,
+              "text": "不能当成盈利或人气预测，也不优先于项目本体。"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.factors[1].interpretation",
+              "start": 1574,
+              "end": 1582,
+              "text": "作为主要阻碍看待"
+            }
+          ],
+          "concrete_corrections": [
+            "说明主要评估的是项目本体、自身推进还是其他用户目标，以及为何优先；角度无法确定且影响方向时保留unclear。"
+          ]
+        },
+        "direction": {
+          "status": "fail",
+          "reason": "mixed没有说明具体利弊为何相互牵制且无法定主次。正文说兴趣项目可行，因素称主要阻碍，但未解释有限主导关系为何能与主要阻碍形成无法排序的牵制；官鬼受制在正文和oppose中的角色也未协调。失败针对论证/分类不一致，不要求把它强改favorable或unfavorable。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "file": "private-project-response.txt",
+              "path": "$.direction",
+              "start": 564,
+              "end": 583,
+              "text": "\"direction\":\"mixed\""
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.answer",
+              "start": 463,
+              "end": 478,
+              "text": "整体上，作为兴趣小项目是可行的"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.factors[0].interpretation",
+              "start": 1260,
+              "end": 1303,
+              "text": "这是支持“小项目可以自己慢慢做”的直接依据，但它只支持主导关系，不证明现实中一定顺利。"
+            },
+            {
+              "file": "private-project-response.txt",
+              "path": "$.factors[1].interpretation",
+              "start": 1574,
+              "end": 1593,
+              "text": "作为主要阻碍看待，不能理解成已经稳定。"
+            }
+          ],
+          "concrete_corrections": [
+            "若选mixed，明确两组相关作用、为何不可比较主次；无法建立依据时坦然unclear，不凭存在support和oppose就mixed。"
+          ]
+        }
+      },
+      "additional_checks": {
+        "general_advice_as_chart_support": "pass",
+        "role_and_object_reasoning": "fail",
+        "traditional_forecast_correctness": "unassessed"
+      }
+    }
+  ],
+  "summary": {
+    "overall_status": "fail",
+    "dimension_counts": {
+      "pass": 2,
+      "fail": 7,
+      "uncertain": 1
+    },
+    "main_failures": [
+      "Game-specific mechanism assumptions and reality assertions remain; general practice is still inserted into a conditional chart-support factor.",
+      "Private project has unresolved role/effect interpretation of constrained官鬼, no primary yongshen and no argued mixed tradeoff.",
+      "Both replies retain missing local property citations despite mechanical validation."
+    ]
+  },
+  "limitations": [
+    "Two already exposed development cases, retrospective and nonblind; no randomized old/new comparison and no general improvement claim.",
+    "No real outcome follow-up; traditional forecast validity, actual rank attainability and project success are unassessed.",
+    "No supplied traditional literature establishes each interpretation; reviewer does not treat remembered tradition as source verification.",
+    "No API calls, credentials, budget ledger or protected user files accessed; only reviewer-b.json created."
+  ]
+}

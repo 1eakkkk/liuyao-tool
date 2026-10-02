@@ -45,6 +45,32 @@ test('ledger lock rejects reconciliation and preserves bytes',()=>temporary(root
   const ledger=path.join(root,'ledger.json');write(ledger,{limit_cny:2,reservations:[]});const before=fs.readFileSync(ledger,'utf8');
   fs.writeFileSync(ledger+'.lock','');expect(()=>settlePilot(ledger,root)).toThrow();expect(fs.readFileSync(ledger,'utf8')).toBe(before);
 }));
+function closedSourcedPilot(root){
+  const dir=oldPilot(root),read=name=>JSON.parse(fs.readFileSync(path.join(dir,name)));
+  const p=read('plan.json');p.cases=p.cases.slice(0,1);p.cases[0].arms=p.cases[0].arms.slice(0,1);
+  write(path.join(dir,'plan.json'),p);const hash=sealPlan(p);write(path.join(dir,'seal.json'),{hash});
+  const e=read('execution.json');e.plan_hash=hash;write(path.join(dir,'execution.json'),e);
+  const s=read('summary.json');s.plan_hash=hash;s.planned_calls=1;s.attempted_calls=1;s.production_changes=false;s.balance_difference_is_not_exact_attributed_cost=true;
+  const r=s.results[0];delete r.within_reserve;r.model_quality='manual_review_pending';r.check={mechanical_ok:true};
+  r.conservative_peak_cost_cny=(r.usage.prompt_tokens*2+r.usage.completion_tokens*8)/1e6;
+  write(path.join(dir,`${r.id}-check.json`),r);write(path.join(dir,'summary.json'),s);return dir;
+}
+test('complete sourced format settles using original higher reservation rates, not mechanical quality as billing proof',()=>temporary(root=>{
+  const dir=closedSourcedPilot(root),options={format:'sourced-complete'};
+  expect(()=>auditCompletedPilot(dir)).toThrow('Unknown call status');
+  const a=auditCompletedPilot(dir,options);expect(a.unattempted_calls).toBe(0);expect(a.accounted_cny).toBe(0.03683);
+  const ledger=path.join(root,'ledger.json');write(ledger,{limit_cny:2,reservations:[{run:dir,amount:a.original_amount,planHash:a.planHash}]});
+  expect(settlePilot(ledger,dir,options).accounted_cny).toBe(a.accounted_cny);
+}));
+test.each(['incomplete','execution_seal','summary_seal','estimate','unknown_quality','extra_attempt'])('sourced reconciliation refuses unverifiable closure: %s',kind=>temporary(root=>{
+  const dir=closedSourcedPilot(root),read=name=>JSON.parse(fs.readFileSync(path.join(dir,name)));
+  if(kind==='incomplete'){const p=read('plan.json');p.cases[0].arms.push({...p.cases[0].arms[0],id:'unattempted-arm'});const h=sealPlan(p);write(path.join(dir,'plan.json'),p);write(path.join(dir,'seal.json'),{hash:h});const e=read('execution.json');e.plan_hash=h;write(path.join(dir,'execution.json'),e);const s=read('summary.json');s.plan_hash=h;s.planned_calls=2;write(path.join(dir,'summary.json'),s);}
+  if(kind==='execution_seal'){const e=read('execution.json');e.plan_hash='wrong';write(path.join(dir,'execution.json'),e);}
+  if(kind==='summary_seal'){const s=read('summary.json');s.plan_hash='wrong';write(path.join(dir,'summary.json'),s);}
+  if(['estimate','unknown_quality'].includes(kind)){const s=read('summary.json'),r=s.results[0];if(kind==='estimate')r.conservative_peak_cost_cny=0;else r.model_quality='unknown';write(path.join(dir,'summary.json'),s);write(path.join(dir,`${r.id}-check.json`),r);}
+  if(kind==='extra_attempt')write(path.join(dir,'unknown-attempt.json'),{});
+  expect(()=>auditCompletedPilot(dir,{format:'sourced-complete'})).toThrow();
+}));
 const kinds=['valid','duplicate','escaped_duplicate','truncated','invalid_origin','wrong_seal','insufficient_balance','missing_usage','unknown_model'];
 const pilots=['original','clarity','bound'].flatMap(pilot=>[...kinds,...(pilot==='clarity'?['third_case_failure']:pilot==='bound'?['missing_note']:[])].map(kind=>({pilot,kind})));
 test.each(pilots)('paid executor mocked: $pilot $kind, replay rejected without further calls',async ({pilot,kind})=>{

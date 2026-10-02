@@ -1,0 +1,9 @@
+{
+  "plan_hash": "925601219e995e581d59cf6e9146b6f6c42e89647a73ab9816ff0edde75e9295",
+  "version": "compact-judgment-offline-candidate-1",
+  "base_plan_hash": "b180d61d1e55c4fe0b784e6400eaaad83fe001602ad14e9ff4568c4c80ea5bf0",
+  "production": false,
+  "live_execution_available": false,
+  "network_calls": 0,
+  "scope": "Offline compact alternative after two exposed production4 failures; no model replies, paid executor, promotion or quality claim."
+}
