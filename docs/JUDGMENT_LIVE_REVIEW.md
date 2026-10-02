@@ -34,6 +34,8 @@
 
 下一步应对该候选另行冻结真实验证计划，重点审查引用覆盖、角色作用与主次说明；不能凭本次离线通过直接发布或宣称模型已遵循。现阶段停止本批付费生成，保留两条失败及全部不确定项。
 
+后续已按独立计划执行 [精简候选真实复测](JUDGMENT_COMPACT_REVIEW.md)，该报告单独记录新结果与预留；上面的 production4 原始失败和纯离线候选封条不变。
+
 ## 证据
 
 [冻结计划](acceptance/judgment-live-20261002/plan.json)、[原始执行摘要](acceptance/judgment-live-20261002/summary.json)、[审查 A](acceptance/judgment-live-20261002/reviewer-a.json)、[审查 B](acceptance/judgment-live-20261002/reviewer-b.json)、[旧预留结算](acceptance/judgment-live-20261002/clarity-settlement.json)、[审查完整回放](acceptance/judgment-live-20261002/replay.json)。原始回复和 SSE 同目录保留，失败未被“改好后的答案”替换。

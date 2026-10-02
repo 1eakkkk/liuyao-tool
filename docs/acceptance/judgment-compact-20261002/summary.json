@@ -1,0 +1,220 @@
+{
+  "plan_hash": "e9066727ecc9f219dba140822eebdaa38c5bff5086e88ac0e57b357cd91bfe5c",
+  "planned_calls": 2,
+  "attempted_calls": 2,
+  "results": [
+    {
+      "id": "game-rank",
+      "status": "validated",
+      "issues": [],
+      "finish_reason": "stop",
+      "saw_done": true,
+      "transport_error": null,
+      "http_status": 200,
+      "archive": {
+        "complete": true,
+        "error": null,
+        "redacted": false,
+        "bytes": 326557,
+        "sha256": "c72354bc85a737f47a0b583655a7708062e708e509d79c7aa512d3ce788b81ed"
+      },
+      "usage": {
+        "prompt_tokens": 13689,
+        "completion_tokens": 1128,
+        "total_tokens": 14817,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 13049
+      },
+      "usage_ok": true,
+      "conservative_peak_cost_cny": 0.036402,
+      "semantic_review": "pending",
+      "raw_sha256": "38eb0b2c9a18824b29bde24ac654d7dc1c0334e40a7c6ec422860e8c610021f1",
+      "response": {
+        "schema_version": "structured-answer-1.0",
+        "context_id": "sha256:9cd5c74bff7edc6b0c086cba18b0ce847830d5501db4c10ccdc5ee0764f42a97",
+        "answer": "就“能否打到王者段位”而言，这盘给出的信号偏向不利中有条件。若把段位晋升视为官鬼所代表的名位或关卡，三爻官鬼酉金得月令之旺，五爻官鬼酉金同样旺且发动，说明目标本身有力量、并非虚无，但五爻动而变出父母亥水，是名位泄气于文书、规则、流程之象，意味着晋升更依赖持续投入与合规操作，而非一蹴而就。世爻四爻父母亥水为求测者自身状态，月令为相，不算弱，可四爻动化妻财丑土回头克，世爻受制，说明努力容易被现实资源、时间或心态问题反噬；同时应爻初爻妻财丑土克世，外部消耗对自身形成压力。二爻父母亥水亦动，伏神兄弟寅木被飞神生扶，提示同行或竞争环境中有隐性助力，也意味着对手不弱。综合看：有向上空间，但过程反复、阻力实在，不能保证必上王者；若能把训练节奏、复盘和资源安排稳住，条件会好转。",
+        "direction": "mixed",
+        "yongshen_candidates": [
+          {
+            "relative": "官鬼",
+            "targets": [
+              {
+                "line": 3,
+                "component": "primary"
+              },
+              {
+                "line": 5,
+                "component": "primary"
+              }
+            ],
+            "reason": "段位晋升属于名位、关卡性质，取官鬼为用神。三爻官鬼酉金为静爻且得月令旺，五爻官鬼酉金为动爻亦旺，显示目标有实势，但五爻动化父母，用神泄气于规则流程，不是单凭冲劲可成。",
+            "evidence_ids": [
+              "fact:/lines/2/relative",
+              "fact:/lines/2/relations/month_strength",
+              "fact:/lines/4/relative",
+              "fact:/lines/4/moving",
+              "fact:/lines/4/relations/month_strength",
+              "fact:/lines/4/changed/relative"
+            ]
+          },
+          {
+            "relative": "父母",
+            "targets": [
+              {
+                "line": 2,
+                "component": "primary"
+              },
+              {
+                "line": 4,
+                "component": "primary"
+              }
+            ],
+            "reason": "世爻四爻父母亥水代表自身状态与承载，月令为相，本气不弱，但四爻动化妻财回头克，世爻受制；二爻父母亥水亦动，与四爻同气，可视为过程中的文书、规则、日常练习等支撑，但同样要面对消耗。",
+            "evidence_ids": [
+              "fact:/lines/3/relative",
+              "fact:/lines/3/is_shi",
+              "fact:/lines/3/relations/month_strength",
+              "fact:/lines/3/relations/return_relation",
+              "fact:/lines/1/relative",
+              "fact:/lines/1/moving"
+            ]
+          }
+        ],
+        "factors": [
+          {
+            "assessment": "support",
+            "interpretation": "三爻与五爻官鬼酉金均得月令旺，五爻又发动，说明段位目标本身有现实分量和推进可能，不是空想；五爻变出父母亥水，提示晋升更依赖规则理解、复盘和稳定执行。",
+            "evidence_ids": [
+              "fact:/lines/2/relative",
+              "fact:/lines/2/relations/month_strength",
+              "fact:/lines/4/relative",
+              "fact:/lines/4/moving",
+              "fact:/lines/4/changed/relative"
+            ]
+          },
+          {
+            "assessment": "oppose",
+            "interpretation": "世爻四爻父母亥水发动，变出妻财丑土回头克，自身状态虽得月令之相，但行动容易受现实资源、时间或心态反噬；应爻初爻妻财丑土克世，外部消耗也形成压力。",
+            "evidence_ids": [
+              "fact:/lines/3/is_shi",
+              "fact:/lines/3/moving",
+              "fact:/lines/3/relations/return_relation",
+              "fact:/lines/0/is_ying",
+              "fact:/lines/0/element",
+              "rule:YING-CONTROL-SHI-001:primary:4:1"
+            ]
+          },
+          {
+            "assessment": "conditional",
+            "interpretation": "二爻父母亥水发动，其伏神兄弟寅木得飞神生扶，提示同行或竞争环境中有隐性助力，可借他人经验或组队配合；但兄弟伏而未现，助力需要主动经营才可能显现。",
+            "evidence_ids": [
+              "fact:/lines/1/moving",
+              "fact:/lines/1/hidden/relative",
+              "fact:/lines/1/relations/hidden_relation",
+              "rule:HIDDEN-FLY-GENERATE-001:hidden:2:-"
+            ]
+          }
+        ],
+        "timing_candidates": [],
+        "uncertainties": [
+          "本盘未提供王者万象棋的具体段位机制、当前段位、近期投入时间与对局数据，因此只能就卦象给出条件性判断，不能确认实际能否达到王者段位。",
+          "用神取官鬼为名位关卡是一种解释假设；若用户更关心自身精力或资源消耗，取用重心会变化，结论也会随之调整。",
+          "本盘没有可直接换算为公历日期的应期依据，故不给出确定时间点。"
+        ]
+      }
+    },
+    {
+      "id": "private-project",
+      "status": "validated",
+      "issues": [],
+      "finish_reason": "stop",
+      "saw_done": true,
+      "transport_error": null,
+      "http_status": 200,
+      "archive": {
+        "complete": true,
+        "error": null,
+        "redacted": false,
+        "bytes": 251957,
+        "sha256": "e70b682c81bef904fa689b8dc80c20a2544709b97b67b2837394c3972adfed1c"
+      },
+      "usage": {
+        "prompt_tokens": 14306,
+        "completion_tokens": 870,
+        "total_tokens": 15176,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024
+        },
+        "prompt_cache_hit_tokens": 1024,
+        "prompt_cache_miss_tokens": 13282
+      },
+      "usage_ok": true,
+      "conservative_peak_cost_cny": 0.035572,
+      "semantic_review": "pending",
+      "raw_sha256": "795861010a6001c1952e07fd8a2ba30bbcd67037b1abc28fdfc32438b99388b6",
+      "response": {
+        "schema_version": "structured-answer-1.0",
+        "context_id": "sha256:519b4a99a6bca44476eb683f1784f9723a083b4d13c7b9df3668571d690c6b41",
+        "answer": "这卦可视为“小玩意、自娱自乐”性质的项目：山火贲本就有装饰、点缀、小规模呈现之意，与“仅供自己和好友娱乐”的定位相合，并非要做成大平台。世爻在第一爻、临官鬼且旬空，又被月建所冲，像是项目起点由自己发起，但力量偏虚、热度或持续投入有限；应爻第四爻为兄弟，与“周围好友”的分享场景对应，世克应，说明主导权在你手里，节奏也由你决定。第五爻妻财得月令相，但整体不是财爻强旺之局，更像是“零花费、零推广”的小工具，不宜期待它自己带来明显回报。第六爻官鬼动而回头克、受日冲，提示若把它当作要持续维护、要面对外部访问或规则压力的正式产品，可能会带来额外操心和消耗；若只是自己玩、不给它压任务，这些问题就不必放大。总的看，作为休闲小项目是可行的，适合轻量、随手分享；若想长期公开运营或承载更多期待，则要单独评估维护成本和合规问题。",
+        "direction": "mixed",
+        "yongshen_candidates": [],
+        "factors": [
+          {
+            "assessment": "support",
+            "interpretation": "本卦山火贲，卦名取象为装饰、点缀、小规模呈现，与用户所说“小模拟摇奖机、仅供自己和好友娱乐”的轻量定位相合；引用卦名仅作整体定位的类比解释，不据此断言现实结果。",
+            "evidence_ids": [
+              "fact:/hexagram/primary/name"
+            ]
+          },
+          {
+            "assessment": "conditional",
+            "interpretation": "世爻在第一爻、为官鬼且旬空，又逢月建相冲（月破），可解释为项目发起人虽是自身、起点由自己把控，但其力量偏虚，投入的持续度未必强；若只是短期玩玩较合，若要长期维护则需另作安排。",
+            "evidence_ids": [
+              "fact:/lines/0/is_shi",
+              "fact:/lines/0/is_kongwang",
+              "rule:MONTH-CLASH-001:primary:1:-",
+              "rule:SHI-CONTROL-YING-001:primary:1:4"
+            ]
+          },
+          {
+            "assessment": "neutral",
+            "interpretation": "应爻在第四爻、为兄弟，与“周围好友”的分享场景相呼应；世克应说明互动主导权在世方，节奏由自己掌握，朋友更多是使用者而非共同决策者。此为象意关系类比，不表示现实中朋友的意愿或参与程度已被知悉。",
+            "evidence_ids": [
+              "fact:/hexagram/ying_line",
+              "fact:/lines/3/relative",
+              "rule:SHI-CONTROL-YING-001:primary:1:4"
+            ]
+          },
+          {
+            "assessment": "oppose",
+            "interpretation": "第六爻官鬼动而回头克、受日冲，若把项目当成需要持续对外维护、要承受访问或规则压力的正式产品，这类动爻提示会带来额外操心和消耗；如果仅限自己和熟人小范围娱乐，这种压力不必被放大。",
+            "evidence_ids": [
+              "fact:/lines/5/moving",
+              "fact:/lines/5/relative",
+              "rule:DAY-CLASH-001:primary:6:-",
+              "rule:MOVE-RETURN-CONTROL-001:primary:6:-"
+            ]
+          }
+        ],
+        "timing_candidates": [],
+        "uncertainties": [
+          "卦盘只能反映起卦时点的象意，不能据此判断网站实际访问量、朋友参与度或任何现实结果。",
+          "用神不明确：本问题既涉及个人自娱项目，又涉及技术实现与分享场景，不同取用会得到不同侧重，因此未确定唯一用神。",
+          "本次结论仅基于所给卦盘和用户描述的项目性质，不包含对双色球、大乐透等具体彩票机制合规性的判断。"
+        ]
+      }
+    }
+  ],
+  "reservation": {
+    "reserved_cny": 19.901897999999992,
+    "remaining_unreserved_cny": 0.048102000000007195
+  },
+  "balance_before_cny": 24.83,
+  "balance_after_cny": 24.83,
+  "exact_billed_cost_cny": null,
+  "balance_difference_is_not_exact_attributed_cost": true,
+  "production_changes": false
+}

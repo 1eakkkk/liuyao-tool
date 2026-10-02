@@ -308,6 +308,8 @@ wrangler.jsonc   Cloudflare 静态资源配置
 | [程序出处绑定候选](docs/BOUND_SOURCE_CANDIDATE.md) | 程序保存完整引文与出处、模型声明实际引用；仅离线，语义尚未验收 |
 | [单条真实引用检查](docs/BOUND_LIVE_EVALUATION.md) | 两名独立审查通过一条月合回答；不代表总体改善或知识可上线 |
 | [判断主次修正](docs/JUDGMENT_CORRECTION.md) | 修正月令摘要，要求新结构化回答说明取用与主次；真实效果仍需验证 |
+| [判断真实复测](docs/JUDGMENT_LIVE_REVIEW.md) | 两条 production4 回答未通过内容验收，保留逐字审查、原始回复及预算核清记录 |
+| [精简判断候选复测](docs/JUDGMENT_COMPACT_REVIEW.md) | 独立冻结两次开发调用；引用与主次问题仍在，候选未上线 |
 
 阶段文档保留了当时的上下文，历史的「未发布」结论不应直接当作当前状态。请结合项目状态和对应版本的发布记录阅读。
 

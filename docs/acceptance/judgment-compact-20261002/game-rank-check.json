@@ -1,0 +1,123 @@
+{
+  "id": "game-rank",
+  "status": "validated",
+  "issues": [],
+  "finish_reason": "stop",
+  "saw_done": true,
+  "transport_error": null,
+  "http_status": 200,
+  "archive": {
+    "complete": true,
+    "error": null,
+    "redacted": false,
+    "bytes": 326557,
+    "sha256": "c72354bc85a737f47a0b583655a7708062e708e509d79c7aa512d3ce788b81ed"
+  },
+  "usage": {
+    "prompt_tokens": 13689,
+    "completion_tokens": 1128,
+    "total_tokens": 14817,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "prompt_cache_hit_tokens": 640,
+    "prompt_cache_miss_tokens": 13049
+  },
+  "usage_ok": true,
+  "conservative_peak_cost_cny": 0.036402,
+  "semantic_review": "pending",
+  "raw_sha256": "38eb0b2c9a18824b29bde24ac654d7dc1c0334e40a7c6ec422860e8c610021f1",
+  "response": {
+    "schema_version": "structured-answer-1.0",
+    "context_id": "sha256:9cd5c74bff7edc6b0c086cba18b0ce847830d5501db4c10ccdc5ee0764f42a97",
+    "answer": "就“能否打到王者段位”而言，这盘给出的信号偏向不利中有条件。若把段位晋升视为官鬼所代表的名位或关卡，三爻官鬼酉金得月令之旺，五爻官鬼酉金同样旺且发动，说明目标本身有力量、并非虚无，但五爻动而变出父母亥水，是名位泄气于文书、规则、流程之象，意味着晋升更依赖持续投入与合规操作，而非一蹴而就。世爻四爻父母亥水为求测者自身状态，月令为相，不算弱，可四爻动化妻财丑土回头克，世爻受制，说明努力容易被现实资源、时间或心态问题反噬；同时应爻初爻妻财丑土克世，外部消耗对自身形成压力。二爻父母亥水亦动，伏神兄弟寅木被飞神生扶，提示同行或竞争环境中有隐性助力，也意味着对手不弱。综合看：有向上空间，但过程反复、阻力实在，不能保证必上王者；若能把训练节奏、复盘和资源安排稳住，条件会好转。",
+    "direction": "mixed",
+    "yongshen_candidates": [
+      {
+        "relative": "官鬼",
+        "targets": [
+          {
+            "line": 3,
+            "component": "primary"
+          },
+          {
+            "line": 5,
+            "component": "primary"
+          }
+        ],
+        "reason": "段位晋升属于名位、关卡性质，取官鬼为用神。三爻官鬼酉金为静爻且得月令旺，五爻官鬼酉金为动爻亦旺，显示目标有实势，但五爻动化父母，用神泄气于规则流程，不是单凭冲劲可成。",
+        "evidence_ids": [
+          "fact:/lines/2/relative",
+          "fact:/lines/2/relations/month_strength",
+          "fact:/lines/4/relative",
+          "fact:/lines/4/moving",
+          "fact:/lines/4/relations/month_strength",
+          "fact:/lines/4/changed/relative"
+        ]
+      },
+      {
+        "relative": "父母",
+        "targets": [
+          {
+            "line": 2,
+            "component": "primary"
+          },
+          {
+            "line": 4,
+            "component": "primary"
+          }
+        ],
+        "reason": "世爻四爻父母亥水代表自身状态与承载，月令为相，本气不弱，但四爻动化妻财回头克，世爻受制；二爻父母亥水亦动，与四爻同气，可视为过程中的文书、规则、日常练习等支撑，但同样要面对消耗。",
+        "evidence_ids": [
+          "fact:/lines/3/relative",
+          "fact:/lines/3/is_shi",
+          "fact:/lines/3/relations/month_strength",
+          "fact:/lines/3/relations/return_relation",
+          "fact:/lines/1/relative",
+          "fact:/lines/1/moving"
+        ]
+      }
+    ],
+    "factors": [
+      {
+        "assessment": "support",
+        "interpretation": "三爻与五爻官鬼酉金均得月令旺，五爻又发动，说明段位目标本身有现实分量和推进可能，不是空想；五爻变出父母亥水，提示晋升更依赖规则理解、复盘和稳定执行。",
+        "evidence_ids": [
+          "fact:/lines/2/relative",
+          "fact:/lines/2/relations/month_strength",
+          "fact:/lines/4/relative",
+          "fact:/lines/4/moving",
+          "fact:/lines/4/changed/relative"
+        ]
+      },
+      {
+        "assessment": "oppose",
+        "interpretation": "世爻四爻父母亥水发动，变出妻财丑土回头克，自身状态虽得月令之相，但行动容易受现实资源、时间或心态反噬；应爻初爻妻财丑土克世，外部消耗也形成压力。",
+        "evidence_ids": [
+          "fact:/lines/3/is_shi",
+          "fact:/lines/3/moving",
+          "fact:/lines/3/relations/return_relation",
+          "fact:/lines/0/is_ying",
+          "fact:/lines/0/element",
+          "rule:YING-CONTROL-SHI-001:primary:4:1"
+        ]
+      },
+      {
+        "assessment": "conditional",
+        "interpretation": "二爻父母亥水发动，其伏神兄弟寅木得飞神生扶，提示同行或竞争环境中有隐性助力，可借他人经验或组队配合；但兄弟伏而未现，助力需要主动经营才可能显现。",
+        "evidence_ids": [
+          "fact:/lines/1/moving",
+          "fact:/lines/1/hidden/relative",
+          "fact:/lines/1/relations/hidden_relation",
+          "rule:HIDDEN-FLY-GENERATE-001:hidden:2:-"
+        ]
+      }
+    ],
+    "timing_candidates": [],
+    "uncertainties": [
+      "本盘未提供王者万象棋的具体段位机制、当前段位、近期投入时间与对局数据，因此只能就卦象给出条件性判断，不能确认实际能否达到王者段位。",
+      "用神取官鬼为名位关卡是一种解释假设；若用户更关心自身精力或资源消耗，取用重心会变化，结论也会随之调整。",
+      "本盘没有可直接换算为公历日期的应期依据，故不给出确定时间点。"
+    ]
+  }
+}

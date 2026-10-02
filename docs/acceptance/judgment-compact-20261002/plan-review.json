@@ -1,0 +1,135 @@
+{
+  "reviewer_id": "agent-b",
+  "review_kind": "independent_offline_frozen_plan_review",
+  "reviewed_at": "2026-10-02",
+  "overall_status": "pass_for_reviewed_plan_scope",
+  "inputs": [
+    {
+      "file": "experiments/judgment-review/candidate.js",
+      "sha256": "5143afa1119e8f9568606835618c50085756ad40574b3d35bacf016480433fed"
+    },
+    {
+      "file": "experiments/judgment-review/live-candidate.js",
+      "sha256": "b92a5129c0699d8eb74eb8f792b15b1174f7e23a36150548c6bbae3eb461279f"
+    },
+    {
+      "file": "experiments/judgment-review/plan.js",
+      "sha256": "d7e14727cf493acdfd325fbfadd746d4a1035d22d935f151e7ab669b23238f22"
+    },
+    {
+      "file": "scripts/judgment-live-pilot.js",
+      "sha256": "6eb45426101471245373dd98eb1e4e37d1c7d798f6497a7089b87c163d6a798a"
+    },
+    {
+      "file": "test-results/judgment-compact-live-20261002/plan.json",
+      "sha256": "3d60f997f331d6f41204be81df1d811099c7a0c7fc669d02c87c72d1a05bdbbc"
+    },
+    {
+      "file": "test-results/judgment-compact-live-20261002/seal.json",
+      "sha256": "b0b0569c1c2fe0a38ec8c00365080f375daff880b12e7b91ed39f41c33a9b7c7"
+    }
+  ],
+  "plan_hash": "e9066727ecc9f219dba140822eebdaa38c5bff5086e88ac0e57b357cd91bfe5c",
+  "offline_candidate_hash": "925601219e995e581d59cf6e9146b6f6c42e89647a73ab9816ff0edde75e9295",
+  "checks": [
+    {
+      "id": "frozen_integrity",
+      "status": "pass",
+      "reason": "冻结plan、seal以及可信compact准备函数重新生成的stable hash三者一致；绑定独立offline_candidate_hash也一致。"
+    },
+    {
+      "id": "request_difference",
+      "status": "pass",
+      "reason": "两例与已曝光P4冻结请求逐字比较，完整user消息保持，request仅system变化，且变化后system逐字等于独立compact离线候选。",
+      "cases": [
+        {
+          "case_id": "game-rank",
+          "full_source_user_message_exact": true,
+          "source_request_except_system_exact": true,
+          "candidate_system_exact": true,
+          "system_differs_from_source": true,
+          "max_tokens": 8192,
+          "estimated_reserve_cny": 0.17555
+        },
+        {
+          "case_id": "private-project",
+          "full_source_user_message_exact": true,
+          "source_request_except_system_exact": true,
+          "candidate_system_exact": true,
+          "system_differs_from_source": true,
+          "max_tokens": 8192,
+          "estimated_reserve_cny": 0.180046
+        }
+      ]
+    },
+    {
+      "id": "identity_and_prediction_boundary",
+      "status": "pass",
+      "reason": "live计划为独立compact开发实验，明确production=false、非正式P4请求、非盲测/预测验收/部署；候选提示不预设任何direction，mixed须具体解释，取法/材料不足允许unclear。保留冻结五维标准。",
+      "reading_prompt": "compact-judgment-candidate-1",
+      "source_reading_prompt": "reading-production-4",
+      "review_criteria_exact": true
+    },
+    {
+      "id": "offline_candidate_unchanged",
+      "status": "pass",
+      "reason": "live准备通过structuredClone分离新计划；重新生成离线候选仍offline-1、production=false、live_execution_available=false、network_calls=0、budget_reserved=false，原哈希未变。"
+    },
+    {
+      "id": "price_and_reserve_metadata",
+      "status": "pass",
+      "reason": "冻结价格日期为2026-10-02，输入2/输出8元每百万token，8192 cap及保守输入字节额度推导正数预估0.355596。只核验元数据和算式；未联网重新核对官方价格，也未检查实际剩余额度或付费授权。",
+      "price_checked": "2026-10-02",
+      "rates": {
+        "input": 2,
+        "output": 8
+      },
+      "reserve_cny": 0.355596,
+      "budget_reserved": false
+    },
+    {
+      "id": "trusted_profile_and_precredential_order",
+      "status": "pass",
+      "reason": "静态核验runner仅接受production4或compact profile，并分别调用可信准备函数；文件hash、可信重建hash、execution重跑检查及UTC当日日期检查在loadEnvFile之前；账本重跑/额度检查也在凭据和任何fetch之前。此审查未运行execute函数或读取账本。",
+      "source": "scripts/judgment-live-pilot.js",
+      "line_ranges": {
+        "trusted_profile": [
+          25,
+          29
+        ],
+        "seal_date_replay": [
+          40,
+          42
+        ],
+        "budget_before_credentials": [
+          43,
+          48
+        ],
+        "network_after_checks": [
+          50,
+          57
+        ]
+      }
+    },
+    {
+      "id": "call_limit_and_failure_stop",
+      "status": "pass",
+      "reason": "可信封印固定两例；runner单次遍历无retry，transport/completion/usage/mechanical失败停止跨case，保留预留与失败，不在此工具结算历史。"
+    }
+  ],
+  "limitations": [
+    "这是离线准备/静态执行顺序审查，未真实调用或访问凭据/账本，不能据此确认实际授权余额或供应商余额。",
+    "尚无compact真实回复，五维语义通过率、真实遵循、总体改善及传统预测正确性均unassessed。",
+    "未运行本轮mock测试；未将其他代理报告测试冒认独立测试。",
+    "价格来自冻结元数据，独立在线真实性复核不在本次禁止网络的范围内。"
+  ],
+  "execution_performed": false,
+  "semantic_review_status": "awaiting_real_responses",
+  "network_calls": 0,
+  "credentials_accessed": false,
+  "ledger_accessed": false,
+  "production_modified": false,
+  "files_created": [
+    "test-results/judgment-compact-plan-review.json"
+  ]
+}

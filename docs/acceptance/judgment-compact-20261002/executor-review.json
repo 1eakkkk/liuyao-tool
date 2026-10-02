@@ -1,0 +1,168 @@
+{
+  "version": "compact-executor-independent-review-1",
+  "reviewer_id": "agent-a",
+  "review_kind": "offline_executor_safety_review",
+  "result": "passed_no_blocking_issue_found",
+  "fixed_plan": {
+    "directory": "test-results/judgment-compact-live-20261002",
+    "seal_hash": "e9066727ecc9f219dba140822eebdaa38c5bff5086e88ac0e57b357cd91bfe5c",
+    "regenerated_matches": true,
+    "version": "compact-judgment-two-live-development-1",
+    "reading_prompt": "compact-judgment-candidate-1",
+    "source_reading_prompt": "reading-production-4",
+    "price_checked": "2026-10-02",
+    "reserve_cny": 0.355596,
+    "cases": [
+      "game-rank",
+      "private-project"
+    ]
+  },
+  "tests": {
+    "existing_files": [
+      "tests/output/judgment-live-pilot.test.js",
+      "tests/output/judgment-replay.test.js"
+    ],
+    "passed": 23,
+    "independent_mock_scenarios": [
+      {
+        "mode": "offline_candidate",
+        "passed": true,
+        "rejected_before_key_and_network": true,
+        "key_reads": 0,
+        "completion_calls": 0,
+        "error": "Plan, price date or replay rejected"
+      },
+      {
+        "mode": "expired_production4",
+        "passed": true,
+        "rejected_before_key_and_network": true,
+        "key_reads": 0,
+        "completion_calls": 0,
+        "error": "Plan, price date or replay rejected"
+      },
+      {
+        "mode": "wrong_profile",
+        "passed": true,
+        "rejected_before_key_and_network": true,
+        "key_reads": 0,
+        "completion_calls": 0,
+        "error": "Plan, price date or replay rejected"
+      },
+      {
+        "mode": "tamper_resealed",
+        "passed": true,
+        "rejected_before_key_and_network": true,
+        "key_reads": 0,
+        "completion_calls": 0,
+        "error": "Plan, price date or replay rejected"
+      },
+      {
+        "mode": "expired_compact",
+        "passed": true,
+        "rejected_before_key_and_network": true,
+        "key_reads": 0,
+        "completion_calls": 0,
+        "error": "Plan, price date or replay rejected"
+      },
+      {
+        "mode": "insufficient",
+        "passed": true,
+        "rejected_before_key_and_network": true,
+        "key_reads": 0,
+        "completion_calls": 0,
+        "error": "Additional authorized campaign budget required"
+      },
+      {
+        "mode": "duplicate_reservation",
+        "passed": true,
+        "rejected_before_key_and_network": true,
+        "key_reads": 0,
+        "completion_calls": 0,
+        "error": "Run already reserved; replay rejected"
+      },
+      {
+        "mode": "execution_marker",
+        "passed": true,
+        "rejected_before_key_and_network": true,
+        "key_reads": 0,
+        "completion_calls": 0,
+        "error": "Plan, price date or replay rejected"
+      },
+      {
+        "mode": "unknown_profile",
+        "passed": true,
+        "rejected_before_key_and_network": true,
+        "key_reads": 0,
+        "completion_calls": 0,
+        "error": "Unknown experiment profile"
+      },
+      {
+        "mode": "first_http_failure",
+        "passed": true,
+        "key_reads": 1,
+        "completion_calls": 1,
+        "attempted_calls": 1,
+        "error": null,
+        "full_reservation_retained": true
+      },
+      {
+        "mode": "second_http_failure",
+        "passed": true,
+        "key_reads": 1,
+        "completion_calls": 2,
+        "attempted_calls": 2,
+        "error": null,
+        "full_reservation_retained": true
+      },
+      {
+        "mode": "missing_usage",
+        "passed": true,
+        "key_reads": 1,
+        "completion_calls": 1,
+        "attempted_calls": 1,
+        "error": null,
+        "full_reservation_retained": true
+      },
+      {
+        "mode": "success",
+        "passed": true,
+        "key_reads": 1,
+        "completion_calls": 2,
+        "attempted_calls": 2,
+        "error": null,
+        "full_reservation_retained": true
+      }
+    ]
+  },
+  "authorization_scope": {
+    "limit_cny": 20,
+    "remaining_cny_supplied_by_parent": 0.403698,
+    "reserve_cny": 0.355596,
+    "remaining_after_reservation_estimate": 0.048102,
+    "actual_ledger_read": false,
+    "budget_limit_unchanged_in_synthetic_runs": true
+  },
+  "conclusions": [
+    "两种profile分别重建精确可信计划，封条同时等于磁盘计划和可信重建hash；即使篡改后重封、离线候选或其他profile，也在凭据/network前拒绝。",
+    "日期、execution标记、同run预留及授权预算均先于loadEnvFile与balance网络；synthetic拒绝情形账本逐字不变。",
+    "compact最多两次completion调用，第一次失败停止一次、第二次失败停止两次，无重试；完整预留保留，重复执行拒绝。",
+    "固定compact使用原P4完整用户数据及context，但系统提示为compact，已明确标非production4请求/部署；机械通过仍semantic_review pending。"
+  ],
+  "findings": [],
+  "limitations": [
+    "只审查离线入口与模拟执行，未运行真实模型；模型语义和预测效果未验证。",
+    "实际授权限额和剩余额来自父任务，本审查未读取真实账本；代码不扩大limit。",
+    "日期为UTC，2026-10-03 UTC后当前计划将拒绝；需要新的价格检查与冻结计划。",
+    "未读取Key、holdout或调用真实API；仅新增此结果文件，临时模拟目录已清除。"
+  ],
+  "reviewed_commit": "6ee45ba39e8767bb08f4e1aff6bf6927c8439549",
+  "additional_diff_review": {
+    "file": "experiments/judgment-review/replay.js",
+    "result": "no_blocking_issue_found",
+    "notes": [
+      "compact仅由专用version识别，并要求重建完整live候选hash与seal相等；仅改reading_prompt或自行封任意计划不能进入compact回放。",
+      "compact解读上下文明确使用source_reading_prompt=P4，系统消息只与重建compact候选比较；未把compact称为production4请求。",
+      "原P4归档回放12项测试继续通过。尚无新的compact真实回复，未将静态入口审查当生成语义验收。"
+    ]
+  }
+}
