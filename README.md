@@ -310,6 +310,7 @@ wrangler.jsonc   Cloudflare 静态资源配置
 | [判断主次修正](docs/JUDGMENT_CORRECTION.md) | 修正月令摘要，要求新结构化回答说明取用与主次；真实效果仍需验证 |
 | [判断真实复测](docs/JUDGMENT_LIVE_REVIEW.md) | 两条 production4 回答未通过内容验收，保留逐字审查、原始回复及预算核清记录 |
 | [精简判断候选复测](docs/JUDGMENT_COMPACT_REVIEW.md) | 独立冻结两次开发调用；引用与主次问题仍在，候选未上线 |
+| [事实与解释分离原型](docs/EVIDENCE_LED_OFFLINE.md) | 程序展示事实，单独记录主要取用与取舍；只离线验收，未接入正式解读 |
 
 阶段文档保留了当时的上下文，历史的「未发布」结论不应直接当作当前状态。请结合项目状态和对应版本的发布记录阅读。
 

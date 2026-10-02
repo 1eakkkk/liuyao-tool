@@ -1,0 +1,80 @@
+{
+  "version": "evidence-led-offline-1",
+  "plan_hash": "ce8f059c06f5fe50cf4d6c2c5db486e9cd1546d007fa023061f380d9b0ba379d",
+  "source_plan_hash": "b180d61d1e55c4fe0b784e6400eaaad83fe001602ad14e9ff4568c4c80ea5bf0",
+  "production": false,
+  "network_calls": 0,
+  "budget_reserved": false,
+  "paid_executor_available": false,
+  "semantic_acceptance": "unassessed",
+  "blind": false,
+  "provenance": "Two exposed cases; hand-authored UI/protocol examples only, not model replies.",
+  "cases": [
+    {
+      "id": "game-rank",
+      "context_id": "sha256:1878d6eded9af6239fb1a97e2cb0c7a696d81cd019feb03c45f0825e1c746397",
+      "synthetic_answer": {
+        "schema_version": "evidence-led-offline-1",
+        "context_id": "sha256:1878d6eded9af6239fb1a97e2cb0c7a696d81cd019feb03c45f0825e1c746397",
+        "summary": "这是程序编写的离线展示样例，不是解卦结果。程序事实可以核对，但不能仅凭这些事实确认现实结果；本例不作趋势判断。",
+        "decision": {
+          "task": "trend",
+          "direction": "unclear",
+          "focus": [],
+          "major_factor_ids": [],
+          "counter_factor_ids": [],
+          "tradeoff_reason": "本例只展示引用组织，没有建立取用或解释支持，不能凭因素数量决定吉凶。"
+        },
+        "factors": [
+          {
+            "id": "f1",
+            "effect": "neutral",
+            "evidence_ids": [
+              "fact:/lines/0/relative"
+            ],
+            "interpretation": "本项只演示如何查看第一爻的程序记录，不从六亲推断项目表现、竞争状态或他人意愿。",
+            "assumption": "没有采用具体传统取象。",
+            "limitation": "单个程序属性不能确认现实事件。"
+          }
+        ],
+        "general_advice": [],
+        "uncertainties": [
+          "样例是手工编写，不表示模型会遵守新协议，也没有预测结果反馈。"
+        ]
+      }
+    },
+    {
+      "id": "private-project",
+      "context_id": "sha256:ab7369a160e061ce00e34c9a54a01160cd958133f4dfef0acc4ee0321e6cc2fc",
+      "synthetic_answer": {
+        "schema_version": "evidence-led-offline-1",
+        "context_id": "sha256:ab7369a160e061ce00e34c9a54a01160cd958133f4dfef0acc4ee0321e6cc2fc",
+        "summary": "这是程序编写的离线展示样例，不是解卦结果。程序事实可以核对，但不能仅凭这些事实确认现实结果；本例不作趋势判断。",
+        "decision": {
+          "task": "trend",
+          "direction": "unclear",
+          "focus": [],
+          "major_factor_ids": [],
+          "counter_factor_ids": [],
+          "tradeoff_reason": "本例只展示引用组织，没有建立取用或解释支持，不能凭因素数量决定吉凶。"
+        },
+        "factors": [
+          {
+            "id": "f1",
+            "effect": "neutral",
+            "evidence_ids": [
+              "fact:/lines/0/relative"
+            ],
+            "interpretation": "本项只演示如何查看第一爻的程序记录，不从六亲推断项目表现、竞争状态或他人意愿。",
+            "assumption": "没有采用具体传统取象。",
+            "limitation": "单个程序属性不能确认现实事件。"
+          }
+        ],
+        "general_advice": [],
+        "uncertainties": [
+          "样例是手工编写，不表示模型会遵守新协议，也没有预测结果反馈。"
+        ]
+      }
+    }
+  ]
+}

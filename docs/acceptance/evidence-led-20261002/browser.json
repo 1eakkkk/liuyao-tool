@@ -1,0 +1,21 @@
+{
+  "production": false,
+  "network_calls": 0,
+  "results": [
+    {
+      "width": 1280,
+      "overflow": false,
+      "synthetic": true
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "synthetic": true
+    },
+    {
+      "width": 320,
+      "overflow": false,
+      "synthetic": true
+    }
+  ]
+}

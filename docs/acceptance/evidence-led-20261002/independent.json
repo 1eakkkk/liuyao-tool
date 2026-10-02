@@ -1,0 +1,208 @@
+{
+  "reviewer_id": "agent-b",
+  "review_kind": "independent_offline_protocol_review",
+  "reviewed_at": "2026-10-02",
+  "overall_status": "pass_for_offline_structure_candidate",
+  "inputs": [
+    {
+      "file": "experiments/judgment-review/evidence-led.js",
+      "sha256": "04104cb01fe3697feddab5e690f495ce713e6341b20c9b8478cce8bd5fdd4c60"
+    },
+    {
+      "file": "experiments/judgment-review/evidence-led-view.js",
+      "sha256": "adaf38ef1a650bc8d90aecd9ea59f928c19e90c1daf83b0ab1e11b5d0656b5d8"
+    },
+    {
+      "file": "scripts/prepare-evidence-led.js",
+      "sha256": "17c23671d6946e3c6b4fdd63288a4f8344a607b251eba440af4d6fc0377c0454"
+    },
+    {
+      "file": "tests/output/evidence-led.test.js",
+      "sha256": "152ff338f3f62d29279c2dfb144ef10e6cbf09f7a841c97751d558d00ed8d3c8"
+    }
+  ],
+  "independent_tests": {
+    "command": "vitest run tests/output/evidence-led.test.js",
+    "files_passed": 1,
+    "tests_passed": 18,
+    "semantic_quality_test": false
+  },
+  "findings": [
+    {
+      "id": "focus_only_in_secondary",
+      "severity": "resolved_structural_binding",
+      "status": "resolved",
+      "reason": "非unclear趋势已要求focus直接出现在至少一项所选major因素evidence_ids。独立重放原补充neutral挂focus反例，现在抛Focus absent from selected major factors。新增测试也保留仅补合法引用仍semantic_unassessed的反例。",
+      "source": "experiments/judgment-review/evidence-led.js",
+      "code": "if(!major.some(id=>factors.get(id).evidence_ids.includes(d.focus[0].evidence_id)))throw Error('Focus absent from selected major factors');"
+    },
+    {
+      "id": "source_and_identity",
+      "status": "pass",
+      "reason": "trusted context WeakSet+不可变对象，模型无value/result字段；程序通过evidenceText及collectEvidencePresentation生成事实与规则source闭包并去重。独立试未知/重复ID、跨context和未引用relative被拒绝，现有测试覆盖任务换趋势、主次ID不存在/重叠及方向必需focus/major。"
+    },
+    {
+      "id": "mixed_and_free_prose",
+      "status": "known_semantic_gap",
+      "reason": "mixed只要求major至少一个support和一个oppose及非空理由，不保证这些因素同目标、实际牵制或有合理权重。合法主因素里附relative后再写“月份酉保证成功”仍通过，view明确semantic_acceptance=unassessed。该缺口不得宣传成语义支持已解决。"
+    },
+    {
+      "id": "advice_separation",
+      "status": "pass_with_semantic_limit",
+      "reason": "general_advice独立数组并由程序标一般建议，不参与major/counter；facts任务禁止一般建议及方向因素。但散文仍可能在interpretation偷偷建议或断现实，结构不能自动辨识，需人工审查。"
+    },
+    {
+      "id": "dom_preview",
+      "status": "pass",
+      "reason": "renderer所有模型文本经textContent；验证后再replaceChildren，折叠是并列details没有嵌套。独立16项测试验证注入标签不成DOM、错误输入不替换页面、闭合折叠、事实不重复；只作离线合成样例，不冒认真模型回复。"
+    },
+    {
+      "id": "offline_and_production_boundary",
+      "status": "pass",
+      "reason": "prepare脚本仅内存准备及本地样例写入，无fetch、凭据读取或付费入口，no paid_executor和budget_reserved=false。源码git diff未见旧生产文件改动，新四文件为离线实验。当前未真实模型测试。"
+    },
+    {
+      "id": "facts_prose_boundary",
+      "status": "known_semantic_gap",
+      "reason": "独立facts反例使用合法引用/neutral因素/unclear但summary称第一爻官鬼发动并保证成功，仍结构通过；view保持semantic_acceptance=unassessed。facts只锁任务和字段，不自动校对自然语言事实或阻止散文偷渡趋势，应在文档明确，不能冒称所有文字已验。无需用无限regex扩大语义检查。"
+    },
+    {
+      "id": "preparation_no_network_and_no_overwrite",
+      "status": "pass",
+      "reason": "独立18项测试新增验证prepare时fetch/loadEnvFile若触发立即throw，仍生成两个synthetic案例并保留离线flags；同目录重复prepare拒绝且原plan字节不变。没有真实网络、凭据或预算读取。"
+    }
+  ],
+  "counterexamples": [
+    {
+      "name": "focus_only_in_unselected_secondary_factor",
+      "accepted": false,
+      "error": "Focus absent from selected major factors"
+    },
+    {
+      "name": "duplicate_evidence_ids",
+      "accepted": false,
+      "error": "duplicate_item at $.factors[0].evidence_ids"
+    },
+    {
+      "name": "unreferenced_relative_focus",
+      "accepted": false,
+      "error": "Focus absent from selected factor evidence"
+    },
+    {
+      "name": "cross_context",
+      "accepted": false,
+      "error": "Context or task mismatch"
+    },
+    {
+      "name": "unknown_evidence",
+      "accepted": false,
+      "error": "Unknown evidence reference"
+    },
+    {
+      "name": "valid_major_focus_but_wrong_free_prose",
+      "accepted": true,
+      "answer": {
+        "schema_version": "evidence-led-offline-1",
+        "context_id": "sha256:1878d6eded9af6239fb1a97e2cb0c7a696d81cd019feb03c45f0825e1c746397",
+        "summary": "这是程序编写的离线展示样例，不是解卦结果。程序事实可以核对，但不能仅凭这些事实确认现实结果；本例不作趋势判断。",
+        "decision": {
+          "task": "trend",
+          "direction": "favorable",
+          "focus": [
+            {
+              "evidence_id": "fact:/lines/0/relative",
+              "role_hypothesis": "随意角色"
+            }
+          ],
+          "major_factor_ids": [
+            "f1"
+          ],
+          "counter_factor_ids": [],
+          "tradeoff_reason": "本例只展示引用组织，没有建立取用或解释支持，不能凭因素数量决定吉凶。"
+        },
+        "factors": [
+          {
+            "id": "f1",
+            "effect": "support",
+            "evidence_ids": [
+              "fact:/lines/0/relative",
+              "fact:/calendar/month_branch"
+            ],
+            "interpretation": "只因为月份为酉就保证目标必定成功。",
+            "assumption": "没有采用具体传统取象。",
+            "limitation": "单个程序属性不能确认现实事件。"
+          }
+        ],
+        "general_advice": [],
+        "uncertainties": [
+          "样例是手工编写，不表示模型会遵守新协议，也没有预测结果反馈。"
+        ]
+      },
+      "view_semantic_acceptance": "unassessed"
+    }
+  ],
+  "limitations": [
+    "任何格式/结构通过都不能证明解释、传统出处、权重或预测准确。",
+    "焦点与主要引用绑定修正只能加强结构关系；无关主要因素附焦点、未引用自由文字、现实断言仍需语义审查。",
+    "16测试是离线合成和DOM检查，不是模型遵循效果。",
+    "未访问真实凭据/预算/holdout，未付费、不部署、不改生产或原始回复。"
+  ],
+  "actions": {
+    "network_calls": 0,
+    "source_modified": false,
+    "production_modified": false,
+    "files_created": [
+      "test-results/evidence-led-independent.json"
+    ]
+  },
+  "review_history": [
+    {
+      "stage": "initial_independent_counterexample",
+      "overall_status": "blocked_pending_focus_selection_fix",
+      "finding": {
+        "id": "focus_only_in_secondary",
+        "severity": "blocking_for_claimed_structural_binding",
+        "status": "fail",
+        "reason": "现实现只检查任一answer.factors是否直接含focus ID。可把焦点挂到未列major/counter的neutral补充因素，而favorable的major只引用月份，趋势仍通过。错误消息称selected factor evidence，但实际没有限制selected主要集合。",
+        "source": "experiments/judgment-review/evidence-led.js",
+        "code": "if(!answer.factors.some(v=>v.evidence_ids.includes(e.id)))",
+        "correction": "对已断方向的trend至少要求focus直接出现在选定major_factor_ids对应因素；新增已复现反例测试。明确是否允许counter绑定及unclear的focus策略，不靠散文声称相关。"
+      },
+      "independent_tests": {
+        "tests_passed": 16
+      },
+      "counterexample_accepted_before_fix": true,
+      "source_hash_before_fix": "not_captured_before_concurrent_fix",
+      "timing_note": "Initial reproduction accepted before fix and was immediately sent to root. Root applied fix while report generation was underway; first report counterexamples already reflected rejection after the fix."
+    }
+  ],
+  "reverification": {
+    "original_secondary_focus_counterexample": {
+      "accepted": false,
+      "error": "Focus absent from selected major factors"
+    },
+    "facts_free_prose_counterexample": {
+      "accepted": true,
+      "summary": "第一爻为官鬼且发动，现实目标必定成功。",
+      "interpretation": "第一爻已发动。",
+      "mechanical_check": "structure_and_links_only",
+      "semantic_acceptance": "unassessed"
+    },
+    "production_claims_allowed": [
+      "Offline trusted evidence display, source closure, structured task/identity/link constraints and safe synthetic DOM preview."
+    ],
+    "production_claims_not_allowed": [
+      "Free prose factual correctness, semantic support, target relevance, inferred roles or valid factor weighting.",
+      "Correct mixed tradeoff or forecast accuracy; real model adherence; deployed or production-ready acceptance."
+    ]
+  },
+  "test_history": [
+    {
+      "stage": "focus_selection_fix_verified",
+      "command": "vitest run tests/output/evidence-led.test.js",
+      "files_passed": 1,
+      "tests_passed": 17,
+      "semantic_quality_test": false
+    }
+  ]
+}
