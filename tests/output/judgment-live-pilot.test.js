@@ -5,6 +5,8 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {test,expect,vi,afterEach} from 'vitest';
 import {prepareJudgmentPlan,planHash} from '../../experiments/judgment-review/plan.js';
+import {prepareLiveJudgmentCandidate} from '../../experiments/judgment-review/live-candidate.js';
+import {prepareJudgmentCandidate} from '../../experiments/judgment-review/candidate.js';
 import {prepareJudgmentDirectory,executeJudgmentDirectory,archiveProviderBody} from '../../scripts/judgment-live-pilot.js';
 import {createReadingSession,prepareReadingTurn} from '../../src/ai/output/session.js';
 import {readingRequestBody} from '../../src/ai/output/client.js';
@@ -29,6 +31,36 @@ test('two exposed cases regenerate identical full production requests and no pre
     expect(c.input_allowance).toBe(Buffer.byteLength(JSON.stringify(c.body.messages))+4096);
     expect(c).not.toHaveProperty('expected_direction');
   }
+});
+test('compact live profile is separately sealed and cannot execute offline or production plans',async()=>{
+  vi.useFakeTimers();vi.setSystemTime(new Date('2026-10-02T03:00:00Z'));
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'judgment-compact-'));dirs.push(root);
+  const dir=path.join(root,'run'),ledger=path.join(root,'budget.json');
+  fs.writeFileSync(ledger,JSON.stringify({limit_cny:.4,reservations:[]}));
+  await prepareJudgmentDirectory(dir,'compact');
+  const live=await prepareLiveJudgmentCandidate(),offline=await prepareJudgmentCandidate();
+  expect(live.offline_candidate_hash).toBe(planHash(offline));expect(live.cases).toEqual(offline.cases);
+  expect(live.production).toBe(false);expect(live.live_execution_available).toBe(true);
+  const load=vi.spyOn(process,'loadEnvFile').mockImplementation(()=>{}),fetch=vi.fn();vi.stubGlobal('fetch',fetch);
+  await expect(executeJudgmentDirectory(dir,ledger)).rejects.toThrow('rejected');
+  fs.writeFileSync(path.join(dir,'plan.json'),JSON.stringify(offline));fs.writeFileSync(path.join(dir,'seal.json'),JSON.stringify({hash:planHash(offline)}));
+  await expect(executeJudgmentDirectory(dir,ledger,'compact')).rejects.toThrow('rejected');
+  await expect(executeJudgmentDirectory(dir,ledger,'arbitrary')).rejects.toThrow('Unknown');
+  expect(load).not.toHaveBeenCalled();expect(fetch).not.toHaveBeenCalled();
+});
+test('compact profile retains the budget guard, two-call cap, stop and replay protections',async()=>{
+  vi.useFakeTimers();vi.setSystemTime(new Date('2026-10-02T03:00:00Z'));
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'judgment-compact-'));dirs.push(root);
+  const dir=path.join(root,'run'),ledger=path.join(root,'budget.json');
+  fs.writeFileSync(ledger,JSON.stringify({limit_cny:.3,reservations:[]}));await prepareJudgmentDirectory(dir,'compact');
+  const load=vi.spyOn(process,'loadEnvFile').mockImplementation(()=>{});vi.stubEnv('DEEPSEEK_API_KEY','synthetic-key');
+  const fetch=vi.fn(async url=>url.endsWith('/balance')?new Response(JSON.stringify({is_available:true,balance_infos:[{currency:'CNY',total_balance:'5'}]})):new Response('failure',{status:500}));vi.stubGlobal('fetch',fetch);
+  await expect(executeJudgmentDirectory(dir,ledger,'compact')).rejects.toThrow('Additional authorized');expect(load).not.toHaveBeenCalled();expect(fetch).not.toHaveBeenCalled();
+  fs.writeFileSync(ledger,JSON.stringify({limit_cny:.4,reservations:[]}));
+  const r=await executeJudgmentDirectory(dir,ledger,'compact');expect(r.attempted_calls).toBe(1);
+  expect(fetch.mock.calls.filter(([url])=>url.endsWith('/completions'))).toHaveLength(1);
+  expect(JSON.parse(fs.readFileSync(ledger)).reservations[0].amount).toBe((await prepareLiveJudgmentCandidate()).reserve_cny);
+  const calls=fetch.mock.calls.length;await expect(executeJudgmentDirectory(dir,ledger,'compact')).rejects.toThrow('rejected');expect(fetch.mock.calls.length).toBe(calls);
 });
 test('insufficient authorization rejects before credentials or network and leaves ledger unchanged',async()=>{
   const {dir,ledger}=await setup(.07766),before=fs.readFileSync(ledger,'utf8');

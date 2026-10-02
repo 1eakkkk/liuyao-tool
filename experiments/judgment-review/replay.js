@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {planHash,reviewCriteria} from './plan.js';
+import {prepareLiveJudgmentCandidate} from './live-candidate.js';
 import {createReadingSession,prepareReadingTurn,appendReadingTurn} from '../../src/ai/output/session.js';
 import {parseOutputSse} from '../../src/ai/output/sse.js';
 const need=(ok,message)=>{if(!ok)throw Error(message);};
@@ -33,15 +34,19 @@ function stringRanges(raw){
 export async function replayJudgmentReview(directory){
   const read=name=>JSON.parse(fs.readFileSync(path.join(directory,name),'utf8'));
   const planBytes=fs.readFileSync(path.join(directory,'plan.json')),plan=JSON.parse(planBytes),seal=read('seal.json');
-  need(planHash(plan)===seal.hash&&plan.reading_prompt==='reading-production-4','Frozen plan mismatch');
+  const compact=plan.version==='compact-judgment-two-live-development-1';
+  need(planHash(plan)===seal.hash&&(compact||plan.reading_prompt==='reading-production-4'),'Frozen plan mismatch');
+  const candidate=compact?await prepareLiveJudgmentCandidate():null;
+  if(compact)need(planHash(candidate)===seal.hash,'Compact plan identity mismatch');
   need(planHash(plan.review_criteria)===planHash(reviewCriteria),'Review criteria changed');
   const inputs=new Map();
   for(const c of plan.cases){
     need(/^[a-z-]+$/.test(c.id),'Invalid case ID');
     const raw=fs.readFileSync(path.join(directory,c.id+'-response.txt'),'utf8'),check=read(c.id+'-check.json');
-    const session=createReadingSession(c.canonical,{style:'brief',custom:''});session.prompt=plan.reading_prompt;
+    const session=createReadingSession(c.canonical,{style:'brief',custom:''});session.prompt=compact?plan.source_reading_prompt:plan.reading_prompt;
     const prepared=await prepareReadingTurn(session,c.question);
-    need(planHash(prepared.messages)===planHash(c.body.messages)&&prepared.context.context_id===c.context_id,'Production replay input mismatch');
+    const messages=compact?candidate.cases.find(v=>v.id===c.id)?.body.messages:prepared.messages;
+    need(planHash(messages)===planHash(c.body.messages)&&prepared.context.context_id===c.context_id,'Production replay input mismatch');
     need(digest(raw)===check.raw_sha256,'Raw reply hash mismatch');
     const result=appendReadingTurn(session,prepared,raw,check.saw_done&&check.finish_reason==='stop'&&!check.transport_error,'api').result;
     need(result.status===check.status&&planHash(result.answer)===planHash(check.response),'Mechanical replay mismatch');

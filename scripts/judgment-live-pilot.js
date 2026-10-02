@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
-import {prepareJudgmentPlan,planHash,PRICE_CHECKED} from '../experiments/judgment-review/plan.js';
+import {prepareJudgmentPlan,planHash} from '../experiments/judgment-review/plan.js';
+import {prepareLiveJudgmentCandidate} from '../experiments/judgment-review/live-candidate.js';
 import {createReadingSession,prepareReadingTurn,appendReadingTurn} from '../src/ai/output/session.js';
 import {parseOutputSse} from '../src/ai/output/sse.js';
 import {accountedCampaignAmount,reserveCampaign} from './deepseek-campaign-budget.js';
@@ -21,19 +22,24 @@ export async function archiveProviderBody(body,file,{limit=4*1024*1024,redact=''
   fs.writeFileSync(file,data,{flag:'wx'});
   return {data,metadata:{complete,error,redacted,bytes:data.length,sha256:createHash('sha256').update(data).digest('hex')}};
 }
-export async function prepareJudgmentDirectory(directory){
-  const plan=await prepareJudgmentPlan();fs.mkdirSync(directory);
+async function trustedPlan(profile){
+  if(profile==='production4')return prepareJudgmentPlan();
+  if(profile==='compact')return prepareLiveJudgmentCandidate();
+  throw Error('Unknown experiment profile');
+}
+export async function prepareJudgmentDirectory(directory,profile='production4'){
+  const plan=await trustedPlan(profile);fs.mkdirSync(directory);
   for(const [name,value]of [['plan.json',plan],['seal.json',{hash:planHash(plan)}]])
     fs.writeFileSync(path.join(directory,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
   return {planned_calls:plan.cases.length,reserve_cny:plan.reserve_cny,plan_hash:planHash(plan),network_calls:0};
 }
-export async function executeJudgmentDirectory(directory,ledger){
+export async function executeJudgmentDirectory(directory,ledger,profile='production4'){
   const dir=path.resolve(directory),write=(name,value)=>fs.writeFileSync(path.join(dir,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
   const plan=JSON.parse(fs.readFileSync(path.join(dir,'plan.json'),'utf8'));
   const seal=JSON.parse(fs.readFileSync(path.join(dir,'seal.json'),'utf8'));
-  const expected=await prepareJudgmentPlan();
+  const expected=await trustedPlan(profile);
   if(seal.hash!==planHash(plan)||seal.hash!==planHash(expected)||fs.existsSync(path.join(dir,'execution.json'))||
-    PRICE_CHECKED!==new Date().toISOString().slice(0,10))throw Error('Plan, price date or replay rejected');
+    expected.price_checked!==new Date().toISOString().slice(0,10))throw Error('Plan, price date or replay rejected');
   const state=JSON.parse(fs.readFileSync(ledger,'utf8'));
   if(state.reservations.some(r=>r.run===dir))throw Error('Run already reserved; replay rejected');
   if(accountedCampaignAmount(state)+plan.reserve_cny>state.limit_cny)throw Error('Additional authorized campaign budget required');
@@ -93,9 +99,9 @@ export async function executeJudgmentDirectory(directory,ledger){
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){
   const [mode,directory,ledger]=process.argv.slice(2);
-  if(mode==='prepare'&&directory&&!ledger)console.log(JSON.stringify(await prepareJudgmentDirectory(directory)));
-  else if(mode==='execute'&&directory&&ledger){const r=await executeJudgmentDirectory(directory,ledger);
+  if(['prepare','prepare-compact'].includes(mode)&&directory&&!ledger)console.log(JSON.stringify(await prepareJudgmentDirectory(directory,mode==='prepare'?'production4':'compact')));
+  else if(['execute','execute-compact'].includes(mode)&&directory&&ledger){const r=await executeJudgmentDirectory(directory,ledger,mode==='execute'?'production4':'compact');
     console.log(JSON.stringify({attempted_calls:r.attempted_calls,statuses:r.results.map(x=>({id:x.id,status:x.status})),reservation:r.reservation}));
     if(r.attempted_calls!==2||r.results.some(x=>x.status!=='validated'||!x.usage_ok))process.exitCode=2;
-  }else throw Error('Use prepare <new-directory> or execute <prepared-directory> <budget-ledger>');
+  }else throw Error('Use prepare[ -compact] <new-directory> or execute[-compact] <prepared-directory> <budget-ledger>');
 }
