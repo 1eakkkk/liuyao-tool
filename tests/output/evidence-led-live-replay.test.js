@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {replayEvidenceLedLive} from '../../scripts/replay-evidence-led-live.js';
+import {planHash} from '../../experiments/judgment-review/plan.js';
 const source=path.resolve('docs/acceptance/evidence-led-live-20261002');
 async function fixture(fn){
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),'evidence-led-replay-'));
@@ -27,4 +28,26 @@ test('rejects altered SSE bytes',()=>fixture(async dir=>{
 }));
 test('rejects altered extracted response',()=>fixture(async dir=>{
   fs.appendFileSync(path.join(dir,'facts-motion-response.txt'),' ');await expect(replayEvidenceLedLive(dir)).rejects.toThrow('Response text');
+}));
+test('rejects quotations moved away from the cited field',()=>fixture(async dir=>{
+  change(dir,'semantic-review-a.json',v=>v.reviews[0].criteria.facts.quotes[0].start++);
+  await expect(replayEvidenceLedLive(dir)).rejects.toThrow('Review quotation');
+}));
+test('rejects resealing a changed fixed request',()=>fixture(async dir=>{
+  change(dir,'plan.json',v=>v.cases[0].body.messages[0].content+=' altered');
+  const h=planHash(JSON.parse(fs.readFileSync(path.join(dir,'plan.json'))));
+  change(dir,'seal.json',v=>v.hash=h);change(dir,'summary.json',v=>v.plan_hash=h);
+  await expect(replayEvidenceLedLive(dir)).rejects.toThrow('Trusted fixed plan');
+}));
+test('rejects overflowing quote range',()=>fixture(async dir=>{
+  change(dir,'semantic-review-a.json',v=>v.reviews[0].criteria.facts.quotes[0].end=9999);
+  await expect(replayEvidenceLedLive(dir)).rejects.toThrow('Review quotation');
+}));
+test('rejects unknown reviewer evidence',()=>fixture(async dir=>{
+  change(dir,'semantic-review-a.json',v=>v.reviews[0].criteria.facts.evidence_ids=['fact:/not-real']);
+  await expect(replayEvidenceLedLive(dir)).rejects.toThrow('Unknown review evidence');
+}));
+test('rejects false usage-validity metadata',()=>fixture(async dir=>{
+  change(dir,'facts-motion-check.json',v=>v.usage_ok=false);
+  await expect(replayEvidenceLedLive(dir)).rejects.toThrow('Usage validity');
 }));

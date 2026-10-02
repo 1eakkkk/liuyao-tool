@@ -4,6 +4,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
 import {planHash} from '../experiments/judgment-review/plan.js';
+import {prepareEvidenceLedLivePlan} from '../experiments/judgment-review/evidence-led-live-plan.js';
 import {buildOutputContext} from '../src/ai/output/context.js';
 import {createEvidenceLedContext,validateEvidenceLedAnswer} from '../experiments/judgment-review/evidence-led.js';
 import {parseEvidenceLedSse,strictJson} from './evidence-led-live-pilot.js';
@@ -13,8 +14,9 @@ export async function replayEvidenceLedLive(directory){
   const read=name=>strictJson(fs.readFileSync(path.join(directory,name),'utf8'));
   const plan=read('plan.json'),seal=read('seal.json'),summary=read('summary.json');
   same(seal.hash,planHash(plan),'Plan seal mismatch');
+  same(plan,await prepareEvidenceLedLivePlan(),'Trusted fixed plan mismatch');
   same(summary.plan_hash,seal.hash,'Summary plan mismatch');
-  const results=[];
+  const results=[],contexts=new Map();
   for(const c of plan.cases){
     const file=path.join(directory,c.id+'-check.json');
     if(!fs.existsSync(file))throw Error('Expected complete six-case archive');
@@ -27,11 +29,14 @@ export async function replayEvidenceLedLive(directory){
     same(check.request_hash,planHash(c.body),'Request identity mismatch');
     same(read(c.id+'-attempt.json').request_hash,check.request_hash,'Attempt identity mismatch');
     const context=await createEvidenceLedContext(await buildOutputContext(c.canonical,{includeMissingRecords:true}),c.task);
+    contexts.set(c.id,context);
     same(context.context_id,c.context_id,'Context mismatch');same(check.context_id,c.context_id,'Check context mismatch');
     const parsed=parseEvidenceLedSse(bytes,{inputAllowance:c.input_allowance,maxTokens:c.body.max_tokens});
     same(parsed.rawText,fs.readFileSync(path.join(directory,c.id+'-response.txt'),'utf8'),'Response text mismatch');
     same(check.raw_sha256,hash(parsed.rawText),'Response digest mismatch');
     same(check.usage,parsed.usage,'Usage mismatch');same(check.usage_sha256,parsed.usage===null?null:planHash(parsed.usage),'Usage identity mismatch');
+    same(check.usage_ok,parsed.usageOk,'Usage validity mismatch');same(check.cost_unknown,!parsed.usageOk,'Cost uncertainty mismatch');
+    same(check.conservative_peak_cost_cny,parsed.usageOk?(parsed.usage.prompt_tokens*2+parsed.usage.completion_tokens*8)/1e6:null,'Cost estimate mismatch');
     same(check.model,parsed.model,'Model mismatch');same(check.finish_reason,parsed.finishReason,'Completion mismatch');same(check.saw_done,parsed.sawDone,'Terminal mismatch');
     let issue=parsed.error,answer=null;
     if(!issue){try{answer=strictJson(parsed.rawText);validateEvidenceLedAnswer(answer,context);}catch(e){issue=e.message;answer=null;}}
@@ -40,7 +45,33 @@ export async function replayEvidenceLedLive(directory){
     results.push({id:c.id,status:check.status,issues:check.issues,archive_sha256:hash(bytes),raw_sha256:check.raw_sha256});
   }
   if(summary.attempted_calls!==6||summary.planned_calls!==6||summary.results.length!==6)throw Error('Call accounting mismatch');
-  return {plan_hash:seal.hash,network_calls:0,verified_cases:6,results,semantic_acceptance:'requires_independent_review',forecast_accuracy:'unassessed'};
+  const reviews=[];
+  for(const name of ['semantic-review-a.json','semantic-review-b.json']){
+    if(!fs.existsSync(path.join(directory,name)))continue;
+    const review=read(name);
+    if(review.plan_sha256!==hash(fs.readFileSync(path.join(directory,'plan.json')))||review.reviews.length!==6||new Set(review.reviews.map(v=>v.case_id)).size!==6)throw Error('Review identity mismatch');
+    let quoteCount=0;
+    for(const item of review.reviews){
+      const c=plan.cases.find(v=>v.id===item.case_id);if(!c)throw Error('Unknown reviewed case');
+      const raw=fs.readFileSync(path.join(directory,c.id+'-response.txt'),'utf8'),answer=strictJson(raw);
+      if(item.response_sha256!==hash(raw))throw Error('Reviewed response mismatch');
+      same(Object.keys(item.criteria).sort(),plan.review_criteria.map(v=>v.id).sort(),'Review dimensions mismatch');
+      for(const criterion of Object.values(item.criteria)){
+        if(!['pass','fail','uncertain'].includes(criterion.verdict))throw Error('Review verdict invalid');
+        if(criterion.verdict!=='pass'&&!criterion.quotes?.length)throw Error('Missing failure quotation');
+        const ids=new Set(contexts.get(c.id).evidence.map(e=>e.id));
+        for(const id of criterion.evidence_ids??[])if(!ids.has(id))throw Error('Unknown review evidence ID');
+        for(const q of criterion.quotes??[]){
+          if(!q.path.startsWith('/'))throw Error('Review path invalid');
+          const value=q.path.slice(1).split('/').reduce((v,k)=>v?.[k.replaceAll('~1','/').replaceAll('~0','~')],answer);
+          if(typeof value!=='string'||q.offset_unit!=='UTF-16'||!Number.isInteger(q.start)||!Number.isInteger(q.end)||q.start<0||q.end<=q.start||q.end>value.length||value.slice(q.start,q.end)!==q.text)throw Error('Review quotation mismatch');
+          quoteCount++;
+        }
+      }
+    }
+    reviews.push({file:name,reviewed_cases:6,dimensions:36,verified_quotes:quoteCount});
+  }
+  return {plan_hash:seal.hash,network_calls:0,verified_cases:6,results,reviews,semantic_acceptance:'requires_independent_review',forecast_accuracy:'unassessed'};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){
   console.log(JSON.stringify(await replayEvidenceLedLive(process.argv[2]),null,2));

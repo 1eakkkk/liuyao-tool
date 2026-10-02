@@ -1,0 +1,746 @@
+{
+  "schema_version": "evidence-led-six-semantic-review-1",
+  "reviewer_id": "agent-a",
+  "review_kind": "retrospective_nonblind",
+  "reviewed_on": "2026-10-02",
+  "plan_sha256": "fdf205247bcebc71a7c965caa44fe418e127cead42a0894095ade8f6cb10233f",
+  "review_criteria": [
+    {
+      "id": "facts",
+      "requirement": "每段实际说出的盘面属性须准确且由本段引用覆盖；未说属性不强求。程序值和规则来源由可信目录展示，不能用引用存在证明解释。"
+    },
+    {
+      "id": "scope",
+      "requirement": "回应固定问题与显式task，不将事实或建议任务改为趋势；不虚构未知机制，不替换用户目标，不附加未问的应期。"
+    },
+    {
+      "id": "support",
+      "requirement": "事实、取象假设、用户现实和一般建议分开；关系影响结合对象角色；一般建议不能作为盘面支持，传统依据不足标无法确认。"
+    },
+    {
+      "id": "priority",
+      "requirement": "趋势说明主要取用、相关因素主次及取舍；取法影响方向而无法确定须保留不确定性。事实/建议不强迫取用。"
+    },
+    {
+      "id": "direction",
+      "requirement": "方向、正文、因素与主次一致；mixed解释同一目标上的牵制及为何不能分主次，不按条数评分或预设吉凶；facts/advice只能unclear。"
+    },
+    {
+      "id": "task_boundary",
+      "requirement": "固定task不得改写；facts无建议或趋势因素，advice一般建议单列；自由文字边界另由人工审查，结构通过不证明文字正确。"
+    }
+  ],
+  "actual_responses_reviewed": 6,
+  "blind": false,
+  "forecast_accuracy": "unassessed",
+  "semantic_acceptance": "not_established",
+  "scope": "固定六条新development问题的真实原始回复独立内容审查；未查看另一审查者，不生成回答、不API、不读凭据、真实预算或受保护holdout。",
+  "citation_policy": "按每段实际说出的属性检查，认可规则source_facts闭包；缺引用与事实错误分开。普通建议本身不要求卦盘引用，不要求补足三因素；但自由文字自行补写的盘面属性仍须引用。只核查传统取法的支持边界，不确认现实成败。",
+  "reviews": [
+    {
+      "case_id": "facts-motion",
+      "task": "facts",
+      "question": "只核对本卦六条爻的动静，并指出世爻和应爻各在第几爻。不要解释趋势或给建议。",
+      "response_sha256": "3c451d500bf7e98ea828f35b926aa381b47ff41640a2844b4cfa9d4d94079adb",
+      "mechanical_status": "validated",
+      "mechanical_issues": [],
+      "reviewed_fields": [
+        "/summary",
+        "/decision/task",
+        "/decision/direction",
+        "/decision/focus",
+        "/decision/major_factor_ids",
+        "/decision/counter_factor_ids",
+        "/decision/tradeoff_reason",
+        "/factors",
+        "/general_advice",
+        "/uncertainties"
+      ],
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "动静与世应因素的对应值正确，但summary补写卦名卦宫、老阳变阴、六亲纳甲及额外空破旺等属性，未由本段有效引用或相关因素覆盖；不能因所有值在全输入存在就当最小引用覆盖。summary中rule:LINE-MOVING-001也不是目录完整实例ID。",
+          "evidence_ids": [
+            "fact:/lines/0/relative",
+            "fact:/lines/0/ganzhi",
+            "fact:/lines/0/is_kongwang",
+            "fact:/lines/0/relations/day_relation",
+            "fact:/lines/4/relations/month_strength"
+          ],
+          "quotes": [
+            {
+              "path": "/summary",
+              "start": 156,
+              "end": 193,
+              "text": "额外事实：第1爻（子孙己卯木）旬空且受日辰冲，并见月破标注；第5爻月令旺。",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 297,
+              "raw_end": 334,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "fail",
+          "reason": "用户只要求六爻动静与世应位置；明确增加第1爻空破与第5爻旺等额外事实，超出这次限定范围，虽未预测现实。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/summary",
+              "start": 156,
+              "end": 193,
+              "text": "额外事实：第1爻（子孙己卯木）旬空且受日辰冲，并见月破标注；第5爻月令旺。",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 297,
+              "raw_end": 334,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "support": {
+          "verdict": "pass",
+          "reason": "所要求的动静和世应位置能由两个neutral因素引用支持；未把空破等程序关系推成现实或成败。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "priority": {
+          "verdict": "pass",
+          "reason": "纯事实不强迫用神或主次，major/counter/focus为空。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "unclear与不作趋势判断一致。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "仍为facts，无一般建议或方向因素；范围多写事实另在scope记录。",
+          "evidence_ids": [],
+          "quotes": []
+        }
+      }
+    },
+    {
+      "case_id": "facts-records",
+      "task": "facts",
+      "question": "只核对第三爻是否记载伏神，以及第五爻的本爻六亲与变爻六亲；未记载只说明记录情况。不要推断现实或趋势。",
+      "response_sha256": "6813b0267a7782fc0db2aea05d69605e82637a3d4adccdf9052383308f69f8a7",
+      "mechanical_status": "validated",
+      "mechanical_issues": [],
+      "reviewed_fields": [
+        "/summary",
+        "/decision/task",
+        "/decision/direction",
+        "/decision/focus",
+        "/decision/major_factor_ids",
+        "/decision/counter_factor_ids",
+        "/decision/tradeoff_reason",
+        "/factors",
+        "/general_advice",
+        "/uncertainties"
+      ],
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "两个因素所写伏神存在、伏克飞、第五爻六亲及变爻土均有有效引用且与计划一致；但summary额外写本爻戊午/壬申、伏神水/亥、第五爻金/动及变爻己未，没有对应本段引用，也不由这两个因素引用的来源闭包覆盖。",
+          "evidence_ids": [
+            "fact:/lines/4/ganzhi",
+            "fact:/lines/4/element",
+            "fact:/lines/4/moving",
+            "fact:/lines/4/changed/ganzhi"
+          ],
+          "quotes": [
+            {
+              "path": "/summary",
+              "start": 79,
+              "end": 129,
+              "text": "第五爻（position 5，壬申）本爻六亲为妻财、五行金，动爻，变爻记录为己未、五行土、六亲子孙。",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 220,
+              "raw_end": 270,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "回答所问伏神记录与第五爻两六亲，没有把未记载推不存在、未推现实趋势；额外属性的引用缺漏单列facts。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "support": {
+          "verdict": "pass",
+          "reason": "把hidden非null作为有记录，changed口径按程序给定，不从六亲推现实；所问字段解释有支持。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "priority": {
+          "verdict": "pass",
+          "reason": "facts不强迫取用或主次，未赋传统权重。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "unclear与事实核对一致。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "neutral因素，无建议、趋势或应期。",
+          "evidence_ids": [],
+          "quotes": []
+        }
+      }
+    },
+    {
+      "case_id": "advice-photos",
+      "task": "advice",
+      "question": "我准备把旧照片整理成家庭电子相册，只供家人查看。请给两条开始整理的建议，不判断成败，也不预测时间。",
+      "response_sha256": "aad9aa1f984c35924ea6e1511d73915d5d8cdd16007570dc76dfdfbed5a21232",
+      "mechanical_status": "validated",
+      "mechanical_issues": [],
+      "reviewed_fields": [
+        "/summary",
+        "/decision/task",
+        "/decision/direction",
+        "/decision/focus",
+        "/decision/major_factor_ids",
+        "/decision/counter_factor_ids",
+        "/decision/tradeoff_reason",
+        "/factors",
+        "/general_advice",
+        "/uncertainties"
+      ],
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "factors为空本身允许，但summary仍自由写卦名、世应位置、纳甲五行、月旺、应生世、日月合及飞伏等程序属性，没有实际声明的有效引用；不能以一般建议无需引用来豁免已说的盘面事实。",
+          "evidence_ids": [
+            "fact:/hexagram/primary/name",
+            "fact:/hexagram/shi_line",
+            "fact:/lines/2/relative",
+            "fact:/lines/2/relations/month_strength",
+            "fact:/lines/1/hidden/relative",
+            "fact:/lines/1/relations/hidden_relation"
+          ],
+          "quotes": [
+            {
+              "path": "/summary",
+              "start": 49,
+              "end": 120,
+              "text": "卦盘显示泽山咸、世爻在三爻（兄弟申金，月令旺），应爻六爻（父母未土）生世，另有初爻父母辰土与日辰六合、与月建六合，二爻官鬼下伏妻财卯木生飞神。",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 190,
+              "raw_end": 261,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "保留家庭电子相册和仅家人查看，给两条起手建议，未改成成败或时间预测。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "support": {
+          "verdict": "pass",
+          "reason": "清点来源/数量、共享权限/备份属一般操作建议，不需盘面依据；正文明确不确认数量、配合和存储条件，没有将建议作为支持因素。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "priority": {
+          "verdict": "pass",
+          "reason": "普通建议不需要唯一用神或盘面因素，不要求补满三项。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "unclear与不判成败一致。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "两条一般建议独立放general_advice，focus/major/counter为空；summary装饰性事实另列facts失败，不当作已作趋势预测。",
+          "evidence_ids": [],
+          "quotes": []
+        }
+      }
+    },
+    {
+      "case_id": "advice-plant",
+      "task": "advice",
+      "question": "我想试着在阳台养一盆薄荷，目前还没确认光照和浇水条件。请给两条试种前的建议，不预测长势或收获。",
+      "response_sha256": "577b672527ace07d749301dbbbbb2c788a7380ac02c7daa444c4e83ae10e2e86",
+      "mechanical_status": "validated",
+      "mechanical_issues": [],
+      "reviewed_fields": [
+        "/summary",
+        "/decision/task",
+        "/decision/direction",
+        "/decision/focus",
+        "/decision/major_factor_ids",
+        "/decision/counter_factor_ids",
+        "/decision/tradeoff_reason",
+        "/factors",
+        "/general_advice",
+        "/uncertainties"
+      ],
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "允许无factors，但summary实际写第2/6爻官鬼木空破死、世兄弟丑土/伏申金/飞生伏及第5妻财水相，没有任何实际引用。关系大体对应计划不等于引用覆盖。",
+          "evidence_ids": [
+            "fact:/lines/1/relative",
+            "fact:/lines/1/is_kongwang",
+            "fact:/lines/5/relations/month_strength",
+            "fact:/lines/2/hidden/ganzhi",
+            "fact:/lines/2/relations/hidden_relation",
+            "fact:/lines/4/relations/month_strength"
+          ],
+          "quotes": [
+            {
+              "path": "/summary",
+              "start": 39,
+              "end": 103,
+              "text": "第2爻官鬼卯木旬空且受日冲、月破，第6爻官鬼寅木旬空、月令死，第3爻世位兄弟丑土下伏子孙申金，飞神生伏神，第5爻妻财子水月令相。",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 192,
+              "raw_end": 256,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "两条建议围绕光照观察和浇水判断；未预测长势、收获或成败，也未虚构已知环境。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "support": {
+          "verdict": "pass",
+          "reason": "一般建议依据缺少环境信息这一用户前提，不将盘面作为薄荷存活证据；程序关系与取象用词有混杂，但未由此建立实际资源或结果断言。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "priority": {
+          "verdict": "pass",
+          "reason": "普通建议无须用神或因素；不因空数组要求增加盘面内容。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "unclear与不预测长势一致。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "一般建议单列，不设趋势因素或主次。",
+          "evidence_ids": [],
+          "quotes": []
+        }
+      }
+    },
+    {
+      "case_id": "trend-course",
+      "task": "trend",
+      "question": "我报名了一个周末陶艺入门课程，想完成一件自己满意的小作品；只作兴趣体验，不参加比赛。就这个目标怎么看？",
+      "response_sha256": "df17101a971a241b20955cbe09a1735fe17aea1a83f5325a98a66aaa19df9e57",
+      "mechanical_status": "validated",
+      "mechanical_issues": [],
+      "reviewed_fields": [
+        "/summary",
+        "/decision/task",
+        "/decision/direction",
+        "/decision/focus",
+        "/decision/major_factor_ids",
+        "/decision/counter_factor_ids",
+        "/decision/tradeoff_reason",
+        "/factors",
+        "/general_advice",
+        "/uncertainties"
+      ],
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "f2说出的卯木/死/空破冲由规则来源闭包支持，不误报遗漏；f3写申金，但所选月旺/世克应只覆盖element与位置，不含申支。summary和uncertainties还补卦名、六神及变卦/寅木子孙等未声明属性；f1“唯一动爻”仅选择第1动爻，未覆盖其他五爻非动。",
+          "evidence_ids": [
+            "fact:/lines/3/branch",
+            "fact:/hexagram/changed/name",
+            "fact:/lines/0/changed/relative",
+            "fact:/lines/0/changed/branch"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/2/interpretation",
+              "start": 0,
+              "end": 26,
+              "text": "第4爻应位父母申金，月令为旺，且与本世爻形成世克应。",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 1819,
+              "raw_end": 1845,
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/uncertainties/1",
+              "start": 0,
+              "end": 18,
+              "text": "本卦向坎为水变化，第1爻变出子孙寅木",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 2246,
+              "raw_end": 2264,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "uncertain",
+          "reason": "大体保留兴趣课程目标且不提应期，但建议将满意成品调整为亲手完成一次，是否仍服务原目标或改变验收标准需保留疑问，不能靠降低目标证明顺利。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/general_advice/0",
+              "start": 40,
+              "end": 62,
+              "text": "把期待从“满意成品”调整为“亲手完成一次”。",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 2087,
+              "raw_end": 2109,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "support": {
+          "verdict": "fail",
+          "reason": "明示取象假设不抵消正文“说明”与“本就”的个案断言。回头生不能证明投入承接，世克应不能确认主导权；一般建议又将子孙偏弱作为依据，未保持纯一般建议边界。",
+          "evidence_ids": [
+            "rule:MOVE-RETURN-GENERATE-001:primary:1:-",
+            "rule:SHI-CONTROL-YING-001:primary:1:4",
+            "fact:/lines/1/relative"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/interpretation",
+              "start": 30,
+              "end": 48,
+              "text": "该爻有回头生，说明动而能借到接续之力",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 1043,
+              "raw_end": 1061,
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/2/interpretation",
+              "start": 53,
+              "end": 66,
+              "text": "世克应也说明主导权偏在自方",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 1872,
+              "raw_end": 1885,
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/general_advice/1",
+              "start": 31,
+              "end": 39,
+              "text": "子孙一途本就偏弱",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 2143,
+              "raw_end": 2151,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "priority": {
+          "verdict": "uncertain",
+          "reason": "妻财取作品、子孙取创作体验、父母取课程条件被标成候选，但本输入无文献证明该取法与动世优先；能够保留unclear是边界改善，不等于已核实传统主取/权重。",
+          "evidence_ids": [
+            "fact:/lines/0/relative",
+            "fact:/lines/1/relative"
+          ],
+          "quotes": [
+            {
+              "path": "/decision/focus/0/role_hypothesis",
+              "start": 7,
+              "end": 24,
+              "text": "取唯一动爻且临世爻的妻财作候选用神",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 487,
+              "raw_end": 504,
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/decision/tradeoff_reason",
+              "start": 73,
+              "end": 98,
+              "text": "作品成果与辅助体验是否互斥、能否相抵，本盘无法确认",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 710,
+              "raw_end": 735,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "unclear与尚不能比较候选作用一致，没有仅因一利一弊强填mixed；单项解释越界另列support。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "task_boundary": {
+          "verdict": "fail",
+          "reason": "general_advice第二项嵌入“子孙一途本就偏弱”盘面解释，作为降低一次课程评价的理由；未把该条保持为独立的一般建议。",
+          "evidence_ids": [
+            "fact:/lines/1/relative"
+          ],
+          "quotes": [
+            {
+              "path": "/general_advice/1",
+              "start": 31,
+              "end": 54,
+              "text": "子孙一途本就偏弱，不必用一次课程验证全部兴趣。",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 2143,
+              "raw_end": 2166,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "trend-trip",
+      "task": "trend",
+      "question": "我计划与一位朋友安排一次当天往返的近郊散步，具体路线和天气尚未确定。我想知道这次安排是否容易顺利落实，不问日期。",
+      "response_sha256": "7536674857740eff15f4f5111018392c4865de81418f6a71f2fbd9532833a2b3",
+      "mechanical_status": "rejected",
+      "mechanical_issues": [
+        "Focus requires an existing relative fact"
+      ],
+      "reviewed_fields": [
+        "/summary",
+        "/decision/task",
+        "/decision/direction",
+        "/decision/focus",
+        "/decision/major_factor_ids",
+        "/decision/counter_factor_ids",
+        "/decision/tradeoff_reason",
+        "/factors",
+        "/general_advice",
+        "/uncertainties"
+      ],
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "方向性规则来源覆盖世应位置、五行、旬空、回头克，不误报这些为无引用；f1另说辛酉纳甲、f2丙寅/癸酉纳甲、f3父母丙子/子孙辛巳，缺相应ganzhi及飞神relative引用。summary卦名归魂等也未声明引用。",
+          "evidence_ids": [
+            "fact:/lines/2/ganzhi",
+            "fact:/lines/5/ganzhi",
+            "fact:/lines/5/changed/ganzhi",
+            "fact:/lines/4/relative",
+            "fact:/lines/4/ganzhi",
+            "fact:/lines/4/hidden/ganzhi"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/interpretation",
+              "start": 0,
+              "end": 9,
+              "text": "世爻三爻为官鬼辛酉",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 1011,
+              "raw_end": 1020,
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/1/interpretation",
+              "start": 0,
+              "end": 26,
+              "text": "应爻上爻兄弟丙寅发动、旬空，并且变爻癸酉回头克寅木。",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 1426,
+              "raw_end": 1452,
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/2/interpretation",
+              "start": 0,
+              "end": 13,
+              "text": "五爻父母丙子之下伏子孙辛巳",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 1849,
+              "raw_end": 1862,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "fail",
+          "reason": "路线天气未定、朋友实际状态未知，却把世旺接成现有明确决策/推动力，补写朋友易迟到、改期或兴趣减弱；未仅保留假设机制边界。普通提前确认的建议本身不判为应期预测。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/factors/0/interpretation",
+              "start": 31,
+              "end": 54,
+              "text": "你这一侧的时间规划与决策立场相对明确、有推进力",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 1042,
+              "raw_end": 1065,
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/1/interpretation",
+              "start": 58,
+              "end": 84,
+              "text": "表示对方临到安排时容易发生改期、迟到或兴趣减弱等变动",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 1484,
+              "raw_end": 1510,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "support": {
+          "verdict": "fail",
+          "reason": "旺、世克应、空及回头克只给程序关系；不能由此确认实际推动力或朋友状态。limitation仍声称“旺仅说明推动力”，没有撤回现实归因；卦名象义接成可推进也无输入支持。",
+          "evidence_ids": [
+            "fact:/lines/2/relations/month_strength",
+            "rule:SHI-CONTROL-YING-001:primary:3:6"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/limitation",
+              "start": 0,
+              "end": 16,
+              "text": "世爻旺仅说明你方推动力与决断状态",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 1169,
+              "raw_end": 1185,
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/summary",
+              "start": 191,
+              "end": 219,
+              "text": "暗示只要先把路线和天气两项未定项落实，事情可以往前推进。",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 332,
+              "raw_end": 360,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "priority": {
+          "verdict": "fail",
+          "reason": "tradeoff称应方受阻优先于世方有力，实际major仅f1支持，f2/f3放counter；focus又看应方动爻，与宣称主要取用及优先选择不一致。传统朋友/官鬼角色的有效性也无来源，不自行改断。",
+          "evidence_ids": [
+            "fact:/lines/5/relative",
+            "fact:/lines/5/moving"
+          ],
+          "quotes": [
+            {
+              "path": "/decision/tradeoff_reason",
+              "start": 88,
+              "end": 109,
+              "text": "因此把应爻受阻视为优先于世爻有力的制约因素",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 753,
+              "raw_end": 774,
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/decision/focus/0/role_hypothesis",
+              "start": 0,
+              "end": 28,
+              "text": "上爻兄弟动而旬空、回头克，是与朋友协作落实最直接的作用点",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 510,
+              "raw_end": 538,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "direction": {
+          "verdict": "fail",
+          "reason": "mixed与“应阻优先”未协调，未说明同一目标为何无法分主次；major只有support且相反作用在counter，也与mixed协议不符。只指出内在不一致，不要求改为偏吉或偏凶。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/decision/direction",
+              "start": 0,
+              "end": 5,
+              "text": "mixed",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 437,
+              "raw_end": 442,
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/decision/tradeoff_reason",
+              "start": 88,
+              "end": 121,
+              "text": "因此把应爻受阻视为优先于世爻有力的制约因素，整体不作单向顺利判断。",
+              "offset_unit": "UTF-16",
+              "range": "[start,end)",
+              "raw_start": 753,
+              "raw_end": 786,
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "仍回应trend并有一般建议栏；不因focus字段机械失败直接推断task改写。自由文字的现实推断另列scope/support，标签矛盾另列direction。",
+          "evidence_ids": [],
+          "quotes": []
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "这些是固定新开发例，不是盲测或总体改善证明。",
+    "未提供原典注入，本次不能确认候选取用与权重属于经核实传统规范。",
+    "每维pass限该维冻结标准；单维通过不抵消其他维fail或uncertain。"
+  ],
+  "quote_offset_history": [
+    {
+      "corrected_on": "2026-10-02",
+      "finding": "初版25条start/end为raw response整体UTF16位置，虽带path但不是该解码字段内偏移；此前验证raw slice和字段包含不充分，Root字段slice回放拒绝。",
+      "resolution": "start/end现为path对应JSON解码字符串内UTF16位置，text为解码原文；保留原整体位置raw_start/raw_end。所有字段slice逐条核对，不改任何结论或原回复。",
+      "quotes_corrected": 25
+    }
+  ]
+}
