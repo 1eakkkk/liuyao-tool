@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "reviewer_id": "agent-a",
+  "review_kind": "independent_offline_integrity_review",
+  "reviewed_at": "2026-10-02T09:19:56.739Z",
+  "scope": [
+    "scripts/replay-task-led-live.js",
+    "tests/output/task-led-live-replay.test.js",
+    "docs/acceptance/task-led-20261002"
+  ],
+  "integrity_verdict": "pass",
+  "blocking_findings": [],
+  "source_sha256": {
+    "replayer": "d4f7eb3eb0838ebd82847739f459c7f6ba9c50a0b914eb8d023edb0e77de337a",
+    "tests": "57fb76d4c0de1c06bc1bf48924bd7448a9df2890e97c737bfd89c92d019734fd",
+    "plan_bytes": "79fc4b39ebf506248d343d7f2a3c7de21a4b10b94a3ef1ffb429d7ca7429a812"
+  },
+  "baseline": {
+    "plan_hash": "ffd9d2e9751a19ec2f8157b9721467815967762caeda547df803b73043b6f414",
+    "network_calls": 0,
+    "planned_calls": 4,
+    "attempted_calls": 3,
+    "verified_cases": 3,
+    "results": [
+      {
+        "id": "advice-notes",
+        "status": "validated",
+        "issues": [],
+        "archive_sha256": "1685db428d2c4507375dd77968005246e1f4758124c5ef9eeeabdf964e0ee755",
+        "raw_sha256": "6e645e43330eff347ff79237d2853ce76a620b3ac9162fa37b724b37f870c838"
+      },
+      {
+        "id": "advice-boxes",
+        "status": "validated",
+        "issues": [],
+        "archive_sha256": "496e9e8c387a04e77c432ee353eed3126ec4b5bfa77be8afb1379bac569995dd",
+        "raw_sha256": "b086dbd408d666eefb1f8202c9f1ec1ae710c7092991271c754cf4436f3e0701"
+      },
+      {
+        "id": "trend-writing",
+        "status": "rejected",
+        "issues": [
+          "invalid_count at $.factors[1].evidence_ids"
+        ],
+        "archive_sha256": "40bdd15fd440f98dd8ea0f8dbb232cb95c6ca6f71c00e5daa7ae645ac896a92e",
+        "raw_sha256": "076dce4b3bab94696acffc329b362cdc225201c2cdd184d248f625e4e712206a"
+      }
+    ],
+    "reviews": [
+      {
+        "file": "semantic-review-a.json",
+        "reviewed_cases": 3,
+        "dimensions": 18,
+        "verified_quotes": 6
+      },
+      {
+        "file": "semantic-review-b.json",
+        "reviewed_cases": 3,
+        "dimensions": 18,
+        "verified_quotes": 25
+      }
+    ],
+    "semantic_acceptance": "requires_independent_review",
+    "forecast_accuracy": "unassessed"
+  },
+  "verification": {
+    "test_command": "npx vitest run tests/output/task-led-live-replay.test.js --maxWorkers=2",
+    "test_files_passed": 1,
+    "tests_passed": 18,
+    "network_calls": 0,
+    "review_dimensions": 36,
+    "verified_quotes": 31
+  },
+  "original_findings": [
+    {
+      "id": "review-count",
+      "finding": "报告实际回复数原未与已返回条数核对。",
+      "status": "resolved",
+      "retest": "把 actual_responses_reviewed 改为4，被 Review accounting mismatch 拒绝；计划4和实际3分别核对。"
+    },
+    {
+      "id": "empty-reason",
+      "finding": "判定理由原可为空。",
+      "status": "resolved",
+      "retest": "reason 改为一个空格，被 Missing review reason 拒绝。"
+    },
+    {
+      "id": "inherited-pointer",
+      "finding": "引文路径原可穿过 JavaScript 继承属性；/constructor/name 引用 Object 仍被接受，但并非回复 JSON 自有字段。",
+      "status": "resolved",
+      "retest": "同一副本反例现在被 Review path not an own JSON field 拒绝。逐段限定 object/array、自有字段、数组合法索引和 JSON Pointer 转义。"
+    }
+  ],
+  "negative_checks": [
+    {
+      "id": "stop-order",
+      "result": "rejected",
+      "detail": "在首例被拒后保留后续调用记录的副本，被 Calls continued after rejection 拒绝。"
+    },
+    {
+      "id": "unattempted-fourth-artifact",
+      "result": "rejected",
+      "detail": "为未调用第四例加入 response 文件，被 Artifacts for unattempted case 拒绝。"
+    },
+    {
+      "id": "unknown-evidence",
+      "result": "rejected",
+      "detail": "一般建议引入不存在的盘面 evidence ID，被 Unknown review evidence ID 拒绝。"
+    },
+    {
+      "id": "quote-beyond-field",
+      "result": "rejected",
+      "detail": "引文 end 超出解码字段长度，被 Review quotation mismatch 拒绝。"
+    },
+    {
+      "id": "wrong-count",
+      "result": "rejected",
+      "detail": "当前独立临时副本复验。"
+    },
+    {
+      "id": "empty-reason",
+      "result": "rejected",
+      "detail": "当前独立临时副本复验。"
+    },
+    {
+      "id": "inherited-pointer",
+      "result": "rejected",
+      "detail": "当前独立临时副本复验。"
+    },
+    {
+      "id": "trim-count-does-not-cure-focus",
+      "result": "rejected",
+      "detail": "测试仅在内存将原失败回复9项引用减为8，仍因 Focus absent from selected factor 拒绝；未修改归档。"
+    }
+  ],
+  "findings": [
+    "可信固定计划、封条、context/request、SSE完整性及usage/raw哈希、机械结果、停机和未调用第四例均由回放核对。",
+    "两份报告各3例18维，合计36维31条字段内UTF16引文；新路径限定排除继承属性与字符串内部索引。",
+    "前两条机械validated，第三条机械rejected，第四条未调用；回放保留该事实。"
+  ],
+  "limitations": [
+    "仅核验现有记录一致性、结构、引用字段及偏移；不验证引文所支持的语义判断是否正确。",
+    "不改变独立审查中 fail/uncertain，不把机械validated或回放通过当整体语义接受。",
+    "未验证预测，未调用API，未读取凭据、真实预算账本或受保护holdout；不得据此声称盲测或总体提升。"
+  ],
+  "semantic_acceptance": "not_established_by_integrity_replay",
+  "forecast_accuracy": "unassessed"
+}

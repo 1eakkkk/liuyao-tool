@@ -65,3 +65,10 @@ test('reducing the failed reply citation count does not cure its unlinked focus'
   answer.factors[1].evidence_ids.pop();
   expect(()=>validateTaskLedAnswer(answer,context)).toThrow('Focus absent from selected factor');
 });
+test('review paths cannot quote inherited constructors or array methods',()=>fixture(async dir=>{
+  change(dir,'semantic-review-a.json',v=>{
+    const q=v.reviews.find(v=>v.case_id==='trend-writing').criteria.facts.quotes[0];
+    q.path='/constructor/name';q.start=0;q.end=6;q.text='Object';
+  });
+  await expect(replayTaskLedLive(dir)).rejects.toThrow('own JSON field');
+}));

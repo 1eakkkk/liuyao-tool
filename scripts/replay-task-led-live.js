@@ -10,6 +10,17 @@ import {createTaskLedContext,validateTaskLedAnswer} from '../experiments/judgmen
 import {parseEvidenceLedSse,strictJson} from './evidence-led-live-pilot.js';
 const hash=v=>createHash('sha256').update(v).digest('hex');
 const same=(a,b,label)=>{if(planHash(a)!==planHash(b))throw Error(label);};
+function ownField(answer,pointer){
+  if(typeof pointer!=='string'||!pointer.startsWith('/'))throw Error('Review path invalid');
+  let value=answer;
+  for(const segment of pointer.slice(1).split('/')){
+    if(/~(?![01])/.test(segment))throw Error('Review path invalid');
+    const key=segment.replaceAll('~1','/').replaceAll('~0','~');
+    if(value===null||typeof value!=='object'||!Object.hasOwn(value,key)||Array.isArray(value)&&(!/^(0|[1-9]\d*)$/.test(key)||Number(key)>=value.length))throw Error('Review path not an own JSON field');
+    value=value[key];
+  }
+  return value;
+}
 export async function replayTaskLedLive(directory){
   const read=name=>strictJson(fs.readFileSync(path.join(directory,name),'utf8'));
   const plan=read('plan.json'),seal=read('seal.json'),summary=read('summary.json');
@@ -76,8 +87,7 @@ export async function replayTaskLedLive(directory){
         const ids=new Set((contexts.get(c.id).evidence??[]).map(e=>e.id));
         for(const id of criterion.evidence_ids??[])if(!ids.has(id))throw Error('Unknown review evidence ID');
         for(const q of criterion.quotes??[]){
-          if(!q.path.startsWith('/'))throw Error('Review path invalid');
-          const value=q.path.slice(1).split('/').reduce((v,k)=>v?.[k.replaceAll('~1','/').replaceAll('~0','~')],answer);
+          const value=ownField(answer,q.path);
           if(typeof value!=='string'||q.offset_unit!=='UTF-16'||!Number.isInteger(q.start)||!Number.isInteger(q.end)||q.start<0||q.end<=q.start||q.end>value.length||value.slice(q.start,q.end)!==q.text)throw Error('Review quotation mismatch');
           quoteCount++;
         }
