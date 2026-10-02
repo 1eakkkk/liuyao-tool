@@ -1,0 +1,48 @@
+{
+  "id": "advice-notes",
+  "context_id": "sha256:30227c044d1e9fb52ad2043d500aa051a9006e01879953e39dc54cf8c17e0d99",
+  "request_hash": "d58def2d221258f3bcc16e98bcacd57ddaaf3147e7a7a0654f549106086115ab",
+  "status": "validated",
+  "issues": [],
+  "model": "deepseek-flash",
+  "finish_reason": "stop",
+  "saw_done": true,
+  "usage": {
+    "prompt_tokens": 337,
+    "completion_tokens": 218,
+    "total_tokens": 555,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 337
+  },
+  "usage_ok": true,
+  "usage_sha256": "fbe08d0b3647fb2522a4dc14b23e8e6e3fe5ac06f61d5535565983d571d6c91f",
+  "cost_unknown": false,
+  "conservative_peak_cost_cny": 0.002418,
+  "archive": {
+    "complete": true,
+    "error": null,
+    "redacted": false,
+    "bytes": 64107,
+    "sha256": "1685db428d2c4507375dd77968005246e1f4758124c5ef9eeeabdf964e0ee755"
+  },
+  "raw_sha256": "6e645e43330eff347ff79237d2853ce76a620b3ac9162fa37b724b37f870c838",
+  "response": {
+    "schema_version": "task-led-experiment-1",
+    "context_id": "sha256:30227c044d1e9fb52ad2043d500aa051a9006e01879953e39dc54cf8c17e0d99",
+    "task": "advice",
+    "advice": [
+      "先不要急于建立固定分类体系，可先把你已有的读书笔记全部列出，给每条笔记临时打上1到3个自由标签（如主题、作者、场景），标签可以重复和临时调整。",
+      "在完成第一轮自由标签后，统计出现频率较高的标签，将它们合并或重新命名为更概括的类别，再按这些类别创建目录文件夹或索引页，并把每条笔记归入最合适的1到2个类别。"
+    ],
+    "limits": [
+      "没有固定分类时，整理初期应优先保证笔记条目的完整性和可检索性，而不是一次性确立完美分类体系。",
+      "如果笔记数量较大，建议逐批处理而非全量一次完成；本建议不包含对整理耗时或最终分类有效性的预测。"
+    ]
+  },
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed",
+  "reservation_retained": true
+}

@@ -1,0 +1,1739 @@
+{
+  "version": "task-led-four-live-development-1",
+  "production": false,
+  "campaign_id": "task-led-new-20261002",
+  "campaign_cap_cny": 2,
+  "wallet_floor_cny": 1,
+  "planned_calls": 4,
+  "price_checked": "2026-10-02",
+  "price_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "peak_cny_per_million": {
+    "input": 2,
+    "output": 8
+  },
+  "reserve_cny": 0.277544,
+  "blind": false,
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed",
+  "review_criteria": [
+    {
+      "id": "facts",
+      "requirement": "实际说出的事实应与给定材料相符；趋势每段程序属性须被本段引用覆盖，规则只覆盖source_facts。建议无盘面输入，不自行补盘或未提供的现实。"
+    },
+    {
+      "id": "scope",
+      "requirement": "回应当前明确目标与固定task，不虚构机制，不替换目标，不将计划时长当预测日期，不扩写未问应期。"
+    },
+    {
+      "id": "support",
+      "requirement": "取象是解释假设，不确认现实条件或他人意愿；普通建议独立，不能作为盘面支持或抵消阻碍；传统依据不足标uncertain。"
+    },
+    {
+      "id": "priority",
+      "requirement": "趋势说明取用与相关主次及其比较理由，依据不足坦然保留不确定性；一般建议无取用、无装饰性因素。"
+    },
+    {
+      "id": "direction",
+      "requirement": "趋势方向与正文、因素、主次一致；mixed须解释同目标牵制及不可分主次，不能由两面存在自动mixed；不预设方向。建议不输出趋势方向。"
+    },
+    {
+      "id": "task_boundary",
+      "requirement": "建议模型只接收question及协议metadata/schema，无canonical/evidence或其他盘面线索，不输出趋势或引用；事实核对是程序投影，不调用模型；本批仅advice/trend各二。自由文字仍需人工审查。"
+    }
+  ],
+  "review_values": [
+    "pass",
+    "fail",
+    "uncertain"
+  ],
+  "source_policy": "No literature or unreviewed source injection.",
+  "provenance": "Four new fixed manual-recipe questions, advice and trend separately supplied. Freeze before answers; no model calls for facts. Not production, blind or forecast acceptance.",
+  "stop_policy": "At most four chats, no retry/automatic settlement. Every chat needs confirmed wallet >= full reserve + 1 CNY; any failure stops and retains full reservation.",
+  "cases": [
+    {
+      "id": "advice-notes",
+      "task": "advice",
+      "question": "我想把个人读书笔记整理成便于检索的目录，目前没有固定分类。请给两条开始整理的建议，不预测学习成绩或完成时间。",
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "task-led-new-advice-notes",
+          "created_at": "2026-10-02T14:00:00.000Z",
+          "source": "manual",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我想把个人读书笔记整理成便于检索的目录，目前没有固定分类。请给两条开始整理的建议，不预测学习成绩或完成时间。",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "己酉",
+          "year_ganzhi": "丙午",
+          "month_ganzhi": "丁酉",
+          "hour_ganzhi": "乙亥",
+          "anchor": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "month_branch": "酉",
+          "day_branch": "酉",
+          "kongwang": [
+            "寅",
+            "卯"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "火水未济",
+            "palace": "离宫",
+            "lower_trigram": "坎",
+            "upper_trigram": "离"
+          },
+          "changed": null,
+          "shi_line": 3,
+          "ying_line": 6
+        },
+        "display": {
+          "four_pillars_text": "年柱：丙午　月柱：丁酉　日柱：己酉　时柱：乙亥",
+          "kong_text": "空亡：寅、卯",
+          "date_text": "公历：2026年10月2日",
+          "palace_text": "离宫 · 三世卦（本宫五行：火）",
+          "lower_upper_text": "下卦：☵ 坎　上卦：☲ 离",
+          "day_kong_text": "日柱：己酉　空亡：寅、卯",
+          "overall_trend_text": "当令得力(旺/相)1爻、当令减力(休/囚/死)5爻；世应：世应比和——当令减力爻数量较多；这是月令计数，不代表整体吉凶，具体判断还要结合用神与相关动变"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "死",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "1爻",
+            "relative": "父母",
+            "spirit": "螣蛇",
+            "ganzhi": "戊寅",
+            "element": "木",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": true,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "寅"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "日辰合",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "2爻",
+            "relative": "子孙",
+            "spirit": "白虎",
+            "ganzhi": "戊辰",
+            "element": "土",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "辰"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": {
+              "relative": "官鬼",
+              "ganzhi": "己亥",
+              "element": "水",
+              "branch": "亥"
+            },
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": "伏神克飞神"
+            },
+            "position_label": "3爻",
+            "relative": "兄弟",
+            "spirit": "玄武",
+            "ganzhi": "戊午",
+            "element": "火",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "午"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "妻财",
+            "spirit": "青龙",
+            "ganzhi": "己酉",
+            "element": "金",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "酉"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "5爻",
+            "relative": "子孙",
+            "spirit": "朱雀",
+            "ganzhi": "己未",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "未"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "兄弟",
+            "spirit": "勾陈",
+            "ganzhi": "己巳",
+            "element": "火",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "巳"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "context_id": "sha256:30227c044d1e9fb52ad2043d500aa051a9006e01879953e39dc54cf8c17e0d99",
+      "body": {
+        "model": "deepseek-flash",
+        "thinking": {
+          "type": "disabled"
+        },
+        "max_tokens": 4096,
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": true,
+        "stream_options": {
+          "include_usage": true
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "开发实验 task-led-experiment-1。只输出完整JSON。当前任务为一般建议，不作趋势判断。输入仅含用户问题，不提供卦盘。给一到两条直接可用的建议和实际信息限制，不编卦盘、爻位、取用、预测或现实状态，不为建议添加占卜依据，不扩大用户目标。"
+          },
+          {
+            "role": "user",
+            "content": "{\"context_id\":\"sha256:30227c044d1e9fb52ad2043d500aa051a9006e01879953e39dc54cf8c17e0d99\",\"question\":\"我想把个人读书笔记整理成便于检索的目录，目前没有固定分类。请给两条开始整理的建议，不预测学习成绩或完成时间。\",\"response_schema\":{\"additionalProperties\":false,\"properties\":{\"advice\":{\"items\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"},\"maxItems\":2,\"minItems\":1,\"type\":\"array\",\"uniqueItems\":true},\"context_id\":{\"maxLength\":80,\"minLength\":1,\"type\":\"string\"},\"limits\":{\"items\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"},\"maxItems\":2,\"minItems\":1,\"type\":\"array\",\"uniqueItems\":true},\"schema_version\":{\"const\":\"task-led-experiment-1\"},\"task\":{\"const\":\"advice\"}},\"required\":[\"schema_version\",\"context_id\",\"task\",\"advice\",\"limits\"],\"type\":\"object\"},\"task\":\"advice\"}"
+          }
+        ]
+      },
+      "input_allowance": 5405,
+      "reserve_cny": 0.043578
+    },
+    {
+      "id": "advice-boxes",
+      "task": "advice",
+      "question": "我准备给家里的收纳盒贴分类标签，只方便自己找东西。请给两条开始整理的建议，不判断成败或时间。",
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "task-led-new-advice-boxes",
+          "created_at": "2026-10-02T14:00:00.000Z",
+          "source": "manual",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我准备给家里的收纳盒贴分类标签，只方便自己找东西。请给两条开始整理的建议，不判断成败或时间。",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "己酉",
+          "year_ganzhi": "丙午",
+          "month_ganzhi": "丁酉",
+          "hour_ganzhi": "乙亥",
+          "anchor": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "month_branch": "酉",
+          "day_branch": "酉",
+          "kongwang": [
+            "寅",
+            "卯"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "震为雷",
+            "palace": "震宫",
+            "lower_trigram": "震",
+            "upper_trigram": "震"
+          },
+          "changed": null,
+          "shi_line": 6,
+          "ying_line": 3
+        },
+        "display": {
+          "four_pillars_text": "年柱：丙午　月柱：丁酉　日柱：己酉　时柱：乙亥",
+          "kong_text": "空亡：寅、卯",
+          "date_text": "公历：2026年10月2日",
+          "palace_text": "震宫 · 八纯卦（本宫五行：木）",
+          "lower_upper_text": "下卦：☳ 震　上卦：☳ 震",
+          "day_kong_text": "日柱：己酉　空亡：寅、卯",
+          "overall_trend_text": "当令得力(旺/相)2爻、当令减力(休/囚/死)4爻；世应：世应比和——当令减力爻数量较多；这是月令计数，不代表整体吉凶，具体判断还要结合用神与相关动变"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "相",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "1爻",
+            "relative": "父母",
+            "spirit": "螣蛇",
+            "ganzhi": "庚子",
+            "element": "水",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "子"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "死",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "2爻",
+            "relative": "兄弟",
+            "spirit": "白虎",
+            "ganzhi": "庚寅",
+            "element": "木",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": true,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "寅"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "日辰合",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "3爻",
+            "relative": "妻财",
+            "spirit": "玄武",
+            "ganzhi": "庚辰",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "辰"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "子孙",
+            "spirit": "青龙",
+            "ganzhi": "庚午",
+            "element": "火",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "午"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "5爻",
+            "relative": "官鬼",
+            "spirit": "朱雀",
+            "ganzhi": "庚申",
+            "element": "金",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "申"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "妻财",
+            "spirit": "勾陈",
+            "ganzhi": "庚戌",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "戌"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "context_id": "sha256:7aeecf4db34ea762394dde2b5a1261924def24997d7d1ffcf40e04ce61869696",
+      "body": {
+        "model": "deepseek-flash",
+        "thinking": {
+          "type": "disabled"
+        },
+        "max_tokens": 4096,
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": true,
+        "stream_options": {
+          "include_usage": true
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "开发实验 task-led-experiment-1。只输出完整JSON。当前任务为一般建议，不作趋势判断。输入仅含用户问题，不提供卦盘。给一到两条直接可用的建议和实际信息限制，不编卦盘、爻位、取用、预测或现实状态，不为建议添加占卜依据，不扩大用户目标。"
+          },
+          {
+            "role": "user",
+            "content": "{\"context_id\":\"sha256:7aeecf4db34ea762394dde2b5a1261924def24997d7d1ffcf40e04ce61869696\",\"question\":\"我准备给家里的收纳盒贴分类标签，只方便自己找东西。请给两条开始整理的建议，不判断成败或时间。\",\"response_schema\":{\"additionalProperties\":false,\"properties\":{\"advice\":{\"items\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"},\"maxItems\":2,\"minItems\":1,\"type\":\"array\",\"uniqueItems\":true},\"context_id\":{\"maxLength\":80,\"minLength\":1,\"type\":\"string\"},\"limits\":{\"items\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"},\"maxItems\":2,\"minItems\":1,\"type\":\"array\",\"uniqueItems\":true},\"schema_version\":{\"const\":\"task-led-experiment-1\"},\"task\":{\"const\":\"advice\"}},\"required\":[\"schema_version\",\"context_id\",\"task\",\"advice\",\"limits\"],\"type\":\"object\"},\"task\":\"advice\"}"
+          }
+        ]
+      },
+      "input_allowance": 5381,
+      "reserve_cny": 0.04353
+    },
+    {
+      "id": "trend-writing",
+      "task": "trend",
+      "question": "我准备试着用一个月写三篇短的旅行回忆，只写给自己看。我关心是否容易完成这个写作计划，不问应期。",
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "task-led-new-trend-writing",
+          "created_at": "2026-10-02T14:00:00.000Z",
+          "source": "manual",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我准备试着用一个月写三篇短的旅行回忆，只写给自己看。我关心是否容易完成这个写作计划，不问应期。",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "己酉",
+          "year_ganzhi": "丙午",
+          "month_ganzhi": "丁酉",
+          "hour_ganzhi": "乙亥",
+          "anchor": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "month_branch": "酉",
+          "day_branch": "酉",
+          "kongwang": [
+            "寅",
+            "卯"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "火泽睽",
+            "palace": "艮宫",
+            "lower_trigram": "兑",
+            "upper_trigram": "离"
+          },
+          "changed": {
+            "name": "火雷噬嗑"
+          },
+          "shi_line": 4,
+          "ying_line": 1
+        },
+        "display": {
+          "four_pillars_text": "年柱：丙午　月柱：丁酉　日柱：己酉　时柱：乙亥",
+          "kong_text": "空亡：寅、卯",
+          "date_text": "公历：2026年10月2日",
+          "palace_text": "艮宫 · 四世卦（本宫五行：土）",
+          "lower_upper_text": "下卦：☱ 兑　上卦：☲ 离",
+          "day_kong_text": "日柱：己酉　空亡：寅、卯",
+          "overall_trend_text": "当令得力(旺/相)1爻、当令减力(休/囚/死)5爻；世应：应克世——当令减力爻数量较多；这是月令计数，不代表整体吉凶，具体判断还要结合用神与相关动变"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "1爻",
+            "relative": "父母",
+            "spirit": "螣蛇",
+            "ganzhi": "丁巳",
+            "element": "火",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "巳"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yang",
+            "changed": {
+              "ganzhi": "庚寅",
+              "element": "木",
+              "relative": "官鬼",
+              "branch": "寅"
+            },
+            "hidden": null,
+            "relations": {
+              "month_strength": "死",
+              "day_relation": "日辰冲",
+              "return_relation": "",
+              "advance_retreat": "退神",
+              "hidden_relation": ""
+            },
+            "position_label": "2爻",
+            "relative": "官鬼",
+            "spirit": "白虎",
+            "ganzhi": "丁卯",
+            "element": "木",
+            "state_text": "老阳→变阴",
+            "moving": true,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": true,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "卯"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "3爻",
+            "relative": "兄弟",
+            "spirit": "玄武",
+            "ganzhi": "丁丑",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "丑"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "子孙",
+            "spirit": "青龙",
+            "ganzhi": "己酉",
+            "element": "金",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "酉"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": {
+              "relative": "妻财",
+              "ganzhi": "丙子",
+              "element": "水",
+              "branch": "子"
+            },
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": "飞神克伏神"
+            },
+            "position_label": "5爻",
+            "relative": "兄弟",
+            "spirit": "朱雀",
+            "ganzhi": "己未",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "未"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "父母",
+            "spirit": "勾陈",
+            "ganzhi": "己巳",
+            "element": "火",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "巳"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "context_id": "sha256:68023bee7e7f6f711b72bad29e44079d2cb33a159c607db72e4b2e4e08f31efb",
+      "body": {
+        "model": "deepseek-flash",
+        "thinking": {
+          "type": "disabled"
+        },
+        "max_tokens": 4096,
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": true,
+        "stream_options": {
+          "include_usage": true
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "开发实验 task-led-experiment-1。只输出完整JSON，按response_schema。当前task固定trend。\nconclusion.answer只回答当前目标及判断把握，不复述爻位、六亲、五行、旺衰、卦名或纳甲；程序展示所有盘面值。tradeoff_reason只说明哪些已选因素优先、为什么及其对同一目标的影响，用因素编号指代，不重新复述属性。\n至多三项因素。只选择已有evidence_id，在interpretation解释这些依据对当前目标的相关性，不另抄属性；取象必须明确为假设，不把关系名直接当吉凶，也不把象意当成实际能力、精力、配合、天气、故障或热度。assumption限定角色映射，limitation限定不能确认的现实。所有正文言及的属性仍须由相应因素引用覆盖，规则来源闭包由程序显示。\nfocus至多一个，必须引用相应六亲relative的program_fact，不能选moving等其他字段。非unclear须直接关联所选主要因素。主要与需权衡因素不可重叠；需要同时主要支持和阻碍才能mixed，且必须解释不能分主次的理由，一利一弊不会自动mixed，不按数量计分。若已认为阻碍优先，不应同时无理由宣称mixed。\n没有已核实传统取法或权重足以支撑方向时选unclear，不强行填因素或唯一用神，不靠结尾免责声明抵消正文越界。不要改变用户目标或未知机制。\n一般建议只放general_advice，不引用卦盘、不成为因素支持，不降低用户成功标准来冒充成功。uncertainties描述真实缺口，不添未问应期。输入不含古籍，不能声称来源已获验证。"
+          },
+          {
+            "role": "user",
+            "content": "{\"context_id\":\"sha256:68023bee7e7f6f711b72bad29e44079d2cb33a159c607db72e4b2e4e08f31efb\",\"evidence\":[{\"id\":\"fact:/calendar/year_ganzhi\",\"kind\":\"program_fact\",\"label\":\"历法 · 年柱\",\"path\":\"/calendar/year_ganzhi\",\"value\":\"丙午\"},{\"id\":\"fact:/calendar/month_ganzhi\",\"kind\":\"program_fact\",\"label\":\"历法 · 月柱\",\"path\":\"/calendar/month_ganzhi\",\"value\":\"丁酉\"},{\"id\":\"fact:/calendar/day_ganzhi\",\"kind\":\"program_fact\",\"label\":\"历法 · 日柱\",\"path\":\"/calendar/day_ganzhi\",\"value\":\"己酉\"},{\"id\":\"fact:/calendar/hour_ganzhi\",\"kind\":\"program_fact\",\"label\":\"历法 · 时柱\",\"path\":\"/calendar/hour_ganzhi\",\"value\":\"乙亥\"},{\"id\":\"fact:/calendar/day_branch\",\"kind\":\"program_fact\",\"label\":\"历法 · 日支\",\"path\":\"/calendar/day_branch\",\"value\":\"酉\"},{\"id\":\"fact:/calendar/month_branch\",\"kind\":\"program_fact\",\"label\":\"历法 · 月支\",\"path\":\"/calendar/month_branch\",\"value\":\"酉\"},{\"id\":\"fact:/calendar/kongwang/0\",\"kind\":\"program_fact\",\"label\":\"历法 · 空亡\",\"path\":\"/calendar/kongwang/0\",\"value\":\"寅\"},{\"id\":\"fact:/calendar/kongwang/1\",\"kind\":\"program_fact\",\"label\":\"历法 · 空亡\",\"path\":\"/calendar/kongwang/1\",\"value\":\"卯\"},{\"id\":\"fact:/calendar/anchor/year\",\"kind\":\"program_fact\",\"label\":\"历法 · year\",\"path\":\"/calendar/anchor/year\",\"value\":2026},{\"id\":\"fact:/calendar/anchor/month\",\"kind\":\"program_fact\",\"label\":\"历法 · month\",\"path\":\"/calendar/anchor/month\",\"value\":10},{\"id\":\"fact:/calendar/anchor/day\",\"kind\":\"program_fact\",\"label\":\"历法 · day\",\"path\":\"/calendar/anchor/day\",\"value\":2},{\"id\":\"fact:/hexagram/primary/name\",\"kind\":\"program_fact\",\"label\":\"卦盘 · 卦名\",\"path\":\"/hexagram/primary/name\",\"value\":\"火泽睽\"},{\"id\":\"fact:/hexagram/primary/palace\",\"kind\":\"program_fact\",\"label\":\"卦盘 · 卦宫\",\"path\":\"/hexagram/primary/palace\",\"value\":\"艮宫\"},{\"id\":\"fact:/hexagram/primary/lower_trigram\",\"kind\":\"program_fact\",\"label\":\"卦盘 · lower_trigram\",\"path\":\"/hexagram/primary/lower_trigram\",\"value\":\"兑\"},{\"id\":\"fact:/hexagram/primary/upper_trigram\",\"kind\":\"program_fact\",\"label\":\"卦盘 · upper_trigram\",\"path\":\"/hexagram/primary/upper_trigram\",\"value\":\"离\"},{\"id\":\"fact:/hexagram/changed/name\",\"kind\":\"program_fact\",\"label\":\"卦盘变爻／变卦 · 卦名\",\"path\":\"/hexagram/changed/name\",\"value\":\"火雷噬嗑\"},{\"id\":\"fact:/hexagram/shi_line\",\"kind\":\"program_fact\",\"label\":\"卦盘 · 世爻位置\",\"path\":\"/hexagram/shi_line\",\"value\":4},{\"id\":\"fact:/hexagram/ying_line\",\"kind\":\"program_fact\",\"label\":\"卦盘 · 应爻位置\",\"path\":\"/hexagram/ying_line\",\"value\":1},{\"id\":\"fact:/lines/0/position\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 爻位\",\"path\":\"/lines/0/position\",\"value\":1},{\"id\":\"fact:/lines/0/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 阴阳\",\"path\":\"/lines/0/yin_yang\",\"value\":\"yang\"},{\"id\":\"fact:/lines/0/moving\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 动爻\",\"path\":\"/lines/0/moving\",\"value\":false},{\"id\":\"fact:/lines/0/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 纳甲\",\"path\":\"/lines/0/ganzhi\",\"value\":\"丁巳\"},{\"id\":\"fact:/lines/0/branch\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 地支\",\"path\":\"/lines/0/branch\",\"value\":\"巳\"},{\"id\":\"fact:/lines/0/element\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 五行\",\"path\":\"/lines/0/element\",\"value\":\"火\"},{\"id\":\"fact:/lines/0/relative\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 六亲\",\"path\":\"/lines/0/relative\",\"value\":\"父母\"},{\"id\":\"fact:/lines/0/spirit\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 六神\",\"path\":\"/lines/0/spirit\",\"value\":\"螣蛇\"},{\"id\":\"fact:/lines/0/state_text\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 爻状态\",\"path\":\"/lines/0/state_text\",\"value\":\"少阳\"},{\"id\":\"fact:/lines/0/is_shi\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 世爻\",\"path\":\"/lines/0/is_shi\",\"value\":false},{\"id\":\"fact:/lines/0/is_ying\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 应爻\",\"path\":\"/lines/0/is_ying\",\"value\":true},{\"id\":\"fact:/lines/0/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 旬空\",\"path\":\"/lines/0/is_kongwang\",\"value\":false},{\"id\":\"fact:/lines/0/changed\",\"kind\":\"program_fact\",\"label\":\"第1爻变爻／变卦 · 变爻记录\",\"path\":\"/lines/0/changed\",\"value\":null},{\"id\":\"fact:/lines/0/hidden\",\"kind\":\"program_fact\",\"label\":\"第1爻伏神 · 伏神记录\",\"path\":\"/lines/0/hidden\",\"value\":null},{\"id\":\"fact:/lines/0/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 月令\",\"path\":\"/lines/0/relations/month_strength\",\"value\":\"囚\"},{\"id\":\"fact:/lines/1/position\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 爻位\",\"path\":\"/lines/1/position\",\"value\":2},{\"id\":\"fact:/lines/1/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 阴阳\",\"path\":\"/lines/1/yin_yang\",\"value\":\"yang\"},{\"id\":\"fact:/lines/1/moving\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 动爻\",\"path\":\"/lines/1/moving\",\"value\":true},{\"id\":\"fact:/lines/1/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 纳甲\",\"path\":\"/lines/1/ganzhi\",\"value\":\"丁卯\"},{\"id\":\"fact:/lines/1/branch\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 地支\",\"path\":\"/lines/1/branch\",\"value\":\"卯\"},{\"id\":\"fact:/lines/1/element\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 五行\",\"path\":\"/lines/1/element\",\"value\":\"木\"},{\"id\":\"fact:/lines/1/relative\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 六亲\",\"path\":\"/lines/1/relative\",\"value\":\"官鬼\"},{\"id\":\"fact:/lines/1/spirit\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 六神\",\"path\":\"/lines/1/spirit\",\"value\":\"白虎\"},{\"id\":\"fact:/lines/1/state_text\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 爻状态\",\"path\":\"/lines/1/state_text\",\"value\":\"老阳→变阴\"},{\"id\":\"fact:/lines/1/is_shi\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 世爻\",\"path\":\"/lines/1/is_shi\",\"value\":false},{\"id\":\"fact:/lines/1/is_ying\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 应爻\",\"path\":\"/lines/1/is_ying\",\"value\":false},{\"id\":\"fact:/lines/1/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 旬空\",\"path\":\"/lines/1/is_kongwang\",\"value\":true},{\"id\":\"fact:/lines/1/changed/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第2爻变爻／变卦 · 纳甲\",\"path\":\"/lines/1/changed/ganzhi\",\"value\":\"庚寅\"},{\"id\":\"fact:/lines/1/changed/branch\",\"kind\":\"program_fact\",\"label\":\"第2爻变爻／变卦 · 地支\",\"path\":\"/lines/1/changed/branch\",\"value\":\"寅\"},{\"id\":\"fact:/lines/1/changed/element\",\"kind\":\"program_fact\",\"label\":\"第2爻变爻／变卦 · 五行\",\"path\":\"/lines/1/changed/element\",\"value\":\"木\"},{\"id\":\"fact:/lines/1/changed/relative\",\"kind\":\"program_fact\",\"label\":\"第2爻变爻／变卦 · 六亲\",\"path\":\"/lines/1/changed/relative\",\"value\":\"官鬼\"},{\"id\":\"fact:/lines/1/hidden\",\"kind\":\"program_fact\",\"label\":\"第2爻伏神 · 伏神记录\",\"path\":\"/lines/1/hidden\",\"value\":null},{\"id\":\"fact:/lines/1/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 月令\",\"path\":\"/lines/1/relations/month_strength\",\"value\":\"死\"},{\"id\":\"fact:/lines/1/relations/day_relation\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 日辰关系\",\"path\":\"/lines/1/relations/day_relation\",\"value\":\"日辰冲\"},{\"id\":\"fact:/lines/1/relations/advance_retreat\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 进退\",\"path\":\"/lines/1/relations/advance_retreat\",\"value\":\"退神\"},{\"id\":\"fact:/lines/2/position\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 爻位\",\"path\":\"/lines/2/position\",\"value\":3},{\"id\":\"fact:/lines/2/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 阴阳\",\"path\":\"/lines/2/yin_yang\",\"value\":\"yin\"},{\"id\":\"fact:/lines/2/moving\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 动爻\",\"path\":\"/lines/2/moving\",\"value\":false},{\"id\":\"fact:/lines/2/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 纳甲\",\"path\":\"/lines/2/ganzhi\",\"value\":\"丁丑\"},{\"id\":\"fact:/lines/2/branch\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 地支\",\"path\":\"/lines/2/branch\",\"value\":\"丑\"},{\"id\":\"fact:/lines/2/element\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 五行\",\"path\":\"/lines/2/element\",\"value\":\"土\"},{\"id\":\"fact:/lines/2/relative\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 六亲\",\"path\":\"/lines/2/relative\",\"value\":\"兄弟\"},{\"id\":\"fact:/lines/2/spirit\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 六神\",\"path\":\"/lines/2/spirit\",\"value\":\"玄武\"},{\"id\":\"fact:/lines/2/state_text\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 爻状态\",\"path\":\"/lines/2/state_text\",\"value\":\"少阴\"},{\"id\":\"fact:/lines/2/is_shi\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 世爻\",\"path\":\"/lines/2/is_shi\",\"value\":false},{\"id\":\"fact:/lines/2/is_ying\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 应爻\",\"path\":\"/lines/2/is_ying\",\"value\":false},{\"id\":\"fact:/lines/2/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 旬空\",\"path\":\"/lines/2/is_kongwang\",\"value\":false},{\"id\":\"fact:/lines/2/changed\",\"kind\":\"program_fact\",\"label\":\"第3爻变爻／变卦 · 变爻记录\",\"path\":\"/lines/2/changed\",\"value\":null},{\"id\":\"fact:/lines/2/hidden\",\"kind\":\"program_fact\",\"label\":\"第3爻伏神 · 伏神记录\",\"path\":\"/lines/2/hidden\",\"value\":null},{\"id\":\"fact:/lines/2/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 月令\",\"path\":\"/lines/2/relations/month_strength\",\"value\":\"休\"},{\"id\":\"fact:/lines/3/position\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 爻位\",\"path\":\"/lines/3/position\",\"value\":4},{\"id\":\"fact:/lines/3/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 阴阳\",\"path\":\"/lines/3/yin_yang\",\"value\":\"yang\"},{\"id\":\"fact:/lines/3/moving\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 动爻\",\"path\":\"/lines/3/moving\",\"value\":false},{\"id\":\"fact:/lines/3/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 纳甲\",\"path\":\"/lines/3/ganzhi\",\"value\":\"己酉\"},{\"id\":\"fact:/lines/3/branch\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 地支\",\"path\":\"/lines/3/branch\",\"value\":\"酉\"},{\"id\":\"fact:/lines/3/element\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 五行\",\"path\":\"/lines/3/element\",\"value\":\"金\"},{\"id\":\"fact:/lines/3/relative\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 六亲\",\"path\":\"/lines/3/relative\",\"value\":\"子孙\"},{\"id\":\"fact:/lines/3/spirit\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 六神\",\"path\":\"/lines/3/spirit\",\"value\":\"青龙\"},{\"id\":\"fact:/lines/3/state_text\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 爻状态\",\"path\":\"/lines/3/state_text\",\"value\":\"少阳\"},{\"id\":\"fact:/lines/3/is_shi\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 世爻\",\"path\":\"/lines/3/is_shi\",\"value\":true},{\"id\":\"fact:/lines/3/is_ying\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 应爻\",\"path\":\"/lines/3/is_ying\",\"value\":false},{\"id\":\"fact:/lines/3/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 旬空\",\"path\":\"/lines/3/is_kongwang\",\"value\":false},{\"id\":\"fact:/lines/3/changed\",\"kind\":\"program_fact\",\"label\":\"第4爻变爻／变卦 · 变爻记录\",\"path\":\"/lines/3/changed\",\"value\":null},{\"id\":\"fact:/lines/3/hidden\",\"kind\":\"program_fact\",\"label\":\"第4爻伏神 · 伏神记录\",\"path\":\"/lines/3/hidden\",\"value\":null},{\"id\":\"fact:/lines/3/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 月令\",\"path\":\"/lines/3/relations/month_strength\",\"value\":\"旺\"},{\"id\":\"fact:/lines/4/position\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 爻位\",\"path\":\"/lines/4/position\",\"value\":5},{\"id\":\"fact:/lines/4/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 阴阳\",\"path\":\"/lines/4/yin_yang\",\"value\":\"yin\"},{\"id\":\"fact:/lines/4/moving\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 动爻\",\"path\":\"/lines/4/moving\",\"value\":false},{\"id\":\"fact:/lines/4/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 纳甲\",\"path\":\"/lines/4/ganzhi\",\"value\":\"己未\"},{\"id\":\"fact:/lines/4/branch\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 地支\",\"path\":\"/lines/4/branch\",\"value\":\"未\"},{\"id\":\"fact:/lines/4/element\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 五行\",\"path\":\"/lines/4/element\",\"value\":\"土\"},{\"id\":\"fact:/lines/4/relative\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 六亲\",\"path\":\"/lines/4/relative\",\"value\":\"兄弟\"},{\"id\":\"fact:/lines/4/spirit\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 六神\",\"path\":\"/lines/4/spirit\",\"value\":\"朱雀\"},{\"id\":\"fact:/lines/4/state_text\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 爻状态\",\"path\":\"/lines/4/state_text\",\"value\":\"少阴\"},{\"id\":\"fact:/lines/4/is_shi\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 世爻\",\"path\":\"/lines/4/is_shi\",\"value\":false},{\"id\":\"fact:/lines/4/is_ying\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 应爻\",\"path\":\"/lines/4/is_ying\",\"value\":false},{\"id\":\"fact:/lines/4/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 旬空\",\"path\":\"/lines/4/is_kongwang\",\"value\":false},{\"id\":\"fact:/lines/4/changed\",\"kind\":\"program_fact\",\"label\":\"第5爻变爻／变卦 · 变爻记录\",\"path\":\"/lines/4/changed\",\"value\":null},{\"id\":\"fact:/lines/4/hidden/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第5爻伏神 · 纳甲\",\"path\":\"/lines/4/hidden/ganzhi\",\"value\":\"丙子\"},{\"id\":\"fact:/lines/4/hidden/branch\",\"kind\":\"program_fact\",\"label\":\"第5爻伏神 · 地支\",\"path\":\"/lines/4/hidden/branch\",\"value\":\"子\"},{\"id\":\"fact:/lines/4/hidden/element\",\"kind\":\"program_fact\",\"label\":\"第5爻伏神 · 五行\",\"path\":\"/lines/4/hidden/element\",\"value\":\"水\"},{\"id\":\"fact:/lines/4/hidden/relative\",\"kind\":\"program_fact\",\"label\":\"第5爻伏神 · 六亲\",\"path\":\"/lines/4/hidden/relative\",\"value\":\"妻财\"},{\"id\":\"fact:/lines/4/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 月令\",\"path\":\"/lines/4/relations/month_strength\",\"value\":\"休\"},{\"id\":\"fact:/lines/4/relations/hidden_relation\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 飞伏关系\",\"path\":\"/lines/4/relations/hidden_relation\",\"value\":\"飞神克伏神\"},{\"id\":\"fact:/lines/5/position\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 爻位\",\"path\":\"/lines/5/position\",\"value\":6},{\"id\":\"fact:/lines/5/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 阴阳\",\"path\":\"/lines/5/yin_yang\",\"value\":\"yang\"},{\"id\":\"fact:/lines/5/moving\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 动爻\",\"path\":\"/lines/5/moving\",\"value\":false},{\"id\":\"fact:/lines/5/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 纳甲\",\"path\":\"/lines/5/ganzhi\",\"value\":\"己巳\"},{\"id\":\"fact:/lines/5/branch\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 地支\",\"path\":\"/lines/5/branch\",\"value\":\"巳\"},{\"id\":\"fact:/lines/5/element\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 五行\",\"path\":\"/lines/5/element\",\"value\":\"火\"},{\"id\":\"fact:/lines/5/relative\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 六亲\",\"path\":\"/lines/5/relative\",\"value\":\"父母\"},{\"id\":\"fact:/lines/5/spirit\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 六神\",\"path\":\"/lines/5/spirit\",\"value\":\"勾陈\"},{\"id\":\"fact:/lines/5/state_text\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 爻状态\",\"path\":\"/lines/5/state_text\",\"value\":\"少阳\"},{\"id\":\"fact:/lines/5/is_shi\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 世爻\",\"path\":\"/lines/5/is_shi\",\"value\":false},{\"id\":\"fact:/lines/5/is_ying\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 应爻\",\"path\":\"/lines/5/is_ying\",\"value\":false},{\"id\":\"fact:/lines/5/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 旬空\",\"path\":\"/lines/5/is_kongwang\",\"value\":false},{\"id\":\"fact:/lines/5/changed\",\"kind\":\"program_fact\",\"label\":\"第6爻变爻／变卦 · 变爻记录\",\"path\":\"/lines/5/changed\",\"value\":null},{\"id\":\"fact:/lines/5/hidden\",\"kind\":\"program_fact\",\"label\":\"第6爻伏神 · 伏神记录\",\"path\":\"/lines/5/hidden\",\"value\":null},{\"id\":\"fact:/lines/5/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 月令\",\"path\":\"/lines/5/relations/month_strength\",\"value\":\"囚\"},{\"id\":\"rule:LINE-MOVING-001:primary:2:-\",\"kind\":\"rule_result\",\"label\":\"LINE-MOVING-001 · 第2爻 · 动爻\",\"result\":{\"code\":\"line_moving\",\"label\":\"动爻\"},\"rule_id\":\"LINE-MOVING-001\",\"source_facts\":[\"fact:/lines/1/moving\"],\"target\":{\"component\":\"primary\",\"line\":2}},{\"id\":\"rule:LINE-VOID-001:primary:2:-\",\"kind\":\"rule_result\",\"label\":\"LINE-VOID-001 · 第2爻 · 旬空\",\"result\":{\"code\":\"line_void\",\"label\":\"旬空\"},\"rule_id\":\"LINE-VOID-001\",\"source_facts\":[\"fact:/lines/1/is_kongwang\"],\"target\":{\"component\":\"primary\",\"line\":2}},{\"id\":\"rule:DAY-CLASH-001:primary:2:-\",\"kind\":\"rule_result\",\"label\":\"DAY-CLASH-001 · 第2爻 · 受日冲\",\"result\":{\"code\":\"day_clash\",\"label\":\"受日冲\"},\"rule_id\":\"DAY-CLASH-001\",\"source_facts\":[\"fact:/lines/1/relations/day_relation\",\"fact:/lines/1/branch\",\"fact:/calendar/day_branch\"],\"target\":{\"component\":\"primary\",\"line\":2}},{\"id\":\"rule:MOVE-RETREAT-001:primary:2:-\",\"kind\":\"rule_result\",\"label\":\"MOVE-RETREAT-001 · 第2爻 · 化退\",\"result\":{\"code\":\"move_retreat\",\"label\":\"化退\"},\"rule_id\":\"MOVE-RETREAT-001\",\"source_facts\":[\"fact:/lines/1/relations/advance_retreat\",\"fact:/lines/1/moving\",\"fact:/lines/1/branch\",\"fact:/lines/1/changed/branch\"],\"target\":{\"component\":\"primary\",\"line\":2}},{\"id\":\"rule:HIDDEN-FLY-CONTROL-001:hidden:5:-\",\"kind\":\"rule_result\",\"label\":\"HIDDEN-FLY-CONTROL-001 · 第5爻 · 飞神克伏神\",\"result\":{\"code\":\"hidden_fly_control\",\"from\":{\"component\":\"primary\",\"line\":5},\"label\":\"飞神克伏神\",\"to\":{\"component\":\"hidden\",\"line\":5}},\"rule_id\":\"HIDDEN-FLY-CONTROL-001\",\"source_facts\":[\"fact:/lines/4/relations/hidden_relation\",\"fact:/lines/4/element\",\"fact:/lines/4/hidden/element\"],\"target\":{\"component\":\"hidden\",\"line\":5}},{\"id\":\"rule:MONTH-STATE-WANG-001:primary:4:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-WANG-001 · 第4爻 · 月令旺\",\"result\":{\"code\":\"month_state_wang\",\"label\":\"月令旺\"},\"rule_id\":\"MONTH-STATE-WANG-001\",\"source_facts\":[\"fact:/lines/3/relations/month_strength\",\"fact:/lines/3/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":4}},{\"id\":\"rule:MONTH-STATE-XIU-001:primary:3:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-XIU-001 · 第3爻 · 月令休\",\"result\":{\"code\":\"month_state_xiu\",\"label\":\"月令休\"},\"rule_id\":\"MONTH-STATE-XIU-001\",\"source_facts\":[\"fact:/lines/2/relations/month_strength\",\"fact:/lines/2/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":3}},{\"id\":\"rule:MONTH-STATE-XIU-001:primary:5:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-XIU-001 · 第5爻 · 月令休\",\"result\":{\"code\":\"month_state_xiu\",\"label\":\"月令休\"},\"rule_id\":\"MONTH-STATE-XIU-001\",\"source_facts\":[\"fact:/lines/4/relations/month_strength\",\"fact:/lines/4/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":5}},{\"id\":\"rule:MONTH-STATE-QIU-001:primary:1:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-QIU-001 · 第1爻 · 月令囚\",\"result\":{\"code\":\"month_state_qiu\",\"label\":\"月令囚\"},\"rule_id\":\"MONTH-STATE-QIU-001\",\"source_facts\":[\"fact:/lines/0/relations/month_strength\",\"fact:/lines/0/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":1}},{\"id\":\"rule:MONTH-STATE-QIU-001:primary:6:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-QIU-001 · 第6爻 · 月令囚\",\"result\":{\"code\":\"month_state_qiu\",\"label\":\"月令囚\"},\"rule_id\":\"MONTH-STATE-QIU-001\",\"source_facts\":[\"fact:/lines/5/relations/month_strength\",\"fact:/lines/5/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":6}},{\"id\":\"rule:MONTH-STATE-SI-001:primary:2:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-SI-001 · 第2爻 · 月令死\",\"result\":{\"code\":\"month_state_si\",\"label\":\"月令死\"},\"rule_id\":\"MONTH-STATE-SI-001\",\"source_facts\":[\"fact:/lines/1/relations/month_strength\",\"fact:/lines/1/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":2}},{\"id\":\"rule:YING-CONTROL-SHI-001:primary:4:1\",\"kind\":\"rule_result\",\"label\":\"YING-CONTROL-SHI-001 · 第4爻 · 应克世\",\"result\":{\"code\":\"ying_control_shi\",\"from\":{\"component\":\"primary\",\"line\":1},\"label\":\"应克世\",\"to\":{\"component\":\"primary\",\"line\":4}},\"rule_id\":\"YING-CONTROL-SHI-001\",\"source_facts\":[\"fact:/hexagram/shi_line\",\"fact:/hexagram/ying_line\",\"fact:/lines/0/is_shi\",\"fact:/lines/1/is_shi\",\"fact:/lines/2/is_shi\",\"fact:/lines/3/is_shi\",\"fact:/lines/4/is_shi\",\"fact:/lines/5/is_shi\",\"fact:/lines/0/is_ying\",\"fact:/lines/1/is_ying\",\"fact:/lines/2/is_ying\",\"fact:/lines/3/is_ying\",\"fact:/lines/4/is_ying\",\"fact:/lines/5/is_ying\",\"fact:/lines/3/element\",\"fact:/lines/0/element\"],\"target\":{\"component\":\"primary\",\"line\":4,\"related_line\":1}},{\"id\":\"rule:MONTH-CLASH-001:primary:2:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-CLASH-001 · 第2爻 · 月破（与月建六冲）\",\"result\":{\"code\":\"month_clash\",\"label\":\"月破（与月建六冲）\"},\"rule_id\":\"MONTH-CLASH-001\",\"source_facts\":[\"fact:/calendar/month_branch\",\"fact:/lines/1/branch\"],\"target\":{\"component\":\"primary\",\"line\":2}}],\"question\":\"我准备试着用一个月写三篇短的旅行回忆，只写给自己看。我关心是否容易完成这个写作计划，不问应期。\",\"response_schema\":{\"additionalProperties\":false,\"properties\":{\"conclusion\":{\"additionalProperties\":false,\"properties\":{\"answer\":{\"maxLength\":220,\"minLength\":1,\"type\":\"string\"},\"direction\":{\"enum\":[\"favorable\",\"unfavorable\",\"mixed\",\"unclear\"]}},\"required\":[\"direction\",\"answer\"],\"type\":\"object\"},\"context_id\":{\"maxLength\":80,\"minLength\":1,\"type\":\"string\"},\"counter_factor_ids\":{\"items\":{\"enum\":[\"f1\",\"f2\",\"f3\"]},\"maxItems\":3,\"minItems\":0,\"type\":\"array\",\"uniqueItems\":true},\"factors\":{\"items\":{\"additionalProperties\":false,\"properties\":{\"assumption\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"},\"effect\":{\"enum\":[\"support\",\"oppose\",\"neutral\",\"conditional\"]},\"evidence_ids\":{\"items\":{\"maxLength\":180,\"minLength\":1,\"type\":\"string\"},\"maxItems\":8,\"minItems\":1,\"type\":\"array\",\"uniqueItems\":true},\"id\":{\"enum\":[\"f1\",\"f2\",\"f3\"]},\"interpretation\":{\"maxLength\":400,\"minLength\":1,\"type\":\"string\"},\"limitation\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"}},\"required\":[\"id\",\"effect\",\"evidence_ids\",\"interpretation\",\"assumption\",\"limitation\"],\"type\":\"object\"},\"maxItems\":3,\"minItems\":0,\"type\":\"array\",\"uniqueItems\":true},\"focus\":{\"items\":{\"additionalProperties\":false,\"properties\":{\"evidence_id\":{\"maxLength\":180,\"minLength\":1,\"type\":\"string\"},\"role_hypothesis\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"}},\"required\":[\"evidence_id\",\"role_hypothesis\"],\"type\":\"object\"},\"maxItems\":1,\"minItems\":0,\"type\":\"array\",\"uniqueItems\":true},\"general_advice\":{\"items\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"},\"maxItems\":2,\"minItems\":0,\"type\":\"array\",\"uniqueItems\":true},\"major_factor_ids\":{\"items\":{\"enum\":[\"f1\",\"f2\",\"f3\"]},\"maxItems\":3,\"minItems\":0,\"type\":\"array\",\"uniqueItems\":true},\"schema_version\":{\"const\":\"task-led-experiment-1\"},\"task\":{\"const\":\"trend\"},\"tradeoff_reason\":{\"maxLength\":400,\"minLength\":1,\"type\":\"string\"},\"uncertainties\":{\"items\":{\"maxLength\":300,\"minLength\":1,\"type\":\"string\"},\"maxItems\":3,\"minItems\":1,\"type\":\"array\",\"uniqueItems\":true}},\"required\":[\"schema_version\",\"context_id\",\"task\",\"conclusion\",\"focus\",\"major_factor_ids\",\"counter_factor_ids\",\"tradeoff_reason\",\"factors\",\"general_advice\",\"uncertainties\"],\"type\":\"object\"},\"task\":\"trend\"}"
+          }
+        ]
+      },
+      "input_allowance": 31655,
+      "reserve_cny": 0.096078
+    },
+    {
+      "id": "trend-gathering",
+      "task": "trend",
+      "question": "我想在邻里熟人间发起一次小型桌游聚会，没有收费计划，时间地点尚未确定。就能否顺利组织成一次活动怎么看？",
+      "canonical": {
+        "schema_version": "1.0",
+        "meta": {
+          "cast_id": "task-led-new-trend-gathering",
+          "created_at": "2026-10-02T14:00:00.000Z",
+          "source": "manual",
+          "coin_convention": null
+        },
+        "question": {
+          "text": "我想在邻里熟人间发起一次小型桌游聚会，没有收费计划，时间地点尚未确定。就能否顺利组织成一次活动怎么看？",
+          "topic": null
+        },
+        "versions": {
+          "app": "2.0.0",
+          "engine": "desktop-2026-09-15-2",
+          "prompt": "p1",
+          "legacy_rules": "2026-09-15-2"
+        },
+        "calendar": {
+          "day_ganzhi": "己酉",
+          "year_ganzhi": "丙午",
+          "month_ganzhi": "丁酉",
+          "hour_ganzhi": "乙亥",
+          "anchor": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "month_branch": "酉",
+          "day_branch": "酉",
+          "kongwang": [
+            "寅",
+            "卯"
+          ]
+        },
+        "hexagram": {
+          "primary": {
+            "name": "泽山咸",
+            "palace": "兑宫",
+            "lower_trigram": "艮",
+            "upper_trigram": "兑"
+          },
+          "changed": {
+            "name": "泽地萃"
+          },
+          "shi_line": 3,
+          "ying_line": 6
+        },
+        "display": {
+          "four_pillars_text": "年柱：丙午　月柱：丁酉　日柱：己酉　时柱：乙亥",
+          "kong_text": "空亡：寅、卯",
+          "date_text": "公历：2026年10月2日",
+          "palace_text": "兑宫 · 三世卦（本宫五行：金）",
+          "lower_upper_text": "下卦：☶ 艮　上卦：☱ 兑",
+          "day_kong_text": "日柱：己酉　空亡：寅、卯",
+          "overall_trend_text": "当令得力(旺/相)3爻、当令减力(休/囚/死)3爻；世应：应生世——两类爻数量相同；这是月令计数，不代表整体吉凶，具体判断还要结合用神与相关动变"
+        },
+        "lines": [
+          {
+            "position": 1,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "日辰合",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "1爻",
+            "relative": "父母",
+            "spirit": "螣蛇",
+            "ganzhi": "丙辰",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "辰"
+          },
+          {
+            "position": 2,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": {
+              "relative": "妻财",
+              "ganzhi": "丁卯",
+              "element": "木",
+              "branch": "卯"
+            },
+            "relations": {
+              "month_strength": "囚",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": "伏神生飞神"
+            },
+            "position_label": "2爻",
+            "relative": "官鬼",
+            "spirit": "白虎",
+            "ganzhi": "丙午",
+            "element": "火",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "午"
+          },
+          {
+            "position": 3,
+            "yin_yang": "yang",
+            "changed": {
+              "ganzhi": "乙卯",
+              "element": "木",
+              "relative": "妻财",
+              "branch": "卯"
+            },
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "3爻",
+            "relative": "兄弟",
+            "spirit": "玄武",
+            "ganzhi": "丙申",
+            "element": "金",
+            "state_text": "老阳→变阴",
+            "moving": true,
+            "is_shi": true,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "申"
+          },
+          {
+            "position": 4,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "相",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "4爻",
+            "relative": "子孙",
+            "spirit": "青龙",
+            "ganzhi": "丁亥",
+            "element": "水",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "亥"
+          },
+          {
+            "position": 5,
+            "yin_yang": "yang",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "旺",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "5爻",
+            "relative": "兄弟",
+            "spirit": "朱雀",
+            "ganzhi": "丁酉",
+            "element": "金",
+            "state_text": "少阳",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": false,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "酉"
+          },
+          {
+            "position": 6,
+            "yin_yang": "yin",
+            "changed": null,
+            "hidden": null,
+            "relations": {
+              "month_strength": "休",
+              "day_relation": "",
+              "return_relation": "",
+              "advance_retreat": "",
+              "hidden_relation": ""
+            },
+            "position_label": "6爻",
+            "relative": "父母",
+            "spirit": "勾陈",
+            "ganzhi": "丁未",
+            "element": "土",
+            "state_text": "少阴",
+            "moving": false,
+            "is_shi": false,
+            "is_ying": true,
+            "is_kongwang": false,
+            "compatibility": {
+              "presence": [
+                "爻位",
+                "六亲",
+                "六神",
+                "纳甲",
+                "五行",
+                "状态",
+                "是否动爻",
+                "是否世爻",
+                "是否应爻",
+                "是否空亡",
+                "变纳甲",
+                "变五行",
+                "变六亲",
+                "伏神六亲",
+                "伏神纳甲",
+                "伏神五行",
+                "月令",
+                "日辰关系",
+                "回头",
+                "进退神",
+                "伏神与飞神关系"
+              ],
+              "extensions": {}
+            },
+            "branch": "未"
+          }
+        ],
+        "compatibility": {
+          "presence": [
+            "ganzhi",
+            "yearGanzhi",
+            "monthGanzhi",
+            "hourGanzhi",
+            "fourPillarsText",
+            "kongText",
+            "dateText",
+            "palaceText",
+            "lowerUpperText",
+            "dayKongText",
+            "guaName",
+            "bianGuaName",
+            "source",
+            "rulesVersion",
+            "coinConvention",
+            "castAnchorY",
+            "castAnchorM",
+            "castAnchorD",
+            "overallTrendText"
+          ],
+          "extensions": {}
+        }
+      },
+      "context_id": "sha256:8f32c42021d509801543773e413cf609cad11d4c392fc3203f412485918c9af3",
+      "body": {
+        "model": "deepseek-flash",
+        "thinking": {
+          "type": "disabled"
+        },
+        "max_tokens": 4096,
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": true,
+        "stream_options": {
+          "include_usage": true
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "开发实验 task-led-experiment-1。只输出完整JSON，按response_schema。当前task固定trend。\nconclusion.answer只回答当前目标及判断把握，不复述爻位、六亲、五行、旺衰、卦名或纳甲；程序展示所有盘面值。tradeoff_reason只说明哪些已选因素优先、为什么及其对同一目标的影响，用因素编号指代，不重新复述属性。\n至多三项因素。只选择已有evidence_id，在interpretation解释这些依据对当前目标的相关性，不另抄属性；取象必须明确为假设，不把关系名直接当吉凶，也不把象意当成实际能力、精力、配合、天气、故障或热度。assumption限定角色映射，limitation限定不能确认的现实。所有正文言及的属性仍须由相应因素引用覆盖，规则来源闭包由程序显示。\nfocus至多一个，必须引用相应六亲relative的program_fact，不能选moving等其他字段。非unclear须直接关联所选主要因素。主要与需权衡因素不可重叠；需要同时主要支持和阻碍才能mixed，且必须解释不能分主次的理由，一利一弊不会自动mixed，不按数量计分。若已认为阻碍优先，不应同时无理由宣称mixed。\n没有已核实传统取法或权重足以支撑方向时选unclear，不强行填因素或唯一用神，不靠结尾免责声明抵消正文越界。不要改变用户目标或未知机制。\n一般建议只放general_advice，不引用卦盘、不成为因素支持，不降低用户成功标准来冒充成功。uncertainties描述真实缺口，不添未问应期。输入不含古籍，不能声称来源已获验证。"
+          },
+          {
+            "role": "user",
+            "content": "{\"context_id\":\"sha256:8f32c42021d509801543773e413cf609cad11d4c392fc3203f412485918c9af3\",\"evidence\":[{\"id\":\"fact:/calendar/year_ganzhi\",\"kind\":\"program_fact\",\"label\":\"历法 · 年柱\",\"path\":\"/calendar/year_ganzhi\",\"value\":\"丙午\"},{\"id\":\"fact:/calendar/month_ganzhi\",\"kind\":\"program_fact\",\"label\":\"历法 · 月柱\",\"path\":\"/calendar/month_ganzhi\",\"value\":\"丁酉\"},{\"id\":\"fact:/calendar/day_ganzhi\",\"kind\":\"program_fact\",\"label\":\"历法 · 日柱\",\"path\":\"/calendar/day_ganzhi\",\"value\":\"己酉\"},{\"id\":\"fact:/calendar/hour_ganzhi\",\"kind\":\"program_fact\",\"label\":\"历法 · 时柱\",\"path\":\"/calendar/hour_ganzhi\",\"value\":\"乙亥\"},{\"id\":\"fact:/calendar/day_branch\",\"kind\":\"program_fact\",\"label\":\"历法 · 日支\",\"path\":\"/calendar/day_branch\",\"value\":\"酉\"},{\"id\":\"fact:/calendar/month_branch\",\"kind\":\"program_fact\",\"label\":\"历法 · 月支\",\"path\":\"/calendar/month_branch\",\"value\":\"酉\"},{\"id\":\"fact:/calendar/kongwang/0\",\"kind\":\"program_fact\",\"label\":\"历法 · 空亡\",\"path\":\"/calendar/kongwang/0\",\"value\":\"寅\"},{\"id\":\"fact:/calendar/kongwang/1\",\"kind\":\"program_fact\",\"label\":\"历法 · 空亡\",\"path\":\"/calendar/kongwang/1\",\"value\":\"卯\"},{\"id\":\"fact:/calendar/anchor/year\",\"kind\":\"program_fact\",\"label\":\"历法 · year\",\"path\":\"/calendar/anchor/year\",\"value\":2026},{\"id\":\"fact:/calendar/anchor/month\",\"kind\":\"program_fact\",\"label\":\"历法 · month\",\"path\":\"/calendar/anchor/month\",\"value\":10},{\"id\":\"fact:/calendar/anchor/day\",\"kind\":\"program_fact\",\"label\":\"历法 · day\",\"path\":\"/calendar/anchor/day\",\"value\":2},{\"id\":\"fact:/hexagram/primary/name\",\"kind\":\"program_fact\",\"label\":\"卦盘 · 卦名\",\"path\":\"/hexagram/primary/name\",\"value\":\"泽山咸\"},{\"id\":\"fact:/hexagram/primary/palace\",\"kind\":\"program_fact\",\"label\":\"卦盘 · 卦宫\",\"path\":\"/hexagram/primary/palace\",\"value\":\"兑宫\"},{\"id\":\"fact:/hexagram/primary/lower_trigram\",\"kind\":\"program_fact\",\"label\":\"卦盘 · lower_trigram\",\"path\":\"/hexagram/primary/lower_trigram\",\"value\":\"艮\"},{\"id\":\"fact:/hexagram/primary/upper_trigram\",\"kind\":\"program_fact\",\"label\":\"卦盘 · upper_trigram\",\"path\":\"/hexagram/primary/upper_trigram\",\"value\":\"兑\"},{\"id\":\"fact:/hexagram/changed/name\",\"kind\":\"program_fact\",\"label\":\"卦盘变爻／变卦 · 卦名\",\"path\":\"/hexagram/changed/name\",\"value\":\"泽地萃\"},{\"id\":\"fact:/hexagram/shi_line\",\"kind\":\"program_fact\",\"label\":\"卦盘 · 世爻位置\",\"path\":\"/hexagram/shi_line\",\"value\":3},{\"id\":\"fact:/hexagram/ying_line\",\"kind\":\"program_fact\",\"label\":\"卦盘 · 应爻位置\",\"path\":\"/hexagram/ying_line\",\"value\":6},{\"id\":\"fact:/lines/0/position\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 爻位\",\"path\":\"/lines/0/position\",\"value\":1},{\"id\":\"fact:/lines/0/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 阴阳\",\"path\":\"/lines/0/yin_yang\",\"value\":\"yin\"},{\"id\":\"fact:/lines/0/moving\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 动爻\",\"path\":\"/lines/0/moving\",\"value\":false},{\"id\":\"fact:/lines/0/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 纳甲\",\"path\":\"/lines/0/ganzhi\",\"value\":\"丙辰\"},{\"id\":\"fact:/lines/0/branch\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 地支\",\"path\":\"/lines/0/branch\",\"value\":\"辰\"},{\"id\":\"fact:/lines/0/element\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 五行\",\"path\":\"/lines/0/element\",\"value\":\"土\"},{\"id\":\"fact:/lines/0/relative\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 六亲\",\"path\":\"/lines/0/relative\",\"value\":\"父母\"},{\"id\":\"fact:/lines/0/spirit\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 六神\",\"path\":\"/lines/0/spirit\",\"value\":\"螣蛇\"},{\"id\":\"fact:/lines/0/state_text\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 爻状态\",\"path\":\"/lines/0/state_text\",\"value\":\"少阴\"},{\"id\":\"fact:/lines/0/is_shi\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 世爻\",\"path\":\"/lines/0/is_shi\",\"value\":false},{\"id\":\"fact:/lines/0/is_ying\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 应爻\",\"path\":\"/lines/0/is_ying\",\"value\":false},{\"id\":\"fact:/lines/0/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 旬空\",\"path\":\"/lines/0/is_kongwang\",\"value\":false},{\"id\":\"fact:/lines/0/changed\",\"kind\":\"program_fact\",\"label\":\"第1爻变爻／变卦 · 变爻记录\",\"path\":\"/lines/0/changed\",\"value\":null},{\"id\":\"fact:/lines/0/hidden\",\"kind\":\"program_fact\",\"label\":\"第1爻伏神 · 伏神记录\",\"path\":\"/lines/0/hidden\",\"value\":null},{\"id\":\"fact:/lines/0/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 月令\",\"path\":\"/lines/0/relations/month_strength\",\"value\":\"休\"},{\"id\":\"fact:/lines/0/relations/day_relation\",\"kind\":\"program_fact\",\"label\":\"第1爻 · 日辰关系\",\"path\":\"/lines/0/relations/day_relation\",\"value\":\"日辰合\"},{\"id\":\"fact:/lines/1/position\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 爻位\",\"path\":\"/lines/1/position\",\"value\":2},{\"id\":\"fact:/lines/1/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 阴阳\",\"path\":\"/lines/1/yin_yang\",\"value\":\"yin\"},{\"id\":\"fact:/lines/1/moving\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 动爻\",\"path\":\"/lines/1/moving\",\"value\":false},{\"id\":\"fact:/lines/1/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 纳甲\",\"path\":\"/lines/1/ganzhi\",\"value\":\"丙午\"},{\"id\":\"fact:/lines/1/branch\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 地支\",\"path\":\"/lines/1/branch\",\"value\":\"午\"},{\"id\":\"fact:/lines/1/element\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 五行\",\"path\":\"/lines/1/element\",\"value\":\"火\"},{\"id\":\"fact:/lines/1/relative\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 六亲\",\"path\":\"/lines/1/relative\",\"value\":\"官鬼\"},{\"id\":\"fact:/lines/1/spirit\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 六神\",\"path\":\"/lines/1/spirit\",\"value\":\"白虎\"},{\"id\":\"fact:/lines/1/state_text\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 爻状态\",\"path\":\"/lines/1/state_text\",\"value\":\"少阴\"},{\"id\":\"fact:/lines/1/is_shi\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 世爻\",\"path\":\"/lines/1/is_shi\",\"value\":false},{\"id\":\"fact:/lines/1/is_ying\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 应爻\",\"path\":\"/lines/1/is_ying\",\"value\":false},{\"id\":\"fact:/lines/1/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 旬空\",\"path\":\"/lines/1/is_kongwang\",\"value\":false},{\"id\":\"fact:/lines/1/changed\",\"kind\":\"program_fact\",\"label\":\"第2爻变爻／变卦 · 变爻记录\",\"path\":\"/lines/1/changed\",\"value\":null},{\"id\":\"fact:/lines/1/hidden/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第2爻伏神 · 纳甲\",\"path\":\"/lines/1/hidden/ganzhi\",\"value\":\"丁卯\"},{\"id\":\"fact:/lines/1/hidden/branch\",\"kind\":\"program_fact\",\"label\":\"第2爻伏神 · 地支\",\"path\":\"/lines/1/hidden/branch\",\"value\":\"卯\"},{\"id\":\"fact:/lines/1/hidden/element\",\"kind\":\"program_fact\",\"label\":\"第2爻伏神 · 五行\",\"path\":\"/lines/1/hidden/element\",\"value\":\"木\"},{\"id\":\"fact:/lines/1/hidden/relative\",\"kind\":\"program_fact\",\"label\":\"第2爻伏神 · 六亲\",\"path\":\"/lines/1/hidden/relative\",\"value\":\"妻财\"},{\"id\":\"fact:/lines/1/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 月令\",\"path\":\"/lines/1/relations/month_strength\",\"value\":\"囚\"},{\"id\":\"fact:/lines/1/relations/hidden_relation\",\"kind\":\"program_fact\",\"label\":\"第2爻 · 飞伏关系\",\"path\":\"/lines/1/relations/hidden_relation\",\"value\":\"伏神生飞神\"},{\"id\":\"fact:/lines/2/position\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 爻位\",\"path\":\"/lines/2/position\",\"value\":3},{\"id\":\"fact:/lines/2/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 阴阳\",\"path\":\"/lines/2/yin_yang\",\"value\":\"yang\"},{\"id\":\"fact:/lines/2/moving\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 动爻\",\"path\":\"/lines/2/moving\",\"value\":true},{\"id\":\"fact:/lines/2/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 纳甲\",\"path\":\"/lines/2/ganzhi\",\"value\":\"丙申\"},{\"id\":\"fact:/lines/2/branch\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 地支\",\"path\":\"/lines/2/branch\",\"value\":\"申\"},{\"id\":\"fact:/lines/2/element\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 五行\",\"path\":\"/lines/2/element\",\"value\":\"金\"},{\"id\":\"fact:/lines/2/relative\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 六亲\",\"path\":\"/lines/2/relative\",\"value\":\"兄弟\"},{\"id\":\"fact:/lines/2/spirit\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 六神\",\"path\":\"/lines/2/spirit\",\"value\":\"玄武\"},{\"id\":\"fact:/lines/2/state_text\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 爻状态\",\"path\":\"/lines/2/state_text\",\"value\":\"老阳→变阴\"},{\"id\":\"fact:/lines/2/is_shi\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 世爻\",\"path\":\"/lines/2/is_shi\",\"value\":true},{\"id\":\"fact:/lines/2/is_ying\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 应爻\",\"path\":\"/lines/2/is_ying\",\"value\":false},{\"id\":\"fact:/lines/2/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 旬空\",\"path\":\"/lines/2/is_kongwang\",\"value\":false},{\"id\":\"fact:/lines/2/changed/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第3爻变爻／变卦 · 纳甲\",\"path\":\"/lines/2/changed/ganzhi\",\"value\":\"乙卯\"},{\"id\":\"fact:/lines/2/changed/branch\",\"kind\":\"program_fact\",\"label\":\"第3爻变爻／变卦 · 地支\",\"path\":\"/lines/2/changed/branch\",\"value\":\"卯\"},{\"id\":\"fact:/lines/2/changed/element\",\"kind\":\"program_fact\",\"label\":\"第3爻变爻／变卦 · 五行\",\"path\":\"/lines/2/changed/element\",\"value\":\"木\"},{\"id\":\"fact:/lines/2/changed/relative\",\"kind\":\"program_fact\",\"label\":\"第3爻变爻／变卦 · 六亲\",\"path\":\"/lines/2/changed/relative\",\"value\":\"妻财\"},{\"id\":\"fact:/lines/2/hidden\",\"kind\":\"program_fact\",\"label\":\"第3爻伏神 · 伏神记录\",\"path\":\"/lines/2/hidden\",\"value\":null},{\"id\":\"fact:/lines/2/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第3爻 · 月令\",\"path\":\"/lines/2/relations/month_strength\",\"value\":\"旺\"},{\"id\":\"fact:/lines/3/position\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 爻位\",\"path\":\"/lines/3/position\",\"value\":4},{\"id\":\"fact:/lines/3/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 阴阳\",\"path\":\"/lines/3/yin_yang\",\"value\":\"yang\"},{\"id\":\"fact:/lines/3/moving\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 动爻\",\"path\":\"/lines/3/moving\",\"value\":false},{\"id\":\"fact:/lines/3/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 纳甲\",\"path\":\"/lines/3/ganzhi\",\"value\":\"丁亥\"},{\"id\":\"fact:/lines/3/branch\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 地支\",\"path\":\"/lines/3/branch\",\"value\":\"亥\"},{\"id\":\"fact:/lines/3/element\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 五行\",\"path\":\"/lines/3/element\",\"value\":\"水\"},{\"id\":\"fact:/lines/3/relative\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 六亲\",\"path\":\"/lines/3/relative\",\"value\":\"子孙\"},{\"id\":\"fact:/lines/3/spirit\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 六神\",\"path\":\"/lines/3/spirit\",\"value\":\"青龙\"},{\"id\":\"fact:/lines/3/state_text\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 爻状态\",\"path\":\"/lines/3/state_text\",\"value\":\"少阳\"},{\"id\":\"fact:/lines/3/is_shi\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 世爻\",\"path\":\"/lines/3/is_shi\",\"value\":false},{\"id\":\"fact:/lines/3/is_ying\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 应爻\",\"path\":\"/lines/3/is_ying\",\"value\":false},{\"id\":\"fact:/lines/3/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 旬空\",\"path\":\"/lines/3/is_kongwang\",\"value\":false},{\"id\":\"fact:/lines/3/changed\",\"kind\":\"program_fact\",\"label\":\"第4爻变爻／变卦 · 变爻记录\",\"path\":\"/lines/3/changed\",\"value\":null},{\"id\":\"fact:/lines/3/hidden\",\"kind\":\"program_fact\",\"label\":\"第4爻伏神 · 伏神记录\",\"path\":\"/lines/3/hidden\",\"value\":null},{\"id\":\"fact:/lines/3/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第4爻 · 月令\",\"path\":\"/lines/3/relations/month_strength\",\"value\":\"相\"},{\"id\":\"fact:/lines/4/position\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 爻位\",\"path\":\"/lines/4/position\",\"value\":5},{\"id\":\"fact:/lines/4/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 阴阳\",\"path\":\"/lines/4/yin_yang\",\"value\":\"yang\"},{\"id\":\"fact:/lines/4/moving\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 动爻\",\"path\":\"/lines/4/moving\",\"value\":false},{\"id\":\"fact:/lines/4/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 纳甲\",\"path\":\"/lines/4/ganzhi\",\"value\":\"丁酉\"},{\"id\":\"fact:/lines/4/branch\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 地支\",\"path\":\"/lines/4/branch\",\"value\":\"酉\"},{\"id\":\"fact:/lines/4/element\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 五行\",\"path\":\"/lines/4/element\",\"value\":\"金\"},{\"id\":\"fact:/lines/4/relative\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 六亲\",\"path\":\"/lines/4/relative\",\"value\":\"兄弟\"},{\"id\":\"fact:/lines/4/spirit\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 六神\",\"path\":\"/lines/4/spirit\",\"value\":\"朱雀\"},{\"id\":\"fact:/lines/4/state_text\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 爻状态\",\"path\":\"/lines/4/state_text\",\"value\":\"少阳\"},{\"id\":\"fact:/lines/4/is_shi\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 世爻\",\"path\":\"/lines/4/is_shi\",\"value\":false},{\"id\":\"fact:/lines/4/is_ying\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 应爻\",\"path\":\"/lines/4/is_ying\",\"value\":false},{\"id\":\"fact:/lines/4/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 旬空\",\"path\":\"/lines/4/is_kongwang\",\"value\":false},{\"id\":\"fact:/lines/4/changed\",\"kind\":\"program_fact\",\"label\":\"第5爻变爻／变卦 · 变爻记录\",\"path\":\"/lines/4/changed\",\"value\":null},{\"id\":\"fact:/lines/4/hidden\",\"kind\":\"program_fact\",\"label\":\"第5爻伏神 · 伏神记录\",\"path\":\"/lines/4/hidden\",\"value\":null},{\"id\":\"fact:/lines/4/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第5爻 · 月令\",\"path\":\"/lines/4/relations/month_strength\",\"value\":\"旺\"},{\"id\":\"fact:/lines/5/position\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 爻位\",\"path\":\"/lines/5/position\",\"value\":6},{\"id\":\"fact:/lines/5/yin_yang\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 阴阳\",\"path\":\"/lines/5/yin_yang\",\"value\":\"yin\"},{\"id\":\"fact:/lines/5/moving\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 动爻\",\"path\":\"/lines/5/moving\",\"value\":false},{\"id\":\"fact:/lines/5/ganzhi\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 纳甲\",\"path\":\"/lines/5/ganzhi\",\"value\":\"丁未\"},{\"id\":\"fact:/lines/5/branch\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 地支\",\"path\":\"/lines/5/branch\",\"value\":\"未\"},{\"id\":\"fact:/lines/5/element\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 五行\",\"path\":\"/lines/5/element\",\"value\":\"土\"},{\"id\":\"fact:/lines/5/relative\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 六亲\",\"path\":\"/lines/5/relative\",\"value\":\"父母\"},{\"id\":\"fact:/lines/5/spirit\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 六神\",\"path\":\"/lines/5/spirit\",\"value\":\"勾陈\"},{\"id\":\"fact:/lines/5/state_text\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 爻状态\",\"path\":\"/lines/5/state_text\",\"value\":\"少阴\"},{\"id\":\"fact:/lines/5/is_shi\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 世爻\",\"path\":\"/lines/5/is_shi\",\"value\":false},{\"id\":\"fact:/lines/5/is_ying\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 应爻\",\"path\":\"/lines/5/is_ying\",\"value\":true},{\"id\":\"fact:/lines/5/is_kongwang\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 旬空\",\"path\":\"/lines/5/is_kongwang\",\"value\":false},{\"id\":\"fact:/lines/5/changed\",\"kind\":\"program_fact\",\"label\":\"第6爻变爻／变卦 · 变爻记录\",\"path\":\"/lines/5/changed\",\"value\":null},{\"id\":\"fact:/lines/5/hidden\",\"kind\":\"program_fact\",\"label\":\"第6爻伏神 · 伏神记录\",\"path\":\"/lines/5/hidden\",\"value\":null},{\"id\":\"fact:/lines/5/relations/month_strength\",\"kind\":\"program_fact\",\"label\":\"第6爻 · 月令\",\"path\":\"/lines/5/relations/month_strength\",\"value\":\"休\"},{\"id\":\"rule:LINE-MOVING-001:primary:3:-\",\"kind\":\"rule_result\",\"label\":\"LINE-MOVING-001 · 第3爻 · 动爻\",\"result\":{\"code\":\"line_moving\",\"label\":\"动爻\"},\"rule_id\":\"LINE-MOVING-001\",\"source_facts\":[\"fact:/lines/2/moving\"],\"target\":{\"component\":\"primary\",\"line\":3}},{\"id\":\"rule:DAY-COMBINE-001:primary:1:-\",\"kind\":\"rule_result\",\"label\":\"DAY-COMBINE-001 · 第1爻 · 与日辰六合\",\"result\":{\"code\":\"day_combine\",\"label\":\"与日辰六合\"},\"rule_id\":\"DAY-COMBINE-001\",\"source_facts\":[\"fact:/lines/0/relations/day_relation\",\"fact:/lines/0/branch\",\"fact:/calendar/day_branch\"],\"target\":{\"component\":\"primary\",\"line\":1}},{\"id\":\"rule:HIDDEN-GENERATE-FLY-001:hidden:2:-\",\"kind\":\"rule_result\",\"label\":\"HIDDEN-GENERATE-FLY-001 · 第2爻 · 伏神生飞神\",\"result\":{\"code\":\"hidden_generate_fly\",\"from\":{\"component\":\"hidden\",\"line\":2},\"label\":\"伏神生飞神\",\"to\":{\"component\":\"primary\",\"line\":2}},\"rule_id\":\"HIDDEN-GENERATE-FLY-001\",\"source_facts\":[\"fact:/lines/1/relations/hidden_relation\",\"fact:/lines/1/element\",\"fact:/lines/1/hidden/element\"],\"target\":{\"component\":\"hidden\",\"line\":2}},{\"id\":\"rule:MONTH-STATE-WANG-001:primary:3:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-WANG-001 · 第3爻 · 月令旺\",\"result\":{\"code\":\"month_state_wang\",\"label\":\"月令旺\"},\"rule_id\":\"MONTH-STATE-WANG-001\",\"source_facts\":[\"fact:/lines/2/relations/month_strength\",\"fact:/lines/2/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":3}},{\"id\":\"rule:MONTH-STATE-WANG-001:primary:5:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-WANG-001 · 第5爻 · 月令旺\",\"result\":{\"code\":\"month_state_wang\",\"label\":\"月令旺\"},\"rule_id\":\"MONTH-STATE-WANG-001\",\"source_facts\":[\"fact:/lines/4/relations/month_strength\",\"fact:/lines/4/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":5}},{\"id\":\"rule:MONTH-STATE-XIANG-001:primary:4:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-XIANG-001 · 第4爻 · 月令相\",\"result\":{\"code\":\"month_state_xiang\",\"label\":\"月令相\"},\"rule_id\":\"MONTH-STATE-XIANG-001\",\"source_facts\":[\"fact:/lines/3/relations/month_strength\",\"fact:/lines/3/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":4}},{\"id\":\"rule:MONTH-STATE-XIU-001:primary:1:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-XIU-001 · 第1爻 · 月令休\",\"result\":{\"code\":\"month_state_xiu\",\"label\":\"月令休\"},\"rule_id\":\"MONTH-STATE-XIU-001\",\"source_facts\":[\"fact:/lines/0/relations/month_strength\",\"fact:/lines/0/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":1}},{\"id\":\"rule:MONTH-STATE-XIU-001:primary:6:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-XIU-001 · 第6爻 · 月令休\",\"result\":{\"code\":\"month_state_xiu\",\"label\":\"月令休\"},\"rule_id\":\"MONTH-STATE-XIU-001\",\"source_facts\":[\"fact:/lines/5/relations/month_strength\",\"fact:/lines/5/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":6}},{\"id\":\"rule:MONTH-STATE-QIU-001:primary:2:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-STATE-QIU-001 · 第2爻 · 月令囚\",\"result\":{\"code\":\"month_state_qiu\",\"label\":\"月令囚\"},\"rule_id\":\"MONTH-STATE-QIU-001\",\"source_facts\":[\"fact:/lines/1/relations/month_strength\",\"fact:/lines/1/element\",\"fact:/calendar/month_branch\"],\"target\":{\"component\":\"primary\",\"line\":2}},{\"id\":\"rule:YING-GENERATE-SHI-001:primary:3:6\",\"kind\":\"rule_result\",\"label\":\"YING-GENERATE-SHI-001 · 第3爻 · 应生世\",\"result\":{\"code\":\"ying_generate_shi\",\"from\":{\"component\":\"primary\",\"line\":6},\"label\":\"应生世\",\"to\":{\"component\":\"primary\",\"line\":3}},\"rule_id\":\"YING-GENERATE-SHI-001\",\"source_facts\":[\"fact:/hexagram/shi_line\",\"fact:/hexagram/ying_line\",\"fact:/lines/0/is_shi\",\"fact:/lines/1/is_shi\",\"fact:/lines/2/is_shi\",\"fact:/lines/3/is_shi\",\"fact:/lines/4/is_shi\",\"fact:/lines/5/is_shi\",\"fact:/lines/0/is_ying\",\"fact:/lines/1/is_ying\",\"fact:/lines/2/is_ying\",\"fact:/lines/3/is_ying\",\"fact:/lines/4/is_ying\",\"fact:/lines/5/is_ying\",\"fact:/lines/2/element\",\"fact:/lines/5/element\"],\"target\":{\"component\":\"primary\",\"line\":3,\"related_line\":6}},{\"id\":\"rule:MONTH-COMBINE-001:primary:1:-\",\"kind\":\"rule_result\",\"label\":\"MONTH-COMBINE-001 · 第1爻 · 与月建六合\",\"result\":{\"code\":\"month_combine\",\"label\":\"与月建六合\"},\"rule_id\":\"MONTH-COMBINE-001\",\"source_facts\":[\"fact:/calendar/month_branch\",\"fact:/lines/0/branch\"],\"target\":{\"component\":\"primary\",\"line\":1}}],\"question\":\"我想在邻里熟人间发起一次小型桌游聚会，没有收费计划，时间地点尚未确定。就能否顺利组织成一次活动怎么看？\",\"response_schema\":{\"additionalProperties\":false,\"properties\":{\"conclusion\":{\"additionalProperties\":false,\"properties\":{\"answer\":{\"maxLength\":220,\"minLength\":1,\"type\":\"string\"},\"direction\":{\"enum\":[\"favorable\",\"unfavorable\",\"mixed\",\"unclear\"]}},\"required\":[\"direction\",\"answer\"],\"type\":\"object\"},\"context_id\":{\"maxLength\":80,\"minLength\":1,\"type\":\"string\"},\"counter_factor_ids\":{\"items\":{\"enum\":[\"f1\",\"f2\",\"f3\"]},\"maxItems\":3,\"minItems\":0,\"type\":\"array\",\"uniqueItems\":true},\"factors\":{\"items\":{\"additionalProperties\":false,\"properties\":{\"assumption\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"},\"effect\":{\"enum\":[\"support\",\"oppose\",\"neutral\",\"conditional\"]},\"evidence_ids\":{\"items\":{\"maxLength\":180,\"minLength\":1,\"type\":\"string\"},\"maxItems\":8,\"minItems\":1,\"type\":\"array\",\"uniqueItems\":true},\"id\":{\"enum\":[\"f1\",\"f2\",\"f3\"]},\"interpretation\":{\"maxLength\":400,\"minLength\":1,\"type\":\"string\"},\"limitation\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"}},\"required\":[\"id\",\"effect\",\"evidence_ids\",\"interpretation\",\"assumption\",\"limitation\"],\"type\":\"object\"},\"maxItems\":3,\"minItems\":0,\"type\":\"array\",\"uniqueItems\":true},\"focus\":{\"items\":{\"additionalProperties\":false,\"properties\":{\"evidence_id\":{\"maxLength\":180,\"minLength\":1,\"type\":\"string\"},\"role_hypothesis\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"}},\"required\":[\"evidence_id\",\"role_hypothesis\"],\"type\":\"object\"},\"maxItems\":1,\"minItems\":0,\"type\":\"array\",\"uniqueItems\":true},\"general_advice\":{\"items\":{\"maxLength\":240,\"minLength\":1,\"type\":\"string\"},\"maxItems\":2,\"minItems\":0,\"type\":\"array\",\"uniqueItems\":true},\"major_factor_ids\":{\"items\":{\"enum\":[\"f1\",\"f2\",\"f3\"]},\"maxItems\":3,\"minItems\":0,\"type\":\"array\",\"uniqueItems\":true},\"schema_version\":{\"const\":\"task-led-experiment-1\"},\"task\":{\"const\":\"trend\"},\"tradeoff_reason\":{\"maxLength\":400,\"minLength\":1,\"type\":\"string\"},\"uncertainties\":{\"items\":{\"maxLength\":300,\"minLength\":1,\"type\":\"string\"},\"maxItems\":3,\"minItems\":1,\"type\":\"array\",\"uniqueItems\":true}},\"required\":[\"schema_version\",\"context_id\",\"task\",\"conclusion\",\"focus\",\"major_factor_ids\",\"counter_factor_ids\",\"tradeoff_reason\",\"factors\",\"general_advice\",\"uncertainties\"],\"type\":\"object\"},\"task\":\"trend\"}"
+          }
+        ]
+      },
+      "input_allowance": 30795,
+      "reserve_cny": 0.094358
+    }
+  ]
+}

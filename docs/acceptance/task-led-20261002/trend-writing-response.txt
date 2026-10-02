@@ -1,0 +1,77 @@
+{
+  "schema_version": "task-led-experiment-1",
+  "context_id": "sha256:68023bee7e7f6f711b72bad29e44079d2cb33a159c607db72e4b2e4e08f31efb",
+  "task": "trend",
+  "conclusion": {
+    "direction": "unclear",
+    "answer": "就“一个月内是否容易完成三篇短篇旅行回忆”这一目标，当前证据不足以形成有把握的方向判断：能识别出若干可能利好与耗损的线索，但传统取法权重与映射并不足以支撑单一结论，故不作趋势定论。"
+  },
+  "focus": [
+    {
+      "evidence_id": "fact:/lines/3/relative",
+      "role_hypothesis": "假设世爻六亲“子孙”可映射为写作产出与自我表达的流畅度；该六亲本身只标示爻位属性，不直接等同于实际能力或进度。"
+    }
+  ],
+  "major_factor_ids": [],
+  "counter_factor_ids": [],
+  "tradeoff_reason": "未选出可优先的主要因素；因为缺乏已核实的传统取法权重来决定诸如动爻、化退、旬空、月破、飞伏等线索在“自我记录型写作”题材中应如何相对加权，故不对同一目标强行作优先排序。",
+  "factors": [
+    {
+      "id": "f1",
+      "effect": "support",
+      "evidence_ids": [
+        "fact:/lines/1/moving",
+        "fact:/lines/1/relative",
+        "fact:/lines/1/state_text",
+        "rule:LINE-MOVING-001:primary:2:-",
+        "fact:/lines/3/relations/month_strength",
+        "rule:MONTH-STATE-WANG-001:primary:4:-"
+      ],
+      "interpretation": "取象假设：第2爻动且临官鬼，若把官鬼映射为“计划约束/进度压力”，其发动可能代表推动力；世爻子孙临月旺，若映射为自我表达，可能对持续写出短篇有利。二者对“是否容易完成”这一目标的相关性仅在于提供支持方向的假设，不据此断吉凶。",
+      "assumption": "假设六亲映射为：官鬼=计划压力或自我督促，子孙=自我表达与产出；仅用于本问题角色设定，非固定传统定义。",
+      "limitation": "不能确认动爻官鬼是否真对应实际写作动力或压力，也不能确认月旺世爻是否代表实际流畅完成。"
+    },
+    {
+      "id": "f2",
+      "effect": "oppose",
+      "evidence_ids": [
+        "fact:/lines/1/is_kongwang",
+        "rule:LINE-VOID-001:primary:2:-",
+        "fact:/lines/1/relations/day_relation",
+        "rule:DAY-CLASH-001:primary:2:-",
+        "fact:/lines/1/relations/month_strength",
+        "rule:MONTH-STATE-SI-001:primary:2:-",
+        "fact:/lines/1/relations/advance_retreat",
+        "rule:MOVE-RETREAT-001:primary:2:-",
+        "fact:/lines/1/branch"
+      ],
+      "interpretation": "取象假设：同一动爻官鬼旬空、受日冲、月令为死，并有化退，可映射为计划推进力耗散或自我督促减弱；其对“是否容易完成”的相关性在于提示可能需要额外坚持才能维持节奏，属假设性阻碍线索。",
+      "assumption": "假设官鬼动爻的旬空、日冲、化退可映射为写作计划推进力不足或中断风险，而非预示必然失败。",
+      "limitation": "不能确认旬空、日冲、化退在自我记录型短篇写作中实际对应何种行为或心理状态，也不代表实际无法完成。"
+    },
+    {
+      "id": "f3",
+      "effect": "conditional",
+      "evidence_ids": [
+        "fact:/lines/4/hidden/relative",
+        "fact:/lines/4/relations/hidden_relation",
+        "rule:HIDDEN-FLY-CONTROL-001:hidden:5:-",
+        "fact:/lines/4/relative",
+        "fact:/lines/4/relations/month_strength",
+        "rule:MONTH-STATE-XIU-001:primary:5:-"
+      ],
+      "interpretation": "取象假设：第5爻兄弟下伏妻财且飞神克伏神，妻财可映射为可供写作的素材或内在资源；兄弟可映射为分散注意力的杂物。该结构若映射到“一个月内完成三篇”的目标，可能表示素材调动或时间分配需要额外条件，而非直接说明实际资源多寡。",
+      "assumption": "假设妻财=旅行回忆素材或可支配时间资源，兄弟=竞争性事务或注意力分散；此映射仅为本问题假设。",
+      "limitation": "不能确认伏神妻财是否对应真实的素材或时间，也不能确认兄弟克伏神是否对应实际干扰。"
+    }
+  ],
+  "general_advice": [
+    "为降低不确定性的影响，可先把“一个月三篇短篇”拆成更小的可交付步骤，例如每周推进一篇或每篇先写一段，再根据实际写作节奏调整。",
+    "如果写作过程中感到动力不足或素材难组织，不必将此视为成败预兆，可先尝试降低单次写作门槛、记录可用片段，并允许后续修改。"
+  ],
+  "uncertainties": [
+    "缺乏针对“自我记录型短篇旅行回忆”的已核实传统取法或权重，无法确定动爻、化退、旬空、飞伏等线索的相对重要性。",
+    "将六亲映射为写作动力、素材或产出属于解释性假设，不能确认卦盘线索与实际写作行为、时间投入或完成度之间的对应关系。",
+    "现有程序事实未提供可用于判断“是否容易完成”的实际能力、精力或时间资源信息，故无法从卦盘直接确认完成难度。"
+  ]
+}

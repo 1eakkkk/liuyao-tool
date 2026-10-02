@@ -1,0 +1,123 @@
+{
+  "version": "task-led-experiment-1",
+  "synthetic": true,
+  "production": false,
+  "network_calls": 0,
+  "automatic_task_classification": false,
+  "cases": [
+    {
+      "task": "facts",
+      "context_id": "sha256:f5b6e60a69e431d163d89ee6c909f9a105b86212735791211b5edee4978691d8",
+      "view": {
+        "task": "facts",
+        "question": "我的王者万象棋段位能打到王者段位吗？",
+        "generated_by": "program",
+        "facts": [
+          {
+            "id": "fact:/lines/0/moving",
+            "text": "第1爻 · 动爻：否"
+          },
+          {
+            "id": "fact:/lines/1/moving",
+            "text": "第2爻 · 动爻：是"
+          },
+          {
+            "id": "fact:/lines/2/moving",
+            "text": "第3爻 · 动爻：否"
+          },
+          {
+            "id": "fact:/lines/3/moving",
+            "text": "第4爻 · 动爻：是"
+          },
+          {
+            "id": "fact:/lines/4/moving",
+            "text": "第5爻 · 动爻：是"
+          },
+          {
+            "id": "fact:/lines/5/moving",
+            "text": "第6爻 · 动爻：否"
+          },
+          {
+            "id": "fact:/hexagram/shi_line",
+            "text": "卦盘 · 世爻位置：4"
+          },
+          {
+            "id": "fact:/hexagram/ying_line",
+            "text": "卦盘 · 应爻位置：1"
+          }
+        ],
+        "network_calls": 0,
+        "mechanical_check": "selected_program_records_only",
+        "semantic_acceptance": "not_applicable_to_model",
+        "forecast_accuracy": "unassessed"
+      },
+      "synthetic_answer": null
+    },
+    {
+      "task": "advice",
+      "context_id": "sha256:88ec4a3e0f00b7f209a873926b03e77f87db0c541127c7875447a5df0b35ee23",
+      "view": {
+        "task": "advice",
+        "question": "我的王者万象棋段位能打到王者段位吗？",
+        "advice": [
+          "先明确自己的练习目标，再记录实际反馈。"
+        ],
+        "limits": [
+          "这是一般建议展示样例，未形成趋势判断。"
+        ],
+        "mechanical_check": "shape_and_task_only",
+        "semantic_acceptance": "unassessed",
+        "forecast_accuracy": "unassessed"
+      },
+      "synthetic_answer": {
+        "schema_version": "task-led-experiment-1",
+        "context_id": "sha256:88ec4a3e0f00b7f209a873926b03e77f87db0c541127c7875447a5df0b35ee23",
+        "task": "advice",
+        "advice": [
+          "先明确自己的练习目标，再记录实际反馈。"
+        ],
+        "limits": [
+          "这是一般建议展示样例，未形成趋势判断。"
+        ]
+      }
+    },
+    {
+      "task": "trend",
+      "context_id": "sha256:d468e3df6073f16ef994fcfa14698491898ef334f4a3d26f073f4c5d34025d7f",
+      "view": {
+        "task": "trend",
+        "question": "我的王者万象棋段位能打到王者段位吗？",
+        "summary": "本样例没有建立合理取法，不能确认目标能否完成。",
+        "direction": "unclear",
+        "tradeoff_reason": "手工展示样例没有支持相关性或比较权重，不作取舍。",
+        "focus": [],
+        "factors": [],
+        "general_advice": [],
+        "uncertainties": [
+          "真实模型仍可能越界，需要独立内容检查。"
+        ],
+        "mechanical_check": "structure_and_links_only",
+        "semantic_acceptance": "unassessed",
+        "forecast_accuracy": "unassessed"
+      },
+      "synthetic_answer": {
+        "schema_version": "task-led-experiment-1",
+        "context_id": "sha256:d468e3df6073f16ef994fcfa14698491898ef334f4a3d26f073f4c5d34025d7f",
+        "task": "trend",
+        "conclusion": {
+          "direction": "unclear",
+          "answer": "本样例没有建立合理取法，不能确认目标能否完成。"
+        },
+        "focus": [],
+        "major_factor_ids": [],
+        "counter_factor_ids": [],
+        "tradeoff_reason": "手工展示样例没有支持相关性或比较权重，不作取舍。",
+        "factors": [],
+        "general_advice": [],
+        "uncertainties": [
+          "真实模型仍可能越界，需要独立内容检查。"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "schema_version": "task-led-independent-review-1",
+  "reviewer_id": "agent-a",
+  "reviewed_on": "2026-10-02",
+  "status": "offline_checks_passed",
+  "scope": "只读隔离协议及四题runner；离线模拟，未调用真实API、未读凭据/真实预算或protected holdout，未修改实现。",
+  "source_files": [
+    {
+      "file": "experiments/judgment-review/task-led.js",
+      "sha256": "dc2fcf9182f87dca6e8e99c008184f4867d0fea4b2eff3630a15efb6b9da845b"
+    },
+    {
+      "file": "experiments/judgment-review/task-led-view.js",
+      "sha256": "cfc51a975116eea889b97e6ca0bac606ed56987d3b7807e8f75ca41662075db0"
+    },
+    {
+      "file": "tests/output/task-led.test.js",
+      "sha256": "5b682a518a763b971dd3eb53cf4570b2d284a4ffa37594d81ebada4b5d946646"
+    },
+    {
+      "file": "experiments/judgment-review/task-led-live-plan.js",
+      "sha256": "ddb3f2a3029584771ee8bd3bac6380756099dce096a5c0eb84c80e5b9d7e4ee2"
+    },
+    {
+      "file": "scripts/task-led-live-pilot.js",
+      "sha256": "a639fc9936d907a4f0c568ed6bfcac5b69bf0548dd6f39ad30ca7010c267dde0"
+    },
+    {
+      "file": "tests/output/task-led-live-pilot.test.js",
+      "sha256": "0a0bdd8f02514bd9d3d6ccf231286cb7a0dcd76945bb36adfe27835b815afe98"
+    }
+  ],
+  "checks": [
+    {
+      "id": "trusted_identity",
+      "verdict": "pass",
+      "reason": "source与task-led context均须模块WeakSet信任对象，克隆拒绝；trend另由WeakMap绑定P2 underlying context。不同目标context答案拒绝，task或版本变化拒绝。"
+    },
+    {
+      "id": "advice_isolation",
+      "verdict": "pass",
+      "reason": "advice实际messages只含question/context_id/task/schema，context没有source_context_id、canonical/evidence/history；相同问题即使换卦盘也产生相同消息，隔离盘面身份。用户自己在问题中写入的内容仍按问题传递，不承诺自动删除问题里的文字。"
+    },
+    {
+      "id": "facts_selection",
+      "verdict": "pass",
+      "reason": "调用者须显式选择1–18个唯一、稠密string IDs，只接受现有program_fact，rule/unknown/duplicate/sparse均拒绝。程序显示选择字段，无模型request或model fact answer入口；null只显示未记载，不代表现实不存在。"
+    },
+    {
+      "id": "returned_values",
+      "verdict": "pass",
+      "reason": "事实view是冻结选择的副本，改显示副本不改后续程序值；trend只传引用和解释，额外value/result字段拒绝，规则source_facts由可信目录展示；advice仅建议与限制。"
+    },
+    {
+      "id": "html",
+      "verdict": "pass",
+      "reason": "task-led-view先验证完整view，再创建fragment；所有用户/模型文字经textContent，不成为HTML；无效答案保持旧内容。恶意img测试没有生成img元素。"
+    },
+    {
+      "id": "major_focus",
+      "verdict": "pass",
+      "reason": "继承P2：focus只能现有relative program_fact，非unclear须直接关联所选major；major/counter有效且不重叠，favorable/unfavorable需对应major effect，mixed需主要支持与阻碍。未知引用和模型值拒绝；不证明角色映射或主次文字正确。"
+    },
+    {
+      "id": "dense_model_data",
+      "verdict": "pass",
+      "reason": "task-led局部assertDenseJson拒绝稀疏数组及循环值，不改P2共享schema validator。Sparse advice/trend factors JS接口反例现拒绝；真正JSON本来不会生成holes。"
+    },
+    {
+      "id": "funds_and_replay",
+      "verdict": "pass",
+      "reason": "固定新4例plan+seal须匹配重新生成完整计划；仅新task-led campaign/schema、authorized=true、2元cap、空reserve/settlement可执行；锁内重读reserve。检查先于credential/network，旧账本、重封计划、已execution/attempt或reserved均拒绝。"
+    },
+    {
+      "id": "wallet_stop_sse",
+      "verdict": "pass",
+      "reason": "每次chat需钱包确认>=全批reserve+1元；最多4、任何transport/archive/SSE/model/usage/schema/link失败即停，无重试/自动结算，完整reserve保留。复用已修严格SSE独立有界归档，usage/hash与check绑定，semantic/forecast始终unassessed。"
+    },
+    {
+      "id": "utc_after_balance",
+      "verdict": "pass",
+      "reason": "入口余额返回后和每次下一chat余额await后均再次核UTC日期；独立跨日余额反例现在第2chat前拒绝，保持1次chat及1个reservation。"
+    }
+  ],
+  "history": [
+    {
+      "id": "sparse_fact_ids",
+      "original_finding": "new Array(1)和[,合法ID]绕过map检查，生成facts:[null]或含null。",
+      "original_observation": "两项本地JS接口反例均accepted。",
+      "resolution": "own slot/string检查先于map，两个反例现在Dense string fact selection required拒绝。",
+      "status": "resolved"
+    },
+    {
+      "id": "sparse_advice_answer",
+      "original_finding": "共享shape validator的forEach跳过hole，advice:new Array(1)通过并显示空项。",
+      "original_observation": "accepted，view.advice=[null]。",
+      "boundary": "真正JSON没有稀疏数组；这是导出JS接口边界，不是已发生的模型JSON错误。",
+      "resolution": "局部assertDenseJson；独立advice反例Sparse model arrays rejected，trend sparse和循环值也拒绝。",
+      "status": "resolved"
+    },
+    {
+      "id": "utc_balance_await",
+      "original_finding": "第2次余额await期间UTC跨日，旧runner在余额返回后直接发chat，第3轮才拒绝。",
+      "original_observation": {
+        "chats": 2,
+        "request_times": [
+          "2026-10-02T04:00:00.000Z",
+          "2026-10-03T00:00:00.000Z"
+        ]
+      },
+      "resolution": "余额返回后补UTC检查。独立原反例现chats=1，第2项request_started=false，error=UTC price date changed during balance，reservation_count=1。",
+      "status": "resolved"
+    }
+  ],
+  "tests": {
+    "initial_protocol_and_p2": {
+      "files": 2,
+      "passed": 40
+    },
+    "protocol_and_new_runner_after_facts_fix": {
+      "files": 2,
+      "passed": 59
+    },
+    "final_protocol_and_new_runner": {
+      "command": "npx vitest run tests/output/task-led.test.js tests/output/task-led-live-pilot.test.js --maxWorkers=2 --reporter=dot",
+      "files": 2,
+      "passed": 60,
+      "failed": 0
+    },
+    "additional_local_probes": [
+      {
+        "id": "cross_context",
+        "rejected": true,
+        "error": "Context or task mismatch"
+      },
+      {
+        "id": "cloned_context",
+        "rejected": true,
+        "error": "Untrusted task-led context"
+      },
+      {
+        "id": "sparse_trend_factors",
+        "rejected": true,
+        "error": "Sparse model arrays rejected"
+      },
+      {
+        "id": "cyclic_answer",
+        "rejected": true,
+        "error": "Cyclic model value"
+      }
+    ],
+    "original_facts_sparse_rechecks": 2,
+    "advice_sparse_recheck": 1,
+    "UTC_async_crossing_recheck": "passed_after_repair"
+  },
+  "plan": {
+    "hash": "ffd9d2e9751a19ec2f8157b9721467815967762caeda547df803b73043b6f414",
+    "version": "task-led-four-live-development-1",
+    "planned_calls": 4,
+    "tasks": [
+      "advice",
+      "advice",
+      "trend",
+      "trend"
+    ],
+    "reserve_cny": 0.277544,
+    "wallet_floor_cny": 1,
+    "minimum_wallet_cny": 1.277544,
+    "price_checked": "2026-10-02",
+    "campaign_cap_cny": 2
+  },
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed",
+  "limitations": [
+    "explicit task不是自然语言自动分类，调用者仍须正确选择task与fact_ids；字段覆盖不证明选择完整回应问题。",
+    "隔离后的advice自由文字仍可能虚构现实或偷偷给趋势；trend文字仍可能重抄属性、滥用取象、错误主次或假装来源，需要真实逐段内容审查。",
+    "JSON/链接/HTML及执行保护通过，不是语义改善或预测验证；这批尚未付费生成时不称真实样本验收。",
+    "本审查没有认证实际钱包/账本资金；官方价格沿用Root当日核对，本审查未联网或读取真实预算。"
+  ]
+}

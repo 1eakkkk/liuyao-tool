@@ -1,0 +1,48 @@
+{
+  "id": "advice-boxes",
+  "context_id": "sha256:7aeecf4db34ea762394dde2b5a1261924def24997d7d1ffcf40e04ce61869696",
+  "request_hash": "d4ee703439c7d6f3dbffcdb2802f9519b2ff1a4f36372a3c67c408e14eb601e5",
+  "status": "validated",
+  "issues": [],
+  "model": "deepseek-flash",
+  "finish_reason": "stop",
+  "saw_done": true,
+  "usage": {
+    "prompt_tokens": 334,
+    "completion_tokens": 184,
+    "total_tokens": 518,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 334
+  },
+  "usage_ok": true,
+  "usage_sha256": "1d3a079ff271090d50de54cd9d34dcfbc244eb18c03fcad7800fbafc726c2922",
+  "cost_unknown": false,
+  "conservative_peak_cost_cny": 0.00214,
+  "archive": {
+    "complete": true,
+    "error": null,
+    "redacted": false,
+    "bytes": 54251,
+    "sha256": "496e9e8c387a04e77c432ee353eed3126ec4b5bfa77be8afb1379bac569995dd"
+  },
+  "raw_sha256": "b086dbd408d666eefb1f8202c9f1ec1ae710c7092991271c754cf4436f3e0701",
+  "response": {
+    "schema_version": "task-led-experiment-1",
+    "context_id": "sha256:7aeecf4db34ea762394dde2b5a1261924def24997d7d1ffcf40e04ce61869696",
+    "task": "advice",
+    "advice": [
+      "先给现有收纳盒拍一张全景照，再写下你平时找东西时最先想到的几个关键词；标签直接用这些词，不必套用通用分类。",
+      "从你最近一周内翻找过两次以上的盒子开始贴标签，一次只处理一个盒子，贴完就把它放回固定位置。"
+    ],
+    "limits": [
+      "只能基于你实际拥有的盒子数量和常用物品来定标签，无法替你判断哪些品类更值得保留或丢弃。",
+      "贴标签解决的是外观识别，不会自动改变盒内物品的摆放方式；如果东西叠放混乱，仍可能找不到。"
+    ]
+  },
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed",
+  "reservation_retained": true
+}

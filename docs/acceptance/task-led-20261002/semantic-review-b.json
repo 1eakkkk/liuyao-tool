@@ -1,0 +1,384 @@
+{
+  "schema_version": "task-led-human-review-1",
+  "reviewer_id": "agent-b",
+  "review_kind": "retrospective_nonblind",
+  "plan_sha256": "79fc4b39ebf506248d343d7f2a3c7de21a4b10b94a3ef1ffb429d7ca7429a812",
+  "method": "独立回顾性人工内容审查，仅审核实际返回三条；每条quotes.path为JSON Pointer，start/end为该路径解码字符串内UTF-16偏移，end不包含。检查全文解释/假设/限制/建议/不确定性，规则仅按source_facts闭包覆盖。机械校验与语义判断分开。未查另一审查结果；未调用API或读取凭据/预算/受保护文档。",
+  "planned_cases": 4,
+  "actual_responses": 3,
+  "not_reviewed": [
+    {
+      "case_id": "trend-gathering",
+      "reason": "第三条schema拒绝后停止，没有实际回复，不评六维。"
+    }
+  ],
+  "reviews": [
+    {
+      "case_id": "advice-notes",
+      "response_sha256": "6e645e43330eff347ff79237d2853ce76a620b3ac9162fa37b724b37f870c838",
+      "criteria": {
+        "facts": {
+          "verdict": "pass",
+          "reason": "自由标签数量、目录和归类方法是建议，不是虚构用户已有分类或笔记数量；未补入盘面事实。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/advice/0",
+              "start": 0,
+              "end": 71,
+              "text": "先不要急于建立固定分类体系，可先把你已有的读书笔记全部列出，给每条笔记临时打上1到3个自由标签（如主题、作者、场景），标签可以重复和临时调整。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "围绕开始整理和便于检索；未预测成绩、耗时或完成期限。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/limits/0",
+              "start": 0,
+              "end": 46,
+              "text": "没有固定分类时，整理初期应优先保证笔记条目的完整性和可检索性，而不是一次性确立完美分类体系。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "support": {
+          "verdict": "pass",
+          "reason": "提出低成本可尝试的普通整理方法，未用象意确认现实，未把建议包装为卦盘支持或结果保证。此判定不代表实际效果已经测试。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/advice/1",
+              "start": 0,
+              "end": 79,
+              "text": "在完成第一轮自由标签后，统计出现频率较高的标签，将它们合并或重新命名为更概括的类别，再按这些类别创建目录文件夹或索引页，并把每条笔记归入最合适的1到2个类别。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "priority": {
+          "verdict": "pass",
+          "reason": "本例为一般建议任务，未强加用神、装饰性因素或吉凶权重；两条建议提供开始步骤。这是任务适配判断，不是传统取用质量判断。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/advice/0",
+              "start": 0,
+              "end": 71,
+              "text": "先不要急于建立固定分类体系，可先把你已有的读书笔记全部列出，给每条笔记临时打上1到3个自由标签（如主题、作者、场景），标签可以重复和临时调整。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "没有趋势方向字段或成功/失败结论；限制文字也没有暗示保证。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/limits/1",
+              "start": 0,
+              "end": 47,
+              "text": "如果笔记数量较大，建议逐批处理而非全量一次完成；本建议不包含对整理耗时或最终分类有效性的预测。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "已核对冻结实际user消息仅context_id/question/response_schema/task，无canonical/evidence；回复仅建议和限制，不输出盘面引用或趋势。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/task",
+              "start": 0,
+              "end": 6,
+              "text": "advice",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "advice-boxes",
+      "response_sha256": "b086dbd408d666eefb1f8202c9f1ec1ae710c7092991271c754cf4436f3e0701",
+      "criteria": {
+        "facts": {
+          "verdict": "pass",
+          "reason": "拍照、关键词、翻找频次是拟议整理步骤；未断言用户确有某数量盒子或当前混乱。最近一周两次以上是建议筛选条件，不是已知事实。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/advice/0",
+              "start": 0,
+              "end": 53,
+              "text": "先给现有收纳盒拍一张全景照，再写下你平时找东西时最先想到的几个关键词；标签直接用这些词，不必套用通用分类。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "围绕自己找东西与开始贴标签；未预测成败、时间，也未扩展成丢弃整理任务。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/limits/0",
+              "start": 0,
+              "end": 43,
+              "text": "只能基于你实际拥有的盒子数量和常用物品来定标签，无法替你判断哪些品类更值得保留或丢弃。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "support": {
+          "verdict": "pass",
+          "reason": "提出低成本可尝试的普通整理方法，未用象意确认现实，未把建议包装为卦盘支持或结果保证。此判定不代表实际效果已经测试。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/advice/1",
+              "start": 0,
+              "end": 45,
+              "text": "从你最近一周内翻找过两次以上的盒子开始贴标签，一次只处理一个盒子，贴完就把它放回固定位置。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "priority": {
+          "verdict": "pass",
+          "reason": "本例为一般建议任务，未强加用神、装饰性因素或吉凶权重；两条建议提供开始步骤。这是任务适配判断，不是传统取用质量判断。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/advice/0",
+              "start": 0,
+              "end": 53,
+              "text": "先给现有收纳盒拍一张全景照，再写下你平时找东西时最先想到的几个关键词；标签直接用这些词，不必套用通用分类。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "没有趋势方向字段或成功/失败结论；限制文字也没有暗示保证。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/limits/1",
+              "start": 0,
+              "end": 44,
+              "text": "贴标签解决的是外观识别，不会自动改变盒内物品的摆放方式；如果东西叠放混乱，仍可能找不到。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "已核对冻结实际user消息仅context_id/question/response_schema/task，无canonical/evidence；回复仅建议和限制，不输出盘面引用或趋势。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/task",
+              "start": 0,
+              "end": 6,
+              "text": "advice",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "trend-writing",
+      "response_sha256": "076dce4b3bab94696acffc329b362cdc225201c2cdd184d248f625e4e712206a",
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "所述盘面属性大体与canonical相符，但不满足本段证据覆盖：f1的“世爻子孙”缺本段relative及is_shi/shi_line引用，MONTH-STATE-WANG闭包不含这两项；f2的“官鬼”缺本段relative，MOVE-RETREAT闭包覆盖moving但不覆盖relative。focus.role_hypothesis说“世爻”却仅引用relative；tradeoff_reason新增“月破”没有本段依据。不能用其他段引用、全部输入可见或免责声明替代本段覆盖。",
+          "evidence_ids": [
+            "fact:/lines/3/relative",
+            "fact:/lines/3/is_shi",
+            "fact:/hexagram/shi_line",
+            "fact:/lines/1/relative",
+            "rule:MONTH-STATE-WANG-001:primary:4:-",
+            "rule:MOVE-RETREAT-001:primary:2:-",
+            "rule:MONTH-CLASH-001:primary:2:-"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/interpretation",
+              "start": 44,
+              "end": 51,
+              "text": "世爻子孙临月旺",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/1/interpretation",
+              "start": 5,
+              "end": 13,
+              "text": "同一动爻官鬼旬空",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/focus/0/role_hypothesis",
+              "start": 0,
+              "end": 10,
+              "text": "假设世爻六亲“子孙”",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/tradeoff_reason",
+              "start": 40,
+              "end": 42,
+              "text": "月破",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "目标仍为一个月内完成三篇自用旅行回忆的容易程度。“一个月”来自用户目标窗口，未被转成应期预测；未改变完成标准或假定商业成果。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/conclusion/answer",
+              "start": 0,
+              "end": 25,
+              "text": "就“一个月内是否容易完成三篇短篇旅行回忆”这一目标",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "support": {
+          "verdict": "uncertain",
+          "reason": "正文明确标为取象假设，并限制不能确认真实动力、素材和完成能力；一般建议独立且未抵消阻碍。然而官鬼动对应推进支持、旬空日冲化退对应推进耗散、妻财对应素材等角色和作用没有已核实传统依据，程序规则只证明盘面关系，不能证明这些现实目标映射。故不能因为假设标签齐全便判解释支持通过；也不能由此自行改判偏吉凶。",
+          "evidence_ids": [
+            "fact:/lines/1/relative",
+            "rule:LINE-MOVING-001:primary:2:-",
+            "rule:LINE-VOID-001:primary:2:-",
+            "rule:DAY-CLASH-001:primary:2:-",
+            "rule:MOVE-RETREAT-001:primary:2:-",
+            "fact:/lines/4/hidden/relative",
+            "rule:HIDDEN-FLY-CONTROL-001:hidden:5:-"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/interpretation",
+              "start": 14,
+              "end": 43,
+              "text": "若把官鬼映射为“计划约束/进度压力”，其发动可能代表推动力",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/1/interpretation",
+              "start": 28,
+              "end": 46,
+              "text": "可映射为计划推进力耗散或自我督促减弱",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/2/interpretation",
+              "start": 21,
+              "end": 39,
+              "text": "妻财可映射为可供写作的素材或内在资源",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/general_advice/1",
+              "start": 0,
+              "end": 59,
+              "text": "如果写作过程中感到动力不足或素材难组织，不必将此视为成败预兆，可先尝试降低单次写作门槛、记录可用片段，并允许后续修改。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "priority": {
+          "verdict": "pass",
+          "reason": "明确保留取用和权重不足，不强造唯一用神或用一利一弊计分；unclear下允许未选major。focus未与因素直接关联在unclear时不是结构违规，但使取用的实质依据仍待确认，不能把本维通过解释成已建立有效权重。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/tradeoff_reason",
+              "start": 0,
+              "end": 26,
+              "text": "未选出可优先的主要因素；因为缺乏已核实的传统取法权重",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "unclear与正文缺少取法/映射支持、不作趋势定论一致；没有仅因两面存在自动mixed，也没有一般建议保证完成。此判定仅是结论一致性，不评传统预测准确。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/conclusion/direction",
+              "start": 0,
+              "end": 7,
+              "text": "unclear",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/conclusion/answer",
+              "start": 62,
+              "end": 90,
+              "text": "传统取法权重与映射并不足以支撑单一结论，故不作趋势定论。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "实际任务及回复均为trend，普通建议分置general_advice，未将其列支持因素；没有从取象直接确认用户现实。此维仅按冻结任务边界判，不能掩盖另外记录的schema拒绝及facts本段引用失败。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/task",
+              "start": 0,
+              "end": 5,
+              "text": "trend",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "mechanical_findings": [
+    {
+      "case_id": "trend-writing",
+      "status": "rejected",
+      "path": "/factors/1/evidence_ids",
+      "reason": "实际9项，冻结schema最大8；保留原始失败。此机械失败不自动证明传统解释对错。",
+      "quoted_item": {
+        "path": "/factors/1/evidence_ids/8",
+        "start": 0,
+        "end": 20,
+        "text": "fact:/lines/1/branch",
+        "offset_unit": "UTF-16"
+      }
+    }
+  ],
+  "specific_changes_for_future": [
+    {
+      "case_id": "trend-writing",
+      "items": [
+        "避免复述未被本段覆盖的世爻、六亲属性；确需使用时将相应有效fact引用绑定本段，规则闭包不能扩大。",
+        "tradeoff_reason使用因素编号和比较理由，不增写未引用月破等盘面属性。",
+        "精简因素引用至冻结上限，去掉仅重复规则source_facts且未增信息的直接引用；不能修改本次失败回复冒充通过。",
+        "角色映射和作用方向仍须独立知识/内容审查；补齐引用不会解决传统支持不确定。"
+      ]
+    }
+  ],
+  "limitations": [
+    "本批仅实际三条，非盲测；第四条未调用。",
+    "建议通过表示这两条未发现冻结标准越界，不证明建议效果、用户执行或普遍遵循。",
+    "单条趋势的unclear可符合证据不足处理；仍存在本段归属失败和传统解释支持不确定，不能宣布趋势质量改善或预测正确。",
+    "自由文字语义由人工判断，没有声称自动穷尽所有归属和事实。"
+  ]
+}

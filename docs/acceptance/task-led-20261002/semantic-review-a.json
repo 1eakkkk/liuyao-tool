@@ -1,0 +1,276 @@
+{
+  "schema_version": "task-led-semantic-review-1",
+  "reviewer_id": "agent-a",
+  "review_kind": "retrospective_nonblind",
+  "reviewed_on": "2026-10-02",
+  "plan_sha256": "79fc4b39ebf506248d343d7f2a3c7de21a4b10b94a3ef1ffb429d7ca7429a812",
+  "actual_responses_reviewed": 3,
+  "planned_cases": 4,
+  "not_called": [
+    "trend-gathering"
+  ],
+  "review_criteria": [
+    {
+      "id": "facts",
+      "requirement": "实际说出的事实应与给定材料相符；趋势每段程序属性须被本段引用覆盖，规则只覆盖source_facts。建议无盘面输入，不自行补盘或未提供的现实。"
+    },
+    {
+      "id": "scope",
+      "requirement": "回应当前明确目标与固定task，不虚构机制，不替换目标，不将计划时长当预测日期，不扩写未问应期。"
+    },
+    {
+      "id": "support",
+      "requirement": "取象是解释假设，不确认现实条件或他人意愿；普通建议独立，不能作为盘面支持或抵消阻碍；传统依据不足标uncertain。"
+    },
+    {
+      "id": "priority",
+      "requirement": "趋势说明取用与相关主次及其比较理由，依据不足坦然保留不确定性；一般建议无取用、无装饰性因素。"
+    },
+    {
+      "id": "direction",
+      "requirement": "趋势方向与正文、因素、主次一致；mixed须解释同目标牵制及不可分主次，不能由两面存在自动mixed；不预设方向。建议不输出趋势方向。"
+    },
+    {
+      "id": "task_boundary",
+      "requirement": "建议模型只接收question及协议metadata/schema，无canonical/evidence或其他盘面线索，不输出趋势或引用；事实核对是程序投影，不调用模型；本批仅advice/trend各二。自由文字仍需人工审查。"
+    }
+  ],
+  "reviews": [
+    {
+      "case_id": "advice-notes",
+      "response_sha256": "6e645e43330eff347ff79237d2853ce76a620b3ac9162fa37b724b37f870c838",
+      "task": "advice",
+      "question": "我想把个人读书笔记整理成便于检索的目录，目前没有固定分类。请给两条开始整理的建议，不预测学习成绩或完成时间。",
+      "mechanical_status": "validated",
+      "mechanical_issues": [],
+      "reviewed_fields": [
+        "/advice",
+        "/limits"
+      ],
+      "criteria": {
+        "facts": {
+          "verdict": "pass",
+          "reason": "没有盘面输入，回复没有补盘或断言未提供的既有现实；分类方法与数量阈值是建议，不是声称用户已有属性。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "围绕个人读书笔记检索目录、尚无固定分类，给出两条起手方法；不预测成绩或完成时间。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "support": {
+          "verdict": "pass",
+          "reason": "自由标签、后续合并类别属普通操作建议，没有拿建议自证盘面，也没有古籍、能力或现实结果归因。无需卦盘ID。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "priority": {
+          "verdict": "pass",
+          "reason": "一般建议没有取用或装饰性因素，顺序是整理工作顺序，不是传统主次权重。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "无趋势方向字段或暗含成败预测，保留建议效果与耗时限制。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "请求仅question与协议metadata/schema，实际回复只有advice/limits和身份字段，没有引文、取象或趋势。",
+          "evidence_ids": [],
+          "quotes": []
+        }
+      }
+    },
+    {
+      "case_id": "advice-boxes",
+      "response_sha256": "b086dbd408d666eefb1f8202c9f1ec1ae710c7092991271c754cf4436f3e0701",
+      "task": "advice",
+      "question": "我准备给家里的收纳盒贴分类标签，只方便自己找东西。请给两条开始整理的建议，不判断成败或时间。",
+      "mechanical_status": "validated",
+      "mechanical_issues": [],
+      "reviewed_fields": [
+        "/advice",
+        "/limits"
+      ],
+      "criteria": {
+        "facts": {
+          "verdict": "pass",
+          "reason": "不补盘、未断言具体盒子数量、物品种类或用户实际翻找记录；“从最近翻找过的盒子开始”是筛选建议，条件句不当成已知现实。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "保留只方便自己找东西的目标，两条建议集中标签命名和起手范围；最近一周作为筛选条件不是预测时间或应期。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "support": {
+          "verdict": "pass",
+          "reason": "以用户寻找时习惯词命名和逐盒处理属一般建议，不需要盘面引用；明确标签不自动改变内部摆放，没有把方法保证成败。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "priority": {
+          "verdict": "pass",
+          "reason": "没有用神、因素或传统权重；不要求普通建议增加盘面因素。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "没有趋势方向、成败或时间预测。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "请求无canonical/evidence/history，回复保持advice/limits边界；条件性的混乱提醒未变成个案占卜判断。",
+          "evidence_ids": [],
+          "quotes": []
+        }
+      }
+    },
+    {
+      "case_id": "trend-writing",
+      "response_sha256": "076dce4b3bab94696acffc329b362cdc225201c2cdd184d248f625e4e712206a",
+      "task": "trend",
+      "question": "我准备试着用一个月写三篇短的旅行回忆，只写给自己看。我关心是否容易完成这个写作计划，不问应期。",
+      "mechanical_status": "rejected",
+      "mechanical_issues": [
+        "invalid_count at $.factors[1].evidence_ids"
+      ],
+      "reviewed_fields": [
+        "/conclusion",
+        "/focus",
+        "/major_factor_ids",
+        "/counter_factor_ids",
+        "/tradeoff_reason",
+        "/factors",
+        "/general_advice",
+        "/uncertainties"
+      ],
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "f1说“世爻子孙”，引用只有第2爻relative及第4月旺，规则闭包不含第4relative/is_shi；focus有relative也不能替代本段引用。f2说同一动爻官鬼，化退规则覆盖moving/branch但不含relative，f2未引用官鬼字段。已引用的动、空、日冲、死、退及f3飞克伏/两六亲与计划一致，不因重复ID数或没说的属性追加语义事实错误。",
+          "evidence_ids": [
+            "fact:/lines/3/relative",
+            "fact:/lines/3/is_shi",
+            "fact:/lines/1/relative"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/interpretation",
+              "start": 44,
+              "end": 51,
+              "text": "世爻子孙临月旺",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path",
+              "range": "[start,end)"
+            },
+            {
+              "path": "/factors/1/interpretation",
+              "start": 5,
+              "end": 27,
+              "text": "同一动爻官鬼旬空、受日冲、月令为死，并有化退",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path",
+              "range": "[start,end)"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "保留一个月三篇、旅行回忆、自用的目标；一个月是用户计划窗口，不解释为预测日期。普通建议拆小步骤不改篇数或成功标准，无未问应期。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "support": {
+          "verdict": "uncertain",
+          "reason": "正文始终用取象假设、若映射、可能，并明确不能确认实际动力/资源/行为；没有上一批那种把关系直接确认现实的表述。但官鬼→督促、子孙→表达、妻财→素材/时间、兄弟→分心及关系→利耗都无已核实传统来源，本批材料无法建立解释支持。保留uncertain，不把有免责声明当已验证取法。",
+          "evidence_ids": [
+            "fact:/lines/1/relative",
+            "fact:/lines/3/relative",
+            "fact:/lines/4/hidden/relative",
+            "fact:/lines/4/relative"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/assumption",
+              "start": 8,
+              "end": 31,
+              "text": "官鬼=计划压力或自我督促，子孙=自我表达与产出",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path",
+              "range": "[start,end)"
+            },
+            {
+              "path": "/factors/2/assumption",
+              "start": 0,
+              "end": 34,
+              "text": "假设妻财=旅行回忆素材或可支配时间资源，兄弟=竞争性事务或注意力分散",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path",
+              "range": "[start,end)"
+            }
+          ]
+        },
+        "priority": {
+          "verdict": "uncertain",
+          "reason": "明确没有选出可优先因素，major/counter为空并说明权重未核实，未按数量或强行分主次；这是合理的不确定性边界。但角色映射与相对作用仍无法核实，不把多候选及自述理由视作传统主取已成立。focus第4子孙没有进入任何factor引用，也使结构焦点与因素声明未闭合，不能仅因direction unclear略过。",
+          "evidence_ids": [
+            "fact:/lines/3/relative"
+          ],
+          "quotes": [
+            {
+              "path": "/tradeoff_reason",
+              "start": 0,
+              "end": 11,
+              "text": "未选出可优先的主要因素",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path",
+              "range": "[start,end)"
+            },
+            {
+              "path": "/focus/0/role_hypothesis",
+              "start": 0,
+              "end": 27,
+              "text": "假设世爻六亲“子孙”可映射为写作产出与自我表达的流畅度",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path",
+              "range": "[start,end)"
+            }
+          ]
+        },
+        "direction": {
+          "verdict": "pass",
+          "reason": "conclusion选unclear且说明映射/权重不足，正文对局部利耗均作为假设，不一利一弊自动mixed，不强制方向；无法核实取法单列support/priority。",
+          "evidence_ids": [],
+          "quotes": []
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "conclusion没有抄盘面属性；盘面描述留在有引用的因素区域，缺漏另列facts；一般建议独立且不拿预测作依据，uncertainties的实际能力缺口是语义否定，不误报为新增属性断言。",
+          "evidence_ids": [],
+          "quotes": []
+        }
+      }
+    }
+  ],
+  "semantic_acceptance": "not_established_for_batch",
+  "forecast_accuracy": "unassessed",
+  "scope": "独立审本批3条真实原始回复；未查看B，不API、不读凭据/真实账本或protected holdout，不修改原始回答或代码。",
+  "mechanical_notes": "两条advice validated；trend-writing因factors[1].evidence_ids为9项超过8被rejected。照原文内容审查；另静态发现focus relative未出现任何factor引用，不将其伪装为实际check第二错误。第四未调用，没有生成或编造回答。",
+  "citation_policy": "一般建议无盘面无需引用；趋势每段只核实际说出的属性，认可规则source_facts，跨段ID不能自动补本段。泛称规则种类或否定未知能力/权重不误报个案属性。最多三因素是容量，不是最低数。",
+  "limitations": [
+    "两条建议本次六维均pass，限这两条固定开发回复；单维pass不代表整批接受或总体改进。",
+    "趋势仍有引用覆盖失败、取象与权重无法确认；诚实unclear不证明传统取法正确。",
+    "未评现实执行结果或预测准确；不是盲测。"
+  ]
+}
