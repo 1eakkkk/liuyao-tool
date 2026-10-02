@@ -1,0 +1,153 @@
+{
+  "schema_version": "evidence-led-replay-independent-1",
+  "reviewer_id": "agent-a",
+  "reviewed_on": "2026-10-02",
+  "scope": "离线完整性复验，不重做语义审查；无API、凭据、真实账本或protected holdout访问。",
+  "status": "integrity_replay_passed",
+  "baseline": {
+    "plan_hash": "230755ceb9223d86510f3f0538c508c1be6b9a9f8565afcd7915afa8d877769b",
+    "network_calls": 0,
+    "verified_cases": 6,
+    "results": [
+      {
+        "id": "facts-motion",
+        "status": "validated",
+        "issues": [],
+        "archive_sha256": "76f84bfbb24b9aaa3c5f32177f8471e04ffa2ded6adf6ff8fbf317512f60ddc0",
+        "raw_sha256": "3c451d500bf7e98ea828f35b926aa381b47ff41640a2844b4cfa9d4d94079adb"
+      },
+      {
+        "id": "facts-records",
+        "status": "validated",
+        "issues": [],
+        "archive_sha256": "d50ef4ad77404ff74336099c15c9c70224c31aa86aed49398be5859196c507e8",
+        "raw_sha256": "6813b0267a7782fc0db2aea05d69605e82637a3d4adccdf9052383308f69f8a7"
+      },
+      {
+        "id": "advice-photos",
+        "status": "validated",
+        "issues": [],
+        "archive_sha256": "208e092a2d7c89873011e996076a71244ee4706751ec5b36ec308231babd2009",
+        "raw_sha256": "aad9aa1f984c35924ea6e1511d73915d5d8cdd16007570dc76dfdfbed5a21232"
+      },
+      {
+        "id": "advice-plant",
+        "status": "validated",
+        "issues": [],
+        "archive_sha256": "b18429f9dff18c4f31136d509376a7e8f671abca0a6154a537493258883cd33f",
+        "raw_sha256": "577b672527ace07d749301dbbbbb2c788a7380ac02c7daa444c4e83ae10e2e86"
+      },
+      {
+        "id": "trend-course",
+        "status": "validated",
+        "issues": [],
+        "archive_sha256": "2d88865cae428c5e617b1d028a5a4bdfac7e025810287c3619a50a635f703557",
+        "raw_sha256": "df17101a971a241b20955cbe09a1735fe17aea1a83f5325a98a66aaa19df9e57"
+      },
+      {
+        "id": "trend-trip",
+        "status": "rejected",
+        "issues": [
+          "Focus requires an existing relative fact"
+        ],
+        "archive_sha256": "1b31cf445752f24c40061c442fd464532e8bea43d397a8569d8142d82b84849e",
+        "raw_sha256": "7536674857740eff15f4f5111018392c4865de81418f6a71f2fbd9532833a2b3"
+      }
+    ],
+    "reviews": [
+      {
+        "file": "semantic-review-a.json",
+        "reviewed_cases": 6,
+        "dimensions": 36,
+        "verified_quotes": 25
+      },
+      {
+        "file": "semantic-review-b.json",
+        "reviewed_cases": 6,
+        "dimensions": 36,
+        "verified_quotes": 36
+      }
+    ],
+    "semantic_acceptance": "requires_independent_review",
+    "forecast_accuracy": "unassessed"
+  },
+  "original_findings": [
+    {
+      "id": "trusted-plan-identity",
+      "original_issue": "初版仅验证plan自身seal，可更换system后重新封条并同步request/summary/review hash。",
+      "resolution": "当前与prepareEvidenceLedLivePlan重新生成的固定完整计划比较。",
+      "counterexample": "修改system、重封并同步相关身份。",
+      "observed_error": "Trusted fixed plan mismatch",
+      "status": "resolved"
+    },
+    {
+      "id": "review-evidence-identity",
+      "original_issue": "初版未校验review criteria.evidence_ids。",
+      "resolution": "逐例对重建context evidence目录核对审查ID。",
+      "counterexample": "插入fact:/fabricated/not-in-packet。",
+      "observed_error": "Unknown review evidence ID",
+      "status": "resolved"
+    },
+    {
+      "id": "quote-end-bound",
+      "original_issue": "初版end未限制字段长度，slice可截断接受超长end。",
+      "resolution": "显式end<=decoded field length并检查字段UTF16 slice。",
+      "counterexample": "start=0,end=字段长度+42,text=整个字段值。",
+      "observed_error": "Review quotation mismatch",
+      "status": "resolved"
+    },
+    {
+      "id": "usage-flags",
+      "original_issue": "初版未将check.usage_ok/cost_unknown/最高价估算与独立SSE解析结果绑定。",
+      "resolution": "当前逐项对usageOk、!usageOk和2/8保守费用估算重算比较。",
+      "counterexample": "同步改check和summary usage_ok=false,cost_unknown=true。",
+      "observed_error": "Usage validity mismatch",
+      "status": "resolved"
+    }
+  ],
+  "quote_offset_correction": {
+    "file": "semantic-review-a.json",
+    "quotes": 25,
+    "original_issue": "初版start/end是raw response整体UTF16位置，与path字段位置约定不一致。",
+    "resolution": "已改为对应JSON解码字段内UTF16，保留raw_start/raw_end与quote_offset_history；所有pathValue.slice(start,end)===text，原判断与原始response未改。"
+  },
+  "tests": {
+    "initial_suite": {
+      "passed": 8,
+      "total": 8
+    },
+    "intermediate_after_guards": {
+      "passed": 11,
+      "failed": 1,
+      "total": 12,
+      "failure": "Review path invalid，B的$.path格式尚未转换；未冒称当时完整通过。"
+    },
+    "final_baseline": {
+      "verified_cases": 6,
+      "verified_review_dimensions": 72,
+      "verified_quotes": 61
+    },
+    "own_temp_counterexamples": {
+      "total": 4,
+      "rejected": 4,
+      "mutations_on_temporary_copies_only": true
+    }
+  },
+  "source_hashes": [
+    {
+      "file": "scripts/replay-evidence-led-live.js",
+      "sha256": "3b672bc9861880fca016ee221befdbe9f668136a27be70d1b50589aadf0cb1e7"
+    },
+    {
+      "file": "tests/output/evidence-led-live-replay.test.js",
+      "sha256": "1fce1c4f5ae0277a6697e2fad5cf484e5b073fca9a07c81a2dd6468ecfbdbd8f"
+    }
+  ],
+  "semantic_acceptance": "not_established_by_integrity_replay",
+  "forecast_accuracy": "unassessed",
+  "limitations": [
+    "本次只证明归档与冻结输入、SSE/usage/响应hash、机械判定及引文记录之间一致；不证明审查语义判断正确。",
+    "六条中第六机械rejected必须保留，不能改成validated或丢弃。",
+    "基线语义审查中的fail/uncertain未被完整性通过覆盖；不是盲测或总体预测验证。"
+  ]
+}
