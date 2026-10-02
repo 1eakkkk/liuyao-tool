@@ -1,0 +1,257 @@
+{
+  "schema_version": "development-focus-source-candidate-1",
+  "candidate_id": "zsby-1925-focus-source-dev-1",
+  "created_on": "2026-10-02",
+  "data_kind": "development_candidate",
+  "verification_status": "agent_visual_transcribed_pending_independent_review",
+  "admitted_to_corpus": false,
+  "source_id": "zsby-nlc-12jh005345",
+  "edition_id": "zsby-wenming-1925-11-nlc-12jh005345",
+  "source_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf",
+  "artifact_sha256": "caac111bc5c5b1c08fd27b3828e7cf6b5430503800f2427d8f2b28809022abaa",
+  "artifact_bytes": 11089308,
+  "artifact_pages": 394,
+  "source_count_added": 0,
+  "method": "同一固定底本 PDF 重新取得后核对 SHA-256；逐页视觉读取，不使用 OCR、现代网站转录或记忆补字。",
+  "transcription_policy": "字符规范转录，不宣称扫描字形或代码点原样：本次显式爲→為；小句读圈记。、大圈记○；竖排线性化并去除列换行。其余可辨繁体按候选文字保存，字形以扫描为准，新增映射必须显式记录。各摘录独立保存，不把删节前后伪拼为连续原文；行列定位与句读仍需独立复核。",
+  "verification_limits": [
+    "由单一代理视觉转录，未获独立人工或专家复核。",
+    "图片哈希与定位仅帮助重现，不证明来源真实性或预测有效。",
+    "只收有限摘录，未完整转录全章、后卷分类细法或全部条件。",
+    "转录已明确爲→為字符规范；不宣称代码点原样，独立专家复核与预测有效性均未建立。"
+  ],
+  "witness_pages": [
+    {
+      "image_page": 42,
+      "pdf_page_index": 41,
+      "printed_page": "二二",
+      "volume": "卷一",
+      "chapter": null,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf#page=42",
+      "rendered_png_sha256": "c2d14a0720b641649a4a60a281e7b7c1f4ba09ecd96fe6e6f571627822586984",
+      "render_command": "pdftoppm -f 42 -l 42 -scale-to 2100 -png zsby.pdf page",
+      "local_render_path": "C:/Users/35341/AppData/Local/Temp/liuyao-focus-source-20261002/page-042.png",
+      "reading_order": "竖排右至左，列内上至下"
+    },
+    {
+      "image_page": 43,
+      "pdf_page_index": 42,
+      "printed_page": "二三",
+      "volume": "卷一",
+      "chapter": null,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf#page=43",
+      "rendered_png_sha256": "6deb8ed8f62f8d7ffa295f86bfa751dbc3b685c058fc35f8661f4375709b2621",
+      "render_command": "pdftoppm -f 43 -l 43 -scale-to 2100 -png zsby.pdf page",
+      "local_render_path": "C:/Users/35341/AppData/Local/Temp/liuyao-focus-source-20261002/page-043.png",
+      "reading_order": "竖排右至左，列内上至下"
+    },
+    {
+      "image_page": 48,
+      "pdf_page_index": 47,
+      "printed_page": "二八",
+      "volume": "卷一",
+      "chapter": "用神章第八",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf#page=48",
+      "rendered_png_sha256": "0ead55c502bf11b168d81cb82e4e3079eb804aaa91a3675705a7a2f2aea94878",
+      "render_command": "pdftoppm -f 48 -l 48 -scale-to 2600 -png zsby.pdf page",
+      "local_render_path": "C:/Users/35341/AppData/Local/Temp/liuyao-focus-source-20261002/page-048.png",
+      "reading_order": "竖排右至左，列内上至下"
+    },
+    {
+      "image_page": 49,
+      "pdf_page_index": 48,
+      "printed_page": "二九",
+      "volume": "卷一",
+      "chapter": "用神章第八",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf#page=49",
+      "rendered_png_sha256": "f0653aee713990ca15c8af59cc38a5eca8ebc1c42149996999b121486337a537",
+      "render_command": "pdftoppm -f 49 -l 49 -scale-to 2100 -png zsby.pdf page",
+      "local_render_path": "C:/Users/35341/AppData/Local/Temp/liuyao-focus-source-20261002/page-049.png",
+      "reading_order": "竖排右至左，列内上至下"
+    },
+    {
+      "image_page": 50,
+      "pdf_page_index": 49,
+      "printed_page": "三〇",
+      "volume": "卷一",
+      "chapter": "用神章第八",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/42/NLC416-12jh005345-45344_%E5%A2%9E%E5%88%AA%E5%8D%9C%E6%98%93.pdf#page=50",
+      "rendered_png_sha256": "9737f72ba4380b3ffce5b731f4ca7261727629710a5a7be865c1ad44dffe6959",
+      "render_command": "pdftoppm -f 50 -l 50 -scale-to 2100 -png zsby.pdf page",
+      "local_render_path": "C:/Users/35341/AppData/Local/Temp/liuyao-focus-source-20261002/page-050.png",
+      "reading_order": "竖排右至左，列内上至下"
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "focus-parent-dev-001",
+      "source_type": "original_body",
+      "literature_role": "父母取用事项候选",
+      "original_text_excerpts": [
+        {
+          "image_page": 48,
+          "printed_page": "二八",
+          "anchor": "用神章第八—父母爻；章题左侧首列",
+          "text": "占父母卽以卦中之父母爻為用神。"
+        },
+        {
+          "image_page": 49,
+          "printed_page": "二九",
+          "anchor": "右起首列，承前页父母段；在官鬼爻标题上方",
+          "text": "○占天地城池牆垣宅舍屋宇舟車",
+          "fragment": true
+        },
+        {
+          "image_page": 49,
+          "printed_page": "二九",
+          "anchor": "右起首列下部接右起第二列上部，父母段末",
+          "text": "及章奏文書文章書館文契。亦以父母為用神。物類亦多在人通變。一切庇覆我身者是也。"
+        }
+      ],
+      "modern_editorial": {
+        "statement": "本章将父母本人及宅舍、舟车、章奏文书、文章书馆文契等列为父母取用事项，原文同时要求在人通变。",
+        "applicable_conditions": [
+          "确认所问确为原文列举事项；摘录支持该作者所述取用对应，不直接支持现实成败。",
+          "若借文书或庇覆之类象解释现代事物，须明确为现代类比，并解释目标相关性，不能冒充原文列举。"
+        ],
+        "exclusions": [
+          "未建立现代网站本体、用户关系、免费娱乐目标与父母的唯一映射。",
+          "不由父母出现、旺或受克自动推出产品质量、故障、热度、收益或未来成败。"
+        ],
+        "disagreements": [
+          "本次未核实不同取法或流派是否同意现代网站唯一用父母；保留未知。"
+        ],
+        "omissions": [
+          "父母段前后其余人物与物品列举未完整转录；不得把摘录当穷尽清单。"
+        ]
+      }
+    },
+    {
+      "candidate_id": "focus-official-dev-001",
+      "source_type": "original_body",
+      "literature_role": "官鬼取用事项候选",
+      "original_text_excerpts": [
+        {
+          "image_page": 49,
+          "printed_page": "二九",
+          "anchor": "官鬼爻小标题下首列",
+          "text": "占功名占官府雷霆鬼神妻占夫皆以官鬼爻為用神。"
+        },
+        {
+          "image_page": 49,
+          "printed_page": "二九",
+          "anchor": "官鬼段末，兄弟爻标题右侧",
+          "text": "物類亦多。一切拘束我身者是也。"
+        }
+      ],
+      "modern_editorial": {
+        "statement": "官鬼段明确列功名、官府、雷霆鬼神、妻占夫，并另有拘束我身的概括；这不是所有目标统一取官鬼。",
+        "applicable_conditions": [
+          "区分求功名的目标角色与拘束身者的角色，说明本次为何选该角色。",
+          "现代竞争游戏是否可类比功名需单独论证；未知机制不能补为组队或竞争强度事实。"
+        ],
+        "exclusions": [
+          "不能确认游戏升段必用官鬼或官鬼受克必吉／必凶。",
+          "不能一段将官鬼作维护压力，另一段直接把其受克解释为目标受损而不协调对象。"
+        ],
+        "disagreements": [
+          "功名与现代游戏段位的类比、官鬼的目标或障碍角色选择尚未核实传统规范。"
+        ],
+        "omissions": [
+          "官鬼段另列乱臣贼盗等，未录入本候选摘录；须参看扫描，不能说只有功名一义。"
+        ]
+      }
+    },
+    {
+      "candidate_id": "focus-wealth-dev-001",
+      "source_type": "original_body",
+      "literature_role": "妻财取用事项候选",
+      "original_text_excerpts": [
+        {
+          "image_page": 49,
+          "printed_page": "二九",
+          "anchor": "妻財爻标题下首列",
+          "text": "占妻妾婢僕下役凡我驅使之人。皆以財爻為用神。"
+        },
+        {
+          "image_pages": [
+            49,
+            50
+          ],
+          "printed_pages": [
+            "二九",
+            "三〇"
+          ],
+          "anchor": "影像49末列“占貨財”至末字“一”，续影像50首列“切使用”至“用神”",
+          "text": "○占貨財珠寶金銀倉庫錢糧一切使用之財物什物器皿。亦以財爻為用神。"
+        },
+        {
+          "image_page": 43,
+          "printed_page": "二三",
+          "anchor": "右起第二列“凡占金銀”至第三列上部",
+          "text": "○凡占金銀買賣皆以妻財為用神。須在用神章中細看。"
+        }
+      ],
+      "modern_editorial": {
+        "statement": "本章财物取财，前文金银买卖也取妻财；另有历史社会角色列举，仅记录作者原文，不作为现代伦理或人际规范。",
+        "applicable_conditions": [
+          "问题确实以财物或金银买卖为目标；取用对应仍需后续作用条件。",
+          "金银买卖句明确指向用神章细看，不能单独截句作为全套规则。"
+        ],
+        "exclusions": [
+          "免费熟人娱乐不自动改写为盈利、回报或热度目标。",
+          "不能仅凭妻财有利或不利确认实际收益或损失；未核实人气等同财。"
+        ],
+        "disagreements": [
+          "现代关注度、人气或非营利项目是否取财未获本段直接依据。"
+        ],
+        "omissions": [
+          "财物清单不等于所有现代资产、经营方式的完整规范。"
+        ]
+      }
+    }
+  ],
+  "context_excerpts": [
+    {
+      "image_page": 42,
+      "printed_page": "二二",
+      "anchor": "父母段首，右起第四列开始",
+      "text": "占父母者以卦中之父母爻為用神。此卦辰戌兩爻俱是父母。若兩爻俱動或俱不動擇其旺者而為用神。如一爻動者擇其動者為用神。",
+      "modern_editorial": "同类两爻的取舍有明确语境；这是该例的文字，非任意全盘主次算法。综合旺衰前提尚需其他材料，不能实现为单属性或票数比较。"
+    },
+    {
+      "image_page": 43,
+      "printed_page": "二三",
+      "anchor": "“從前至此所論諸事”段",
+      "text": "從前至此所論諸事後卷俱有以官鬼爻為用神得其門而入寫此以為綱領引入門也。知此綱領再細詳後卷各章。由淺入深自入佳境。",
+      "modern_editorial": "仅使用明确的“知此綱領再細詳後卷各章”说明入门纲领须参看后卷。本段连续含“以官鬼爻為用神”的疑句不用于扩大取用范围，不推所有事用官鬼。当前未完成后卷分类细法审查，不据此宣布条件齐全。",
+      "transcription_uncertainty": "本连续印文含“以官鬼爻為用神”，照印保留；语句衔接、断句与该短语具体所指待进一步核对，不能解释为所有事项均用官鬼。"
+    },
+    {
+      "image_page": 50,
+      "printed_page": "三〇",
+      "anchor": "用神元神忌神仇神章第九第一列下部",
+      "text": "○不拘占何事先看何爻為用神。既得用神須看旺相否有元神動而生扶否有忌神動而剋害否。",
+      "modern_editorial": "本章之后明确另需旺相、元神生扶、忌神克害等检查；本候选不把概述实现为评分，不假定任一关系即可定胜负。"
+    }
+  ],
+  "unresolved_questions": [
+    "现代游戏升段与功名的类比是否适用，存在何种替代取法。",
+    "现代娱乐网站不同目标是否需要不同角色；父母、官鬼、妻财不得凭物体名称唯一化。",
+    "后卷分类细法、综合旺衰及原忌神条件尚未完整转录与独立审查。",
+    "文字、句读及行列定位需第二名审查者对同一哈希扫描复核，尤其段落跨页与角色广义概括。"
+  ],
+  "promotion_requirements": [
+    "复核摘录与定位，任何异字或断句争议保留 uncertain。",
+    "不扩大摘录支持范围；明确直接列举、现代类比与未知取法。",
+    "补足拟使用事项的必要后文条件后才讨论有限准入，不能仅凭此文件自动准入。",
+    "来源归属、字段声明及自由文字语义分别审查；无预测验证声明。"
+  ],
+  "character_normalization": [
+    {
+      "printed_form": "爲",
+      "text_form": "為",
+      "reason": "字符规范转录，扫描字形为依据；不是外交式逐字字形复刻。"
+    }
+  ]
+}

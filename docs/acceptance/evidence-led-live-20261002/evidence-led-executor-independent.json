@@ -1,0 +1,235 @@
+{
+  "schema_version": "evidence-led-executor-independent-review-2",
+  "reviewer_id": "agent-a",
+  "reviewed_on": "2026-10-02",
+  "scope": "离线代码与模拟测试独立审查；未读取真实 Key、真实账本或 protected holdout；未调用 API。",
+  "status": "offline_executor_checks_passed",
+  "production_changes": false,
+  "paid_calls": 0,
+  "source_files": [
+    {
+      "file": "scripts/evidence-led-live-pilot.js",
+      "sha256": "3b5a00c03ccb2051213536cd243d89edae228463514a489fc829ab76ea0a94c0"
+    },
+    {
+      "file": "experiments/judgment-review/evidence-led-live-plan.js",
+      "sha256": "56a64db259d5d45e080ac848e5ea6fcadbcb833e52abeb435c35a1fd74c401c9"
+    },
+    {
+      "file": "tests/output/evidence-led-live-pilot.test.js",
+      "sha256": "d376213b0358833fcea4a044a8f766c163dc57f3dea74c0cd92478b7fef5e62d"
+    },
+    {
+      "file": "scripts/judgment-live-pilot.js",
+      "sha256": "6eb45426101471245373dd98eb1e4e37d1c7d798f6497a7089b87c163d6a798a"
+    },
+    {
+      "file": "experiments/judgment-review/evidence-led.js",
+      "sha256": "46a7df0cebf42974a59b7277227cd4440d1ccf70ba759c23eec12fbaec460ae7"
+    }
+  ],
+  "plan": {
+    "hash": "230755ceb9223d86510f3f0538c508c1be6b9a9f8565afcd7915afa8d877769b",
+    "version": "evidence-led-six-live-development-1",
+    "planned_calls": 6,
+    "reserve_cny": 0.794146,
+    "wallet_floor_cny": 1,
+    "minimum_confirmed_wallet_cny": 1.794146,
+    "price_checked": "2026-10-02",
+    "campaign_cap_cny": 2,
+    "protocol": "evidence-led-offline-2"
+  },
+  "checks": [
+    {
+      "id": "fixed_identity",
+      "verdict": "pass",
+      "reason": "plan 与 seal 必须等于本地重新构造的固定六例计划哈希；不能重封任意body、task、日期或profile来执行。context_id逐例重建；prepare不触网或读取凭据。"
+    },
+    {
+      "id": "funds_and_authorization",
+      "verdict": "pass",
+      "reason": "仅接受固定 campaign/schema、authorized=true、limit_cny=2、无reservations/settlements的新空campaign，在loadEnvFile与网络前检查。reserve以独占锁重读，拒绝并发已预留或旧授权格式；完整0.794146预留不自动释放或结算。审核未读实际账本。 当前另显式检查reserve有限、正数且不超过授权上限，仍在loadEnvFile前。"
+    },
+    {
+      "id": "date",
+      "verdict": "pass",
+      "reason": "UTC price_checked入口先于凭据及网络核对，并在每次chat前重验；过期日期拒绝，跨日失败停。静态价格来源未在本审查联网重核。"
+    },
+    {
+      "id": "replay",
+      "verdict": "pass",
+      "reason": "execution.json或任意-attempt.json及非空campaign reservation使入口拒重跑；prepare创建新目录和wx输出，不覆写原始输出。"
+    },
+    {
+      "id": "wallet_floor",
+      "verdict": "pass",
+      "reason": "余额要求available、单一CNY行、可解析非负数；初次以及之后每次chat前确认余额 >= 全批预留 + 1元。拒绝时无新chat；第二次检查下降的模拟测试只完成一次chat。余额差未当精确费用。"
+    },
+    {
+      "id": "stop_and_archive",
+      "verdict": "pass",
+      "reason": "至多六次；HTTP/归档/模型/finish/usage/JSON/链接任何失败break，无重试，保留全批预留。独立有界收集原始SSE，记录完整/截断/读失败、字节hash；HTTP错误64KiB上限并精确脱敏key。"
+    },
+    {
+      "id": "sse_known_failures",
+      "verdict": "pass",
+      "reason": "拒绝断连DONE缺失、non-stop、变模型、usage缺失/重复/计数不一致/超限、DONE后数据、非法UTF8和重复JSON键；机械标识与semantic/forecast unassessed分开。"
+    },
+    {
+      "id": "sse_unrequested_channels",
+      "verdict": "pass",
+      "reason": "原tool_calls及reasoning_content:0反例现分别返回unexpected_tool_channel、unexpected_thinking_channel。非空function_call也拒绝；空string/null reasoning与空/null工具占位兼容。原失败保留history。",
+      "counterexample_rechecks": [
+        {
+          "injected_delta": {
+            "tool_calls": [
+              {
+                "index": 0,
+                "id": "unexpected",
+                "type": "function",
+                "function": {
+                  "name": "external",
+                  "arguments": "{}"
+                }
+              }
+            ]
+          },
+          "error": "unexpected_tool_channel",
+          "expected": "rejected"
+        },
+        {
+          "injected_delta": {
+            "reasoning_content": 0
+          },
+          "error": "unexpected_thinking_channel",
+          "expected": "rejected"
+        },
+        {
+          "injected_delta": {
+            "reasoning_content": "",
+            "tool_calls": [],
+            "function_call": {}
+          },
+          "error": null,
+          "expected": "accepted"
+        },
+        {
+          "injected_delta": {
+            "reasoning_content": null,
+            "tool_calls": null,
+            "function_call": null
+          },
+          "error": null,
+          "expected": "accepted"
+        }
+      ]
+    },
+    {
+      "id": "v2_empty_factors_boundary",
+      "verdict": "pass",
+      "reason": "advice与direction=unclear的trend可无盘面因素；facts仍至少一项有效引用且neutral，无建议或趋势；有方向trend仍要求focus、major及链接覆盖。程序固定task/context；不把允许空因素当自然语言语义通过。"
+    }
+  ],
+  "tests": {
+    "command": "npx vitest run tests/output/evidence-led-live-pilot.test.js tests/output/evidence-led.test.js --maxWorkers=2 --reporter=dot",
+    "files_passed": 2,
+    "tests_passed": 56,
+    "failures": 0,
+    "additional_local_counterexamples": 2,
+    "additional_empty_placeholder_checks": 2
+  },
+  "limitations": [
+    "没有真实执行或供应商余额/账本核对，不认证实际资金状态。",
+    "模型自由文字、传统取法、现实结果均未评；schema通过不能证明内容或预测。",
+    "候选来源保持未准入；本报告不晋升 corpus 或修改生产。",
+    "本结论核对生成的当前计划及源码，不包含尚未提供的最终冻结目录封条验收。"
+  ],
+  "recommended_next_step": "离线执行器未发现剩余阻断，可独立复核随后冻结的目录plan/seal。真实回答仍须逐段内容审查，semantic与forecast保持unassessed。",
+  "history": [
+    {
+      "reviewed_on": "2026-10-02",
+      "status": "changes_required_for_strict_sse",
+      "plan": {
+        "hash": "ed7636a1260cde8d4b205ccf9c64e776fbda147fd593e580d74cba9fc3851d1d",
+        "version": "evidence-led-six-live-development-1",
+        "planned_calls": 6,
+        "reserve_cny": 0.792202,
+        "wallet_floor_cny": 1,
+        "minimum_confirmed_wallet_cny": 1.792202,
+        "price_checked": "2026-10-02",
+        "campaign_cap_cny": 2
+      },
+      "source_files": [
+        {
+          "file": "scripts/evidence-led-live-pilot.js",
+          "sha256": "eda99072ae3fe4d57bd01caeddb2818b53b58c509793f6ad688850e6f6615f85"
+        },
+        {
+          "file": "experiments/judgment-review/evidence-led-live-plan.js",
+          "sha256": "56a64db259d5d45e080ac848e5ea6fcadbcb833e52abeb435c35a1fd74c401c9"
+        },
+        {
+          "file": "tests/output/evidence-led-live-pilot.test.js",
+          "sha256": "6b0aaa5bd6bb1b1b1fb4657e717afa9f8ec5a100cb964abfe34ec043e8cbf2b6"
+        },
+        {
+          "file": "scripts/judgment-live-pilot.js",
+          "sha256": "6eb45426101471245373dd98eb1e4e37d1c7d798f6497a7089b87c163d6a798a"
+        },
+        {
+          "file": "experiments/judgment-review/evidence-led.js",
+          "sha256": "04104cb01fe3697feddab5e690f495ce713e6341b20c9b8478cce8bd5fdd4c60"
+        }
+      ],
+      "tests": {
+        "command": "npx vitest run tests/output/evidence-led-live-pilot.test.js tests/output/evidence-led.test.js --maxWorkers=2 --reporter=dot",
+        "files_passed": 2,
+        "tests_passed": 43,
+        "failures": 0,
+        "additional_local_counterexamples": 2
+      },
+      "original_findings": [
+        {
+          "id": "sse_unrequested_channels",
+          "verdict": "fail",
+          "reason": "delta.tool_calls未检查；reasoning_content采用truthy检查，数字0等非法类型被忽略。完整synthetic回答同时夹带这些字段，可parse error=null且schema/link validated。建议明确处理未请求tool/function字段及reasoning_content类型/值，增加负向测试。不会执行工具或增加额度，但严格SSE停止策略尚不闭合。",
+          "counterexamples": [
+            {
+              "injected_delta": {
+                "tool_calls": [
+                  {
+                    "index": 0,
+                    "id": "unexpected",
+                    "type": "function",
+                    "function": {
+                      "name": "external",
+                      "arguments": "{}"
+                    }
+                  }
+                ]
+              },
+              "parse_error": null,
+              "answer_schema_and_links": "validated",
+              "saw_done": true,
+              "finish_reason": "stop",
+              "sse_sha256": "73b4d714d422bf63a3de8dc96f2064730178294c86687e726a6fea72d0c7e4ca",
+              "note": "全为本地生成的 synthetic 回答与 SSE，无网络或真实 API。这表明当前 runner 可将夹带未请求通道的响应标 validated。"
+            },
+            {
+              "injected_delta": {
+                "reasoning_content": 0
+              },
+              "parse_error": null,
+              "answer_schema_and_links": "validated",
+              "saw_done": true,
+              "finish_reason": "stop",
+              "sse_sha256": "4fa667927ae2599aa7535b9b5e75422a73252c02bc36a688c8064a3ec474a589",
+              "note": "全为本地生成的 synthetic 回答与 SSE，无网络或真实 API。这表明当前 runner 可将夹带未请求通道的响应标 validated。"
+            }
+          ]
+        }
+      ],
+      "resolution": "保留此前error=null与validated反例；本次独立复验后确认拒绝。不是覆写或撤销原发现。"
+    }
+  ]
+}

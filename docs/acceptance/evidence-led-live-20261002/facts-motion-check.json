@@ -1,0 +1,83 @@
+{
+  "id": "facts-motion",
+  "context_id": "sha256:d1e6b9b817afb7d2df0e287e19a588d1d92cb4ed63775dbef11a18466c4a5a08",
+  "request_hash": "18bb1088e052d464df8076e72157dcd617f11b3a7f64f61c206fa3c5fd740eec",
+  "status": "validated",
+  "issues": [],
+  "model": "deepseek-flash",
+  "finish_reason": "stop",
+  "saw_done": true,
+  "usage": {
+    "prompt_tokens": 12260,
+    "completion_tokens": 614,
+    "total_tokens": 12874,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 12260
+  },
+  "usage_ok": true,
+  "usage_sha256": "fdc7a7db03dd1d46ce01c5ddf876f94bf2a3e92706a7fd89dbcab58d661ef46f",
+  "cost_unknown": false,
+  "conservative_peak_cost_cny": 0.029432,
+  "archive": {
+    "complete": true,
+    "error": null,
+    "redacted": false,
+    "bytes": 178312,
+    "sha256": "76f84bfbb24b9aaa3c5f32177f8471e04ffa2ded6adf6ff8fbf317512f60ddc0"
+  },
+  "raw_sha256": "3c451d500bf7e98ea828f35b926aa381b47ff41640a2844b4cfa9d4d94079adb",
+  "response": {
+    "schema_version": "evidence-led-offline-2",
+    "context_id": "sha256:d1e6b9b817afb7d2df0e287e19a588d1d92cb4ed63775dbef11a18466c4a5a08",
+    "summary": "本卦为雷火丰（坎宫），按初爻至上爻核对：六爻中仅第4爻为动爻（老阳→变阴，动爻记录见 fact:/lines/3/moving 与 rule:LINE-MOVING-001），其余五爻均不动。世爻在第5爻（父母庚申金），应爻在第2爻（官鬼己丑土），与卦盘所记 shi_line=5、ying_line=2 一致。额外事实：第1爻（子孙己卯木）旬空且受日辰冲，并见月破标注；第5爻月令旺。本轮只核对爻之动静与世应位置，不做趋势判断，也不提供建议。",
+    "decision": {
+      "task": "facts",
+      "direction": "unclear",
+      "focus": [],
+      "major_factor_ids": [],
+      "counter_factor_ids": [],
+      "tradeoff_reason": "本任务为事实核对，只确认动爻与世应位置，不对趋势作吉凶或利弊取舍判断，因此不列出主要或抵消因素。"
+    },
+    "factors": [
+      {
+        "id": "f1",
+        "effect": "neutral",
+        "evidence_ids": [
+          "fact:/lines/3/moving",
+          "fact:/lines/0/moving",
+          "fact:/lines/1/moving",
+          "fact:/lines/2/moving",
+          "fact:/lines/4/moving",
+          "fact:/lines/5/moving"
+        ],
+        "interpretation": "六爻动静核对：第4爻标注为动爻，初、二、三、五、上爻均标注不动。",
+        "assumption": "以程序给定的 moving 字段为唯一动静依据，不另行判断动爻含义。",
+        "limitation": "只反映盘面动静字段，不能说明动爻代表何种现实变化或结果。"
+      },
+      {
+        "id": "f2",
+        "effect": "neutral",
+        "evidence_ids": [
+          "fact:/hexagram/shi_line",
+          "fact:/hexagram/ying_line",
+          "fact:/lines/4/is_shi",
+          "fact:/lines/1/is_ying"
+        ],
+        "interpretation": "世应位置核对：世爻位于第5爻，应爻位于第2爻。",
+        "assumption": "以卦盘给定 shi_line、ying_line 及逐爻标记为世应依据。",
+        "limitation": "只确认位置，不解释世应关系或其所象征的现实对象。"
+      }
+    ],
+    "general_advice": [],
+    "uncertainties": [
+      "本次仅核对爻动静与世应位置，未涉及用神选取与吉凶推断；如需趋势解释，需另行说明目标。",
+      "第1爻同时见旬空、日辰冲与月破标注，这些均为程序给定关系项，本任务不据此推断现实含义。"
+    ]
+  },
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed",
+  "reservation_retained": true
+}

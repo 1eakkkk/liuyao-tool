@@ -1,0 +1,24 @@
+{
+  "version": "focus-source-independent-1",
+  "reviewer_id": "root",
+  "candidate_hash": "de34f6315dbbe23d51007766f9824259eb3d749e4e35f2ec5336f80b69f682ee",
+  "reviewed_pages": [
+    42,
+    43,
+    48,
+    49,
+    50
+  ],
+  "source_artifact_hash_matched": true,
+  "image_hashes_matched": true,
+  "method": "Independent visual reading of supplied fixed-edition scans, plus byte-hash checks.",
+  "excerpt_agreement": "development_excerpt_agreement_with_declared_character_normalization",
+  "transcription_normalization": "爲→為 explicitly recorded; not diplomatic glyph transcription.",
+  "uncertainties": [
+    "Page43 printed continuous wording retained; not interpreted as all questions using 官鬼.",
+    "Necessary later category chapters and complete effect conditions not reviewed."
+  ],
+  "corpus_admission": false,
+  "model_injection": false,
+  "forecast_accuracy": "unassessed"
+}

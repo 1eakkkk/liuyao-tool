@@ -69,6 +69,13 @@ test.each(['facts','advice'])('task boundary %s does not force yongshen or favor
   if(task==='facts')expect(()=>validateEvidenceLedAnswer(answer,context)).toThrow('Fact task');
   else expect(evidenceLedView(answer,context).general_advice[0].label).toBe('一般建议');
 });
+test('ordinary advice and insufficient trend do not need decorative chart factors; fact checks still need citations',async()=>{
+  for(const task of ['advice','trend','facts']){
+    const {context,answer}=await setup(task);answer.factors=[];
+    if(task==='facts')expect(()=>validateEvidenceLedAnswer(answer,context)).toThrow('requires cited facts');
+    else{expect(validateEvidenceLedAnswer(answer,context)).toBe(answer);answer.decision.direction='favorable';expect(()=>validateEvidenceLedAnswer(answer,context)).toThrow();}
+  }
+});
 test('source identity, known task and offline prompt stay separate from production sessions',async()=>{
   const {source,context}=await setup();expect(context.context_id).not.toBe(source.context_id);
   expect(context.source_context_id).toBe(source.context_id);expect(context.input).toBe(source.input);

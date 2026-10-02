@@ -1,0 +1,58 @@
+{
+  "id": "advice-plant",
+  "context_id": "sha256:2a42269837432eb20fe48053bd93952ff0a9b3430eb6edec37af2c4181de44cc",
+  "request_hash": "b6129c1fb4df893b388b66896c731e031831f90e29570bdc9a3b294e1eb7f314",
+  "status": "validated",
+  "issues": [],
+  "model": "deepseek-flash",
+  "finish_reason": "stop",
+  "saw_done": true,
+  "usage": {
+    "prompt_tokens": 12513,
+    "completion_tokens": 512,
+    "total_tokens": 13025,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 12257
+  },
+  "usage_ok": true,
+  "usage_sha256": "276c6b1788205b1f4bea4911226abd5d057a70bb129af0bfe357fb8ad967f73a",
+  "cost_unknown": false,
+  "conservative_peak_cost_cny": 0.029122,
+  "archive": {
+    "complete": true,
+    "error": null,
+    "redacted": false,
+    "bytes": 149020,
+    "sha256": "b18429f9dff18c4f31136d509376a7e8f671abca0a6154a537493258883cd33f"
+  },
+  "raw_sha256": "577b672527ace07d749301dbbbbb2c788a7380ac02c7daa444c4e83ae10e2e86",
+  "response": {
+    "schema_version": "evidence-led-offline-2",
+    "context_id": "sha256:2a42269837432eb20fe48053bd93952ff0a9b3430eb6edec37af2c4181de44cc",
+    "summary": "本次目标是阳台试种薄荷前的准备建议，不预测长势或收获。盘面显示的可用信息有限：第2爻官鬼卯木旬空且受日冲、月破，第6爻官鬼寅木旬空、月令死，第3爻世位兄弟丑土下伏子孙申金，飞神生伏神，第5爻妻财子水月令相。这些只能作为取象参考，不能直接证明光照、浇水或薄荷存活条件。因此建议集中在可自行确认的试种前动作：先观察阳台光照时段与强度，再建立可调整的浇水判断方式，先小范围试种。",
+    "decision": {
+      "task": "advice",
+      "direction": "unclear",
+      "focus": [],
+      "major_factor_ids": [],
+      "counter_factor_ids": [],
+      "tradeoff_reason": "用户问题属于试种前建议，且盘面没有能直接对应阳台光照、浇水或薄荷生长的用神规则。程序事实中虽有旬空、日冲、月破、飞伏等关系，但这些属于取象解释，不能替代对实际环境的确认。因取法不足且不预测长势，本项不强行判吉凶方向，不列主要或抵消因素。"
+    },
+    "factors": [],
+    "general_advice": [
+      "先连续观察阳台在不同时段的光照情况，记录直射与散射的大致时段，再决定摆放位置和是否遮阴。",
+      "建立简单的浇水判断方法，例如用可排水花盆、检查盆土干湿后再浇，避免固定频率浇水。"
+    ],
+    "uncertainties": [
+      "本盘未提供阳台朝向、楼层、遮挡物、日照时长或气温湿度等实际环境信息，无法据此确认光照或浇水条件。",
+      "六爻取象不能证明薄荷能否存活、长势好坏或资源是否充足，本回答不预测长势或收获。",
+      "若后续确认了具体栽培条件，应优先依据实际观察和栽培资料，而不是依赖本盘取象。"
+    ]
+  },
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed",
+  "reservation_retained": true
+}

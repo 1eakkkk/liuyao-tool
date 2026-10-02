@@ -1,0 +1,109 @@
+{
+  "id": "trend-course",
+  "context_id": "sha256:26cd25dcba6d30710cf4eafd2aab46ab1aacf3f2236c46506963eca9bff52180",
+  "request_hash": "517004b4cd42be1a1e23b8ee55e27342d7acc7fe2d8705d5ff9b7cc2d3b63ea2",
+  "status": "validated",
+  "issues": [],
+  "model": "deepseek-flash",
+  "finish_reason": "stop",
+  "saw_done": true,
+  "usage": {
+    "prompt_tokens": 12598,
+    "completion_tokens": 1239,
+    "total_tokens": 13837,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 12342
+  },
+  "usage_ok": true,
+  "usage_sha256": "9ed3a1eaacf607ac51c95d0f42a3dca81ec4bc662a8a1d0b4ed567b6d03ef430",
+  "cost_unknown": false,
+  "conservative_peak_cost_cny": 0.035108,
+  "archive": {
+    "complete": true,
+    "error": null,
+    "redacted": false,
+    "bytes": 358687,
+    "sha256": "2d88865cae428c5e617b1d028a5a4bdfac7e025810287c3619a50a635f703557"
+  },
+  "raw_sha256": "df17101a971a241b20955cbe09a1735fe17aea1a83f5325a98a66aaa19df9e57",
+  "response": {
+    "schema_version": "evidence-led-offline-2",
+    "context_id": "sha256:26cd25dcba6d30710cf4eafd2aab46ab1aacf3f2236c46506963eca9bff52180",
+    "summary": "本盘问的是周末陶艺入门课能否完成一件自己满意的小作品。程序事实显示：本卦水泽节，世爻在第1爻（妻财，火，动，螣蛇），应爻在第4爻（父母，金，旺，青龙），第1爻为唯一动爻，动而回头生；第2爻子孙卯木旬空且月破、日辰冲。以作品成果取向时，世爻动且回头生可作候选用神来解释投入有承接；应爻父母旺可作课程条件偏稳的候选参考，但两者都不直接证明实际产出。折中看，目标不自带吉凶，取用证据偏单薄，态势判为 unclear，更接近“可尝试、需限缩预期”。",
+    "decision": {
+      "task": "trend",
+      "direction": "unclear",
+      "focus": [
+        {
+          "evidence_id": "fact:/lines/0/relative",
+          "role_hypothesis": "未指定用神时，取唯一动爻且临世爻的妻财作候选用神：妻财可象化为作品成果或可把玩之物，与“完成一件自己的小作品”目标名称相应，但其成立与否属解释假设，非程序结论。"
+        }
+      ],
+      "major_factor_ids": [
+        "f1"
+      ],
+      "counter_factor_ids": [
+        "f2"
+      ],
+      "tradeoff_reason": "第1爻妻财动而回头生作支持候选，第2爻子孙旬空月破且受日冲作抵消候选；两项中至少后者明确指向易反复、易落空，但二者并非同一目标节点上的实际对决——作品成果与辅助体验是否互斥、能否相抵，本盘无法确认，故不判 favorable 或 unfavorable。"
+    },
+    "factors": [
+      {
+        "id": "f1",
+        "effect": "conditional",
+        "evidence_ids": [
+          "rule:LINE-MOVING-001:primary:1:-",
+          "rule:MOVE-RETURN-GENERATE-001:primary:1:-",
+          "rule:MONTH-STATE-QIU-001:primary:1:-",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/0/relative"
+        ],
+        "interpretation": "唯一动爻在第1爻且临世，属“自己发起、自己投入”的一层取象；该爻有回头生，说明动而能借到接续之力，可作投入有承接、作品有望推进的候选解释。",
+        "assumption": "假设以世爻所在、唯一动爻的妻财为候选用神，取象作品成果。",
+        "limitation": "妻财只取象财物或作品类，不能确认陶艺成品真的成功、也无从证明手作兴趣一定转化为实际满意；回头生是局部关系，不构成综合吉凶。"
+      },
+      {
+        "id": "f2",
+        "effect": "oppose",
+        "evidence_ids": [
+          "rule:LINE-VOID-001:primary:2:-",
+          "rule:DAY-CLASH-001:primary:2:-",
+          "rule:MONTH-CLASH-001:primary:2:-",
+          "rule:MONTH-STATE-SI-001:primary:2:-",
+          "fact:/lines/1/relative"
+        ],
+        "interpretation": "第2爻子孙卯木同时旬空、月破、受日冲，且月令为死，若把子孙视作动手体验与创作过程的取象，则过程一途在本盘偏弱，可解释为兴致或动手感容易被打断、反复。",
+        "assumption": "假设以子孙作创作体验、可玩性的取象，与作品成果区分开。",
+        "limitation": "子孙在此仅是一层取象，不能由此推知课程质量、老师水平、材料或场地是否真有问题；旬空、月破也不等于活动不会发生。"
+      },
+      {
+        "id": "f3",
+        "effect": "neutral",
+        "evidence_ids": [
+          "rule:SHI-CONTROL-YING-001:primary:1:4",
+          "rule:MONTH-STATE-WANG-001:primary:4:-",
+          "fact:/lines/3/relative",
+          "fact:/lines/3/is_ying"
+        ],
+        "interpretation": "第4爻应位父母申金，月令为旺，且与本世爻形成世克应。父母可象化课程条件、教与学的环境，旺则条件看上去不差；世克应也说明主导权偏在自方，宜按自己的节奏取舍，而非依赖外部节奏。",
+        "assumption": "以应爻父母作课程与教学条件的取象，并承认世克应仅表方向关系。",
+        "limitation": "旺与世克应均属局部关系，不能确认课程内容、教师水平或后续安排是否真能满足自己；也不能据此推断课程一定值得继续投入。"
+      }
+    ],
+    "general_advice": [
+      "既然属兴趣体验，可优先定一个“小而具体”的完成标准（比如一件器皿的成型或上釉），把期待从“满意成品”调整为“亲手完成一次”。",
+      "若中途出现反复或手感不佳，可停下重来或只保留一件最满意的部分；子孙一途本就偏弱，不必用一次课程验证全部兴趣。"
+    ],
+    "uncertainties": [
+      "未指定用神，本盘以世爻妻财和应爻父母作候选取用；换用其他六亲（如以官鬼看压力、以兄弟看同伴），解释可能偏向不同。",
+      "本卦向坎为水变化，第1爻变出子孙寅木，但本盘未提供变爻整体取用的更细规则，变卦意义此处不作展开。",
+      "月令与日辰仅作为局部关系呈现，本盘未提供综合强弱评分，因此不能据某爻旺或空直接判定当天实际体验的成败。"
+    ]
+  },
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed",
+  "reservation_retained": true
+}

@@ -1,0 +1,443 @@
+{
+  "plan_hash": "230755ceb9223d86510f3f0538c508c1be6b9a9f8565afcd7915afa8d877769b",
+  "planned_calls": 6,
+  "attempted_calls": 6,
+  "results": [
+    {
+      "id": "facts-motion",
+      "context_id": "sha256:d1e6b9b817afb7d2df0e287e19a588d1d92cb4ed63775dbef11a18466c4a5a08",
+      "request_hash": "18bb1088e052d464df8076e72157dcd617f11b3a7f64f61c206fa3c5fd740eec",
+      "status": "validated",
+      "issues": [],
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "saw_done": true,
+      "usage": {
+        "prompt_tokens": 12260,
+        "completion_tokens": 614,
+        "total_tokens": 12874,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 12260
+      },
+      "usage_ok": true,
+      "usage_sha256": "fdc7a7db03dd1d46ce01c5ddf876f94bf2a3e92706a7fd89dbcab58d661ef46f",
+      "cost_unknown": false,
+      "conservative_peak_cost_cny": 0.029432,
+      "archive": {
+        "complete": true,
+        "error": null,
+        "redacted": false,
+        "bytes": 178312,
+        "sha256": "76f84bfbb24b9aaa3c5f32177f8471e04ffa2ded6adf6ff8fbf317512f60ddc0"
+      },
+      "raw_sha256": "3c451d500bf7e98ea828f35b926aa381b47ff41640a2844b4cfa9d4d94079adb",
+      "response": {
+        "schema_version": "evidence-led-offline-2",
+        "context_id": "sha256:d1e6b9b817afb7d2df0e287e19a588d1d92cb4ed63775dbef11a18466c4a5a08",
+        "summary": "本卦为雷火丰（坎宫），按初爻至上爻核对：六爻中仅第4爻为动爻（老阳→变阴，动爻记录见 fact:/lines/3/moving 与 rule:LINE-MOVING-001），其余五爻均不动。世爻在第5爻（父母庚申金），应爻在第2爻（官鬼己丑土），与卦盘所记 shi_line=5、ying_line=2 一致。额外事实：第1爻（子孙己卯木）旬空且受日辰冲，并见月破标注；第5爻月令旺。本轮只核对爻之动静与世应位置，不做趋势判断，也不提供建议。",
+        "decision": {
+          "task": "facts",
+          "direction": "unclear",
+          "focus": [],
+          "major_factor_ids": [],
+          "counter_factor_ids": [],
+          "tradeoff_reason": "本任务为事实核对，只确认动爻与世应位置，不对趋势作吉凶或利弊取舍判断，因此不列出主要或抵消因素。"
+        },
+        "factors": [
+          {
+            "id": "f1",
+            "effect": "neutral",
+            "evidence_ids": [
+              "fact:/lines/3/moving",
+              "fact:/lines/0/moving",
+              "fact:/lines/1/moving",
+              "fact:/lines/2/moving",
+              "fact:/lines/4/moving",
+              "fact:/lines/5/moving"
+            ],
+            "interpretation": "六爻动静核对：第4爻标注为动爻，初、二、三、五、上爻均标注不动。",
+            "assumption": "以程序给定的 moving 字段为唯一动静依据，不另行判断动爻含义。",
+            "limitation": "只反映盘面动静字段，不能说明动爻代表何种现实变化或结果。"
+          },
+          {
+            "id": "f2",
+            "effect": "neutral",
+            "evidence_ids": [
+              "fact:/hexagram/shi_line",
+              "fact:/hexagram/ying_line",
+              "fact:/lines/4/is_shi",
+              "fact:/lines/1/is_ying"
+            ],
+            "interpretation": "世应位置核对：世爻位于第5爻，应爻位于第2爻。",
+            "assumption": "以卦盘给定 shi_line、ying_line 及逐爻标记为世应依据。",
+            "limitation": "只确认位置，不解释世应关系或其所象征的现实对象。"
+          }
+        ],
+        "general_advice": [],
+        "uncertainties": [
+          "本次仅核对爻动静与世应位置，未涉及用神选取与吉凶推断；如需趋势解释，需另行说明目标。",
+          "第1爻同时见旬空、日辰冲与月破标注，这些均为程序给定关系项，本任务不据此推断现实含义。"
+        ]
+      },
+      "semantic_acceptance": "unassessed",
+      "forecast_accuracy": "unassessed",
+      "reservation_retained": true
+    },
+    {
+      "id": "facts-records",
+      "context_id": "sha256:1d7d2a3821bf146cd38c07ca3df76e84db8e5b6075628cb1b06c9df6db6d95fc",
+      "request_hash": "2be751e0225537a00590b86581396bdd0476b67dcf71e8e535f1fb66e1b1a39b",
+      "status": "validated",
+      "issues": [],
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "saw_done": true,
+      "usage": {
+        "prompt_tokens": 12868,
+        "completion_tokens": 600,
+        "total_tokens": 13468,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 12612
+      },
+      "usage_ok": true,
+      "usage_sha256": "ab0edfcfa8a58b91a3b1116cad04df4a0c3cd5b31b6f4a6e1b3e76b8c3c362e7",
+      "cost_unknown": false,
+      "conservative_peak_cost_cny": 0.030536,
+      "archive": {
+        "complete": true,
+        "error": null,
+        "redacted": false,
+        "bytes": 174308,
+        "sha256": "d50ef4ad77404ff74336099c15c9c70224c31aa86aed49398be5859196c507e8"
+      },
+      "raw_sha256": "6813b0267a7782fc0db2aea05d69605e82637a3d4adccdf9052383308f69f8a7",
+      "response": {
+        "schema_version": "evidence-led-offline-2",
+        "context_id": "sha256:1d7d2a3821bf146cd38c07ca3df76e84db8e5b6075628cb1b06c9df6db6d95fc",
+        "summary": "仅核对记载：第三爻（position 3，戊午）在盘面中确有伏神记录，伏神纳甲为己亥、地支亥、五行水、六亲官鬼，并伴有伏神克飞神关系；该爻不能记为“无伏神”。第五爻（position 5，壬申）本爻六亲为妻财、五行金，动爻，变爻记录为己未、五行土、六亲子孙。两者均为程序给定事实，未据其推断任何现实或趋势。",
+        "decision": {
+          "task": "facts",
+          "direction": "unclear",
+          "focus": [],
+          "major_factor_ids": [],
+          "counter_factor_ids": [],
+          "tradeoff_reason": "本次为事实核对任务，不涉及趋势取用或吉凶权衡；不作方向判定，也不列支持或抵消因素。"
+        },
+        "factors": [
+          {
+            "id": "f1",
+            "effect": "neutral",
+            "evidence_ids": [
+              "fact:/lines/2/position",
+              "fact:/lines/2/hidden/ganzhi",
+              "fact:/lines/2/hidden/relative",
+              "fact:/lines/2/relations/hidden_relation"
+            ],
+            "interpretation": "第三爻记载伏神：该爻位为3，伏神记录有纳甲与六亲字段，非空；同时记有伏神克飞神关系。仅核对记录存在与字段值。",
+            "assumption": "按输入将 /lines/2/hidden 非 null 视为“记载伏神”。",
+            "limitation": "不解释伏神含义、不推断现实事件、不评估吉凶。"
+          },
+          {
+            "id": "f2",
+            "effect": "neutral",
+            "evidence_ids": [
+              "fact:/lines/4/position",
+              "fact:/lines/4/relative",
+              "fact:/lines/4/changed/relative",
+              "fact:/lines/4/changed/element"
+            ],
+            "interpretation": "第五爻本爻六亲为妻财，变爻六亲为子孙，变爻五行为土。仅核对字段所载，并对齐本卦宫五行基准的给定口径。",
+            "assumption": "changed 六亲按输入说明以本卦宫五行为基准，不重算。",
+            "limitation": "不推断财、子等六亲在现实中的对应，不判断趋势。"
+          }
+        ],
+        "general_advice": [],
+        "uncertainties": [
+          "第五爻变爻六亲的基准依输入说明为本卦宫五行；若需引用古籍或另换基准，本盘不提供依据。",
+          "第三爻伏神仅确认有记录，伏神能否“出伏”等取用判断超出现有程序事实，本回答不涉及。"
+        ]
+      },
+      "semantic_acceptance": "unassessed",
+      "forecast_accuracy": "unassessed",
+      "reservation_retained": true
+    },
+    {
+      "id": "advice-photos",
+      "context_id": "sha256:74c678079ef6d5330baf19ef14d1b776120ed876d1fb69a87a42bf11e21df9a3",
+      "request_hash": "1d4c879c4c4152b49496a85b8871f7bfc7b67450d27985ad059961d6a759f507",
+      "status": "validated",
+      "issues": [],
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "saw_done": true,
+      "usage": {
+        "prompt_tokens": 12190,
+        "completion_tokens": 495,
+        "total_tokens": 12685,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 11934
+      },
+      "usage_ok": true,
+      "usage_sha256": "0d27b985df76e2b8abbbb56b9481d912bc725fc15632cde4e209b52d148b7ee3",
+      "cost_unknown": false,
+      "conservative_peak_cost_cny": 0.02834,
+      "archive": {
+        "complete": true,
+        "error": null,
+        "redacted": false,
+        "bytes": 144191,
+        "sha256": "208e092a2d7c89873011e996076a71244ee4706751ec5b36ec308231babd2009"
+      },
+      "raw_sha256": "aad9aa1f984c35924ea6e1511d73915d5d8cdd16007570dc76dfdfbed5a21232",
+      "response": {
+        "schema_version": "evidence-led-offline-2",
+        "context_id": "sha256:74c678079ef6d5330baf19ef14d1b776120ed876d1fb69a87a42bf11e21df9a3",
+        "summary": "本次任务是为“旧照片整理成家庭电子相册、仅家人查看”给出两条开始整理的建议，不判成败也不预测时间。卦盘显示泽山咸、世爻在三爻（兄弟申金，月令旺），应爻六爻（父母未土）生世，另有初爻父母辰土与日辰六合、与月建六合，二爻官鬼下伏妻财卯木生飞神。这些是可以引用的程序事实，但卦象本身不直接说明照片数量、家人配合意愿或存储条件，因此下面两条建议只作为整理起手的操作顺序参考，不作为吉凶结论。",
+        "decision": {
+          "task": "advice",
+          "direction": "unclear",
+          "focus": [],
+          "major_factor_ids": [],
+          "counter_factor_ids": [],
+          "tradeoff_reason": "本次目标为整理起手的操作建议，不是成败或趋势判断。盘面虽有世应相生、父母爻与日／月六合等局部关系，但传统取象是否足以支撑“整理顺利”一类结论没有可靠出处，因此不设主要取用角度，major／counter 因素为空；方向取 unclear，建议仅作为操作顺序参考。"
+        },
+        "factors": [],
+        "general_advice": [
+          "先做一次范围清点：把旧照片按来源（手机、相机、扫描件、纸质待扫）分堆，记下大概数量和格式，再决定电子相册的目录结构；不要一开始就逐张精修。",
+          "先定“只给家人看”的共享方式：例如本地加密文件夹加一次离线拷贝，或家人可见的私密相册链接，先小范围试传一批，确认权限与备份可用后再大批量导入。"
+        ],
+        "uncertainties": [
+          "卦象取象不能确认照片数量、扫描质量或存储介质状态，这些需实际清点。",
+          "应生世、六合等关系属传统解释，不能据此断言整理过程一定顺利或一定遇到阻碍。",
+          "“只给家人查看”的权限与隐私效果取决于所用工具设置，卦盘不提供这方面的信息。"
+        ]
+      },
+      "semantic_acceptance": "unassessed",
+      "forecast_accuracy": "unassessed",
+      "reservation_retained": true
+    },
+    {
+      "id": "advice-plant",
+      "context_id": "sha256:2a42269837432eb20fe48053bd93952ff0a9b3430eb6edec37af2c4181de44cc",
+      "request_hash": "b6129c1fb4df893b388b66896c731e031831f90e29570bdc9a3b294e1eb7f314",
+      "status": "validated",
+      "issues": [],
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "saw_done": true,
+      "usage": {
+        "prompt_tokens": 12513,
+        "completion_tokens": 512,
+        "total_tokens": 13025,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 12257
+      },
+      "usage_ok": true,
+      "usage_sha256": "276c6b1788205b1f4bea4911226abd5d057a70bb129af0bfe357fb8ad967f73a",
+      "cost_unknown": false,
+      "conservative_peak_cost_cny": 0.029122,
+      "archive": {
+        "complete": true,
+        "error": null,
+        "redacted": false,
+        "bytes": 149020,
+        "sha256": "b18429f9dff18c4f31136d509376a7e8f671abca0a6154a537493258883cd33f"
+      },
+      "raw_sha256": "577b672527ace07d749301dbbbbb2c788a7380ac02c7daa444c4e83ae10e2e86",
+      "response": {
+        "schema_version": "evidence-led-offline-2",
+        "context_id": "sha256:2a42269837432eb20fe48053bd93952ff0a9b3430eb6edec37af2c4181de44cc",
+        "summary": "本次目标是阳台试种薄荷前的准备建议，不预测长势或收获。盘面显示的可用信息有限：第2爻官鬼卯木旬空且受日冲、月破，第6爻官鬼寅木旬空、月令死，第3爻世位兄弟丑土下伏子孙申金，飞神生伏神，第5爻妻财子水月令相。这些只能作为取象参考，不能直接证明光照、浇水或薄荷存活条件。因此建议集中在可自行确认的试种前动作：先观察阳台光照时段与强度，再建立可调整的浇水判断方式，先小范围试种。",
+        "decision": {
+          "task": "advice",
+          "direction": "unclear",
+          "focus": [],
+          "major_factor_ids": [],
+          "counter_factor_ids": [],
+          "tradeoff_reason": "用户问题属于试种前建议，且盘面没有能直接对应阳台光照、浇水或薄荷生长的用神规则。程序事实中虽有旬空、日冲、月破、飞伏等关系，但这些属于取象解释，不能替代对实际环境的确认。因取法不足且不预测长势，本项不强行判吉凶方向，不列主要或抵消因素。"
+        },
+        "factors": [],
+        "general_advice": [
+          "先连续观察阳台在不同时段的光照情况，记录直射与散射的大致时段，再决定摆放位置和是否遮阴。",
+          "建立简单的浇水判断方法，例如用可排水花盆、检查盆土干湿后再浇，避免固定频率浇水。"
+        ],
+        "uncertainties": [
+          "本盘未提供阳台朝向、楼层、遮挡物、日照时长或气温湿度等实际环境信息，无法据此确认光照或浇水条件。",
+          "六爻取象不能证明薄荷能否存活、长势好坏或资源是否充足，本回答不预测长势或收获。",
+          "若后续确认了具体栽培条件，应优先依据实际观察和栽培资料，而不是依赖本盘取象。"
+        ]
+      },
+      "semantic_acceptance": "unassessed",
+      "forecast_accuracy": "unassessed",
+      "reservation_retained": true
+    },
+    {
+      "id": "trend-course",
+      "context_id": "sha256:26cd25dcba6d30710cf4eafd2aab46ab1aacf3f2236c46506963eca9bff52180",
+      "request_hash": "517004b4cd42be1a1e23b8ee55e27342d7acc7fe2d8705d5ff9b7cc2d3b63ea2",
+      "status": "validated",
+      "issues": [],
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "saw_done": true,
+      "usage": {
+        "prompt_tokens": 12598,
+        "completion_tokens": 1239,
+        "total_tokens": 13837,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 12342
+      },
+      "usage_ok": true,
+      "usage_sha256": "9ed3a1eaacf607ac51c95d0f42a3dca81ec4bc662a8a1d0b4ed567b6d03ef430",
+      "cost_unknown": false,
+      "conservative_peak_cost_cny": 0.035108,
+      "archive": {
+        "complete": true,
+        "error": null,
+        "redacted": false,
+        "bytes": 358687,
+        "sha256": "2d88865cae428c5e617b1d028a5a4bdfac7e025810287c3619a50a635f703557"
+      },
+      "raw_sha256": "df17101a971a241b20955cbe09a1735fe17aea1a83f5325a98a66aaa19df9e57",
+      "response": {
+        "schema_version": "evidence-led-offline-2",
+        "context_id": "sha256:26cd25dcba6d30710cf4eafd2aab46ab1aacf3f2236c46506963eca9bff52180",
+        "summary": "本盘问的是周末陶艺入门课能否完成一件自己满意的小作品。程序事实显示：本卦水泽节，世爻在第1爻（妻财，火，动，螣蛇），应爻在第4爻（父母，金，旺，青龙），第1爻为唯一动爻，动而回头生；第2爻子孙卯木旬空且月破、日辰冲。以作品成果取向时，世爻动且回头生可作候选用神来解释投入有承接；应爻父母旺可作课程条件偏稳的候选参考，但两者都不直接证明实际产出。折中看，目标不自带吉凶，取用证据偏单薄，态势判为 unclear，更接近“可尝试、需限缩预期”。",
+        "decision": {
+          "task": "trend",
+          "direction": "unclear",
+          "focus": [
+            {
+              "evidence_id": "fact:/lines/0/relative",
+              "role_hypothesis": "未指定用神时，取唯一动爻且临世爻的妻财作候选用神：妻财可象化为作品成果或可把玩之物，与“完成一件自己的小作品”目标名称相应，但其成立与否属解释假设，非程序结论。"
+            }
+          ],
+          "major_factor_ids": [
+            "f1"
+          ],
+          "counter_factor_ids": [
+            "f2"
+          ],
+          "tradeoff_reason": "第1爻妻财动而回头生作支持候选，第2爻子孙旬空月破且受日冲作抵消候选；两项中至少后者明确指向易反复、易落空，但二者并非同一目标节点上的实际对决——作品成果与辅助体验是否互斥、能否相抵，本盘无法确认，故不判 favorable 或 unfavorable。"
+        },
+        "factors": [
+          {
+            "id": "f1",
+            "effect": "conditional",
+            "evidence_ids": [
+              "rule:LINE-MOVING-001:primary:1:-",
+              "rule:MOVE-RETURN-GENERATE-001:primary:1:-",
+              "rule:MONTH-STATE-QIU-001:primary:1:-",
+              "fact:/lines/0/is_shi",
+              "fact:/lines/0/relative"
+            ],
+            "interpretation": "唯一动爻在第1爻且临世，属“自己发起、自己投入”的一层取象；该爻有回头生，说明动而能借到接续之力，可作投入有承接、作品有望推进的候选解释。",
+            "assumption": "假设以世爻所在、唯一动爻的妻财为候选用神，取象作品成果。",
+            "limitation": "妻财只取象财物或作品类，不能确认陶艺成品真的成功、也无从证明手作兴趣一定转化为实际满意；回头生是局部关系，不构成综合吉凶。"
+          },
+          {
+            "id": "f2",
+            "effect": "oppose",
+            "evidence_ids": [
+              "rule:LINE-VOID-001:primary:2:-",
+              "rule:DAY-CLASH-001:primary:2:-",
+              "rule:MONTH-CLASH-001:primary:2:-",
+              "rule:MONTH-STATE-SI-001:primary:2:-",
+              "fact:/lines/1/relative"
+            ],
+            "interpretation": "第2爻子孙卯木同时旬空、月破、受日冲，且月令为死，若把子孙视作动手体验与创作过程的取象，则过程一途在本盘偏弱，可解释为兴致或动手感容易被打断、反复。",
+            "assumption": "假设以子孙作创作体验、可玩性的取象，与作品成果区分开。",
+            "limitation": "子孙在此仅是一层取象，不能由此推知课程质量、老师水平、材料或场地是否真有问题；旬空、月破也不等于活动不会发生。"
+          },
+          {
+            "id": "f3",
+            "effect": "neutral",
+            "evidence_ids": [
+              "rule:SHI-CONTROL-YING-001:primary:1:4",
+              "rule:MONTH-STATE-WANG-001:primary:4:-",
+              "fact:/lines/3/relative",
+              "fact:/lines/3/is_ying"
+            ],
+            "interpretation": "第4爻应位父母申金，月令为旺，且与本世爻形成世克应。父母可象化课程条件、教与学的环境，旺则条件看上去不差；世克应也说明主导权偏在自方，宜按自己的节奏取舍，而非依赖外部节奏。",
+            "assumption": "以应爻父母作课程与教学条件的取象，并承认世克应仅表方向关系。",
+            "limitation": "旺与世克应均属局部关系，不能确认课程内容、教师水平或后续安排是否真能满足自己；也不能据此推断课程一定值得继续投入。"
+          }
+        ],
+        "general_advice": [
+          "既然属兴趣体验，可优先定一个“小而具体”的完成标准（比如一件器皿的成型或上釉），把期待从“满意成品”调整为“亲手完成一次”。",
+          "若中途出现反复或手感不佳，可停下重来或只保留一件最满意的部分；子孙一途本就偏弱，不必用一次课程验证全部兴趣。"
+        ],
+        "uncertainties": [
+          "未指定用神，本盘以世爻妻财和应爻父母作候选取用；换用其他六亲（如以官鬼看压力、以兄弟看同伴），解释可能偏向不同。",
+          "本卦向坎为水变化，第1爻变出子孙寅木，但本盘未提供变爻整体取用的更细规则，变卦意义此处不作展开。",
+          "月令与日辰仅作为局部关系呈现，本盘未提供综合强弱评分，因此不能据某爻旺或空直接判定当天实际体验的成败。"
+        ]
+      },
+      "semantic_acceptance": "unassessed",
+      "forecast_accuracy": "unassessed",
+      "reservation_retained": true
+    },
+    {
+      "id": "trend-trip",
+      "context_id": "sha256:ec492575b7701b4e2272b1d9f35f4b52ef0af44b0929e5f407a922ce986aa27c",
+      "request_hash": "cbcb28dff5ab77071ddc24bedd0ef94a42c29f1c3cb0217d36521d548f8075d2",
+      "status": "rejected",
+      "issues": [
+        "Focus requires an existing relative fact"
+      ],
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "saw_done": true,
+      "usage": {
+        "prompt_tokens": 12424,
+        "completion_tokens": 1187,
+        "total_tokens": 13611,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 12168
+      },
+      "usage_ok": true,
+      "usage_sha256": "09c1a8acdc2b5f778695e8dd4c6a1436f7a909efb137290432f97736112cae7a",
+      "cost_unknown": false,
+      "conservative_peak_cost_cny": 0.034344,
+      "archive": {
+        "complete": true,
+        "error": null,
+        "redacted": false,
+        "bytes": 343971,
+        "sha256": "1b31cf445752f24c40061c442fd464532e8bea43d397a8569d8142d82b84849e"
+      },
+      "raw_sha256": "7536674857740eff15f4f5111018392c4865de81418f6a71f2fbd9532833a2b3",
+      "response": null,
+      "semantic_acceptance": "unassessed",
+      "forecast_accuracy": "unassessed",
+      "reservation_retained": true
+    }
+  ],
+  "reservation": {
+    "reserved_cny": 0.794146,
+    "limit_cny": 2
+  },
+  "balance_before_cny": 24.8,
+  "exact_billed_cost_cny": null,
+  "production_changes": false,
+  "semantic_acceptance": "unassessed",
+  "automatic_settlement": false
+}
