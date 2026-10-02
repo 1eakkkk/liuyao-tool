@@ -312,6 +312,7 @@ wrangler.jsonc   Cloudflare 静态资源配置
 | [精简判断候选复测](docs/JUDGMENT_COMPACT_REVIEW.md) | 独立冻结两次开发调用；引用与主次问题仍在，候选未上线 |
 | [事实与解释分离 v2](docs/EVIDENCE_LED_LIVE_REVIEW.md) | 六例真实开发检查、费用和双人审查；结构五例通过、一例拒绝，内容仍未通过，尚未发布 |
 | [关键取用来源候选](docs/JUDGMENT_FOCUS_SOURCE_CANDIDATE.md) | 三条已有原典摘录及扫描复核，完整适用条件尚未准入知识库 |
+| [任务分流开发](docs/TASK_LED_REVIEW.md) | 事实核对由程序生成、一般建议不发送卦盘、趋势单独解释，隔离实验尚未上线 |
 | [事实与解释分离原型](docs/EVIDENCE_LED_OFFLINE.md) | 程序展示事实，单独记录主要取用与取舍；只离线验收，未接入正式解读 |
 
 阶段文档保留了当时的上下文，历史的「未发布」结论不应直接当作当前状态。请结合项目状态和对应版本的发布记录阅读。
