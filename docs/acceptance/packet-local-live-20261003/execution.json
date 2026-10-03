@@ -1,0 +1,10 @@
+{
+  "plan_hash": "1264e601754a174183a426394758b38778a8e70284e2d68822f58d72347cedb7",
+  "started_at": "2026-10-03T05:24:01.117Z",
+  "reservation": {
+    "reserved_cny": 0.088838,
+    "limit_cny": 2
+  },
+  "balance_before_cny": 23.98,
+  "automatic_retries": false
+}

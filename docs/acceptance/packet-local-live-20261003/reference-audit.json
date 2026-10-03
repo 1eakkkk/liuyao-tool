@@ -1,0 +1,44 @@
+{
+  "mechanical_status": "rejected",
+  "first_error": "Mixed requires explicit opposed major effects",
+  "reference_findings": [
+    {
+      "factor_id": "f1",
+      "kind": "packet_id_used_as_basis",
+      "id": "rel:rule:MONTH-COMBINE-001:primary:3:-",
+      "rule_id": "rule:MONTH-COMBINE-001:primary:3:-",
+      "relation_packet_selected": false
+    },
+    {
+      "factor_id": "f2",
+      "kind": "packet_id_used_as_basis",
+      "id": "rel:rule:DAY-CLASH-001:primary:3:-",
+      "rule_id": "rule:DAY-CLASH-001:primary:3:-",
+      "relation_packet_selected": false
+    },
+    {
+      "factor_id": "f2",
+      "kind": "packet_id_used_as_basis",
+      "id": "rel:rule:MONTH-STATE-XIU-001:primary:3:-",
+      "rule_id": "rule:MONTH-STATE-XIU-001:primary:3:-",
+      "relation_packet_selected": false
+    },
+    {
+      "factor_id": "f3",
+      "kind": "packet_id_used_as_basis",
+      "id": "rel:rule:MOVE-RETURN-GENERATE-001:primary:4:-",
+      "rule_id": "rule:MOVE-RETURN-GENERATE-001:primary:4:-",
+      "relation_packet_selected": false
+    },
+    {
+      "factor_id": "f3",
+      "kind": "packet_id_used_as_basis",
+      "id": "rel:rule:HIDDEN-FLY-CONTROL-001:hidden:4:-",
+      "rule_id": "rule:HIDDEN-FLY-CONTROL-001:hidden:4:-",
+      "relation_packet_selected": false
+    }
+  ],
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed",
+  "response_modified": false
+}

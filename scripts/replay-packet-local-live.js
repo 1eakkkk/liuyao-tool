@@ -32,6 +32,11 @@ export async function replayPacketLocalLive(directory){
   const attempted=plan.cases.slice(0,summary.results.length);
   const suffixes=['-attempt.json','-archive.json','-raw.sse','-response.txt','-check.json','-failure.json','-http-error.txt'];
   const expectedArtifacts=new Set(attempted.flatMap(c=>suffixes.map(s=>c.id+s)));
+  // This fixed historical batch had a preflight event: its recorded absence is not interchangeable.
+  if(!fs.existsSync(path.join(directory,'preflight-failure.json')))throw Error('Known preflight audit missing');
+  const audit=read('preflight-failure.json');
+  if(audit.phase!=='initial_balance'||audit.chat_requests!==0||audit.reserved_cny!==0||audit.verified_no_attempt_artifacts!==true||audit.probe_authenticated!==false||audit.public_connectivity_probe_http_status!==401||audit.error!=='fetch failed')throw Error('Preflight audit mismatch');
+  expectedArtifacts.add('preflight-failure.json');
   if(fs.readdirSync(directory).some(n=>suffixes.some(s=>n.endsWith(s))&&!expectedArtifacts.has(n)))throw Error('Unrecorded case artifact');
   if(attempted.some(c=>['-failure.json','-http-error.txt'].some(s=>fs.existsSync(path.join(directory,c.id+s)))))throw Error('Unsupported or conflicting failure archive');
   const execution=read('execution.json');
@@ -101,4 +106,3 @@ export async function replayPacketLocalLive(directory){
 if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){
   console.log(JSON.stringify(await replayPacketLocalLive(process.argv[2]),null,2));
 }
-

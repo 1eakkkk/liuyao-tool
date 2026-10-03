@@ -1,0 +1,38 @@
+{
+  "id": "trend-spare-key",
+  "context_id": "sha256:8e54d0221ee9bb8e57be8e8cd9be4bd596d10b125b043b68fc1f60d9562efc98",
+  "request_hash": "b3552b28503428e810d2705fc3629f7648edd06594aa0f275b32ca16d93933ea",
+  "status": "rejected",
+  "issues": [
+    "Mixed requires explicit opposed major effects"
+  ],
+  "model": "deepseek-flash",
+  "finish_reason": "stop",
+  "saw_done": true,
+  "usage": {
+    "prompt_tokens": 6983,
+    "completion_tokens": 1219,
+    "total_tokens": 8202,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 6983
+  },
+  "usage_ok": true,
+  "usage_sha256": "5f00fbeb38152cc654e4bad7dabfac68741a3f595e32bd75d5bb45fac232ea9b",
+  "cost_unknown": false,
+  "conservative_peak_cost_cny": 0.023718,
+  "archive": {
+    "complete": true,
+    "error": null,
+    "redacted": false,
+    "bytes": 353216,
+    "sha256": "27ec0fd561987e1b2902495485ee46796f4b462caf4f86549da3b1b4399c4546"
+  },
+  "raw_sha256": "aa92ed4b7c59b769add6f2971e199d22d40446d22569ab9d867504be4080a64c",
+  "response": null,
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed",
+  "reservation_retained": true
+}

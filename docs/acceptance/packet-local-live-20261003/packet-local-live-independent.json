@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "reviewer_id": "agent-a",
+  "review_kind": "independent_offline_executor_and_replay_review",
+  "reviewed_at": "2026-10-03T05:21:41.806Z",
+  "verdict": "pass_with_declared_replay_scope",
+  "blocking_findings": [],
+  "original_findings": [],
+  "source_sha256": {
+    "experiments/judgment-review/packet-local-live-plan.js": "c3245ddaa948ebe7398bdc04960179d0dbed40c695d944e086a2a3e4a516756e",
+    "scripts/packet-local-live-pilot.js": "af1544df64544783775b36b7847024bf22e31cb230db83673f1e34a225ff4286",
+    "tests/output/packet-local-live-pilot.test.js": "2e68be2e26d69bfa29309020fa095dd5fdc30415b84c21dc5827bc6ab31ec757",
+    "scripts/replay-packet-local-live.js": "44ea8079c1406272c5f12fae28d1341da1c5d4247e7844256b1f68790eca9380",
+    "experiments/judgment-review/packet-led-local.js": "e9da547c9b54ff26d8908ea391c9878bcea0c33116f003923b9de0efe0a4e72b"
+  },
+  "plan_hash": "1264e601754a174183a426394758b38778a8e70284e2d68822f58d72347cedb7",
+  "plan_identity": {
+    "planned_calls": 1,
+    "case_id": "trend-spare-key",
+    "campaign_id": "packet-local-new-20261003",
+    "campaign_schema": "packet-local-campaign-1",
+    "prompt_revision": "packet-local-live-p1",
+    "price_checked": "2026-10-03",
+    "campaign_cap_cny": 2,
+    "wallet_floor_cny": 1,
+    "reserve_cny": 0.088838,
+    "minimum_balance_cny": 1.088838,
+    "model": "deepseek-flash",
+    "max_tokens": 4096
+  },
+  "verification": {
+    "command": "npx vitest run tests/output/packet-local-live-pilot.test.js --maxWorkers=2",
+    "tests_passed": 44,
+    "test_files_passed": 1,
+    "earlier_run_tests_passed": 43,
+    "actual_network_calls": 0,
+    "actual_credentials_read": false,
+    "actual_ledger_read": false,
+    "synthetic_replay": {
+      "planned_calls": 1,
+      "attempted_calls": 1,
+      "verified_cases": 1,
+      "status": "validated",
+      "reviews": [],
+      "semantic_acceptance": "requires_independent_review",
+      "forecast_accuracy": "unassessed"
+    },
+    "independent_counterexamples": [
+      {
+        "id": "unknown-case-artifact",
+        "accepted": false,
+        "error": "Unrecorded case artifact"
+      },
+      {
+        "id": "conflicting-failure-file",
+        "accepted": false,
+        "error": "Unsupported or conflicting failure archive"
+      },
+      {
+        "id": "synchronized-check-summary-wrong-case-id",
+        "accepted": false,
+        "error": "Case identity mismatch"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "topic": "fixed_plan",
+      "verdict": "pass",
+      "reason": "Seal must equal trusted rebuilt single-case plan, including full prompt/body/context and reserve. Reconstructed local context identity checked; prompt adaptation asserts old substrings before replacement. No arbitrary plan/profile or second question accepted."
+    },
+    {
+      "topic": "funds_and_replay",
+      "verdict": "pass",
+      "reason": "Matching fresh authorized empty campaign exact2cap required before credential/network. Full reserve plus1floor confirmed before reservation/chat; reservation locks and rereads campaign. Existing execution/attempt or reservation prohibits replay. No retries, follow-up or automatic settlement."
+    },
+    {
+      "topic": "UTC",
+      "verdict": "pass",
+      "reason": "Frozen Oct3 UTC date checked before credentials and rechecked after awaited initial balance; another immediate date check precedes sole chat. Rollover mock leaves no reservation/chat."
+    },
+    {
+      "topic": "archive_and_local_protocol",
+      "verdict": "pass",
+      "reason": "Provider body fully archived with bytes/hash and completeness before strict SSE parse. Expected model, stop/DONE, bounded usage and unexpected channels checked; strict JSON and local packet/basis/focus validation retained. Failed response stops and retains reserve, redacted errors do not reveal synthetic credential."
+    },
+    {
+      "topic": "replay_integrity",
+      "verdict": "pass",
+      "reason": "Trusted fixed plan, request/context, raw bytes/SSE/text/usage/check and case policy verified; review hashes/counts/sixdimensions/IDs/exact own-field UTF16 quotes checked when present. Unknown case artifacts and conflicting failure files rejected."
+    }
+  ],
+  "limits": [
+    "This replay supports one complete HTTP200 raw SSE with check.json; HTTP/transport/pre-chat failures are intentionally unsupported and must not be called fully replayed.",
+    "Synthetic reply, balance, credential and ledger were locally mocked. No live bill, wallet balance, real authorization ledger or provider response independently verified.",
+    "Absent semantic reports remain requires_independent_review; mechanical validated does not establish correct prose, local citation coverage in prose, traditional relevance, priority weights or forecast accuracy.",
+    "Official current pricing was checked separately by Root; this reviewer inspected the frozen2/8 metadata only without browsing.",
+    "No old protocol/archive/production changes or held-out second-case debugging. New question is a manual fixture rather than an actual cast."
+  ],
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed"
+}

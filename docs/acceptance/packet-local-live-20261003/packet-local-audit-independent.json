@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "reviewer_id": "agent-a",
+  "review_kind": "independent_offline_diagnostic_review",
+  "reviewed_at": "2026-10-03T05:33:17.781Z",
+  "verdict": "pass_with_declared_scope",
+  "blocking_findings": [],
+  "original_findings": [],
+  "source_sha256": {
+    "experiments/judgment-review/packet-local-audit.js": "aad2443d12f476abe8f2d34b526017898b04350de668401e3f1e6c0c72cfda6e",
+    "tests/output/packet-local-audit.test.js": "1e9d20a3f0f939bee5855385d8de7238df93f9b067117db33f990a61b295f32e"
+  },
+  "verification": {
+    "command": "npx vitest run tests/output/packet-local-audit.test.js --maxWorkers=2",
+    "tests_passed": 6,
+    "test_files_passed": 1,
+    "network_calls": 0,
+    "independent_checks": [
+      "Actual frozen single reply keeps first_error Mixed requires explicit opposed major effects and exactly five packet_id_used_as_basis findings.",
+      "Answer serialization unchanged after diagnostic; raw archived file not rewritten.",
+      "Hidden4 owning-primary moving is a legitimate basis contribution and is not marked unused; it does not grant selected hidden relative or flying relation.",
+      "Unknown selected packet separately diagnosed without undefined-member crash.",
+      "Nested sparse basis array safely returns rejected/Sparse error and no traversal findings."
+    ]
+  },
+  "findings": [
+    {
+      "topic": "old_gate_preserved",
+      "verdict": "pass",
+      "reason": "validatePacketLocalAnswer still determines mechanical_status and first_error. Extra diagnostics neither alter validation nor repair the response."
+    },
+    {
+      "topic": "reference_scope",
+      "verdict": "pass",
+      "reason": "Allowed references computed separately per factor using exactly the old packet-membership definition. Five rel: namespace errors shown with true rule_id and relation_packet_selected=false; corrected prefixes remain outside selected packets, not auto-fixed."
+    },
+    {
+      "topic": "shared_fact",
+      "verdict": "pass",
+      "reason": "Shared owner moving contributes to hidden4 under original membership definition, so no false unused finding. Diagnostic membership does not claim this moving fact supports hidden identity or relations."
+    },
+    {
+      "topic": "input_boundaries",
+      "verdict": "pass",
+      "reason": "Original trusted context required. Sparse/cyclic values stop early; malformed shape and cross-context mismatch do not invent local reference audit. Unknown packets handled via filtered chosen records."
+    },
+    {
+      "topic": "semantic_boundary",
+      "verdict": "pass",
+      "reason": "A reply asserting definite key recovery can still be mechanically validated with zero factors and unclear; diagnostic preserves semantic_acceptance/forecast_accuracy unassessed rather than certifying it."
+    }
+  ],
+  "limitations": [
+    "reference_findings audits explicit reference membership only, not every gate failure or natural-language factual coverage. An empty list does not imply mechanical or semantic success; first_error must remain visible.",
+    "Reporting rule_id alongside an invalid rel: ID is diagnostic explanation only, not a migration, correction or authorization to borrow that relation from another factor.",
+    "The archived single reply remains rejected with failed/uncertain semantic dimensions. No new model response or prediction evidence."
+  ],
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed"
+}

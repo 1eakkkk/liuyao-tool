@@ -1,0 +1,397 @@
+{
+  "schema_version": 1,
+  "reviewer_id": "agent-a",
+  "review_kind": "retrospective_nonblind",
+  "plan_sha256": "387211258793bc0bc41835313a25fce2789068dbb5b514a1cbce6cfb017c7666",
+  "actual_responses_reviewed": 1,
+  "planned_cases": 1,
+  "reviews": [
+    {
+      "case_id": "trend-spare-key",
+      "response_sha256": "aa92ed4b7c59b769add6f2971e199d22d40446d22569ab9d867504be4080a64c",
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "妻财不旬空、日冲/月休、父母动/回头生及飞神克伏神等在整盘中真实且生克方向未反转，但本段局部引用覆盖不成立：五个关系basis误写rel:包ID而非原registry的rule.id，且各关系包均未选。f1无合法月合依据；f2只有妻财和日关系两个合法basis，月休不能借f1的month_strength。f3合法basis只有动和return_relation，父母/子孙六亲及飞伏关系均未局部选择，hidden包按协议亦包含本位moving，因此它有合法动爻basis贡献，不能称未使用；但这个贡献不覆盖伏神子孙身份或飞伏关系。focus说世爻也缺局部is_shi；六亲basis足以结构关联focus，不代表其他身份均被引用。不能用全包或他因素补救，不将真实但未引原值误称原值算错。",
+          "evidence_ids": [
+            "fact:/lines/2/relative",
+            "fact:/lines/2/is_shi",
+            "fact:/lines/2/is_kongwang",
+            "fact:/lines/2/relations/day_relation",
+            "fact:/lines/2/relations/month_strength",
+            "rule:MONTH-COMBINE-001:primary:3:-",
+            "rule:DAY-CLASH-001:primary:3:-",
+            "rule:MONTH-STATE-XIU-001:primary:3:-",
+            "fact:/lines/3/relative",
+            "fact:/lines/3/hidden/relative",
+            "fact:/lines/3/relations/hidden_relation",
+            "rule:MOVE-RETURN-GENERATE-001:primary:4:-",
+            "rule:HIDDEN-FLY-CONTROL-001:hidden:4:-"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/basis_ids/3",
+              "start": 0,
+              "end": 38,
+              "text": "rel:rule:MONTH-COMBINE-001:primary:3:-",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/1/basis_ids/2",
+              "start": 0,
+              "end": 34,
+              "text": "rel:rule:DAY-CLASH-001:primary:3:-",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/1/basis_ids/3",
+              "start": 0,
+              "end": 40,
+              "text": "rel:rule:MONTH-STATE-XIU-001:primary:3:-",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/2/basis_ids/2",
+              "start": 0,
+              "end": 45,
+              "text": "rel:rule:MOVE-RETURN-GENERATE-001:primary:4:-",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/2/basis_ids/3",
+              "start": 0,
+              "end": 42,
+              "text": "rel:rule:HIDDEN-FLY-CONTROL-001:hidden:4:-",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/1/question_relevance",
+              "start": 0,
+              "end": 10,
+              "text": "妻财受日辰冲、月令休",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/2/question_relevance",
+              "start": 0,
+              "end": 8,
+              "text": "父母动而有回头生",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/2/question_relevance",
+              "start": 28,
+              "end": 37,
+              "text": "伏神子孙被飞神克制",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/focus/0/role_hypothesis",
+              "start": 0,
+              "end": 7,
+              "text": "此包为世爻妻财",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "仍回答继续寻找钥匙的希望，未断言具体位置、日期或已被某人拿走，也没有把免费私人事情改成商业目标。口袋、包袋等作为一般检查选项，询问家人也是建议而非已发生事实；改日属于操作选项而非应期预测。对室内重找效力的越界判断在support单独保留失败，不因其无具体位置而放行整体内容。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/general_advice/1",
+              "start": 21,
+              "end": 39,
+              "text": "也可询问家人是否曾移动或暂借备用钥匙",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/uncertainties/1",
+              "start": 0,
+              "end": 28,
+              "text": "卦盘无法确认钥匙是否仍在屋内、是否已被他人取得或具体位置",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "support": {
+          "verdict": "fail",
+          "reason": "因素明确以妻财/父母为假设且多次否认必在家、必找回，不能据此确认传统映射；这些取法本身仍未知。然而结论从月合/旬空推出有线索或搁置可能，从动变/飞伏推出单靠室内重找难有稳定进展，再以此主张暂停及扩大范围，实际将类象作未提供的搜索效力依据。f3正文表示寻找有外力、发现力量受制也没有现实信息支持。限制声明与未获取古籍的诚实说明没有撤回总结中的个案影响判断；一般实用建议本身不需盘面引文。",
+          "evidence_ids": [
+            "rule:MONTH-COMBINE-001:primary:3:-",
+            "fact:/lines/2/is_kongwang",
+            "fact:/lines/3/relations/return_relation",
+            "fact:/lines/3/relations/hidden_relation"
+          ],
+          "quotes": [
+            {
+              "path": "/conclusion/answer",
+              "start": 45,
+              "end": 60,
+              "text": "提示有未被排除的线索或搁置可能",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/conclusion/answer",
+              "start": 96,
+              "end": 110,
+              "text": "表示单靠室内重找难有稳定进展",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/2/question_relevance",
+              "start": 9,
+              "end": 26,
+              "text": "表示寻找行为或信息条件并非完全无援",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/2/question_relevance",
+              "start": 38,
+              "end": 55,
+              "text": "表示能直接发现或确认目标的力量受制",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "priority": {
+          "verdict": "uncertain",
+          "reason": "选妻财作为失物候选并明确是假设；f1有效六亲basis确能给focus提供局部身份，不应误报全未引用。可是为何月合/不旬空主要支持、日冲/月休只为counter、寻找与发现分别映射父母/子孙，未有可核实传统适用或权重。tradeoff说难分主次却列primary/counter/background，欠比较理由；其明确结构方向矛盾在direction记fail。不能自行替换用神或断法来解决，所以此维保留uncertain。",
+          "evidence_ids": [
+            "fact:/lines/2/relative",
+            "fact:/lines/3/relative",
+            "fact:/lines/3/hidden/relative",
+            "rule:MONTH-COMBINE-001:primary:3:-",
+            "rule:DAY-CLASH-001:primary:3:-"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/assumption",
+              "start": 0,
+              "end": 17,
+              "text": "以妻财作为失物／备用钥匙的取象身份",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/2/assumption",
+              "start": 0,
+              "end": 41,
+              "text": "以动爻父母回头生代表寻找动作本身有外力／条件支撑，伏神子孙受克代表实际发现路径不畅",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/tradeoff_reason",
+              "start": 62,
+              "end": 84,
+              "text": "三者同看，支持与阻碍均指向同一目标且难分主次",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "direction": {
+          "verdict": "fail",
+          "reason": "mixed没有对应相反的primary效应：f1 support为primary，f2 oppose仅counter，f3 conditional为background，原机械Mixed requires explicit opposed major effects应保留。文字虽说同目标难分主次，却不说明为何难比较，同时宣布主要支持/需权衡阻碍/背景限制，是从存在两面直接推mixed。正文整体转向暂停室内重找、换条件的策略，不等于已论证继续寻找的混合找回趋势。未将实际正确的回头生/飞克伏方向误报相反。",
+          "evidence_ids": [
+            "fact:/lines/3/relations/return_relation",
+            "fact:/lines/3/relations/hidden_relation"
+          ],
+          "quotes": [
+            {
+              "path": "/conclusion/direction",
+              "start": 0,
+              "end": 5,
+              "text": "mixed",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/0/priority",
+              "start": 0,
+              "end": 7,
+              "text": "primary",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/1/priority",
+              "start": 0,
+              "end": 7,
+              "text": "counter",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/tradeoff_reason",
+              "start": 67,
+              "end": 96,
+              "text": "支持与阻碍均指向同一目标且难分主次，故取mixed而非单边",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        },
+        "task_boundary": {
+          "verdict": "fail",
+          "reason": "固定trend、三个因素、每段一至两包和四个basis数量均在容量内，未要求强填。可是五个rel:包ID不是合法局部basis且对应关系包未选，程序闭包不能成立；原拒绝由更早mixed检查触发不豁免这些后续错误。结论把暂停、换条件、扩大范围的操作建议放在conclusion.answer，违反冻结建议仅general_advice，说明字段拆分仍没有阻止建议充当解释结果。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/conclusion/answer",
+              "start": 133,
+              "end": 159,
+              "text": "更支持“暂停盲目重找，换条件或扩大范围后再查”的方向",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            },
+            {
+              "path": "/factors/0/basis_ids/3",
+              "start": 0,
+              "end": 38,
+              "text": "rel:rule:MONTH-COMBINE-001:primary:3:-",
+              "offset_unit": "UTF-16",
+              "offset_scope": "decoded_string_at_path"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "local_basis_audit": [
+    {
+      "factor_id": "f1",
+      "local_basis": [
+        {
+          "submitted_id": "fact:/lines/2/relative",
+          "registry_exists": true,
+          "belongs_to_selected_packet": true,
+          "packet_id_misused_as_basis": false
+        },
+        {
+          "submitted_id": "fact:/lines/2/is_kongwang",
+          "registry_exists": true,
+          "belongs_to_selected_packet": true,
+          "packet_id_misused_as_basis": false
+        },
+        {
+          "submitted_id": "fact:/lines/2/relations/month_strength",
+          "registry_exists": true,
+          "belongs_to_selected_packet": true,
+          "packet_id_misused_as_basis": false
+        },
+        {
+          "submitted_id": "rel:rule:MONTH-COMBINE-001:primary:3:-",
+          "registry_exists": false,
+          "belongs_to_selected_packet": false,
+          "packet_id_misused_as_basis": true
+        }
+      ]
+    },
+    {
+      "factor_id": "f2",
+      "local_basis": [
+        {
+          "submitted_id": "fact:/lines/2/relative",
+          "registry_exists": true,
+          "belongs_to_selected_packet": true,
+          "packet_id_misused_as_basis": false
+        },
+        {
+          "submitted_id": "fact:/lines/2/relations/day_relation",
+          "registry_exists": true,
+          "belongs_to_selected_packet": true,
+          "packet_id_misused_as_basis": false
+        },
+        {
+          "submitted_id": "rel:rule:DAY-CLASH-001:primary:3:-",
+          "registry_exists": false,
+          "belongs_to_selected_packet": false,
+          "packet_id_misused_as_basis": true
+        },
+        {
+          "submitted_id": "rel:rule:MONTH-STATE-XIU-001:primary:3:-",
+          "registry_exists": false,
+          "belongs_to_selected_packet": false,
+          "packet_id_misused_as_basis": true
+        }
+      ]
+    },
+    {
+      "factor_id": "f3",
+      "local_basis": [
+        {
+          "submitted_id": "fact:/lines/3/moving",
+          "registry_exists": true,
+          "belongs_to_selected_packet": true,
+          "packet_id_misused_as_basis": false
+        },
+        {
+          "submitted_id": "fact:/lines/3/relations/return_relation",
+          "registry_exists": true,
+          "belongs_to_selected_packet": true,
+          "packet_id_misused_as_basis": false
+        },
+        {
+          "submitted_id": "rel:rule:MOVE-RETURN-GENERATE-001:primary:4:-",
+          "registry_exists": false,
+          "belongs_to_selected_packet": false,
+          "packet_id_misused_as_basis": true
+        },
+        {
+          "submitted_id": "rel:rule:HIDDEN-FLY-CONTROL-001:hidden:4:-",
+          "registry_exists": false,
+          "belongs_to_selected_packet": false,
+          "packet_id_misused_as_basis": true
+        }
+      ]
+    }
+  ],
+  "mechanical_observation": {
+    "status": "rejected",
+    "issues": [
+      "Mixed requires explicit opposed major effects"
+    ],
+    "additional_local_errors": "Five rel: packet IDs used as basis; relation packets absent; missing locally chosen identities/relations remain after earliest mechanical rejection."
+  },
+  "verification": {
+    "dimensions": 6,
+    "verified_quotes": 24,
+    "all_quote_field_slices_match": true,
+    "all_evidence_ids_exist": true,
+    "network_calls": 0
+  },
+  "semantic_acceptance": "not_established",
+  "forecast_accuracy": "unassessed",
+  "limits": [
+    "仅一条真实development回复的事后审查，不是盲测、专家取法认证或预测验证。",
+    "未看其他审查、不读凭据或账本、不调用API、不修改冻结输出或任何协议。",
+    "无合法整体局部展开可生成；上述检查逐项记录原basis合法性，未把错误rel:自动转为rule:或替原文补引用。"
+  ],
+  "review_correction_history": [
+    {
+      "field": "reviews/0/criteria/facts/reason",
+      "prior_inaccuracy": "初稿错误称 hidden包实际未提供合法basis。",
+      "correction": "hidden:4 包的 owning-primary moving 与 fact:/lines/3/moving 相符，因此合法本位动爻贡献存在。缺漏仅指未所选的伏神身份与飞伏关系。",
+      "verdict_changed": false,
+      "quotes_changed": false
+    }
+  ]
+}

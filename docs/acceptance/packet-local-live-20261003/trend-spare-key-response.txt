@@ -1,0 +1,72 @@
+{
+  "schema_version": "packet-led-local-offline-1",
+  "context_id": "sha256:8e54d0221ee9bb8e57be8e8cd9be4bd596d10b125b043b68fc1f60d9562efc98",
+  "task": "trend",
+  "conclusion": {
+    "direction": "mixed",
+    "answer": "继续寻找有部分结构支持，也有明确阻碍：一方面代表“物品／失物”的妻财不受空亡且与月建六合，提示有未被排除的线索或搁置可能；另一方面同一妻财受日冲、月令休，且动爻父母回头生却伏神子孙被飞神克制，表示单靠室内重找难有稳定进展。综合看不宜判定完全无望，也不宜判定必然找回，更支持“暂停盲目重找，换条件或扩大范围后再查”的方向。"
+  },
+  "focus": [
+    {
+      "packet_id": "role:primary:3",
+      "role_hypothesis": "此包为世爻妻财，可作为用户与丢失钥匙之间的主要身份背景；其是否受冲、是否合月，用来判断“继续寻找”的把握。"
+    }
+  ],
+  "tradeoff_reason": "f1（妻财合月、不受空亡）是主要支持；f2（妻财日冲、月休）是需权衡的阻碍；f3（动爻父母回头生但伏神子孙受克）为背景限制。三者同看，支持与阻碍均指向同一目标且难分主次，故取mixed而非单边。",
+  "factors": [
+    {
+      "id": "f1",
+      "effect": "support",
+      "packet_ids": ["role:primary:3"],
+      "assumption": "以妻财作为失物／备用钥匙的取象身份，且月建六合表示线索尚未完全断绝。",
+      "limitation": "六合只说明此爻与月建存在合的关系，不能证明钥匙一定还在家中或能被实际找到。",
+      "priority": "primary",
+      "question_relevance": "妻财不受旬空，并与月建六合，表示失物类身份仍有被“合住、留住”的结构可能，对“继续找是否有希望”提供一定支持，但不指向具体位置。",
+      "basis_ids": [
+        "fact:/lines/2/relative",
+        "fact:/lines/2/is_kongwang",
+        "fact:/lines/2/relations/month_strength",
+        "rel:rule:MONTH-COMBINE-001:primary:3:-"
+      ]
+    },
+    {
+      "id": "f2",
+      "effect": "oppose",
+      "packet_ids": ["role:primary:3"],
+      "assumption": "以日冲、月休为失物当前态势的阻碍因素，表示单靠室内重找不容易稳定推进。",
+      "limitation": "日冲与月休只描述此爻所受的时令作用，不能证明钥匙已不在家中或一定找不回。",
+      "priority": "counter",
+      "question_relevance": "妻财受日辰冲、月令休，说明失物身份在当前时间条件下受扰且不够稳定，可能对应反复翻找仍难落实，对继续寻找形成拖累。",
+      "basis_ids": [
+        "fact:/lines/2/relative",
+        "fact:/lines/2/relations/day_relation",
+        "rel:rule:DAY-CLASH-001:primary:3:-",
+        "rel:rule:MONTH-STATE-XIU-001:primary:3:-"
+      ]
+    },
+    {
+      "id": "f3",
+      "effect": "conditional",
+      "packet_ids": ["role:primary:4", "role:hidden:4"],
+      "assumption": "以动爻父母回头生代表寻找动作本身有外力／条件支撑，伏神子孙受克代表实际发现路径不畅。",
+      "limitation": "动爻与飞伏关系只描述此卦内的结构互动，不能证明用户已尽力、技术受阻或钥匙位置可被推知。",
+      "priority": "background",
+      "question_relevance": "父母动而有回头生，表示寻找行为或信息条件并非完全无援；但伏神子孙被飞神克制，表示能直接发现或确认目标的力量受制，对“继续找”的效果构成条件限制。",
+      "basis_ids": [
+        "fact:/lines/3/moving",
+        "fact:/lines/3/relations/return_relation",
+        "rel:rule:MOVE-RETURN-GENERATE-001:primary:4:-",
+        "rel:rule:HIDDEN-FLY-CONTROL-001:hidden:4:-"
+      ]
+    }
+  ],
+  "general_advice": [
+    "可先暂停无差别翻找，改为回忆最后一次使用钥匙的场景并检查常带物品、外套口袋、包袋夹层等易被忽略处。",
+    "若家中仍无结果，可考虑换时间段或改日再找，也可询问家人是否曾移动或暂借备用钥匙。"
+  ],
+  "uncertainties": [
+    "取象以妻财为失物、父母为寻找行为属于本段假设，未获取古籍或现实机制验证。",
+    "卦盘无法确认钥匙是否仍在屋内、是否已被他人取得或具体位置，也不能证明用户实际搜索是否充分。",
+    "当前因素仅反映结构中的可能与限制，不构成找回概率或必然结果的证明。"
+  ]
+}

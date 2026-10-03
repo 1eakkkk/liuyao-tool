@@ -1,0 +1,9 @@
+{
+  "checked_at": "2026-10-03T05:17:20.8208879Z",
+  "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "verification_method": "Official documentation opened with web tool, crawled today",
+  "model": "deepseek-flash",
+  "input_peak_cny_per_million": 2,
+  "output_peak_cny_per_million": 8,
+  "estimate_policy": "Use peak cache-miss input and peak output as conservative bounds, not exact billed cost"
+}

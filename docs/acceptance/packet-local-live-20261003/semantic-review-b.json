@@ -1,0 +1,334 @@
+{
+  "schema_version": "packet-local-human-review-1",
+  "reviewer_id": "agent-b",
+  "review_kind": "retrospective_nonblind",
+  "plan_sha256": "387211258793bc0bc41835313a25fce2789068dbb5b514a1cbce6cfb017c7666",
+  "actual_responses_reviewed": 1,
+  "planned_cases": 1,
+  "method": "Independent raw reply review against frozen six criteria; context/source registry reconstructed offline from this canonical only. Quotes are response JSON Pointer decoded string field UTF-16 start/end, end exclusive. All evidence_ids are actual source registry IDs; invalid model basis identifiers are quoted, not used as valid review evidence. No A report, API, credentials, ledger or holdout read; no original record changed.",
+  "reviews": [
+    {
+      "case_id": "trend-spare-key",
+      "response_sha256": "aa92ed4b7c59b769add6f2971e199d22d40446d22569ab9d867504be4080a64c",
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "盘面所说妻财不空、月合、日冲/月休、父母动回头生及飞克伏多数与canonical相符，但本段局部依据不成立。f1月合只有非法rel:包ID，role:primary:3不提供关系rule；f2月休虽在所选大包中，但没有合法本段局部月休basis，rel规则名不能补它。f3所选局部有效basis仅moving/return_relation，没有父母relative、伏子孙relative或飞克伏关系；不能借未选角色包属性。focus散文“世爻”也没有对应is_shi/shi_line局部依据。f3的回头生本身有有效直接fact，不应误称全部属性错误。",
+          "evidence_ids": [
+            "fact:/lines/2/relative",
+            "fact:/lines/2/is_kongwang",
+            "fact:/lines/2/is_shi",
+            "rule:MONTH-COMBINE-001:primary:3:-",
+            "fact:/lines/2/relations/month_strength",
+            "fact:/lines/2/relations/day_relation",
+            "fact:/lines/3/moving",
+            "fact:/lines/3/relations/return_relation",
+            "fact:/lines/3/relative",
+            "fact:/lines/3/hidden/relative",
+            "fact:/lines/3/relations/hidden_relation"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/question_relevance",
+              "start": 7,
+              "end": 13,
+              "text": "并与月建六合",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/1/question_relevance",
+              "start": 7,
+              "end": 10,
+              "text": "月令休",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/2/question_relevance",
+              "start": 0,
+              "end": 8,
+              "text": "父母动而有回头生",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/2/question_relevance",
+              "start": 28,
+              "end": 37,
+              "text": "伏神子孙被飞神克制",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/focus/0/role_hypothesis",
+              "start": 0,
+              "end": 7,
+              "text": "此包为世爻妻财",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "目标仍为继续寻找有无找回希望，没有断言具体位置、日期、他人已取走钥匙或家人已经移动它。口袋/包袋等是一般搜索选项，不是卦盘定位；改日与询问是可选建议，不是应期或事实。结论对室内策略的支持不足另在support评，不因用户“不问具体位置和日期”把一般建议机械当定位预测。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/general_advice/0",
+              "start": 0,
+              "end": 9,
+              "text": "可先暂停无差别翻找",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/general_advice/1",
+              "start": 21,
+              "end": 40,
+              "text": "也可询问家人是否曾移动或暂借备用钥匙。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "support": {
+          "verdict": "uncertain",
+          "reason": "妻财取失物、六合取线索/搁置、日冲月休取反复难落实、父母回头生取搜索条件、伏子孙受克取发现路径不畅均缺已核实传统取法/权重。尤其从时令作用转到“单靠室内重找难有稳定进展”的策略判断没有现实搜索证据，不能因有结构词便判支持通过。但全文确有假设及不能确认位置/必然结果的限制，没有明确断言一定找回或一定找不回，因此不能将未核实取法直接判为已证伪。建议使用可/若，未写成必需每天找才能成功；本维保留uncertain而不因建议出现而自动fail。",
+          "evidence_ids": [
+            "fact:/lines/2/relative",
+            "rule:MONTH-COMBINE-001:primary:3:-",
+            "rule:DAY-CLASH-001:primary:3:-",
+            "fact:/lines/3/relations/return_relation",
+            "fact:/lines/3/relations/hidden_relation"
+          ],
+          "quotes": [
+            {
+              "path": "/conclusion/answer",
+              "start": 96,
+              "end": 110,
+              "text": "表示单靠室内重找难有稳定进展",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/0/assumption",
+              "start": 19,
+              "end": 33,
+              "text": "月建六合表示线索尚未完全断绝",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/2/assumption",
+              "start": 25,
+              "end": 41,
+              "text": "伏神子孙受克代表实际发现路径不畅",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/uncertainties/0",
+              "start": 23,
+              "end": 36,
+              "text": "未获取古籍或现实机制验证。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "priority": {
+          "verdict": "fail",
+          "reason": "f1为primary支持、f2为counter阻碍、f3背景，却说支持阻碍难分主次；单选priority避免了旧同因素双数组冲突，但没有使权重解释有效。主取世妻财对问题的角色是假设且局部relative可用，不能误判focus完全缺引用；为何月合不空主于日冲月休、为何其为主要取用缺比较理由，只有并列作用与“难分主次”声明。权重未核实可保留unclear，而不是用字段完整掩盖缺口。",
+          "evidence_ids": [
+            "fact:/lines/2/relative",
+            "rule:MONTH-COMBINE-001:primary:3:-",
+            "rule:DAY-CLASH-001:primary:3:-"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/priority",
+              "start": 0,
+              "end": 7,
+              "text": "primary",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/1/priority",
+              "start": 0,
+              "end": 7,
+              "text": "counter",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/tradeoff_reason",
+              "start": 0,
+              "end": 37,
+              "text": "f1（妻财合月、不受空亡）是主要支持；f2（妻财日冲、月休）是需权衡的阻碍",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/tradeoff_reason",
+              "start": 67,
+              "end": 97,
+              "text": "支持与阻碍均指向同一目标且难分主次，故取mixed而非单边。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "direction": {
+          "verdict": "fail",
+          "reason": "冻结协议的mixed需要主要支持与主要阻碍，而本条仅支持为primary，oppose为counter，原首项机械拒绝准确。同时实质解释仅说两种作用同一目标、难分主次，没有说明相互牵制或比较权重的机制；不能由“希望不完全排除+有拖累”自动推出mixed。没有必然找回/找不到断语是优点，但不足以补齐mixed论证。失败不意味着必须改成偏吉或偏凶；不改变本次冻结标准。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/conclusion/direction",
+              "start": 0,
+              "end": 5,
+              "text": "mixed",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/tradeoff_reason",
+              "start": 62,
+              "end": 97,
+              "text": "三者同看，支持与阻碍均指向同一目标且难分主次，故取mixed而非单边。",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/1/priority",
+              "start": 0,
+              "end": 7,
+              "text": "counter",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "task_boundary": {
+          "verdict": "fail",
+          "reason": "确为trend单例、三个因素、每段包/局部basis数量合规，建议单列。但5个局部basis使用rel:rule:包ID，不是原registry fact/rule.id，且所选role包不包含这些关系规则。因此未遵循局部选择协议。不能只去掉rel:前缀便算修复，还需检查合法rule由本段packet提供；首项mixed错误不能掩盖这些独立错误。",
+          "evidence_ids": [
+            "rule:MONTH-COMBINE-001:primary:3:-",
+            "rule:DAY-CLASH-001:primary:3:-",
+            "rule:MONTH-STATE-XIU-001:primary:3:-",
+            "rule:MOVE-RETURN-GENERATE-001:primary:4:-",
+            "rule:HIDDEN-FLY-CONTROL-001:hidden:4:-"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/basis_ids/3",
+              "start": 0,
+              "end": 38,
+              "text": "rel:rule:MONTH-COMBINE-001:primary:3:-",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/1/basis_ids/2",
+              "start": 0,
+              "end": 34,
+              "text": "rel:rule:DAY-CLASH-001:primary:3:-",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/1/basis_ids/3",
+              "start": 0,
+              "end": 40,
+              "text": "rel:rule:MONTH-STATE-XIU-001:primary:3:-",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/2/basis_ids/2",
+              "start": 0,
+              "end": 45,
+              "text": "rel:rule:MOVE-RETURN-GENERATE-001:primary:4:-",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/2/basis_ids/3",
+              "start": 0,
+              "end": 42,
+              "text": "rel:rule:HIDDEN-FLY-CONTROL-001:hidden:4:-",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "basis_diagnostics": [
+    {
+      "factor_id": "f1",
+      "selected_packet_ids": [
+        "role:primary:3"
+      ],
+      "invalid_basis": [
+        {
+          "id": "rel:rule:MONTH-COMBINE-001:primary:3:-",
+          "path": "/factors/0/basis_ids/3",
+          "exists_as_packet": true,
+          "exists_in_evidence_registry": false,
+          "underlying_rule_id": "rule:MONTH-COMBINE-001:primary:3:-",
+          "reason": "Relation packet ID is not a fact or rule.id; selected role packets do not supply that relation rule."
+        }
+      ]
+    },
+    {
+      "factor_id": "f2",
+      "selected_packet_ids": [
+        "role:primary:3"
+      ],
+      "invalid_basis": [
+        {
+          "id": "rel:rule:DAY-CLASH-001:primary:3:-",
+          "path": "/factors/1/basis_ids/2",
+          "exists_as_packet": true,
+          "exists_in_evidence_registry": false,
+          "underlying_rule_id": "rule:DAY-CLASH-001:primary:3:-",
+          "reason": "Relation packet ID is not a fact or rule.id; selected role packets do not supply that relation rule."
+        },
+        {
+          "id": "rel:rule:MONTH-STATE-XIU-001:primary:3:-",
+          "path": "/factors/1/basis_ids/3",
+          "exists_as_packet": true,
+          "exists_in_evidence_registry": false,
+          "underlying_rule_id": "rule:MONTH-STATE-XIU-001:primary:3:-",
+          "reason": "Relation packet ID is not a fact or rule.id; selected role packets do not supply that relation rule."
+        }
+      ]
+    },
+    {
+      "factor_id": "f3",
+      "selected_packet_ids": [
+        "role:primary:4",
+        "role:hidden:4"
+      ],
+      "invalid_basis": [
+        {
+          "id": "rel:rule:MOVE-RETURN-GENERATE-001:primary:4:-",
+          "path": "/factors/2/basis_ids/2",
+          "exists_as_packet": true,
+          "exists_in_evidence_registry": false,
+          "underlying_rule_id": "rule:MOVE-RETURN-GENERATE-001:primary:4:-",
+          "reason": "Relation packet ID is not a fact or rule.id; selected role packets do not supply that relation rule."
+        },
+        {
+          "id": "rel:rule:HIDDEN-FLY-CONTROL-001:hidden:4:-",
+          "path": "/factors/2/basis_ids/3",
+          "exists_as_packet": true,
+          "exists_in_evidence_registry": false,
+          "underlying_rule_id": "rule:HIDDEN-FLY-CONTROL-001:hidden:4:-",
+          "reason": "Relation packet ID is not a fact or rule.id; selected role packets do not supply that relation rule."
+        }
+      ]
+    }
+  ],
+  "mechanical_findings": {
+    "original_first_issue": "Mixed requires explicit opposed major effects",
+    "independently_found_additional_invalid_basis": 5,
+    "diagnostic_note": "Changing only direction in a disposable in-memory copy exposes Basis absent from selected packets; this is diagnosis, not a repaired or accepted response."
+  },
+  "future_design_notes": [
+    "Separate packet_ids/basis_ids increases namespace and membership complexity; any future simplification should use program-owned per-packet local menus or unambiguous typed choices, independently reviewed and frozen. Do not retrospectively normalize this response.",
+    "Requiring both opposed primary effects is a frozen structural mixed rule, not a proof of correct traditional weighting. A future protocol may define direction by explicit target tradeoff separately from display priority, but only after offline design/review; current failed sample must stay failed.",
+    "Schema diagnostics could list independent namespace/membership errors in addition to first priority error, without claiming free-prose semantic completeness."
+  ],
+  "limitations": [
+    "One new nonblind development reply; cannot establish model improvement, prediction correctness or actual key location.",
+    "Traditional mappings and relative weights remain uncertain; pass in scope does not establish support.",
+    "Mechanical rejection and human review are distinct; adding references or changing priorities would not alone establish sound interpretation."
+  ],
+  "quote_validation": {
+    "count": 23,
+    "decoded_utf16_slices_match": true
+  }
+}
