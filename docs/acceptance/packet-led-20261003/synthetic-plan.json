@@ -1,0 +1,133 @@
+{
+  "version": "packet-led-experiment-1",
+  "synthetic": true,
+  "production": false,
+  "network_calls": 0,
+  "selected_packet_ids": [
+    "rel:rule:MONTH-STATE-WANG-001:primary:3:-"
+  ],
+  "view": {
+    "task": "trend",
+    "summary": "这是手工程序展示样例，没有建立与具体目标相关的合理取法，不能确认现实结果。",
+    "direction": "unclear",
+    "tradeoff_reason": "样例只展示程序包的展开；取象和作用没有验收，不作优先判断。",
+    "focus": [],
+    "factors": [
+      {
+        "id": "f1",
+        "effect": "neutral",
+        "major": false,
+        "counter": false,
+        "interpretation": "本项只演示规则前提与参与者身份的区别，不判断现实作用。",
+        "assumption": "没有认证取法。",
+        "limitation": "程序记录不能证明现实能力或结果。",
+        "selected_packet_ids": [
+          "rel:rule:MONTH-STATE-WANG-001:primary:3:-"
+        ],
+        "facts": [
+          {
+            "id": "fact:/lines/2/relations/month_strength",
+            "text": "第3爻 · 月令：旺",
+            "rule_premise": true
+          },
+          {
+            "id": "fact:/lines/2/element",
+            "text": "第3爻 · 五行：金",
+            "rule_premise": true
+          },
+          {
+            "id": "fact:/calendar/month_branch",
+            "text": "历法 · 月支：酉",
+            "rule_premise": true
+          },
+          {
+            "id": "fact:/lines/2/position",
+            "text": "第3爻 · 爻位：3",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/yin_yang",
+            "text": "第3爻 · 阴阳：yang",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/moving",
+            "text": "第3爻 · 动爻：否",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/ganzhi",
+            "text": "第3爻 · 纳甲：辛酉",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/branch",
+            "text": "第3爻 · 地支：酉",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/relative",
+            "text": "第3爻 · 六亲：官鬼",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/spirit",
+            "text": "第3爻 · 六神：白虎",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/state_text",
+            "text": "第3爻 · 爻状态：少阳",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/is_shi",
+            "text": "第3爻 · 世爻：否",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/is_ying",
+            "text": "第3爻 · 应爻：否",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/is_kongwang",
+            "text": "第3爻 · 旬空：否",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/changed",
+            "text": "第3爻变爻／变卦 · 变爻记录：未记载",
+            "rule_premise": false
+          },
+          {
+            "id": "fact:/lines/2/hidden",
+            "text": "第3爻伏神 · 伏神记录：未记载",
+            "rule_premise": false
+          }
+        ],
+        "rules": [
+          {
+            "id": "rule:MONTH-STATE-WANG-001:primary:3:-",
+            "text": "第3爻本爻 · 月令旺",
+            "source_ids": [
+              "fact:/lines/2/relations/month_strength",
+              "fact:/lines/2/element",
+              "fact:/calendar/month_branch"
+            ]
+          }
+        ]
+      }
+    ],
+    "general_advice": [],
+    "uncertainties": [
+      "这不是模型回复、盲测或正式产品截图。"
+    ],
+    "distinct_relation_ids": [
+      "rule:MONTH-STATE-WANG-001:primary:3:-"
+    ],
+    "mechanical_check": "packet_membership_and_links_only",
+    "semantic_acceptance": "unassessed",
+    "forecast_accuracy": "unassessed"
+  }
+}

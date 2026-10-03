@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "reviewer_id": "agent-a",
+  "review_kind": "independent_offline_protocol_review",
+  "reviewed_at": "2026-10-03T03:18:17.018Z",
+  "verdict": "pass_with_semantic_limits",
+  "blocking_findings": [],
+  "source_sha256": {
+    "experiments/judgment-review/packet-led.js": "e32202aa82bee4ec07dc396bde287e108917ace27c3d27a60769b9209015c9fb",
+    "experiments/judgment-review/packet-led-view.js": "757b1a3897f419a64a69a039e690e85a0e0f0181f0c68a4292b4e36e44797f9d",
+    "tests/output/packet-led.test.js": "0505d3d52e948c920b51f830bdc83ac9885d5581623256a2d9ec7c8abd055ae2",
+    "experiments/judgment-review/packet-led-live-plan.js": "d0846a7cb5cb2ef7c09d5a2a5110596a51aac3f23a661371df4adb3dfc84f07c",
+    "scripts/packet-led-live-pilot.js": "50e310a0915d78501f906cbe6a12b0f048c563617c363b2d4239aad22a123ac3",
+    "tests/output/packet-led-live-pilot.test.js": "443c08a492b12f005ed99843356dcb48d9bebf9a8ed1f7aa2451ed54018690e2"
+  },
+  "verification": {
+    "test_command": "npx vitest run tests/output/packet-led.test.js --maxWorkers=2",
+    "test_files_passed": 1,
+    "tests_passed": 18,
+    "network_calls": 0,
+    "independent_checks": [
+      "Untrusted source clone and context clone rejected; trusted contexts deeply frozen.",
+      "Cross-context answer rejected.",
+      "Sparse factors and packet_ids, cyclic values, unknown packets, more than two packets per factor, more than three factors and model-provided facts rejected.",
+      "Actual shi/ying participant role can supply focus. Unrelated primary role appearing only as a negative flag in strict source closure cannot supply focus; changed role cannot borrow primary participant identity.",
+      "Return relation from changed line can supply changed-role focus. Exact original source_ids retained; 19 expanded facts deduplicated, four rule premises distinguished from identity supplementation.",
+      "Synthetic hidden equality with no from/to still supplies hidden role and primary owner; this is offline fixture coverage only.",
+      "All compact message participant IDs resolve to role profiles; identity_facts duplication is omitted without deleting strict premises.",
+      "HTML markup remains text in data; new DOM preview uses textContent, validates before replacing container, and official test rejects executable image injection."
+    ],
+    "latest_combined_tests_passed": 61,
+    "latest_combined_test_files_passed": 2
+  },
+  "findings": [
+    {
+      "topic": "record_membership",
+      "verdict": "pass",
+      "reason": "Profile packets preserve single primary/changed/hidden component identities and owning position/flags/motion without allowing the model to supply replacement facts."
+    },
+    {
+      "topic": "relation_closure",
+      "verdict": "pass",
+      "reason": "Trusted strict premise closure checked before packet construction. Original rule source_ids remain exact; identity supplementation does not alter rule premises."
+    },
+    {
+      "topic": "focus_and_major",
+      "verdict": "pass",
+      "reason": "Coverage uses direct role selection or actual relation participants rather than all premise paths. Non-unclear direction additionally requires focus in selected major packets and compatible major effects."
+    },
+    {
+      "topic": "direction_boundary",
+      "verdict": "pass",
+      "reason": "Program does not derive a trend from packet/factor counts; mixed requires opposed selected major effects, and unclear can have no factors. These checks establish structural coherence only."
+    },
+    {
+      "topic": "preview_safety",
+      "verdict": "pass",
+      "reason": "Preview uses textContent and a fragment replaced only after validation; no innerHTML sink accepts model text."
+    }
+  ],
+  "limitations": [
+    "Free prose can still name unselected facts, misuse relation direction, invent unknown mechanisms or claim reality; packet membership alone does not assess those meanings.",
+    "A role profile contains a broader single-record background. Declared packet membership does not prove every fact is relevant or that a particular traditional choice is valid.",
+    "Repeated relation IDs are deduplicated in the distinct_relation_ids index and facts within each factor; the same record may appear in multiple factor panels. Neither deduplication nor factor effects prove interpretive independence or prevent rhetorical double counting.",
+    "This review is for an isolated trend development protocol and local preview, not P2/task-led/production admission, model semantic acceptance, expert confirmation or forecast validation."
+  ],
+  "runner_review": {
+    "verdict": "pass_with_semantic_limits",
+    "blocking_findings": [],
+    "plan_hash": "5e711c8ae0977521a52c565681c59f20ae5223285573f6bf938ac99bcb186c86",
+    "campaign_id": "packet-led-new-20261003",
+    "campaign_schema": "packet-led-campaign-1",
+    "price_checked": "2026-10-03",
+    "planned_calls": 2,
+    "cap_cny": 2,
+    "wallet_floor_cny": 1,
+    "reserve_cny": 0.1746,
+    "minimum_confirmed_balance_cny": 1.1746,
+    "model": "deepseek-flash",
+    "max_tokens": 4096,
+    "verification": {
+      "command": "npx vitest run tests/output/packet-led.test.js tests/output/packet-led-live-pilot.test.js --maxWorkers=2",
+      "test_files_passed": 2,
+      "tests_passed": 61,
+      "protocol_tests": 18,
+      "runner_mock_tests": 43,
+      "actual_provider_calls": 0,
+      "actual_credentials_read": false,
+      "actual_ledger_read": false
+    },
+    "findings": [
+      "Read-only diff against audited task-led runner shows changes confined to packet-led context/validation/plan and fixed two-call accounting; UTC after-await and reserve/floor safeguards retained.",
+      "Plan/seal must equal independently rebuilt fixed Oct3 plan; tampered or resealed arbitrary plan, stale UTC date and prior execution/attempt rejected before credentials/network.",
+      "Only new authorized empty packet-led schema/campaign with exact 2 CNY cap is accepted; legacy campaign, existing reservation and unauthorized or changed cap rejected before credentials/network.",
+      "Wallet must cover full two-call reserve plus 1 CNY before reservation and again before second chat. Fresh UTC date checked after both awaited balance checks, and before chat.",
+      "At most two chats; first failed HTTP/SSE/schema/packet result stops without retry or settlement and retains full reservation. Second balance floor or rollover stops without another request.",
+      "Provider bytes independently archived before parse, strict usage/model/DONE and forbidden channels preserved. Response/check raw UTF8 and usage identities kept; network errors and bounded HTTP error body redact synthetic credential in tests.",
+      "Manual recipe hash identical across UTC and Asia/Singapore. Only trend packets injected; no old task-led advice mode or literature injection."
+    ],
+    "limitations": [
+      "Mock success proves runner safety and archival mechanics, not model semantic quality or actual billing.",
+      "Price 2/8 is frozen plan metadata; this offline review does not independently browse or recertify current official price.",
+      "Reservation is deliberately retained on failure, and no automatic settlement is performed."
+    ]
+  },
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed",
+  "original_findings": [],
+  "updated_at": "2026-10-03T03:19:39.474Z"
+}

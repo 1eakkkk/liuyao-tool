@@ -1,0 +1,38 @@
+[
+  {
+    "width": 1280,
+    "expanded": false,
+    "overflow": false,
+    "nested_details": 0
+  },
+  {
+    "width": 1280,
+    "expanded": true,
+    "overflow": false,
+    "nested_details": 0
+  },
+  {
+    "width": 390,
+    "expanded": false,
+    "overflow": false,
+    "nested_details": 0
+  },
+  {
+    "width": 390,
+    "expanded": true,
+    "overflow": false,
+    "nested_details": 0
+  },
+  {
+    "width": 320,
+    "expanded": false,
+    "overflow": false,
+    "nested_details": 0
+  },
+  {
+    "width": 320,
+    "expanded": true,
+    "overflow": false,
+    "nested_details": 0
+  }
+]

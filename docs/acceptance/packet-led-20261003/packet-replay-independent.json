@@ -1,0 +1,182 @@
+{
+  "reviewer_id": "agent-b",
+  "review_kind": "independent_offline_replay_boundary",
+  "script": "scripts/replay-packet-led-live.js",
+  "script_sha256": "030ff5f0fe7a24051fa0792846c652e30b949294b91389d951727e916b7a7a20",
+  "archive_directory": "test-results/packet-led-two-live-20261003",
+  "plan_sha256": "7fac62a37a847751b5c5381e3d0f1d9a7a51eec5abecaf9f62e80278801c9fa7",
+  "blocking_issues": [],
+  "verdict": "pass_with_scope_limits",
+  "original_findings": [
+    {
+      "id": "case_identity",
+      "initial_result": "Forged check.id and agreeing summary.results[0].id accepted in initial independent counterexample.",
+      "fix": "Root added check.id === fixed case id.",
+      "current_result": {
+        "name": "forged_case_identity",
+        "rejected": true,
+        "error": "Case identity mismatch"
+      }
+    },
+    {
+      "id": "retained_policy",
+      "initial_result": "check and agreeing summary reservation_retained=false accepted in initial independent counterexample.",
+      "fix": "Root now requires retained=true and semantic/forecast check flags unassessed; summary semantic/exact_billed flags fixed.",
+      "current_result": {
+        "name": "retained_policy",
+        "rejected": true,
+        "error": "Case policy mismatch"
+      }
+    }
+  ],
+  "baseline": {
+    "plan_hash": "5e711c8ae0977521a52c565681c59f20ae5223285573f6bf938ac99bcb186c86",
+    "network_calls": 0,
+    "planned_calls": 2,
+    "attempted_calls": 1,
+    "verified_cases": 1,
+    "results": [
+      {
+        "id": "trend-album",
+        "status": "rejected",
+        "issues": [
+          "Invalid factor selection"
+        ],
+        "archive_sha256": "324af114fce4bfeb4c04bc476808eef26f01742aebcf34e070e95647f74b5df0",
+        "raw_sha256": "4a83b3c502d70b186bffb4982ce35a355c2240762608771e9497d6b1be4ca3ac"
+      }
+    ],
+    "reviews": [
+      {
+        "file": "semantic-review-b.json",
+        "reviewed_cases": 1,
+        "dimensions": 6,
+        "verified_quotes": 19
+      }
+    ],
+    "semantic_acceptance": "requires_independent_review",
+    "forecast_accuracy": "unassessed"
+  },
+  "independent_checks": {
+    "total": 21,
+    "positive": 1,
+    "negative": 20,
+    "negative_rejected": 20,
+    "negative_results": [
+      {
+        "name": "forged_case_identity",
+        "rejected": true,
+        "error": "Case identity mismatch"
+      },
+      {
+        "name": "retained_policy",
+        "rejected": true,
+        "error": "Case policy mismatch"
+      },
+      {
+        "name": "semantic_check_policy",
+        "rejected": true,
+        "error": "Case policy mismatch"
+      },
+      {
+        "name": "forecast_check_policy",
+        "rejected": true,
+        "error": "Case policy mismatch"
+      },
+      {
+        "name": "semantic_summary_policy",
+        "rejected": true,
+        "error": "Execution policy mismatch"
+      },
+      {
+        "name": "exact_billed_summary_policy",
+        "rejected": true,
+        "error": "Execution policy mismatch"
+      },
+      {
+        "name": "raw_bytes",
+        "rejected": true,
+        "error": "Provider bytes mismatch"
+      },
+      {
+        "name": "response_text",
+        "rejected": true,
+        "error": "Response text mismatch"
+      },
+      {
+        "name": "plan",
+        "rejected": true,
+        "error": "Plan seal mismatch"
+      },
+      {
+        "name": "resealed_modified_prompt",
+        "rejected": true,
+        "error": "Trusted fixed plan mismatch"
+      },
+      {
+        "name": "mechanical_issue",
+        "rejected": true,
+        "error": "Validation issue mismatch"
+      },
+      {
+        "name": "usage",
+        "rejected": true,
+        "error": "Usage mismatch"
+      },
+      {
+        "name": "quote_offset",
+        "rejected": true,
+        "error": "Review quotation mismatch"
+      },
+      {
+        "name": "quote_pointer",
+        "rejected": true,
+        "error": "Review path not an own JSON field"
+      },
+      {
+        "name": "quote_inherited_field",
+        "rejected": true,
+        "error": "Review path not an own JSON field"
+      },
+      {
+        "name": "unknown_evidence",
+        "rejected": true,
+        "error": "Unknown review evidence ID"
+      },
+      {
+        "name": "review_hash",
+        "rejected": true,
+        "error": "Reviewed response mismatch"
+      },
+      {
+        "name": "extra_attempt",
+        "rejected": true,
+        "error": "Unrecorded attempt"
+      },
+      {
+        "name": "unattempted_artifact",
+        "rejected": true,
+        "error": "Artifacts for unattempted case"
+      },
+      {
+        "name": "review_accounting",
+        "rejected": true,
+        "error": "Review accounting mismatch"
+      }
+    ]
+  },
+  "root_reported_tests": {
+    "count": 21,
+    "status": "root reports passed; not rerun by B because that suite reads reviewer-a"
+  },
+  "method": "Only permitted archive files copied to fresh OS temporary directories, excluding reviewer-a; own B review checked. Real originals untouched. fetch/loadEnvFile replaced with throwing guards; no API, credentials, real ledger or protected files. Temporary copies removed after each check.",
+  "execution_integrity": "Fixed plan/seal, raw provider bytes, response text, request/context/usage/stop identities and Invalid factor selection reproduced. Planned2/actual1 accepted; no nonexistent second response demanded. B review six dimensions/19 decoded-field UTF-16 JSON Pointer quotations and source IDs validated.",
+  "content_acceptance": "Not passed: original B semantic review has four failing dimensions (facts/support/priority/direction). Replay only validates identities/quote records and reproduces mechanical rejection, not semantic correctness or forecast accuracy.",
+  "limits": [
+    "This replayer supports complete HTTP200 SSE with check records; it is not a general replay validator for HTTP/transport/early balance failures and should not be advertised as covering those formats.",
+    "No real ledger is read, so retention, authorization and exact provider billing are not independently proven; execution log policy fields are checked only.",
+    "Hash bindings establish consistency with the local fixed plan and stored records; they are not an external attestation against coordinated replacement of every archive record.",
+    "B did not inspect or replay A content; baseline verified B alone.",
+    "Single nonblind failed sample and integrity pass cannot establish general model improvement."
+  ]
+}

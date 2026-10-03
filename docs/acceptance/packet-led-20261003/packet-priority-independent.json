@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "reviewer_id": "agent-a",
+  "review_kind": "independent_offline_candidate_review",
+  "reviewed_at": "2026-10-03T03:27:42.433Z",
+  "verdict": "pass_with_semantic_limits",
+  "blocking_findings": [],
+  "source_sha256": {
+    "experiments/judgment-review/packet-led-priority.js": "db10c9f0f0131c022f9adde56c42137983baa015957539785df3bc17b66ee719",
+    "tests/output/packet-led-priority.test.js": "3684b33ea02fe5b5d167702eb87da9d5996bf47e62924b54bb20f7e38a11736b"
+  },
+  "verification": {
+    "command": "npx vitest run tests/output/packet-led-priority.test.js --maxWorkers=2",
+    "tests_passed": 8,
+    "test_files_passed": 1,
+    "network_calls": 0,
+    "independent_cases": [
+      "priority both/unknown/null/array primary+counter rejected by invalid_enum",
+      "background renders major=false and counter=false",
+      "dynamic import after clone leaves old conclusion unfrozen false→false, old/new conclusion distinct, new conclusion frozen"
+    ]
+  },
+  "findings": [
+    {
+      "topic": "conflict_unrepresentable",
+      "verdict": "pass",
+      "reason": "Each unique factor has one enum priority. Generated major/counter lists use mutually exclusive comparisons; old global arrays rejected as unknown fields, duplicate factor IDs rejected before adaptation can create overlap."
+    },
+    {
+      "topic": "trusted_boundaries",
+      "verdict": "pass",
+      "reason": "WeakMap requires original priority context; underlying original trusted packet context remains private. Source clone/context clone/foreign answer context rejected; dense validation precedes filter/map."
+    },
+    {
+      "topic": "focus_and_direction",
+      "verdict": "pass",
+      "reason": "Adapter reuses old packet validator; a counter/background factor cannot supply focus for unrelated primary factors, and mixed needs opposed primary effects rather than one primary+one counter."
+    },
+    {
+      "topic": "schema_isolation",
+      "verdict": "pass",
+      "reason": "Final construction clones complete old schema before modifying or freezing. New schema deeply frozen without mutating old nested definitions."
+    }
+  ],
+  "original_findings": [
+    {
+      "id": "shared-schema-freeze",
+      "finding": "Initial shallow schema copies shared old conclusion/focus/leaf definitions; importing priority module froze original nested schema objects.",
+      "status": "resolved",
+      "repair": "structuredClone(PACKET_LED_SCHEMA) before construction.",
+      "retest": "Old conclusion frozen false→false after dynamic import; old/new identity differs; new conclusion frozen=true."
+    }
+  ],
+  "limitations": [
+    "Only disjoint structural priorities are established. The model can still invent unsupported importance or duplicate prose under distinct factor IDs; actual meaning and double counting require independent content review.",
+    "No automatic fix, migration, or semantic acceptance of the archived trend-album reply. Its major/counter overlap and other fail/uncertain findings remain unchanged.",
+    "Candidate isolated offline; no new paid response, forecast validation, traditional expert confirmation or production admission."
+  ],
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed"
+}

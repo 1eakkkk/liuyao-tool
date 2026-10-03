@@ -1,0 +1,234 @@
+{
+  "schema_version": "packet-led-human-review-1",
+  "reviewer_id": "agent-b",
+  "review_kind": "retrospective_nonblind",
+  "plan_sha256": "7fac62a37a847751b5c5381e3d0f1d9a7a51eec5abecaf9f62e80278801c9fa7",
+  "actual_responses_reviewed": 1,
+  "planned_cases": 2,
+  "method": "独立检查实际全文及冻结六维。quotes为JSON Pointer所指解码字符串内UTF-16起止位置，end不包含；引用不是raw JSON整串偏移。离线重建trusted source/context并核对context_id，role.facts及rel.premises/identity_facts分别核对；identity背景不是rule source premise。未查看另一审查、未调用API或读取Key/真实预算/holdout。",
+  "reviews": [
+    {
+      "case_id": "trend-album",
+      "response_sha256": "4a83b3c502d70b186bffb4982ce35a355c2240762608771e9497d6b1be4ca3ac",
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "程序事实多数符合盘面，但本段包覆盖不完整。f1选第3爻role和世克应rel；rel的premises及identity_facts仅涉及第5/2爻身份，不能覆盖第4爻官鬼金旺（source中第4爻is_shi/is_ying也不能扩大为其六亲/五行/月令）。f2只选changed:2和hidden:2，含变爻/伏神及所属爻位置/动/世应标记，却不含本爻父母、水或飞神生伏神。不能从其他因素f1的第2爻identity背景借证到f2。focus选primary:2自身属性有覆盖；这不补足f2引用。",
+          "evidence_ids": [
+            "fact:/lines/3/relative",
+            "fact:/lines/3/element",
+            "fact:/lines/3/relations/month_strength",
+            "fact:/lines/1/relative",
+            "fact:/lines/1/element",
+            "fact:/lines/1/relations/hidden_relation",
+            "rule:SHI-CONTROL-YING-001:primary:5:2"
+          ],
+          "quotes": [
+            {
+              "path": "/factors/0/interpretation",
+              "start": 12,
+              "end": 19,
+              "text": "第4爻官鬼金旺",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/1/interpretation",
+              "start": 0,
+              "end": 12,
+              "text": "第2爻父母水动而变子孙火",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/1/interpretation",
+              "start": 57,
+              "end": 67,
+              "text": "伏神兄弟木被飞神水生",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "scope": {
+          "verdict": "pass",
+          "reason": "整体仍回应私人免费照片册能否容易做出，没有引入收费、家人意愿、修图技术机制或具体完成日期。一般建议的时间/人物筛选是可选方法，不是声称已知用户办法；正文“如期”和推进速度是多余措辞，未形成具体日期预测。范围通过不代表可行性断言或传统解释通过。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/general_advice/0",
+              "start": 11,
+              "end": 24,
+              "text": "例如先按时间或人物粗筛一轮",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/conclusion/answer",
+              "start": 16,
+              "end": 25,
+              "text": "筛选落实可能受拖累",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "support": {
+          "verdict": "fail",
+          "reason": "假设/限制字段承认无法证明现实，但conclusion直接说“做法可行”以及“需主动安排筛选框架方能成型”，把尚未确定的做法和建议写成已支持的可行性/必要条件；这是结论层越界，不能由免责声明抵消。f1世应制约→能推动、f2成品化→稀释/拖慢、兄弟→较多同类素材干扰的传统映射和权重仍无法确认（uncertain），包成员存在不证明这些作用。尤其用户目标就是成册，为什么趋向成品反而抵消产出没有建立支持链。一般建议本身可以保留，不能用它证明能成型或抵消阻碍。",
+          "evidence_ids": [
+            "rule:SHI-CONTROL-YING-001:primary:5:2",
+            "fact:/lines/1/changed/relative",
+            "fact:/lines/1/hidden/relative"
+          ],
+          "quotes": [
+            {
+              "path": "/conclusion/answer",
+              "start": 5,
+              "end": 9,
+              "text": "做法可行",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/conclusion/answer",
+              "start": 119,
+              "end": 132,
+              "text": "需主动安排筛选框架方能成型",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/1/interpretation",
+              "start": 30,
+              "end": 54,
+              "text": "筛选出的内容易偏向“成品／成品化”，而非稳定整理",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/factors/1/interpretation",
+              "start": 71,
+              "end": 84,
+              "text": "暗处有较多同类素材相互干扰",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "priority": {
+          "verdict": "fail",
+          "reason": "f2同时在major和counter，角色选择互斥要求明确违反。focus本爻身份被f1世克应rel参与者覆盖，不能错误报告focus完全无包覆盖；但解释只称第2爻为关键/直接点，未证明其为何主于世爻或其他因素。f1推进结构与f2转向/干扰仍是未经核实的假设；“无法简单二选一”缺少比较标准或权重理由，不能因各有一面就把两者皆列major。不能自行替换为偏吉或偏凶。",
+          "evidence_ids": [
+            "fact:/lines/1/relative",
+            "rule:SHI-CONTROL-YING-001:primary:5:2"
+          ],
+          "quotes": [
+            {
+              "path": "/major_factor_ids/1",
+              "start": 0,
+              "end": 2,
+              "text": "f2",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/counter_factor_ids/0",
+              "start": 0,
+              "end": 2,
+              "text": "f2",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/tradeoff_reason",
+              "start": 76,
+              "end": 111,
+              "text": "tradfoff无法简单二选一，故mixed；阻碍与支持都属主要因素。",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/focus/0/role_hypothesis",
+              "start": 53,
+              "end": 67,
+              "text": "是判断筛选难度的一个直接点。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "direction": {
+          "verdict": "fail",
+          "reason": "mixed具有support/oppose标签外壳，但tradeoff仅声称无法二选一，没有说明两种作用如何在同一成册目标上形成不能分主次的牵制，尤其把成品化视为阻碍未解释。结论“做法可行”强于这些未核实假设与uncertainties承认的实际信息不足；“不是吉凶定论”也不能使已有mixed方向与论证自动一致。失败指结论支持和一致性不足，不表示应该改成某个吉凶标签。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/conclusion/direction",
+              "start": 0,
+              "end": 5,
+              "text": "mixed",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/tradeoff_reason",
+              "start": 76,
+              "end": 98,
+              "text": "tradfoff无法简单二选一，故mixed",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/conclusion/answer",
+              "start": 5,
+              "end": 9,
+              "text": "做法可行",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/uncertainties/2",
+              "start": 23,
+              "end": 37,
+              "text": "无法从盘面确认能否如期成册。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "task_boundary": {
+          "verdict": "pass",
+          "reason": "按本维冻结要求，实际为trend且仅3因素、每因素2包；建议单置general_advice，没有把建议作为带盘面引用的因素。此通过仅限任务形式，不掩盖priority的major/counter互斥失败、原始机械拒绝及自由文字语义缺陷；不能作为整体协议通过。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/task",
+              "start": 0,
+              "end": 5,
+              "text": "trend",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/general_advice/1",
+              "start": 0,
+              "end": 38,
+              "text": "把“选给家人看的照片”和“留作存档的照片”分开，避免过程中不断改变筛选目标。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "not_reviewed": [
+    {
+      "case_id": "trend-puzzle",
+      "reason": "第一题机械拒绝后停止，没有回复，不评。"
+    }
+  ],
+  "mechanical_findings": [
+    {
+      "case_id": "trend-album",
+      "status": "rejected",
+      "issues": [
+        "Invalid factor selection"
+      ],
+      "reason": "f2同时major和counter；保留原失败，内容审查未修改回复或放宽协议。"
+    }
+  ],
+  "specific_changes_for_future": [
+    "确保major/counter互斥；这只修结构，不会解决比较理由不足。",
+    "本段实际使用第4爻身份/月令或第2爻本爻身份/飞伏时，选择能覆盖的包或删除未使用属性；不要借其他段的身份补充或把identity当规则premise。",
+    "结论保持解释把握与未知现实边界；一般方法建议不能写为已判可行或成型的必要条件。",
+    "解释成品化与本目标的关系及因素相对作用；权重无法核实则保留unclear，不要求改成偏吉凶。"
+  ],
+  "limitations": [
+    "实际仅一条，第二条未调用；非盲测，不能证明总体改进或预测正确。",
+    "传统角色映射与权重缺乏核实依据，不能从程序包正确存在推断解释支持已通过。",
+    "原机械拒绝与人工内容审查分别记录；维度pass只表示该维范围内未发现违规，不能作为整体接受。"
+  ]
+}

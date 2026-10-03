@@ -1,0 +1,38 @@
+{
+  "id": "trend-album",
+  "context_id": "sha256:ec4a828eccd08cc8a0efc99a4d95728c8315405ac71f2e144eb8eb69e959b64a",
+  "request_hash": "97cfc59e13495d6e8925acf7159ee7a9bafb538af1883d6127d73bd06d2ab7b7",
+  "status": "rejected",
+  "issues": [
+    "Invalid factor selection"
+  ],
+  "model": "deepseek-flash",
+  "finish_reason": "stop",
+  "saw_done": true,
+  "usage": {
+    "prompt_tokens": 6481,
+    "completion_tokens": 1033,
+    "total_tokens": 7514,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 6481
+  },
+  "usage_ok": true,
+  "usage_sha256": "643e7faf7a4957dadedfeb22daa1f44a7b115789157fe5ab56763298e9e7c650",
+  "cost_unknown": false,
+  "conservative_peak_cost_cny": 0.021226,
+  "archive": {
+    "complete": true,
+    "error": null,
+    "redacted": false,
+    "bytes": 299727,
+    "sha256": "324af114fce4bfeb4c04bc476808eef26f01742aebcf34e070e95647f74b5df0"
+  },
+  "raw_sha256": "4a83b3c502d70b186bffb4982ce35a355c2240762608771e9497d6b1be4ca3ac",
+  "response": null,
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed",
+  "reservation_retained": true
+}

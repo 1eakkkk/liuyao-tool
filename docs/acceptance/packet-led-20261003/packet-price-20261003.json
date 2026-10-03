@@ -1,0 +1,9 @@
+{
+  "checked_at": "2026-10-03T03:19:10.874Z",
+  "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "html_sha256": "5a7b1832592387340f2fc456399b34b89b05f3fa167c2e35909e2fa4afe021e3",
+  "model": "deepseek-flash",
+  "input_peak_cny_per_million": 2,
+  "output_peak_cny_per_million": 8,
+  "source_snippet": "（缓存未命中） 空闲时段 1元 4.5元 高峰时段 2元 9.0元 百万tokens输出 空闲时段 4元 13.5元 高峰时段 8元 27.0元 并发限制 (3) 2500 500 (1) 模型名请使用 deepseek-flash 。旧模型名 deepseek-v4-flash 、 deepseek-v4-flash-vision-exp 仍可调用，但对应模型已下线，请求将由 DeepSeek-V4.1-Flash 模型提供服务，并按 Flash 价格计"
+}
