@@ -1,0 +1,285 @@
+{
+  "reviewer_id": "agent-b",
+  "review_kind": "independent_offline_archive_replay",
+  "script": "scripts/replay-packet-local-live.js",
+  "script_sha256": "78e18063adf9ba85689d27218cc2b6591762506acca3d23f91755f60eee2a2e3",
+  "archive_directory": "test-results/packet-local-one-live-20261003",
+  "plan_sha256": "387211258793bc0bc41835313a25fce2789068dbb5b514a1cbce6cfb017c7666",
+  "baseline": {
+    "plan_hash": "1264e601754a174183a426394758b38778a8e70284e2d68822f58d72347cedb7",
+    "network_calls": 0,
+    "planned_calls": 1,
+    "attempted_calls": 1,
+    "verified_cases": 1,
+    "results": [
+      {
+        "id": "trend-spare-key",
+        "status": "rejected",
+        "issues": [
+          "Mixed requires explicit opposed major effects"
+        ],
+        "archive_sha256": "27ec0fd561987e1b2902495485ee46796f4b462caf4f86549da3b1b4399c4546",
+        "raw_sha256": "aa92ed4b7c59b769add6f2971e199d22d40446d22569ab9d867504be4080a64c"
+      }
+    ],
+    "reviews": [
+      {
+        "file": "semantic-review-b.json",
+        "reviewed_cases": 1,
+        "dimensions": 6,
+        "verified_quotes": 23
+      }
+    ],
+    "semantic_acceptance": "requires_independent_review",
+    "forecast_accuracy": "unassessed"
+  },
+  "negative_tests": [
+    {
+      "name": "preflight_phase",
+      "rejected": true,
+      "error": "Preflight audit mismatch"
+    },
+    {
+      "name": "preflight_chat_requests",
+      "rejected": true,
+      "error": "Preflight audit mismatch"
+    },
+    {
+      "name": "preflight_reserved_cny",
+      "rejected": true,
+      "error": "Preflight audit mismatch"
+    },
+    {
+      "name": "preflight_verified_no_attempt_artifacts",
+      "rejected": true,
+      "error": "Preflight audit mismatch"
+    },
+    {
+      "name": "preflight_probe_authenticated",
+      "rejected": true,
+      "error": "Preflight audit mismatch"
+    },
+    {
+      "name": "preflight_public_connectivity_probe_http_status",
+      "rejected": true,
+      "error": "Preflight audit mismatch"
+    },
+    {
+      "name": "preflight_error",
+      "rejected": true,
+      "error": "Preflight audit mismatch"
+    },
+    {
+      "name": "forged_case_id",
+      "rejected": true,
+      "error": "Case identity mismatch"
+    },
+    {
+      "name": "first_mechanical_issue",
+      "rejected": true,
+      "error": "Validation issue mismatch"
+    },
+    {
+      "name": "provider_bytes",
+      "rejected": true,
+      "error": "Provider bytes mismatch"
+    },
+    {
+      "name": "response_text",
+      "rejected": true,
+      "error": "Response text mismatch"
+    },
+    {
+      "name": "usage",
+      "rejected": true,
+      "error": "Usage mismatch"
+    },
+    {
+      "name": "quote_offset",
+      "rejected": true,
+      "error": "Review quotation mismatch"
+    },
+    {
+      "name": "unknown_evidence",
+      "rejected": true,
+      "error": "Unknown review evidence ID"
+    },
+    {
+      "name": "inherited_quote_path",
+      "rejected": true,
+      "error": "Review path not an own JSON field"
+    },
+    {
+      "name": "review_hash",
+      "rejected": true,
+      "error": "Reviewed response mismatch"
+    },
+    {
+      "name": "resealed_prompt",
+      "rejected": true,
+      "error": "Trusted fixed plan mismatch"
+    },
+    {
+      "name": "semantic_policy",
+      "rejected": true,
+      "error": "Case policy mismatch"
+    },
+    {
+      "name": "retention_policy",
+      "rejected": true,
+      "error": "Case policy mismatch"
+    },
+    {
+      "name": "forecast_policy",
+      "rejected": true,
+      "error": "Case policy mismatch"
+    },
+    {
+      "name": "billed_cost_policy",
+      "rejected": true,
+      "error": "Execution policy mismatch"
+    },
+    {
+      "name": "unknown_artifact-attempt.json",
+      "rejected": true,
+      "error": "Unrecorded case artifact"
+    },
+    {
+      "name": "unknown_artifact-archive.json",
+      "rejected": true,
+      "error": "Unrecorded case artifact"
+    },
+    {
+      "name": "unknown_artifact-raw.sse",
+      "rejected": true,
+      "error": "Unrecorded case artifact"
+    },
+    {
+      "name": "unknown_artifact-response.txt",
+      "rejected": true,
+      "error": "Unrecorded case artifact"
+    },
+    {
+      "name": "unknown_artifact-check.json",
+      "rejected": true,
+      "error": "Unrecorded case artifact"
+    },
+    {
+      "name": "unknown_artifact-failure.json",
+      "rejected": true,
+      "error": "Unrecorded case artifact"
+    },
+    {
+      "name": "unknown_artifact-http-error.txt",
+      "rejected": true,
+      "error": "Unrecorded case artifact"
+    },
+    {
+      "name": "conflicting-failure.json",
+      "rejected": true,
+      "error": "Unsupported or conflicting failure archive"
+    },
+    {
+      "name": "conflicting-http-error.txt",
+      "rejected": true,
+      "error": "Unsupported or conflicting failure archive"
+    }
+  ],
+  "test_counts": {
+    "baseline": 1,
+    "negative": 30,
+    "rejected_negative": 30,
+    "total": 33,
+    "initial_checks": 31,
+    "followup_checks": 2
+  },
+  "blocking_issues": [],
+  "verdict": "pass_with_scope_limits",
+  "preflight_record": "Existing audit independently checked initial_balance/fetch failed/0 chat/0 reserve/no attempts/public401/unauthenticated. Formal record separately shows one complete chat. This is recorded-history consistency, not proof of external calls or ledger state.",
+  "additional_boundary_probe": {
+    "missing_optional_preflight_audit": {
+      "historical_initial_result": {
+        "accepted": true,
+        "reason": "Optional audit format allows directories without preflight; no external manifest proves this event was preserved.",
+        "formal_call_verified": 1
+      },
+      "current_result": {
+        "rejected": true,
+        "error": "Known preflight audit missing"
+      }
+    }
+  },
+  "method": "Exact allowed files copied to temporary directories, excluding A. fetch and loadEnvFile throwing guards; no network/Key/real ledger/holdout. Mutations confined to temporary copies; originals untouched. B only review has one reply, six criteria,23 decoded field UTF-16 quotes. Root22 tests not rerun because they load A.",
+  "root_reported_tests": {
+    "replay": 23,
+    "audit": 6,
+    "total": 29,
+    "status": "root reports passed; not run by B"
+  },
+  "content_acceptance": "No semantic acceptance: original B four failed dimensions, scope pass, support uncertain remain intact. The first mechanical Mixed requires explicit opposed major effects reproduced; later basis namespace issues are human findings, not replaced as original first issue.",
+  "limits": [
+    "Complete HTTP200 provider SSE+check format only; not a general HTTP/transport/chat-failure verifier. Such conflicting failure artifacts are rejected here.",
+    "Preflight fields prove only local audit-record consistency; public probe authentication/network outcome and zero external reservation/calls require separate evidence beyond this replay.",
+    "No ledger is accessed; reservation_retained/authorization/exact provider billing are not independently established.",
+    "Local hashes/quote identities cannot prove model semantic support, forecast correctness or general improvement.",
+    "Only B content was reviewed; A file was excluded from every temporary fixture.",
+    "For this known historical batch the preflight audit is now required; this preserves local event presence, but does not establish external reservation or network facts."
+  ],
+  "resolved_findings": [
+    {
+      "id": "optional_known_preflight",
+      "initial_source_sha256": "d557796b72ad8d9246285fe2127fe20929c94e592b1a33eca439dbf8617bac2a",
+      "initial_finding": {
+        "accepted": true,
+        "reason": "Optional audit format allows directories without preflight; no external manifest proves this event was preserved.",
+        "formal_call_verified": 1
+      },
+      "fix": "Root requires preflight-failure.json for this fixed known historical batch; future batches and original paid requests unchanged.",
+      "current_missing_file_result": {
+        "rejected": true,
+        "error": "Known preflight audit missing"
+      },
+      "status": "resolved"
+    }
+  ],
+  "followup_checks": {
+    "source_sha256": "78e18063adf9ba85689d27218cc2b6591762506acca3d23f91755f60eee2a2e3",
+    "checks": 2,
+    "normal_archive": {
+      "passed": true,
+      "result": {
+        "plan_hash": "1264e601754a174183a426394758b38778a8e70284e2d68822f58d72347cedb7",
+        "network_calls": 0,
+        "planned_calls": 1,
+        "attempted_calls": 1,
+        "verified_cases": 1,
+        "results": [
+          {
+            "id": "trend-spare-key",
+            "status": "rejected",
+            "issues": [
+              "Mixed requires explicit opposed major effects"
+            ],
+            "archive_sha256": "27ec0fd561987e1b2902495485ee46796f4b462caf4f86549da3b1b4399c4546",
+            "raw_sha256": "aa92ed4b7c59b769add6f2971e199d22d40446d22569ab9d867504be4080a64c"
+          }
+        ],
+        "reviews": [
+          {
+            "file": "semantic-review-b.json",
+            "reviewed_cases": 1,
+            "dimensions": 6,
+            "verified_quotes": 23
+          }
+        ],
+        "semantic_acceptance": "requires_independent_review",
+        "forecast_accuracy": "unassessed"
+      }
+    },
+    "removed_known_preflight": {
+      "rejected": true,
+      "error": "Known preflight audit missing"
+    }
+  },
+  "execution_integrity_followup": "Actual one reply and B23 quotes still replay; deleting required known historical preflight audit is now rejected."
+}

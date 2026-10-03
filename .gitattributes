@@ -14,3 +14,5 @@ docs/acceptance/evidence-led-live-20261002/*-raw.sse whitespace=-blank-at-eof
 docs/acceptance/task-led-20261002/*-raw.sse whitespace=-blank-at-eof
 docs/acceptance/packet-led-20261003/*-raw.sse whitespace=-blank-at-eof
 docs/acceptance/packet-local-live-20261003/*-raw.sse whitespace=-blank-at-eof
+# The PowerShell price audit contains CRLF; preserve its recorded bytes.
+docs/acceptance/packet-local-live-20261003/packet-local-price-20261003.json whitespace=cr-at-eol
