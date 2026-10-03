@@ -1,0 +1,246 @@
+{
+  "reviewer_id": "agent-b",
+  "review_kind": "independent_offline_synthetic_semantic_and_display",
+  "plan_sha256": "177aa9c3f77b9e18702c0dbfcb7c98dce5171b39110e837a2144b8d736e0e644",
+  "synthetic_samples": 3,
+  "actual_model_responses": 0,
+  "production": false,
+  "provider_calls": 0,
+  "prediction_acceptance": "not_assessed",
+  "real_model_acceptance": "not_assessed",
+  "overall_status": "offline_demonstration_boundary_pass_with_free_prose_semantic_failure_retained",
+  "method": "Quotes are JSON Pointers from demo plan.json root; start/end decoded field UTF-16 indices, end exclusive. Independently reconstructed only exposed first album canonical; no second uncalled question used. Stored views compared against program-generated views. No credentials/ledger/holdout or API.",
+  "mechanical_results": [
+    {
+      "sample_id": "local-separated",
+      "status": "accepted_membership_only",
+      "error": null
+    },
+    {
+      "sample_id": "missing-local-basis",
+      "status": "rejected",
+      "error": "Basis absent from selected packets"
+    },
+    {
+      "sample_id": "free-prose-counterexample",
+      "status": "accepted_membership_only",
+      "error": null
+    }
+  ],
+  "reviews": [
+    {
+      "sample_id": "local-separated",
+      "mechanical_status": "accepted_membership_only",
+      "semantic_status": "limited_demonstration_not_acceptance",
+      "reason": "原值只显示第3爻六亲，问题对应、假设、限制、一般建议分开；正文保留私人相册取法未确认与无法判断结果。是手工展示正确拆分的示例，不等于取法成立或预测有效。conditional/background只为示例字段，不评价其传统权重。",
+      "evidence_ids": [
+        "fact:/lines/2/relative"
+      ],
+      "quotes": [
+        {
+          "path": "/samples/0/answer/conclusion/answer",
+          "start": 0,
+          "end": 30,
+          "text": "目前没有确认适合私人相册的取法，不能据这些事实判断能否成册。",
+          "offset_unit": "UTF-16"
+        },
+        {
+          "path": "/samples/0/answer/factors/0/question_relevance",
+          "start": 32,
+          "end": 44,
+          "text": "目前不能确定其现实作用。",
+          "offset_unit": "UTF-16"
+        }
+      ]
+    },
+    {
+      "sample_id": "missing-local-basis",
+      "mechanical_status": "rejected",
+      "semantic_status": "not_accepted",
+      "reason": "选role:primary:3却添加第4爻relative局部依据，程序拒绝Basis absent from selected packets；这是局部成员边界通过反例验收，不是断语语义已自动核对。",
+      "evidence_ids": [
+        "fact:/lines/2/relative",
+        "fact:/lines/3/relative"
+      ],
+      "quotes": [
+        {
+          "path": "/samples/1/answer/factors/0/basis_ids/1",
+          "start": 0,
+          "end": 22,
+          "text": "fact:/lines/3/relative",
+          "offset_unit": "UTF-16"
+        }
+      ]
+    },
+    {
+      "sample_id": "free-prose-counterexample",
+      "mechanical_status": "accepted_membership_only",
+      "semantic_status": "fail",
+      "criteria": {
+        "facts": {
+          "verdict": "fail",
+          "reason": "局部依据唯一为第3爻relative；正文却说第4爻官鬼、金、旺。它们在原盘真实存在也不等于本段basis选取或展开覆盖；此视图仅展示第3爻六亲，没有第4爻依据。",
+          "evidence_ids": [
+            "fact:/lines/2/relative",
+            "fact:/lines/3/relative",
+            "fact:/lines/3/element",
+            "fact:/lines/3/relations/month_strength"
+          ],
+          "quotes": [
+            {
+              "path": "/samples/2/answer/factors/0/question_relevance",
+              "start": 0,
+              "end": 7,
+              "text": "第4爻官鬼金旺",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "support": {
+          "verdict": "fail",
+          "reason": "盘面角色/旺衰不能证明一定迅速成册；没有相册取法支持，免责声明不能抵消肯定现实结果。传统映射本身仍未核实，不能因此替用户确定吉凶。",
+          "evidence_ids": [
+            "fact:/lines/2/relative"
+          ],
+          "quotes": [
+            {
+              "path": "/samples/2/answer/factors/0/question_relevance",
+              "start": 8,
+              "end": 19,
+              "text": "所以一定能够迅速成册。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "advice_boundary": {
+          "verdict": "fail",
+          "reason": "每天筛选是可能的操作建议，不是从所选程序事实得到的必要条件。“否则一定无法”把未证明的建议升级成成功必要条件，不提供资源或办法证据。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/samples/2/answer/general_advice/0",
+              "start": 0,
+              "end": 16,
+              "text": "必须每天筛选，否则一定无法成册。",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        },
+        "direction": {
+          "verdict": "fail",
+          "reason": "顶部unclear/无法判断，与因素散文“一定能够迅速成册”及建议“一定无法”相矛盾，字段标签不能盖过实际断语。",
+          "evidence_ids": [],
+          "quotes": [
+            {
+              "path": "/samples/2/answer/conclusion/direction",
+              "start": 0,
+              "end": 7,
+              "text": "unclear",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/samples/2/answer/factors/0/question_relevance",
+              "start": 10,
+              "end": 18,
+              "text": "一定能够迅速成册",
+              "offset_unit": "UTF-16"
+            },
+            {
+              "path": "/samples/2/answer/general_advice/0",
+              "start": 7,
+              "end": 15,
+              "text": "否则一定无法成册",
+              "offset_unit": "UTF-16"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "additional_display_checks": {
+    "relation_program_sources": [
+      {
+        "id": "rule:SHI-CONTROL-YING-001:primary:5:2",
+        "source_ids": [
+          "fact:/hexagram/shi_line",
+          "fact:/hexagram/ying_line",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/1/is_shi",
+          "fact:/lines/2/is_shi",
+          "fact:/lines/3/is_shi",
+          "fact:/lines/4/is_shi",
+          "fact:/lines/5/is_shi",
+          "fact:/lines/0/is_ying",
+          "fact:/lines/1/is_ying",
+          "fact:/lines/2/is_ying",
+          "fact:/lines/3/is_ying",
+          "fact:/lines/4/is_ying",
+          "fact:/lines/5/is_ying",
+          "fact:/lines/4/element",
+          "fact:/lines/1/element"
+        ]
+      }
+    ],
+    "identity_background": [
+      {
+        "id": "fact:/lines/4/relative",
+        "text": "第5爻 · 六亲：妻财",
+        "direct": false,
+        "rule_premise": false,
+        "identity_background": true
+      },
+      {
+        "id": "fact:/lines/1/relative",
+        "text": "第2爻 · 六亲：父母",
+        "direct": false,
+        "rule_premise": false,
+        "identity_background": true
+      }
+    ],
+    "identity_not_rule_premise": true,
+    "html_text_safety": {
+      "model_html_rendered": false,
+      "literal_text_preserved": true
+    },
+    "browser_file": "test-results/packet-local-demo-20261003/browser.json",
+    "widths": [
+      1280,
+      390,
+      320
+    ],
+    "states": [
+      "collapsed",
+      "expanded"
+    ],
+    "all_six_views_no_horizontal_overflow": true,
+    "details_unnested": true,
+    "no_page_errors": true,
+    "screenshots": [
+      "test-results\\packet-local-demo-20261003\\preview-1280-collapsed.png",
+      "test-results\\packet-local-demo-20261003\\preview-1280-expanded.png",
+      "test-results\\packet-local-demo-20261003\\preview-390-collapsed.png",
+      "test-results\\packet-local-demo-20261003\\preview-390-expanded.png",
+      "test-results\\packet-local-demo-20261003\\preview-320-collapsed.png",
+      "test-results\\packet-local-demo-20261003\\preview-320-expanded.png"
+    ],
+    "visual_inspection": [
+      "preview-320-expanded.png: readable wrapping, distinct interpretation/basis/advice headings; no clipping observed."
+    ],
+    "browser_runtime_note": "Default bundled Chromium unavailable; used already installed Edge through Playwright, without browser download."
+  },
+  "comparison_to_exposed_album_failure": [
+    "Local basis checks reject an explicit fourth-line ID outside the selected third-line packet, and display only selected facts rather than the whole role profile.",
+    "A free-prose fourth-line claim still passes membership checks when basis_ids stays valid; the demonstrated old-style unsupported claim is retained and manually failed.",
+    "Suggestion necessity overreach remains a semantic defect even with separate advice fields."
+  ],
+  "limits": [
+    "All three answers are hand-written synthetic examples; no model output or future outcome is tested.",
+    "Correct display/membership does not establish traditional mappings, weighting, applicability or prediction validity.",
+    "Free text attributes, reality assertions and advice necessity still require independent semantic review; this candidate must not claim automatic semantic correction.",
+    "Preview.html shows only local-separated; browser results do not imply free-prose-counterexample has passed semantic review."
+  ],
+  "quote_validation": {
+    "count": 9,
+    "all_decoded_utf16_slices_match": true
+  }
+}

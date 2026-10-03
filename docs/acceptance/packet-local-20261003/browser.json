@@ -1,0 +1,147 @@
+{
+  "reviewer_id": "agent-b",
+  "engine": "Playwright installed Edge (Chromium)",
+  "source": "preview.html",
+  "model_calls": 0,
+  "network_provider_calls": 0,
+  "checks": [
+    {
+      "width": 1280,
+      "state": "collapsed",
+      "document_width": 1280,
+      "viewport_width": 1280,
+      "details": [
+        {
+          "open": false,
+          "nested": 0
+        },
+        {
+          "open": false,
+          "nested": 0
+        }
+      ],
+      "main_width": 808,
+      "summary_visible": true,
+      "warning": true,
+      "advice_separate": true,
+      "horizontal_overflow": false,
+      "page_errors": [],
+      "screenshot": "test-results\\packet-local-demo-20261003\\preview-1280-collapsed.png"
+    },
+    {
+      "width": 1280,
+      "state": "expanded",
+      "document_width": 1280,
+      "viewport_width": 1280,
+      "details": [
+        {
+          "open": true,
+          "nested": 0
+        },
+        {
+          "open": true,
+          "nested": 0
+        }
+      ],
+      "main_width": 808,
+      "summary_visible": true,
+      "warning": true,
+      "advice_separate": true,
+      "horizontal_overflow": false,
+      "page_errors": [],
+      "screenshot": "test-results\\packet-local-demo-20261003\\preview-1280-expanded.png"
+    },
+    {
+      "width": 390,
+      "state": "collapsed",
+      "document_width": 390,
+      "viewport_width": 390,
+      "details": [
+        {
+          "open": false,
+          "nested": 0
+        },
+        {
+          "open": false,
+          "nested": 0
+        }
+      ],
+      "main_width": 390,
+      "summary_visible": true,
+      "warning": true,
+      "advice_separate": true,
+      "horizontal_overflow": false,
+      "page_errors": [],
+      "screenshot": "test-results\\packet-local-demo-20261003\\preview-390-collapsed.png"
+    },
+    {
+      "width": 390,
+      "state": "expanded",
+      "document_width": 390,
+      "viewport_width": 390,
+      "details": [
+        {
+          "open": true,
+          "nested": 0
+        },
+        {
+          "open": true,
+          "nested": 0
+        }
+      ],
+      "main_width": 390,
+      "summary_visible": true,
+      "warning": true,
+      "advice_separate": true,
+      "horizontal_overflow": false,
+      "page_errors": [],
+      "screenshot": "test-results\\packet-local-demo-20261003\\preview-390-expanded.png"
+    },
+    {
+      "width": 320,
+      "state": "collapsed",
+      "document_width": 320,
+      "viewport_width": 320,
+      "details": [
+        {
+          "open": false,
+          "nested": 0
+        },
+        {
+          "open": false,
+          "nested": 0
+        }
+      ],
+      "main_width": 320,
+      "summary_visible": true,
+      "warning": true,
+      "advice_separate": true,
+      "horizontal_overflow": false,
+      "page_errors": [],
+      "screenshot": "test-results\\packet-local-demo-20261003\\preview-320-collapsed.png"
+    },
+    {
+      "width": 320,
+      "state": "expanded",
+      "document_width": 320,
+      "viewport_width": 320,
+      "details": [
+        {
+          "open": true,
+          "nested": 0
+        },
+        {
+          "open": true,
+          "nested": 0
+        }
+      ],
+      "main_width": 320,
+      "summary_visible": true,
+      "warning": true,
+      "advice_separate": true,
+      "horizontal_overflow": false,
+      "page_errors": [],
+      "screenshot": "test-results\\packet-local-demo-20261003\\preview-320-expanded.png"
+    }
+  ]
+}
