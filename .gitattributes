@@ -5,6 +5,7 @@ docs/acceptance/evidence-led-20261002/** -text
 docs/acceptance/evidence-led-live-20261002/** -text
 docs/acceptance/task-led-20261002/** -text
 docs/acceptance/packet-led-20261003/** -text
+docs/acceptance/packet-local-20261003/** -text
 # The final empty SSE frame is part of the archived provider bytes.
 docs/acceptance/judgment-live-20261002/*-raw.sse whitespace=-blank-at-eof
 docs/acceptance/judgment-compact-20261002/*-raw.sse whitespace=-blank-at-eof

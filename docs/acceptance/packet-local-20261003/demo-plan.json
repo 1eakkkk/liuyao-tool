@@ -1,0 +1,207 @@
+{
+  "version": "packet-led-local-offline-1",
+  "synthetic": true,
+  "production": false,
+  "network_calls": 0,
+  "source_kind": "exposed_first_development_case",
+  "source_input_hash": "9acf16074329a79b2055a1e8323929976a9e631434d67f50348e739d1bd6d6d4",
+  "samples": [
+    {
+      "id": "local-separated",
+      "answer": {
+        "schema_version": "packet-led-local-offline-1",
+        "context_id": "sha256:34a0ee8945c8d5c63519b87cb8cbebf5beb144d0f9f4ed3c24aedaefd21995ce",
+        "task": "trend",
+        "conclusion": {
+          "direction": "unclear",
+          "answer": "目前没有确认适合私人相册的取法，不能据这些事实判断能否成册。"
+        },
+        "focus": [],
+        "tradeoff_reason": "盘面记录与实际筛选进度是两回事；此手工样例只展示依据和解释如何分开。",
+        "factors": [
+          {
+            "id": "f1",
+            "priority": "background",
+            "effect": "conditional",
+            "packet_ids": [
+              "role:primary:3"
+            ],
+            "basis_ids": [
+              "fact:/lines/2/relative"
+            ],
+            "question_relevance": "若用此类角色观察整理过程的约束，需先确认这种取象适用于私人相册；目前不能确定其现实作用。",
+            "assumption": "取象仅为待核对假设。",
+            "limitation": "不能确认筛选方法、投入时间或完成结果。"
+          }
+        ],
+        "general_advice": [
+          "可以先试选一小组照片，观察整理是否顺手。"
+        ],
+        "uncertainties": [
+          "此处所有解释均为手工开发文字，不是模型回复。"
+        ]
+      },
+      "expected_semantic_status": "limited_demonstration_not_acceptance",
+      "view": {
+        "summary": "目前没有确认适合私人相册的取法，不能据这些事实判断能否成册。",
+        "direction": "unclear",
+        "tradeoff_reason": "盘面记录与实际筛选进度是两回事；此手工样例只展示依据和解释如何分开。",
+        "focus": [],
+        "factors": [
+          {
+            "id": "f1",
+            "priority": "background",
+            "effect": "conditional",
+            "selected_basis_ids": [
+              "fact:/lines/2/relative"
+            ],
+            "program_basis": {
+              "facts": [
+                {
+                  "id": "fact:/lines/2/relative",
+                  "text": "第3爻 · 六亲：官鬼",
+                  "direct": true,
+                  "rule_premise": false,
+                  "identity_background": false
+                }
+              ],
+              "rules": []
+            },
+            "question_interpretation": {
+              "relevance": "若用此类角色观察整理过程的约束，需先确认这种取象适用于私人相册；目前不能确定其现实作用。",
+              "assumption": "取象仅为待核对假设。",
+              "limitation": "不能确认筛选方法、投入时间或完成结果。"
+            }
+          }
+        ],
+        "general_advice": [
+          "可以先试选一小组照片，观察整理是否顺手。"
+        ],
+        "uncertainties": [
+          "此处所有解释均为手工开发文字，不是模型回复。"
+        ],
+        "mechanical_check": "local_basis_membership_closure_and_focus_only",
+        "semantic_acceptance": "unassessed",
+        "forecast_accuracy": "unassessed"
+      }
+    },
+    {
+      "id": "missing-local-basis",
+      "answer": {
+        "schema_version": "packet-led-local-offline-1",
+        "context_id": "sha256:34a0ee8945c8d5c63519b87cb8cbebf5beb144d0f9f4ed3c24aedaefd21995ce",
+        "task": "trend",
+        "conclusion": {
+          "direction": "unclear",
+          "answer": "目前没有确认适合私人相册的取法，不能据这些事实判断能否成册。"
+        },
+        "focus": [],
+        "tradeoff_reason": "盘面记录与实际筛选进度是两回事；此手工样例只展示依据和解释如何分开。",
+        "factors": [
+          {
+            "id": "f1",
+            "priority": "background",
+            "effect": "conditional",
+            "packet_ids": [
+              "role:primary:3"
+            ],
+            "basis_ids": [
+              "fact:/lines/2/relative",
+              "fact:/lines/3/relative"
+            ],
+            "question_relevance": "若用此类角色观察整理过程的约束，需先确认这种取象适用于私人相册；目前不能确定其现实作用。",
+            "assumption": "取象仅为待核对假设。",
+            "limitation": "不能确认筛选方法、投入时间或完成结果。"
+          }
+        ],
+        "general_advice": [
+          "可以先试选一小组照片，观察整理是否顺手。"
+        ],
+        "uncertainties": [
+          "此处所有解释均为手工开发文字，不是模型回复。"
+        ]
+      },
+      "expected_mechanical_error": "Basis absent from selected packets"
+    },
+    {
+      "id": "free-prose-counterexample",
+      "answer": {
+        "schema_version": "packet-led-local-offline-1",
+        "context_id": "sha256:34a0ee8945c8d5c63519b87cb8cbebf5beb144d0f9f4ed3c24aedaefd21995ce",
+        "task": "trend",
+        "conclusion": {
+          "direction": "unclear",
+          "answer": "目前没有确认适合私人相册的取法，不能据这些事实判断能否成册。"
+        },
+        "focus": [],
+        "tradeoff_reason": "盘面记录与实际筛选进度是两回事；此手工样例只展示依据和解释如何分开。",
+        "factors": [
+          {
+            "id": "f1",
+            "priority": "background",
+            "effect": "conditional",
+            "packet_ids": [
+              "role:primary:3"
+            ],
+            "basis_ids": [
+              "fact:/lines/2/relative"
+            ],
+            "question_relevance": "第4爻官鬼金旺，所以一定能够迅速成册。",
+            "assumption": "取象仅为待核对假设。",
+            "limitation": "不能确认筛选方法、投入时间或完成结果。"
+          }
+        ],
+        "general_advice": [
+          "必须每天筛选，否则一定无法成册。"
+        ],
+        "uncertainties": [
+          "此处所有解释均为手工开发文字，不是模型回复。"
+        ]
+      },
+      "mechanical_status": "accepted_membership_only",
+      "expected_semantic_status": "reject_unsupported_claim_and_necessity",
+      "view": {
+        "summary": "目前没有确认适合私人相册的取法，不能据这些事实判断能否成册。",
+        "direction": "unclear",
+        "tradeoff_reason": "盘面记录与实际筛选进度是两回事；此手工样例只展示依据和解释如何分开。",
+        "focus": [],
+        "factors": [
+          {
+            "id": "f1",
+            "priority": "background",
+            "effect": "conditional",
+            "selected_basis_ids": [
+              "fact:/lines/2/relative"
+            ],
+            "program_basis": {
+              "facts": [
+                {
+                  "id": "fact:/lines/2/relative",
+                  "text": "第3爻 · 六亲：官鬼",
+                  "direct": true,
+                  "rule_premise": false,
+                  "identity_background": false
+                }
+              ],
+              "rules": []
+            },
+            "question_interpretation": {
+              "relevance": "第4爻官鬼金旺，所以一定能够迅速成册。",
+              "assumption": "取象仅为待核对假设。",
+              "limitation": "不能确认筛选方法、投入时间或完成结果。"
+            }
+          }
+        ],
+        "general_advice": [
+          "必须每天筛选，否则一定无法成册。"
+        ],
+        "uncertainties": [
+          "此处所有解释均为手工开发文字，不是模型回复。"
+        ],
+        "mechanical_check": "local_basis_membership_closure_and_focus_only",
+        "semantic_acceptance": "unassessed",
+        "forecast_accuracy": "unassessed"
+      }
+    }
+  ]
+}

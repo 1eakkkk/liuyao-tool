@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "reviewer_id": "agent-a",
+  "review_kind": "independent_offline_candidate_review",
+  "reviewed_at": "2026-10-03T03:55:17.966Z",
+  "verdict": "pass_with_semantic_limits",
+  "blocking_findings": [],
+  "original_findings": [],
+  "source_sha256": {
+    "experiments/judgment-review/packet-led-local.js": "e9da547c9b54ff26d8908ea391c9878bcea0c33116f003923b9de0efe0a4e72b",
+    "experiments/judgment-review/packet-led-local-view.js": "713592a4078cb9f1c8e30539427e88ab7a973fbccdf2ec27e1ddf36af1b6c0cc",
+    "tests/output/packet-led-local.test.js": "4bd61b8f015fee64113c082faa35144b7c1df14c57eaaec403394cddc37e8aad"
+  },
+  "fixture_scope": "Only docs/acceptance/packet-led-20261003/plan.json cases[0] exposed album canonical; uncalled second case not used for debugging.",
+  "verification": {
+    "command": "npx vitest run tests/output/packet-led-local.test.js --maxWorkers=2",
+    "test_files_passed": 1,
+    "tests_passed": 14,
+    "actual_provider_calls": 0,
+    "credentials_read": false,
+    "actual_ledger_read": false,
+    "independent_checks": [
+      {
+        "id": "primary-relative-from-changed-hidden",
+        "result": "rejected",
+        "error": "Basis absent from selected packets"
+      },
+      {
+        "id": "unused-role-packet",
+        "result": "rejected",
+        "error": "Unused packet selection"
+      },
+      {
+        "id": "negative-closure-focus",
+        "result": "rejected",
+        "error": "Focus absent from factor packets"
+      },
+      {
+        "id": "actual-relation-participant",
+        "result": "accepted_as_structurally_covered"
+      },
+      {
+        "id": "closure-values-background-mutation",
+        "result": "pass",
+        "detail": "Exact rule source_ids and source values preserved, facts deduplicated; added identity facts are not premises; mutating returned view does not alter next view."
+      },
+      {
+        "id": "deliberately-wrong-prose",
+        "result": "mechanically_accepted_semantics_unassessed",
+        "detail": "Unselected fourth-line attribute and certain real-world success assertion remain free text; no fourth-line relative appears in displayed basis. This is a limitation counterexample, not semantic acceptance."
+      }
+    ]
+  },
+  "findings": [
+    {
+      "topic": "local_membership",
+      "verdict": "pass",
+      "reason": "Each basis_id must belong to this factor selected packets; global facts and another factor do not grant local membership. Every selected packet supplies a chosen basis. Unknown/duplicate/excessive/sparse local IDs are rejected."
+    },
+    {
+      "topic": "program_values_and_premises",
+      "verdict": "pass",
+      "reason": "Program resolves trusted source evidence, expands exact rule closure, deduplicates facts and preserves original source_ids. Only participating six-relative identities are supplemented; background remains separate from rule_premise. Explicitly chosen identity is direct fact, not an invented premise."
+    },
+    {
+      "topic": "focus_and_priority",
+      "verdict": "pass",
+      "reason": "Old packet and priority validation retained, with additional local identity or actual selected rule requirement. Source closure negative flags alone do not create participants. Primary local basis must cover asserted-direction focus; single factor priority stays disjoint."
+    },
+    {
+      "topic": "context_schema",
+      "verdict": "pass",
+      "reason": "WeakMap rejects cloned context; trusted source and context identity checked. Complete schema clone and deep freeze keep priority/v1 definitions separate. Sparse/cyclic checks precede adapters."
+    },
+    {
+      "topic": "safe_atomic_preview",
+      "verdict": "pass",
+      "reason": "Question interpretation, program basis and general advice displayed separately through textContent. All validation and fragment construction finish before replaceChildren; failure preserves previous DOM."
+    }
+  ],
+  "limitations": [
+    "Membership and layout cannot detect unselected attributes in prose, invented causal mechanisms, necessary-success advice, unsupported traditional application or weights, reality assertions, or rhetorical double counting. Deliberately wrong prose remains accepted by mechanical validation and semantic_acceptance stays unassessed.",
+    "Selected relation strict closure still includes its required multi-line flag facts. Display presence does not establish relevance or make unrelated lines participants.",
+    "Local basis maxItems=4 and packet maxItems=2 are capacity choices, not a minimum number of references or proof of adequate interpretation. Rule closure expansion may exceed four displayed facts without exceeding model selection capacity.",
+    "Selecting only a relative identity is sufficient for structural focus coverage, but does not establish a valid unique traditional focus for private photo tasks.",
+    "No new model output, API request, production admission, forecast validation or repair of prior album reply. Its archived failures and uncertain judgment remain intact."
+  ],
+  "semantic_acceptance": "unassessed",
+  "forecast_accuracy": "unassessed"
+}
