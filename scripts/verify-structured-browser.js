@@ -74,12 +74,16 @@ try {
     assert.deepEqual(follow.messages[1], structured.messages[1]);
     // Change URL to legacy, reload: the restored conversation must still be structured.
     await page.evaluate(() => history.replaceState(null, '', '?debug=1'));
-    await page.reload();
-    await page.locator('[data-tab="ai"]').click();
-    await page.waitForFunction(() => document.getElementById('aiResult').textContent.includes('固定流式回复'));
     const restored = await send('structured', '#followUpBtn', '还是同一件事，请说明不确定性');
     assert.deepEqual(restored.messages[1], structured.messages[1]);
     assert.ok(restored.messages[0].content.includes('不得重新排盘'));
+    await page.reload();
+    assert.equal(await page.locator('#plateWrap table').count(),0);
+    assert.equal(await page.locator('#aiResult').textContent(),'');
+    await page.locator('[data-tab="caster"]').click();await page.locator('[data-mode="manual"]').click();
+    for(const [i,sum] of [7,8,9,7,6,8].entries())await page.locator(`#manualLine${i}`).selectOption(String(sum));
+    await page.locator('#manualCastBtn').click();
+    await page.locator('[data-tab="ai"]').click();
     await page.locator('#questionInput').fill('固定 Phase 4 对照问题');
     const legacy = await send('legacy', '#interpretBtn');
     assert.ok(legacy.messages[1].content.startsWith('排盘数据：'));
@@ -87,7 +91,7 @@ try {
     assert.deepEqual(legacy.thinking, structured.thinking);
     assert.equal(legacy.reasoning_effort, structured.reasoning_effort);
     assert.deepEqual(errors, []);
-    report.push({ target, mock_requests: requests.length, paired_copy: 'passed', structured_followup_export: 'passed', restore_mode_lock: 'passed', errors });
+    report.push({ target, mock_requests: requests.length, paired_copy: 'passed', structured_followup_export: 'passed', in_session_mode_lock_refresh_clear: 'passed', errors });
     await context.close();
   }
   fs.mkdirSync('test-results/phase4', { recursive: true });

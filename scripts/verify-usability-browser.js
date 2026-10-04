@@ -32,7 +32,11 @@ try {
         localStorage.setItem('liuyao_reply_style','deep');
       }, saved);
       await page.reload();
-      await page.waitForFunction(() => document.querySelector('#plateWrap .gua-name-row'));
+      assert.equal(await page.locator('#plateWrap table').count(),0);
+      await page.locator('[data-mode=manual]').click();
+      for(let i=0;i<6;i++)await page.locator(`#manualLine${i}`).selectOption(String(canonical.lines[i].yin_yang==='yang'?(canonical.lines[i].moving?9:7):(canonical.lines[i].moving?6:8)));
+      await page.locator('#manualCastBtn').click();
+      await page.locator('[data-mode=system]').click();
       for (const width of [320,390,580,768,1024,1280]) {
         await page.setViewportSize({width,height:844});
         const layout = await page.locator('#plateWrap').evaluate(node => {

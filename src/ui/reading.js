@@ -1,9 +1,8 @@
-import { createReadingSession, prepareReadingTurn, appendReadingTurn, serializeReadingSession, restoreReadingSession, readingExport } from '../ai/output/session.js';
+import { createReadingSession, prepareCompactReadingTurn as prepareReadingTurn, appendReadingTurn, serializeReadingSession, readingExport } from '../ai/output/session.js';
 import { callReading } from '../ai/output/client.js';
 import { renderOutputResult } from '../ai/output/view.js';
 import { castStore } from '../app/cast-store.js';
-import { renderPlateFromCastData } from './casting-view.js';
-import { safeGetItem, safeSetItem, safeRemoveItem } from '../storage/local.js';
+import { safeSetItem, safeRemoveItem } from '../storage/local.js';
 import { clearActiveConversationStorage } from '../storage/conversation.js';
 import { copyTextToClipboard } from './helpers.js';
 import { isLifespanQuestion } from '../app/question.js';
@@ -104,7 +103,7 @@ export async function startReading(canonical, kind) {
     const prepared = await prepareReadingTurn(session, canonical.question.text);
     render();
     if (kind === 'api') await request(prepared);
-    else { pending = prepared; render(); status('复制提示词给外部 AI，再贴回完整回复。刷新页面可恢复本次提示词。'); persist(); }
+    else { pending = prepared; render(); status('复制提示词给外部 AI，再贴回完整回复。刷新前请复制提示词；历史记录中保留本次导出。'); persist(); }
     el('readingPanel').scrollIntoView({ block: 'nearest' });
   });
 }
@@ -153,22 +152,6 @@ export function initializeReading() {
       else { pending = prepared; render(); status('追问提示词已包含本卦与既有问答，请贴回本轮完整回复。'); persist(); }
       el('readingFollow').value = '';
     }));
-  }
-  // Restore from canonical + raw responses; never trust a stored validation badge.
-  const raw = safeGetItem(KEY);
-  if (raw && !state.currentConversation) {
-    const restoreEpoch = epoch;
-    void exclusive(async () => {
-      const restored = await restoreReadingSession(raw);
-      if (epoch !== restoreEpoch) return;
-      session = restored.session; pending = restored.pending;
-      renderPlateFromCastData(session.canonical, session.canonical.question.text,
-        new Date(session.canonical.meta.created_at || Date.now()).getTime());
-      // Restore the conversation, never refill a fresh question or mode selection.
-      syncSettings();
-      render(); status('已恢复上次结构化解读，并重新核对格式与引用。');
-      persist();
-    });
   }
   syncSettings();
 }

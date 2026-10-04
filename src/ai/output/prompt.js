@@ -42,3 +42,6 @@ export function buildOutputExport(context) {
   const [system, user] = buildOutputMessages(context);
   return `【任务与输出要求】\n${system.content}\n\n【输入数据】\n${user.content}\n\n请仅返回 JSON。复制到外部 AI 后，需将完整回复带回本工具校验；外部 AI 不会自动接受本站校验。`;
 }
+
+// Additional guidance for new website turns; frozen historical prompts remain reproducible.
+export const COMPACT_READING_GUIDANCE = '紧凑解读：开头先直接回答，再用两三条最相关依据说明取舍。factors 通常一至三项，不罗列全盘，不补齐六亲或利弊类别。趋势问题通常只选一个主要用神角度，备选仅在会改变判断时列出并说明原因。篇幅可以短于目标字数；信息不足时不以重复、泛泛建议或新增取象填满字数。一般建议明确与卦盘解释区分；不按因素数量决定吉凶。';

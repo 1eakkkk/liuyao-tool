@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { test, expect } from 'vitest';
 import fs from 'node:fs';
-import { createReadingSession, prepareReadingTurn, appendReadingTurn, serializeReadingSession, restoreReadingSession, readingExport } from '../../src/ai/output/session.js';
+import { createReadingSession, prepareCompactReadingTurn, prepareReadingTurn, appendReadingTurn, serializeReadingSession, restoreReadingSession, readingExport } from '../../src/ai/output/session.js';
 import { syntheticOutput } from '../../experiments/structured-output/example.js';
 import { readingRequestBody } from '../../src/ai/output/client.js';
 const canonical = JSON.parse(fs.readFileSync(new URL('../../experiments/phase7/fixtures/compat-1.json', import.meta.url)));
@@ -156,4 +156,18 @@ test('structured length preferences reach API/export and survive reload and foll
   }
   const a=syntheticOutput(p.context);a.answer=`第1爻为${opposite}爻？第1爻为${opposite}爻。`;
   expect(appendReadingTurn(prepare(),p,JSON.stringify(a),true,'external').result.issues[0].code).toBe('motion_fact_conflict');
+});
+
+test('compact website turns share API/export guidance without changing frozen context or response validation', async()=>{
+  const session=prepare();
+  const original=await prepareReadingTurn(session,'计划是否可行？');
+  const compact=await prepareCompactReadingTurn(session,'计划是否可行？');
+  expect(compact.context.context_id).toBe(original.context.context_id);
+  expect(compact.messages[1]).toEqual(original.messages[1]);
+  expect(readingRequestBody(compact).messages).toEqual(compact.messages);
+  expect(readingExport(compact)).toContain(compact.messages[0].content);
+  expect(original.messages[0].content).not.toContain('紧凑解读：');
+  expect(compact.messages[0].content).toContain('紧凑解读：');
+  const raw=JSON.stringify(syntheticOutput(compact.context));
+  expect(appendReadingTurn(session,compact,raw,true,'external').result.status).toBe('validated');
 });

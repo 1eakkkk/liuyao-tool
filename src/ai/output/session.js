@@ -1,6 +1,6 @@
 import { normalizeLegacyCast } from '../../core/normalize.js';
 import { buildOutputContext, hashOutput } from './context.js';
-import { buildOutputMessages, JUDGMENT_GUIDANCE } from './prompt.js';
+import { buildOutputMessages, JUDGMENT_GUIDANCE, COMPACT_READING_GUIDANCE } from './prompt.js';
 import { parseOutputAnswer } from './parse.js';
 import { MAX_RESPONSE_CHARS } from './contract.js';
 
@@ -70,4 +70,11 @@ export async function restoreReadingSession(raw) {
   }
   const pending = saved.pendingQuestion == null ? null : await prepareReadingTurn(session, saved.pendingQuestion);
   return { session, pending };
+}
+
+// Shared by API calls and prompt export, without changing the response schema.
+export async function prepareCompactReadingTurn(session, question) {
+  const prepared = await prepareReadingTurn(session, question);
+  prepared.messages[0].content += '\n' + COMPACT_READING_GUIDANCE;
+  return prepared;
 }

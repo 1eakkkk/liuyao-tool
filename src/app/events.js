@@ -26,7 +26,6 @@ import { buildExportPromptText, buildExportFollowUpPromptText } from '../ai/prom
 import { annotateShichen, annotateGanzhiDay, stripMarkdown } from '../ai/text.js';
 import { currentRoleLabel, currentRoleCustomSnapshot, currentReplyStyleLabel, currentStyleCustomSnapshot } from '../ai/preferences.js';
 import { LS_KEY_CAST_LOG, configureQuotaNotifications, logCastEvent, castsRemainingInWindow } from '../storage/cast-log.js';
-import { loadActiveConversationFromStorage } from '../storage/conversation.js';
 import { LS_KEY_HISTORY, loadHistory, saveHistory, appendHistory, LS_KEY_LIFETIME_STATS, clearLifetimeStats, buildHistoryCastSnapshot } from '../storage/history.js';
 import { loadRoleChoice, saveRoleChoice, loadCustomRole, saveCustomRole, loadModelChoice, saveModelChoice, savePriceOverride, clearPriceOverride, loadApiKey, saveApiKey, clearApiKey, loadStyleChoice, saveStyleChoice, loadCustomStyle, saveCustomStyle, loadEffortChoice, saveEffortChoice } from '../storage/settings.js';
 import { configureStorageNotifications, safeGetItem, safeSetItem } from '../storage/local.js';
@@ -462,36 +461,49 @@ window.addEventListener('storage', (e)=>{
   }
 });
 
-// ---- 恢复上次刷新前还没结束的会话（如果有的话），恢复后就能直接在原对话基础上继续追问 ----
-(function restoreActiveConversation(){
-  const saved = loadActiveConversationFromStorage();
-  if(!saved || !saved.conversation || !Array.isArray(saved.conversation.turns) || !saved.conversation.turns.length) return;
-  state.currentConversation = saved.conversation;
-  state.currentHistorySessionId = saved.sessionId || null;
-  // 把当时的排盘也一起恢复出来：既让用户能看到这次对话对应的是哪一卦，
-  // 也避免 castStore.legacy 空着导致下次点"AI 解读"时被误判成"没摇过卦"而悄悄重摇。
-  if(saved.castData){
-    renderPlateFromCastData(saved.castData, saved.castQuestion, saved.castTime);
-  }
-  renderConversation();
-  aiMeta.textContent =
-    `（已从上次未结束的会话恢复，累计约¥${(state.currentConversation.cumCost||0).toFixed(4)}，仅供参考，以DeepSeek账单为准）`;
-  copyRow.style.display = 'flex';
-  followUpBox.style.display = 'flex';
-})();
-
+// Reset only the active workspace; history, settings and cast quota remain saved.
 initializeReading();
+const emptyPlateMarkup = document.querySelector('#plateWrap .placeholder')?.outerHTML || '';
 function resetEntryDrafts() {
-  for (const id of ['questionInput','followUpInput','readingFollow','readingPaste','cleanupInputText','followUpExportInput']) {
+  state.activeAbortController?.abort();
+  document.querySelector('.physics-dialog .physics-close')?.click();
+  resetConversation();
+  castStore.canonical = null; castStore.question = ''; castStore.time = null;
+  state.knownCastDate = null;
+  hidePromptExportBoxes();
+  state.lastExportCastText = null; state.lastExportQuestion = null;
+  for (const id of ['questionInput','followUpInput','readingFollow','readingPaste','readingPrompt','promptOutputText','cleanupInputText','cleanupOutputText','followUpExportInput','followUpExportOutput']) {
     const input=document.getElementById(id);
     if(input) { input.value=''; input.dispatchEvent(new Event('input')); }
   }
+  for (let i=0;i<6;i++) {
+    const select=document.getElementById('manualLine'+i);
+    if(select) { select.value='7'; select.dispatchEvent(new Event('change')); }
+  }
+  manualLineTouched.fill(false);
+  plateWrap.innerHTML=emptyPlateMarkup;
+  const facts=document.getElementById('factCheckPanel'); facts.replaceChildren(); facts.hidden=true;
+  document.getElementById('coinLog').replaceChildren();
+  aiResult.textContent=''; aiMeta.textContent=''; aiStatus.textContent='';
+  copyRow.style.display='none';
+  document.getElementById('readingStatus').textContent='';
   document.getElementById('readingComplete').checked=false;
   const mode=document.getElementById('readingMode'); mode.value=''; mode.dispatchEvent(new Event('change'));
+  window.updateCurrentCastStatus();
 }
 resetEntryDrafts();
 window.addEventListener('pageshow', resetEntryDrafts);
-
+// Brief background visits preserve work; 30 minutes away starts a fresh workspace.
+let hiddenAt = null;
+const RETURN_RESET_MS = 30 * 60 * 1000;
+document.addEventListener('visibilitychange', () => {
+  if(document.visibilityState === 'hidden') hiddenAt = Date.now();
+  else if(hiddenAt !== null) {
+    const expired = Date.now() - hiddenAt >= RETURN_RESET_MS;
+    hiddenAt = null;
+    if(expired) resetEntryDrafts();
+  }
+});
 
 styleSelect.addEventListener('change', ()=>{
   saveStyleChoice(styleSelect.value);

@@ -83,11 +83,12 @@ try {
       await page.waitForFunction(() => !document.getElementById('followUpBtn').disabled && document.getElementById('aiResult').textContent.includes('固定追问'));
       outputs[name].conversation = await page.locator('#aiResult').innerHTML();
       await page.reload();
-      await page.waitForFunction(() => document.getElementById('aiResult').textContent.includes('固定追问'));
+      if(name==='baseline') await page.waitForFunction(() => document.getElementById('aiResult').textContent.includes('固定追问'));
+      else { assert.equal(await page.locator('#aiResult').textContent(),''); assert.equal(await page.locator('#plateWrap table').count(),0); }
       // Compare every restored result element; the intentional UI guidance differs from v1.
       outputs[name].restoredPlate = await page.locator('#plateWrap').evaluate(root =>
         [...root.children].filter(n => !n.matches('.plate-legend,.term-guide')).map(n => n.outerHTML).join(''));
-      if (name !== 'baseline') assert.equal(await page.locator('#plateWrap .term-guide details').count(), 3);
+      if (name !== 'baseline') assert.equal(await page.locator('#plateWrap .empty-lines span').count(), 6);
       outputs[name].restoredConversation = await page.locator('#aiResult').innerHTML();
       outputs[name].requests = requests;
       assert.equal(requests.length, 2);
@@ -108,8 +109,9 @@ try {
         report.push({ width, target: name, tab, maximumChannelDifference });
       }
       assert.equal(outputs[name].prompt, overviewExportPrompt(outputs.baseline.prompt), `${name} exported prompt`);
-      for (const key of ['conversation', 'restoredConversation']) assert.deepEqual(outputs[name][key], outputs.baseline[key], `${name} ${key}`);
-      assert.equal(outputs[name].restoredPlate,overviewPlateHtml(outputs.baseline.restoredPlate),`${name} restoredPlate`);
+      for (const key of ['conversation']) assert.deepEqual(outputs[name][key], outputs.baseline[key], `${name} ${key}`);
+      assert.equal(outputs[name].restoredConversation,'');
+      assert.equal(outputs[name].restoredPlate,outputs.built.restoredPlate);
       assert.deepEqual(outputs[name].requests,outputs.baseline.requests.map(overviewApiRequest),`${name} requests`);
       report.push({ width, target: name, screenshots: 5, prompt: 'identical-except-overview-copy', mockApiRequests: 2, conversation: 'identical', restoredPlate: 'identical-except-overview-copy', errors: 0 });
     }

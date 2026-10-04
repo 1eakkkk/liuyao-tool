@@ -82,12 +82,16 @@ try {
     const follow = await send('on', '#followUpBtn', '请解释动爻');
     assert.deepEqual(follow.messages[1], on.messages[1]);
     await page.evaluate(() => history.replaceState(null, '', '?debug=1&ai_input=structured&ai_rules=off'));
-    await page.reload();
-    await page.locator('[data-tab="ai"]').click();
-    await page.waitForFunction(() => document.getElementById('aiResult').textContent.includes('固定流式回复'));
     const restored = await send('on', '#followUpBtn', '同一件事，请指出确定事实与推理');
     assert.deepEqual(restored.messages[1], on.messages[1]);
     assert.ok(restored.messages[0].content.includes('不是第二份独立证据，不得重复加权'));
+    await page.reload();
+    assert.equal(await page.locator('#plateWrap table').count(),0);
+    assert.equal(await page.locator('#aiResult').textContent(),'');
+    await page.locator('[data-tab="caster"]').click();await page.locator('[data-mode="manual"]').click();
+    for(const [i,sum] of [7,8,9,7,6,8].entries())await page.locator(`#manualLine${i}`).selectOption(String(sum));
+    await page.locator('#manualCastBtn').click();
+    await page.locator('[data-tab="ai"]').click();
     await page.locator('#questionInput').fill('固定 Phase 5 对照问题');
     const offAgain = await send('off', '#interpretBtn');
     assert.deepEqual(offAgain.messages, off.messages);
@@ -98,7 +102,7 @@ try {
     assert.deepEqual(errors, []);
     report.push({ target, width: target === 'built' ? 390 : 1280, mock_requests: requests.length,
       paired_copy: 'passed', rules_followup_export: 'passed', identical_system_prompt: 'passed',
-      only_enabled_and_hits_differ: 'passed', restore_rules_lock: 'passed', stale_rules_export_cleared: 'passed', errors });
+      only_enabled_and_hits_differ: 'passed', in_session_rules_lock_refresh_clear: 'passed', stale_rules_export_cleared: 'passed', errors });
     await context.close();
   }
   fs.mkdirSync('test-results/phase5', { recursive: true });

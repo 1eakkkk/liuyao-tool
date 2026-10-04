@@ -31,6 +31,43 @@ try {for(const engine of [chromium,webkit]) {
   await page.locator('[data-tab=caster]').click();await page.locator('[data-mode=manual]').click();
   for(let i=0;i<6;i++)await page.locator(`#manualLine${i}`).selectOption('8');
   await page.locator('#manualCastBtn').click();
+  await page.locator('[data-tab=ai]').click();
+  await page.locator('#questionInput').fill('刷新前的问题');
+  await page.locator('#readingMode').selectOption('legacy');
+  await page.locator('#promptBtn').click();
+  assert((await page.locator('#promptOutputText').inputValue()).length>100);
+  const historyBefore = await page.evaluate(()=>localStorage.getItem('liuyao_interpret_history'));
+  assert(historyBefore);
+  await page.reload();
+  assert.equal(await page.locator('#plateWrap table').count(),0);
+  assert.equal(await page.locator('.empty-lines span').count(),6);
+  await page.locator('[data-tab=ai]').click();
+  assert.equal(await page.locator('#questionInput').inputValue(),'');
+  assert.equal(await page.locator('#promptOutputText').inputValue(),'');
+  assert(await page.locator('#currentCastStatus').isHidden());
+  assert.equal(await page.evaluate(()=>localStorage.getItem('liuyao_interpret_history')),historyBefore);
+  await page.locator('[data-tab=caster]').click();
+  await page.locator('[data-mode=manual]').click();
+  for(let i=0;i<6;i++)await page.locator(`#manualLine${i}`).selectOption('8');
+  await page.locator('#manualCastBtn').click();
+  await page.evaluate(()=>{
+    window.testNow=Date.now; window.testTime=Date.now(); Date.now=()=>window.testTime;
+    Object.defineProperty(document,'visibilityState',{configurable:true,get:()=>window.testVisibility});
+    window.testVisibility='hidden'; document.dispatchEvent(new Event('visibilitychange'));
+    window.testTime+=1000; window.testVisibility='visible';document.dispatchEvent(new Event('visibilitychange'));
+  });
+  assert.equal(await page.locator('#plateWrap table').count(),1);
+  await page.evaluate(()=>{
+    window.testVisibility='hidden';document.dispatchEvent(new Event('visibilitychange'));
+    window.testTime+=30*60*1000;window.testVisibility='visible';document.dispatchEvent(new Event('visibilitychange'));
+    Date.now=window.testNow;delete document.visibilityState;
+  });
+  assert.equal(await page.locator('#plateWrap table').count(),0);
+  assert.equal(await page.locator('.empty-lines span').count(),6);
+  // Resetting the workspace must not reset cast quota; clear quota only in this test fixture.
+  await page.evaluate(()=>localStorage.removeItem('liuyao_cast_log'));
+  for(let i=0;i<6;i++)await page.locator(`#manualLine${i}`).selectOption('8');
+  await page.locator('#manualCastBtn').click();
   await page.locator('.term-guide details').first().locator('summary').click();
   assert(await page.locator('.term-guide p').first().isVisible());await page.locator('[data-mode=system]').click();
   await page.locator('#castBtn').click();await page.locator('.physics-dialog').waitFor();assert(await page.locator('#confirmOverlay').isHidden());
@@ -42,7 +79,7 @@ try {for(const engine of [chromium,webkit]) {
   await page.locator('#helpFab').click();await page.locator('#onboardCloseBtn').click();
   await page.waitForTimeout(3200);
   await page.screenshot({path:`test-results/entry/${engine.name()}-${width}.png`,animations:'disabled'});
-  assert.deepEqual(errors,[]);report.push({engine:engine.name(),width,reset:'reload-and-back',emptyRecast:'no-confirmation',navigation:'two-primary',errors});
+  assert.deepEqual(errors,[]);report.push({engine:engine.name(),width,reset:'reload-back-short-visit-and-30-minute-return',emptyRecast:'no-confirmation',navigation:'two-primary',errors});
   await page.close();
  }}finally{await browser.close();}
 }}finally{await server?.httpServer.close();}

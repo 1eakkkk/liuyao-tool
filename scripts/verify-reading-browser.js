@@ -52,11 +52,7 @@ try {
     const extract = text => JSON.parse(text.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
     let input = extract(await page.locator('#readingPrompt').inputValue());
     assert.equal(requests.length, 0);
-    await page.reload(); await page.locator('[data-tab="ai"]').click();
-    assert.equal(await page.locator('#questionInput').inputValue(),'');
-    assert.equal(await page.locator('#readingMode').inputValue(),'');
-    await page.locator('#readingPanel').waitFor({ state: 'visible' });
-    assert.equal(extract(await page.locator('#readingPrompt').inputValue()).context_id, input.context_id);
+    assert((await page.locator('#readingPrompt').inputValue()).includes('紧凑解读：'));
     await page.locator('#readingPaste').fill(JSON.stringify(answer(input)));
     await page.locator('#readingImport').click();
     assert((await page.locator('#readingStatus').textContent()).includes('确认'));
@@ -112,10 +108,10 @@ try {
     assert((await page.locator('#readingTurns .reading-issue').textContent()).includes('问答轮次'));
     assert.equal(await page.getByRole('button',{name:'复制原始回复',exact:true}).count(),1);
     // Saved test key never leaves the mocked route.
-    await page.evaluate(() => localStorage.setItem('liuyao_deepseek_api_key', 'TEST_ONLY'));
-    await page.reload(); await page.locator('[data-tab="ai"]').click();
-    assert.equal(await page.locator('#questionInput').inputValue(),'');
-    assert.equal(await page.locator('#readingMode').inputValue(),'');
+    await page.locator('#toggleSettingsBtn').click();
+    await page.locator('#apiKeyInput').fill('TEST_ONLY');
+    await page.locator('#saveKeyBtn').click();
+    await page.locator('#toggleSettingsBtn').click();
     await page.locator('#readingFollow').fill('请给一项建议'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 3);
     assert.equal(requests.length, 1); assert.equal(JSON.parse(requests[0].messages[1].content).conversation.history.length, 2);
@@ -152,8 +148,9 @@ try {
     await page.reload(); await page.locator('[data-tab="ai"]').click();
     assert.equal(await page.locator('#questionInput').inputValue(),'');
     assert.equal(await page.locator('#readingMode').inputValue(),'');
-    await page.locator('#readingTurns h2').waitFor();
-    assert.equal(await page.locator('#readingTurns article').count(), 1);
+    assert(await page.locator('#readingPanel').isHidden());
+    assert.equal(await page.locator('#readingTurns article').count(), 0);
+    assert.equal(await page.locator('#plateWrap table').count(),0);
     await page.locator('#toggleHistoryBtn').click();
     assert.equal(await page.locator('.history-item').count(),2);
     await page.locator('.history-item-head').first().click();
@@ -168,7 +165,7 @@ try {
     await page.reload(); await page.locator('[data-tab="ai"]').click();
     assert.equal(await page.locator('#questionInput').inputValue(),'');
     assert.equal(await page.locator('#readingMode').inputValue(),'');
-    await page.locator('#readingTurns h2').waitFor();
+    assert(await page.locator('#readingPanel').isHidden());
     await page.locator('#toggleHistoryBtn').click();
     assert.equal(await page.locator('.history-item').count(),1,'Deleted active reading must not reappear on restore');
     const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_interpret_history')));
@@ -176,7 +173,7 @@ try {
     assert.deepEqual(errors, []);
     report.push({ width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', nested_provenance: false,
       long_conclusion: 'passed', history_keyboard: 'passed', disclosure_preservation: 'passed', history_scroll_preservation: 'passed',
-      replay_rejected: true, restore: 'passed', stop: 'passed', replacement: 'passed', errors });
+      replay_rejected: true, refresh_workspace_clear_history_preserved: 'passed', stop: 'passed', replacement: 'passed', errors });
     await context.close();
   }
 } finally { await browser.close(); await server?.httpServer.close(); }
