@@ -111,7 +111,7 @@ try {
     await page.locator('#toggleSettingsBtn').click();
     await page.locator('#apiKeyInput').fill('TEST_ONLY');
     await page.locator('#saveKeyBtn').click();
-    await page.locator('#toggleSettingsBtn').click();
+    await page.locator('#closeSettingsBtn').click();
     await page.locator('#readingFollow').fill('请给一项建议'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 3);
     assert.equal(requests.length, 1); assert.equal(JSON.parse(requests[0].messages[1].content).conversation.history.length, 2);
