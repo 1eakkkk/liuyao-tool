@@ -9,6 +9,7 @@
 | 未发布的明确事实检查候选 | [检查边界、真实回答与停止记录](READING_FACT_GATE.md) |
 | 最新取用与作用一致性候选（未发布） | [有限验收、范围错误及停止记录](READING_ROLE_EFFECT.md) |
 | 联网背景基础候选（未发布） | [共同输入字段、浏览器真实搜索及边界](BACKGROUND_SEARCH_CANDIDATE.md) |
+| 联网原文摘录候选（未发布） | [短搜索、公开读取及来源适用范围](BACKGROUND_SEARCH_EXCERPTS.md) |
 | 总目标与真实进度 | [PROJECT_STATUS](PROJECT_STATUS.md) |
 | 模块与数据 | [ARCHITECTURE](ARCHITECTURE.md)、[MIGRATION_MAP](MIGRATION_MAP.md)、[DATA_SCHEMA](DATA_SCHEMA.md) |
 | 生产范围与部署 | [PRODUCTION_PLAN](PRODUCTION_PLAN.md)、[DEPLOYMENT](DEPLOYMENT.md)；当前配置以 `wrangler.jsonc` 和 README 为准 |

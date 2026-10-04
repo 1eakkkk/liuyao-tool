@@ -20,7 +20,7 @@
 
 > 仓库只保留 `main` 工作分支，历史里程碑通过归档标签和 Git 历史保留。知识库增强尚未进入生产。
 
-> 最新开发：[联网背景基础候选](docs/BACKGROUND_SEARCH_CANDIDATE.md)完成 API／提示词共同输入字段与失败处理；一次浏览器真实搜索因截断及超出请求限制而拒绝结果，未接入正式页面。[取用与作用验收](docs/READING_ROLE_EFFECT.md)及[前轮事实检查](docs/READING_FACT_GATE.md)保留，正式功能保持上面的发布记录。
+> 最新开发：[联网原文摘录候选](docs/BACKGROUND_SEARCH_EXCERPTS.md)取得短搜索加公开原文读取的接入路径，API／提示词输入与恢复离线检查通过；尚未接入正式页面或完成解读内容验收。[第一阶段](docs/BACKGROUND_SEARCH_CANDIDATE.md)、[取用与作用验收](docs/READING_ROLE_EFFECT.md)及[前轮事实检查](docs/READING_FACT_GATE.md)保留，正式功能保持上面的发布记录。
 
 打开页面默认进入 **起卦排盘**。主导航只有「起卦排盘」「AI 解卦」，学习资料在顶部，主题与帮助位于右上角。无需先读教程，也无需注册。
 
