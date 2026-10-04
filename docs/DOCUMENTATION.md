@@ -6,6 +6,7 @@
 | --- | --- |
 | 当前能用什么、如何运行 | [README](../README.md) |
 | 最新解读核对与本机反馈 | [本轮变更、失败样本及发布](READING_QUALITY_FEEDBACK_RELEASE.md) |
+| 未发布的明确事实检查候选 | [检查边界、真实回答与停止记录](READING_FACT_GATE.md) |
 | 总目标与真实进度 | [PROJECT_STATUS](PROJECT_STATUS.md) |
 | 模块与数据 | [ARCHITECTURE](ARCHITECTURE.md)、[MIGRATION_MAP](MIGRATION_MAP.md)、[DATA_SCHEMA](DATA_SCHEMA.md) |
 | 生产范围与部署 | [PRODUCTION_PLAN](PRODUCTION_PLAN.md)、[DEPLOYMENT](DEPLOYMENT.md)；当前配置以 `wrangler.jsonc` 和 README 为准 |
