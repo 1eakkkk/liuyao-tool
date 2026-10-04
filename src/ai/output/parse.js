@@ -42,16 +42,19 @@ function checkLiteralFacts(answer, context) {
         if (role) { claims.push([role[1] === '世爻' ? 'is_shi' : 'is_ying', true]); tail = tail.slice(role[0].length).replace(/^[，,：:\s]*(?:为|是)?/, ''); }
         const relative = tail.match(/^(?:的?六亲(?:属于|为|是|属))?(父母|兄弟|子孙|妻财|官鬼)/);
         if (relative) { claims.push(['relative', relative[1]]); tail = tail.slice(relative[0].length); }
-        const element = tail.match(/^(?:五行(?:属于|为|是|属))?([甲乙丙丁戊己庚辛壬癸]?[子丑寅卯辰巳午未申酉戌亥]?)([木火土金水])/);
-        if (element) { claims.push(['element', element[2]]); tail = tail.slice(element[0].length); }
-        const motion = tail.match(/^(?:[，,\s]*(?:为|是))?(动爻|静爻|发动)/);
+        const element = tail.match(/^(?:[，,\s]*五行(?:属于|为|是|属)?|[甲乙丙丁戊己庚辛壬癸]?[子丑寅卯辰巳午未申酉戌亥]?)([木火土金水])/);
+        if (element) { claims.push(['element', element[1]]); tail = tail.slice(element[0].length); }
+        const motion = tail.match(/^[，,\s]*(?:为|是)?(动爻|静爻|发动)/);
         if (motion) { claims.push(['moving', motion[1] !== '静爻']); tail = tail.slice(motion[0].length); }
         const month = tail.match(/^[，,\s]*(?:均|都|皆)?(?:临)?(?:月令|当令)(?:属于|为|是|属)?([旺相休囚死])(?![旺相休囚死])/);
         if (month) claims.push(['relations/month_strength', month[1]]);
         for (const line of lines) for (const [field, expected] of claims) {
           const id = `fact:/lines/${line-1}/${field}`, fact = registry.get(id);
           if (!fact || fact.value !== expected) throw new OutputError('literal_fact_conflict', passage.path);
-          if (passage.ids && !cited.has(id)) throw new OutputError('literal_fact_citation_missing', passage.path);
+          const rolePosition = field === 'is_shi' ? 'shi_line' : field === 'is_ying' ? 'ying_line' : null;
+          const positionId = `fact:/hexagram/${rolePosition}`;
+          const equivalentRole = rolePosition && cited.has(positionId) && registry.get(positionId)?.value === line;
+          if (passage.ids && !cited.has(id) && !equivalentRole) throw new OutputError('literal_fact_citation_missing', passage.path);
         }
       }
     }
