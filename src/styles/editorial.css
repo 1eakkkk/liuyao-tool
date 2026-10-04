@@ -75,6 +75,13 @@ body .plate-cards .plate-card, :root[data-theme=dark] body .plate-cards .plate-c
 
 /* Reading controls stay in the text flow, without another enclosing card. */
 body .reading-conclusion {white-space:pre-wrap;overflow-wrap:anywhere;}
+body .reading-factor-overview {margin:22px 0 8px;}
+body .reading-factor-overview > h3 {margin:0;font-size:17px;font-weight:600;}
+body .reading-overview-caption {margin:4px 0 12px;color:var(--ui-muted);font-size:13px;line-height:1.7;}
+body .reading-factor-previews {margin:0;padding:0;list-style:none;}
+body .reading-factor-previews > li {padding:12px 0;border-top:1px solid var(--ui-border);min-width:0;}
+body .reading-factor-label {font-size:14px;font-weight:600;color:var(--ui-accent);}
+body .reading-factor-excerpt {margin:5px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.85;}
 body .reading-text-toggle {display:block;min-height:44px;padding:8px 0;border:0;background:transparent;color:var(--ui-accent);font:inherit;cursor:pointer;text-align:left;}
 body .history-item-head {width:100%;padding:0;border:0;border-radius:0;background:transparent;color:var(--ui-text);font:inherit;text-align:left;}
 body .history-plate {margin-top:16px;white-space:normal;}

@@ -60,6 +60,10 @@ try {
     await page.locator('#readingTurns h2').waitFor();
     assert.equal(await page.locator('#readingTurns img').count(), 0);
     assert.equal(await page.locator('#readingTurns details[open]').count(), 0);
+    const factorPreview = page.locator('#readingTurns .reading-factor-overview').first();
+    assert(await factorPreview.isVisible());
+    assert.equal(await factorPreview.locator('.reading-factor-excerpt').count(), Math.min(3, answer(input).factors.length));
+    assert.equal(await factorPreview.locator('.reading-factor-excerpt').first().textContent(), answer(input).factors[0].interpretation);
     const conclusionToggle=page.locator('#readingTurns .reading-text-toggle').first();
     assert.equal(await conclusionToggle.getAttribute('aria-expanded'),'false');
     assert((await page.locator('#readingTurns .reading-conclusion').first().textContent()).endsWith('…'));
@@ -67,6 +71,7 @@ try {
     assert.equal(await page.locator('#readingTurns .reading-conclusion').first().textContent(),answer(input).answer);
     await page.keyboard.press('Space');
     assert.equal(await conclusionToggle.getAttribute('aria-expanded'),'false');
+    await page.locator('#readingTurns article').first().screenshot({path:`test-results/reading/overview-${engine}-${width}.png`});
     const citedRule=input.evidence.find(e=>e.kind==='rule_result');
     assert(citedRule,'Fixture has a rule citation');
     const ruleSection=page.locator('#readingTurns article').first().locator('section').nth(1);

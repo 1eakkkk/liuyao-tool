@@ -84,3 +84,37 @@ test('long conclusions expand without splitting Unicode, rendering HTML or chang
   expect(toggle.getAttribute('aria-expanded')).toBe('false');
   expect(JSON.stringify(result.answer)).toBe(raw);
 });
+
+test('factor preview preserves AI order and exposes remaining analysis without changing the answer', () => {
+  const answer = syntheticOutput(context);
+  answer.factors = ['support', 'oppose', 'conditional', 'neutral'].map((value, i) => ({
+    assessment: value, interpretation: `原回复第 ${i + 1} 项解释`, evidence_ids: answer.factors[0].evidence_ids,
+  }));
+  const result = parseOutputAnswer(JSON.stringify(answer), context, { completed: true });
+  expect(result.status).toBe('validated');
+  const saved = JSON.stringify(result.answer);
+  const container = document.createElement('div'); renderOutputResult(container, result, context);
+  expect([...container.querySelectorAll('.reading-factor-excerpt')].map(p => p.textContent))
+    .toEqual(answer.factors.slice(0, 3).map(f => f.interpretation));
+  expect(container.querySelector('.reading-overview-caption').textContent).toContain('共 4 项');
+  const full = container.querySelector('details');
+  expect(full.open).toBe(false);
+  expect(full.textContent).toContain(answer.factors[3].interpretation);
+  expect(full.querySelectorAll('.reading-evidence-sources')).toHaveLength(4 + answer.yongshen_candidates.length);
+  expect(JSON.stringify(result.answer)).toBe(saved);
+});
+
+test('long factor previews are Unicode-safe and expand complete plain text without exposing HTML', () => {
+  const answer = syntheticOutput(context);
+  answer.factors[0].interpretation = '🙂'.repeat(181) + '<img src=x onerror="bad()">';
+  const result = parseOutputAnswer(JSON.stringify(answer), context, { completed: true });
+  const container = document.createElement('div'); renderOutputResult(container, result, context);
+  const preview = container.querySelector('.reading-factor-excerpt');
+  const toggle = container.querySelector('.reading-factor-overview button');
+  expect(preview.textContent).toBe('🙂'.repeat(160) + '…');
+  expect(toggle.getAttribute('aria-controls')).toBe(preview.id);
+  toggle.click(); expect(preview.textContent).toBe(answer.factors[0].interpretation);
+  expect(toggle.getAttribute('aria-expanded')).toBe('true');
+  expect(container.querySelector('img')).toBeNull();
+  toggle.click(); expect(preview.textContent).toBe('🙂'.repeat(160) + '…');
+});
