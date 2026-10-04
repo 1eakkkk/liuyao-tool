@@ -4,6 +4,59 @@ import { isOutputContext } from './context.js';
 function references(answer) {
   return [...answer.factors, ...answer.yongshen_candidates, ...answer.timing_candidates];
 }
+
+// Opt-in for new website turns. Recognizes only a small grammar of affirmative
+// primary-line labels, not symbolic interpretations or arbitrary Chinese prose.
+function checkLiteralFacts(answer, context) {
+  const registry = new Map(context.evidence.map(e => [e.id, e]));
+  const passages = [{ text: answer.answer, path: '$.answer' },
+    ...answer.factors.map((f,i) => ({ text:f.interpretation, ids:f.evidence_ids, path:`$.factors[${i}].interpretation` })),
+    ...answer.yongshen_candidates.map((c,i) => ({ text:c.reason, ids:c.evidence_ids, path:`$.yongshen_candidates[${i}].reason` })),
+    ...answer.timing_candidates.map((c,i) => ({ text:c.reason, ids:c.evidence_ids, path:`$.timing_candidates[${i}].reason` })),
+    ...answer.uncertainties.map((text,i) => ({ text, path:`$.uncertainties[${i}]` }))];
+  const numbers = { 一:1, 二:2, 三:3, 四:4, 五:5, 六:6, 初:1, 上:6 };
+  const anchor = '(?:第?[一二三四五六1-6]爻|初爻|上爻)';
+  for (const passage of passages) {
+    const cited = new Set();
+    for (const id of passage.ids || []) {
+      const item = registry.get(id);
+      if (item.kind === 'program_fact') cited.add(id);
+      else for (const source of item.source_facts || []) cited.add(source);
+    }
+    for (const sentence of passage.text.match(/[^。；;！？!?\n]+[。；;！？!?\n]?/g) || []) {
+      if (/[？?“”"‘’']/.test(sentence) || /[吗么呢][。！!]?\s*$/.test(sentence)) continue;
+      const matches = [...sentence.matchAll(new RegExp(`(${anchor}(?:\\s*[、与和及]\\s*${anchor})*)`, 'g'))]
+        .filter(m => !/[第零一二三四五六七八九十百0-9]/.test(sentence[m.index-1] || ''));
+      for (let i=0; i<matches.length; i++) {
+        const match = matches[i];
+        const prefix = sentence.slice(0, match.index);
+        if (/如果|假设|假如|假定|若|倘|即使|无论|不论|可能|或|还是|似乎|未必|是否|能否|请(?:问|确认|核对)|并非|不是|并不|不一定|不能说|不为|不属|不代表/.test(prefix)) continue;
+        if (/变|化|伏神/.test(prefix.split(/[，,]/).at(-1))) continue;
+        const lines = [...match[1].matchAll(/[一二三四五六初上1-6]/g)].map(m => numbers[m[0]] || Number(m[0]));
+        let tail = sentence.slice(match.index + match[0].length, matches[i+1]?.index ?? sentence.length).trim();
+        if (/不成立|错误说法|不是事实|不正确|如果|假设|若|可能|或|还是|似乎|未必|是否|并非|不是|并不|不一定|不为|不属/.test(tail.split(/[，,]/)[0])) continue;
+        tail = tail.split(/变|化|伏神/)[0]; // Check unambiguous primary labels before an object switch.
+        tail = tail.replace(/^(?:的)?(?:本爻)?(?:的)?(?:均|都|皆)?(?:属于|为|是|属)?\s*/, '');
+        const claims = [];
+        const role = tail.match(/^(世爻|应爻)/);
+        if (role) { claims.push([role[1] === '世爻' ? 'is_shi' : 'is_ying', true]); tail = tail.slice(role[0].length).replace(/^[，,：:\s]*(?:为|是)?/, ''); }
+        const relative = tail.match(/^(?:的?六亲(?:属于|为|是|属))?(父母|兄弟|子孙|妻财|官鬼)/);
+        if (relative) { claims.push(['relative', relative[1]]); tail = tail.slice(relative[0].length); }
+        const element = tail.match(/^(?:五行(?:属于|为|是|属))?([甲乙丙丁戊己庚辛壬癸]?[子丑寅卯辰巳午未申酉戌亥]?)([木火土金水])/);
+        if (element) { claims.push(['element', element[2]]); tail = tail.slice(element[0].length); }
+        const motion = tail.match(/^(?:[，,\s]*(?:为|是))?(动爻|静爻|发动)/);
+        if (motion) { claims.push(['moving', motion[1] !== '静爻']); tail = tail.slice(motion[0].length); }
+        const month = tail.match(/^[，,\s]*(?:均|都|皆)?(?:临)?(?:月令|当令)(?:属于|为|是|属)?([旺相休囚死])(?![旺相休囚死])/);
+        if (month) claims.push(['relations/month_strength', month[1]]);
+        for (const line of lines) for (const [field, expected] of claims) {
+          const id = `fact:/lines/${line-1}/${field}`, fact = registry.get(id);
+          if (!fact || fact.value !== expected) throw new OutputError('literal_fact_conflict', passage.path);
+          if (passage.ids && !cited.has(id)) throw new OutputError('literal_fact_citation_missing', passage.path);
+        }
+      }
+    }
+  }
+}
 // A deliberately narrow consistency check, not a natural-language truth checker.
 // Only literal numbered-line claims and quantified cited motion facts are checked.
 // Questions, conditions, negations and quotations are left for human review.
@@ -33,7 +86,7 @@ function checkMotionClaims(answer, context) {
     }
   }
 }
-export function validateOutputAnswer(answer, context) {
+export function validateOutputAnswer(answer, context, { literalFacts = false } = {}) {
   if (!isOutputContext(context)) throw new OutputError('untrusted_context');
   validateOutputShape(answer);
   if (answer.context_id !== context.context_id) throw new OutputError('context_mismatch', '$.context_id');
@@ -48,6 +101,7 @@ export function validateOutputAnswer(answer, context) {
     if (!candidate.evidence_ids.includes(`fact:${pointer}`)) throw new OutputError('missing_target_evidence', '$.yongshen_candidates');
   }
   checkMotionClaims(answer,context);
+  if (literalFacts) checkLiteralFacts(answer, context);
   return answer;
 }
 
@@ -75,7 +129,7 @@ function hasDuplicateKeys(raw) {
   }
   return false;
 }
-export function parseOutputAnswer(rawText, context, { completed = false } = {}) {
+export function parseOutputAnswer(rawText, context, { completed = false, literalFacts = false } = {}) {
   if (!isOutputContext(context)) throw new OutputError('untrusted_context');
   if (typeof rawText !== 'string') throw new OutputError('invalid_response_type');
   const plain = (code, path = '$') => ({ status: 'fallback', validation: 'not_validated',
@@ -88,7 +142,7 @@ export function parseOutputAnswer(rawText, context, { completed = false } = {}) 
   try { answer = JSON.parse(rawText); } catch { return plain('invalid_json'); }
   if (hasDuplicateKeys(rawText)) return plain('duplicate_field');
   try {
-    validateOutputAnswer(answer, context);
+    validateOutputAnswer(answer, context, { literalFacts });
     return { status: 'validated', validation: 'structure_and_references_only',
       answer, display_text: answer.answer, truncated: false, issues: [],
       notice: '格式与引用已核对；AI 的解释和预测尚未经事实效果验证。' };
