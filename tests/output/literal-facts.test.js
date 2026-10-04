@@ -20,6 +20,15 @@ test('a correct local claim requires all stated properties, not a citation to an
   expect(run(reply(text,ids)).status).toBe('validated');
   expect(run(reply(text,ids.filter(id=>id!==fact(4,'element')))).issues[0].code).toBe('literal_fact_citation_missing');
   expect(run(reply('第4爻为父母。',[fact(3,'relative')])).issues[0].code).toBe('literal_fact_citation_missing');
+  expect(run(reply('第4爻的六亲为父母，五行为水，月令相。',ids)).status).toBe('validated');
+  expect(run(reply('第4爻的六亲为父母，五行为金，月令相。',ids)).issues[0].code).toBe('literal_fact_conflict');
+});
+
+test('the exact hexagram role position covers the same line without redundant boolean citations', () => {
+  expect(run(reply('第4爻为世爻。',['fact:/hexagram/shi_line'])).status).toBe('validated');
+  expect(run(reply('初爻为应爻。',['fact:/hexagram/ying_line'])).status).toBe('validated');
+  expect(run(reply('第4爻为世爻。',['fact:/hexagram/ying_line'])).issues[0].code).toBe('literal_fact_citation_missing');
+  expect(run(reply('第3爻为世爻。',['fact:/hexagram/shi_line'])).issues[0].code).toBe('literal_fact_conflict');
 });
 
 test('wrong relatives, elements, month labels and shi/ying are rejected in factors and conclusion', () => {
