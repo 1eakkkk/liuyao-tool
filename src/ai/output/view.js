@@ -17,6 +17,8 @@ export function outputIssueText(result) {
     target_relative_mismatch:'用神候选与程序记录的爻位、六亲不一致，暂不能作为有效候选。',
     missing_target_evidence:'用神候选缺少对应爻的六亲引用，需要补齐直接依据。',
     motion_fact_conflict:'回复中明确的动静表述与程序卦盘不一致。请以排盘为准，这份解读需要重新核对。',
+    literal_fact_conflict:'回复中的明确爻位属性与程序卦盘不一致。请以排盘为准，原回复已保留。',
+    literal_fact_citation_missing:'该段明确提到的爻位属性缺少对应引用，已有引用不足以核对这项事实。原回复已保留。',
     missing_field:'回复缺少必需内容，请让 AI 按本轮提示词补齐完整回复。',
     unknown_field:'回复增加了协议之外的字段，请让 AI 按本轮提示词重新整理格式。',
     version_mismatch:'回复使用的格式版本与当前提示词不一致，请使用本轮提示词。',

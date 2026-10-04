@@ -40,41 +40,46 @@ export function readingExport(prepared) {
 }
 export function appendReadingTurn(session, prepared, raw, completed, source, usage = null) {
   if (!['api', 'external'].includes(source)) throw Error('Unknown reading source');
-  const result = parseOutputAnswer(raw, prepared.context, { completed });
+  const result = parseOutputAnswer(raw, prepared.context, { completed, literalFacts: prepared.literalFacts === true });
   const turn = { question: prepared.question, raw: raw.slice(0, MAX_RESPONSE_CHARS + 1), completed: !!completed,
-    source, result, context: prepared.context, usage };
+    source, result, context: prepared.context, usage, ...(prepared.literalFacts === true ? {literalFacts:true} : {}) };
   session.turns.push(turn);
   return turn;
 }
 export function serializeReadingSession(session, pendingQuestion = null) {
   return JSON.stringify({ version: session.version, prompt: session.prompt, canonical: session.canonical, preferences: session.preferences,
-    historyId:session.historyId, historySuppressed:session.historySuppressed,
-    pendingQuestion, turns: session.turns.map(({ question, raw, completed, source, usage }) => ({ question, raw, completed, source, usage })) });
+    historyId:session.historyId, historySuppressed:session.historySuppressed, ...(session.literalFacts === true ? {literalFacts:true} : {}),
+    pendingQuestion, turns: session.turns.map(({ question, raw, completed, source, usage, literalFacts }) => ({ question, raw, completed, source, usage, ...(literalFacts === true ? {literalFacts:true} : {}) })) });
 }
 export async function restoreReadingSession(raw) {
   if (typeof raw !== 'string' || raw.length > 900000) throw Error('保存的解读体积异常');
   const saved = JSON.parse(raw);
   if (saved.version !== READING_VERSION || !supportedPrompts.has(saved.prompt) || !Array.isArray(saved.turns) || saved.turns.length > MAX_TURNS) throw Error('保存的解读版本不兼容');
   const session = createReadingSession(saved.canonical, saved.preferences ?? null);
+  if (saved.literalFacts !== undefined && typeof saved.literalFacts !== 'boolean') throw Error('保存的核对标记损坏');
+  session.literalFacts = saved.literalFacts === true;
   session.prompt = saved.prompt;
   session.historyId = typeof saved.historyId === 'string' && /^reading-[a-zA-Z0-9:_-]{1,100}$/.test(saved.historyId)
     ? saved.historyId : `reading-${await hashOutput(session.canonical)}`;
   session.historySuppressed = saved.historySuppressed === true;
   for (const t of saved.turns) {
     if (typeof t.raw !== 'string' || t.raw.length > MAX_RESPONSE_CHARS + 1 || typeof t.completed !== 'boolean') throw Error('保存的回复损坏');
-    const prepared = await prepareReadingTurn(session, t.question);
+    if (t.literalFacts !== undefined && typeof t.literalFacts !== 'boolean') throw Error('保存的核对标记损坏');
+    const prepared = await (t.literalFacts === true ? prepareCompactReadingTurn : prepareReadingTurn)(session, t.question);
     const u = t.usage;
     const validUsage = u && Number.isFinite(u.seconds) && u.seconds >= 0 &&
       ((u.total === null && u.cost === null) || (Number.isSafeInteger(u.total) && u.total >= 0 && Number.isFinite(u.cost) && u.cost >= 0));
     appendReadingTurn(session, prepared, t.raw, t.completed, t.source, validUsage ? { total: u.total, cost: u.cost, seconds: u.seconds } : null);
   }
-  const pending = saved.pendingQuestion == null ? null : await prepareReadingTurn(session, saved.pendingQuestion);
+  const pending = saved.pendingQuestion == null ? null : await (session.literalFacts ? prepareCompactReadingTurn : prepareReadingTurn)(session, saved.pendingQuestion);
   return { session, pending };
 }
 
 // Shared by API calls and prompt export, without changing the response schema.
 export async function prepareCompactReadingTurn(session, question) {
   const prepared = await prepareReadingTurn(session, question);
+  prepared.literalFacts = true;
+  session.literalFacts = true;
   prepared.messages[0].content += '\n' + COMPACT_READING_GUIDANCE;
   prepared.messages[0].content += '\n爻位核对：line_reference 是同一卦盘的程序对照表，不是额外依据。爻位从初爻 1 到上爻 6；fact:/lines/0 对应初爻，fact:/lines/3 对应第四爻。不要把数组下标当爻位。引用仍使用 evidence 中的原编号，先逐行核对六亲、世应和变爻，再输出；answer 与 factors 中的同一爻不能写成不同六亲。不熟悉的游戏不套用英雄池、队友或胜率机制。';
   const payload = JSON.parse(prepared.messages[1].content);

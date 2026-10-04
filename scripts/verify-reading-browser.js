@@ -34,6 +34,11 @@ try {
       assert.equal(input.line_reference.length,6);
       for (const row of input.line_reference) assert.equal(row.relative,input.evidence.find(e=>e.id===row.fact_prefix+'relative').value);
       if (behavior === 'invalid') response.factors[0].evidence_ids = ['fact:fake'];
+      if (behavior === 'literal-wrong') {
+        const actual=input.evidence.find(e=>e.id==='fact:/lines/0/relative').value;
+        response.answer='只核对第一爻六亲。';
+        response.factors=[{assessment:'neutral',interpretation:`第1爻为${actual==='官鬼'?'父母':'官鬼'}。`,evidence_ids:['fact:/lines/0/relative']}];
+      }
       if (behavior === 'delayed') await new Promise(resolve => setTimeout(resolve, 1200));
       const content = JSON.stringify(response);
       const stream = `data: ${JSON.stringify({ choices: [{ delta: { content }, finish_reason: behavior === 'truncated' ? 'length' : 'stop' }], usage: { prompt_tokens: 20, completion_tokens: 30 } })}\n\ndata: [DONE]\n\n`;
@@ -198,9 +203,31 @@ try {
     assert.equal(await page.locator('.history-item').count(),1,'Deleted active reading must not reappear on restore');
     const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_interpret_history')));
     assert.equal(stored[0].turns.filter(t=>t.role==='assistant').length,6,'Followups belong to one history record');
+    // A separate fresh cast checks the new literal gate through both external import and API.
+    await page.locator('[data-tab="caster"]').click(); await page.locator('[data-mode="manual"]').click();
+    for (let i=0;i<6;i++) await page.locator(`#manualLine${i}`).selectOption('8');
+    await page.locator('#manualCastBtn').click();
+    await page.locator('[data-tab="ai"]').click();
+    await page.locator('#questionInput').fill('只核对第一爻属性。');
+    await page.locator('#readingMode').selectOption('structured'); await page.locator('#promptBtn').click();
+    const literalInput=extract(await page.locator('#readingPrompt').inputValue());
+    const actualElement=literalInput.evidence.find(e=>e.id==='fact:/lines/0/element').value;
+    const missing=answer(literalInput); missing.answer='只核对第一爻五行。';
+    missing.factors=[{assessment:'neutral',interpretation:`第1爻五行为${actualElement}。`,evidence_ids:['fact:/lines/0/relative']}];
+    await page.locator('#readingPaste').fill(JSON.stringify(missing));
+    await page.locator('#readingComplete').check(); await page.locator('#readingImport').click();
+    assert((await page.locator('#readingTurns .reading-issue').last().textContent()).includes('缺少对应引用'));
+    behavior='literal-wrong';
+    await page.locator('#readingFollow').fill('请核对第一爻六亲。'); await page.locator('#readingFollowApi').click();
+    await page.locator('#readingTurns .reading-issue').nth(1).waitFor();
+    assert((await page.locator('#readingTurns .reading-issue').last().textContent()).includes('明确爻位属性'));
+    assert.equal(await page.locator('#readingTurns h2').count(),0,'Both failures must remain raw replies');
+    const request=requests.at(-1); const literalHistory=JSON.parse(request.messages[1].content).conversation.history;
+    assert.equal(literalHistory[0].answer,null);
     assert.deepEqual(errors, []);
     report.push({ width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', nested_provenance: false,
       long_conclusion: 'passed', history_keyboard: 'passed', disclosure_preservation: 'passed', history_scroll_preservation: 'passed',
+      literal_import_citation_gate:'passed',literal_api_fact_gate:'passed',
       replay_rejected: true, refresh_workspace_clear_history_preserved: 'passed', stop: 'passed', replacement: 'passed', errors });
     await context.close();
   }
