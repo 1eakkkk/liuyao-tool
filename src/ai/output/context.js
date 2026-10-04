@@ -1,5 +1,6 @@
 import { buildRulesAiInput } from '../rules-input.js';
 import { OUTPUT_VERSION, OUTPUT_PROMPT_VERSION, stableOutputJson } from './contract.js';
+import { validateSearchBackground } from '../background-search.js';
 
 const trusted = new WeakSet();
 export const isOutputContext = context => trusted.has(context);
@@ -24,8 +25,9 @@ function factLabel(path) {
   const component = parts.includes('changed') ? '变爻／变卦' : parts.includes('hidden') ? '伏神' : '';
   return `${prefix}${component} · ${labels[parts.at(-1)] ?? labels[parts.at(-2)] ?? parts.at(-1)}`;
 }
-export async function buildOutputContext(canonical, { rulesMode = 'on', conversation = null, includeMissingRecords = false } = {}) {
+export async function buildOutputContext(canonical, { rulesMode = 'on', conversation = null, includeMissingRecords = false, backgroundSearch = null } = {}) {
   const input = buildRulesAiInput(canonical, rulesMode);
+  if (backgroundSearch !== null) input.background_search = validateSearchBackground(backgroundSearch);
   const evidence = [];
   function walk(value, path) {
     if (value !== null && typeof value === 'object') {
