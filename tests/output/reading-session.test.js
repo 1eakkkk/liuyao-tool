@@ -195,7 +195,14 @@ test('compact website turns share API/export guidance without changing frozen co
   expect(readingExport(compact)).toContain(compact.messages[0].content);
   expect(readingExport(compact)).toContain('line_reference');
   expect(original.messages[0].content).not.toContain('紧凑解读：');
+  expect(original.messages[0].content).not.toContain('取用与作用核对：');
   expect(compact.messages[0].content).toContain('紧凑解读：');
+  expect(compact.messages[0].content).toContain('取用与作用核对：');
+  const restored=await restoreReadingSession(serializeReadingSession(session,compact.question));
+  expect(restored.pending.messages).toEqual(compact.messages);
+  const next=await prepareCompactReadingTurn(restored.session,'只核对初爻');
+  expect(readingExport(next)).toContain('取用与作用核对：');
+  expect(readingRequestBody(next).messages).toEqual(next.messages);
   const raw=JSON.stringify(syntheticOutput(compact.context));
   expect(appendReadingTurn(session,compact,raw,true,'external').result.status).toBe('validated');
 });

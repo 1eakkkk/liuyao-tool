@@ -28,6 +28,7 @@ try {
       const body = route.request().postDataJSON(); requests.push(body);
       assert.equal(body.response_format.type, 'json_object');
       assert(body.messages[0].content.includes('本轮判断指引 reading-production-4'));
+      assert(body.messages[0].content.includes('取用与作用核对：'));
       assert(body.messages[0].content.includes('一般建议，不当成盘面支持'));
       assert(body.messages[0].content.includes('爻位核对：'));
       const input = JSON.parse(body.messages[1].content), response = answer(input);

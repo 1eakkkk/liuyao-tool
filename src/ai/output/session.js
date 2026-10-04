@@ -1,6 +1,6 @@
 import { normalizeLegacyCast } from '../../core/normalize.js';
 import { buildOutputContext, hashOutput } from './context.js';
-import { buildOutputMessages, JUDGMENT_GUIDANCE, COMPACT_READING_GUIDANCE } from './prompt.js';
+import { buildOutputMessages, JUDGMENT_GUIDANCE, COMPACT_READING_GUIDANCE, ROLE_EFFECT_GUIDANCE } from './prompt.js';
 import { parseOutputAnswer } from './parse.js';
 import { MAX_RESPONSE_CHARS } from './contract.js';
 
@@ -81,6 +81,7 @@ export async function prepareCompactReadingTurn(session, question) {
   prepared.literalFacts = true;
   session.literalFacts = true;
   prepared.messages[0].content += '\n' + COMPACT_READING_GUIDANCE;
+  prepared.messages[0].content += '\n' + ROLE_EFFECT_GUIDANCE;
   prepared.messages[0].content += '\n爻位核对：line_reference 是同一卦盘的程序对照表，不是额外依据。爻位从初爻 1 到上爻 6；fact:/lines/0 对应初爻，fact:/lines/3 对应第四爻。不要把数组下标当爻位。引用仍使用 evidence 中的原编号，先逐行核对六亲、世应和变爻，再输出；answer 与 factors 中的同一爻不能写成不同六亲。不熟悉的游戏不套用英雄池、队友或胜率机制。';
   const payload = JSON.parse(prepared.messages[1].content);
   payload.line_reference = prepared.context.input.C_canonical_cast.lines.map((line, index) => ({
