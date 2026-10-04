@@ -87,3 +87,12 @@ body .history-item-head {width:100%;padding:0;border:0;border-radius:0;backgroun
 body .history-plate {margin-top:16px;white-space:normal;}
 body .history-plate > summary {min-height:44px;padding:10px 0;cursor:pointer;color:var(--ui-accent);}
 body :is(.reading-text-toggle,.history-item-head,.history-plate > summary):focus-visible {outline:3px solid var(--ui-accent);outline-offset:3px;}
+/* Local outcome notes share the history text flow instead of adding nested cards. */
+.history-feedback { margin-block: 18px; border-top: 1px solid var(--ui-border); padding-block-start: 12px; }
+.history-feedback label { display: grid; gap: 8px; margin-block: 14px; font-size: 14px; }
+.history-feedback input, .history-feedback select, .history-feedback textarea { width: 100%; box-sizing: border-box; padding: 12px; min-height: 44px; font: inherit; color:var(--ui-text); background:var(--ui-surface); border:1px solid var(--ui-border); border-radius:var(--ui-radius); }
+.history-feedback textarea { resize: vertical; }
+.history-feedback > summary { min-height:44px; padding-block:10px; cursor:pointer; color:var(--ui-accent); }
+.history-feedback :is(summary,input,select,textarea,button):focus-visible { outline:3px solid var(--ui-accent); outline-offset:3px; }
+.history-feedback-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.history-feedback-actions button { min-height: 44px; padding: 10px 16px; }

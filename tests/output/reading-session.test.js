@@ -4,8 +4,24 @@ import fs from 'node:fs';
 import { createReadingSession, prepareCompactReadingTurn, prepareReadingTurn, appendReadingTurn, serializeReadingSession, restoreReadingSession, readingExport } from '../../src/ai/output/session.js';
 import { syntheticOutput } from '../../experiments/structured-output/example.js';
 import { readingRequestBody } from '../../src/ai/output/client.js';
+import { prepareJudgmentPlan } from '../../experiments/judgment-review/plan.js';
 const canonical = JSON.parse(fs.readFileSync(new URL('../../experiments/phase7/fixtures/compat-1.json', import.meta.url)));
 const prepare = () => { const s = createReadingSession(canonical); return s; };
+
+test('actual rejected reply with fourth-line relative confusion stays rejected without repairing the model output', async()=>{
+  const fixture=JSON.parse(fs.readFileSync(new URL('./fixtures/real-answer-line-offset-20261004.json',import.meta.url)));
+  const spec=(await prepareJudgmentPlan()).cases[0];
+  const session=createReadingSession(spec.canonical,{style:'brief',custom:''});
+  const prepared=await prepareCompactReadingTurn(session,spec.question);
+  expect(prepared.context.context_id).toBe(JSON.parse(fixture.raw).context_id);
+  const turn=appendReadingTurn(session,prepared,fixture.raw,true,'api');
+  expect(turn.result.status).toBe('fallback');
+  expect(turn.result.issues[0].code).toBe(fixture.expectedIssue);
+  expect(turn.raw).toBe(fixture.raw);
+  const follow=await prepareCompactReadingTurn(session,'请再说明');
+  expect(follow.context.conversation.history[0].answer).toBeNull();
+  expect(follow.context.conversation.history[0].checked).toBe(false);
+});
 
 test('new followups omit failed raw answers while preserving questions and valid answers',async()=>{
   const session=prepare(), first=await prepareReadingTurn(session,'核对初爻');
@@ -163,9 +179,21 @@ test('compact website turns share API/export guidance without changing frozen co
   const original=await prepareReadingTurn(session,'计划是否可行？');
   const compact=await prepareCompactReadingTurn(session,'计划是否可行？');
   expect(compact.context.context_id).toBe(original.context.context_id);
-  expect(compact.messages[1]).toEqual(original.messages[1]);
+  const payload=JSON.parse(compact.messages[1].content);
+  const {line_reference,...unchanged}=payload;
+  expect(unchanged).toEqual(JSON.parse(original.messages[1].content));
+  expect(line_reference).toHaveLength(6);
+  for (const row of line_reference) {
+    const line=compact.context.input.C_canonical_cast.lines[row.line-1];
+    expect(row.relative).toBe(line.relative);
+    expect(row.fact_prefix).toBe(`fact:/lines/${row.line-1}/`);
+    expect(row.is_shi).toBe(line.is_shi);
+    expect(row.changed_relative).toBe(line.changed?.relative??null);
+    expect(compact.context.evidence.find(e=>e.id===row.fact_prefix+'relative').value).toBe(row.relative);
+  }
   expect(readingRequestBody(compact).messages).toEqual(compact.messages);
   expect(readingExport(compact)).toContain(compact.messages[0].content);
+  expect(readingExport(compact)).toContain('line_reference');
   expect(original.messages[0].content).not.toContain('紧凑解读：');
   expect(compact.messages[0].content).toContain('紧凑解读：');
   const raw=JSON.stringify(syntheticOutput(compact.context));

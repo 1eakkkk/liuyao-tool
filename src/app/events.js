@@ -13,6 +13,7 @@ import { castInputFromEvent, performBackgroundCast, performCast } from '../ui/ph
 import { renderCastQuota, renderPlateFromCastData } from '../ui/casting-view.js';
 import { resetConversation, updateHistorySession } from '../app/conversation.js';
 import { renderStats, renderHistory } from '../ui/history-view.js';
+import { bindFeedback } from '../ui/outcome-feedback.js';
 import { tabButtons, switchTab } from '../ui/navigation.js';
 import { renderConversation, withThinkingIndicator, renderLive, hidePromptExportBoxes, showStopBtn, hideStopBtn, showPromptOutput } from '../ui/ai-view.js';
 import { updateApiKeyStatus, refreshPriceOverridePlaceholders, fillPriceOverrideInputs, lockApiKeyInput, unlockApiKeyInput } from '../ui/settings.js';
@@ -36,6 +37,7 @@ import { BAGUA, WX, JIAZI60 } from '../core/constants.js';
 
 export function initializeApp(){
   configureStorageNotifications(showToast);
+  bindFeedback(historyList, renderHistory, showToast);
   configureQuotaNotifications(renderCastQuota);
 /* ==================================================================
   ③ 逻辑区目录（按出现顺序，各节都有同款横幅注释可搜索跳转）：
@@ -402,7 +404,7 @@ historyList.addEventListener('click', async (e)=>{
     item.classList.toggle('expanded');
     actionEl.setAttribute('aria-expanded', String(item.classList.contains('expanded')));
   }else if(actionEl.dataset.action === 'delete'){
-    if(!(await showConfirm('删除这条解读记录？删除后无法恢复。',{title:'删除记录',okText:'删除',cancelText:'保留'}))) return;
+    if(!(await showConfirm('删除这条解读记录？删除后无法恢复。已保存的结果反馈会保留，可在历史顶部导出。',{title:'删除记录',okText:'删除',cancelText:'保留'}))) return;
     const list = loadHistory().filter(r => String(r.id) !== id);
     if(!saveHistory(list)){showToast('删除失败，请稍后再试','error');return;}
     document.dispatchEvent(new CustomEvent('history:deleted',{detail:{id}}));
@@ -413,7 +415,7 @@ historyList.addEventListener('click', async (e)=>{
 
 clearHistoryBtn.addEventListener('click', async ()=>{
   if(!loadHistory().length) return;
-  const ok = await showConfirm('确定清空全部历史记录和累计统计吗？此操作不可撤销。', {
+  const ok = await showConfirm('确定清空全部历史记录和累计统计吗？此操作不可撤销。已保存的结果反馈会保留，可在历史顶部导出。', {
     title: '清空历史记录', okText: '清空', cancelText: '取消'
   });
   if(!ok) return;

@@ -6,6 +6,8 @@ import { aiStats, historyList, historyEmpty, historyCount } from './dom.js';
 import { pillarsAndKongText } from '../ai/formatter.js';
 import { loadHistory, loadLifetimeStats, historyTurnsOf } from '../storage/history.js';
 import { buildDateDisplayText } from '../core/ganzhi.js';
+import { feedbackHtml } from './outcome-feedback.js';
+import { loadFeedback } from '../storage/outcome-feedback.js';
 
 
 
@@ -83,12 +85,14 @@ function renderHistory(){
     expanded: item.classList.contains('expanded'),
     open: [...item.querySelectorAll('details[open]')].map(d => d.dataset.view),
     scroll: item.querySelector('.history-item-body')?.scrollTop || 0,
+    feedbackDraft: [...item.querySelectorAll('[data-feedback]')].filter(n => 'value' in n).map(n => [n.dataset.feedback, n.value]),
   }]));
   const active = historyList.contains(document.activeElement) ? document.activeElement : null;
   const focusId = active?.closest('.history-item')?.dataset.id;
   const focusView = active?.closest('details')?.dataset.view;
   const focusAction = active?.dataset.action;
   const list = loadHistory().slice().reverse(); // 最新的在最上面
+  const feedback = loadFeedback();
   historyCount.textContent = list.length;
   historyEmpty.style.display = list.length ? 'none' : 'flex';
   historyList.innerHTML = list.map((r, index) => {
@@ -136,7 +140,7 @@ function renderHistory(){
         <span class="history-item-time">${formatTime(r.ts)}</span>
       </button>
       <div class="history-item-meta">${metaText}</div>
-      <div id="history-body-${index}" class="history-item-body" tabindex="0" role="region" aria-label="历史记录详情，可滚动">${questionHtml}${restTurnsHtml}${customConfigHtml}${plateHtml}</div>
+      <div id="history-body-${index}" class="history-item-body" tabindex="0" role="region" aria-label="历史记录详情，可滚动">${questionHtml}${restTurnsHtml}${customConfigHtml}${feedbackHtml(r, feedback)}${plateHtml}</div>
       <button class="history-item-del" data-action="delete">删除这条</button>
     </div>
   `;
@@ -148,6 +152,10 @@ function renderHistory(){
       item.querySelector('.history-item-head').setAttribute('aria-expanded', String(view.expanded));
       for (const details of item.querySelectorAll('details')) details.open = view.open.includes(details.dataset.view);
       item.querySelector('.history-item-body').scrollTop = view.scroll;
+      for (const [field, value] of view.feedbackDraft) {
+        const input = item.querySelector(`[data-feedback="${field}"]`);
+        if (input) input.value = value;
+      }
     }
     if (item.dataset.id === focusId) {
       const target = focusView ? [...item.querySelectorAll('details')].find(d => d.dataset.view === focusView)?.querySelector('summary')

@@ -76,5 +76,14 @@ export async function restoreReadingSession(raw) {
 export async function prepareCompactReadingTurn(session, question) {
   const prepared = await prepareReadingTurn(session, question);
   prepared.messages[0].content += '\n' + COMPACT_READING_GUIDANCE;
+  prepared.messages[0].content += '\n爻位核对：line_reference 是同一卦盘的程序对照表，不是额外依据。爻位从初爻 1 到上爻 6；fact:/lines/0 对应初爻，fact:/lines/3 对应第四爻。不要把数组下标当爻位。引用仍使用 evidence 中的原编号，先逐行核对六亲、世应和变爻，再输出；answer 与 factors 中的同一爻不能写成不同六亲。不熟悉的游戏不套用英雄池、队友或胜率机制。';
+  const payload = JSON.parse(prepared.messages[1].content);
+  payload.line_reference = prepared.context.input.C_canonical_cast.lines.map((line, index) => ({
+    line: line.position, fact_prefix: `fact:/lines/${index}/`, relative: line.relative,
+    is_shi: line.is_shi, is_ying: line.is_ying, moving: line.moving,
+    element: line.element, branch: line.branch, month_strength: line.relations.month_strength,
+    changed_relative: line.changed?.relative ?? null, hidden_relative: line.hidden?.relative ?? null,
+  }));
+  prepared.messages[1].content = JSON.stringify(payload);
   return prepared;
 }
