@@ -1,4 +1,5 @@
 // Background retrieval only. A model's prose is never proof that a search ran.
+import {readPublicSource} from './public-source-reader.js';
 export const SEARCH_ENDPOINT = 'https://api.deepseek.com/anthropic/v1/messages';
 export const SEARCH_LIMITS = Object.freeze({ queries: 1, uses: 1, maxTokens: 2048, sources: 5, bodyChars: 128000 });
 
@@ -16,7 +17,9 @@ export function validateSearchBackground(value) {
   if (value.provenance!==origins[value.search_status] || (retrieved ? !value.web_sources.length : value.web_sources.length||value.background_claims.length)) throw Error('搜索状态与来源不一致。');
   const sources=value.web_sources.map((s,i)=>{
     if(s.id!==`web:${i+1}` || !safeUrl(s.url) || typeof s.title!=='string'||!s.title.trim()||s.title.length>240 || typeof s.excerpt!=='string'||s.excerpt.length>1200 || typeof s.retrieved_at!=='string'||!Number.isFinite(Date.parse(s.retrieved_at)) || !(s.published_at===null||typeof s.published_at==='string'&&s.published_at.length<=80)) throw Error('搜索来源无效。');
-    return {id:s.id,title:s.title,url:safeUrl(s.url),retrieved_at:s.retrieved_at,excerpt:s.excerpt,published_at:s.published_at};
+    if(s.excerpt_origin!==undefined && (s.excerpt_origin!=='public_reader'||s.reader_provider!=='jina-reader'||!s.excerpt.trim()))throw Error('网页摘录来源无效。');
+    return {id:s.id,title:s.title,url:safeUrl(s.url),retrieved_at:s.retrieved_at,excerpt:s.excerpt,published_at:s.published_at,
+      ...(s.excerpt_origin ? {excerpt_origin:s.excerpt_origin,reader_provider:s.reader_provider} : {})};
   });
   if(new Set(sources.map(s=>s.url)).size!==sources.length)throw Error('搜索来源重复。');
   const claims=value.background_claims.map(c=>{
@@ -93,7 +96,27 @@ export async function searchBackground(query, { key, signal, fetchImpl = globalT
   try {
     if (!usage || usage.output > SEARCH_LIMITS.maxTokens || !Number.isSafeInteger(u?.server_tool_use?.web_search_requests) || u.server_tool_use.web_search_requests < 1 || u.server_tool_use.web_search_requests > SEARCH_LIMITS.uses) throw Error('检索用量未知或超过本次请求限制，未使用结果。');
     const background = parseSearchResponse(payload, query);
-    if (background.search_status === 'retrieved' && !background.background_claims.length) throw Error('搜索只返回链接，缺少可追溯摘录；不用于解读。');
+    if (background.search_status === 'retrieved' && !background.background_claims.length) {
+      const error=new Error('搜索只返回链接，缺少可追溯摘录；不用于解读。');
+      error.code='missing_search_excerpts';error.background=background;throw error;
+    }
     return { background, usage };
   } catch (error) { error.usage = usage; throw error; }
+}
+
+// Explicit opt-in fallback: read one selected search result, never arbitrary URLs or more searches.
+export async function searchWithPublicExcerpt(query, term, {key,signal,sourceIndex=0,fetchImpl=globalThis.fetch}={}) {
+  try{return await searchBackground(query,{key,signal,fetchImpl});}
+  catch(error){
+    if(error.code!=='missing_search_excerpts')throw error;
+    try{
+      const background=structuredClone(error.background);
+      if(!Number.isInteger(sourceIndex)||sourceIndex<0||!background.web_sources[sourceIndex])throw Error('请选择搜索返回的公开来源。');
+      const source=background.web_sources[sourceIndex];
+      const read=await readPublicSource(source.url,term,{signal,fetchImpl});
+      Object.assign(source,read);
+      background.background_claims=[{text:read.excerpt,source_ids:[source.id]}];
+      return {background:validateSearchBackground(background),usage:error.usage};
+    }catch(readerError){readerError.usage=error.usage;throw readerError;}
+  }
 }
