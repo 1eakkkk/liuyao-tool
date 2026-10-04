@@ -16,7 +16,7 @@
 
 ![桌面端起卦首页：日间主题与起卦操作](docs/images/desktop-casting.png)
 
-> 发布状态核对于 **2026-10-03**，现有完整正式版已重新发布供体验；截图拍摄于 2026-10-01。[本次发布与清理记录](docs/USER_TEST_RELEASE.md)。正式地址为 https://gua.1eak.cool/
+> 发布状态核对于 **2026-10-04**，已上线刷新／超时返回清空当前卦盘及紧凑解读要求；截图拍摄于 2026-10-01。[本次发布记录](docs/WORKSPACE_RESET_COMPACT.md)。正式地址为 https://gua.1eak.cool/
 
 > 仓库只保留 `main` 工作分支，历史里程碑通过归档标签和 Git 历史保留。知识库增强尚未进入生产。
 
