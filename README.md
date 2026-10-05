@@ -20,7 +20,7 @@
 
 > 仓库只保留 `main` 工作分支，历史里程碑通过归档标签和 Git 历史保留。知识库增强尚未进入生产。
 
-> 最新开发：[关系表真实检查及输入去重](docs/ELEMENT_READING_REVIEW.md)。一次真实回答仍有引用遗漏和无依据的游戏规则推断，停止追加调用；随后离线减少重复输入，完整事实与来源依据保留。候选**未上线**，正式功能保持上面的发布记录。[基础关系候选](docs/ELEMENT_REFERENCE_CANDIDATE.md)、[背景确认页面候选](docs/BACKGROUND_SEARCH_UI.md)及前期记录保留。
+> 最新验证：[精简输入真实检查](docs/COMPACT_EVIDENCE_LIVE_REVIEW.md)只有一次调用。输入用量下降，但仍混淆卦盘引用与外部来源，并将迷你战资料用于主游戏建议；程序拦截、独立审查失败，已停止追加调用。候选**未上线**，正式功能保持上面的发布记录。[输入去重](docs/ELEMENT_READING_REVIEW.md)、[基础关系候选](docs/ELEMENT_REFERENCE_CANDIDATE.md)、[背景确认页面候选](docs/BACKGROUND_SEARCH_UI.md)及前期记录保留。
 
 打开页面默认进入 **起卦排盘**。主导航只有「起卦排盘」「AI 解卦」，学习资料在顶部，主题与帮助位于右上角。无需先读教程，也无需注册。
 
