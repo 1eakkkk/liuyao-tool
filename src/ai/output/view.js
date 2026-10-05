@@ -17,6 +17,8 @@ export function outputIssueText(result) {
     unknown_evidence:'回复引用了本卦证据目录中不存在的条目，暂不能核对依据。',
     model_fact_restatement:'AI 重新陈述了应由程序展示的卦盘属性，请按本轮提示词只选择依据并解释。',
     duplicate_basis:'回复重复使用了同一依据，请合并后重新检查。',
+    unbacked_reality_assertion:'回复中出现了未说明来源的现实断言。卦盘不能证明项目阶段、运行状态或实际助力，请核对来源或保留未知。',
+    unbacked_reality_quote:'回复引用的现实描述不在本轮问题或可用资料原文中，请核对完整原话，不用引号包装推断。',
     rule_subject_mismatch:'规则与所解释的对象位置不对应，请核对关联对象及其与问题的关系。',
     unselected_judgment_basis:'取舍引用了本轮未列出的因素，请先完整说明该依据。',
     missing_judgment_basis:'判断倾向缺少参与取舍的因素，请说明依据或保留不明确。',
