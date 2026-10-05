@@ -6,9 +6,9 @@ import {readingTask} from '../../src/ai/output/selection.js';
 import {parseOutputAnswer} from '../../src/ai/output/parse.js';
 const fixture=JSON.parse(await readFile(new URL('../../experiments/reading-quality/grounded-exposed-reply.json',import.meta.url),'utf8'));
 test('specific actionable numbered advice restricts both API and exported prompt schema',async()=>{
- for(const wording of ['请先给两项具体建议','给两条可执行的建议','请给一项可操作建议']){
+ for(const wording of ['请先给两项具体建议','给两条可执行的建议','请给一项可操作建议','请先给两项具体维护建议','给两条使用方面的建议']){
   const p=await prepareSelectedReadingTurn(createReadingSession(fixture.canonical),`如何安排维护？${wording}，不预测收益、热度或时间。`);
-  expect(readingTask(p.context)).toBe('advice');expect(p.context.conversation.task_policy).toBe(3);
+  expect(readingTask(p.context)).toBe('advice');expect(p.context.conversation.task_policy).toBe(4);
   const schema=JSON.parse(p.messages[1].content).response_schema;
   expect(schema.properties.factors.maxItems).toBe(0);expect(schema.properties.direction.const).toBe('unclear');
   expect(readingExport(p)).toContain('本次只提供一般建议');
@@ -16,6 +16,14 @@ test('specific actionable numbered advice restricts both API and exported prompt
   expect(parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true}).status).toBe('validated');
   raw.factors=[{basis_id:'l1',assessment:'neutral',interpretation:'保持现状。'}];
   expect(parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true}).status).toBe('fallback');
+ }
+});
+test('policy 4 handles maintenance wording without rewriting published policy 3',async()=>{
+ const q='请先给两项具体维护建议，不预测热度、收益或时间。';
+ for(const version of [3,4]){
+  const s=createReadingSession(fixture.canonical),p=await prepareSelectedReadingTurn(s,q,{taskPolicyVersion:version});
+  expect(readingTask(p.context)).toBe(version===3?'interpretation':'advice');
+  const saved=await restoreReadingSession(serializeReadingSession(s,q));expect(readingExport(saved.pending)).toBe(readingExport(p));
  }
 });
 test('trend requests and quoted requests cannot be narrowed into advice',async()=>{

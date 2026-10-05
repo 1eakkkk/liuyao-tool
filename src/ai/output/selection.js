@@ -12,14 +12,16 @@ export function readingTask(context){
  if(!isOutputContext(context))throw Error('Trusted context required');
  const original=context.input.A_user_question;
  // Published sessions keep their original routing and context identities.
- if(![2,3].includes(context.conversation?.task_policy)){
+ if(![2,3,4].includes(context.conversation?.task_policy)){
   if(/只核对|只确认|仅核对/.test(original))return 'facts';
   return /准备哪些材料|只[给要].{0,12}建议|(?:请)?给[一二两三123]项建议/.test(original)?'advice':'interpretation';
  }
  const q=original.replace(/“[^”]*”|「[^」]*」|『[^』]*』|"[^"\n]*"/g,'');
  const boundary='(?:^|[，,。；;！？!?\\n])\\s*(?:请|麻烦|我)?(?:先)?';
  const explicitFacts=new RegExp(boundary+'(?:只核对|只确认|仅核对)').test(q);
- const numberedAdvice=context.conversation?.task_policy===3
+ const numberedAdvice=context.conversation?.task_policy===4
+  ?'给[一二两三123](?:项|条)(?:(?:具体|可执行|可操作)(?:的)?)?(?:(?:维护|使用|筹备|操作)(?:方面的)?)?建议'
+  :context.conversation?.task_policy===3
   ?'给[一二两三123](?:项|条)(?:(?:具体|可执行|可操作)(?:的)?)?建议'
   :'给[一二两三123]项建议';
  const explicitAdvice=new RegExp(boundary+'(?:再|并|同时)?(?:只[给要].{0,12}建议|'+numberedAdvice+'|准备哪些材料)').test(q)||/准备哪些材料/.test(q);
