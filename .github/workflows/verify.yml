@@ -34,6 +34,11 @@ jobs:
         run: npm run test:browser:reading
         env:
           BROWSER_ENGINE: webkit
+      - run: node scripts/verify-background-browser.js
+      - name: Verify background confirmation in WebKit
+        run: node scripts/verify-background-browser.js
+        env:
+          BROWSER_ENGINE: webkit
       - run: node scripts/verify-entry-browser.js
       - run: node scripts/verify-editorial-browser.js
       - run: npm run test:browser:usability
