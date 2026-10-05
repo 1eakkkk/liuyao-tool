@@ -113,3 +113,8 @@ body :is(.reading-text-toggle,.history-item-head,.history-plate > summary):focus
 .history-feedback .registration-confirm input { width:20px; min-height:20px; flex:none; margin-top:2px; }
 .history-feedback [data-view="registration"] > summary { min-height:44px; padding-block:10px; cursor:pointer; }
 .history-feedback [data-view="registration"] p,.history-feedback [data-view="registration"] li { overflow-wrap:anywhere; }
+.registration-record { padding-block:16px; border-top:1px solid var(--ui-border); }
+.registration-record h3 { font-size:16px; overflow-wrap:anywhere; }
+.registration-record pre { white-space:pre-wrap; overflow-wrap:anywhere; max-height:320px; overflow:auto; padding-block:12px; }
+.registration-record summary { cursor:pointer; min-height:44px; padding-block:10px; }
+.registration-library input[type=file] { padding:10px; min-width:0; }

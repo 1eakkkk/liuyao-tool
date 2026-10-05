@@ -98,24 +98,24 @@ try {
     assert.equal(await page.locator('.history-plate').first().getAttribute('open'),null);
     const historyBody=page.locator('.history-item-body').first();
     await page.locator('.history-feedback > summary').first().click();
-    await page.locator('[data-view="registration"] > summary').first().click();
-    await page.locator('[data-registration="claim"]').first().fill('在截止日前完成阅读计划');
-    await page.locator('[data-registration="criterion"]').first().fill('以阅读记录完成清单为准 <img src=x>');
-    await page.locator('[data-registration="deadline"]').first().fill('2030-01-01');
-    await page.locator('[data-registration="notOccurred"]').first().check();
-    await page.locator('[data-action="registration-create"]').first().click();
-    await page.locator('[data-action="registration-observe"]').first().waitFor();
+    await page.locator('#historyList [data-view="registration"] > summary').first().click();
+    await page.locator('#historyList [data-registration="claim"]').first().fill('在截止日前完成阅读计划');
+    await page.locator('#historyList [data-registration="criterion"]').first().fill('以阅读记录完成清单为准 <img src=x>');
+    await page.locator('#historyList [data-registration="deadline"]').first().fill('2030-01-01');
+    await page.locator('#historyList [data-registration="notOccurred"]').first().check();
+    await page.locator('#historyList [data-action="registration-create"]').first().click();
+    await page.locator('#historyList [data-action="registration-observe"]').first().waitFor();
     const registered=await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_judgment_registrations_v1')).entries[0]);
     assert.equal(registered.versions.status,'validated');
     assert.equal(registered.versions.groundingPolicyVersion,1);
-    assert.equal(await page.locator('[data-registration="criterion"]').count(),0);
-    assert.equal(await page.locator('[data-view="registration"] img').count(),0);
+    assert.equal(await page.locator('#historyList [data-registration="criterion"]').count(),0);
+    assert.equal(await page.locator('#historyList [data-view="registration"] img').count(),0);
     const registrationDay=registered.registeredOn;
     for(const note of ['开始记录，尚未完成','已完成一部分']){
-      await page.locator('[data-registration="observedOn"]').first().fill(registrationDay);
-      await page.locator('[data-registration="note"]').first().fill(note);
-      await page.locator('[data-action="registration-observe"]').first().click();
-      await page.locator('[data-view="registration"] li').filter({hasText:note}).waitFor();
+      await page.locator('#historyList [data-registration="observedOn"]').first().fill(registrationDay);
+      await page.locator('#historyList [data-registration="note"]').first().fill(note);
+      await page.locator('#historyList [data-action="registration-observe"]').first().click();
+      await page.locator('#historyList [data-view="registration"] li').filter({hasText:note}).waitFor();
     }
     assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_judgment_registrations_v1')).entries[0].observations.length),2);
     await page.locator('[data-feedback="outcome"]').first().selectOption('partial');
@@ -231,7 +231,38 @@ try {
     assert.equal(await hashOutput(backup.registrations[0].registration.snapshot),registered.snapshotHash);
     assert.equal(backup.registrations[0].observations.length,2);
     assert(!JSON.stringify(backup).includes('sk-test'));
-    report.push({ judgment_registration:'passed', width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', source_boundary_rejected:width===1280?'passed':'covered_by_unit_tests', unrequested_window_rejected:width===390?'passed':'covered_by_unit_tests', direction_consistency_rejected:'covered_by_unit_tests', formal_relation_effect_rejected:width===320?'passed':'covered_by_unit_tests', nested_provenance: false,
+    await page.evaluate(()=>localStorage.removeItem('liuyao_interpret_history'));
+    await page.reload(); await page.locator('[data-tab="ai"]').click(); await page.locator('#toggleHistoryBtn').click();
+    await page.locator('#registrationLibrary > summary').click();
+    assert.equal(await page.locator('#historyList .history-item').count(),0);
+    assert.equal(await page.locator('#registrationRecords article').count(),1);
+    await page.locator('#registrationRecords [data-view="registration"] > summary').click();
+    await page.locator('#registrationRecords [data-registration="observedOn"]').fill(registrationDay);
+    await page.locator('#registrationRecords [data-registration="note"]').fill('删除历史后仍可补记');
+    await page.locator('#registrationRecords [data-action="registration-observe"]').click();
+    await page.locator('#registrationRecords li').filter({hasText:'删除历史后仍可补记'}).waitFor();
+    await page.evaluate(()=>localStorage.removeItem('liuyao_judgment_registrations_v1'));
+    await page.reload(); await page.locator('[data-tab="ai"]').click(); await page.locator('#toggleHistoryBtn').click();
+    await page.locator('#registrationLibrary > summary').click();
+    await page.locator('#registrationImportFile').setInputFiles({name:'backup.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(backup))});
+    await page.locator('#registrationImportConfirm').waitFor({state:'visible'});
+    assert.equal(await page.locator('#registrationRecords article').count(),0,'Preview must not write');
+    await page.locator('#registrationImportConfirm').click();
+    await page.locator('#registrationRecords article').waitFor();
+    assert.equal(await page.locator('#registrationCount').textContent(),'1');
+    assert((await page.locator('#registrationRecords').textContent()).includes('从备份恢复'));
+    assert.equal(await page.locator('#registrationRecords img').count(),0);
+    await page.locator('#registrationImportFile').setInputFiles({name:'same.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(backup))});
+    await page.locator('#registrationImportStatus').filter({hasText:'1 条重复不变'}).waitFor();
+    assert(await page.locator('#registrationImportConfirm').isHidden());
+    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_judgment_registrations_v1')).entries[0].observations.length),2);
+    const corrupted=structuredClone(backup);corrupted.registrations[0].registration.criterion='改变标准';
+    await page.locator('#registrationImportFile').setInputFiles({name:'bad.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(corrupted))});
+    await page.locator('#registrationImportStatus').filter({hasText:'哈希不匹配'}).waitFor();
+    assert.equal(await page.locator('#registrationRecords article').count(),1);
+    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+    await page.locator('#registrationLibrary').screenshot({path:'test-results/reading/registration-library-'+engine+'-'+width+'.png'});
+    report.push({ registration_import:'passed', standalone_after_history_deleted:'passed', judgment_registration:'passed', width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', source_boundary_rejected:width===1280?'passed':'covered_by_unit_tests', unrequested_window_rejected:width===390?'passed':'covered_by_unit_tests', direction_consistency_rejected:'covered_by_unit_tests', formal_relation_effect_rejected:width===320?'passed':'covered_by_unit_tests', nested_provenance: false,
       long_conclusion: 'passed', history_keyboard: 'passed', disclosure_preservation: 'passed', history_scroll_preservation: 'passed',
       replay_rejected: true, refresh_workspace_clear_history_preserved: 'passed', stop: 'passed', replacement: 'passed', errors });
     await context.close();

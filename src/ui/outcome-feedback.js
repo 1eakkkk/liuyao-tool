@@ -1,7 +1,7 @@
 import { feedbackSnapshot, loadFeedback, saveFeedback, feedbackExport, OUTCOMES } from '../storage/outcome-feedback.js';
 import { loadHistory } from '../storage/history.js';
 import { escapeHtml } from './helpers.js';
-import {registrationHtml,bindRegistrations} from './judgment-registration.js';
+import {registrationHtml,bindRegistrations,bindRegistrationLibrary} from './judgment-registration.js';
 import {loadRegistrations,registrationExport,verifyRegistration} from '../storage/judgment-registration.js';
 
 export function feedbackHtml(record, data = loadFeedback()) {
@@ -30,6 +30,7 @@ export function bindFeedback(list, render, toast) {
     link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   bindRegistrations(list,loadHistory,render,toast,download);
+  bindRegistrationLibrary(loadHistory,render,toast,download);
   document.getElementById('exportFeedbackBtn')?.addEventListener('click', async () => {
     const data = loadFeedback();
     const registrations=loadRegistrations();

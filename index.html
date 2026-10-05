@@ -613,6 +613,15 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
           <div>还没有解读记录</div>
         </div>
         <div class="history-list" id="historyList"></div>
+        <details class="history-feedback registration-library" id="registrationLibrary">
+          <summary>判断登记 <span id="registrationCount">0</span></summary>
+          <p class="hint">独立保留原回答与结果。恢复备份不认证文件中的时间或预测。</p>
+          <label>导入判断登记备份<input type="file" id="registrationImportFile" accept=".json,application/json"></label>
+          <p class="hint">支持单条登记或“登记与反馈”备份；只导入判断登记，不恢复普通历史和事后反馈。</p>
+          <p role="status" id="registrationImportStatus"></p>
+          <button type="button" class="ai-btn" id="registrationImportConfirm" hidden>确认合并导入</button>
+          <div id="registrationRecords"></div>
+        </details>
       </div>
 
       <div class="ai-result" id="aiResult" aria-live="polite"></div>

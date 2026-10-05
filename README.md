@@ -20,7 +20,7 @@
 
 > 仓库只保留 `main` 工作分支，历史里程碑通过归档标签和 Git 历史保留。知识库增强尚未进入生产。
 
-> 新增核验工具：[本地判断登记](docs/JUDGMENT_REGISTRATION_RELEASE.md)，在结果发生前固定原回答、判断标准和截止日期，随后追加结果；仅存本机，不代表预测准确率。
+> 新增核验工具：[本地判断登记](docs/JUDGMENT_REGISTRATION_RELEASE.md)，在结果发生前固定原回答、判断标准和截止日期，随后追加结果；支持[备份恢复与独立列表](docs/JUDGMENT_BACKUP_RELEASE.md)，仅存本机，不代表预测准确率。
 
 > 最新约束：[来源与回答边界](docs/GROUNDED_READING_RELEASE.md)统一用户陈述、程序事实与公开背景的归属，保留旧历史；已知越界回复会被拒绝。有限真实回答仍不合格，不代表预测验收通过。
 

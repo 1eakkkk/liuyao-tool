@@ -1,3 +1,4 @@
+import {renderRegistrationLibrary} from './judgment-registration.js';
 import { toLegacyCast } from '../core/normalize.js';
 import {upgradeOverviewText} from '../core/overview.js';
 import { buildGuaDiagramHtml, structLineToDiagram } from './plate-markup.js';
@@ -169,6 +170,7 @@ function renderHistory(){
     }
   }
   renderStats();
+  renderRegistrationLibrary();
 }
 
 export { historyCastHtml, renderStats, renderHistory };
