@@ -55,7 +55,7 @@ export function validateOutputAnswer(answer, context) {
   return answer;
 }
 
-// Strict JSON only. Never silently extract a fragment, repair fields, or retry a paid call.
+// Never extract an embedded fragment, repair fields, or retry a paid call.
 // JSON.parse silently accepts repeated keys. Reject ambiguous objects, including
 // escaped spellings of the same key, before treating any response as validated.
 function hasDuplicateKeys(raw) {
@@ -79,7 +79,7 @@ function hasDuplicateKeys(raw) {
   }
   return false;
 }
-export function parseOutputAnswer(rawText, context, { completed = false } = {}) {
+export function parseOutputAnswer(rawText, context, { completed = false, allowEnvelope = false } = {}) {
   if (!isOutputContext(context)) throw new OutputError('untrusted_context');
   if (typeof rawText !== 'string') throw new OutputError('invalid_response_type');
   const plain = (code, path = '$') => ({ status: 'fallback', validation: 'not_validated',
@@ -88,9 +88,16 @@ export function parseOutputAnswer(rawText, context, { completed = false } = {}) 
     notice: '本次回复未通过结构与引用校验，以下仅保留原始文本。' });
   if (rawText.length > MAX_RESPONSE_CHARS) return plain('response_too_large');
   if (!completed) return plain('incomplete_response');
-  let answer;
-  try { answer = JSON.parse(rawText); } catch { return plain('invalid_json'); }
-  if (hasDuplicateKeys(rawText)) return plain('duplicate_field');
+  let answer, jsonText=rawText, inputNormalization=null;
+  // Opt-in for newly pasted external replies only. Preserve the original bytes
+  // and accept exactly one complete wrapper, never prose plus an embedded JSON.
+  if(allowEnvelope){
+    if(jsonText.startsWith('\uFEFF')){jsonText=jsonText.slice(1);inputNormalization='leading_bom';}
+    const fence=/^```(?:json)?[ \t]*\r?\n([\s\S]*)\r?\n```$/i.exec(jsonText.trim());
+    if(fence){jsonText=fence[1];inputNormalization='outer_json_fence';}
+  }
+  try { answer = JSON.parse(jsonText); } catch { return plain('invalid_json'); }
+  if (hasDuplicateKeys(jsonText)) return plain('duplicate_field');
   try {
     if(context.conversation?.output_format==='selection-2'&&answer?.schema_version!==SELECTION_VERSION)throw new OutputError('version_mismatch');
     if(answer?.schema_version===SELECTION_VERSION){
@@ -100,7 +107,8 @@ export function parseOutputAnswer(rawText, context, { completed = false } = {}) 
     validateOutputAnswer(answer, context);
     return { status: 'validated', validation: 'structure_and_references_only',
       answer, display_text: answer.answer, truncated: false, issues: [],
-      notice: '格式与引用已核对；AI 的解释和预测尚未经事实效果验证。' };
+      ...(inputNormalization?{inputNormalization}:{}),
+      notice: `${inputNormalization?'已识别完整 JSON 的外层包装；':''}格式与引用已核对；AI 的解释和预测尚未经事实效果验证。` };
   } catch (error) {
     if (!(error instanceof OutputError)) throw error;
     return plain(error.code, error.path);

@@ -79,13 +79,13 @@ function checkQuestion(question) {
 async function request(prepared) {
   const activeSession = session, requestEpoch = epoch;
   const controller = new AbortController(); state.activeAbortController = controller;
-  const timer = setTimeout(() => controller.abort(), 180000);
+  const timer = setTimeout(() => controller.abort('reading_timeout'), 180000);
   el('stopGenBtn').disabled = false; el('stopGenBtn').style.display = 'inline-flex';
   status('正在生成结构化解读，完成后展示结论与依据…');
   try {
     const result = await callReading(prepared, controller.signal);
     if (epoch !== requestEpoch || session !== activeSession) return;
-    const turn = appendReadingTurn(session, prepared, result.raw, result.completed, 'api', result.usage);
+    const turn = appendReadingTurn(session, prepared, result.raw, result.completed, 'api', result.usage,{completion:result.completion});
     pending = null; render();
     status(turn.result.status === 'validated' ? '格式与引用核对通过；解释仍属于 AI 判断。' : '回复未完成或未通过检查，已保留原文；未自动重试。');
     persist();
@@ -141,7 +141,7 @@ export function initializeReading() {
     if (!pending || !session) throw Error('请先生成本轮提示词。');
     if (!el('readingPaste').value.trim()) throw Error('请先贴回外部 AI 的回复。');
     if (!el('readingComplete').checked) throw Error('请确认已复制完整回复；未完成的内容不能视为完整解读。');
-    const t = appendReadingTurn(session, pending, el('readingPaste').value, true, 'external');
+    const t = appendReadingTurn(session, pending, el('readingPaste').value, true, 'external',null,{allowEnvelope:true});
     pending = null; render();
     status(t.result.status === 'validated' ? '格式与引用核对通过。' : '未通过检查，已保留原文；可生成新的提示词继续。'); persist();
   }));

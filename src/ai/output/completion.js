@@ -1,0 +1,26 @@
+// Store only bounded transport diagnostics, never provider bodies or credentials.
+const errors=new Set(['aborted','request_timeout','sse_invalid_utf8','sse_invalid_chunk','sse_malformed_event','sse_after_done',
+ 'sse_conflicting_finish_reason','sse_event_too_large','sse_stream_too_large','sse_stream_error']);
+const finishes=new Set(['stop','length','content_filter','tool_calls','insufficient_system_resource','other']);
+export function normalizeCompletion(value){
+ if(value==null)return null;
+ if(typeof value!=='object'||Array.isArray(value)||typeof value.sawDone!=='boolean'||
+  !(value.error===null||errors.has(value.error))||!(value.finishReason===null||finishes.has(value.finishReason))||
+  Object.keys(value).some(k=>!['error','finishReason','sawDone'].includes(k)))throw Error('传输完成记录不兼容');
+ return {error:value.error,finishReason:value.finishReason,sawDone:value.sawDone};
+}
+export function completionFromStream(parsed,signal){
+ return normalizeCompletion({error:signal?.aborted&&signal.reason==='reading_timeout'?'request_timeout':parsed.error??null,
+  finishReason:parsed.finishReason==null?null:finishes.has(parsed.finishReason)?parsed.finishReason:'other',sawDone:parsed.sawDone===true});
+}
+export function completionIssue(completion){
+ if(!completion)return null;
+ if(completion.error)return completion.error;
+ if(completion.finishReason==='length')return 'response_token_limit';
+ if(completion.finishReason==='content_filter')return 'response_filtered';
+ if(completion.finishReason==='insufficient_system_resource')return 'provider_interrupted';
+ if(!completion.sawDone)return 'stream_not_finished';
+ if(completion.finishReason==null)return 'stream_missing_finish_reason';
+ if(completion.finishReason!=='stop')return 'unexpected_finish_reason';
+ return null;
+}

@@ -4,6 +4,7 @@ import { buildOutputMessages, JUDGMENT_GUIDANCE, COMPACT_READING_GUIDANCE } from
 import { parseOutputAnswer } from './parse.js';
 import { MAX_RESPONSE_CHARS } from './contract.js';
 import {selectionMessages} from './selection.js';
+import {normalizeCompletion,completionIssue} from './completion.js';
 
 export const READING_VERSION = 'reading-session-1';
 export const READING_PROMPT = 'reading-production-4';
@@ -50,11 +51,15 @@ export async function prepareReadingTurn(session, question, { backgroundSearch =
 export function readingExport(prepared) {
   return `【解读要求】\n${prepared.messages[0].content}\n\n【卦盘、问题与历史数据】\n${prepared.messages[1].content}\n\n请返回完整 JSON，不加代码围栏。复制完整回复回本站“贴回外部回复”，即可查看结论与可展开依据。`;
 }
-export function appendReadingTurn(session, prepared, raw, completed, source, usage = null) {
+export function appendReadingTurn(session, prepared, raw, completed, source, usage = null, {completion=null,allowEnvelope=false} = {}) {
   if (!['api', 'external'].includes(source)) throw Error('Unknown reading source');
-  const result = parseOutputAnswer(raw, prepared.context, { completed });
-  const turn = { question: prepared.question, raw: raw.slice(0, MAX_RESPONSE_CHARS + 1), completed: !!completed,
-    source, result, context: prepared.context, usage, ...(prepared.backgroundSearch ? {backgroundSearch:prepared.backgroundSearch} : {}) };
+  const transport=source==='api'?normalizeCompletion(completion):null;
+  const issue=completionIssue(transport),finished=!!completed&&!issue;
+  const envelope=source==='external'&&allowEnvelope===true;
+  let result = parseOutputAnswer(raw, prepared.context, { completed:finished,allowEnvelope:envelope });
+  if(issue)result={...result,issues:[{code:issue,path:'$'}]};
+  const turn = { question: prepared.question, raw: raw.slice(0, MAX_RESPONSE_CHARS + 1), completed: finished,
+    source, result, context: prepared.context, usage, ...(transport?{completion:transport}:{}),...(envelope?{inputEnvelopeVersion:1}:{}), ...(prepared.backgroundSearch ? {backgroundSearch:prepared.backgroundSearch} : {}) };
   session.turns.push(turn);
   delete session.pendingBackgroundSearch;
   delete session.pendingBackgroundQuestion;
@@ -64,7 +69,7 @@ export function serializeReadingSession(session, pendingQuestion = null) {
   return JSON.stringify({ version: session.version, prompt: session.prompt, canonical: session.canonical, preferences: session.preferences,
     historyId:session.historyId, historySuppressed:session.historySuppressed,
     outputFormat:session.outputFormat, ...([2,3,4,5].includes(session.taskPolicyVersion)?{taskPolicyVersion:session.taskPolicyVersion}:{}), ...([1,2,3,4].includes(session.judgmentPolicyVersion)?{judgmentPolicyVersion:session.judgmentPolicyVersion}:{}), ...([1,2].includes(session.groundingPolicyVersion)?{groundingPolicyVersion:session.groundingPolicyVersion}:{}), pendingQuestion, ...(pendingQuestion && pendingQuestion.trim() === session.pendingBackgroundQuestion && session.pendingBackgroundSearch ? {pendingBackgroundSearch:session.pendingBackgroundSearch} : {}),
-    turns: session.turns.map(({ question, raw, completed, source, usage, backgroundSearch }) => ({ question, raw, completed, source, usage, ...(backgroundSearch ? {backgroundSearch} : {}) })) });
+    turns: session.turns.map(({ question, raw, completed, source, usage, backgroundSearch,completion,inputEnvelopeVersion }) => ({ question, raw, completed, source, usage, ...(completion?{completion}:{}),...(inputEnvelopeVersion===1?{inputEnvelopeVersion}:{}), ...(backgroundSearch ? {backgroundSearch} : {}) })) });
 }
 export async function restoreReadingSession(raw) {
   if (typeof raw !== 'string' || raw.length > 900000) throw Error('保存的解读体积异常');
@@ -88,7 +93,9 @@ export async function restoreReadingSession(raw) {
     const u = t.usage;
     const validUsage = u && Number.isFinite(u.seconds) && u.seconds >= 0 &&
       ((u.total === null && u.cost === null) || (Number.isSafeInteger(u.total) && u.total >= 0 && Number.isFinite(u.cost) && u.cost >= 0));
-    appendReadingTurn(session, prepared, t.raw, t.completed, t.source, validUsage ? { total: u.total, cost: u.cost, seconds: u.seconds } : null);
+    if(t.inputEnvelopeVersion!==undefined&&t.inputEnvelopeVersion!==1)throw Error('外部回复包装版本不兼容');
+    appendReadingTurn(session, prepared, t.raw, t.completed, t.source, validUsage ? { total: u.total, cost: u.cost, seconds: u.seconds } : null,
+      {completion:t.completion??null,allowEnvelope:t.inputEnvelopeVersion===1});
   }
   const pending = saved.pendingQuestion == null ? null : await (session.outputFormat==='selection-2'?prepareSelectedReadingTurn:saved.pendingBackgroundSearch ? prepareCompactReadingTurn : prepareReadingTurn)(session, saved.pendingQuestion, {backgroundSearch:saved.pendingBackgroundSearch ?? null});
   return { session, pending };

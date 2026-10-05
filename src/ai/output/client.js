@@ -4,6 +4,7 @@ import { DEEPSEEK_BASE_URL } from '../config.js';
 import { loadApiKey, loadModelChoice } from '../../storage/settings.js';
 import { effectivePriceTable, isBeijingPeakHour } from '../preferences.js';
 import { addLifetimeUsage } from '../../storage/history.js';
+import {completionFromStream} from './completion.js';
 
 export function readingRequestBody(prepared, model = 'deepseek-flash') {
   return { model, messages: prepared.messages, thinking: { type: 'disabled' }, max_tokens: 8192,
@@ -35,5 +36,6 @@ export async function callReading(prepared, signal) {
   if (known) addLifetimeUsage(cost, total);
   return { raw: parsed.rawText,
     completed: !parsed.error && parsed.sawDone && parsed.finishReason === 'stop',
-    usage: { total, cost, seconds: (Date.now() - start) / 1000 }, error: parsed.error };
+    usage: { total, cost, seconds: (Date.now() - start) / 1000 }, error: parsed.error,
+    completion:completionFromStream(parsed,signal) };
 }

@@ -66,7 +66,7 @@ try {
     assert(input.response_schema.properties.direction.enum.includes('favorable'),'A request for advice must not erase the trend question');
     assert.equal(requests.length, 0);
     assert((await page.locator('#readingPrompt').inputValue()).includes('优先两三条'));
-    await page.locator('#readingPaste').fill(JSON.stringify(answer(input)));
+    await page.locator('#readingPaste').fill('```json\n'+JSON.stringify(answer(input))+'\n```');
     await page.locator('#readingImport').click();
     assert((await page.locator('#readingStatus').textContent()).includes('确认'));
     await page.locator('#readingComplete').check(); await page.locator('#readingImport').click();
@@ -179,13 +179,13 @@ try {
     assert((await page.locator('#readingTurns article').last().locator('.reading-issue').textContent()).includes(width===1280?'现实断言':width===390?'预测时间':'所选依据只提供基础五行方向'));
     behavior = 'truncated'; await page.locator('#readingFollow').fill('截断测试'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 5);
-    assert((await page.locator('#readingTurns article').last().textContent()).includes('未完成'));
+    assert((await page.locator('#readingTurns article').last().textContent()).includes('输出上限'));
     behavior = 'delayed'; await page.locator('#readingFollow').fill('停止测试'); await page.locator('#readingFollowApi').click();
     await page.locator('#stopGenBtn').waitFor({ state: 'visible' });
     assert(await page.locator('#manualCastBtn').isDisabled()); assert(await page.locator('#readingMode').isDisabled());
     await page.locator('#stopGenBtn').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 6);
-    assert((await page.locator('#readingTurns article').last().textContent()).includes('未完成'));
+    assert((await page.locator('#readingTurns article').last().textContent()).includes('生成被停止'));
     await page.locator('#readingTurns details').first().evaluate(node => { node.open = true; });
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
     await page.screenshot({ path: `test-results/reading/${target ? 'remote' : 'local'}-${width}.png`, fullPage: true });

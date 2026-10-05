@@ -6,9 +6,35 @@ const assessment = { support: '支持因素', oppose: '不利因素', neutral: '
 const component = { primary: '本爻', changed: '变爻', hidden: '伏神' };
 const direction = { favorable: '偏有利', unfavorable: '偏不利', mixed: '利弊并存', unclear: '暂不明确' };
 let conclusionId = 0;
+const transportCodes=new Set(['incomplete_response','response_token_limit','response_filtered','provider_interrupted','stream_not_finished',
+ 'stream_missing_finish_reason','unexpected_finish_reason','request_timeout','aborted','sse_invalid_utf8','sse_invalid_chunk','sse_malformed_event',
+ 'sse_after_done','sse_conflicting_finish_reason','sse_event_too_large','sse_stream_too_large','sse_stream_error']);
+export function outputFailureSummary(result){
+ const code=result.issues?.[0]?.code;
+ if(transportCodes.has(code))return '解读未完整接收，已保留收到的原文。';
+ if(code==='invalid_json')return '回复无法作为完整 JSON 读取，已保留原文。';
+ if(code==='context_mismatch')return '回复与当前问答不匹配，已保留原文。';
+ return '回复未通过字段、引用或内容约束检查，已保留原文。';
+}
 export function outputIssueText(result) {
   const code=result.issues?.[0]?.code;
-  return ({
+  const message=({
+    response_token_limit:'回复达到输出上限而截断，没有取得完整 JSON。可缩短篇幅后手动重新生成；本站不会自动重试。',
+    response_filtered:'接口提前停止了这次回复，没有返回完整解读。',
+    provider_interrupted:'接口因服务资源不足提前结束，未取得完整解读。',
+    stream_not_finished:'连接结束前没有收到完整结束标记，可能发生断流，未将部分回复当作完整解读。',
+    stream_missing_finish_reason:'接口未说明回复是否正常完成，暂不能将收到的文本视为完整解读。',
+    unexpected_finish_reason:'接口没有以正常文本回复结束，本次不能作为完整解读。',
+    request_timeout:'等待解读超时，已停止本次请求；这不是 JSON 字段格式错误。',
+    aborted:'本次生成被停止，尚未取得完整回复。',
+    sse_stream_error:'接收回复时连接中断，已保留中断前收到的文本。',
+    sse_malformed_event:'接口返回的流数据无法读取，尚未取得完整回复；这不是解读字段不匹配。',
+    sse_invalid_utf8:'收到的流数据存在编码错误，无法完整读取。',
+    sse_invalid_chunk:'收到的流数据类型异常，无法完整读取。',
+    sse_after_done:'接口结束标记之后仍返回了数据，本次流状态异常。',
+    sse_conflicting_finish_reason:'接口返回了相互冲突的结束状态，本次不能确认完整性。',
+    sse_event_too_large:'单段接口流数据超出接收限制，本次未完整读取。',
+    sse_stream_too_large:'接口流数据超出总接收限制，本次未完整读取。',
     incomplete_response:'回复尚未完整结束，可能被停止或截断。请取得完整回复后再检查。',
     response_too_large:'回复过长，超过本站可检查的范围。请缩短后重新提交。',
     invalid_json:'回复格式无法读取。请贴回完整 JSON，去掉外层代码围栏和额外说明。',
@@ -45,6 +71,8 @@ export function outputIssueText(result) {
     invalid_count:'回复条目数量不符合要求，需要按提示词规定的数量重新整理。',
     duplicate_item:'回复包含重复条目，需要去重后重新检查。'
   })[code] || '回复未通过格式与引用检查，请核对是否贴回了本轮完整回复。';
+  const path=result.issues?.[0]?.path;
+  return typeof path==='string'&&path!=='$'?`${message} 出错位置：${path.replace(/^\$\./,'')}`:message;
 }
 export function evidenceText(entry) {
   if (entry.kind === 'program_fact') return `${entry.label}：${entry.value === null ? '未记载' : typeof entry.value === 'boolean' ? (entry.value ? '是' : '否') : String(entry.value)}`;
@@ -61,7 +89,7 @@ export function renderOutputResult(container, result, context, { collapseFallbac
   const fragment = doc.createDocumentFragment();
   if(context.input.background_search){const background=node('details');background.className='background-result';background.append(node('summary','查看本轮公开背景与来源'));const body=node('div');renderBackgroundSources(body,context.input.background_search);background.append(body);fragment.append(background);}
   if (result.status !== 'validated') {
-    fragment.append(node('p', '回复未完成或未通过格式与引用检查，保留原文供查看。'));
+    fragment.append(node('p', outputFailureSummary(result)));
     const explanation=node('p',outputIssueText(result)); explanation.className='reading-issue'; fragment.append(explanation);
     const raw = node('pre', result.display_text);
     if (collapseFallback) {
