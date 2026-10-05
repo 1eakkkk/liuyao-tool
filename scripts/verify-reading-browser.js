@@ -13,7 +13,7 @@ const report = [];
 fs.mkdirSync('test-results/reading', { recursive: true });
 function answer(input) {
   const rule=input.bases.find(e=>e.id.startsWith('k'));
-  return {schema_version:SELECTION_VERSION,context_id:input.context_id,answer:'可以先整理书目，再安排阅读。<img src=x onerror=alert(1)>'+'请先梳理现有资料，再按自己的时间安排分阶段阅读；这只是阅读建议，不代表真实结果。'.repeat(18),direction:'unclear',main_choice:{basis_id:'none',reason:'这里只提供一般建议，不作趋势判断。'},factors:[{basis_id:'l1',assessment:'neutral',interpretation:'仅作事实展示，不断言现实结果。'},...(rule?[{basis_id:rule.id,assessment:'neutral',interpretation:'这项标注与来源不重复计为依据。'}]:[])],background_usage:input.sources.map(s=>({source_id:s.id,state:'not_applicable',note:'仅作测试，不应用背景。'})),timing_candidates:[],uncertainties:['这是模拟回复，格式核对不代表预测正确。']};
+  return {schema_version:SELECTION_VERSION,context_id:input.context_id,answer:'可以先整理书目，再安排阅读。<img src=x onerror=alert(1)>'+'请先梳理现有资料，再按自己的时间安排分阶段阅读；这只是阅读建议，不代表真实结果。'.repeat(18),direction:'unclear',main_choice:{basis_id:'none',reason:'这里只提供一般建议，不作趋势判断。'},factors:[{basis_id:input.bases.find(e=>e.id.startsWith('e')).id,assessment:'neutral',interpretation:'仅作事实展示，不断言现实结果。'},...(rule?[{basis_id:rule.id,assessment:'neutral',interpretation:'这项标注与来源不重复计为依据。'}]:[])],background_usage:input.sources.map(s=>({source_id:s.id,state:'not_applicable',note:'仅作测试，不应用背景。'})),timing_candidates:[],uncertainties:['这是模拟回复，格式核对不代表预测正确。']};
 }
 try {
   for (const width of [1280, 390, 320]) {
@@ -24,9 +24,9 @@ try {
     await page.route('https://api.deepseek.com/**', async route => {
       const body = route.request().postDataJSON(); requests.push(body);
       assert.equal(body.response_format.type, 'json_object');
-      assert(body.messages[0].content.includes('程序负责事实陈述'));
-      assert(body.messages[0].content.includes('一般建议明确为一般建议'));
-      assert(body.messages[0].content.includes('不书写 evidence_ids'));
+      assert(body.messages[0].content.includes('页面已经负责排盘'));
+      assert(body.messages[0].content.includes('一般建议独立标明'));
+      assert(body.messages[0].content.includes('选择 basis_id'));
       const input = JSON.parse(body.messages[1].content), response = answer(input);
       assert(input.bases.some(b=>b.id==='l1'));
       if (behavior === 'invalid') response.factors[0].basis_id='fake';
@@ -47,7 +47,7 @@ try {
     await page.locator('#readingMode').selectOption('structured');
     await page.locator('#promptBtn').click();
     assert((await page.locator('#readingPrompt').inputValue()).includes('700–800 字'));
-    assert((await page.locator('#readingPrompt').inputValue()).includes('程序负责事实陈述'));
+    assert((await page.locator('#readingPrompt').inputValue()).includes('页面已经负责排盘'));
     const extract = text => JSON.parse(text.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
     let input = extract(await page.locator('#readingPrompt').inputValue());
     assert.equal(requests.length, 0);
