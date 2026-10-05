@@ -58,7 +58,7 @@ try {
     assert((await page.locator('#readingPrompt').inputValue()).includes('程序负责事实文字'));
     const extract = text => JSON.parse(text.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
     let input = extract(await page.locator('#readingPrompt').inputValue());
-    assert.equal(input.conversation.task_policy,4);
+    assert.equal(input.conversation.task_policy,5);
     assert.equal(input.conversation.judgment_policy,2);
     assert.equal(input.conversation.grounding_policy,2);
     assert.equal(input.response_schema.properties.judgment,undefined);
@@ -269,7 +269,17 @@ try {
     assert.equal(await page.locator('#registrationRecords article').count(),1);
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
     await page.locator('#registrationLibrary').screenshot({path:'test-results/reading/registration-library-'+engine+'-'+width+'.png'});
-    report.push({ registration_import:'passed', standalone_after_history_deleted:'passed', judgment_registration:'passed', width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', source_boundary_rejected:width===1280?'passed':'covered_by_unit_tests', unrequested_window_rejected:width===390?'passed':'covered_by_unit_tests', direction_consistency_rejected:'covered_by_unit_tests', formal_relation_effect_rejected:width===320?'passed':'covered_by_unit_tests', nested_provenance: false,
+    await page.locator('[data-tab="caster"]').click(); await page.locator('[data-mode="manual"]').click();
+    for(let i=0;i<6;i++)await page.locator(`#manualLine${i}`).selectOption('8');
+    await page.locator('#manualCastBtn').click();await page.locator('[data-tab="ai"]').click();
+    await page.locator('#questionInput').fill('我目前只有这个名称“雾城对弈”，没有提供玩法规则，能否冲高段位？');
+    await page.locator('#readingMode').selectOption('structured');await page.locator('#promptBtn').click();
+    const unknownInput=extract(await page.locator('#readingPrompt').inputValue());
+    assert.deepEqual(unknownInput.bases,[]);assert.equal(unknownInput.conversation.history,undefined);
+    assert.equal(unknownInput.response_schema.properties.factors.maxItems,0);
+    assert.equal(unknownInput.response_schema.properties.main_choice.properties.basis_id.const,'none');
+    assert.equal(unknownInput.response_schema.properties.direction.const,'unclear');
+    report.push({ unknown_object_scoped:'passed', registration_import:'passed', standalone_after_history_deleted:'passed', judgment_registration:'passed', width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', source_boundary_rejected:width===1280?'passed':'covered_by_unit_tests', unrequested_window_rejected:width===390?'passed':'covered_by_unit_tests', direction_consistency_rejected:'covered_by_unit_tests', formal_relation_effect_rejected:width===320?'passed':'covered_by_unit_tests', nested_provenance: false,
       long_conclusion: 'passed', history_keyboard: 'passed', disclosure_preservation: 'passed', history_scroll_preservation: 'passed',
       replay_rejected: true, refresh_workspace_clear_history_preserved: 'passed', stop: 'passed', replacement: 'passed', errors });
     await context.close();

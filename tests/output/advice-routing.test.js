@@ -8,7 +8,7 @@ const fixture=JSON.parse(await readFile(new URL('../../experiments/reading-quali
 test('specific actionable numbered advice restricts both API and exported prompt schema',async()=>{
  for(const wording of ['请先给两项具体建议','给两条可执行的建议','请给一项可操作建议','请先给两项具体维护建议','给两条使用方面的建议']){
   const p=await prepareSelectedReadingTurn(createReadingSession(fixture.canonical),`如何安排维护？${wording}，不预测收益、热度或时间。`);
-  expect(readingTask(p.context)).toBe('advice');expect(p.context.conversation.task_policy).toBe(4);
+  expect(readingTask(p.context)).toBe('advice');expect(p.context.conversation.task_policy).toBe(5);
   const schema=JSON.parse(p.messages[1].content).response_schema;
   expect(schema.properties.factors.maxItems).toBe(0);expect(schema.properties.direction.const).toBe('unclear');
   expect(readingExport(p)).toContain('本次只提供一般建议');
