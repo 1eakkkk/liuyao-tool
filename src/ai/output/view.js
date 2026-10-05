@@ -1,5 +1,6 @@
 import { validateOutputAnswer } from './parse.js';
 import { collectEvidencePresentation } from './evidence-presentation.js';
+import {renderBackgroundSources} from './background-view.js';
 
 const assessment = { support: '支持因素', oppose: '不利因素', neutral: '中性因素', conditional: '条件因素' };
 const component = { primary: '本爻', changed: '变爻', hidden: '伏神' };
@@ -40,6 +41,7 @@ export function renderOutputResult(container, result, context, { collapseFallbac
   const doc = container.ownerDocument;
   const node = (tag, text) => { const el = doc.createElement(tag); if (text !== undefined) el.textContent = text; return el; };
   const fragment = doc.createDocumentFragment();
+  if(context.input.background_search){const background=node('details');background.className='background-result';background.append(node('summary','查看本轮公开背景与来源'));const body=node('div');renderBackgroundSources(body,context.input.background_search);background.append(body);fragment.append(background);}
   if (result.status !== 'validated') {
     fragment.append(node('p', '回复未完成或未通过格式与引用检查，保留原文供查看。'));
     const explanation=node('p',outputIssueText(result)); explanation.className='reading-issue'; fragment.append(explanation);

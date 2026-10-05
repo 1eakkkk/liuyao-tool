@@ -1,5 +1,6 @@
 import { selectedRulesMode, buildRulesPair, buildRulesExportPrompt } from '../ai/rules-input.js';
 import { initializeReading, readingSelected, startReading, clearReading } from '../ui/reading.js';
+import {selectedBackground} from '../ui/background.js';
 import { bindDisclosure } from '../ui/disclosure.js';
 import { showRulesExportComparison } from '../ui/rules-debug.js';
 import { buildPairedPromptExports, buildStructuredExportPrompt } from '../ai/exports.js';
@@ -648,6 +649,8 @@ interpretBtn.addEventListener('click', async (event)=>{
     return;
   }
 
+  let backgroundSearch=null;
+  try{if(readingSelected())backgroundSearch=selectedBackground(question);}catch(e){showToast(e.message,'error');return;}
   interpretBtn.disabled = true;
   // 解读进行中锁住两个摇卦入口，防止中途换卦导致"旧卦的解读显示在新卦下面"的错位
   castBtn.disabled = true;
@@ -720,7 +723,7 @@ interpretBtn.addEventListener('click', async (event)=>{
     aiStatus.textContent = '正在调用 DeepSeek 生成解卦回复…';
     showToast('正在调用 DeepSeek 生成解卦回复…');
     if (readingSelected()) {
-      await startReading(castStore.canonical, 'api');
+      await startReading(castStore.canonical, 'api', {backgroundSearch});
       aiStatus.textContent = '结构化解读见下方';
       return;
     }
@@ -822,6 +825,8 @@ promptBtn.addEventListener('click', async (event)=>{
     return;
   }
 
+  let backgroundSearch=null;
+  try{if(readingSelected())backgroundSearch=selectedBackground(question);}catch(e){showToast(e.message,'error');return;}
   promptBtn.disabled = true;
   interpretBtn.disabled = true;
   castBtn.disabled = true;
@@ -870,7 +875,7 @@ promptBtn.addEventListener('click', async (event)=>{
     }
 
     if (readingSelected()) {
-      await startReading(castStore.canonical, 'external');
+      await startReading(castStore.canonical, 'external', {backgroundSearch});
       aiStatus.textContent = '结构化提示词见下方';
       return;
     }

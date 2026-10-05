@@ -413,6 +413,16 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         <select id="readingMode" autocomplete="off"><option value="" selected disabled>选择</option><option value="legacy">普通解读</option><option value="structured">结构化解读（试用）· 可查看依据</option></select>
         <p id="readingModeNote" hidden>先读结论，依据可展开。API 与提示词均支持；设置在新解读时生效。</p>
       </div>
+      <details id="backgroundCheck" class="background-check" hidden>
+        <summary>核实背景（可选）</summary>
+        <p class="reading-note">只填公开对象名称，不填私人问题。使用 DeepSeek 搜索及 Jina 公开网页读取，搜索会产生 API 费用。</p>
+        <label for="backgroundSubject">待核实对象</label>
+        <input id="backgroundSubject" maxlength="40" autocomplete="off" placeholder="例如：王者万象棋">
+        <div class="ai-row"><button id="backgroundSearchBtn" class="ai-btn ghost" type="button">查询公开背景</button><button id="backgroundStop" class="ai-btn ghost" type="button" hidden>停止查询</button><button id="backgroundClear" class="ai-btn ghost" type="button">清除背景</button></div>
+        <p id="backgroundStatus" class="reading-note" role="status" aria-live="polite"></p>
+        <div id="backgroundSources"></div>
+        <label id="backgroundConfirmLabel" class="background-confirm" hidden><input id="backgroundConfirm" type="checkbox">我已核对对象及适用模式，将此背景用于当前问题</label>
+      </details>
       <div class="ai-row compose-actions">
         <button class="ai-btn" id="interpretBtn">AI 解读</button>
         <button class="ai-btn ghost" id="promptBtn">输出提示词</button>

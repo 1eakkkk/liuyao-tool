@@ -96,3 +96,15 @@ body :is(.reading-text-toggle,.history-item-head,.history-plate > summary):focus
 .history-feedback :is(summary,input,select,textarea,button):focus-visible { outline:3px solid var(--ui-accent); outline-offset:3px; }
 .history-feedback-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .history-feedback-actions button { min-height: 44px; padding: 10px 16px; }
+.background-check {margin-block:12px;border-block:1px solid var(--ui-border);padding-block:8px;}
+.background-check > summary,.background-result > summary {min-height:44px;padding-block:10px;cursor:pointer;color:var(--ui-accent);}
+.background-check > label {display:block;margin-block:12px 6px;}
+.background-check > input {width:100%;box-sizing:border-box;min-height:44px;padding:12px;font:inherit;background:var(--ui-surface);color:var(--ui-text);border:1px solid var(--ui-border);border-radius:var(--ui-radius);}
+.background-check .background-confirm {display:flex;align-items:flex-start;gap:10px;line-height:1.8;}
+.background-check[hidden],.background-check [hidden] {display:none!important;}
+.background-confirm input {flex:none;margin-top:8px;}
+.background-excerpt {white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.85;max-height:320px;overflow-y:auto;}
+.background-result {margin-block:16px;}
+.background-check a,.background-result a {color:var(--ui-accent);overflow-wrap:anywhere;}
+.background-check #backgroundSources summary,.background-result details > summary {min-height:44px;padding-block:10px;cursor:pointer;}
+.background-check :is(input,summary,button):focus-visible,.background-result summary:focus-visible {outline:3px solid var(--ui-accent);outline-offset:3px;}
