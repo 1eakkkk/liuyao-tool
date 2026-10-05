@@ -1,0 +1,94 @@
+{
+  "version": "constraint-baseline-1",
+  "network_calls": 0,
+  "controls": [
+    {
+      "id": "reality-assertion",
+      "expected": "unbacked_reality_assertion",
+      "observed": {
+        "mechanical_ok": false,
+        "status": "fallback",
+        "issues": [
+          {
+            "code": "unbacked_reality_assertion",
+            "path": "$.answer"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "id": "reality-denial",
+      "expected": null,
+      "observed": {
+        "mechanical_ok": true,
+        "status": "validated",
+        "issues": []
+      },
+      "matched": true
+    },
+    {
+      "id": "prediction-window",
+      "expected": "unrequested_prediction_window",
+      "observed": {
+        "mechanical_ok": false,
+        "status": "fallback",
+        "issues": [
+          {
+            "code": "unrequested_prediction_window",
+            "path": "$.answer"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "id": "usage-advice",
+      "expected": null,
+      "observed": {
+        "mechanical_ok": true,
+        "status": "validated",
+        "issues": []
+      },
+      "matched": true
+    },
+    {
+      "id": "unsupported-feature",
+      "expected": null,
+      "observed": {
+        "mechanical_ok": true,
+        "status": "validated",
+        "issues": []
+      },
+      "matched": true
+    },
+    {
+      "id": "feature-unknown",
+      "expected": null,
+      "observed": {
+        "mechanical_ok": true,
+        "status": "validated",
+        "issues": []
+      },
+      "matched": true
+    },
+    {
+      "id": "exposed-project",
+      "expected": "direction_basis_mismatch",
+      "observed": {
+        "mechanical_ok": false,
+        "status": "fallback",
+        "issues": [
+          {
+            "code": "direction_basis_mismatch",
+            "path": "$.direction"
+          }
+        ]
+      },
+      "matched": true
+    }
+  ],
+  "known_semantic_gap": "unsupported-feature is mechanically accepted. Actual collaboration functionality is not established; semantic review must assess its unsupported assertion.",
+  "production_ready": false,
+  "prediction_accuracy_established": false
+}

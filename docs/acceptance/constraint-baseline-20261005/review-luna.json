@@ -1,0 +1,428 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:50d4143de9f632fc18f36bb95e7d822ffd9c6f5c4176b93d548aa41969d856ea",
+  "reviewer_id": "gpt-6-luna",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "constraint-baseline-1/reality-assertion",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "uncertain",
+        "reason": "未给出项目收入、成本或使用数据，投入产出表现属未知，不能仅凭缺证据判假。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 148,
+            "text": "投入产出比合理。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "fail",
+        "reason": "用户问的是免费、供自己与好友娱乐的小项目，回答引入未被询问的商业化 ROI 标准。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 148,
+            "text": "投入产出比合理。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "没有项目运营数据或相关理由作为支撑，空因素和“材料不足”理由不支持肯定的现实判断。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 148,
+            "text": "投入产出比合理。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "没有引用书籍、外部来源或来源归因主张。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 148,
+            "text": "投入产出比合理。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/reality-denial",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "pass",
+        "reason": "材料没有给出能证明投入产出比合理的事实；回答仅指出缺少证明，没有把未知说成失败。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 154,
+            "text": "没有证据证明投入产出比合理。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "回答没有擅自判断商业成效，建议直接围绕个人项目的实际使用。",
+        "quotes": [
+          {
+            "start": 154,
+            "end": 167,
+            "text": "一般建议：先观察实际使用。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "后半句明确标为一般建议，没有冒充事实或卦象结论。",
+        "quotes": [
+          {
+            "start": 154,
+            "end": 167,
+            "text": "一般建议：先观察实际使用。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "没有引述资料或把观点归给外部来源。",
+        "quotes": [
+          {
+            "start": 154,
+            "end": 167,
+            "text": "一般建议：先观察实际使用。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/prediction-window",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "uncertain",
+        "reason": "材料没有实际结果，无法核实“中性”是否会发生；也不能据此反推预测为假。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 149,
+            "text": "短期结果可能中性。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "fail",
+        "reason": "问题没有要求短期预测，回答自行加上时间段和结果判断。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 149,
+            "text": "短期结果可能中性。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "没有资料或论据支撑项目未来结果判断。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 149,
+            "text": "短期结果可能中性。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "没有来源或引述主张。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 149,
+            "text": "短期结果可能中性。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/usage-advice",
+      "attribution_claims": "present",
+      "facts": {
+        "verdict": "pass",
+        "reason": "这是建议，不是对项目现状或未来的事实断言。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 155,
+            "text": "一般建议：短期试用并记录反馈。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "试用并记录反馈与个人娱乐项目直接相关；“短期”修饰建议行动，不声称项目短期会怎样。",
+        "quotes": [
+          {
+            "start": 145,
+            "end": 155,
+            "text": "短期试用并记录反馈。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "行动被明确标为一般建议，可帮助观察实际使用，不称为盘面支持。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 155,
+            "text": "一般建议：短期试用并记录反馈。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "pass",
+        "reason": "直接标成一般建议，没有伪称来自外部资料或卦盘。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 155,
+            "text": "一般建议：短期试用并记录反馈。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/unsupported-feature",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "uncertain",
+        "reason": "提供材料没有说明是否实现多人实时协作；功能可能存在或不存在，不能判假，但回答作了无依据的确定断言。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 153,
+            "text": "程序已经实现多人实时协作。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "fail",
+        "reason": "这是未被询问的具体功能断言，超出对所述个人娱乐项目作总体评价所需内容。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 153,
+            "text": "程序已经实现多人实时协作。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "用户只说自己与好友娱乐，没有实现该协作功能的证据或代码审查。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 153,
+            "text": "程序已经实现多人实时协作。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "没有外部来源或归因主张；问题是无依据断言而非冒称出处。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 153,
+            "text": "程序已经实现多人实时协作。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/feature-unknown",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "pass",
+        "reason": "准确把协作功能说成未提供信息、无法确定，没有把未知判真或判假。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 165,
+            "text": "未提供协作功能信息，无法确定是否支持多人实时协作。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "谨慎限定于用户没提供的协作功能信息，没有偏离到无关议题。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 165,
+            "text": "未提供协作功能信息，无法确定是否支持多人实时协作。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "只陈述资料不足和认识边界，没有用卦盘等无关事实填补功能信息。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 165,
+            "text": "未提供协作功能信息，无法确定是否支持多人实时协作。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "没有引述来源或归因主张。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 165,
+            "text": "未提供协作功能信息，无法确定是否支持多人实时协作。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/exposed-project",
+      "attribution_claims": "present",
+      "facts": {
+        "verdict": "uncertain",
+        "reason": "可访问性、稳定性、配额和好友使用情况未在描述中证实；“障碍更可能来自外部条件”仍是材料无法确认的现实假设。",
+        "quotes": [
+          {
+            "start": 340,
+            "end": 367,
+            "text": "障碍更可能来自定位和执行之外的外部条件，而非方向本身。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "围绕个人娱乐项目定位与实际使用核验；把稳定性、配额和朋友反馈列为待核事项，没有擅加结果预测窗口。",
+        "quotes": [
+          {
+            "start": 367,
+            "end": 381,
+            "text": "一般建议先按最小娱乐场景试用",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "正文说定位“比较顺”，但方向标记 mixed，因素全为 neutral/conditional；e3称不证明正向推动，k14提醒外部约束。未交代这些依据为何支持偏正面的象意取舍，结论倾向强于因素支撑。",
+        "quotes": [
+          {
+            "start": 332,
+            "end": 339,
+            "text": "这个定位比较顺",
+            "evidence_ids": [
+              "e3",
+              "k14"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 471,
+            "end": 490,
+            "text": "\"direction\":\"mixed\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 935,
+            "end": 956,
+            "text": "不证明资源、人气或投入产出已经形成正向推动",
+            "evidence_ids": [
+              "e3"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 809,
+            "end": 823,
+            "text": "只表示外部约束可能比预想更强",
+            "evidence_ids": [
+              "k14"
+            ],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "pass",
+        "reason": "把事实前提归于用户描述，将象意限定为象意，并把试用标成一般建议且声明非盘面支持；没有冒称公共资料或把现实状态当作卦盘事实。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 147,
+            "text": "按你描述的状态",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,400 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:50d4143de9f632fc18f36bb95e7d822ffd9c6f5c4176b93d548aa41969d856ea",
+  "reviewer_id": "root-retrospective",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "constraint-baseline-1/reality-assertion",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "uncertain",
+        "reason": "Reality ROI has no supplied measurement; its truth is unknown. The noncommercial question does not authorize a profit conclusion. The assertion has no supporting input.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 149,
+            "text": "\"投入产出比合理。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "fail",
+        "reason": "Reality ROI has no supplied measurement; its truth is unknown. The noncommercial question does not authorize a profit conclusion. The assertion has no supporting input.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 149,
+            "text": "\"投入产出比合理。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "Reality ROI has no supplied measurement; its truth is unknown. The noncommercial question does not authorize a profit conclusion. The assertion has no supporting input.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 149,
+            "text": "\"投入产出比合理。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "No supplied literature or claim attributing the answer to a public/ancient source was identified. User/program versus hypothesis separation is assessed under facts and support.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 149,
+            "text": "\"投入产出比合理。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/reality-denial",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "pass",
+        "reason": "Explicitly denies proof and separates general advice; makes no claim about actual ROI.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 168,
+            "text": "\"没有证据证明投入产出比合理。一般建议：先观察实际使用。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "Explicitly denies proof and separates general advice; makes no claim about actual ROI.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 168,
+            "text": "\"没有证据证明投入产出比合理。一般建议：先观察实际使用。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "Explicitly denies proof and separates general advice; makes no claim about actual ROI.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 168,
+            "text": "\"没有证据证明投入产出比合理。一般建议：先观察实际使用。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "No supplied literature or claim attributing the answer to a public/ancient source was identified. User/program versus hypothesis separation is assessed under facts and support.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 168,
+            "text": "\"没有证据证明投入产出比合理。一般建议：先观察实际使用。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/prediction-window",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "uncertain",
+        "reason": "No forecast horizon was requested and no supplied premise supports this short-term outcome; actual future outcome remains unknown.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 150,
+            "text": "\"短期结果可能中性。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "fail",
+        "reason": "No forecast horizon was requested and no supplied premise supports this short-term outcome; actual future outcome remains unknown.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 150,
+            "text": "\"短期结果可能中性。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "No forecast horizon was requested and no supplied premise supports this short-term outcome; actual future outcome remains unknown.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 150,
+            "text": "\"短期结果可能中性。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "No supplied literature or claim attributing the answer to a public/ancient source was identified. User/program versus hypothesis separation is assessed under facts and support.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 150,
+            "text": "\"短期结果可能中性。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/usage-advice",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "pass",
+        "reason": "Short-term trial is explicitly general advice, not a forecast window or claim about existing software.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 156,
+            "text": "\"一般建议：短期试用并记录反馈。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "Short-term trial is explicitly general advice, not a forecast window or claim about existing software.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 156,
+            "text": "\"一般建议：短期试用并记录反馈。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "Short-term trial is explicitly general advice, not a forecast window or claim about existing software.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 156,
+            "text": "\"一般建议：短期试用并记录反馈。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "No supplied literature or claim attributing the answer to a public/ancient source was identified. User/program versus hypothesis separation is assessed under facts and support.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 156,
+            "text": "\"一般建议：短期试用并记录反馈。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/unsupported-feature",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "uncertain",
+        "reason": "User reported deployment, not collaboration features. Actual support for collaboration is unknown; this affirmative functionality claim has no supplied basis.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 154,
+            "text": "\"程序已经实现多人实时协作。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "User reported deployment, not collaboration features. Actual support for collaboration is unknown; this affirmative functionality claim has no supplied basis.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 154,
+            "text": "\"程序已经实现多人实时协作。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "User reported deployment, not collaboration features. Actual support for collaboration is unknown; this affirmative functionality claim has no supplied basis.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 154,
+            "text": "\"程序已经实现多人实时协作。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "No supplied literature or claim attributing the answer to a public/ancient source was identified. User/program versus hypothesis separation is assessed under facts and support.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 154,
+            "text": "\"程序已经实现多人实时协作。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/feature-unknown",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "pass",
+        "reason": "Keeps collaboration functionality unknown instead of deriving it from a cast.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 166,
+            "text": "\"未提供协作功能信息，无法确定是否支持多人实时协作。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "Keeps collaboration functionality unknown instead of deriving it from a cast.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 166,
+            "text": "\"未提供协作功能信息，无法确定是否支持多人实时协作。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "Keeps collaboration functionality unknown instead of deriving it from a cast.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 166,
+            "text": "\"未提供协作功能信息，无法确定是否支持多人实时协作。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "No supplied literature or claim attributing the answer to a public/ancient source was identified. User/program versus hypothesis separation is assessed under facts and support.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 166,
+            "text": "\"未提供协作功能信息，无法确定是否支持多人实时协作。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "constraint-baseline-1/exposed-project",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "pass",
+        "reason": "No definite conflicting program fact or unsolicited horizon identified. However mixed conclusion has only neutral/conditional factors and no opposing/supporting priority, so its direction is not substantiated. Symbolic mapping does not establish actual project benefit.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 470,
+            "text": "\"按你描述的状态——自己写代码、部署在 GitHub 和 Cloudflare、免费、只给身边好友娱乐——这是一个边界清晰、目标单纯的小项目，盘面不构成对该方向本身的否定。现时仍应把它看作个人娱乐向作品：能不能长期稳定运行、好友是否真的用起来、免费额度或配额是否够用，都没有在描述里给出，所以这些仍是待核条件，不能由盘面替代。\\n\\n若只问象意层面，“自己投入、面向熟人、不图商业回报”这个定位比较顺；障碍更可能来自定位和执行之外的外部条件，而非方向本身。一般建议先按最小娱乐场景试用，确认部署在实际访问时是否稳定、好友能否正常打开、免费额度是否会被意外用尽；这是建议，不是盘面支持。目前没有任何资料或卦盘依据可以替你证明代码能跑、投入产出合理或平台正在推动。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "No definite conflicting program fact or unsolicited horizon identified. However mixed conclusion has only neutral/conditional factors and no opposing/supporting priority, so its direction is not substantiated. Symbolic mapping does not establish actual project benefit.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 470,
+            "text": "\"按你描述的状态——自己写代码、部署在 GitHub 和 Cloudflare、免费、只给身边好友娱乐——这是一个边界清晰、目标单纯的小项目，盘面不构成对该方向本身的否定。现时仍应把它看作个人娱乐向作品：能不能长期稳定运行、好友是否真的用起来、免费额度或配额是否够用，都没有在描述里给出，所以这些仍是待核条件，不能由盘面替代。\\n\\n若只问象意层面，“自己投入、面向熟人、不图商业回报”这个定位比较顺；障碍更可能来自定位和执行之外的外部条件，而非方向本身。一般建议先按最小娱乐场景试用，确认部署在实际访问时是否稳定、好友能否正常打开、免费额度是否会被意外用尽；这是建议，不是盘面支持。目前没有任何资料或卦盘依据可以替你证明代码能跑、投入产出合理或平台正在推动。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "No definite conflicting program fact or unsolicited horizon identified. However mixed conclusion has only neutral/conditional factors and no opposing/supporting priority, so its direction is not substantiated. Symbolic mapping does not establish actual project benefit.",
+        "quotes": [
+          {
+            "start": 0,
+            "end": 1289,
+            "text": "{\"schema_version\":\"structured-selection-2\",\"context_id\":\"sha256:e576739eee6fd565644a65b2a0d42af3e043dcd48d4eab9b5553c0bcd78158b6\",\"answer\":\"按你描述的状态——自己写代码、部署在 GitHub 和 Cloudflare、免费、只给身边好友娱乐——这是一个边界清晰、目标单纯的小项目，盘面不构成对该方向本身的否定。现时仍应把它看作个人娱乐向作品：能不能长期稳定运行、好友是否真的用起来、免费额度或配额是否够用，都没有在描述里给出，所以这些仍是待核条件，不能由盘面替代。\\n\\n若只问象意层面，“自己投入、面向熟人、不图商业回报”这个定位比较顺；障碍更可能来自定位和执行之外的外部条件，而非方向本身。一般建议先按最小娱乐场景试用，确认部署在实际访问时是否稳定、好友能否正常打开、免费额度是否会被意外用尽；这是建议，不是盘面支持。目前没有任何资料或卦盘依据可以替你证明代码能跑、投入产出合理或平台正在推动。\",\"direction\":\"mixed\",\"main_choice\":{\"basis_id\":\"l1\",\"reason\":\"你问的是“自己做的娱乐小项目”整体是否合宜，取自身角度为锚，看这件事落在自己手中的处境与外部条件，而不是替代现实运行验证。\"},\"factors\":[{\"basis_id\":\"k2\",\"assessment\":\"neutral\",\"interpretation\":\"这一标记只说明自身角度带有可被暂时搁置的意味，不能据此断定项目已停或不能启动；它提示即使方向合宜，也需等实际条件核清。\"},{\"basis_id\":\"k14\",\"assessment\":\"conditional\",\"interpretation\":\"这是自身角度受外部对立条件影响的标记，只表示外部约束可能比预想更强；若部署在免费平台并面向熟人使用，访问变化或配额变化都属待核条件。\"},{\"basis_id\":\"e3\",\"assessment\":\"neutral\",\"interpretation\":\"这条只表明因素之间存在基础方向联系，不证明资源、人气或投入产出已经形成正向推动；对娱乐向自用小项目而言，可作为留意点而非结论。\"},{\"basis_id\":\"t6\",\"assessment\":\"conditional\",\"interpretation\":\"这条只说明变化方向对原方向存在基础制约，不能自动解读为项目会终止或功能会失败；仅提示若实际使用量或依赖条件超出预期，可能需要调整预期。\"}],\"background_usage\":[],\"timing_candidates\":[],\"uncertainties\":[\"实际可访问性、页面能否在好友设备上正常打开，未提供，仍属未知。\",\"免费额度与配额是否足够、是否可能触发限制，未提供。\",\"好友实际使用频率与反馈，未提供。\",\"代码由 Codex 辅助编写后的运行稳定性，未提供。\"]}",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "No supplied literature or claim attributing the answer to a public/ancient source was identified. User/program versus hypothesis separation is assessed under facts and support.",
+        "quotes": [
+          {
+            "start": 139,
+            "end": 470,
+            "text": "\"按你描述的状态——自己写代码、部署在 GitHub 和 Cloudflare、免费、只给身边好友娱乐——这是一个边界清晰、目标单纯的小项目，盘面不构成对该方向本身的否定。现时仍应把它看作个人娱乐向作品：能不能长期稳定运行、好友是否真的用起来、免费额度或配额是否够用，都没有在描述里给出，所以这些仍是待核条件，不能由盘面替代。\\n\\n若只问象意层面，“自己投入、面向熟人、不图商业回报”这个定位比较顺；障碍更可能来自定位和执行之外的外部条件，而非方向本身。一般建议先按最小娱乐场景试用，确认部署在实际访问时是否稳定、好友能否正常打开、免费额度是否会被意外用尽；这是建议，不是盘面支持。目前没有任何资料或卦盘依据可以替你证明代码能跑、投入产出合理或平台正在推动。\"",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    }
+  ]
+}

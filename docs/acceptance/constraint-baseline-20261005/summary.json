@@ -1,0 +1,103 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:50d4143de9f632fc18f36bb95e7d822ffd9c6f5c4176b93d548aa41969d856ea",
+  "review_kind": "retrospective_nonblind",
+  "responses": 7,
+  "reviewers": [
+    "root-retrospective",
+    "gpt-6-luna"
+  ],
+  "dimensions": {
+    "facts": {
+      "pass": 7,
+      "fail": 0,
+      "uncertain": 7,
+      "not_applicable": 0
+    },
+    "scope": {
+      "pass": 9,
+      "fail": 5,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "support": {
+      "pass": 6,
+      "fail": 8,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "attribution": {
+      "pass": 2,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 12
+    }
+  },
+  "disagreements": [
+    {
+      "id": "constraint-baseline-1/usage-advice",
+      "dimension": "attribution",
+      "verdicts": [
+        {
+          "reviewer": "root-retrospective",
+          "verdict": "not_applicable"
+        },
+        {
+          "reviewer": "gpt-6-luna",
+          "verdict": "pass"
+        }
+      ]
+    },
+    {
+      "id": "constraint-baseline-1/unsupported-feature",
+      "dimension": "scope",
+      "verdicts": [
+        {
+          "reviewer": "root-retrospective",
+          "verdict": "pass"
+        },
+        {
+          "reviewer": "gpt-6-luna",
+          "verdict": "fail"
+        }
+      ]
+    },
+    {
+      "id": "constraint-baseline-1/exposed-project",
+      "dimension": "facts",
+      "verdicts": [
+        {
+          "reviewer": "root-retrospective",
+          "verdict": "pass"
+        },
+        {
+          "reviewer": "gpt-6-luna",
+          "verdict": "uncertain"
+        }
+      ]
+    },
+    {
+      "id": "constraint-baseline-1/exposed-project",
+      "dimension": "attribution",
+      "verdicts": [
+        {
+          "reviewer": "root-retrospective",
+          "verdict": "not_applicable"
+        },
+        {
+          "reviewer": "gpt-6-luna",
+          "verdict": "pass"
+        }
+      ]
+    }
+  ],
+  "mechanical_failures": [
+    "constraint-baseline-1/reality-assertion",
+    "constraint-baseline-1/prediction-window",
+    "constraint-baseline-1/exposed-project"
+  ],
+  "production_ready": false,
+  "model_improvement_established": false,
+  "network_calls": 0,
+  "limitation": "Counts are retrospective human/agent judgments, not prediction accuracy or independent unseen-case acceptance."
+}
