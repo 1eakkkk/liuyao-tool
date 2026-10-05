@@ -6,7 +6,7 @@ import {parseOutputAnswer} from '../../src/ai/output/parse.js';
 import {prepareJudgmentPlan} from '../../experiments/judgment-review/plan.js';
 import {parseSearchResponse} from '../../src/ai/background-search.js';
 const spec=(await prepareJudgmentPlan()).cases[0];
-export const selectedAnswer=context=>({schema_version:SELECTION_VERSION,context_id:context.context_id,answer:'目前依据不足以断定能否达成目标。一般建议：先核对现实条件。',direction:'unclear',main_choice:{basis_id:'l4',reason:'先观察自身承受目标的条件，不等于已知能力。'},factors:[{basis_id:'e3',assessment:'conditional',interpretation:'这一基础支持不等于实际晋升，需要结合自身承受条件。'},{basis_id:'t4',assessment:'oppose',interpretation:'从自身这一角度观察限制，但不证明真实投入或状态。'}],background_usage:[],timing_candidates:[],uncertainties:['未提供实际能力与投入信息。']});
+export const selectedAnswer=context=>({schema_version:SELECTION_VERSION,context_id:context.context_id,answer:'目前依据不足以断定能否达成目标。一般建议：先核对现实条件。',direction:'unclear',main_choice:{basis_id:'l4',reason:'先观察自身承受目标的条件，不等于已知能力。'},factors:[{basis_id:'e3',assessment:'conditional',interpretation:'这一基础支持不等于实际晋升，需要结合自身承受条件。'},{basis_id:'t4',assessment:'conditional',interpretation:'从自身这一角度观察限制，但不证明真实投入或状态。'}],background_usage:[],timing_candidates:[],uncertainties:['未提供实际能力与投入信息。']});
 test('program generates facts and direct source references; malformed selectors and property prose rejected',async()=>{
  const p=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),spec.question),raw=selectedAnswer(p.context);
  const r=parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true});expect(r.status).toBe('validated');

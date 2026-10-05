@@ -9,7 +9,7 @@ const spec=(await prepareJudgmentPlan()).cases[0];
 const answer=context=>({schema_version:SELECTION_VERSION,context_id:context.context_id,answer:'象意上目前依据不足，尚不确定有效作用。',direction:'unclear',main_choice:{basis_id:'l4',reason:'观察自身与目标的关联，不把类象视为现实事实。'},factors:[{basis_id:'e3',assessment:'conditional',interpretation:'形式帮助是否能有效作用于目标仍需核对。'},{basis_id:'t4',assessment:'oppose',interpretation:'作为自身这一角度的限制，不证明现实状态。'}],background_usage:[],timing_candidates:[],uncertainties:['现实进展尚未知。']});
 
 test('direction needs matching declared effects, never votes by count or treats conditional as support',async()=>{
- const p=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),spec.question);
+ const p=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),spec.question,{judgmentPolicyVersion:1});
  const cases=[
  ['favorable',['oppose','neutral'],false],['favorable',['conditional','neutral'],false],
  ['unfavorable',['support','conditional'],false],['mixed',['support','conditional'],false],
@@ -28,7 +28,7 @@ test('direction needs matching declared effects, never votes by count or treats 
 });
 
 test('new judgment policy is bound to API/export context, history, pending restore and future turns',async()=>{
- const session=createReadingSession(spec.canonical),p=await prepareSelectedReadingTurn(session,spec.question);
+ const session=createReadingSession(spec.canonical),p=await prepareSelectedReadingTurn(session,spec.question,{judgmentPolicyVersion:1});
  expect(p.context.conversation.judgment_policy).toBe(1);
  const pending=await restoreReadingSession(serializeReadingSession(session,p.question));
  expect(readingExport(pending.pending)).toBe(readingExport(p));
@@ -54,7 +54,7 @@ test('published sessions are not retroactively rechecked or silently upgraded',a
  expect(fresh.context.context_id).not.toBe(p.context.context_id);
  raw.context_id=fresh.context.context_id;
  expect(parseOutputAnswer(JSON.stringify(raw),fresh.context,{completed:true}).issues[0].code).toBe('direction_basis_mismatch');
- const saved=JSON.parse(serializeReadingSession(session));saved.judgmentPolicyVersion=2;
+ const saved=JSON.parse(serializeReadingSession(session));saved.judgmentPolicyVersion=3;
  await expect(restoreReadingSession(JSON.stringify(saved))).rejects.toThrow('判断约束版本不兼容');
 });
 

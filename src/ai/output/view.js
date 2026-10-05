@@ -17,6 +17,7 @@ export function outputIssueText(result) {
     unknown_evidence:'回复引用了本卦证据目录中不存在的条目，暂不能核对依据。',
     model_fact_restatement:'AI 重新陈述了应由程序展示的卦盘属性，请按本轮提示词只选择依据并解释。',
     duplicate_basis:'回复重复使用了同一依据，请合并后重新检查。',
+    formal_relation_effect_overreach:'所选依据只提供基础五行方向，尚未核对有效作用，不能直接标为支持或不利。请重新核对论证，不要只换编号或标签来通过检查。',
     direction_basis_mismatch:'判断倾向与所列因素标签不一致。请重新核对作用与取舍，不要只改标签来通过检查；依据不足时应明确说明。',
     missing_main_choice:'趋势判断缺少主要取用，需要补充或改为依据不足。',
     fact_only_scope:'事实核对中加入了趋势判断，请仅保留所问事实。',
