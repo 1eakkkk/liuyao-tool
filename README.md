@@ -20,7 +20,7 @@
 
 > 仓库只保留 `main` 工作分支，历史里程碑通过归档标签和 Git 历史保留。知识库增强尚未进入生产。
 
-> 最新开发：[背景确认页面候选](docs/BACKGROUND_SEARCH_UI.md)完成查询、来源展开、确认绑定与 API／提示词共用，工程检查通过；一次真实解读仍有五行作用冲突及引用遗漏，已停止测试，**未上线**。[原文摘录](docs/BACKGROUND_SEARCH_EXCERPTS.md)、[第一阶段](docs/BACKGROUND_SEARCH_CANDIDATE.md)、[取用与作用验收](docs/READING_ROLE_EFFECT.md)及[前轮事实检查](docs/READING_FACT_GATE.md)保留，正式功能保持上面的发布记录。
+> 最新开发：[基础五行关系候选](docs/ELEMENT_REFERENCE_CANDIDATE.md)由程序生成关系与来源编号，API／导出共用及浏览器运行检查通过；本轮无付费调用，尚未接入正式页面或完成真实回答验收。[背景确认页面候选](docs/BACKGROUND_SEARCH_UI.md)及前期记录保留，**未上线**，正式功能保持上面的发布记录。测试目录可清理范围见 [说明](docs/TEST_DATA_GUIDE.md)。
 
 打开页面默认进入 **起卦排盘**。主导航只有「起卦排盘」「AI 解卦」，学习资料在顶部，主题与帮助位于右上角。无需先读教程，也无需注册。
 
