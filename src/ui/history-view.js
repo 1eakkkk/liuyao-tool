@@ -86,6 +86,7 @@ function renderHistory(){
     open: [...item.querySelectorAll('details[open]')].map(d => d.dataset.view),
     scroll: item.querySelector('.history-item-body')?.scrollTop || 0,
     feedbackDraft: [...item.querySelectorAll('[data-feedback]')].filter(n => 'value' in n).map(n => [n.dataset.feedback, n.value]),
+    registrationDraft: [...item.querySelectorAll('[data-registration]')].filter(n => 'value' in n).map(n => [n.dataset.registration,n.value,n.checked]),
   }]));
   const active = historyList.contains(document.activeElement) ? document.activeElement : null;
   const focusId = active?.closest('.history-item')?.dataset.id;
@@ -155,6 +156,10 @@ function renderHistory(){
       for (const [field, value] of view.feedbackDraft) {
         const input = item.querySelector(`[data-feedback="${field}"]`);
         if (input) input.value = value;
+      }
+      for (const [field,value,checked] of view.registrationDraft) {
+        const input=item.querySelector(`[data-registration="${field}"]`);
+        if(input){input.value=value;if(input.type==='checkbox')input.checked=checked;}
       }
     }
     if (item.dataset.id === focusId) {

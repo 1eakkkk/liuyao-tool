@@ -108,3 +108,8 @@ body :is(.reading-text-toggle,.history-item-head,.history-plate > summary):focus
 .background-check a,.background-result a {color:var(--ui-accent);overflow-wrap:anywhere;}
 .background-check #backgroundSources summary,.background-result details > summary {min-height:44px;padding-block:10px;cursor:pointer;}
 .background-check :is(input,summary,button):focus-visible,.background-result summary:focus-visible {outline:3px solid var(--ui-accent);outline-offset:3px;}
+
+.history-feedback .registration-confirm { display:flex; align-items:flex-start; gap:10px; }
+.history-feedback .registration-confirm input { width:20px; min-height:20px; flex:none; margin-top:2px; }
+.history-feedback [data-view="registration"] > summary { min-height:44px; padding-block:10px; cursor:pointer; }
+.history-feedback [data-view="registration"] p,.history-feedback [data-view="registration"] li { overflow-wrap:anywhere; }

@@ -32,6 +32,7 @@ export function archiveReading(session, pending) {
   ]);
   if (pending) {const sources=backgroundText(pending.context?.input.background_search);turns.push({role:'user', text:pending.question+(sources?'\n\n'+sources:''), ts});}
   const record = {id:session.historyId, ts, type:session.turns.length ? 'structured' : 'prompt', readingMode:'structured',
+    ...(session.turns.length?{firstReading:{status:session.turns[0].result.status,contextId:session.turns[0].context.context_id,prompt:session.prompt,outputFormat:session.outputFormat??null,taskPolicyVersion:session.taskPolicyVersion??1,judgmentPolicyVersion:session.judgmentPolicyVersion??0,groundingPolicyVersion:session.groundingPolicyVersion??0}}:{}),
     question:session.canonical.question.text, cast:buildHistoryCastSnapshot(session.canonical), turns,
     costYuan:session.turns.reduce((n,t)=>n+(t.usage?.cost || 0),0),
     totalTokens:session.turns.reduce((n,t)=>n+(t.usage?.total || 0),0),

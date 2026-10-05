@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { chromium, webkit } from 'playwright';
 import { preview } from 'vite';
+import {hashOutput} from '../src/ai/output/context.js';
 import { SELECTION_VERSION } from '../src/ai/output/selection.js';
 const target = process.argv[2];
 const server = target ? null : await preview({ preview: { port: 4337, strictPort: true } });
@@ -97,6 +98,26 @@ try {
     assert.equal(await page.locator('.history-plate').first().getAttribute('open'),null);
     const historyBody=page.locator('.history-item-body').first();
     await page.locator('.history-feedback > summary').first().click();
+    await page.locator('[data-view="registration"] > summary').first().click();
+    await page.locator('[data-registration="claim"]').first().fill('在截止日前完成阅读计划');
+    await page.locator('[data-registration="criterion"]').first().fill('以阅读记录完成清单为准 <img src=x>');
+    await page.locator('[data-registration="deadline"]').first().fill('2030-01-01');
+    await page.locator('[data-registration="notOccurred"]').first().check();
+    await page.locator('[data-action="registration-create"]').first().click();
+    await page.locator('[data-action="registration-observe"]').first().waitFor();
+    const registered=await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_judgment_registrations_v1')).entries[0]);
+    assert.equal(registered.versions.status,'validated');
+    assert.equal(registered.versions.groundingPolicyVersion,1);
+    assert.equal(await page.locator('[data-registration="criterion"]').count(),0);
+    assert.equal(await page.locator('[data-view="registration"] img').count(),0);
+    const registrationDay=registered.registeredOn;
+    for(const note of ['开始记录，尚未完成','已完成一部分']){
+      await page.locator('[data-registration="observedOn"]').first().fill(registrationDay);
+      await page.locator('[data-registration="note"]').first().fill(note);
+      await page.locator('[data-action="registration-observe"]').first().click();
+      await page.locator('[data-view="registration"] li').filter({hasText:note}).waitFor();
+    }
+    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_judgment_registrations_v1')).entries[0].observations.length),2);
     await page.locator('[data-feedback="outcome"]').first().selectOption('partial');
     await page.locator('[data-feedback="date"]').first().fill('2026-10-04');
     await page.locator('[data-feedback="note"]').first().fill('实际完成一半 <img src=x>');
@@ -200,7 +221,17 @@ try {
     const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_interpret_history')));
     assert.equal(stored[0].turns.filter(t=>t.role==='assistant').length,6,'Followups belong to one history record');
     assert.deepEqual(errors, []);
-    report.push({ width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', source_boundary_rejected:width===1280?'passed':'covered_by_unit_tests', unrequested_window_rejected:width===390?'passed':'covered_by_unit_tests', direction_consistency_rejected:'covered_by_unit_tests', formal_relation_effect_rejected:width===320?'passed':'covered_by_unit_tests', nested_provenance: false,
+    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_judgment_registrations_v1')).entries[0].registrationHash),registered.registrationHash);
+    const backupEvent=page.waitForEvent('download');
+    await page.locator('#exportFeedbackBtn').click();
+    const backupDownload=await backupEvent;
+    const backup=JSON.parse(fs.readFileSync(await backupDownload.path(),'utf8'));
+    assert.equal(backup.registrations.length,1);
+    assert.equal(backup.registrations[0].registration.registrationHash,registered.registrationHash);
+    assert.equal(await hashOutput(backup.registrations[0].registration.snapshot),registered.snapshotHash);
+    assert.equal(backup.registrations[0].observations.length,2);
+    assert(!JSON.stringify(backup).includes('sk-test'));
+    report.push({ judgment_registration:'passed', width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', source_boundary_rejected:width===1280?'passed':'covered_by_unit_tests', unrequested_window_rejected:width===390?'passed':'covered_by_unit_tests', direction_consistency_rejected:'covered_by_unit_tests', formal_relation_effect_rejected:width===320?'passed':'covered_by_unit_tests', nested_provenance: false,
       long_conclusion: 'passed', history_keyboard: 'passed', disclosure_preservation: 'passed', history_scroll_preservation: 'passed',
       replay_rejected: true, refresh_workspace_clear_history_preserved: 'passed', stop: 'passed', replacement: 'passed', errors });
     await context.close();
