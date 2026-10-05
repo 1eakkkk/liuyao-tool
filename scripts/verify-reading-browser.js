@@ -42,7 +42,7 @@ try {
     for (let i = 0; i < 6; i++) await page.locator(`#manualLine${i}`).selectOption(i === 0 ? '6' : '8');
     await page.locator('#manualCastBtn').click();
     await page.locator('[data-tab="ai"]').click();
-    await page.locator('#questionInput').fill('如何安排读书计划？');
+    await page.locator('#questionInput').fill('读书计划能按时完成吗？请给两项建议。');
     await page.evaluate(() => localStorage.setItem('liuyao_reply_style','deep'));
     await page.locator('#readingMode').selectOption('structured');
     await page.locator('#promptBtn').click();
@@ -50,6 +50,8 @@ try {
     assert((await page.locator('#readingPrompt').inputValue()).includes('页面已经负责排盘'));
     const extract = text => JSON.parse(text.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
     let input = extract(await page.locator('#readingPrompt').inputValue());
+    assert.equal(input.conversation.task_policy,2);
+    assert(input.response_schema.properties.direction.enum.includes('favorable'),'A request for advice must not erase the trend question');
     assert.equal(requests.length, 0);
     assert((await page.locator('#readingPrompt').inputValue()).includes('最多三条'));
     await page.locator('#readingPaste').fill(JSON.stringify(answer(input)));
@@ -160,7 +162,7 @@ try {
     assert.equal(await page.evaluate(() => localStorage.getItem('liuyao_structured_reading_v1')), null);
     assert(await page.locator('#readingPanel').isHidden());
     await page.locator('[data-tab="ai"]').click();
-    await page.locator('#questionInput').fill('如何安排读书计划？');
+    await page.locator('#questionInput').fill('读书计划能按时完成吗？请给两项建议。');
     await page.locator('#readingMode').selectOption('structured');
     behavior = 'valid'; await page.locator('#interpretBtn').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 1);

@@ -6,15 +6,39 @@ const object=properties=>({type:'object',properties,required:Object.keys(propert
 const text=maxLength=>({type:'string',minLength:1,maxLength});
 const list=(items,maxItems,minItems=0)=>({type:'array',items,maxItems,minItems,uniqueItems:true});
 const effects=['support','oppose','neutral','conditional'];
-const factOnly=context=>/只核对|只确认|仅核对/.test(context.input.A_user_question);
-const adviceOnly=context=>/准备哪些材料|只[给要].{0,12}建议|(?:请)?给[一二两三123]项建议/.test(context.input.A_user_question)&&!factOnly(context);
+export function readingTask(context){
+ if(!isOutputContext(context))throw Error('Trusted context required');
+ const original=context.input.A_user_question;
+ // Published sessions keep their original routing and context identities.
+ if(context.conversation?.task_policy!==2){
+  if(/只核对|只确认|仅核对/.test(original))return 'facts';
+  return /准备哪些材料|只[给要].{0,12}建议|(?:请)?给[一二两三123]项建议/.test(original)?'advice':'interpretation';
+ }
+ const q=original.replace(/“[^”]*”|「[^」]*」|『[^』]*』|"[^"\n]*"/g,'');
+ const boundary='(?:^|[，,。；;！？!?\\n])\\s*(?:请|麻烦|我)?(?:先)?';
+ const explicitFacts=new RegExp(boundary+'(?:只核对|只确认|仅核对)').test(q);
+ const explicitAdvice=new RegExp(boundary+'(?:再|并|同时)?(?:只[给要].{0,12}建议|给[一二两三123]项建议|准备哪些材料)').test(q)||/准备哪些材料/.test(q);
+ const trendText=q.replace(/(?:不|不要|无需|不用)(?:做)?(?:预测(?:日期|时间|应期|结果|成败)?|判断成败|分析走势)/g,'');
+ const asksTrend=/能否|能不能|会不会|是否(?:能|会)|何时|什么时候|多久|哪天|(?:能|会)[^，,。；;！？!?\n]{0,24}[吗么]|成败|趋势|走势|怎么样|前景|运势|吉凶|利弊/.test(trendText);
+ const additionalRequest=/(?:再|并|同时|另外|也|以及).{0,16}(?:给|建议|解读|解释|判断|分析)/.test(q);
+ const supportedFact=/六亲|五行|动静|动爻|静爻|世爻|应爻|世应|地支|纳甲|月令|旺衰/.test(q);
+ const unsupportedFact=/六神|旬空|空亡|伏神|变爻|阴阳|回头|进神|退神|世应关系|生克|月破|月合/.test(q);
+ if(explicitFacts&&(!supportedFact||unsupportedFact)&&!asksTrend)return 'clarification';
+ if(explicitFacts&&explicitAdvice&&supportedFact&&!unsupportedFact&&!asksTrend)return 'facts_and_advice';
+ if(explicitFacts&&supportedFact&&!unsupportedFact&&!additionalRequest&&!asksTrend)return 'facts';
+ if(explicitAdvice&&!asksTrend)return 'advice';
+ return 'interpretation';
+}
+const factOnly=context=>readingTask(context)==='facts';
+const factSelection=context=>['facts','facts_and_advice'].includes(readingTask(context));
+const adviceOnly=context=>readingTask(context)==='advice';
 export function selectionCatalog(context){
  if(!isOutputContext(context))throw Error('Trusted context required');
  const entries=[],registry=new Map(context.evidence.map(e=>[e.id,e]));
  const lines=context.input.C_canonical_cast.lines;
  const add=(id,text,ids,target=null)=>{if(ids.some(i=>!registry.has(i)))throw Error('Missing catalog source');entries.push({id,text,ids:[...new Set(ids)],target});};
  for(const [i,line] of lines.entries()){
-  if(factOnly(context)){
+  if(factSelection(context)){
    const q=context.input.A_user_question;
    const named=[...q.matchAll(/(?:第)?([一二三四五六1-6])爻/g)].map(m=>'一二三四五六'.includes(m[1])?'一二三四五六'.indexOf(m[1])+1:Number(m[1]));
    if(/初爻/.test(q))named.push(1);if(/上爻/.test(q))named.push(6);
@@ -33,7 +57,7 @@ export function selectionCatalog(context){
   }
  }
  const reference=buildElementReference(context);
- if(!factOnly(context)){
+ if(!factSelection(context)){
  for(const row of reference.to_shi.filter(r=>r.from.line!==r.to.line&&!lines[r.from.line-1].is_ying))add(`e${row.from.line}`,row.text+'（基础五行方向，不代表有效助力或吉凶）',row.source_fact_ids);
  for(const row of reference.returning)add(`t${row.to.line}`,row.text+'（变爻对本爻的基础方向）',row.source_fact_ids);
  context.evidence.filter(e=>e.kind==='rule_result'&&!e.rule_id.startsWith('MOVE-RETURN-')).forEach((e,i)=>add(`k${i+1}`,`第${e.target.line}爻${e.target.component==='primary'?'本爻':e.target.component==='changed'?'变爻':'伏神'}：${e.result.label}`, [e.id]));
@@ -44,14 +68,14 @@ export function selectionCatalog(context){
  return {entries,sources};
 }
 export function selectionSchema(context){
- const {entries,sources}=selectionCatalog(context),ids=entries.filter(e=>factOnly(context)||!e.target).map(e=>e.id);
+ const {entries,sources}=selectionCatalog(context),ids=entries.filter(e=>factSelection(context)||!e.target).map(e=>e.id);
  const schema=object({schema_version:{const:SELECTION_VERSION},context_id:text(80),answer:{...text(2000),description:'只写面向当前问题的结论、取舍和条件；禁止复述任何爻位或卦盘属性，程序另行展示。'},direction:{enum:['favorable','unfavorable','mixed','unclear']},
   main_choice:object({basis_id:{enum:['none',...entries.filter(e=>e.target).map(e=>e.id)]},reason:{...text(500),description:'解释为何选择这个角度，禁止复述目录事实，只称自身、目标、外部条件。'}}),
   factors:list(object({basis_id:{enum:ids},assessment:{enum:effects},interpretation:{...text(700),description:'仅解释这个 basis_id 自己能支持的目标相关象意与限制。禁止爻位、六亲、动静、生克原文；不得借用未选择的其他依据。'}}),factOnly(context)?6:4,0),
   background_usage:list(object({source_id:{enum:sources.filter(s=>s.scope_gate!=='limited_unconfirmed').map(s=>s.id)},state:{enum:['not_applicable','context_only']},note:text(400)}),5),
   timing_candidates:list(object({candidate:text(240),basis_id:{enum:ids},reason:text(500)}),2),
   uncertainties:list(text(500),5,1)});
- if(factOnly(context)||adviceOnly(context)){
+ if(factSelection(context)||adviceOnly(context)||readingTask(context)==='clarification'){
   schema.properties.direction={const:'unclear'};
   schema.properties.main_choice=object({basis_id:{const:'none'},reason:{const:'仅回应当前请求，不作趋势取用。'}});
   schema.properties.factors=list(schema.properties.factors.items,0);
@@ -61,6 +85,7 @@ export function selectionSchema(context){
   schema.properties.answer={const:'所问事实由程序逐项展示，不作预测。'};
   schema.properties.uncertainties=list({const:'仅核对程序记录，不验证现实结果。'},1,1);
  }
+ if(readingTask(context)==='clarification')schema.properties.uncertainties.maxItems=4;
  return schema;
 }
 const factualProse=/(?:第[一二三四五六1-6两]+爻|[一二三四五1-6]爻|初爻|上爻|世爻|应爻|变爻|伏神|动爻|静爻|月令|回头[生克]|(?:木|火|土|金|水)[生克](?:木|火|土|金|水)|[子丑寅卯辰巳午未申酉戌亥][木火土金水])/;
@@ -86,14 +111,14 @@ export function decodeSelection(raw,context){
  const record=line?(chosen.target.component==='primary'?line:line[chosen.target.component]):null;
  return {schema_version:OUTPUT_VERSION,context_id:raw.context_id,answer:raw.answer,direction:raw.direction,
   yongshen_candidates:record?[{relative:record.relative,targets:[chosen.target],reason:`程序取用位置：${chosen.text}。\nAI取用解释：${raw.main_choice.reason}`,evidence_ids:chosen.ids}]:[],
-  factors:factOnly(context)?entries.map(e=>({assessment:'neutral',interpretation:`程序核对：${e.text}`,evidence_ids:e.ids})):raw.factors.map(f=>({assessment:f.assessment,interpretation:`程序依据：${byId.get(f.basis_id).text}。\nAI解释：${f.interpretation}`,evidence_ids:byId.get(f.basis_id).ids})),
-  timing_candidates:raw.timing_candidates.map(t=>({candidate:t.candidate,reason:`程序依据：${byId.get(t.basis_id).text}。\nAI应期解释：${t.reason}`,evidence_ids:byId.get(t.basis_id).ids})),uncertainties:[...raw.uncertainties,...sources.filter(s=>s.scope_gate==='limited_unconfirmed').map(s=>`程序排除背景资料「${s.title}」：摘录涉及限时或迷你玩法，未确认与当前问题匹配，不提供给模型作为解读背景。`),...raw.background_usage.map(r=>{const s=sources.find(s=>s.id===r.source_id);return `背景资料「${s.title}」：${r.state==='not_applicable'?'不适用于当前问题':'仅作公开背景，不证明预测'}。${r.note}`})]};
+  factors:factSelection(context)?entries.map(e=>({assessment:'neutral',interpretation:`程序核对：${e.text}`,evidence_ids:e.ids})):raw.factors.map(f=>({assessment:f.assessment,interpretation:`程序依据：${byId.get(f.basis_id).text}。\nAI解释：${f.interpretation}`,evidence_ids:byId.get(f.basis_id).ids})),
+  timing_candidates:raw.timing_candidates.map(t=>({candidate:t.candidate,reason:`程序依据：${byId.get(t.basis_id).text}。\nAI应期解释：${t.reason}`,evidence_ids:byId.get(t.basis_id).ids})),uncertainties:[...raw.uncertainties,...(readingTask(context)==='clarification'?['程序说明：所问事实属性暂不在自动核对范围内，本次未核对该属性；请查看当时卦盘详表，不以其他字段替代。']:[]),...sources.filter(s=>s.scope_gate==='limited_unconfirmed').map(s=>`程序排除背景资料「${s.title}」：摘录涉及限时或迷你玩法，未确认与当前问题匹配，不提供给模型作为解读背景。`),...raw.background_usage.map(r=>{const s=sources.find(s=>s.id===r.source_id);return `背景资料「${s.title}」：${r.state==='not_applicable'?'不适用于当前问题':'仅作公开背景，不证明预测'}。${r.note}`})]};
 }
 export function selectionMessages(context){
  const {entries,sources}=selectionCatalog(context);
  const prefs=context.conversation?.response_preferences;
  const goal={brief:'300–400 字',deep:'700–800 字',custom:'按用户自定义篇幅偏好'}[prefs?.style]||'简洁回答';
- const task=factOnly(context)?'本次只核对事实：JSON 的 answer、main_choice、uncertainties 必须逐字使用 schema 的 const；factors=[]，程序自动展示所问事实。':adviceOnly(context)?'本次只提供一般筹备建议：按当前问题要求的数量给出可操作建议，并标明一般建议；main_choice 用 schema 固定值，direction=unclear，factors=[]，不引用无关盘面推演准备成败。':'本次为有边界的象意解读。';
+ const task=readingTask(context)==='clarification'?'本次所问事实属性未进入本站自动核对范围：明确告知这项限制，建议查看卦盘详表，不用其他属性代替；若还要求一般建议，仍按所要求数量回答建议，不遗漏。main_choice 用 schema 固定值，direction=unclear，factors=[]，不编造事实或趋势。':factOnly(context)?'本次只核对事实：JSON 的 answer、main_choice、uncertainties 必须逐字使用 schema 的 const；factors=[]，程序自动展示所问事实。':readingTask(context)==='facts_and_advice'?'本次既核对事实又提供一般建议：所问事实由程序逐项展示，answer 回答用户要的建议，明确是一般建议，不重述事实；main_choice 使用 schema 固定值，direction=unclear，factors=[]，不预测成败。':adviceOnly(context)?'本次只提供一般筹备建议：按当前问题要求的数量给出可操作建议，并标明一般建议；main_choice 用 schema 固定值，direction=unclear，factors=[]，不引用无关盘面推演准备成败。':'本次为有边界的象意解读。';
  return [{role:'system',content:`${task}
 你是解读页面的解释段作者。页面已经负责排盘、事实文字与引用，你只输出解释，不写传统完整解卦文章。严格按 response_schema 输出完整 JSON，不加代码围栏。
 工作分工：bases.text 是页面将自动展示的事实。选择 basis_id 即可让页面插入它。你输出的 answer、reason、interpretation、candidate、note、uncertainties 绝不能重述任何爻位、六亲、世应、动静、地支五行、月令或回头关系；不要出现“第X爻、世爻、应爻、动爻、变爻、伏神、月令、回头生克”。用“自身、目标、外部条件、这项依据”解释意义。

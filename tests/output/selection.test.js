@@ -1,7 +1,7 @@
 // @vitest-environment node
 import {test,expect} from 'vitest';
 import {createReadingSession,prepareSelectedReadingTurn,appendReadingTurn,serializeReadingSession,restoreReadingSession,readingExport} from '../../src/ai/output/session.js';
-import {selectionCatalog,SELECTION_VERSION} from '../../src/ai/output/selection.js';
+import {selectionCatalog,SELECTION_VERSION,readingTask} from '../../src/ai/output/selection.js';
 import {parseOutputAnswer} from '../../src/ai/output/parse.js';
 import {prepareJudgmentPlan} from '../../experiments/judgment-review/plan.js';
 import {parseSearchResponse} from '../../src/ai/background-search.js';
@@ -60,4 +60,65 @@ test('general advice can omit decorative evidence while trend cannot',async()=>{
  expect(parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true}).status).toBe('validated');
  const trend=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),spec.question);raw.context_id=trend.context.context_id;raw.main_choice={basis_id:'l4',reason:'自身角度。'};
  expect(parseOutputAnswer(JSON.stringify(raw),trend.context,{completed:true}).issues[0].code).toBe('missing_field');
+});
+
+test('mixed goals, negated requests and quoted labels do not erase the actual question',async()=>{
+ const cases=[
+  ['我的王者万象棋能打到王者吗？请给两项建议。','interpretation'],
+  ['这个私人网站的前景怎么样？请给两项建议。','interpretation'],
+  ['能否上王者？不要预测日期，请给两项建议。','interpretation'],
+  ['只核对初爻六亲，不判断成败。','facts'],
+  ['不判断成败，只给两项建议。','advice'],
+  ['只核对初爻六亲，同时分析能否找到钥匙。','interpretation'],
+  ['只核对初爻六亲，再给两项建议。','facts_and_advice'],
+  ['只核对初爻六亲，请给两项建议。','facts_and_advice'],
+  ['不要只核对初爻六亲，请分析整体走势。','interpretation'],
+  ['“只核对初爻六亲”是什么意思？','interpretation'],
+  ['只核对空亡，不预测。','clarification'],
+  ['只核对初爻六神，请给两项建议。','clarification'],
+  ['只核对初爻和上爻六亲，不预测。','facts'],
+  ['我想做私人书目页，准备哪些材料？请给两项建议。','advice'],
+  ['不要预测，只给一项建议。','advice'],
+ ];
+ for(const [question,task] of cases){
+  const p=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),question);
+  expect(readingTask(p.context),question).toBe(task);
+  const schema=JSON.parse(p.messages[1].content).response_schema;
+  if(task==='interpretation')expect(schema.properties.direction.enum).toContain('favorable');
+  else expect(schema.properties.direction.const).toBe('unclear');
+ }
+});
+test('routing policy binds context while published old exports and replies retain exact identity',async()=>{
+ const question='能打到王者吗？请给两项建议。';
+ const old=createReadingSession(spec.canonical),previous=await prepareSelectedReadingTurn(old,question,{taskPolicyVersion:1});
+ expect(readingTask(previous.context)).toBe('advice');expect(previous.context.conversation.task_policy).toBeUndefined();
+ const raw=selectedAnswer(previous.context);raw.main_choice={basis_id:'none',reason:'仅回应当前请求，不作趋势取用。'};raw.factors=[];
+ appendReadingTurn(old,previous,JSON.stringify(raw),true,'external');
+ const restored=await restoreReadingSession(serializeReadingSession(old));expect(restored.session.taskPolicyVersion).toBe(1);
+ expect(restored.session.turns[0].context.context_id).toBe(previous.context.context_id);
+ expect(restored.session.turns[0].result.status).toBe('validated');
+ const pending=await prepareSelectedReadingTurn(old,question),saved=await restoreReadingSession(serializeReadingSession(old,pending.question));
+ expect(readingExport(saved.pending)).toBe(readingExport(pending));
+ const current=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),question);
+ expect(readingTask(current.context)).toBe('interpretation');expect(current.context.context_id).not.toBe(previous.context.context_id);
+ expect(parseOutputAnswer(JSON.stringify(raw),current.context,{completed:true}).issues[0].code).toBe('context_mismatch');
+ const fresh=await restoreReadingSession(serializeReadingSession(createReadingSession(spec.canonical)));
+ // Non-selected legacy sessions are not silently upgraded during restoration.
+ expect(fresh.session.taskPolicyVersion).toBe(1);
+});
+
+test('combined facts and advice displays program facts alongside the requested advice',async()=>{
+ const p=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),'只核对初爻六亲，请给两项建议。');
+ const raw=selectedAnswer(p.context);raw.answer='一般建议：先记录现实条件；再按实际反馈调整安排。';raw.main_choice={basis_id:'none',reason:'仅回应当前请求，不作趋势取用。'};raw.factors=[];
+ const result=parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true});expect(result.status).toBe('validated');
+ expect(result.answer.answer).toBe(raw.answer);expect(result.answer.factors).toHaveLength(1);
+ expect(result.answer.factors[0].evidence_ids).toEqual(['fact:/lines/0/relative']);
+ expect(result.answer.factors[0].interpretation).toContain('妻财');
+});
+
+test('unsupported fact request is disclosed and not silently replaced by advice alone',async()=>{
+ const p=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),'只核对初爻六神，请给两项建议。');
+ const raw=selectedAnswer(p.context);raw.answer='该项暂未纳入自动核对。一般建议：先查原记录；再记录现实反馈。';raw.main_choice={basis_id:'none',reason:'仅回应当前请求，不作趋势取用。'};raw.factors=[];
+ const r=parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true});expect(r.status).toBe('validated');
+ expect(r.answer.factors).toEqual([]);expect(r.answer.uncertainties.join('')).toContain('本次未核对该属性');
 });
