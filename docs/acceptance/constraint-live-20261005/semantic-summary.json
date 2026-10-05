@@ -1,0 +1,101 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:daf2c6f24b9f9088fa0965959a716b8da5780377f886f048b0a071d276ca0d54",
+  "review_kind": "retrospective_nonblind",
+  "responses": 1,
+  "reviewers": [
+    "root-retrospective",
+    "gpt-6-luna"
+  ],
+  "dimensions": {
+    "facts": {
+      "pass": 0,
+      "fail": 1,
+      "uncertain": 1,
+      "not_applicable": 0
+    },
+    "scope": {
+      "pass": 1,
+      "fail": 1,
+      "uncertain": 0,
+      "not_applicable": 0
+    },
+    "support": {
+      "pass": 0,
+      "fail": 1,
+      "uncertain": 1,
+      "not_applicable": 0
+    },
+    "attribution": {
+      "pass": 1,
+      "fail": 0,
+      "uncertain": 0,
+      "not_applicable": 1
+    }
+  },
+  "disagreements": [
+    {
+      "id": "finite-constraint-live-1/personal-project-advice",
+      "dimension": "facts",
+      "verdicts": [
+        {
+          "reviewer": "root-retrospective",
+          "verdict": "uncertain"
+        },
+        {
+          "reviewer": "gpt-6-luna",
+          "verdict": "fail"
+        }
+      ]
+    },
+    {
+      "id": "finite-constraint-live-1/personal-project-advice",
+      "dimension": "scope",
+      "verdicts": [
+        {
+          "reviewer": "root-retrospective",
+          "verdict": "fail"
+        },
+        {
+          "reviewer": "gpt-6-luna",
+          "verdict": "pass"
+        }
+      ]
+    },
+    {
+      "id": "finite-constraint-live-1/personal-project-advice",
+      "dimension": "support",
+      "verdicts": [
+        {
+          "reviewer": "root-retrospective",
+          "verdict": "fail"
+        },
+        {
+          "reviewer": "gpt-6-luna",
+          "verdict": "uncertain"
+        }
+      ]
+    },
+    {
+      "id": "finite-constraint-live-1/personal-project-advice",
+      "dimension": "attribution",
+      "verdicts": [
+        {
+          "reviewer": "root-retrospective",
+          "verdict": "not_applicable"
+        },
+        {
+          "reviewer": "gpt-6-luna",
+          "verdict": "pass"
+        }
+      ]
+    }
+  ],
+  "mechanical_failures": [
+    "finite-constraint-live-1/personal-project-advice"
+  ],
+  "production_ready": false,
+  "model_improvement_established": false,
+  "network_calls": 0,
+  "limitation": "Counts are retrospective human/agent judgments, not prediction accuracy or independent unseen-case acceptance."
+}

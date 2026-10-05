@@ -1,0 +1,142 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:daf2c6f24b9f9088fa0965959a716b8da5780377f886f048b0a071d276ca0d54",
+  "reviewer_id": "gpt-6-luna",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "finite-constraint-live-1/personal-project-advice",
+      "attribution_claims": "present",
+      "facts": {
+        "verdict": "fail",
+        "reason": "值本身与所选目录相符，但因素解释直接复述程序负责的盘面属性，违反输入中的事实/解释分工；这不是判定这些事实为假。“当前能跑的版本”和开奖数据接口是否存在未被上下文证实，仍属未知。",
+        "quotes": [
+          {
+            "start": 640,
+            "end": 658,
+            "text": "动爻只表示存在可变动、可调整的着力点",
+            "evidence_ids": [
+              "k1"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 767,
+            "end": 786,
+            "text": "旬空只提示某类条件当前不充实或暂未落地",
+            "evidence_ids": [
+              "k2"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 897,
+            "end": 913,
+            "text": "基础方向显示某侧对自身有生扶意味",
+            "evidence_ids": [
+              "e3"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 1026,
+            "end": 1036,
+            "text": "比和只表示同向、同类",
+            "evidence_ids": [
+              "e6"
+            ],
+            "literature_ids": []
+          },
+          {
+            "start": 154,
+            "end": 162,
+            "text": "把当前能跑的版本",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 265,
+            "end": 275,
+            "text": "开奖数据接口没有报错",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "先给出两项具体维护做法，均面向已部署的个人娱乐项目；后续是条件式的维护提醒，没有预测收益、热度或时间，也没有把项目转成商业目标。",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 150,
+            "text": "先给两项具体维护建议",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 370,
+            "end": 414,
+            "text": "若你实际检查中发现资源加载或函数调用不稳定，再优先处理；若一切可用，则保持低频维护即可。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "uncertain",
+        "reason": "版本标签、README和手动健康检查是清楚标出的通用建议，没有冒称盘面保证效果。但接口存在与否、额外计费检查是否适用于当前架构未给出；建议将开奖接口检查限定为确有该接口时。象意能否支撑如此具体的维护动作也无法从材料确定。",
+        "quotes": [
+          {
+            "start": 154,
+            "end": 232,
+            "text": "把当前能跑的版本在 GitHub 打上清晰标签（如 v1.0-free-fun），并写一份极简 README，只记录部署入口、依赖服务和如何回滚，不必扩功能",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 250,
+            "end": 290,
+            "text": "打开页面摇一次、确认静态资源和开奖数据接口没有报错、确认免费额度未被触发额外计费",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 291,
+            "end": 302,
+            "text": "这两项都基于已部署状态",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "pass",
+        "reason": "回答区分了用户报告的部署状态、盘面象意和维护建议，并说明象意不证明现实状态；没有外部来源归因。完整 requestMessages 中含已部署报告，因此不是把当前问题未重提的部署信息说成未提供。",
+        "quotes": [
+          {
+            "start": 291,
+            "end": 302,
+            "text": "这两项都基于已部署状态",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 329,
+            "end": 370,
+            "text": "盘面只支持“存在需要留意和可整理之处”，不支持断定项目稳定、被推动或该转向商业化。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 552,
+            "end": 563,
+            "text": "不据此断言项目现实状态",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    }
+  ]
+}

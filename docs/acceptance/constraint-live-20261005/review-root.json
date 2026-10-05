@@ -1,0 +1,71 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:daf2c6f24b9f9088fa0965959a716b8da5780377f886f048b0a071d276ca0d54",
+  "reviewer_id": "root-retrospective",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "finite-constraint-live-1/personal-project-advice",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "uncertain",
+        "reason": "Actual runtime and quota status are not established. No definite conflicting cast attribute was asserted, but advice assumes an unspecified lottery data endpoint. Codex is present in the original cast question supplied to the model, so this is not labeled invented merely because absent from current question.",
+        "quotes": [
+          {
+            "start": 258,
+            "end": 275,
+            "text": "确认静态资源和开奖数据接口没有报错",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "fail",
+        "reason": "User requested two maintenance suggestions without prediction. The answer supplies those but adds four symbolic factors and an unrequested cast interpretation. Task router sent this as interpretation instead of advice, contributing to expansion.",
+        "quotes": [
+          {
+            "start": 329,
+            "end": 348,
+            "text": "盘面只支持“存在需要留意和可整理之处”",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 640,
+            "end": 658,
+            "text": "动爻只表示存在可变动、可调整的着力点",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "fail",
+        "reason": "Specific role-to-maintenance mappings lack a justified connection; neutral similarity is turned into a recommendation to maintain the same pace without expansion. The unspecified endpoint should be conditional or omitted. This does not prove the general versioning advice wrong.",
+        "quotes": [
+          {
+            "start": 1026,
+            "end": 1087,
+            "text": "比和只表示同向、同类，不证明现实主导权或朋友正在推动。维护上可视为保持同样节奏、不额外扩张即可，是否合适仍看实际使用情况。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "not_applicable",
+        "reason": "No supplied literature and no public-source attribution claim identified; source-role separation assessed separately.",
+        "quotes": [
+          {
+            "start": 1292,
+            "end": 1306,
+            "text": "相关建议只能作为通用整理步骤",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    }
+  ]
+}

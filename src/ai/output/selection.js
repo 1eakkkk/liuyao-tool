@@ -12,14 +12,17 @@ export function readingTask(context){
  if(!isOutputContext(context))throw Error('Trusted context required');
  const original=context.input.A_user_question;
  // Published sessions keep their original routing and context identities.
- if(context.conversation?.task_policy!==2){
+ if(![2,3].includes(context.conversation?.task_policy)){
   if(/只核对|只确认|仅核对/.test(original))return 'facts';
   return /准备哪些材料|只[给要].{0,12}建议|(?:请)?给[一二两三123]项建议/.test(original)?'advice':'interpretation';
  }
  const q=original.replace(/“[^”]*”|「[^」]*」|『[^』]*』|"[^"\n]*"/g,'');
  const boundary='(?:^|[，,。；;！？!?\\n])\\s*(?:请|麻烦|我)?(?:先)?';
  const explicitFacts=new RegExp(boundary+'(?:只核对|只确认|仅核对)').test(q);
- const explicitAdvice=new RegExp(boundary+'(?:再|并|同时)?(?:只[给要].{0,12}建议|给[一二两三123]项建议|准备哪些材料)').test(q)||/准备哪些材料/.test(q);
+ const numberedAdvice=context.conversation?.task_policy===3
+  ?'给[一二两三123](?:项|条)(?:(?:具体|可执行|可操作)(?:的)?)?建议'
+  :'给[一二两三123]项建议';
+ const explicitAdvice=new RegExp(boundary+'(?:再|并|同时)?(?:只[给要].{0,12}建议|'+numberedAdvice+'|准备哪些材料)').test(q)||/准备哪些材料/.test(q);
  const trendText=q.replace(/(?:不|不要|无需|不用)(?:做)?(?:预测(?:日期|时间|应期|结果|成败)?|判断成败|分析走势)/g,'');
  const asksTrend=/能否|能不能|会不会|是否(?:能|会)|何时|什么时候|多久|哪天|(?:能|会)[^，,。；;！？!?\n]{0,24}[吗么]|成败|趋势|走势|怎么样|前景|运势|吉凶|利弊/.test(trendText);
  const additionalRequest=/(?:再|并|同时|另外|也|以及).{0,16}(?:给|建议|解读|解释|判断|分析)/.test(q);

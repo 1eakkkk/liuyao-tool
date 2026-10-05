@@ -1,0 +1,16 @@
+{
+  "plannedCalls": 2,
+  "attemptedCalls": 1,
+  "skipped": [
+    "unknown-game-scope"
+  ],
+  "stopReason": "model_fact_restatement",
+  "automaticRetries": false,
+  "balanceBefore": 23.77,
+  "balanceAfter": 23.77,
+  "conservativePeakCostCny": 0.0108,
+  "exactAttributedCostCny": null,
+  "balanceDifferenceNotExactAttributedCost": true,
+  "semanticReview": "completed_with_preserved_disagreements_not_accepted",
+  "productionChanges": false
+}

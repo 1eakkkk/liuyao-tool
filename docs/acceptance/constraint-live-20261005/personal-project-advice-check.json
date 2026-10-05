@@ -1,0 +1,27 @@
+{
+  "id": "personal-project-advice",
+  "status": "fallback",
+  "issues": [
+    {
+      "code": "model_fact_restatement",
+      "path": "$"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 2844,
+    "completion_tokens": 639,
+    "total_tokens": 3483,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "prompt_cache_hit_tokens": 512,
+    "prompt_cache_miss_tokens": 2332
+  },
+  "usageOk": true,
+  "conservativePeakCostCny": 0.0108,
+  "finishReason": "stop",
+  "sawDone": true,
+  "error": null,
+  "answer": null,
+  "rawSha256": "ec9962e60fa7aa485ec361d6004a2d621133ad0e02f4571f3cafcb3a6abd5c0d"
+}

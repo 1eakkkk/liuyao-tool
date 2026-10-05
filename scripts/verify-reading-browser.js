@@ -51,7 +51,7 @@ try {
     assert((await page.locator('#readingPrompt').inputValue()).includes('程序负责事实文字'));
     const extract = text => JSON.parse(text.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
     let input = extract(await page.locator('#readingPrompt').inputValue());
-    assert.equal(input.conversation.task_policy,2);
+    assert.equal(input.conversation.task_policy,3);
     assert.equal(input.conversation.judgment_policy,2);
     assert.equal(input.conversation.grounding_policy,1);
     assert.equal(input.response_schema.properties.judgment,undefined);
