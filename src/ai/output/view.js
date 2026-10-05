@@ -107,7 +107,7 @@ export function renderOutputResult(container, result, context, { collapseFallbac
       }
       previews.append(row);
     }
-    overview.append(previews); fragment.append(overview);
+    overview.append(previews); if(answer.factors.length)fragment.append(overview);
     const details = node('details');
     details.append(node('summary', answer.timing_candidates.length ? '查看完整分析、来源、应期与不确定性' : '查看完整分析、来源与不确定性'));
     details.append(node('p', '下列解释由 AI 生成；格式与引用核对不能证明判断正确。规则和其来源事实不重复计为依据。'));

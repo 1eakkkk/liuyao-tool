@@ -1,4 +1,4 @@
-import { MAX_RESPONSE_CHARS, OutputError, validateOutputShape } from './contract.js';
+import { MAX_RESPONSE_CHARS, OUTPUT_SCHEMA, OutputError, validateOutputShape } from './contract.js';
 import { isOutputContext } from './context.js';
 import {SELECTION_VERSION,decodeSelection} from './selection.js';
 
@@ -36,7 +36,10 @@ function checkMotionClaims(answer, context) {
 }
 export function validateOutputAnswer(answer, context) {
   if (!isOutputContext(context)) throw new OutputError('untrusted_context');
-  validateOutputShape(answer);
+  const schema=context.conversation?.output_format==='selection-2'
+    ? {...OUTPUT_SCHEMA,properties:{...OUTPUT_SCHEMA.properties,factors:{...OUTPUT_SCHEMA.properties.factors,minItems:0}}}
+    : OUTPUT_SCHEMA;
+  validateOutputShape(answer,schema);
   if (answer.context_id !== context.context_id) throw new OutputError('context_mismatch', '$.context_id');
   const registry = new Map(context.evidence.map(e => [e.id, e]));
   for (const item of references(answer)) for (const id of item.evidence_ids)

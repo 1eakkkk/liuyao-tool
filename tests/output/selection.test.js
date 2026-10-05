@@ -40,9 +40,9 @@ test('pure fact question narrows fields; prose slots and source bypass remain re
  const p=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),'只核对第三爻和第五爻六亲，不预测。');
  const catalog=selectionCatalog(p.context);expect(catalog.entries.map(e=>e.id)).toEqual(['l3','l5']);
  expect(catalog.entries.every(e=>e.ids.length===1&&e.ids[0].endsWith('/relative'))).toBe(true);
- const raw=selectedAnswer(p.context);raw.main_choice={basis_id:'none',reason:'只展示要求的事实。'};raw.factors=[{basis_id:'l3',assessment:'neutral',interpretation:'所问属性由程序展示。'},{basis_id:'l5',assessment:'neutral',interpretation:'另一项所问属性由程序展示。'}];
+ const raw=selectedAnswer(p.context);raw.main_choice={basis_id:'none',reason:'仅回应当前请求，不作趋势取用。'};raw.answer='所问事实由程序逐项展示，不作预测。';raw.uncertainties=['仅核对程序记录，不验证现实结果。'];raw.factors=[];
  expect(parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true}).status).toBe('validated');
- raw.factors[0].assessment='support';expect(parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true}).issues[0].code).toBe('fact_only_scope');
+ raw.factors=[{basis_id:'l3',assessment:'support',interpretation:'无关趋势。'}];expect(parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true}).issues[0].code).toBe('invalid_count');
  const normal=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),spec.question),answer=selectedAnswer(normal.context);
  answer.timing_candidates=[{candidate:'明天',basis_id:'t4',reason:'仅供参考。'}];expect(parseOutputAnswer(JSON.stringify(answer),normal.context,{completed:true}).issues[0].code).toBe('unexpected_timing');
  answer.timing_candidates[0].candidate='三爻提示明天';expect(parseOutputAnswer(JSON.stringify(answer),normal.context,{completed:true}).issues[0].code).toBe('model_fact_restatement');
@@ -52,4 +52,12 @@ test('initial and top line aliases restrict selectable facts',async()=>{
  for(const [question,id] of [['只核对初爻是否为应爻，不预测','l1'],['只核对上爻六亲，不预测','l6']]){
   const p=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),question);expect(selectionCatalog(p.context).entries.map(e=>e.id)).toEqual([id]);
  }
+});
+
+test('general advice can omit decorative evidence while trend cannot',async()=>{
+ const p=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),'请给两项建议');
+ const raw=selectedAnswer(p.context);raw.main_choice={basis_id:'none',reason:'仅回应当前请求，不作趋势取用。'};raw.factors=[];
+ expect(parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true}).status).toBe('validated');
+ const trend=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),spec.question);raw.context_id=trend.context.context_id;raw.main_choice={basis_id:'l4',reason:'自身角度。'};
+ expect(parseOutputAnswer(JSON.stringify(raw),trend.context,{completed:true}).issues[0].code).toBe('missing_field');
 });

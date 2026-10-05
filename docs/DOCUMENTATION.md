@@ -1,11 +1,12 @@
 # 文档导航
 
-更新：2026-10-04。项目使用说明统一在 [README](../README.md)。此页只整理入口，不改写历史实验结论。
+更新：2026-10-05。项目使用说明统一在 [README](../README.md)。此页只整理入口，不改写历史实验结论。
 
 | 要了解什么 | 从哪里开始 |
 | --- | --- |
 | 当前能用什么、如何运行 | [README](../README.md) |
-| 最新解读核对与本机反馈 | [本轮变更、失败样本及发布](READING_QUALITY_FEEDBACK_RELEASE.md) |
+| 最新结构化选择版 | [程序事实、公开背景、有限真实验收和发布](SELECTED_READING_RELEASE.md) |
+| 前版解读核对与本机反馈 | [本轮变更、失败样本及发布](READING_QUALITY_FEEDBACK_RELEASE.md) |
 | 未发布的明确事实检查候选 | [检查边界、真实回答与停止记录](READING_FACT_GATE.md) |
 | 最新取用与作用一致性候选（未发布） | [有限验收、范围错误及停止记录](READING_ROLE_EFFECT.md) |
 | 联网背景基础候选（未发布） | [共同输入字段、浏览器真实搜索及边界](BACKGROUND_SEARCH_CANDIDATE.md) |
