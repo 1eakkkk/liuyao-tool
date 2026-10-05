@@ -13,7 +13,7 @@ export function createReadingSession(canonical, preferences = null) {
   if (preferences !== null && (!['brief', 'deep', 'custom'].includes(preferences.style) || typeof preferences.custom !== 'string' || preferences.custom.length > 2000)) throw Error('解读篇幅设置无效');
   return { version: READING_VERSION, prompt: READING_PROMPT, historyId: `reading-${globalThis.crypto.randomUUID()}`, historySuppressed: false, canonical: normalizeLegacyCast(structuredClone(canonical)), preferences: preferences ? {style: preferences.style, custom: preferences.custom} : null, turns: [] };
 }
-export async function prepareReadingTurn(session, question, { backgroundSearch = null,outputFormat=null,taskPolicyVersion=1,judgmentPolicyVersion=0 } = {}) {
+export async function prepareReadingTurn(session, question, { backgroundSearch = null,outputFormat=null,taskPolicyVersion=1,judgmentPolicyVersion=0,groundingPolicyVersion=0 } = {}) {
   if (session.version !== READING_VERSION || !supportedPrompts.has(session.prompt)) throw Error('此解读版本暂不支持续接，请重新开始。');
   if (!Array.isArray(session.turns) || session.turns.length >= MAX_TURNS) throw Error('本次已达 8 轮，请保存对话后开始新的解读。');
   if (typeof question !== 'string' || !question.trim() || question.length > 500) throw Error('请填写 1～500 字的问题。');
@@ -26,6 +26,7 @@ export async function prepareReadingTurn(session, question, { backgroundSearch =
     ...(outputFormat==='selection-2'?{output_format:outputFormat}:{}),
     ...(outputFormat==='selection-2'&&taskPolicyVersion===2?{task_policy:2}:{}),
     ...(outputFormat==='selection-2'&&[1,2,3,4].includes(judgmentPolicyVersion)?{judgment_policy:judgmentPolicyVersion}:{}),
+    ...(outputFormat==='selection-2'&&groundingPolicyVersion===1?{grounding_policy:1}:{}),
     ...(session.preferences ? { response_preferences: session.preferences } : {}) } });
   const messages = buildOutputMessages(context);
   if (session.preferences) {
@@ -62,7 +63,7 @@ export function appendReadingTurn(session, prepared, raw, completed, source, usa
 export function serializeReadingSession(session, pendingQuestion = null) {
   return JSON.stringify({ version: session.version, prompt: session.prompt, canonical: session.canonical, preferences: session.preferences,
     historyId:session.historyId, historySuppressed:session.historySuppressed,
-    outputFormat:session.outputFormat, ...(session.taskPolicyVersion===2?{taskPolicyVersion:2}:{}), ...([1,2,3,4].includes(session.judgmentPolicyVersion)?{judgmentPolicyVersion:session.judgmentPolicyVersion}:{}), pendingQuestion, ...(pendingQuestion && pendingQuestion.trim() === session.pendingBackgroundQuestion && session.pendingBackgroundSearch ? {pendingBackgroundSearch:session.pendingBackgroundSearch} : {}),
+    outputFormat:session.outputFormat, ...(session.taskPolicyVersion===2?{taskPolicyVersion:2}:{}), ...([1,2,3,4].includes(session.judgmentPolicyVersion)?{judgmentPolicyVersion:session.judgmentPolicyVersion}:{}), ...(session.groundingPolicyVersion===1?{groundingPolicyVersion:1}:{}), pendingQuestion, ...(pendingQuestion && pendingQuestion.trim() === session.pendingBackgroundQuestion && session.pendingBackgroundSearch ? {pendingBackgroundSearch:session.pendingBackgroundSearch} : {}),
     turns: session.turns.map(({ question, raw, completed, source, usage, backgroundSearch }) => ({ question, raw, completed, source, usage, ...(backgroundSearch ? {backgroundSearch} : {}) })) });
 }
 export async function restoreReadingSession(raw) {
@@ -75,6 +76,8 @@ export async function restoreReadingSession(raw) {
   session.taskPolicyVersion=saved.taskPolicyVersion??1;
   if(saved.judgmentPolicyVersion!==undefined&&![1,2,3,4].includes(saved.judgmentPolicyVersion))throw Error('保存的判断约束版本不兼容');
   session.judgmentPolicyVersion=saved.judgmentPolicyVersion??0;
+  if(saved.groundingPolicyVersion!==undefined&&saved.groundingPolicyVersion!==1)throw Error('保存的来源约束版本不兼容');
+  session.groundingPolicyVersion=saved.groundingPolicyVersion??0;
   session.prompt = saved.prompt;
   session.historyId = typeof saved.historyId === 'string' && /^reading-[a-zA-Z0-9:_-]{1,100}$/.test(saved.historyId)
     ? saved.historyId : `reading-${await hashOutput(session.canonical)}`;
@@ -111,6 +114,8 @@ export async function prepareSelectedReadingTurn(session,question,options={}){
  if(![1,2].includes(taskPolicyVersion))throw Error('任务分流版本不兼容');
  const judgmentPolicyVersion=options.judgmentPolicyVersion??session.judgmentPolicyVersion??2;
  if(![0,1,2,3,4].includes(judgmentPolicyVersion))throw Error('判断约束版本不兼容');
- const prepared=await prepareReadingTurn(session,question,{...options,outputFormat:'selection-2',taskPolicyVersion,judgmentPolicyVersion});
- prepared.messages=selectionMessages(prepared.context);session.outputFormat='selection-2';session.taskPolicyVersion=taskPolicyVersion;session.judgmentPolicyVersion=judgmentPolicyVersion;return prepared;
+ const groundingPolicyVersion=options.groundingPolicyVersion??session.groundingPolicyVersion??(judgmentPolicyVersion===2?1:0);
+ if(![0,1].includes(groundingPolicyVersion))throw Error('来源约束版本不兼容');
+ const prepared=await prepareReadingTurn(session,question,{...options,outputFormat:'selection-2',taskPolicyVersion,judgmentPolicyVersion,groundingPolicyVersion});
+ prepared.messages=selectionMessages(prepared.context);session.outputFormat='selection-2';session.taskPolicyVersion=taskPolicyVersion;session.judgmentPolicyVersion=judgmentPolicyVersion;session.groundingPolicyVersion=groundingPolicyVersion;return prepared;
 }

@@ -24,12 +24,12 @@ try {
     await page.route('https://api.deepseek.com/**', async route => {
       const body = route.request().postDataJSON(); requests.push(body);
       assert.equal(body.response_format.type, 'json_object');
-      assert(body.messages[0].content.includes('页面已经负责排盘'));
-      assert(body.messages[0].content.includes('一般建议独立标明'));
-      assert(body.messages[0].content.includes('选择 basis_id'));
+      assert(body.messages[0].content.includes('程序负责事实文字'));
+      assert(body.messages[0].content.includes('一般建议明确标注'));
+      assert(body.messages[0].content.includes('仅选择bases编号'));
       const input = JSON.parse(body.messages[1].content), response = answer(input);
       assert(input.bases.some(b=>b.id==='l1'));
-      if (behavior === 'invalid') { if(width===1280){ response.direction='favorable'; response.main_choice={basis_id:'l1',reason:'观察目标这一角度。'}; }else response.factors[0].assessment='support'; }
+      if (behavior === 'invalid') { if(width===1280) response.answer='投入产出比合理。'; else if(width===390) response.answer='短期结果可能中性。'; else response.factors[0].assessment='support'; }
       if (behavior === 'delayed') await new Promise(resolve => setTimeout(resolve, 1200));
       const content = JSON.stringify(response);
       const stream = `data: ${JSON.stringify({ choices: [{ delta: { content }, finish_reason: behavior === 'truncated' ? 'length' : 'stop' }], usage: { prompt_tokens: 20, completion_tokens: 30 } })}\n\ndata: [DONE]\n\n`;
@@ -47,14 +47,17 @@ try {
     await page.locator('#readingMode').selectOption('structured');
     await page.locator('#promptBtn').click();
     assert((await page.locator('#readingPrompt').inputValue()).includes('700–800 字'));
-    assert((await page.locator('#readingPrompt').inputValue()).includes('页面已经负责排盘'));
+    assert((await page.locator('#readingPrompt').inputValue()).includes('程序负责事实文字'));
     const extract = text => JSON.parse(text.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
     let input = extract(await page.locator('#readingPrompt').inputValue());
     assert.equal(input.conversation.task_policy,2);
     assert.equal(input.conversation.judgment_policy,2);
+    assert.equal(input.conversation.grounding_policy,1);
+    assert.equal(input.response_schema.properties.judgment,undefined);
+    assert.equal(input.response_schema.properties.factors.items.properties.role,undefined);
     assert(input.response_schema.properties.direction.enum.includes('favorable'),'A request for advice must not erase the trend question');
     assert.equal(requests.length, 0);
-    assert((await page.locator('#readingPrompt').inputValue()).includes('最多三条'));
+    assert((await page.locator('#readingPrompt').inputValue()).includes('优先两三条'));
     await page.locator('#readingPaste').fill(JSON.stringify(answer(input)));
     await page.locator('#readingImport').click();
     assert((await page.locator('#readingStatus').textContent()).includes('确认'));
@@ -145,7 +148,7 @@ try {
     behavior = 'invalid'; await page.locator('#readingFollow').fill('再次检查依据'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 4);
     assert((await page.locator('#readingStatus').textContent()).includes('未通过'), await page.locator('#readingStatus').textContent());
-    assert((await page.locator('#readingTurns article').last().locator('.reading-issue').textContent()).includes(width===1280?'判断倾向与所列因素标签不一致':'所选依据只提供基础五行方向'));
+    assert((await page.locator('#readingTurns article').last().locator('.reading-issue').textContent()).includes(width===1280?'现实断言':width===390?'预测时间':'所选依据只提供基础五行方向'));
     behavior = 'truncated'; await page.locator('#readingFollow').fill('截断测试'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 5);
     assert((await page.locator('#readingTurns article').last().textContent()).includes('未完成'));
@@ -197,7 +200,7 @@ try {
     const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_interpret_history')));
     assert.equal(stored[0].turns.filter(t=>t.role==='assistant').length,6,'Followups belong to one history record');
     assert.deepEqual(errors, []);
-    report.push({ width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', direction_consistency_rejected:width===1280?'passed':'covered_by_unit_tests', formal_relation_effect_rejected:width===1280?'covered_by_unit_tests':'passed', nested_provenance: false,
+    report.push({ width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', source_boundary_rejected:width===1280?'passed':'covered_by_unit_tests', unrequested_window_rejected:width===390?'passed':'covered_by_unit_tests', direction_consistency_rejected:'covered_by_unit_tests', formal_relation_effect_rejected:width===320?'passed':'covered_by_unit_tests', nested_provenance: false,
       long_conclusion: 'passed', history_keyboard: 'passed', disclosure_preservation: 'passed', history_scroll_preservation: 'passed',
       replay_rejected: true, refresh_workspace_clear_history_preserved: 'passed', stop: 'passed', replacement: 'passed', errors });
     await context.close();
