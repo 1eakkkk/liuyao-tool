@@ -1,0 +1,7 @@
+{
+  "attemptedCalls": 2,
+  "accepted": false,
+  "stopReason": "program_attribute_in_explanation",
+  "conservativePeakCostCny": 0.016656,
+  "automaticRetries": false
+}

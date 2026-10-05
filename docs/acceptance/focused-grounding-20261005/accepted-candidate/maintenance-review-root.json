@@ -1,0 +1,64 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:63a4a01fe6658a63f8e3c182e3ca74488c6b7bde8da840fc26262279172ec28e",
+  "reviewer_id": "root-retrospective",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "focused-scoped/maintenance",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "pass",
+        "reason": "No assertion conflicts with the current user report. Deployment is distinguished from continued operation; unprovided domain/configuration/resource dependencies remain conditions.",
+        "quotes": [
+          {
+            "start": 490,
+            "end": 502,
+            "text": "部署描述不等于平台已验证",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "Two labeled main maintenance groups, version/rollback records and minimum operation checks, address the user request. No revenue/popularity or forecast window added; the ancillary free-mode limitation does not assert a commercial change.",
+        "quotes": [
+          {
+            "start": 507,
+            "end": 533,
+            "text": "两项建议都不预测热度、收益或时间，也不替你判断成败。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "Advice is general and relevant to a reported deployed simulation website. Specific configuration and external resource checks are conditional, not asserted as currently present; no symbolic factor is used to prove runtime.",
+        "quotes": [
+          {
+            "start": 310,
+            "end": 362,
+            "text": "若确实有自定义域名、缓存规则或构建命令，也把对应改动写进同一条记录；这些条件你未提供，需按实际情况补充。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "pass",
+        "reason": "Header explicitly identifies the user-supplied deployment/free/personal-use description and calls the actions general advice, not searched or program-certified facts.",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 152,
+            "text": "一般建议，仅就你已说明的",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    }
+  ]
+}

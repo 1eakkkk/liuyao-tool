@@ -1,0 +1,106 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:63a4a01fe6658a63f8e3c182e3ca74488c6b7bde8da840fc26262279172ec28e",
+  "reviewer_id": "gpt-6-luna",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "focused-scoped/maintenance",
+      "attribution_claims": "present",
+      "facts": {
+        "verdict": "pass",
+        "reason": "回答没有与问题中的用户陈述冲突。它把部署状态作为用户已说明的情况，并未把未提供的接口、费用或运行状态断言为事实。",
+        "quotes": [
+          {
+            "start": 145,
+            "end": 152,
+            "text": "仅就你已说明的",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 344,
+            "end": 362,
+            "text": "这些条件你未提供，需按实际情况补充。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "回答给出两项彼此不同的维护建议，并明确不预测题目排除的热度、收益或时间；没有加入卦盘推演。",
+        "quotes": [
+          {
+            "start": 204,
+            "end": 215,
+            "text": "一、做版本与回滚记录。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 366,
+            "end": 381,
+            "text": "二、定期做一次最小可用性核对。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 507,
+            "end": 523,
+            "text": "两项建议都不预测热度、收益或时间",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "版本记录与基础可用性核对是针对网页维护的通用行动建议，不要求卦盘证明。涉及自定义域名、缓存、构建步骤及外部资源时均以条件或核对方式表达，没有将这些未提供的功能视为既有事实。",
+        "quotes": [
+          {
+            "start": 310,
+            "end": 329,
+            "text": "若确实有自定义域名、缓存规则或构建命令",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 419,
+            "end": 434,
+            "text": "若页面依赖外部脚本、字体或图片",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 449,
+            "end": 472,
+            "text": "若没有外部依赖，就只核对本地静态文件是否完整。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "pass",
+        "reason": "回答区分了用户报告的部署与实际验证，未声称已搜索或已核实平台状态；未提供的依赖和配置以条件/未知处理。",
+        "quotes": [
+          {
+            "start": 490,
+            "end": 503,
+            "text": "部署描述不等于平台已验证。",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 344,
+            "end": 362,
+            "text": "这些条件你未提供，需按实际情况补充。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    }
+  ]
+}

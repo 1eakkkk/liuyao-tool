@@ -1,0 +1,99 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:ca4661f70a665eb1f39f896973ab067133a0e19fbbcd12660fd84926920424e8",
+  "reviewer_id": "gpt-6-luna",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "focused-grounding-final/maintenance",
+      "attribution_claims": "present",
+      "facts": {
+        "verdict": "pass",
+        "reason": "未发现与提供记录或用户陈述冲突的断言。部署状态来自用户当前明确报告；运行是否正常没有被当成既定事实。接口和费用只在“如果确实有”条件下提出核对，也明确不预设依赖存在。",
+        "quotes": [
+          {
+            "start": 315,
+            "end": 332,
+            "text": "如果页面确实依赖外部接口或产生费用",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 378,
+            "end": 402,
+            "text": "不要在未确认前把“已部署”当成“当前一定能运行”",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "回答清楚列出两项主建议：发布前核对清单、可用性与备份核对。其余内容仍是这两项的具体步骤或适用条件；没有预测收益、热度或时间，也没有引入商业目标或无关卦盘解释。",
+        "quotes": [
+          {
+            "start": 145,
+            "end": 155,
+            "text": "先做两项维护。第一，",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 262,
+            "end": 278,
+            "text": "第二，做“基础可用性与备份核对”",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 378,
+            "end": 402,
+            "text": "不要在未确认前把“已部署”当成“当前一定能运行”",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "建议作为一般维护步骤，不要求由卦盘证明。版本记录、回退和备份与维护目标直接相关；未知的接口和费用被明确条件化，并要求先核对是否存在，没有把运行、收费或功能写成当前事实。",
+        "quotes": [
+          {
+            "start": 167,
+            "end": 211,
+            "text": "每次改动后，在本地或预览环境确认页面能正常打开、模拟摇奖按钮可用、结果展示无异常，再发布",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 315,
+            "end": 378,
+            "text": "如果页面确实依赖外部接口或产生费用，先用清单逐项核对调用是否正常、额度与账单是否在预期内。若没有这些依赖，就不必预设它们存在。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "pass",
+        "reason": "用户报告的部署与未验证的当前运行状态有明确区分；外部接口、计费均作为未知条件，不冒称已有接口、实际收费或进行过搜索。没有引用外部公共资料。",
+        "quotes": [
+          {
+            "start": 315,
+            "end": 332,
+            "text": "如果页面确实依赖外部接口或产生费用",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 378,
+            "end": 402,
+            "text": "不要在未确认前把“已部署”当成“当前一定能运行”",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    }
+  ]
+}

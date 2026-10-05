@@ -1,0 +1,78 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:ca4661f70a665eb1f39f896973ab067133a0e19fbbcd12660fd84926920424e8",
+  "reviewer_id": "root-retrospective",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "focused-grounding-final/maintenance",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "pass",
+        "reason": "No contradiction with current user report. Runtime and external dependency/fee conditions remain unverified, not asserted as known.",
+        "quotes": [
+          {
+            "start": 378,
+            "end": 402,
+            "text": "不要在未确认前把“已部署”当成“当前一定能运行”",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "Exactly two labeled maintenance groups respond to the request; substeps stay within release checks and availability/backup. No popularity, revenue or timing forecast.",
+        "quotes": [
+          {
+            "start": 152,
+            "end": 166,
+            "text": "第一，建立“发布前核对清单”",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 262,
+            "end": 278,
+            "text": "第二，做“基础可用性与备份核对”",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "General maintenance actions are labeled as advice and fit a reported deployed simulation website. Operation checks are verification actions, not a claim that the runtime has been validated. External interface and fee-specific steps are explicitly conditional; there is no cast-based justification.",
+        "quotes": [
+          {
+            "start": 315,
+            "end": 378,
+            "text": "如果页面确实依赖外部接口或产生费用，先用清单逐项核对调用是否正常、额度与账单是否在预期内。若没有这些依赖，就不必预设它们存在。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "pass",
+        "reason": "No claimed search/public quote/program verification. Advice and unknown actual condition are distinguished from user-reported deployment.",
+        "quotes": [
+          {
+            "start": 140,
+            "end": 151,
+            "text": "一般建议：先做两项维护",
+            "evidence_ids": [],
+            "literature_ids": []
+          },
+          {
+            "start": 625,
+            "end": 666,
+            "text": "未说明是否存在外部接口、调用额度或费用，因此只能给通用核对步骤，不能预设具体依赖。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    }
+  ]
+}

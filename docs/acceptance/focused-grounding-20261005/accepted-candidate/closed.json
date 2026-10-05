@@ -1,0 +1,119 @@
+{
+  "accepted_for_declared_stage": true,
+  "scope": "Focused advice and explicit unknown-object scope, exposed regression. Not blind, not prediction validation or universal semantic certification.",
+  "source_commit": "b24a75af5dafa15611a41ba35dd74c8c0f7bf85a",
+  "plannedCalls": 2,
+  "attemptedCalls": 2,
+  "stageTotalCalls": 4,
+  "automaticRetries": false,
+  "candidateCostUpperCny": 0.01094,
+  "stageTotalCostUpperCny": 0.027596,
+  "cumulativeStageBudgetCny": 0.2,
+  "cases": [
+    {
+      "id": "focused-scoped/maintenance",
+      "packet_hash": "sha256:63a4a01fe6658a63f8e3c182e3ca74488c6b7bde8da840fc26262279172ec28e",
+      "protocol": {
+        "mechanical_ok": true,
+        "status": "validated",
+        "issues": []
+      },
+      "summary": {
+        "version": "knowledge-semantic-review-dev-1",
+        "packet_hash": "sha256:63a4a01fe6658a63f8e3c182e3ca74488c6b7bde8da840fc26262279172ec28e",
+        "review_kind": "retrospective_nonblind",
+        "responses": 1,
+        "reviewers": [
+          "root-retrospective",
+          "gpt-6-luna"
+        ],
+        "dimensions": {
+          "facts": {
+            "pass": 2,
+            "fail": 0,
+            "uncertain": 0,
+            "not_applicable": 0
+          },
+          "scope": {
+            "pass": 2,
+            "fail": 0,
+            "uncertain": 0,
+            "not_applicable": 0
+          },
+          "support": {
+            "pass": 2,
+            "fail": 0,
+            "uncertain": 0,
+            "not_applicable": 0
+          },
+          "attribution": {
+            "pass": 2,
+            "fail": 0,
+            "uncertain": 0,
+            "not_applicable": 0
+          }
+        },
+        "disagreements": [],
+        "mechanical_failures": [],
+        "production_ready": false,
+        "model_improvement_established": false,
+        "network_calls": 0,
+        "limitation": "Counts are retrospective human/agent judgments, not prediction accuracy or independent unseen-case acceptance."
+      }
+    },
+    {
+      "id": "focused-scoped/unknown-object",
+      "packet_hash": "sha256:5121e2e76664e1b6a03afea3cc6242d94dd562b469770123a61d2ac5e371c45b",
+      "protocol": {
+        "mechanical_ok": true,
+        "status": "validated",
+        "issues": []
+      },
+      "summary": {
+        "version": "knowledge-semantic-review-dev-1",
+        "packet_hash": "sha256:5121e2e76664e1b6a03afea3cc6242d94dd562b469770123a61d2ac5e371c45b",
+        "review_kind": "retrospective_nonblind",
+        "responses": 1,
+        "reviewers": [
+          "root-retrospective",
+          "gpt-6-luna"
+        ],
+        "dimensions": {
+          "facts": {
+            "pass": 2,
+            "fail": 0,
+            "uncertain": 0,
+            "not_applicable": 0
+          },
+          "scope": {
+            "pass": 2,
+            "fail": 0,
+            "uncertain": 0,
+            "not_applicable": 0
+          },
+          "support": {
+            "pass": 2,
+            "fail": 0,
+            "uncertain": 0,
+            "not_applicable": 0
+          },
+          "attribution": {
+            "pass": 2,
+            "fail": 0,
+            "uncertain": 0,
+            "not_applicable": 0
+          }
+        },
+        "disagreements": [],
+        "mechanical_failures": [],
+        "production_ready": false,
+        "model_improvement_established": false,
+        "network_calls": 0,
+        "limitation": "Counts are retrospective human/agent judgments, not prediction accuracy or independent unseen-case acceptance."
+      }
+    }
+  ],
+  "balanceAfterCny": 23.76,
+  "exactAttributedCostCny": null,
+  "balanceDifferenceNotExactAttributedCost": true
+}

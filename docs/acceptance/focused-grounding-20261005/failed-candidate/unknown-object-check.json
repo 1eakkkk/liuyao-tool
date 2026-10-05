@@ -1,0 +1,27 @@
+{
+  "id": "unknown-object",
+  "status": "fallback",
+  "issues": [
+    {
+      "code": "program_attribute_in_explanation",
+      "path": "$.factors[0].interpretation"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 2965,
+    "completion_tokens": 718,
+    "total_tokens": 3683,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "prompt_cache_hit_tokens": 512,
+    "prompt_cache_miss_tokens": 2453
+  },
+  "usageOk": true,
+  "conservativePeakCostCny": 0.011674,
+  "finishReason": "stop",
+  "sawDone": true,
+  "error": null,
+  "answer": null,
+  "rawSha256": "c556bf8f6ab7f2ecefa6418649c74c0e22741df9df5a17dd530471ea88145509"
+}

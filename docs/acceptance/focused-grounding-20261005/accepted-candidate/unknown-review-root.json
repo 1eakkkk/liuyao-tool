@@ -1,0 +1,64 @@
+{
+  "version": "knowledge-semantic-review-dev-1",
+  "packet_hash": "sha256:5121e2e76664e1b6a03afea3cc6242d94dd562b469770123a61d2ac5e371c45b",
+  "reviewer_id": "root-retrospective",
+  "review_kind": "retrospective_nonblind",
+  "reviews": [
+    {
+      "id": "focused-scoped/unknown-object",
+      "attribution_claims": "none",
+      "facts": {
+        "verdict": "pass",
+        "reason": "User provides only the name and expressly lacks rules/version/rank/search material. The answer preserves that report, says insufficient information rather than denying object existence, and makes no incompatible program fact claim.",
+        "quotes": [
+          {
+            "start": 198,
+            "end": 221,
+            "text": "名称本身不足以说明对象是否存在可核验的规则体系",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "scope": {
+        "verdict": "pass",
+        "reason": "Addresses the current inability to judge rank advancement and information needed; no cast inference, prediction outcome or forecast time. Available time is an optional real input example, not a predicted date.",
+        "quotes": [
+          {
+            "start": 246,
+            "end": 266,
+            "text": "我不套用其他游戏机制，也不引入时间预测。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "support": {
+        "verdict": "pass",
+        "reason": "Only-name input cannot establish a rank system or personal outcome. The requested information is a conditional/example checklist, not claims of real ability, opponent type or game mechanism; no unsupported cast factor used.",
+        "quotes": [
+          {
+            "start": 309,
+            "end": 328,
+            "text": "如常用操作方式、可用时间、设备与网络等",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      },
+      "attribution": {
+        "verdict": "pass",
+        "reason": "Separates user-supplied name/absence of details from unexecuted public verification. Does not invent citations or claim search results.",
+        "quotes": [
+          {
+            "start": 405,
+            "end": 422,
+            "text": "在未提供检索结果前不能声称已查证。",
+            "evidence_ids": [],
+            "literature_ids": []
+          }
+        ]
+      }
+    }
+  ]
+}
