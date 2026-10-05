@@ -1,5 +1,6 @@
 import { MAX_RESPONSE_CHARS, OutputError, validateOutputShape } from './contract.js';
 import { isOutputContext } from './context.js';
+import {SELECTION_VERSION,decodeSelection} from './selection.js';
 
 function references(answer) {
   return [...answer.factors, ...answer.yongshen_candidates, ...answer.timing_candidates];
@@ -88,6 +89,11 @@ export function parseOutputAnswer(rawText, context, { completed = false } = {}) 
   try { answer = JSON.parse(rawText); } catch { return plain('invalid_json'); }
   if (hasDuplicateKeys(rawText)) return plain('duplicate_field');
   try {
+    if(context.conversation?.output_format==='selection-2'&&answer?.schema_version!==SELECTION_VERSION)throw new OutputError('version_mismatch');
+    if(answer?.schema_version===SELECTION_VERSION){
+      if(context.conversation?.output_format!=='selection-2')throw new OutputError('version_mismatch');
+      answer=decodeSelection(answer,context);
+    }
     validateOutputAnswer(answer, context);
     return { status: 'validated', validation: 'structure_and_references_only',
       answer, display_text: answer.answer, truncated: false, issues: [],

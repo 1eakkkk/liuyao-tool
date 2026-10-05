@@ -1,4 +1,4 @@
-import { createReadingSession, prepareCompactReadingTurn as prepareReadingTurn, appendReadingTurn, serializeReadingSession, readingExport } from '../ai/output/session.js';
+import { createReadingSession, prepareSelectedReadingTurn as prepareReadingTurn, appendReadingTurn, serializeReadingSession, readingExport } from '../ai/output/session.js';
 import { callReading } from '../ai/output/client.js';
 import { renderOutputResult } from '../ai/output/view.js';
 import { castStore } from '../app/cast-store.js';
@@ -10,6 +10,7 @@ import { state } from '../app/state.js';
 import { loadStyleChoice, loadCustomStyle } from '../storage/settings.js';
 import { archiveReading, readingHistoryText } from '../storage/reading-history.js';
 import { renderHistory } from './history-view.js';
+import {initializeBackground,selectedBackground,clearBackground} from './background.js';
 
 const KEY = 'liuyao_structured_reading_v1';
 let session = null, pending = null, busy = false, epoch = 0;
@@ -48,7 +49,7 @@ function render() {
     }
     if (t.usage) {
       const usage = document.createElement('p'); usage.className = 'reading-note';
-      usage.textContent = t.usage.total == null ? '用量未收全，费用未知；以 DeepSeek 账单为准。' : `本轮 ${t.usage.total} tokens · 约 ¥${t.usage.cost.toFixed(4)} · 以 DeepSeek 账单为准`;
+      usage.textContent = t.usage.total == null ? '用量未收全，费用未知；以 DeepSeek 账单为准。' : `解读调用 ${t.usage.total} tokens · 约 ¥${t.usage.cost.toFixed(4)} · 以 DeepSeek 账单为准${t.context.input.background_search?' · 背景查询费用另计':''}`;
       block.append(usage);
     }
     turnsRoot.append(block);
@@ -92,15 +93,16 @@ async function request(prepared) {
     clearTimeout(timer); state.activeAbortController = null; el('stopGenBtn').style.display = 'none';
   }
 }
-export async function startReading(canonical, kind) {
+export async function startReading(canonical, kind, options={}) {
   await exclusive(async () => {
     checkQuestion(canonical.question.text);
+    const backgroundSearch=Object.hasOwn(options,'backgroundSearch')?options.backgroundSearch:selectedBackground(canonical.question.text);
     clearReading();
     clearActiveConversationStorage(); state.currentConversation = null;
     for (const id of ['copyRow', 'followUpBox', 'promptOutputBox', 'promptExtraTools']) el(id).style.display = 'none';
     el('aiResult').textContent = ''; el('aiMeta').textContent = '';
     session = createReadingSession(canonical, {style: loadStyleChoice(), custom: loadCustomStyle().slice(0,2000)});
-    const prepared = await prepareReadingTurn(session, canonical.question.text);
+    const prepared = await prepareReadingTurn(session, canonical.question.text,{backgroundSearch});
     render();
     if (kind === 'api') await request(prepared);
     else { pending = prepared; render(); status('复制提示词给外部 AI，再贴回完整回复。刷新前请复制提示词；历史记录中保留本次导出。'); persist(); }
@@ -108,6 +110,7 @@ export async function startReading(canonical, kind) {
   });
 }
 export function initializeReading() {
+  initializeBackground();
   document.addEventListener('history:deleted', ({detail}) => {
     if (session && (detail.all || detail.id === session.historyId)) {
       session.historySuppressed = true; persist();
@@ -133,7 +136,7 @@ export function initializeReading() {
   });
   copy('readingCopyPrompt', () => el('readingPrompt').value);
   copy('readingCopyAll', () => session?.turns.map(t=>`问：${t.question}\n\n${readingHistoryText(t)}`).join('\n\n────────\n\n') || '');
-  el('readingClear').addEventListener('click', () => { clearReading(); status('已清空本次结构化解读。'); });
+  el('readingClear').addEventListener('click', () => { clearReading(); clearBackground(); status('已清空本次结构化解读。'); });
   el('readingImport').addEventListener('click', () => exclusive(async () => {
     if (!pending || !session) throw Error('请先生成本轮提示词。');
     if (!el('readingPaste').value.trim()) throw Error('请先贴回外部 AI 的回复。');

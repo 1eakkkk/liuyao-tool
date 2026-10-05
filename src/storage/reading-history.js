@@ -1,9 +1,10 @@
 import { loadHistory, saveHistory, buildHistoryCastSnapshot, loadLifetimeStats } from './history.js';
 import { evidenceText, outputIssueText } from '../ai/output/view.js';
 import { collectEvidencePresentation } from '../ai/output/evidence-presentation.js';
+import {backgroundText} from '../ai/output/background-view.js';
 
 export function readingHistoryText(turn) {
-  if (turn.result.status !== 'validated') return `未完成或未通过格式与引用检查：\n${outputIssueText(turn.result)}\n\n${turn.result.display_text}`;
+  if (turn.result.status !== 'validated') {const sources=backgroundText(turn.context.input.background_search);return `未完成或未通过格式与引用检查：\n${outputIssueText(turn.result)}\n\n${turn.result.display_text}${sources?'\n\n'+sources:''}`;}
   const answer = turn.result.answer;
   const parts = [answer.answer, `判断倾向：${{favorable:'偏有利',unfavorable:'偏不利',mixed:'利弊并存',unclear:'暂不明确'}[answer.direction]}`, '以下为 AI 判断；格式与引用检查不代表预测正确。规则和其来源事实不重复计为依据。'];
   const citations = ids => {
@@ -16,6 +17,7 @@ export function readingHistoryText(turn) {
   for (const candidate of answer.yongshen_candidates) add(`用神候选 ${candidate.relative}`, `${candidate.targets.map(t => `第${t.line}爻（${{primary:'本爻',changed:'变爻',hidden:'伏神'}[t.component]}）`).join('、')}。${candidate.reason}`, candidate.evidence_ids);
   for (const timing of answer.timing_candidates) add(`应期候选 ${timing.candidate}`, timing.reason, timing.evidence_ids);
   add('不确定性', answer.uncertainties.join('\n'));
+  if(turn.context.input.background_search)parts.push(backgroundText(turn.context.input.background_search));
   return parts.join('\n\n');
 }
 
@@ -28,7 +30,7 @@ export function archiveReading(session, pending) {
     {role:'user', text:turn.question, ts},
     {role:'assistant', text:readingHistoryText(turn), ts}
   ]);
-  if (pending) turns.push({role:'user', text:pending.question, ts});
+  if (pending) {const sources=backgroundText(pending.context?.input.background_search);turns.push({role:'user', text:pending.question+(sources?'\n\n'+sources:''), ts});}
   const record = {id:session.historyId, ts, type:session.turns.length ? 'structured' : 'prompt', readingMode:'structured',
     question:session.canonical.question.text, cast:buildHistoryCastSnapshot(session.canonical), turns,
     costYuan:session.turns.reduce((n,t)=>n+(t.usage?.cost || 0),0),

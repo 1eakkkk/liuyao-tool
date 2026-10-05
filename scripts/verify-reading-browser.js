@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { chromium, webkit } from 'playwright';
 import { preview } from 'vite';
-import { OUTPUT_VERSION } from '../src/ai/output/contract.js';
+import { SELECTION_VERSION } from '../src/ai/output/selection.js';
 const target = process.argv[2];
 const server = target ? null : await preview({ preview: { port: 4337, strictPort: true } });
 const engine = process.env.BROWSER_ENGINE || 'chromium';
@@ -12,11 +12,8 @@ const browser = await (engine === 'webkit' ? webkit : chromium).launch({ ...(eng
 const report = [];
 fs.mkdirSync('test-results/reading', { recursive: true });
 function answer(input) {
-  const rule=input.evidence.find(e=>e.kind==='rule_result');
-  return { schema_version: OUTPUT_VERSION, context_id: input.context_id, answer: '可以先整理书目，再安排阅读。<img src=x onerror=alert(1)>' + '请先梳理现有资料，再按自己的时间安排分阶段阅读；这只是阅读建议，不代表真实结果。'.repeat(18),
-    direction: 'unclear', yongshen_candidates: [], factors: [{ assessment: 'neutral', interpretation: '仅核对第一爻的六亲，不断言现实结果。', evidence_ids: ['fact:/lines/0/relative'] },
-      ...(rule ? [{assessment:'neutral',interpretation:'规则标注及其来源事实不重复计为依据。',evidence_ids:[rule.source_facts[0],rule.id]}] : [])],
-    timing_candidates: [], uncertainties: ['这是模拟回复，格式核对不代表预测正确。'] };
+  const rule=input.bases.find(e=>e.id.startsWith('k'));
+  return {schema_version:SELECTION_VERSION,context_id:input.context_id,answer:'可以先整理书目，再安排阅读。<img src=x onerror=alert(1)>'+'请先梳理现有资料，再按自己的时间安排分阶段阅读；这只是阅读建议，不代表真实结果。'.repeat(18),direction:'unclear',main_choice:{basis_id:'none',reason:'这里只提供一般建议，不作趋势判断。'},factors:[{basis_id:'l1',assessment:'neutral',interpretation:'仅作事实展示，不断言现实结果。'},...(rule?[{basis_id:rule.id,assessment:'neutral',interpretation:'这项标注与来源不重复计为依据。'}]:[])],background_usage:input.sources.map(s=>({source_id:s.id,state:'not_applicable',note:'仅作测试，不应用背景。'})),timing_candidates:[],uncertainties:['这是模拟回复，格式核对不代表预测正确。']};
 }
 try {
   for (const width of [1280, 390, 320]) {
@@ -27,13 +24,12 @@ try {
     await page.route('https://api.deepseek.com/**', async route => {
       const body = route.request().postDataJSON(); requests.push(body);
       assert.equal(body.response_format.type, 'json_object');
-      assert(body.messages[0].content.includes('本轮判断指引 reading-production-4'));
-      assert(body.messages[0].content.includes('一般建议，不当成盘面支持'));
-      assert(body.messages[0].content.includes('爻位核对：'));
+      assert(body.messages[0].content.includes('程序负责事实陈述'));
+      assert(body.messages[0].content.includes('一般建议明确为一般建议'));
+      assert(body.messages[0].content.includes('不书写 evidence_ids'));
       const input = JSON.parse(body.messages[1].content), response = answer(input);
-      assert.equal(input.line_reference.length,6);
-      for (const row of input.line_reference) assert.equal(row.relative,input.evidence.find(e=>e.id===row.fact_prefix+'relative').value);
-      if (behavior === 'invalid') response.factors[0].evidence_ids = ['fact:fake'];
+      assert(input.bases.some(b=>b.id==='l1'));
+      if (behavior === 'invalid') response.factors[0].basis_id='fake';
       if (behavior === 'delayed') await new Promise(resolve => setTimeout(resolve, 1200));
       const content = JSON.stringify(response);
       const stream = `data: ${JSON.stringify({ choices: [{ delta: { content }, finish_reason: behavior === 'truncated' ? 'length' : 'stop' }], usage: { prompt_tokens: 20, completion_tokens: 30 } })}\n\ndata: [DONE]\n\n`;
@@ -51,11 +47,11 @@ try {
     await page.locator('#readingMode').selectOption('structured');
     await page.locator('#promptBtn').click();
     assert((await page.locator('#readingPrompt').inputValue()).includes('700–800 字'));
-    assert((await page.locator('#readingPrompt').inputValue()).includes('本轮判断指引 reading-production-4'));
+    assert((await page.locator('#readingPrompt').inputValue()).includes('程序负责事实陈述'));
     const extract = text => JSON.parse(text.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
     let input = extract(await page.locator('#readingPrompt').inputValue());
     assert.equal(requests.length, 0);
-    assert((await page.locator('#readingPrompt').inputValue()).includes('紧凑解读：'));
+    assert((await page.locator('#readingPrompt').inputValue()).includes('最多三条'));
     await page.locator('#readingPaste').fill(JSON.stringify(answer(input)));
     await page.locator('#readingImport').click();
     assert((await page.locator('#readingStatus').textContent()).includes('确认'));
@@ -66,7 +62,7 @@ try {
     const factorPreview = page.locator('#readingTurns .reading-factor-overview').first();
     assert(await factorPreview.isVisible());
     assert.equal(await factorPreview.locator('.reading-factor-excerpt').count(), Math.min(3, answer(input).factors.length));
-    assert.equal(await factorPreview.locator('.reading-factor-excerpt').first().textContent(), answer(input).factors[0].interpretation);
+    assert((await factorPreview.locator('.reading-factor-excerpt').first().textContent()).includes(answer(input).factors[0].interpretation));
     const conclusionToggle=page.locator('#readingTurns .reading-text-toggle').first();
     assert.equal(await conclusionToggle.getAttribute('aria-expanded'),'false');
     assert((await page.locator('#readingTurns .reading-conclusion').first().textContent()).endsWith('…'));
@@ -75,12 +71,10 @@ try {
     await page.keyboard.press('Space');
     assert.equal(await conclusionToggle.getAttribute('aria-expanded'),'false');
     await page.locator('#readingTurns article').first().screenshot({path:`test-results/reading/overview-${engine}-${width}.png`});
-    const citedRule=input.evidence.find(e=>e.kind==='rule_result');
-    assert(citedRule,'Fixture has a rule citation');
     const ruleSection=page.locator('#readingTurns article').first().locator('section').nth(1);
-    assert.equal(await ruleSection.locator('.reading-evidence-sources li').count(),new Set(citedRule.source_facts).size);
+    assert(await ruleSection.locator('.reading-evidence-sources li').count()>0);
     assert.equal(await ruleSection.locator('.reading-evidence-rules li').count(),1);
-    assert.equal(await ruleSection.locator('details').count(),0,'Source facts do not require another disclosure');
+    assert.equal(await ruleSection.locator('details').count(),0);
     assert((await ruleSection.textContent()).includes('来源：事实 1'));
     await page.locator('#readingTurns details').first().evaluate(node=>{node.open=true;});
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));

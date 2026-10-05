@@ -1,0 +1,31 @@
+import {test,expect,beforeEach} from 'vitest';
+import fs from 'node:fs';
+import {parseSearchResponse} from '../../src/ai/background-search.js';
+import {renderBackgroundSources,backgroundText} from '../../src/ai/output/background-view.js';
+import {createReadingSession,prepareCompactReadingTurn,appendReadingTurn} from '../../src/ai/output/session.js';
+import {archiveReading,readingHistoryText} from '../../src/storage/reading-history.js';
+import {loadHistory,loadLifetimeStats} from '../../src/storage/history.js';
+import {syntheticOutput} from '../../experiments/structured-output/example.js';
+const canonical=JSON.parse(fs.readFileSync('experiments/phase7/fixtures/compat-1.json'));
+const bg=()=>parseSearchResponse({stop_reason:'end_turn',content:[{type:'web_search_tool_result',content:[{type:'web_search_result',title:'<img src=x onerror=alert(1)>',url:'https://example.org/limited'}]},{type:'text',citations:[{url:'https://example.org/limited',cited_text:'限时模式；<script>alert(1)</script>，不适用于主游戏。'}]}]},'某游戏');
+beforeEach(()=>localStorage.clear());
+test('source display is literal text and keeps scope qualifiers in copy',()=>{
+ const root=document.createElement('div');renderBackgroundSources(root,bg());
+ expect(root.querySelectorAll('img,script')).toHaveLength(0);
+ expect(root.textContent).toContain('不适用于主游戏');
+ expect(root.querySelector('a').href).toBe('https://example.org/limited');
+ expect(root.querySelector('details').open).toBe(false);
+ expect(backgroundText(bg())).toContain('限时模式');expect(backgroundText(null)).toBe('');
+});
+test('export, validated and incomplete history retain the original source without charging again',async()=>{
+ const session=createReadingSession(canonical),prepared=await prepareCompactReadingTurn(session,'如何安排？',{backgroundSearch:bg()});
+ archiveReading(session,prepared);expect(loadHistory()[0].turns[0].text).toContain('https://example.org/limited');
+ const turn=appendReadingTurn(session,prepared,JSON.stringify(syntheticOutput(prepared.context)),true,'external');
+ expect(readingHistoryText(turn)).toContain('不适用于主游戏');archiveReading(session,null);
+ expect(loadHistory()[0].turns[1].text).toContain('公开背景资料');
+ const next=await prepareCompactReadingTurn(session,'换个问题');
+ expect(next.context.input.background_search).toBeUndefined();
+ const incomplete=appendReadingTurn(session,next,'截断',false,'external');
+ expect(readingHistoryText(incomplete).endsWith('截断')).toBe(true);
+ expect(loadLifetimeStats()).toEqual({cost:0,tokens:0});
+});

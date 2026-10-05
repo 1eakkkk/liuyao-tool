@@ -17,7 +17,7 @@ await build({ plugins: [{
         assert(!/\/src\/ai\/knowledge-[^/]+\.js/.test(id.replaceAll('\\', '/')),
           `Unapproved knowledge AI input in stable release: ${id}`);
         if (/\/src\/ai\/output\//.test(id.replaceAll('\\', '/'))) {
-          assert(/\/(client|context|contract|evidence-presentation|parse|prompt|session|sse|view)\.js$/.test(id), `Unreviewed output module: ${id}`);
+          assert(/\/(client|context|contract|evidence-presentation|parse|prompt|session|sse|view|selection|relation-reference|background-view)\.js$/.test(id), `Unreviewed output module: ${id}`);
         }
       }
     }
