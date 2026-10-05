@@ -29,7 +29,7 @@ try {
       assert(body.messages[0].content.includes('选择 basis_id'));
       const input = JSON.parse(body.messages[1].content), response = answer(input);
       assert(input.bases.some(b=>b.id==='l1'));
-      if (behavior === 'invalid') response.factors[0].basis_id='fake';
+      if (behavior === 'invalid') { response.direction='favorable'; response.main_choice={basis_id:'l1',reason:'观察目标这一角度。'}; }
       if (behavior === 'delayed') await new Promise(resolve => setTimeout(resolve, 1200));
       const content = JSON.stringify(response);
       const stream = `data: ${JSON.stringify({ choices: [{ delta: { content }, finish_reason: behavior === 'truncated' ? 'length' : 'stop' }], usage: { prompt_tokens: 20, completion_tokens: 30 } })}\n\ndata: [DONE]\n\n`;
@@ -51,6 +51,7 @@ try {
     const extract = text => JSON.parse(text.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
     let input = extract(await page.locator('#readingPrompt').inputValue());
     assert.equal(input.conversation.task_policy,2);
+    assert.equal(input.conversation.judgment_policy,1);
     assert(input.response_schema.properties.direction.enum.includes('favorable'),'A request for advice must not erase the trend question');
     assert.equal(requests.length, 0);
     assert((await page.locator('#readingPrompt').inputValue()).includes('最多三条'));
@@ -144,6 +145,7 @@ try {
     behavior = 'invalid'; await page.locator('#readingFollow').fill('再次检查依据'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 4);
     assert((await page.locator('#readingStatus').textContent()).includes('未通过'), await page.locator('#readingStatus').textContent());
+    assert((await page.locator('#readingTurns article').last().locator('.reading-issue').textContent()).includes('判断倾向与所列因素标签不一致'));
     behavior = 'truncated'; await page.locator('#readingFollow').fill('截断测试'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 5);
     assert((await page.locator('#readingTurns article').last().textContent()).includes('未完成'));
@@ -195,7 +197,7 @@ try {
     const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_interpret_history')));
     assert.equal(stored[0].turns.filter(t=>t.role==='assistant').length,6,'Followups belong to one history record');
     assert.deepEqual(errors, []);
-    report.push({ width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', nested_provenance: false,
+    report.push({ width, browser_engine: engine, api: 'mocked', export_roundtrip: 'passed', evidence_deduplication: 'passed', direction_consistency_rejected:'passed', nested_provenance: false,
       long_conclusion: 'passed', history_keyboard: 'passed', disclosure_preservation: 'passed', history_scroll_preservation: 'passed',
       replay_rejected: true, refresh_workspace_clear_history_preserved: 'passed', stop: 'passed', replacement: 'passed', errors });
     await context.close();

@@ -98,6 +98,12 @@ export function decodeSelection(raw,context){
  if(new Set(raw.factors.map(f=>f.basis_id)).size!==raw.factors.length)throw new OutputError('duplicate_basis');
  if(raw.main_choice.basis_id==='none'&&raw.direction!=='unclear')throw new OutputError('missing_main_choice');
  if(raw.main_choice.basis_id!=='none'&&!raw.factors.length)throw new OutputError('missing_field','$.factors');
+ // Necessary label consistency only: no factor counts, weighting or semantic truth claims.
+ if(context.conversation?.judgment_policy===1&&readingTask(context)==='interpretation'){
+  const assessments=new Set(raw.factors.map(f=>f.assessment));
+  const required={favorable:['support'],unfavorable:['oppose'],mixed:['support','oppose'],unclear:[]}[raw.direction];
+  if(required.some(a=>!assessments.has(a)))throw new OutputError('direction_basis_mismatch','$.direction');
+ }
  if(factOnly(context)&&(raw.main_choice.basis_id!=='none'||raw.direction!=='unclear'||raw.factors.length))throw new OutputError('fact_only_scope');
  if(raw.timing_candidates.length&&!/何时|多久|什么时候|日期|哪天|几[天月周]|时间|何日|应期/.test(context.input.A_user_question))throw new OutputError('unexpected_timing');
  const used=new Set();
@@ -118,8 +124,10 @@ export function selectionMessages(context){
  const {entries,sources}=selectionCatalog(context);
  const prefs=context.conversation?.response_preferences;
  const goal={brief:'300–400 字',deep:'700–800 字',custom:'按用户自定义篇幅偏好'}[prefs?.style]||'简洁回答';
+ const judgmentConstraint=context.conversation?.judgment_policy===1?'判断一致性：favorable 至少要有一个 support 因素；unfavorable 至少有一个 oppose；mixed 必须同时有 support 与 oppose，说明支持与阻碍为何同时成立、整体为何仍不宜归为单向；条件或中性因素不能冒充确定的支持或阻碍。unclear 不要求两侧齐全，依据不足就说明不足。以上只是不矛盾的必要条件，不是按数量投票：只有支持与阻碍同时存在也可以偏有利或偏不利，answer 必须解释主要依据为什么占主导、另一侧为何未改变取舍。每项 assessment 是针对当前问题和主要取用的作用判断，不能仅凭形式上的生、克或旺衰决定。若有效作用尚不能确定，标为 conditional 或 neutral，不为了通过校验改标签。':'';
  const task=readingTask(context)==='clarification'?'本次所问事实属性未进入本站自动核对范围：明确告知这项限制，建议查看卦盘详表，不用其他属性代替；若还要求一般建议，仍按所要求数量回答建议，不遗漏。main_choice 用 schema 固定值，direction=unclear，factors=[]，不编造事实或趋势。':factOnly(context)?'本次只核对事实：JSON 的 answer、main_choice、uncertainties 必须逐字使用 schema 的 const；factors=[]，程序自动展示所问事实。':readingTask(context)==='facts_and_advice'?'本次既核对事实又提供一般建议：所问事实由程序逐项展示，answer 回答用户要的建议，明确是一般建议，不重述事实；main_choice 使用 schema 固定值，direction=unclear，factors=[]，不预测成败。':adviceOnly(context)?'本次只提供一般筹备建议：按当前问题要求的数量给出可操作建议，并标明一般建议；main_choice 用 schema 固定值，direction=unclear，factors=[]，不引用无关盘面推演准备成败。':'本次为有边界的象意解读。';
  return [{role:'system',content:`${task}
+${judgmentConstraint}
 你是解读页面的解释段作者。页面已经负责排盘、事实文字与引用，你只输出解释，不写传统完整解卦文章。严格按 response_schema 输出完整 JSON，不加代码围栏。
 工作分工：bases.text 是页面将自动展示的事实。选择 basis_id 即可让页面插入它。你输出的 answer、reason、interpretation、candidate、note、uncertainties 绝不能重述任何爻位、六亲、世应、动静、地支五行、月令或回头关系；不要出现“第X爻、世爻、应爻、动爻、变爻、伏神、月令、回头生克”。用“自身、目标、外部条件、这项依据”解释意义。
 l/c/h 编号仅供 main_choice 定位，不得用于因素：仅有属性无法推出压力或活跃程度。factors 只选 e/t/k 的明确关系或规则。主要取用 reason 只说明与问题的关联，不判断该位置压力、活跃、能力或目标结果。每个因素只解释它选择的单个依据，不能夹带别的关系或属性。基础关系只说明形式方向，实际作用还需所选其他依据和取用角色，不能直接推成能力、意愿、真实压力、规则、投入或结果。传统类象是分析角度，不证明现实事实。
