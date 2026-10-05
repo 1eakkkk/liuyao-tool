@@ -25,7 +25,7 @@ export async function prepareReadingTurn(session, question, { backgroundSearch =
     initial_question: session.canonical.question.text, turn: session.turns.length + 1, history,
     ...(outputFormat==='selection-2'?{output_format:outputFormat}:{}),
     ...(outputFormat==='selection-2'&&taskPolicyVersion===2?{task_policy:2}:{}),
-    ...(outputFormat==='selection-2'&&[1,2].includes(judgmentPolicyVersion)?{judgment_policy:judgmentPolicyVersion}:{}),
+    ...(outputFormat==='selection-2'&&[1,2,3].includes(judgmentPolicyVersion)?{judgment_policy:judgmentPolicyVersion}:{}),
     ...(session.preferences ? { response_preferences: session.preferences } : {}) } });
   const messages = buildOutputMessages(context);
   if (session.preferences) {
@@ -62,7 +62,7 @@ export function appendReadingTurn(session, prepared, raw, completed, source, usa
 export function serializeReadingSession(session, pendingQuestion = null) {
   return JSON.stringify({ version: session.version, prompt: session.prompt, canonical: session.canonical, preferences: session.preferences,
     historyId:session.historyId, historySuppressed:session.historySuppressed,
-    outputFormat:session.outputFormat, ...(session.taskPolicyVersion===2?{taskPolicyVersion:2}:{}), ...([1,2].includes(session.judgmentPolicyVersion)?{judgmentPolicyVersion:session.judgmentPolicyVersion}:{}), pendingQuestion, ...(pendingQuestion && pendingQuestion.trim() === session.pendingBackgroundQuestion && session.pendingBackgroundSearch ? {pendingBackgroundSearch:session.pendingBackgroundSearch} : {}),
+    outputFormat:session.outputFormat, ...(session.taskPolicyVersion===2?{taskPolicyVersion:2}:{}), ...([1,2,3].includes(session.judgmentPolicyVersion)?{judgmentPolicyVersion:session.judgmentPolicyVersion}:{}), pendingQuestion, ...(pendingQuestion && pendingQuestion.trim() === session.pendingBackgroundQuestion && session.pendingBackgroundSearch ? {pendingBackgroundSearch:session.pendingBackgroundSearch} : {}),
     turns: session.turns.map(({ question, raw, completed, source, usage, backgroundSearch }) => ({ question, raw, completed, source, usage, ...(backgroundSearch ? {backgroundSearch} : {}) })) });
 }
 export async function restoreReadingSession(raw) {
@@ -73,7 +73,7 @@ export async function restoreReadingSession(raw) {
   if(saved.outputFormat==='selection-2')session.outputFormat=saved.outputFormat;
   if(saved.taskPolicyVersion!==undefined&&saved.taskPolicyVersion!==2)throw Error('保存的任务分流版本不兼容');
   session.taskPolicyVersion=saved.taskPolicyVersion??1;
-  if(saved.judgmentPolicyVersion!==undefined&&![1,2].includes(saved.judgmentPolicyVersion))throw Error('保存的判断约束版本不兼容');
+  if(saved.judgmentPolicyVersion!==undefined&&![1,2,3].includes(saved.judgmentPolicyVersion))throw Error('保存的判断约束版本不兼容');
   session.judgmentPolicyVersion=saved.judgmentPolicyVersion??0;
   session.prompt = saved.prompt;
   session.historyId = typeof saved.historyId === 'string' && /^reading-[a-zA-Z0-9:_-]{1,100}$/.test(saved.historyId)
@@ -110,7 +110,7 @@ export async function prepareSelectedReadingTurn(session,question,options={}){
  const taskPolicyVersion=options.taskPolicyVersion??session.taskPolicyVersion??2;
  if(![1,2].includes(taskPolicyVersion))throw Error('任务分流版本不兼容');
  const judgmentPolicyVersion=options.judgmentPolicyVersion??session.judgmentPolicyVersion??2;
- if(![0,1,2].includes(judgmentPolicyVersion))throw Error('判断约束版本不兼容');
+ if(![0,1,2,3].includes(judgmentPolicyVersion))throw Error('判断约束版本不兼容');
  const prepared=await prepareReadingTurn(session,question,{...options,outputFormat:'selection-2',taskPolicyVersion,judgmentPolicyVersion});
  prepared.messages=selectionMessages(prepared.context);session.outputFormat='selection-2';session.taskPolicyVersion=taskPolicyVersion;session.judgmentPolicyVersion=judgmentPolicyVersion;return prepared;
 }
