@@ -93,7 +93,7 @@ export function selectionMessages(context){
  const {entries,sources}=selectionCatalog(context);
  const prefs=context.conversation?.response_preferences;
  const goal={brief:'300–400 字',deep:'700–800 字',custom:'按用户自定义篇幅偏好'}[prefs?.style]||'简洁回答';
- const task=factOnly(context)?'本次只核对事实：JSON 的 answer、main_choice、uncertainties 必须逐字使用 schema 的 const；factors=[]，程序自动展示所问事实。':adviceOnly(context)?'本次只提供一般筹备建议：清楚给出两项可操作建议，并标明一般建议；main_choice 用 schema 固定值，direction=unclear，factors=[]，不引用无关盘面推演准备成败。':'本次为有边界的象意解读。';
+ const task=factOnly(context)?'本次只核对事实：JSON 的 answer、main_choice、uncertainties 必须逐字使用 schema 的 const；factors=[]，程序自动展示所问事实。':adviceOnly(context)?'本次只提供一般筹备建议：按当前问题要求的数量给出可操作建议，并标明一般建议；main_choice 用 schema 固定值，direction=unclear，factors=[]，不引用无关盘面推演准备成败。':'本次为有边界的象意解读。';
  return [{role:'system',content:`${task}
 你是解读页面的解释段作者。页面已经负责排盘、事实文字与引用，你只输出解释，不写传统完整解卦文章。严格按 response_schema 输出完整 JSON，不加代码围栏。
 工作分工：bases.text 是页面将自动展示的事实。选择 basis_id 即可让页面插入它。你输出的 answer、reason、interpretation、candidate、note、uncertainties 绝不能重述任何爻位、六亲、世应、动静、地支五行、月令或回头关系；不要出现“第X爻、世爻、应爻、动爻、变爻、伏神、月令、回头生克”。用“自身、目标、外部条件、这项依据”解释意义。
