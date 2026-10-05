@@ -11,7 +11,7 @@ test('specific actionable numbered advice restricts both API and exported prompt
   expect(readingTask(p.context)).toBe('advice');expect(p.context.conversation.task_policy).toBe(3);
   const schema=JSON.parse(p.messages[1].content).response_schema;
   expect(schema.properties.factors.maxItems).toBe(0);expect(schema.properties.direction.const).toBe('unclear');
-  expect(readingExport(p)).toContain('一般筹备建议');
+  expect(readingExport(p)).toContain('本次只提供一般建议');
   const raw={schema_version:'structured-selection-2',context_id:p.context.context_id,answer:'一般建议：保存可回滚版本；定期检查实际可访问性。',direction:'unclear',main_choice:{basis_id:'none',reason:'仅回应当前请求，不作趋势取用。'},factors:[],background_usage:[],timing_candidates:[],uncertainties:['实际运行状态需自行检查。']};
   expect(parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true}).status).toBe('validated');
   raw.factors=[{basis_id:'l1',assessment:'neutral',interpretation:'保持现状。'}];

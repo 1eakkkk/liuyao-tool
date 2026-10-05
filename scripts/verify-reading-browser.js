@@ -26,10 +26,17 @@ try {
       const body = route.request().postDataJSON(); requests.push(body);
       assert.equal(body.response_format.type, 'json_object');
       assert(body.messages[0].content.includes('程序负责事实文字'));
-      assert(body.messages[0].content.includes('一般建议明确标注'));
-      assert(body.messages[0].content.includes('仅选择bases编号'));
       const input = JSON.parse(body.messages[1].content), response = answer(input);
-      assert(input.bases.some(b=>b.id==='l1'));
+      if(input.response_schema.properties.factors.maxItems===0&&input.conversation.grounding_policy===2){
+        assert.deepEqual(input.bases,[]);
+        assert.equal(input.conversation.initial_question,undefined);
+        assert.equal(input.conversation.history,undefined);
+        assert(body.messages[0].content.includes('answer开头标明'));
+      }else{
+        assert(body.messages[0].content.includes('一般建议明确标注'));
+        assert(body.messages[0].content.includes('仅选择bases编号'));
+        assert(input.bases.some(b=>b.id==='l1'));
+      }
       if (behavior === 'invalid') { if(width===1280) response.answer='投入产出比合理。'; else if(width===390) response.answer='短期结果可能中性。'; else response.factors[0].assessment='support'; }
       if (behavior === 'delayed') await new Promise(resolve => setTimeout(resolve, 1200));
       const content = JSON.stringify(response);
@@ -53,7 +60,7 @@ try {
     let input = extract(await page.locator('#readingPrompt').inputValue());
     assert.equal(input.conversation.task_policy,3);
     assert.equal(input.conversation.judgment_policy,2);
-    assert.equal(input.conversation.grounding_policy,1);
+    assert.equal(input.conversation.grounding_policy,2);
     assert.equal(input.response_schema.properties.judgment,undefined);
     assert.equal(input.response_schema.properties.factors.items.properties.role,undefined);
     assert(input.response_schema.properties.direction.enum.includes('favorable'),'A request for advice must not erase the trend question');
@@ -107,7 +114,7 @@ try {
     await page.locator('#historyList [data-action="registration-observe"]').first().waitFor();
     const registered=await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_judgment_registrations_v1')).entries[0]);
     assert.equal(registered.versions.status,'validated');
-    assert.equal(registered.versions.groundingPolicyVersion,1);
+    assert.equal(registered.versions.groundingPolicyVersion,2);
     assert.equal(await page.locator('#historyList [data-registration="criterion"]').count(),0);
     assert.equal(await page.locator('#historyList [data-view="registration"] img').count(),0);
     const registrationDay=registered.registeredOn;
@@ -163,8 +170,8 @@ try {
     await page.locator('#closeSettingsBtn').click();
     await page.locator('#readingFollow').fill('请给一项建议'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 3);
-    assert.equal(requests.length, 1); assert.equal(JSON.parse(requests[0].messages[1].content).conversation.history.length, 2);
-    assert.equal(JSON.parse(requests[0].messages[1].content).conversation.history[1].answer,null,'Failed raw reply must not feed future readings');
+    assert.equal(requests.length, 1); assert.equal(JSON.parse(requests[0].messages[1].content).conversation.history, undefined);
+    assert.equal(JSON.parse(requests[0].messages[1].content).conversation.history,undefined,'Neither failed nor checked old interpretations should feed standalone advice');
     assert(requests[0].messages[0].content.includes('700–800 字'));
     behavior = 'invalid'; await page.locator('#readingFollow').fill('再次检查依据'); await page.locator('#readingFollowApi').click();
     await page.waitForFunction(() => document.querySelectorAll('#readingTurns article').length === 4);

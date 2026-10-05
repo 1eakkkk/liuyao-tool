@@ -5,7 +5,7 @@ import {checkRealityStatements,reportedDeployment,selectionSchema,SELECTION_VERS
 import {parseOutputAnswer} from '../../src/ai/output/parse.js';
 import {prepareJudgmentPlan} from '../../experiments/judgment-review/plan.js';
 const spec=(await prepareJudgmentPlan()).cases[1];
-const prepare=(question=spec.question,options={})=>prepareSelectedReadingTurn(createReadingSession(spec.canonical),question,options);
+const prepare=(question=spec.question,options={})=>prepareSelectedReadingTurn(createReadingSession(spec.canonical),question,{groundingPolicyVersion:1,...options});
 const raw=c=>({schema_version:SELECTION_VERSION,context_id:c.context_id,answer:'按你的描述已经部署，当前可访问性与稳定性仍未核实。一般建议：记录使用反馈。',direction:'unclear',main_choice:{basis_id:'none',reason:'尚不能确定取用，保留资料限制。'},factors:[],background_usage:[],timing_candidates:[],uncertainties:['不能以程序记录验证现实状态。']});
 
 test('stable schema gains source boundaries without experimental fields or treating user text as verified',async()=>{
@@ -39,9 +39,9 @@ test('deployment extraction avoids future plans, questions and hypotheses',async
 test('previous stable sessions keep exact old contexts and new policy survives pending and completed history',async()=>{
  const oldSession=createReadingSession(spec.canonical),old=await prepareSelectedReadingTurn(oldSession,spec.question,{groundingPolicyVersion:0});
  expect(old.context.conversation.grounding_policy).toBeUndefined();const pending=await restoreReadingSession(serializeReadingSession(oldSession,old.question));expect(readingExport(pending.pending)).toBe(readingExport(old));
- const session=createReadingSession(spec.canonical),p=await prepareSelectedReadingTurn(session,spec.question);expect(p.context.context_id).not.toBe(old.context.context_id);
+ const session=createReadingSession(spec.canonical),p=await prepareSelectedReadingTurn(session,spec.question,{groundingPolicyVersion:1});expect(p.context.context_id).not.toBe(old.context.context_id);
  const saved=await restoreReadingSession(serializeReadingSession(session,p.question));expect(readingExport(saved.pending)).toBe(readingExport(p));appendReadingTurn(session,p,JSON.stringify(raw(p.context)),true,'external');
  const restored=await restoreReadingSession(serializeReadingSession(session));expect(restored.session.turns[0].result.status).toBe('validated');expect(restored.session.turns[0].context.context_id).toBe(p.context.context_id);
  const next=await prepareSelectedReadingTurn(restored.session,'后续该如何观察？');expect(next.context.conversation.grounding_policy).toBe(1);
- const malformed=JSON.parse(serializeReadingSession(session));malformed.groundingPolicyVersion=2;await expect(restoreReadingSession(JSON.stringify(malformed))).rejects.toThrow('来源约束版本不兼容');
+ const malformed=JSON.parse(serializeReadingSession(session));malformed.groundingPolicyVersion=99;await expect(restoreReadingSession(JSON.stringify(malformed))).rejects.toThrow('来源约束版本不兼容');
 });

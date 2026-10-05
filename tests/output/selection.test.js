@@ -45,7 +45,7 @@ test('pure fact question narrows fields; prose slots and source bypass remain re
  raw.factors=[{basis_id:'l3',assessment:'support',interpretation:'无关趋势。'}];expect(parseOutputAnswer(JSON.stringify(raw),p.context,{completed:true}).issues[0].code).toBe('invalid_count');
  const normal=await prepareSelectedReadingTurn(createReadingSession(spec.canonical),spec.question),answer=selectedAnswer(normal.context);
  answer.timing_candidates=[{candidate:'明天',basis_id:'t4',reason:'仅供参考。'}];expect(parseOutputAnswer(JSON.stringify(answer),normal.context,{completed:true}).issues[0].code).toBe('unexpected_timing');
- answer.timing_candidates[0].candidate='三爻提示明天';expect(parseOutputAnswer(JSON.stringify(answer),normal.context,{completed:true}).issues[0].code).toBe('model_fact_restatement');
+ answer.timing_candidates[0].candidate='三爻提示明天';expect(parseOutputAnswer(JSON.stringify(answer),normal.context,{completed:true}).issues[0].code).toBe('program_attribute_in_explanation');
 });
 
 test('initial and top line aliases restrict selectable facts',async()=>{
