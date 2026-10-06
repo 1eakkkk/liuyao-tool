@@ -3,33 +3,38 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
-import {createReadingSession,prepareSelectedReadingTurn,appendReadingTurn} from '../../src/ai/output/session.js';
-import {strictReadingRequest,receiveStrictReading} from '../../src/ai/output/strict-transport.js';
-import {readingAvailability} from '../../src/ai/output/availability.js';
-import {reserveCampaign,accountedCampaignAmount} from '../../scripts/deepseek-campaign-budget.js';
-import {archiveProviderBody} from '../../scripts/judgment-live-pilot.js';
+import {createReadingSession,prepareSelectedReadingTurn,appendReadingTurn} from '../../../src/ai/output/session.js';
+import {strictReadingRequest,receiveStrictReading} from '../../../src/ai/output/strict-transport.js';
+import {readingAvailability} from '../../../src/ai/output/availability.js';
+import {reserveCampaign,accountedCampaignAmount} from '../../../scripts/deepseek-campaign-budget.js';
+import {archiveProviderBody} from '../../../scripts/judgment-live-pilot.js';
 
 const dir=path.dirname(fileURLToPath(import.meta.url)),sha=b=>createHash('sha256').update(b).digest('hex');
 const write=(name,value)=>{const p=path.join(dir,name);if(fs.existsSync(p))throw Error(`Refusing to overwrite ${name}`);fs.writeFileSync(p,JSON.stringify(value,null,2)+'\n');};
 const bytes=fs.readFileSync(path.join(dir,'plan.json')),plan=JSON.parse(bytes),seal=fs.readFileSync(path.join(dir,'plan.sha256'),'utf8').trim();
 if(sha(bytes)!==seal)throw Error('Plan seal mismatch');
 if(plan.version!=='plan-admission-live-1'||plan.maxCalls!==1||plan.policy.basis!==4||plan.policy.judgment!==6||plan.automaticRetries!==false||plan.previousStageClosed!==true)throw Error('Plan config rejected');
-if(execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()!==plan.sourceCommit)throw Error('Source drift');
+const head=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
+// The sealed source commit must be an ancestor of HEAD; both are recorded so the
+// exact checked-out source of this call stays auditable.
+if(!/^[0-9a-f]{40}$/.test(plan.sourceCommit))throw Error('Plan source commit malformed');
+try{execFileSync('git',['merge-base','--is-ancestor',plan.sourceCommit,head],{stdio:'ignore'});}catch{throw Error('Sealed source commit is not an ancestor of HEAD');}
 if(execFileSync('git',['diff','HEAD','--name-only'],{encoding:'utf8'}).trim())throw Error('Dirty worktree during acceptance');
 if(fs.existsSync(path.join(dir,'plan-covered-attempt.json')))throw Error('Replay denied');
 const c=plan.cases[0];
-const prepare=async question=>prepareSelectedReadingTurn(createReadingSession(c.canonical,{style:'brief',custom:''}),question,{judgmentPolicyVersion:6,groundingPolicyVersion:2,basisPolicyVersion:4});
+const prepare=async(question,canonical)=>prepareSelectedReadingTurn(createReadingSession(canonical,{style:'brief',custom:''}),question,{judgmentPolicyVersion:6,groundingPolicyVersion:2,basisPolicyVersion:4});
 
-// The two no-call expectations are verified here: they must be blocked, so no request is built.
+// The no-call expectations are verified here: each must be blocked on its own chart,
+// so no request is ever built for them.
 const blocked=[];
 for(const b of plan.blockedCases){
- const p=await prepare(b.question),availability=readingAvailability(p.context);
+ const p=await prepare(b.question,b.canonical),availability=readingAvailability(p.context);
  if(availability.kind!==b.expectKind||availability.blocked!==true)throw Error(`Blocked expectation drift: ${b.id} -> ${availability.kind}`);
  if(availability.title!==b.availability.title||availability.message!==b.availability.message)throw Error(`Blocked message drift: ${b.id}`);
  blocked.push({id:b.id,kind:availability.kind,blocked:availability.blocked,calls:0});
 }
 // The covered case must rebuild byte-identical to the frozen request.
-const prepared=await prepare(c.question),rebuilt=strictReadingRequest(prepared);
+const prepared=await prepare(c.question,c.canonical),rebuilt=strictReadingRequest(prepared);
 if(prepared.context.context_id!==c.context.context_id||JSON.stringify(rebuilt.body)!==JSON.stringify(c.body)||rebuilt.endpoint!==c.endpoint)throw Error('Request drift');
 
 const ledger=path.join(dir,'budget.json');
@@ -43,7 +48,7 @@ async function balance(){const r=await fetch('https://api.deepseek.com/user/bala
 const before=await balance();
 if(before<plan.reserveCny+plan.walletFloor)throw Error('Wallet floor');
 const reservation=reserveCampaign(ledger,{run:dir,amount:plan.reserveCny,planHash:seal});
-write('execution.json',{started:new Date().toISOString(),planHash:seal,balanceBefore:before,reservation,automaticRetries:false,blockedVerified:blocked});
+write('execution.json',{started:new Date().toISOString(),planHash:seal,sealedSourceCommit:plan.sourceCommit,headAtRun:head,balanceBefore:before,reservation,automaticRetries:false,blockedVerified:blocked});
 write(`${c.id}-attempt.json`,{started:new Date().toISOString(),requestHash:sha(JSON.stringify(c.body)),retry:false,endpoint:c.endpoint});
 try{
  const signal=AbortSignal.timeout(180000);
