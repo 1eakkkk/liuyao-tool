@@ -10,6 +10,8 @@ const ZSBY={work:'增删卜易',url:'https://upload.wikimedia.org/wikipedia/comm
 
 // A single affirmative self-directed plan question. Negated, quoted, compound and
 // third-party variants are deliberately left uncovered so no direction is guessed.
+// A negation attached to the advance itself (不打算继续…, 停止推进…, 不再投入…).
+const NEGATED_ADVANCE=/(?:不|没|未|无)(?:再|会|要|打算|准备|计划|想|能|可以|应该|该|值得|愿|继续|推进|投入|坚持)|(?:放弃|停止|中止)/;
 export function planGoal(question){
  const q=question.trim();
  if(/[“”「」『』"\n；;：:]|不要|并非|不是|是否(?:不适合|不该|不宜)|还是|或者|或是|同时|另外|以及|帮我|替我|只核对|只要|仅核对/.test(q))return null;
@@ -20,8 +22,15 @@ export function planGoal(question){
  // it and no question may be asked in between.
  const intent=/我(?:想|打算|计划|准备|要|希望|正在考虑)[^？?]{0,200}?(?:是否(?:适合)?(?:继续)?推进|能否(?:继续)?推进|是否适合继续|要不要继续|是否值得继续|能否继续做下去|是否可以继续)/.exec(q);
  if(!intent)return null;
- // A second question or an added request turns this into a compound goal, which the
- // single-direction review does not cover.
+ // The question must be about sustaining something: either an explicit 继续/持续, or an
+ // already-in-place premise (已经/正在/目前…) carried into a 推进 question. A bare
+ // 是否适合推进 with neither is a different question than the one reviewed here.
+ if(!/(?:继续|持续)/.test(intent[0])&&!/(?:已经|已|正在|目前|现在|一向|一直)[^？?]{0,120}推进/.test(intent[0]))return null;
+ // A negation attached to the advance itself inverts the question, so it is not the
+ // reviewed direction even though the affirmative wording is still present. This runs
+ // on the matched intent text only, so unrelated clauses such as 不出售／不组织交换活动
+ // cannot veto an otherwise affirmative plan question.
+ if(NEGATED_ADVANCE.test(intent[0]))return null;
  const tail=q.slice(intent.index+intent[0].length);
  // A single "？" that only terminates the goal question is expected; a question mark
  // closing some other clause, or an added request, makes this a compound goal.
@@ -42,7 +51,7 @@ export const PLAN_MECHANISMS=Object.freeze([
  Object.freeze({id:'plan-shi-return',rule_id:'MOVE-RETURN-001',kind:'return_direction',assessment:null,
   quote:'夫變出之爻能生尅沖合本位之動爻不能生尅他爻。',chapter:'動變生尅沖合章第十五',
   condition:'只按变爻与其本位动爻的五行方向说明回生或回克，不推广到其他爻，也不说明事情成败，并不确认现实条件。'}),
- Object.freeze({id:'plan-shi-month-combine',rule_id:'MONTH-COMBINE-001',kind:'useful_state',assessment:'neutral',
+ Object.freeze({id:'plan-shi-month-combine',rule_id:'MONTH-COMBINE-001',kind:'useful_state',assessment:'support',
   quote:'月建合爻則爲月合乃有用之爻也。',chapter:'月將章第十六',
   condition:'原文称爻逢月合为有用之爻；这是该爻有无作用的判断，不是吉凶或成败判断。'}),
  Object.freeze({id:'plan-shi-month-clash',rule_id:'MONTH-CLASH-001',kind:'useful_state',assessment:'oppose',

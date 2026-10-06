@@ -7,21 +7,35 @@
 原始回复：`plan-covered-response.txt`（未修改）。
 判定：`fallback`，唯一问题 `program_attribute_in_explanation @ $.factors[0].interpretation`。
 传输：`strict_tool`，`finishReason=tool_calls`，`bodyComplete=true`，`envelopeValid=true`。
-用量：输入 6370（命中缓存 1792）、输出 858；上界费用 ¥0.019604（高峰价 2/8 每百万）。预留 ¥0.2，未释放。
+用量：输入 6370（命中缓存 1792、未命中 4578）、输出 858。
 
-## 三次「不调用」期望（均通过，费用 0）
+## 费用更正（重要）
 
-| 用例 | 问题类型 | 程序判定 | 是否拦截 |
+调用发生在北京时间 21:00 前后的**空闲时段**。官方口径为：北京时间周一至周五 9:00–12:00、14:00–18:00（不含法定节假日）为高峰时段，**其余时间均为空闲时段**，空闲单价为高峰的一半。封盘计划内记录的 `conservativePeakCostCny=0.019604` 按高峰价算出，且未对缓存命中单独计价，因此**既不是实际费用，也不是真正的上界**。
+
+按空闲时段单价（缓存命中输入 ¥0.02、未命中输入 ¥1、输出 ¥4 每百万；对应高峰 $0.006/$0.3/$1.2，按约 6.7 汇率折人民币）计算：
+
+`1792×0.02 + 4578×1 + 858×4 = 0.0000358 + 0.004578 + 0.003432 ≈ ¥0.008046`
+
+钱包 ¥22.10 → ¥21.87 的差额为 ¥0.23，远大于 ¥0.008；该差额无法归给本次调用（同期存在其他扣费），因此**本次真实花费只按 token 计算给出，约 ¥0.008**，钱包差额不作费用依据。封盘计划内的字段保留不改，作为「按封盘价计算的值」；真实费用以本条为准。
+
+## 两次「不调用」期望（均通过，费用 0）
+
+`plan-covered` **不属于不调用用例**：它用掉了本批唯一一次调用，且未被拦截。
+
+| 用例 | 问题类型 | 程序判定 | 是否调用 |
 | --- | --- | --- | --- |
-| plan-covered | 个人计划，本盘有依据 | `conditions_unconfirmed` | 不拦截，生成有限观察 |
-| plan-chart-gap | 个人计划，本盘缺依据 | `chart_basis_missing` | 拦截 |
-| plan-method-gap | 覆盖外目标 | `method_not_covered` | 拦截 |
+| plan-covered | 个人计划，本盘有依据 | `conditions_unconfirmed` | 调用 1 次，未被拦截 |
+| plan-chart-gap | 个人计划，本盘缺依据 | `chart_basis_missing` | 未调用，已拦截 |
+| plan-method-gap | 覆盖外目标 | `method_not_covered` | 未调用，已拦截 |
 
 三种缺口在同一批次内分别命中，互不混用。
 
 ## 真实调用逐项判断
 
 ### 1. 事实正确（程序侧）
+
+**卦盘来源需要说明**：本次所用的盘沿用上一批 `personal-books` 用例**原封未动的旧盘**，该盘最初是为另一个问题（一个关于游戏段位的问题）摇出的，`plan.json.provenance` 有记录。本节引用的世爻／变爻都属于这张盘，不是为本问题新摇。
 
 可核对事实由程序另行展示，不依赖模型：世爻为第 4 爻父母亥水、动爻、月令相；变爻为妻财丑土；`t4` 方向为变爻克本爻。原始回复未改写这些事实，未出现数值错误。**通过。**
 
@@ -39,7 +53,9 @@
 
 这是**正确的拦截**，不是误判：解释字段的职责是解释所选依据能支持的目标相关含义，而不是重新陈述程序事实。该回复因此停留在 `fallback`，用户看到原文与失败原因，而不是一条被包装成通过的结论。
 
-同一回复中未被拦下的部分经检查未越界：`main_choice.reason`、`role.meaning`、`judgment.reason`、`general_advice` 与 `uncertainties` 均未复述爻位、六亲、动静或生克原文，`uncertainties` 明确写出数量、时间、场地未记录。`general_advice` 是方法建议，未冒充盘面依据。
+同一回复中未被拦下的部分经检查未越界。校验覆盖的字段不止被拦下的那一处：`decodeSelection` 会把 `main_choice.reason`、`role.meaning`、`application.goal_link`、每个 `effect_conditions[i].condition`、`judgment.reason`、`general_advice[i]` 与 `uncertainties[i]` 一并送入卦盘属性检查与 `checkRealityStatements`。逐段核对结果：无一处复述爻位、六亲、动静或生克原文，也无一处对现实条件作出无依据断言；`uncertainties` 明确写出数量、时间、场地未记录。最近的一处是 `goal_link` 的「自身推进的局部方向」，属于该准入取法自身允许的措辞。`general_advice` 是方法建议，未冒充盘面依据。
+
+需要注意 `goal_link` 写的是「尚未落实为**现实作用**」——声明的是作用未落实，而非关联未建立，因此不会被 `declaresUnresolvedLink` 判为未成立关联。这一表述是诚实的，但如果改写成「关联…尚未落实」就会被拒。
 
 ### 4. 取舍是否成立 —— 只在措辞层成立
 
@@ -63,4 +79,10 @@
 
 ## 归档
 
-`plan.json`/`plan.sha256`（封盘计划）、`execution.json`、`plan-covered-attempt.json`、`plan-covered-provider.json`、`plan-covered-response.txt`、`plan-covered-check.json`、`budget.json`。凭据不入档。
+`plan.json`/`plan.sha256`（封盘计划）、`execution.json`、`plan-covered-attempt.json`、`plan-covered-archive.json`、`plan-covered-provider.json`、`plan-covered-response.txt`、`plan-covered-check.json`、`budget.json`、`run.mjs`、`precheck.mjs`。相关测试为 `tests/output/plan-admission.test.js` 与 `tests/output/plan-live-replay.test.js`。凭据不入档；无 `*-failure.json`，即本次没有传输或处理失败。
+
+## 独立复核
+
+一位独立复核者按「事实、取法适用、解释边界、取舍」四项对本记录做了对抗性核查，结论：拦截判定成立、三种缺口区分成立、support/oppose 越界不可达；同时指出并已修正四处问题——费用算式与高峰时段定义写反、识别器存在四个否定式绕过、月合／月破判定不对称、本记录缺少卦盘来源与「模型实际看到的提示词与 HEAD 不同」的说明。复核意见未删除。
+
+**代码版本说明**：本批调用实际运行的是封盘提交 `01d1919`。其后 HEAD 又改了 `factors[].interpretation` 的字段说明（提示模型程序已在上方展示原文方向），该改动**没有**参与本次调用，也不改变本次判定（`factualProse` 未变，`tests/output/plan-live-replay.test.js` 在当前离线重放上仍复现同一拦下结果）。因此模型当时看到的提示词与当前工作树的版本并不完全一致。

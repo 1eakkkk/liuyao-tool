@@ -24,6 +24,10 @@ test('every plan mechanism quote is pinned to the transcript it cites, not to a 
   expect(matches[0].locator.chapter).toBe(mechanism.chapter);
  }
  expect(PLAN_MECHANISMS.map(m=>m.id)).toHaveLength(6);
+ // 月合 and 月破 are one usefulness axis read in opposite directions, so neither of the
+ // pair may be declared neutral while its sibling is decisive.
+ const combine=PLAN_MECHANISMS.find(m=>m.rule_id==='MONTH-COMBINE-001'),clash=PLAN_MECHANISMS.find(m=>m.rule_id==='MONTH-CLASH-001');
+ expect(combine.kind).toBe(clash.kind);expect(combine.assessment).toBe('support');expect(clash.assessment).toBe('oppose');
 });
 
 test('only a self-directed affirmative plan question is recognised, and it never becomes an assistance question',()=>{
@@ -31,8 +35,17 @@ test('only a self-directed affirmative plan question is recognised, and it never
   expect(planGoal(q)).toBe('self_plan_advance');
  for(const q of ['他能否帮助我整理旧书？','我能否帮助朋友整理旧书？','我想整理旧书，是否适合推进？还是先做别的？',
   '不要分析我想整理旧书是否适合继续推进。','我不想整理旧书，是否适合继续推进？','帮我看看我想做这个项目是否适合推进。',
-  '朋友想整理旧书，是否适合继续推进？','我想做这个项目是否适合推进？我能赚钱吗？','这个网页能火吗？'])
+  '朋友想整理旧书，是否适合继续推进？','我想做这个项目是否适合推进？我能赚钱吗？','这个网页能火吗？',
+  // A negation attached to the advance itself inverts the question, even though the
+  // affirmative wording is still present. These four were real bypasses.
+  '我想把这套旧书整理完，不打算继续推进，是否适合推进？',
+  '我想继续推进整理，但我不打算继续投入时间，是否适合推进？',
+  '我想停止推进这个整理，是否适合推进？',
+  // No continuation signal at all, so it is a different question than the reviewed one.
+  '我想整理旧书，是否适合推进？'])
   expect(planGoal(q)).toBeNull();
+ // An unrelated negative clause must not veto an otherwise affirmative plan question.
+ expect(planGoal('我想继续整理旧书，不出售、不组织交换活动，是否适合继续推进？')).toBe('self_plan_advance');
  // The two recognisers never both claim one question.
  for(const [q,owner] of [[old.cases[0].question,'plan'],[old.cases[1].question,'plan'],['他能否帮助我整理旧书？','peer']]){
   const claimed=[reviewedGoal(q)!==null?'peer':null,planGoal(q)!==null?'plan':null].filter(Boolean);
