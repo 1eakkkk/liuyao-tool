@@ -1,0 +1,86 @@
+{
+  "deployedAt": "2026-10-06T03:14:42.999Z",
+  "production": "https://gua.1eak.cool/",
+  "sourceCommit": "2766d4067d92cdc66a9c65514dc515f6f8dfd0b0",
+  "workerVersion": "cc4b28ee-0676-4443-bdae-10d23007f825",
+  "artifacts": [
+    {
+      "path": "_headers",
+      "bytes": 91,
+      "sha256": "46280e238bbf53cdfba49f7d1737c7b652181107293e9f8825a980787ea8ba39"
+    },
+    {
+      "path": "assets/index-DPz9agIN.css",
+      "bytes": 97132,
+      "sha256": "26f4753a4799dd9565a01b57c85c7fc0ed120772dae28a721291b9029d8e5cf9"
+    },
+    {
+      "path": "assets/index-RPP9IZUD.js",
+      "bytes": 304918,
+      "sha256": "44c10092ec24dfbe5db3eac6acfd2ae734888cca2de01b345997c34e90df94bc"
+    },
+    {
+      "path": "index.html",
+      "bytes": 52671,
+      "sha256": "f7b9d470b73820016ab1dd1a3f234451aae59f4e42e745e673bbb2946e307a0d"
+    },
+    {
+      "path": "vendor/cannon.js",
+      "bytes": 132230,
+      "sha256": "6968efb8ee824bdcb1b0627ee9cf518ff4b360aba606c135448a53684c73e14d"
+    }
+  ],
+  "productionChecks": 12,
+  "apiInBrowser": "mocked-no-paid-calls",
+  "freshPolicy": {
+    "judgment": 6,
+    "basis": 4,
+    "task": 5,
+    "grounding": 2
+  },
+  "legacyHistories": "preserved",
+  "githubActions": {
+    "run": 37407895107,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/1eakkkk/liuyao-tool/actions/runs/37407895107"
+  },
+  "acceptedRuntimeSource": [
+    {
+      "path": "src/ai/output/basis-scope.js",
+      "sha256": "381d945d44a1ec4e2d67368a019f77d665b66cca1fc474f7ed69de6c98aac00f"
+    },
+    {
+      "path": "src/ai/output/client.js",
+      "sha256": "a3d7fe456972114a0383068f8f6e4599bc710964b8010cfc52d1ccae85814027"
+    },
+    {
+      "path": "src/ai/output/completion.js",
+      "sha256": "f181ff5763ac88817f4622fac4d85417072c7ab059699c0e0488c1fd49ccc077"
+    },
+    {
+      "path": "src/ai/output/mapping-admission.js",
+      "sha256": "d2ae1509cbd65299363a14dbcfd5ec89aef380a9b2cdbd5fecd220b1b14f038b"
+    },
+    {
+      "path": "src/ai/output/perspective.js",
+      "sha256": "fb8623eebfce835b1793f58577724533b95102f0a36267014e8009d8d53d1dd5"
+    },
+    {
+      "path": "src/ai/output/selection.js",
+      "sha256": "1da232e96ee37931ade1582b56e5a176b329741baa7832c81dc20bb728629112"
+    },
+    {
+      "path": "src/ai/output/session.js",
+      "sha256": "7b58e375242e1b6f97b5609c037805368cf3fd508f10138c0da83806c2c4b950"
+    },
+    {
+      "path": "src/ai/output/strict-transport.js",
+      "sha256": "1045a7314a7b2046f2fd17e35bd96d88381af755c4075ac9ec02343628f18208"
+    },
+    {
+      "path": "src/ai/output/view.js",
+      "sha256": "0c0b05bf2a9c99d2043508899ef9615625648b52c07372068731ceb001b720fd"
+    }
+  ]
+}

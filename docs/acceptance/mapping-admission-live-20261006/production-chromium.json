@@ -1,0 +1,56 @@
+[
+  {
+    "width": 1280,
+    "engine": "chromium",
+    "mapped": false,
+    "api": "mocked",
+    "export_import": true,
+    "history": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "engine": "chromium",
+    "mapped": true,
+    "api": "mocked",
+    "export_import": true,
+    "history": true,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "engine": "chromium",
+    "mapped": false,
+    "api": "mocked",
+    "export_import": true,
+    "history": true,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "engine": "chromium",
+    "mapped": true,
+    "api": "mocked",
+    "export_import": true,
+    "history": true,
+    "errors": []
+  },
+  {
+    "width": 320,
+    "engine": "chromium",
+    "mapped": false,
+    "api": "mocked",
+    "export_import": true,
+    "history": true,
+    "errors": []
+  },
+  {
+    "width": 320,
+    "engine": "chromium",
+    "mapped": true,
+    "api": "mocked",
+    "export_import": true,
+    "history": true,
+    "errors": []
+  }
+]
