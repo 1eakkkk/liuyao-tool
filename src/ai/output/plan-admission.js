@@ -61,7 +61,18 @@ export const PLAN_MECHANISMS=Object.freeze([
   quote:'沖旺相之靜爻卽爲暗動。沖衰弱之靜爻則爲日破。',chapter:'日辰章第十七',
   condition:'原文按旺相／衰弱区分日冲静爻为暗动或日破；只在世爻为静爻且旺衰可判时成立。'})]);
 
-const hitFor=(entries,rule_id,line)=>entries.find(entry=>entry.ids.some(id=>id.startsWith(`rule:${rule_id}:`))&&entry.target?.line===line);
+// Catalog rule entries carry target:null; the target line and component live in the
+// evidence id (`rule:<rule_id>:<component>:<line>:-`), so that is what we match on.
+const RULE_ID_PATTERN=/^rule:([A-Z0-9-]+):(primary|changed|hidden):([1-6]):/;
+const ruleHit=(entry,rule_id)=>{
+ const id=entry.ids.find(candidate=>candidate.startsWith(`rule:${rule_id}:`));
+ const parts=id?RULE_ID_PATTERN.exec(id):null;
+ return parts?{line:Number(parts[3]),component:parts[2]}:null;
+};
+const hitFor=(entries,rule_id,line)=>entries.find(entry=>{
+ const parsed=ruleHit(entry,rule_id);
+ return parsed?.line===line&&parsed.component==='primary';
+});
 const lineEntry=(entries,line)=>entries.find(entry=>entry.target?.component==='primary'&&entry.target.line===line);
 const returnEntry=(entries,line)=>entries.find(entry=>entry.id===`t${line}`);
 const shiLine=context=>{

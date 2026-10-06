@@ -3,6 +3,9 @@ import {test,expect} from 'vitest';
 import fs from 'node:fs';
 import {createReadingSession,prepareSelectedReadingTurn} from '../../src/ai/output/session.js';
 import {parseOutputAnswer} from '../../src/ai/output/parse.js';
+import {buildCanonicalCast} from '../../src/core/normalize.js';
+import {lineFromSum} from '../../src/core/physics.js';
+import {JIAZI60} from '../../src/core/constants.js';
 import {selectionCatalog,selectionSchema,readingTask} from '../../src/ai/output/selection.js';
 import {readingAvailability} from '../../src/ai/output/availability.js';
 import {admittedMappings,reviewedGoal} from '../../src/ai/output/mapping-admission.js';
@@ -11,7 +14,13 @@ const old=JSON.parse(fs.readFileSync('docs/acceptance/strict-reading-20261006/pl
 const prepare=(canonical,question,basis=4)=>prepareSelectedReadingTurn(createReadingSession(canonical),question,{judgmentPolicyVersion:6,basisPolicyVersion:basis});
 const parse=(p,a)=>parseOutputAnswer(JSON.stringify(a),p.context,{completed:true});
 const covered=()=>prepare(old.cases[1].canonical,old.cases[1].question);
-const lacking=()=>prepare(old.cases[0].canonical,old.cases[0].question);
+// A chart whose 世爻 is 静, 月旺 and neither 合 nor 冲, so no reviewed mechanism can bind.
+// (The earlier private-project chart is not such a case: its 世爻 is 月破.)
+const lackingChart=(question,castId='plan-admission-gap-fixture')=>buildCanonicalCast({
+ lines:[6,6,6,6,6,8].map(value=>lineFromSum(value)),source:'manual',question,
+ createdAt:new Date('2026-10-01T22:00:00+08:00').getTime(),castId,
+ calendar:{now:new Date('2026-10-01T22:00:00+08:00'),day:JIAZI60.find(day=>day.label==='戊申'),ymh:{yearLabel:'丙午',monthLabel:'丁酉',hourLabel:'癸亥'},dateText:'公历：2026年10月1日'}});
+const lacking=()=>prepare(lackingChart(old.cases[0].question),old.cases[0].question);
 
 test('every plan mechanism quote is pinned to the transcript it cites, not to a summary',()=>{
  // Guards the "取法适用" half of acceptance: the quote and its locator must exist verbatim

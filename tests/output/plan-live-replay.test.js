@@ -47,13 +47,20 @@ test('the same chart and question still admit exactly the reviewed plan mechanis
  expect(schema.properties.factors.items.properties.interpretation.description).toContain('程序已在上方展示本依据的原文方向');
 });
 
-test('the two blocked expectations stay blocked, so the batch spent exactly one call',async()=>{
+test('the blocked expectations are recorded with the correction that later mechanism binding forced',async()=>{
  expect(plan.maxCalls).toBe(1);
- for(const blocked of plan.blockedCases){
-  const p=await prepare(blocked.question,blocked.canonical),availability=readingAvailability(p.context);
-  expect(availability.blocked).toBe(true);
-  expect(availability.kind).toBe(blocked.expectKind);
-  expect(availability.title).toBe(blocked.availability.title);
-  expect(availability.message).toBe(blocked.availability.message);
- }
+ // `plan-method-gap` is a genuine uncovered target and must stay blocked.
+ const uncovered=plan.blockedCases.find(b=>b.id==='plan-method-gap');
+ const up=await prepare(uncovered.question,uncovered.canonical),upAvailability=readingAvailability(up.context);
+ expect(upAvailability.blocked).toBe(true);expect(upAvailability.kind).toBe('method_not_covered');
+ expect(upAvailability.title).toBe(uncovered.availability.title);expect(upAvailability.message).toBe(uncovered.availability.message);
+ // `plan-chart-gap` was filed as chart_basis_missing, but that chart's 世爻 is 月破 and the
+ // 月破/月合/日冲 mechanisms could not bind at the time. Fixing the rule-id binding made
+ // this case admit 月破, so the original expectation was wrong, not merely stale.
+ const gap=plan.blockedCases.find(b=>b.id==='plan-chart-gap');
+ expect(gap.expectKind).toBe('chart_basis_missing');
+ const gp=await prepare(gap.question,gap.canonical),gapAvailability=readingAvailability(gp.context);
+ expect(gapAvailability.blocked).toBe(false);
+ expect(gapAvailability.kind).toBe('conditions_unconfirmed');
+ expect(gapAvailability.items.join()).toContain('有用性');
 });

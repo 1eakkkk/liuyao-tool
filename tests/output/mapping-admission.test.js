@@ -12,6 +12,11 @@ import {REVIEWED_MAPPING,reviewedGoal,admittedMappings} from '../../src/ai/outpu
 import {selectionCatalog,selectionSchema} from '../../src/ai/output/selection.js';
 const old=JSON.parse(fs.readFileSync('docs/acceptance/strict-reading-20261006/plan.json'));
 const prepare=(canonical,question,basis=4,s=createReadingSession(canonical))=>prepareSelectedReadingTurn(s,question,{judgmentPolicyVersion:6,basisPolicyVersion:basis});
+// A chart whose 世爻 offers no reviewed plan mechanism: 静, 月旺, 无合无冲.
+const lackingChart=(question,castId='mapping-admission-gap-fixture')=>buildCanonicalCast({
+ lines:[6,6,6,6,6,8].map(value=>lineFromSum(value)),source:'manual',question,
+ createdAt:new Date('2026-10-01T22:00:00+08:00').getTime(),castId,
+ calendar:{now:new Date('2026-10-01T22:00:00+08:00'),day:JIAZI60.find(day=>day.label==='戊申'),ymh:{yearLabel:'丙午',monthLabel:'丁酉',hourLabel:'癸亥'},dateText:'公历：2026年10月1日'}});
 const empty=p=>({schema_version:'structured-selection-2',context_id:p.context.context_id,direction:'unclear',main_choice:{basis_id:'none',perspective:'none',reason:selectionSchema(p.context).properties.main_choice.properties.reason.const},factors:[],judgment:{basis_ids:[],reason:selectionSchema(p.context).properties.judgment.properties.reason.const},role_tradeoffs:[],general_advice:[],background_usage:[],timing_candidates:[],uncertainties:['现有已核对取法尚未覆盖这个目标。']});
 const parse=(p,a)=>parseOutputAnswer(JSON.stringify(a),p.context,{completed:true});
 
@@ -25,8 +30,10 @@ test('the source card quote and locator are pinned to the supplied transcript, n
 test('the original two plan targets are never given the assistance mapping, and each gap is named separately',async()=>{
  // The peer-help mapping must not leak into a self-directed plan question.
  for(const c of old.cases)expect(admittedMappings((await prepare(c.canonical,c.question)).context,selectionCatalog((await prepare(c.canonical,c.question)).context).entries)).toEqual([]);
- const lacking=await prepare(old.cases[0].canonical,old.cases[0].question),lackingInput=JSON.parse(lacking.messages[1].content);
- // This chart's 世爻 is 静 with no 进/退/回头 and no 日冲, so the method applies but the chart lacks its basis.
+ // A chart whose 世爻 is 静, 月旺 and neither 合 nor 冲, so the method applies but no
+ // reviewed mechanism can bind. The private-project chart is NOT such a case: its 世爻
+ // is 月破, which is itself a reviewed mechanism.
+ const lacking=await prepare(lackingChart(old.cases[0].question),old.cases[0].question),lackingInput=JSON.parse(lacking.messages[1].content);
  expect(lackingInput.admitted_mappings).toEqual([]);expect(lackingInput.bases).toEqual([]);expect(lackingInput.response_schema.properties.factors.maxItems).toBe(0);
  const a=empty(lacking);expect(parse(lacking,a).status).toBe('validated');expect(parse(lacking,a).answer.answer).toContain('取法覆盖不足');
  a.direction='favorable';expect(parse(lacking,a).status).toBe('fallback');a.direction='unclear';a.main_choice.basis_id='l1';expect(parse(lacking,a).status).toBe('fallback');
@@ -35,6 +42,10 @@ test('the original two plan targets are never given the assistance mapping, and 
  expect(coveredInput.admitted_mappings.map(m=>m.id)).toEqual(['plan-shi-return-control']);
  expect(coveredInput.admitted_mappings[0].basis_ids).toEqual(['t4']);
  expect(coveredInput.response_schema.properties.factors.maxItems).toBe(1);
+ // The private-project chart's 世爻 is 月破, which the 月將章第十六 unit covers as 无功之爻.
+ const clashed=await prepare(old.cases[0].canonical,old.cases[0].question),clashedInput=JSON.parse(clashed.messages[1].content);
+ expect(clashedInput.admitted_mappings.map(m=>m.id)).toEqual(['plan-shi-month-clash']);
+ expect(clashedInput.admitted_mappings[0].basis_ids).toEqual(['k14']);
 });
 test('quoted examples, other objectives, AI requests and multiple questions do not admit assistance mapping',()=>{
  for(const q of [old.cases[0].question,old.cases[1].question,'帮我算一下我的朋友是不是喜欢这个网页。','别人说“他能否帮助我整理旧书？”这句话是什么意思？','不要分析他能否帮助我整理旧书。','他能否帮助我整理旧书？我能赚钱吗？','朋友能否帮助我维护项目，还是我能帮他维护？','朋友能否帮助我维护项目还是我帮他维护'])expect(reviewedGoal(q)).toBeNull();
@@ -61,7 +72,9 @@ test('admitted mappings require the actual rule and eligible actor, and cannot b
 test('policy four history survives while the actual frozen policy three request remains byte identical',async()=>{
  const frozen=JSON.parse(fs.readFileSync('docs/acceptance/effect-conditions-live-20261006/plan.json')).cases[0];
  const legacy=await prepare(frozen.canonical,frozen.question,3,createReadingSession(frozen.canonical,{style:'brief',custom:''}));expect(JSON.stringify(strictReadingRequest(legacy).body)).toBe(JSON.stringify(frozen.body));
- const s=createReadingSession(old.cases[0].canonical),p=await prepare(s.canonical,old.cases[0].question,4,s);appendReadingTurn(s,p,JSON.stringify(empty(p)),true,'external');
+ const s=createReadingSession(lackingChart(old.cases[0].question,'mapping-admission-history-fixture')),p=await prepare(s.canonical,old.cases[0].question,4,s);appendReadingTurn(s,p,JSON.stringify(empty(p)),true,'external');
+ // The round-trip only needs a policy-four turn; this fixture is used because a chart
+ // with no admitted mapping is the one whose insufficient answer is a pinned constant.
  const restored=(await restoreReadingSession(serializeReadingSession(s))).session;expect(restored.basisPolicyVersion).toBe(4);expect(restored.turns[0].result.status).toBe('validated');
  await expect(prepare(restored.canonical,old.cases[0].question,3,restored)).rejects.toThrow('不能升级');
 });
