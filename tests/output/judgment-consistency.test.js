@@ -54,7 +54,7 @@ test('published sessions are not retroactively rechecked or silently upgraded',a
  expect(fresh.context.context_id).not.toBe(p.context.context_id);
  raw.context_id=fresh.context.context_id;
  expect(parseOutputAnswer(JSON.stringify(raw),fresh.context,{completed:true}).issues[0].code).toBe('direction_basis_mismatch');
- const saved=JSON.parse(serializeReadingSession(session));saved.judgmentPolicyVersion=5;
+ const saved=JSON.parse(serializeReadingSession(session));saved.judgmentPolicyVersion=99;
  await expect(restoreReadingSession(JSON.stringify(saved))).rejects.toThrow('判断约束版本不兼容');
 });
 
