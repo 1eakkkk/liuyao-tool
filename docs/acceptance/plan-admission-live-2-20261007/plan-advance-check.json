@@ -1,0 +1,151 @@
+{
+  "id": "plan-advance",
+  "status": "validated",
+  "issues": [],
+  "completion": {
+    "transport": "strict_tool",
+    "error": null,
+    "finishReason": "tool_calls",
+    "bodyComplete": true,
+    "envelopeValid": true
+  },
+  "usage": {
+    "prompt_tokens": 6796,
+    "completion_tokens": 1233,
+    "total_tokens": 8029,
+    "prompt_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "prompt_cache_hit_tokens": 1792,
+    "prompt_cache_miss_tokens": 5004
+  },
+  "usageOk": true,
+  "conservativePeakCostCny": 0.023456,
+  "availability": {
+    "kind": "conditions_unconfirmed",
+    "title": "可以给出有限的局部观察，现实条件仍待确认",
+    "message": "已经有卦盘，也有适用于这类问题的已核对取法：進神退神章第二十九、日辰章第十七。以下现实前提尚未确认，所以本轮只作条件性观察，不据此判断计划能否成功。",
+    "items": [
+      "盘面只给出这个动爻自身的局部方向，现实前提尚未核实。",
+      "原文按衰弱把这次日冲读作日破；世爻在所问时段内的旺衰与实际情况是否相符，仍需你确认。"
+    ],
+    "blocked": false
+  },
+  "admitted": [
+    {
+      "id": "plan-shi-advance",
+      "basis_ids": [
+        "k7"
+      ],
+      "role_ids": [
+        "l1"
+      ],
+      "condition": "适用于所问为「继续推进」这一方向，只说明该世爻动而化进、方向向前，不说明事情成败。",
+      "unconfirmed": [
+        "盘面只给出这个动爻自身的局部方向，现实前提尚未核实。"
+      ]
+    },
+    {
+      "id": "plan-shi-day-clash",
+      "basis_ids": [
+        "k6"
+      ],
+      "role_ids": [
+        "l1"
+      ],
+      "condition": "原文按旺相／衰弱区分日冲静爻为暗动或日破；只在世爻为静爻且旺衰可判时成立。",
+      "unconfirmed": [
+        "原文按衰弱把这次日冲读作日破；世爻在所问时段内的旺衰与实际情况是否相符，仍需你确认。"
+      ]
+    }
+  ],
+  "schemaSummary": {
+    "factorsMax": 2,
+    "basisEnum": [
+      "k7",
+      "k6"
+    ],
+    "assessmentEnum": [
+      "conditional",
+      "neutral"
+    ],
+    "direction": {
+      "enum": [
+        "favorable",
+        "unfavorable",
+        "mixed",
+        "unclear"
+      ]
+    },
+    "perspectives": [
+      "none",
+      "self"
+    ]
+  },
+  "answer": {
+    "schema_version": "structured-answer-1.0",
+    "context_id": "sha256:107b41bf4a2d8ebaf6e93affeb12e639ffc8797ab23b64eae8b5e27a6cfa4614",
+    "answer": "当前依据不足，不能据此判断目标能否达成。\n\n两条已列因素分别指向相反或不可定的方向：一条在假设层面只给出向前延续的取向，且其成立依赖你实际仍在投入、项目仍有基本运行条件这两个尚未核实的现实前提；另一条在同一位置上同时存在被推动与被打断两种相反读法，本身不具备确定指向，其所属条件也尚未确认。两者均为条件性观察，无一能单独支撑或否定继续推进，故方向无法确定。本判断只覆盖该位置上的局部方向线索，不涉及你是否应继续、项目能否做成或外部环境如何。\n\n一般建议：\n1. 先核对三项事实再决定去留：项目过去一段时间的实际推进进展、你当下可稳定投入的时间与资源、以及继续推进所需的运行条件是否仍然具备。\n2. 若短期难以判断，可先设定一个明确的观察周期与停止条件，用小规模推进的结果代替整体去留的猜测。",
+    "direction": "unclear",
+    "yongshen_candidates": [
+      {
+        "relative": "妻财",
+        "targets": [
+          {
+            "line": 1,
+            "component": "primary"
+          }
+        ],
+        "reason": "程序观察角度：自身观察角度。\n程序取用位置：第1爻本爻：妻财·寅木，动爻，世爻，月令死。\nAI取用解释：所问是自身要不要继续推进这一计划，因此选择与自身对应的位置作为观察角度，只把它当作假设的观察角度，看这一步的局部方向能否为推进与否提供线索，而不据此判断项目现实成败。",
+        "evidence_ids": [
+          "fact:/lines/0/relative",
+          "fact:/lines/0/branch",
+          "fact:/lines/0/element",
+          "fact:/lines/0/moving",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/0/is_ying",
+          "fact:/lines/0/relations/month_strength"
+        ]
+      }
+    ],
+    "factors": [
+      {
+        "assessment": "conditional",
+        "interpretation": "程序依据：第1爻本爻：化进。\n程序核对范围：仅核对规则命中及其程序来源；不证明目标关联或现实结果。\n程序关联对象：第1爻本爻：妻财·寅木，动爻，世爻，月令死。\n程序观察角度：自身观察角度。\nAI对象解释：这个位置代表提出推进与否的你自己，所以它的局部方向变化才可能与要不要继续推进相关；这仍是假设的观察角度，不代表现实意愿或能力已存在。\nAI目标关联（模型假设，未经程序验证）：把自身位置的向前取向与“继续推进”这一目标相连的假设是：若推进节奏确有延续性，则继续做下去在方向上不至于立刻中断；但这只是模型提出的关联，关系的现实成立与否仍需核实。\n取法来源（已核对适用范围，不证明个案解释或预测）：增删卜易，進神退神章第二十九，影像第undefined页。\n作用条件（待核实）：你实际仍在为这个项目投入时间与精力，而不是仅有意愿表述\n作用条件（待核实）：项目当前仍具备继续推进所需的基本运行条件，而非已中断或停滞\nAI解释：若把这一局部方向读作推进节奏本身在往前，它只意味着存在向前延续的取向，并不说明项目会成功、资源会到位或你确有持续投入的意愿与时间；因此只能作为条件性观察，不能当作可继续的结论。",
+        "evidence_ids": [
+          "rule:MOVE-ADVANCE-001:primary:1:-",
+          "fact:/lines/0/relative",
+          "fact:/lines/0/branch",
+          "fact:/lines/0/element",
+          "fact:/lines/0/moving",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/0/is_ying",
+          "fact:/lines/0/relations/month_strength"
+        ]
+      },
+      {
+        "assessment": "conditional",
+        "interpretation": "程序依据：第1爻本爻：受日冲。\n程序核对范围：仅核对规则命中及其程序来源；不证明目标关联或现实结果。\n程序关联对象：第1爻本爻：妻财·寅木，动爻，世爻，月令死。\n程序观察角度：自身观察角度。\nAI对象解释：这个位置仍代表提出推进与否的你自己，冲突性的外力落在同一位置上，才可能影响推进的连续性；这属于假设的观察角度，不表示现实中确有外部压力或反对。\nAI目标关联（模型假设，未经程序验证）：把这一冲突与“是否继续推进”相连接的假设是：冲突若偏强则可能是被推动而动，若偏弱则可能是被冲散而难续；两种解读都只是模型假设，指向相反，故不构成任一方向的依据。\n取法来源（已核对适用范围，不证明个案解释或预测）：增删卜易，日辰章第十七，影像第undefined页。\n作用条件（待核实）：需要先判断这一冲突在你的实际情况中属于被推动而动还是被冲散而难续\nAI解释：这一条只在自身位置足够有力时才作暗动读，偏弱时则读作破裂；你的实际情况属于哪一种并未确认，所以它既不能证明推进受阻，也不能证明推进有力，只能作为待核实的条件性观察。",
+        "evidence_ids": [
+          "rule:DAY-CLASH-001:primary:1:-",
+          "fact:/lines/0/relative",
+          "fact:/lines/0/branch",
+          "fact:/lines/0/element",
+          "fact:/lines/0/moving",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/0/is_ying",
+          "fact:/lines/0/relations/month_strength"
+        ]
+      }
+    ],
+    "timing_candidates": [],
+    "uncertainties": [
+      "继续推进所依赖的现实前提未说明：项目当前是否仍在运行、可动用的时间与资源是否充足、是否有他人配合，均未提供。",
+      "自身位置在所受冲突下究竟偏有力还是偏弱无法确认，两种读法指向相反，无法据此判断推进是受助还是受阻。",
+      "你的问题只表达了“想继续做”的意愿，未说明已投入的程度、近期推进状态与可承受的继续投入成本。",
+      "本次公开背景来源为空，无可核对的对象或版本，故不引入任何外部材料作为依据。"
+    ]
+  },
+  "rawSha256": "d65a54932b77ace50f2b7f84f00a87fee00f059aa1ee16b418269c69a9218c96",
+  "noAutomaticRetries": true
+}

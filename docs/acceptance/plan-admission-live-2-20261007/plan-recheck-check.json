@@ -1,0 +1,121 @@
+{
+  "id": "plan-recheck",
+  "status": "validated",
+  "issues": [],
+  "completion": {
+    "transport": "strict_tool",
+    "error": null,
+    "finishReason": "tool_calls",
+    "bodyComplete": true,
+    "envelopeValid": true
+  },
+  "usage": {
+    "prompt_tokens": 6398,
+    "completion_tokens": 775,
+    "total_tokens": 7173,
+    "prompt_tokens_details": {
+      "cached_tokens": 2048
+    },
+    "prompt_cache_hit_tokens": 2048,
+    "prompt_cache_miss_tokens": 4350
+  },
+  "usageOk": true,
+  "conservativePeakCostCny": 0.018996,
+  "availability": {
+    "kind": "conditions_unconfirmed",
+    "title": "可以给出有限的局部观察，现实条件仍待确认",
+    "message": "已经有卦盘，也有适用于这类问题的已核对取法：動變生尅沖合章第十五。以下现实前提尚未确认，所以本轮只作条件性观察，不据此判断计划能否成功。",
+    "items": [
+      "变爻对本位动爻的方向是盘面内关系，现实中对应的条件仍未核实。"
+    ],
+    "blocked": false
+  },
+  "admitted": [
+    {
+      "id": "plan-shi-return-control",
+      "basis_ids": [
+        "t4"
+      ],
+      "role_ids": [
+        "l4"
+      ],
+      "condition": "只按变爻与其本位动爻的五行方向说明回生或回克，不推广到其他爻，也不说明事情成败，并不确认现实条件。",
+      "unconfirmed": [
+        "变爻对本位动爻的方向是盘面内关系，现实中对应的条件仍未核实。"
+      ]
+    }
+  ],
+  "schemaSummary": {
+    "factorsMax": 1,
+    "basisEnum": [
+      "t4"
+    ],
+    "assessmentEnum": [
+      "conditional",
+      "neutral"
+    ],
+    "direction": {
+      "enum": [
+        "favorable",
+        "unfavorable",
+        "mixed",
+        "unclear"
+      ]
+    },
+    "perspectives": [
+      "none",
+      "self"
+    ]
+  },
+  "answer": {
+    "schema_version": "structured-answer-1.0",
+    "context_id": "sha256:98b54ff88deff4f856edb4308c254e4a2a30bfc643d85bb715310cfa341264c7",
+    "answer": "当前依据不足，不能据此判断目标能否达成。\n\n当前仅有一个局部观察角度可用，且其现实前提均未核实，既不足以支撑推进，也不足以判为阻碍，因此方向保持不清；取舍上不把它当作成败依据，只作为提醒：先把数量与可投入时间记下来，再决定推进节奏。\n\n一般建议：\n1. 先做一次不加整理动作的清点，只记录书名与数量，避免一开始就把标准抬得太高。\n2. 给整理设一个固定的短时段和停止点，先完成可查找到的区域，再逐步补充位置信息。",
+    "direction": "unclear",
+    "yongshen_candidates": [
+      {
+        "relative": "父母",
+        "targets": [
+          {
+            "line": 4,
+            "component": "primary"
+          }
+        ],
+        "reason": "程序观察角度：自身观察角度。\n程序取用位置：第4爻本爻：父母·亥水，动爻，世爻，月令相。\nAI取用解释：这次想判断的是自己主动推进旧书清点编目这件事，围绕自身来做有限象意观察，比套用外部对象更贴近“我是否适合先推进”的问题。",
+        "evidence_ids": [
+          "fact:/lines/3/relative",
+          "fact:/lines/3/branch",
+          "fact:/lines/3/element",
+          "fact:/lines/3/moving",
+          "fact:/lines/3/is_shi",
+          "fact:/lines/3/is_ying",
+          "fact:/lines/3/relations/month_strength"
+        ]
+      }
+    ],
+    "factors": [
+      {
+        "assessment": "conditional",
+        "interpretation": "程序依据：第4爻变爻（土）克第4爻本爻（水）（变爻对本爻的基础方向）。\n程序核对范围：仅核对基础五行方向；不证明目标关联或现实结果。\n程序关联对象：第4爻本爻：父母·亥水，动爻，世爻，月令相。\n程序观察角度：自身观察角度。\nAI对象解释：把自身作为观察角度，是问这件事由我发起、由我执行时，自身状态可能带来什么影响。\nAI目标关联（模型假设，未经程序验证）：自身能否持续推进，直接关系到旧书清点与位置登记能否从决定变成实际完成的动作，因此这一角度与当前目标相关；但关联仅为假设提出，尚未落实为现实条件。\n取法来源（已核对适用范围，不证明个案解释或预测）：增删卜易，動變生尅沖合章第十五，影像第undefined页。\n作用条件（待核实）：实际数量与可投入时间仍未记录，能否先完成一次清点尚未核实。\n作用条件（待核实）：整理安排是否按固定节奏推进、是否中途改换标准，尚未核实。\nAI解释：这个局部方向提示：推进过程中可能存在自我施压或标准反复收紧的倾向，使清点与登记变成消耗；但它只说明一个假设角度，不能判断现实中整理是否真的会受阻，也不能说明实际数量、时间或体力能否支撑。",
+        "evidence_ids": [
+          "fact:/lines/3/changed/element",
+          "fact:/lines/3/element",
+          "fact:/lines/3/moving",
+          "fact:/lines/3/relative",
+          "fact:/lines/3/branch",
+          "fact:/lines/3/is_shi",
+          "fact:/lines/3/is_ying",
+          "fact:/lines/3/relations/month_strength"
+        ]
+      }
+    ],
+    "timing_candidates": [],
+    "uncertainties": [
+      "实际旧书数量和可投入时间没有记录，整理规模与节奏无法核对。",
+      "尚未确认整理安排是否固定、标准是否中途变动。",
+      "盘面局部方向不确认现实意愿、能力、体力或外部条件。"
+    ]
+  },
+  "rawSha256": "fd61ffef85d81c28c9dc5baee2c4e6e554edd8943165fc3ee13dad7e4f51b0b0",
+  "noAutomaticRetries": true
+}
