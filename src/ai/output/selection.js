@@ -343,7 +343,7 @@ question是用户陈述，不是程序核验；保留已给事实，未知运行
    {role:'user',content:JSON.stringify({context_id:context.context_id,question:context.input.A_user_question,
     input_origins:{question:'用户陈述，非程序验证',reported_deployment:reportedDeployment(context),chart:'程序记录及规则标注，非现实验证'},
     ...(hasTightBasisScope(context)?{proof_scope_rules:PROOF_SCOPE_RULES,proof_scope_definitions:PROOF_SCOPE_DEFINITIONS}:{}),
-    ...(hasMappingAdmission(context)?{mapping_registry_version:MAPPING_REGISTRY_VERSION,admitted_mappings:mappings}:{}),
+    ...(hasMappingAdmission(context)?{mapping_registry_version:MAPPING_REGISTRY_VERSION,plan_registry_version:PLAN_MAPPING_REGISTRY_VERSION,admitted_mappings:mappings}:{}),
     bases:visibleEntries.map(e=>({id:e.id,text:e.text,purpose:e.target?'main_choice_or_role':'factor_or_timing',...(hasBasisScope(context)?{proof_scope:hasTightBasisScope(context)?{kind:basisScope(e,context).kind}:basisScope(e,context)}:{}),...(e.target?{available_perspectives:availablePerspectives(e,context)}:{subject_ids:e.subject_ids,allowed_assessments:hasMappingAdmission(context)?['conditional','neutral']:/^[et][1-6]$/.test(e.id)?['neutral','conditional']:effects})})),
     sources:sources.filter(s=>s.scope_gate!=='limited_unconfirmed'),conversation:context.conversation,
     output_layout:selectionLayout(selectionSchema(context),context.context_id),response_schema:selectionSchema(context)})}];
