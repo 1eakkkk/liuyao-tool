@@ -1,0 +1,10 @@
+{
+  "reviewer": "root",
+  "rubric": "constraint-rubric-2",
+  "rawSha256": "6f7c555b6c4688a697bd51fc60ae934cf9803ee0126d8ac4134aa7410020ecdd",
+  "facts": {"verdict": "pass", "evidence": "取用应爻第5爻，规则应生世与固定盘面相符；未把时间、意愿、能力或工作量陈述为已知事实。搬动分类装箱属于建议举例。"},
+  "scope": {"verdict": "pass", "evidence": "只观察问句明确指定的他帮助我方向，未引入收益、兴趣、平台或维护目标；方向不明，没有应期预测。"},
+  "support": {"verdict": "pass", "evidence": "因素仅conditional且明确假设性帮助方向；实际知道、愿意承担作为待核实前提，没有据此宣称成功、意愿或能力。一般建议独立于卦盘。通过仅覆盖这张观察取法的范围约束。"},
+  "attribution": {"verdict": "pass", "evidence": "作用前提标unconfirmed且无伪造用户摘录；取法来源由程序按已审卡生成，未把出处或程序规则说成现实与预测已验证。"},
+  "accepted": true
+}

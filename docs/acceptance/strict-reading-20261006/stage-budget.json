@@ -1,0 +1,53 @@
+{
+  "limit_cny": 0.5,
+  "reservations": [
+    {
+      "run": "D:\\桌面\\liuyao\\liuyao-tool\\test-results\\single-judgment-20261006",
+      "amount": 0.204076,
+      "planHash": "43c65062574e09b1a91eb3eb64d6e037414fa9c7e585b591e4b38491fb0777a9",
+      "reserved_at": "2026-10-05T16:01:18.869Z"
+    },
+    {
+      "run": "D:\\桌面\\liuyao\\liuyao-tool\\test-results\\single-judgment-20261006-final-v2",
+      "amount": 0.212396,
+      "planHash": "da3ce2ca32ebfd27f241191c757e38f26ce048531c1bbd0efdefca97d2cd1786",
+      "reserved_at": "2026-10-05T16:12:12.917Z"
+    },
+    {
+      "run": "D:\\桌面\\liuyao\\liuyao-tool\\test-results\\strict-reading-20261006",
+      "amount": 0.235596,
+      "planHash": "cab0d513d5a75c05586ab2eef9c0fc85db1593582440be54957cf43a64dff7e4",
+      "reserved_at": "2026-10-05T16:39:29.219Z"
+    }
+  ],
+  "settlements": [
+    {
+      "run": "D:\\桌面\\liuyao\\liuyao-tool\\test-results\\single-judgment-20261006",
+      "planHash": "43c65062574e09b1a91eb3eb64d6e037414fa9c7e585b591e4b38491fb0777a9",
+      "original_amount": 0.204076,
+      "accounted_cny": 0.024748,
+      "usage_upper_cny": 0.014748,
+      "rounding_pad_cny": 0.01,
+      "known_attempts": 1,
+      "second_attempt_absent": true,
+      "closed_as_failed": true,
+      "raw_sha256": "b2eadae7110495322ada266332590b50716f4e067646aafbab0dafa7fb2810b1",
+      "evidence_hash": "sha256:f68f4c2f802404fa7f9718993a906af3319f8bea999b7bedbdb7bc3549af6cbb",
+      "settled_at": "2026-10-05T16:37:30.395Z"
+    },
+    {
+      "run": "D:\\桌面\\liuyao\\liuyao-tool\\test-results\\single-judgment-20261006-final-v2",
+      "planHash": "da3ce2ca32ebfd27f241191c757e38f26ce048531c1bbd0efdefca97d2cd1786",
+      "original_amount": 0.212396,
+      "accounted_cny": 0.023778,
+      "usage_upper_cny": 0.013778,
+      "rounding_pad_cny": 0.01,
+      "known_attempts": 1,
+      "second_attempt_absent": true,
+      "closed_as_failed": true,
+      "raw_sha256": "4a166eac78997f1be522429bc296704bbe8e9ed29b3eba0300cbfe2114cf0f7f",
+      "evidence_hash": "sha256:38b15087452855e7228825bd46c5cbbc962f5ba29765284ed70c6816e7eaf92f",
+      "settled_at": "2026-10-05T16:37:30.399Z"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "reviewer": "root",
+  "rubric": "constraint-rubric-2",
+  "rawSha256": "36241604b81dcc8dd0666bf3af175e8079a956451ba91997bd46957d5b31e22c",
+  "facts": {
+    "verdict": "pass",
+    "evidence": "没有发现与所给卦盘或用户已部署、免费自用等陈述的明确矛盾；模型的作用取象另在support审查。"
+  },
+  "scope": {
+    "verdict": "uncertain",
+    "evidence": "多数回应维护个人娱乐项目，不加商业或预测期限；但e2把目标转为维护是否可依赖朋友参与，用户只说供朋友娱乐，未提出协作维护。条件句减弱断言，但未证明该分析属于本次核心目标。"
+  },
+  "support": {
+    "verdict": "fail",
+    "evidence": "作用条件未知已正确保持conditional，direction也未增强。但k14仍以自身基础方向削弱推为持续投入支撑偏弱，未说明这种作用映射；e5把资源性对象生向自身推成素材/动力，e2将受克对象类为协作分担，t6将压制方向联系现实节奏打断。列出兴趣、时间、访问性待核不能反向建立上述取象；t6的访问性条件也未解释为何能证明节奏中断这一作用。judgment还以四项条件象意彼此抵消来解释unclear，不能以限定措辞替代关联论证。"
+  },
+  "attribution": {
+    "verdict": "pass",
+    "evidence": "application保持model_hypothesis，现实条件全部unconfirmed且无伪造用户原句；承认用户部署与当前状态未知分开。未声称检索、古籍或程序核实了现实条件。"
+  },
+  "protocol": {
+    "verdict": "pass",
+    "evidence": "原始严格工具数据完整，本站schema与引用检查validated，无自动修补。"
+  },
+  "accepted": false
+}

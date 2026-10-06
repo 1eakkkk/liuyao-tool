@@ -1,0 +1,15 @@
+{
+  "closed": true,
+  "status": "failed_and_stopped",
+  "sourceCommit": "d25a8b43228082f31d59ec403606dcad033767b0",
+  "attemptCount": 1,
+  "accepted": false,
+  "skippedCases": ["personal-books"],
+  "stopReasons": ["protocol_failure", "support_failure", "attribution_failure"],
+  "thisBatchConservativePeakCostCny": 0.021164,
+  "stageKnownCalls": 3,
+  "stageConservativePeakCostCny": 0.049690,
+  "automaticRetries": false,
+  "candidateDeployed": false,
+  "budgetReservationReleased": false
+}

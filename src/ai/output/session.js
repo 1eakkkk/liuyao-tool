@@ -14,7 +14,10 @@ export function createReadingSession(canonical, preferences = null) {
   if (preferences !== null && (!['brief', 'deep', 'custom'].includes(preferences.style) || typeof preferences.custom !== 'string' || preferences.custom.length > 2000)) throw Error('解读篇幅设置无效');
   return { version: READING_VERSION, prompt: READING_PROMPT, historyId: `reading-${globalThis.crypto.randomUUID()}`, historySuppressed: false, canonical: normalizeLegacyCast(structuredClone(canonical)), preferences: preferences ? {style: preferences.style, custom: preferences.custom} : null, turns: [] };
 }
-export async function prepareReadingTurn(session, question, { backgroundSearch = null,outputFormat=null,taskPolicyVersion=1,judgmentPolicyVersion=0,groundingPolicyVersion=0 } = {}) {
+export async function prepareReadingTurn(session, question, { backgroundSearch = null,outputFormat=null,taskPolicyVersion=1,judgmentPolicyVersion=0,groundingPolicyVersion=0,basisPolicyVersion=0 } = {}) {
+  if(![0,1,2,3,4].includes(basisPolicyVersion))throw Error('依据边界版本不兼容');
+  if(basisPolicyVersion>0&&(outputFormat!=='selection-2'||judgmentPolicyVersion!==6||groundingPolicyVersion!==2))throw Error('依据边界候选必须使用判断策略6和来源策略2');
+  if(((session.turns?.length??0)>0||session.basisPolicyVersion!==undefined)&&basisPolicyVersion!==(session.basisPolicyVersion??0))throw Error('不能升级已有解读的依据边界');
   if (session.version !== READING_VERSION || !supportedPrompts.has(session.prompt)) throw Error('此解读版本暂不支持续接，请重新开始。');
   if (!Array.isArray(session.turns) || session.turns.length >= MAX_TURNS) throw Error('本次已达 8 轮，请保存对话后开始新的解读。');
   if (typeof question !== 'string' || !question.trim() || question.length > 500) throw Error('请填写 1～500 字的问题。');
@@ -26,8 +29,9 @@ export async function prepareReadingTurn(session, question, { backgroundSearch =
     initial_question: session.canonical.question.text, turn: session.turns.length + 1, history,
     ...(outputFormat==='selection-2'?{output_format:outputFormat}:{}),
     ...(outputFormat==='selection-2'&&[2,3,4,5].includes(taskPolicyVersion)?{task_policy:taskPolicyVersion}:{}),
-    ...(outputFormat==='selection-2'&&[1,2,3,4].includes(judgmentPolicyVersion)?{judgment_policy:judgmentPolicyVersion}:{}),
+    ...(outputFormat==='selection-2'&&[1,2,3,4,5,6].includes(judgmentPolicyVersion)?{judgment_policy:judgmentPolicyVersion}:{}),
     ...(outputFormat==='selection-2'&&[1,2].includes(groundingPolicyVersion)?{grounding_policy:groundingPolicyVersion}:{}),
+    ...(outputFormat==='selection-2'&&basisPolicyVersion>0?{basis_policy:basisPolicyVersion}:{}),
     ...(session.preferences ? { response_preferences: session.preferences } : {}) } });
   const messages = buildOutputMessages(context);
   if (session.preferences) {
@@ -46,6 +50,7 @@ export async function prepareReadingTurn(session, question, { backgroundSearch =
     session.pendingBackgroundSearch = context.input.background_search;
     session.pendingBackgroundQuestion = question.trim();
   } else { delete session.pendingBackgroundSearch; delete session.pendingBackgroundQuestion; }
+  session.basisPolicyVersion=basisPolicyVersion;
   return { context, messages, question: question.trim(), ...(backgroundSearch !== null ? { backgroundSearch: context.input.background_search } : {}) };
 }
 export function readingExport(prepared) {
@@ -68,7 +73,8 @@ export function appendReadingTurn(session, prepared, raw, completed, source, usa
 export function serializeReadingSession(session, pendingQuestion = null) {
   return JSON.stringify({ version: session.version, prompt: session.prompt, canonical: session.canonical, preferences: session.preferences,
     historyId:session.historyId, historySuppressed:session.historySuppressed,
-    outputFormat:session.outputFormat, ...([2,3,4,5].includes(session.taskPolicyVersion)?{taskPolicyVersion:session.taskPolicyVersion}:{}), ...([1,2,3,4].includes(session.judgmentPolicyVersion)?{judgmentPolicyVersion:session.judgmentPolicyVersion}:{}), ...([1,2].includes(session.groundingPolicyVersion)?{groundingPolicyVersion:session.groundingPolicyVersion}:{}), pendingQuestion, ...(pendingQuestion && pendingQuestion.trim() === session.pendingBackgroundQuestion && session.pendingBackgroundSearch ? {pendingBackgroundSearch:session.pendingBackgroundSearch} : {}),
+    ...([1,2,3,4].includes(session.basisPolicyVersion)?{basisPolicyVersion:session.basisPolicyVersion}:{}),
+    outputFormat:session.outputFormat, ...([2,3,4,5].includes(session.taskPolicyVersion)?{taskPolicyVersion:session.taskPolicyVersion}:{}), ...([1,2,3,4,5,6].includes(session.judgmentPolicyVersion)?{judgmentPolicyVersion:session.judgmentPolicyVersion}:{}), ...([1,2].includes(session.groundingPolicyVersion)?{groundingPolicyVersion:session.groundingPolicyVersion}:{}), pendingQuestion, ...(pendingQuestion && pendingQuestion.trim() === session.pendingBackgroundQuestion && session.pendingBackgroundSearch ? {pendingBackgroundSearch:session.pendingBackgroundSearch} : {}),
     turns: session.turns.map(({ question, raw, completed, source, usage, backgroundSearch,completion,inputEnvelopeVersion }) => ({ question, raw, completed, source, usage, ...(completion?{completion}:{}),...(inputEnvelopeVersion===1?{inputEnvelopeVersion}:{}), ...(backgroundSearch ? {backgroundSearch} : {}) })) });
 }
 export async function restoreReadingSession(raw) {
@@ -79,10 +85,13 @@ export async function restoreReadingSession(raw) {
   if(saved.outputFormat==='selection-2')session.outputFormat=saved.outputFormat;
   if(saved.taskPolicyVersion!==undefined&&![2,3,4,5].includes(saved.taskPolicyVersion))throw Error('保存的任务分流版本不兼容');
   session.taskPolicyVersion=saved.taskPolicyVersion??1;
-  if(saved.judgmentPolicyVersion!==undefined&&![1,2,3,4].includes(saved.judgmentPolicyVersion))throw Error('保存的判断约束版本不兼容');
+  if(saved.judgmentPolicyVersion!==undefined&&![1,2,3,4,5,6].includes(saved.judgmentPolicyVersion))throw Error('保存的判断约束版本不兼容');
   session.judgmentPolicyVersion=saved.judgmentPolicyVersion??0;
   if(saved.groundingPolicyVersion!==undefined&&![1,2].includes(saved.groundingPolicyVersion))throw Error('保存的来源约束版本不兼容');
   session.groundingPolicyVersion=saved.groundingPolicyVersion??0;
+  if(saved.basisPolicyVersion!==undefined&&![0,1,2,3,4].includes(saved.basisPolicyVersion))throw Error('保存的依据边界版本不兼容');
+  session.basisPolicyVersion=saved.basisPolicyVersion??0;
+  if(session.basisPolicyVersion>0&&(saved.outputFormat!=='selection-2'||session.judgmentPolicyVersion!==6||session.groundingPolicyVersion!==2))throw Error('保存的依据边界与解读版本不兼容');
   session.prompt = saved.prompt;
   session.historyId = typeof saved.historyId === 'string' && /^reading-[a-zA-Z0-9:_-]{1,100}$/.test(saved.historyId)
     ? saved.historyId : `reading-${await hashOutput(session.canonical)}`;
@@ -116,13 +125,19 @@ export async function prepareCompactReadingTurn(session, question, options = {})
   prepared.messages[1].content = JSON.stringify(payload);
   return prepared;
 }
+// Candidate builds opt in explicitly; production and old saved sessions stay unchanged.
+const freshJudgmentPolicy=import.meta.env?.VITE_READING_JUDGMENT_POLICY==='6'?6:2;
 export async function prepareSelectedReadingTurn(session,question,options={}){
  const taskPolicyVersion=options.taskPolicyVersion??session.taskPolicyVersion??5;
  if(![1,2,3,4,5].includes(taskPolicyVersion))throw Error('任务分流版本不兼容');
- const judgmentPolicyVersion=options.judgmentPolicyVersion??session.judgmentPolicyVersion??2;
- if(![0,1,2,3,4].includes(judgmentPolicyVersion))throw Error('判断约束版本不兼容');
- const groundingPolicyVersion=options.groundingPolicyVersion??session.groundingPolicyVersion??(judgmentPolicyVersion===2?2:0);
+ const judgmentPolicyVersion=options.judgmentPolicyVersion??session.judgmentPolicyVersion??freshJudgmentPolicy;
+ if(![0,1,2,3,4,5,6].includes(judgmentPolicyVersion))throw Error('判断约束版本不兼容');
+ const groundingPolicyVersion=options.groundingPolicyVersion??session.groundingPolicyVersion??([2,5,6].includes(judgmentPolicyVersion)?2:0);
  if(![0,1,2].includes(groundingPolicyVersion))throw Error('来源约束版本不兼容');
- const prepared=await prepareReadingTurn(session,question,{...options,outputFormat:'selection-2',taskPolicyVersion,judgmentPolicyVersion,groundingPolicyVersion});
- prepared.messages=selectionMessages(prepared.context);session.outputFormat='selection-2';session.taskPolicyVersion=taskPolicyVersion;session.judgmentPolicyVersion=judgmentPolicyVersion;session.groundingPolicyVersion=groundingPolicyVersion;return prepared;
+ if([5,6].includes(judgmentPolicyVersion)&&groundingPolicyVersion!==2)throw Error('取舍约束必须使用来源策略2');
+ const basisPolicyVersion=options.basisPolicyVersion??session.basisPolicyVersion??({'1':1,'2':2,'3':3,'4':4}[import.meta.env?.VITE_READING_BASIS_POLICY]??0);
+ if(![0,1,2,3,4].includes(basisPolicyVersion))throw Error('依据边界版本不兼容');
+ if(basisPolicyVersion>0&&(judgmentPolicyVersion!==6||groundingPolicyVersion!==2))throw Error('依据边界候选必须使用判断策略6和来源策略2');
+ const prepared=await prepareReadingTurn(session,question,{...options,outputFormat:'selection-2',taskPolicyVersion,judgmentPolicyVersion,groundingPolicyVersion,basisPolicyVersion});
+ prepared.messages=selectionMessages(prepared.context);session.outputFormat='selection-2';session.taskPolicyVersion=taskPolicyVersion;session.judgmentPolicyVersion=judgmentPolicyVersion;session.groundingPolicyVersion=groundingPolicyVersion;session.basisPolicyVersion=basisPolicyVersion;return prepared;
 }

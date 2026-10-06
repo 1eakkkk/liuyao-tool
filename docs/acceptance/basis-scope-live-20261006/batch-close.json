@@ -1,0 +1,16 @@
+{
+  "closed": true,
+  "status": "failed_stopped_stage_call_cap_reached",
+  "sourceCommit": "e50ecd25dc754792d04b694f7331284c9aa1f0ed",
+  "attemptCount": 1,
+  "stageKnownCalls": 4,
+  "totalStageCallsCap": 4,
+  "thisBatchConservativePeakCostCny": 0.033242,
+  "stageConservativePeakCostCny": 0.082932,
+  "automaticRetries": false,
+  "accepted": false,
+  "originalTwoQuestionReleaseGateUnchanged": true,
+  "remainingStageCalls": 0,
+  "candidateDeployed": false,
+  "budgetReservationReleased": false
+}

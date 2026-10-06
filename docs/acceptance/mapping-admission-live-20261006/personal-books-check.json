@@ -1,0 +1,41 @@
+{
+  "id": "personal-books",
+  "status": "validated",
+  "issues": [],
+  "completion": {
+    "transport": "strict_tool",
+    "error": null,
+    "finishReason": "tool_calls",
+    "bodyComplete": true,
+    "envelopeValid": true
+  },
+  "usage": {
+    "prompt_tokens": 5662,
+    "completion_tokens": 507,
+    "total_tokens": 6169,
+    "prompt_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "prompt_cache_hit_tokens": 1792,
+    "prompt_cache_miss_tokens": 3870
+  },
+  "usageOk": true,
+  "conservativePeakCostCny": 0.01538,
+  "answer": {
+    "schema_version": "structured-answer-1.0",
+    "context_id": "sha256:98b54ff88deff4f856edb4308c254e4a2a30bfc643d85bb715310cfa341264c7",
+    "answer": "当前依据不足，不能据此判断目标能否达成。\n\n当前取法覆盖不足，不能据此判断目标能否达成。未核对的象意假设不参与主判断。\n\n一般建议：\n1. 先做一次小范围试清点：选一个书架或一个类别，记录实际耗时，再据此外推全部清点的可行工作量。\n2. 登记时把书名、可辨识的版本信息和当前摆放位置一并记下，先用你习惯的方式（纸质清单或表格）保证自己能查找，再考虑是否细化分类。",
+    "direction": "unclear",
+    "yongshen_candidates": [],
+    "factors": [],
+    "timing_candidates": [],
+    "uncertainties": [
+      "本题的旧书清点整理目标没有可用的已核对取法，也没有与书目、摆放位置相关的个案事实记录，因此无法给出象意方向的有利或阻碍判断。",
+      "用户已决定先清点，但实际藏书数量尚未记录，所以清点工作量是否可承受无法核对。",
+      "可用于整理的时间尚未记录，能否在可投入时间内完成清点与登记无法核对。",
+      "整理的具体标准（例如按类别、按位置或按使用频率）尚未记录，方法选择是否适合当前查找需求无法核对。"
+    ]
+  },
+  "rawSha256": "e897ce2b7ebd77bd3d1ecd36627bb03e00a48b0720045ae46b52d23c99883ab3",
+  "noAutomaticRetries": true
+}

@@ -8,7 +8,8 @@ const direction = { favorable: '偏有利', unfavorable: '偏不利', mixed: '�
 let conclusionId = 0;
 const transportCodes=new Set(['incomplete_response','response_token_limit','response_filtered','provider_interrupted','stream_not_finished',
  'stream_missing_finish_reason','unexpected_finish_reason','request_timeout','aborted','sse_invalid_utf8','sse_invalid_chunk','sse_malformed_event',
- 'sse_after_done','sse_conflicting_finish_reason','sse_event_too_large','sse_stream_too_large','sse_stream_error']);
+ 'sse_after_done','sse_conflicting_finish_reason','sse_event_too_large','sse_stream_too_large','sse_stream_error',
+ 'strict_invalid_envelope','strict_unexpected_text','strict_tool_count','strict_tool_identity','strict_invalid_arguments','strict_invalid_json','strict_response_too_large','strict_read_error']);
 export function outputFailureSummary(result){
  const code=result.issues?.[0]?.code;
  if(transportCodes.has(code))return '解读未完整接收，已保留收到的原文。';
@@ -19,6 +20,14 @@ export function outputFailureSummary(result){
 export function outputIssueText(result) {
   const code=result.issues?.[0]?.code;
   const message=({
+    strict_invalid_envelope:'接口返回的数据包不完整或不符合约定，未将其当作有效解读。',
+    strict_unexpected_text:'接口同时返回了额外正文，未将两份回答混合成解读。',
+    strict_tool_count:'接口没有返回唯一的一份解读数据，本站未执行任何工具动作。',
+    strict_tool_identity:'接口返回的数据身份不匹配，未接受为本轮解读。',
+    strict_invalid_arguments:'接口的解读数据类型不正确，已保留原文。',
+    strict_invalid_json:'接口数据包无法作为完整 JSON 读取，已保留收到的原文。',
+    strict_response_too_large:'接口数据包超过接收上限，本次未完整读取。',
+    strict_read_error:'接收接口数据包时发生中断或编码异常，已保留收到的内容。',
     response_token_limit:'回复达到输出上限而截断，没有取得完整 JSON。可缩短篇幅后手动重新生成；本站不会自动重试。',
     response_filtered:'接口提前停止了这次回复，没有返回完整解读。',
     provider_interrupted:'接口因服务资源不足提前结束，未取得完整解读。',
@@ -47,7 +56,21 @@ export function outputIssueText(result) {
     reported_premise_erased:'回复抹掉了用户已提供的部署描述。请区分用户陈述与尚未核实的可访问性、运行状态。',
     unbacked_reality_assertion:'回复中出现了未说明来源的现实断言。卦盘不能证明项目阶段、运行状态或实际助力，请核对来源或保留未知。',
     unbacked_reality_quote:'回复引用的现实描述不在本轮问题或可用资料原文中，请核对完整原话，不用引号包装推断。',
+    role_perspective_mismatch:'观察角度与程序位置不对应，不能把其他位置当作自身或对应方，请按目录核对。',
+    unresolved_factor_application:'回复列入了尚未建立目标关联的因素。本站未将它参与判断，也不会删项后自动改判；请说明关联缺口或按本轮协议重新生成。',
+    unconfirmed_effect_as_decisive:'回复把尚未确认的作用条件当成了明确支持或阻碍，本站已保留原文，未自动改判。',
+    effect_condition_source_mismatch:'回复声称某项条件来自你的描述，但未提供当前问题中的对应原句。本站未将其视为已提供的条件。',
+    missing_effect_conditions:'回复声称作用依赖现实条件，却没有列出条件，已保留原文。',
+    unexpected_effect_conditions:'回复声明只作象意推论，同时又列入现实前提，作用范围不一致。',
+    unexpected_effect_source:'待核条件附带了用户来源，来源身份不一致，已保留原文。',
+    unreviewed_mapping:'回复使用了未核对适用范围的取法，本站未将其参与判断。',
+    mapping_scope_mismatch:'回复的对象或依据不符合这项取法已核对的适用范围，已保留原文。',
+    mapping_effect_overreach:'这项取法只用于条件性观察，不能单独作为明确支持或阻碍。',
     rule_subject_mismatch:'规则与所解释的对象位置不对应，请核对关联对象及其与问题的关系。',
+    omitted_decisive_factor:'取舍遗漏了本轮已列出的支持或阻碍，请一并说明主次。',
+    missing_role_tradeoff:'同一对象被解释为支持与阻碍，但缺少条件、机制和取舍说明。',
+    duplicate_role_tradeoff:'同一对象的双重作用说明重复，请合并。',
+    unmatched_role_tradeoff:'双重作用说明未对应本轮同时有支持与阻碍的对象。',
     unselected_judgment_basis:'取舍引用了本轮未列出的因素，请先完整说明该依据。',
     missing_judgment_basis:'判断倾向缺少参与取舍的因素，请说明依据或保留不明确。',
     judgment_basis_mismatch:'参与最终取舍的因素不能支持所填倾向，请重新核对主次，不要只换标签。',

@@ -1,0 +1,8 @@
+{
+  "accepted": false,
+  "rubric": "constraint-rubric-2",
+  "reviewers": ["root-review.json", "independent-review.json"],
+  "bothFailedDimensions": ["support", "attribution"],
+  "scopeDisagreementPreserved": true,
+  "secondCaseAllowed": false
+}

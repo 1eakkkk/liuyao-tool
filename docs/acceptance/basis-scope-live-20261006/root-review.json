@@ -1,0 +1,10 @@
+{
+  "reviewer": "root",
+  "rubric": "constraint-rubric-2",
+  "facts": {"verdict": "pass", "evidence": "未发现与给定卦盘或用户已部署等描述的明确事实矛盾。月令相等转述有记录，另计协议违例。"},
+  "scope": {"verdict": "pass", "evidence": "回应个人免费娱乐项目继续维护，无商业目标或具体预测时间；访问与投入核验建议有关。"},
+  "support": {"verdict": "fail", "evidence": "k2/k14将空、相冲改写为动力易散与生活节奏打断，没有建立这种作用映射。低成本维护建议不能反向证明这些象意；k8更明确说关联仍待落实，应省略而不作为判断因素。模型声明假设不补足论证。"},
+  "attribution": {"verdict": "uncertain", "evidence": "模型假设和未知现实条件多数已明确区分，未声称搜索。k13仍称程序记录控制方向，并以此联系项目主导性，形式方向和象意解释的范围没有完全分清；不以字段origin本身宣称来源正确。"},
+  "protocol": {"verdict": "fail", "issue": "program_attribute_in_explanation", "path": "$.factors[3].interpretation"},
+  "accepted": false
+}

@@ -1,0 +1,15 @@
+{
+  "reviewer": "strict_stage_review",
+  "model": "gpt-6-luna",
+  "rubric": "constraint-rubric-2",
+  "case": "private-project",
+  "facts": {"verdict": "pass", "evidence": "旬空、月令死、世克应、月破均有给定记录；个人承担代码与Codex辅助写码有张力，但不足以证明逻辑矛盾，不计事实失败。"},
+  "scope": {"verdict": "pass", "evidence": "聚焦继续维护，给有限unclear倾向，没有增加时间预测或商业目标，两条建议与维护相关。"},
+  "support": {"verdict": "fail", "evidence": "旬空、月令死、月破被释义后落到先确认愿不愿意继续，没有说明象意为何能支持个人持续维护。用户已报告想继续，真正未知的是投入时间等条件；朋友关联缺少现实通道也未经材料确认。"},
+  "attribution": {"verdict": "fail", "evidence": "代码、部署和维护都由个人承担被当作事实，但用户仅报告Codex辅助写码、本人已部署和想继续维护，没有报告由本人独立承担代码及后续维护。其余访问、反馈、时间多标未知，未声称检索。"},
+  "protocol": {"verdict": "fail", "evidence": "原解析fallback，program_attribute_in_explanation在factors[1].interpretation；协议评分与四维内容评分分开。"},
+  "accepted": false,
+  "disagreementPreserved": "主审scope fail，独立scope pass；不强行统一。双方support与attribution均fail，接受门槛未通过。",
+  "engineeringReview": "初版候选裸规则词正则过宽，可能误伤否定限定说明；已要求收窄，后续修正单独记录。",
+  "additionalApiCalls": 0
+}

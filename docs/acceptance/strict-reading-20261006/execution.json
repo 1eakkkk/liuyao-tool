@@ -1,0 +1,10 @@
+{
+  "started": "2026-10-05T16:39:29.223Z",
+  "planHash": "cab0d513d5a75c05586ab2eef9c0fc85db1593582440be54957cf43a64dff7e4",
+  "balanceBefore": 23.72,
+  "reservation": {
+    "reserved_cny": 0.284122,
+    "remaining_unreserved_cny": 0.21587800000000001
+  },
+  "automaticRetries": false
+}

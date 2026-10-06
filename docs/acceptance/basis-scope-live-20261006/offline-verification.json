@@ -1,0 +1,17 @@
+{
+  "implementationCommit": "439fac6",
+  "basisPolicy": 2,
+  "fullTests": {"files": 89, "passed": 1109, "failed": 0, "durationSeconds": 136.13},
+  "focusedTests": {"files": 3, "passed": 36, "failed": 0},
+  "browser": {"api": "mocked", "engines": ["chromium", "webkit"], "widths": [1280, 390, 320], "passed": true, "explicitMissingLinkRejected": true, "failureHistoryPreserved": true},
+  "independentEngineeringReview": "未发现明确阻断。policy2只拒绝明确目标关联未建立/待落实声明，不把proposed视为成立，旧历史策略锁定及程序来源追溯保留。未重跑测试，未改文件。",
+  "knownLiteralLimit": "部分同义表达例如关联尚没有建立可能漏检；此有限语法不验证所有语义。",
+  "policy1FrozenRequestUnchanged": true,
+  "policy1HistoryRegraded": false,
+  "originalArchiveGitBlobsMatched": 17,
+  "policy2PaidApiCalls": 0,
+  "realContentAccepted": false,
+  "candidateDeployed": false,
+  "previewStopped": true,
+  "reviewAgentStopped": true
+}

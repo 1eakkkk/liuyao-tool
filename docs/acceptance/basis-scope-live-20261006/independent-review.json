@@ -1,0 +1,14 @@
+{
+  "reviewer": "basis_live_review",
+  "model": "gpt-6-luna",
+  "rubric": "constraint-rubric-2",
+  "facts": {"verdict": "pass", "evidence": "未发现给定记录的明确事实冲突，程序属性复述另计协议。"},
+  "scope": {"verdict": "pass", "evidence": "给继续维护的有限不清倾向，无预测时间，核验未知运行条件的建议有关。"},
+  "support": {"verdict": "uncertain", "evidence": "k2/k14均明确为假设和条件，没有把条件当现实成立，k13有范围限缩；但k8目标关联明说仍待落实，不能作为已建立依据。不能支撑倾向的限定使其宜记uncertain而非fail。"},
+  "attribution": {"verdict": "pass", "evidence": "盘面推论标为假设，部署状态、反馈、投入列为未核实，无搜索或程序验证的声称。"},
+  "protocol": {"verdict": "fail", "issue": "program_attribute_in_explanation", "path": "$.factors[3].interpretation"},
+  "accepted": false,
+  "engineeringSuggestion": "有限字面拒绝明确未建立的目标关联；不得把proposed本身、未经程序验证或作用条件未核实当失败。",
+  "disagreementPreserved": "主审support fail/attribution uncertain，独立support uncertain/attribution pass；不统一改分。",
+  "additionalApiCalls": 0
+}

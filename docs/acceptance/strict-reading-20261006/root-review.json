@@ -1,0 +1,13 @@
+{
+  "reviewer": "root",
+  "rubric": "constraint-rubric-2",
+  "case": "private-project",
+  "facts": {"verdict": "pass", "evidence": "未发现与用户已部署、免费、自用及好友娱乐的明确矛盾；将空解释为空心状态属于缺少出处的解释，不重复计为事实矛盾。"},
+  "scope": {"verdict": "fail", "evidence": "问题已明确想继续维护，回答反复将是否愿意继续作为需要确认的前提，未说明针对适合继续维护的有效作用与取舍。"},
+  "support": {"verdict": "fail", "evidence": "四个因素都没有建立目标—对象—作用关联。正文自己说朋友关联缺少现实通道，却仍列为因素；维护意愿不是空、死、破的已支持作用条件。应省略缺少关联的因素，而不是凑条件项。"},
+  "attribution": {"verdict": "fail", "evidence": "程序计算标注被扩展为空心状态、作用前提未落实、基础条件不完整等解释。标注存在不证明这些定义或当前项目上的作用，假设免责声明不能补足来源。"},
+  "protocol": {"verdict": "fail", "evidence": "提供方完整指定工具返回通过接收门槛；原本站校验在 factors[1].interpretation 拒绝程序属性复述。原检查保留，不事后重算为通过。"},
+  "accepted": false,
+  "nextCase": "skipped",
+  "automaticRetries": false
+}

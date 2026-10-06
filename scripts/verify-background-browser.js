@@ -21,7 +21,12 @@ try{for(const width of [1280,390,320]){
    await route.fulfill({contentType:'application/json',body:JSON.stringify({stop_reason:'end_turn',content:[{type:'web_search_tool_result',content:[{type:'web_search_result',title:'官方限时模式公告',url}]}],usage:{input_tokens:200,output_tokens:20,server_tool_use:{web_search_requests:1}}})});return;
   }
   const input=JSON.parse(body.messages[1].content);requests.push(input);
-  const response={schema_version:SELECTION_VERSION,context_id:input.context_id,answer:"模拟解读，仅作一般建议。",direction:"unclear",main_choice:{basis_id:"none",reason:"一般建议不作取用。"},factors:[{basis_id:input.bases.find(e=>e.id.startsWith("e")).id,assessment:"neutral",interpretation:"只展示依据，不推测现实结果。"}],background_usage:input.sources.map(s=>({source_id:s.id,state:"not_applicable",note:"限时玩法不能用于主游戏。"})),timing_candidates:[],uncertainties:["实际条件未知。"]};
+  const response={schema_version:SELECTION_VERSION,context_id:input.context_id,answer:"模拟解读，仅作一般建议。",direction:"unclear",main_choice:{basis_id:"none",reason:"一般建议不作取用。"},factors:[{basis_id:input.bases.find(e=>e.id.startsWith("e"))?.id,assessment:"neutral",interpretation:"只展示依据，不推测现实结果。"}],background_usage:input.sources.map(s=>({source_id:s.id,state:"not_applicable",note:"限时玩法不能用于主游戏。"})),timing_candidates:[],uncertainties:["实际条件未知。"]};
+  if(input.conversation.basis_policy===4){
+   response.factors=[];response.main_choice={basis_id:'none',reason:input.response_schema.properties.main_choice.properties.reason.const};
+   if(input.response_schema.properties.judgment){delete response.answer;response.main_choice.perspective='none';response.judgment={basis_ids:[],reason:input.response_schema.properties.judgment.properties.reason.const};response.role_tradeoffs=[];response.general_advice=[];}
+  }
+  if(body.tools){assert(body.tools[0].function.strict);await route.fulfill({contentType:'application/json',body:JSON.stringify({choices:[{index:0,finish_reason:'tool_calls',message:{role:'assistant',content:null,tool_calls:[{id:'background-mock',type:'function',function:{name:'submit_reading',arguments:JSON.stringify(response)}}]}}],usage:{prompt_tokens:30,completion_tokens:20}})});return;}
   await route.fulfill({contentType:'text/event-stream',body:`data: ${JSON.stringify({choices:[{delta:{content:JSON.stringify(response)},finish_reason:'stop'}],usage:{prompt_tokens:30,completion_tokens:20}})}\n\ndata: [DONE]\n\n`});
  });
  await page.route('https://r.jina.ai/**',async route=>{

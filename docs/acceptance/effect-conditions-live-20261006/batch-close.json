@@ -1,0 +1,12 @@
+{
+  "status": "failed_stopped_after_first_content_review",
+  "calls": 1,
+  "maxCalls": 2,
+  "remainingCalls": 0,
+  "secondSkipped": true,
+  "upperCostCny": 0.027138,
+  "previousStageUpperCostCny": 0.082932,
+  "cumulativeKnownUpperCostCny": 0.11007,
+  "reason": "root support fail, Luna support uncertain; no retry, no second sample",
+  "closedAt": "2026-10-06T02:42:01.082Z"
+}

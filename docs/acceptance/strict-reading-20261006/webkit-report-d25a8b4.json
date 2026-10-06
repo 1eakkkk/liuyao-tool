@@ -1,0 +1,35 @@
+[
+  {
+    "width": 1280,
+    "engine": "webkit",
+    "api": "mocked",
+    "prompt_import": "passed",
+    "single_judgment": "passed",
+    "conditions_rejected_as_mixed": "passed",
+    "history": "passed",
+    "standalone_advice": "passed",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "engine": "webkit",
+    "api": "mocked",
+    "prompt_import": "passed",
+    "single_judgment": "passed",
+    "conditions_rejected_as_mixed": "passed",
+    "history": "passed",
+    "standalone_advice": "passed",
+    "errors": []
+  },
+  {
+    "width": 320,
+    "engine": "webkit",
+    "api": "mocked",
+    "prompt_import": "passed",
+    "single_judgment": "passed",
+    "conditions_rejected_as_mixed": "passed",
+    "history": "passed",
+    "standalone_advice": "passed",
+    "errors": []
+  }
+]

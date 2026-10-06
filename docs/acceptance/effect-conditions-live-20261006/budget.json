@@ -1,0 +1,11 @@
+{
+  "limit_cny": 0.4,
+  "reservations": [
+    {
+      "run": "D:\\桌面\\liuyao\\liuyao-tool\\test-results\\effect-conditions-live-20261006",
+      "amount": 0.275988,
+      "planHash": "cc75bddac70d7685c865cf9b67f6f2e69bd5eda4437294a4456570d131c3199d",
+      "reserved_at": "2026-10-06T02:35:31.965Z"
+    }
+  ]
+}

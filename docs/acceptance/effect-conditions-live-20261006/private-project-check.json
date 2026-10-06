@@ -1,0 +1,121 @@
+{
+  "id": "private-project",
+  "status": "validated",
+  "issues": [],
+  "completion": {
+    "transport": "strict_tool",
+    "error": null,
+    "finishReason": "tool_calls",
+    "bodyComplete": true,
+    "envelopeValid": true
+  },
+  "usage": {
+    "prompt_tokens": 7745,
+    "completion_tokens": 1456,
+    "total_tokens": 9201,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "prompt_cache_hit_tokens": 128,
+    "prompt_cache_miss_tokens": 7617
+  },
+  "usageOk": true,
+  "conservativePeakCostCny": 0.027138,
+  "answer": {
+    "schema_version": "structured-answer-1.0",
+    "context_id": "sha256:291313a56f09a64763631c9ad86ee330710fa793f9a95857874b04e9cf688b21",
+    "answer": "当前依据不足，不能据此判断目标能否达成。\n\n四项依据都只能给出象意层面的方向，且两项条件项（投入时间、可访问性）均未确认，因此无法形成支持或阻碍的确定一侧：削弱主导位置的象意与资源汇聚的象意彼此抵消，参与分担的象意不畅与主动推进被收束的象意也都依赖未核实的现实前提。既然没有任何一侧被现实条件落实，方向只能留在不明确，适合继续与不适合继续都无法被本轮数据支持。\n\n一般建议：\n1. 先核实项目在 GitHub 与 Cloudflare 上是否仍可正常访问，再决定是否分配新的维护时间。\n2. 把“继续维护”设定为小额、可随时暂停的固定节奏，用一次实际使用与反馈来检验是否值得保留。",
+    "direction": "unclear",
+    "yongshen_candidates": [
+      {
+        "relative": "官鬼",
+        "targets": [
+          {
+            "line": 1,
+            "component": "primary"
+          }
+        ],
+        "reason": "程序观察角度：自身观察角度。\n程序取用位置：第1爻本爻：官鬼·卯木，静爻，世爻，月令死。\nAI取用解释：以自身在项目中的位置为观察角度，比从外部访客或朋友反馈入手更贴近“是否由自己继续维护”的提问；但该位置本身的现实可用程度未知，只能作为有限象意起点，不能推出继续或停止的结论。",
+        "evidence_ids": [
+          "fact:/lines/0/relative",
+          "fact:/lines/0/branch",
+          "fact:/lines/0/element",
+          "fact:/lines/0/moving",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/0/is_ying",
+          "fact:/lines/0/relations/month_strength"
+        ]
+      }
+    ],
+    "factors": [
+      {
+        "assessment": "conditional",
+        "interpretation": "程序依据：第1爻本爻：月破（与月建六冲）。\n程序核对范围：仅核对规则命中及其程序来源；不证明目标关联或现实结果。\n程序关联对象：第1爻本爻：官鬼·卯木，静爻，世爻，月令死。\n程序观察角度：自身观察角度。\nAI对象解释：自身与项目的关系可作为“由谁继续维护”的观察角度，但不证实该关系在现实中已成立。\nAI目标关联（模型假设，未经程序验证）：该依据涉及自身位置的象征性强度，与“个人项目是否值得继续投入”的目标相关，因为它指向主导方承受持续投入的象意能力。\n作用条件（待核实）：已核实自己每周愿意且能够投入的维护时间\nAI解释：若把该位置看作项目主导方，在其基础方向被削弱（象意假设，非现实判断）时，持续投入的象征性支撑偏弱；这只有在“投入时间尚未核实”这一现实前提被确认后才有意义，否则仅为象意层面的限制。",
+        "evidence_ids": [
+          "rule:MONTH-CLASH-001:primary:1:-",
+          "fact:/lines/0/relative",
+          "fact:/lines/0/branch",
+          "fact:/lines/0/element",
+          "fact:/lines/0/moving",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/0/is_ying",
+          "fact:/lines/0/relations/month_strength"
+        ]
+      },
+      {
+        "assessment": "conditional",
+        "interpretation": "程序依据：第5爻本爻（水）生第1爻本爻（木）（基础五行方向，不代表有效助力或吉凶）。\n程序核对范围：仅核对基础五行方向；不证明目标关联或现实结果。\n程序关联对象：第5爻本爻：妻财·子水，静爻，月令相。\n程序观察角度：象意分析角度。\nAI对象解释：象征性的资源或回报角度，与个人娱乐项目是否值得持续投入相关，但不代表现实收益。\nAI目标关联（模型假设，未经程序验证）：该依据描述资源性对象对自身位置的基础方向，与“继续维护所需的投入是否会得到象意上的支撑”这一目标相连。\n作用条件（待核实）：已核实自己对项目仍保有持续兴趣并愿意付出时间\nAI解释：象征性资源向自身位置汇聚，可作为“有素材/动力继续做”的有限象意；但它不确认现实中的时间、精力或兴趣，因此只在外部条件确认后才有解释力。",
+        "evidence_ids": [
+          "fact:/lines/4/element",
+          "fact:/lines/0/element",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/4/relative",
+          "fact:/lines/4/branch",
+          "fact:/lines/4/moving",
+          "fact:/lines/4/is_shi",
+          "fact:/lines/4/is_ying",
+          "fact:/lines/4/relations/month_strength"
+        ]
+      },
+      {
+        "assessment": "conditional",
+        "interpretation": "程序依据：第2爻本爻（土）受克于第1爻本爻（木）（基础五行方向，不代表有效助力或吉凶）。\n程序核对范围：仅核对基础五行方向；不证明目标关联或现实结果。\n程序关联对象：第2爻本爻：兄弟·丑土，静爻，月令休。\n程序观察角度：象意分析角度。\nAI对象解释：朋友与外部参与者这一观察角度与“朋友娱乐使用是否值得继续”相关，但不确认他们现实中真的参与。\nAI目标关联（模型假设，未经程序验证）：该依据涉及参与/分担类对象与自身方向的基础关系，与“维护是否可依赖朋友参与”这一目标相连。\n作用条件（待核实）：已核实朋友实际使用并按什么方式参与项目\nAI解释：象征性的分担或协作力量受到压抑，可能意味着若把维护依赖在朋友或外部分担上，象意条件并不顺畅；这只在存在实际协作安排时才成立。",
+        "evidence_ids": [
+          "fact:/lines/1/element",
+          "fact:/lines/0/element",
+          "fact:/lines/0/is_shi",
+          "fact:/lines/1/relative",
+          "fact:/lines/1/branch",
+          "fact:/lines/1/moving",
+          "fact:/lines/1/is_shi",
+          "fact:/lines/1/is_ying",
+          "fact:/lines/1/relations/month_strength"
+        ]
+      },
+      {
+        "assessment": "conditional",
+        "interpretation": "程序依据：第6爻变爻（金）克第6爻本爻（木）（变爻对本爻的基础方向）。\n程序核对范围：仅核对基础五行方向；不证明目标关联或现实结果。\n程序关联对象：第6爻本爻：官鬼·寅木，动爻，月令死。\n程序观察角度：象意分析角度。\nAI对象解释：以变化方向作为“继续推进的力度”的象征角度，与要不要继续投入相关，但不代表真实状态。\nAI目标关联（模型假设，未经程序验证）：该依据描述变化对象对其本位的压制方向，与“继续推进是否会被现实节奏打断”这一目标相连。\n作用条件（待核实）：已核实项目在 GitHub 与 Cloudflare 上的当前可访问性与稳定性\nAI解释：动变方向对该位置形成压制，象意上表示主动推进的势头可能被收束，偏向“按需小步维护而非扩张”；这属于假设性角度，不是现实能力或意愿的判断。",
+        "evidence_ids": [
+          "fact:/lines/5/changed/element",
+          "fact:/lines/5/element",
+          "fact:/lines/5/moving",
+          "fact:/lines/5/relative",
+          "fact:/lines/5/branch",
+          "fact:/lines/5/is_shi",
+          "fact:/lines/5/is_ying",
+          "fact:/lines/5/relations/month_strength"
+        ]
+      }
+    ],
+    "timing_candidates": [],
+    "uncertainties": [
+      "GitHub 与 Cloudflare 上的当前可访问性、稳定性尚未核实，无法判断项目实际运行状态。",
+      "朋友的实际使用与反馈尚未核实，无法判断该娱乐用途在现实中是否被使用。",
+      "你愿意持续投入的维护时间与精力尚未核实，无法评估长期维护的现实成本。",
+      "对象意符号与现实项目属性的对应仅为模型假设，未获程序或现实证据支持。",
+      "用户提供的描述：我已把免费的模拟摇奖网页部署在 GitHub 和 Cloudflare。这是用户陈述，不是程序对当前可访问性或运行稳定性的核验。"
+    ]
+  },
+  "rawSha256": "36241604b81dcc8dd0666bf3af175e8079a956451ba91997bd46957d5b31e22c",
+  "noAutomaticRetries": true
+}

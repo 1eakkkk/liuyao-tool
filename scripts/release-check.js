@@ -17,7 +17,7 @@ await build({ plugins: [{
         assert(!/\/src\/ai\/knowledge-[^/]+\.js/.test(id.replaceAll('\\', '/')),
           `Unapproved knowledge AI input in stable release: ${id}`);
         if (/\/src\/ai\/output\//.test(id.replaceAll('\\', '/'))) {
-          assert(/\/(client|completion|context|contract|evidence-presentation|parse|prompt|session|sse|view|selection|relation-reference|background-view)\.js$/.test(id), `Unreviewed output module: ${id}`);
+          assert(/\/(client|completion|context|contract|evidence-presentation|parse|prompt|session|sse|view|selection|relation-reference|background-view|basis-scope|perspective|strict-transport|mapping-admission)\.js$/.test(id), `Unreviewed output module: ${id}`);
         }
       }
     }
@@ -37,6 +37,6 @@ fs.writeFileSync('test-results/release-manifest.json', JSON.stringify({
   createdAt: new Date().toISOString(),
   sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   workingTreeDirty: !!execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim(),
-  mode: 'stable-legacy-default-optional-structured-reading-no-knowledge', artifacts,
+  mode: 'reviewed-applicability-4-strict-transport-legacy-history-no-corpus-import', artifacts,
 }, null, 2) + '\n');
 console.log(`Stable release boundary passed; ${artifacts.length} assets recorded in test-results/release-manifest.json`);

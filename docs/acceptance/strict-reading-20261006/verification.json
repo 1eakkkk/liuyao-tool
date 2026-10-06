@@ -1,0 +1,12 @@
+{
+  "finalImplementationCommit": "aa9f2cb",
+  "fullOfflineTests": {"files": 88, "passed": 1095, "failed": 0, "durationSeconds": 103.28},
+  "focusedFinalChecks": {"files": 2, "passed": 22, "failed": 0},
+  "browserChecks": {"source": "ca80c4e before guard narrowing", "engines": ["chromium", "webkit"], "widths": [1280, 390, 320], "api": "mocked", "passed": true},
+  "independentFinalEngineeringReview": "仅查看差异和测试源码，未运行测试。收窄符合预期：定义动词触发、否定和来源限定保留、旧policy5不受影响。原失败路径与原校验一致，原文及完成元数据历史恢复保持。未发现新增确定阻断，词面检查不证明语义有效。",
+  "originalArchiveGitBlobCheck": {"files": 19, "allBytesMatched": true},
+  "candidateContentAccepted": false,
+  "candidateDeployed": false,
+  "previewStopped": true,
+  "reviewAgentInterruptedAfterUse": true
+}

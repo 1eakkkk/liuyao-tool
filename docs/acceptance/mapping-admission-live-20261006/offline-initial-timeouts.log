@@ -1,0 +1,82 @@
+
+ RUN  v5.0.0 D:/桌面/liuyao/liuyao-tool
+
+····················································································x···································x····························································································································································x····································································································································································································x·························································································································································································································································································································································································································································································································································x···········································································································
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/phase6/workflow.test.js > scoring packet is an allowlist with identical neutral materials; no prompt, mode, seed, lengths or source paths
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/phase6/workflow.test.js:102:1
+    100| });
+    101|
+    102| test('scoring packet is an allowlist with identical neutral materials;…
+       | ^
+    103|   const ctx=await scored();
+    104|   expect(fs.readdirSync(ctx.out).sort()).toEqual(['reviews.json','scor…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/phase6/workflow.test.js > incomplete collection or pending reviews cannot unblind; scoring output cannot be inside execution archive
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/phase6/workflow.test.js:111:1
+    109| });
+    110|
+    111| test('incomplete collection or pending reviews cannot unblind; scoring…
+       | ^
+    112|   const ctx=setup();expect(()=>exportScoring(ctx.root,ctx.out)).toThro…
+    113|   expect(()=>unblind(ctx.root)).toThrow();await collect(ctx);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/phase6/workflow.test.js > locks bind reviews, archives and inputs; explicit unblinding is required and no records are overwritten
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/phase6/workflow.test.js:146:1
+    144| });
+    145|
+    146| test('locks bind reviews, archives and inputs; explicit unblinding is …
+       | ^
+    147|   const ctx=await scored();put(ctx.file,ctx.reviews);lockReviews(ctx.r…
+    148|   expect(()=>summarize(ctx.root)).toThrow(/Explicit unblind/);expect((…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/phase8/query-planning-freeze.test.js > resealed unknown policy and altered semantic metadata both fail closed
+Error: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test tests/phase8/query-planning-freeze.test.js:15:29
+     13|
+     14| const repo = fileURLToPath(new URL('../../', import.meta.url));
+     15| const test = (name, run) => vitestTest(name, run, 30000);
+       |                             ^
+     16| const git = (...args) => execFileSync('git', args, { cwd: repo, encodi…
+     17| const read = name => JSON.parse(fs.readFileSync(path.join(FREEZE_ROOT,…
+ ❯ tests/phase8/query-planning-freeze.test.js:82:1
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/regression/frozen.test.js > authoritative frozen page reproduces the 24 captured cases
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/regression/frozen.test.js:7:1
+      5| const cases = require('./fixtures/casts.json');
+      6|
+      7| test('authoritative frozen page reproduces the 24 captured cases', () …
+       | ^
+      8|   const dom = baseline();
+      9|   try {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  3 failed | 88 passed (91)
+      Tests  5 failed | 1115 passed (1120)
+   Start at  10:55:31
+   Duration  83.39s (tests 74%, environment 18%, import 6%, transform 3%)
+
+    Isolate  91 workers spawned · ~2.26s startup each (spawn + environment, per file)
+             at least ~16.45s faster with isolate: false — reuses workers across files instead of one per file
+

@@ -1,0 +1,12 @@
+{
+  "closed": true,
+  "callsUsed": 3,
+  "remainingCalls": 0,
+  "automaticRetries": false,
+  "accepted": true,
+  "scope": "finite applicability admission, not prediction or domain coverage",
+  "conservativePeakCostCny": 0.04951,
+  "priorKnownUpperCny": 0.11007,
+  "combinedKnownUpperCny": 0.15958,
+  "reviewReassessmentPreserved": true
+}

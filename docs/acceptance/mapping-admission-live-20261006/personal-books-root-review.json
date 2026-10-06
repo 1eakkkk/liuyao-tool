@@ -1,0 +1,22 @@
+{
+  "reviewer": "root",
+  "rubric": "constraint-rubric-2",
+  "rawSha256": "e897ce2b7ebd77bd3d1ecd36627bb03e00a48b0720045ae46b52d23c99883ab3",
+  "facts": {
+    "verdict": "pass",
+    "evidence": "未断言藏书数量、工作量、时间或个人习惯已知；小范围试清点和登记方式属于建议。"
+  },
+  "scope": {
+    "verdict": "pass",
+    "evidence": "保持个人旧书清点、自用查找目标，未转为运营、流量或盈利。"
+  },
+  "support": {
+    "verdict": "pass",
+    "evidence": "无适用卡时不列盘面因素、不以象意推有利不利；一般建议独立，有可核实的实际工作量。"
+  },
+  "attribution": {
+    "verdict": "pass",
+    "evidence": "未伪造古籍、用户陈述、联网或程序验证；未核实实际条件明确标识。"
+  },
+  "accepted": true
+}

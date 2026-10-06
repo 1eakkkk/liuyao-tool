@@ -1,0 +1,32 @@
+{
+  "id": "private-project",
+  "status": "fallback",
+  "issues": [
+    {
+      "code": "program_attribute_in_explanation",
+      "path": "$.factors[1].interpretation"
+    }
+  ],
+  "completion": {
+    "transport": "strict_tool",
+    "error": null,
+    "finishReason": "tool_calls",
+    "bodyComplete": true,
+    "envelopeValid": true
+  },
+  "usage": {
+    "prompt_tokens": 6022,
+    "completion_tokens": 1140,
+    "total_tokens": 7162,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 5766
+  },
+  "usageOk": true,
+  "conservativePeakCostCny": 0.021164,
+  "answer": null,
+  "rawSha256": "6561fde9afd7de0b0d7d27c72ae4e0dabd48443e18db632444cdbfc1982f36a3",
+  "noAutomaticRetries": true
+}

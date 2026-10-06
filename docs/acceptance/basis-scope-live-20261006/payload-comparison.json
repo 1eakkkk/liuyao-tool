@@ -1,0 +1,10 @@
+{
+  "oldPolicy": 1,
+  "newPolicy": 2,
+  "frozenPolicy1RequestUnchanged": true,
+  "oldRequestUtf8Bytes": 41418,
+  "newRequestUtf8Bytes": 26568,
+  "byteReductionPercent": 35.85,
+  "actualNewPolicyTokenUsage": null,
+  "newPolicyPaidCalls": 0
+}
