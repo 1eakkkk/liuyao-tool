@@ -11,10 +11,12 @@ import { loadStyleChoice, loadCustomStyle } from '../storage/settings.js';
 import { archiveReading, readingHistoryText } from '../storage/reading-history.js';
 import { renderHistory } from './history-view.js';
 import {initializeBackground,selectedBackground,clearBackground} from './background.js';
+import {readingAvailability} from '../ai/output/availability.js';
 
 const KEY = 'liuyao_structured_reading_v1';
 let session = null, pending = null, busy = false, epoch = 0;
 let renderedSession = null;
+let availabilityNotice = null;
 const el = id => document.getElementById(id);
 export const readingSelected = () => el('readingMode')?.value === 'structured';
 function status(text) { el('readingStatus').textContent = text; }
@@ -59,11 +61,45 @@ function render() {
   el('readingFollowArea').hidden = !session.turns.length || !!pending;
   el('readingPaste').value = '';
   el('readingComplete').checked = false;
+  el('readingCopyAll').hidden=!session.turns.length;
+  el('readingStorageNote').hidden=!session.turns.length&&!pending;
 }
 export function clearReading() {
   epoch++; session = null; pending = null; renderedSession = null;
+  availabilityNotice = null;
+  el('readingAvailability')?.remove();
   safeRemoveItem(KEY);
   if (el('readingPanel')) { el('readingPanel').hidden = true; el('readingTurns').replaceChildren(); }
+}
+function checkAvailability(prepared){
+  el('readingAvailability')?.remove(); availabilityNotice=null;
+  const capability=readingAvailability(prepared.context);
+  if(!capability.blocked)return true;
+  availabilityNotice=capability;
+  const root=el('readingPanel');root.hidden=false;
+  const notice=document.createElement('section');notice.id='readingAvailability';notice.className='reading-availability';
+  const heading=document.createElement('h2');heading.textContent=capability.title;
+  const body=document.createElement('p');body.textContent=capability.message;
+  const question=document.createElement('p');question.textContent=`你问的是：${prepared.question}`;
+  const actions=document.createElement('div');actions.className='reading-availability-actions';
+  const facts=document.createElement('details');facts.id='readingLocalFacts';
+  const summary=document.createElement('summary');summary.textContent='查看已摇卦盘（无需 AI）';facts.append(summary);
+  const list=document.createElement('ol');
+  for(const line of prepared.context.input.C_canonical_cast.lines){
+    const row=document.createElement('li');row.textContent=`第${line.position}爻：${line.relative} · ${line.branch}${line.element} · ${line.moving?'动爻':'静爻'}${line.is_shi?' · 世爻':''}${line.is_ying?' · 应爻':''}`;list.append(row);
+  }
+  facts.append(list);
+  const legacy=document.createElement('button');legacy.id='readingSwitchLegacy';legacy.type='button';legacy.className='ai-btn ghost';legacy.textContent='切换普通解读';
+  legacy.addEventListener('click',()=>{el('readingMode').value='legacy';el('readingMode').dispatchEvent(new Event('change'));el('aiStatus').textContent='已切换普通解读。此模式不具备同等取法准入核对，内容仅供参考；点击 AI 解读或输出提示词后才会生成。';el('readingMode').focus();});
+  actions.append(legacy);
+  const note=document.createElement('p');note.className='reading-note';note.textContent='普通解读不具备同等取法准入核对；切换不会自动生成回复。';
+  notice.append(heading,question,body,facts,actions,note);el('readingStatus').after(notice);
+  el('readingExportArea').hidden=true;el('readingPrompt').value='';pending=null;
+  el('readingCopyAll').hidden=!session.turns.length;
+  el('readingStorageNote').hidden=!session.turns.length;
+  status('本次未调用 AI，也未生成外部 AI 提示词；不产生解读调用费用。已有背景查询费用另计。');
+  root.scrollIntoView({block:'nearest'});
+  return false;
 }
 async function exclusive(work) {
   if (busy) return;
@@ -104,6 +140,7 @@ export async function startReading(canonical, kind, options={}) {
     session = createReadingSession(canonical, {style: loadStyleChoice(), custom: loadCustomStyle().slice(0,2000)});
     const prepared = await prepareReadingTurn(session, canonical.question.text,{backgroundSearch});
     render();
+    if(!checkAvailability(prepared))return;
     if (kind === 'api') await request(prepared);
     else { pending = prepared; render(); status('复制提示词给外部 AI，再贴回完整回复。刷新前请复制提示词；历史记录中保留本次导出。'); persist(); }
     el('readingPanel').scrollIntoView({ block: 'nearest' });
@@ -129,7 +166,7 @@ export function initializeReading() {
   el('readingMode').addEventListener('change', () => {
     syncSettings();
     el('readingModeNote').hidden = !readingSelected();
-    el('readingPanel').hidden = el('readingMode').value === 'legacy' || !session;
+    el('readingPanel').hidden = !readingSelected() || (!session && !availabilityNotice);
   });
   const copy = (id, getText) => el(id).addEventListener('click', async () => {
     try { await copyTextToClipboard(getText()); status('已复制。'); } catch { status('自动复制失败，请选中文字手动复制。'); }
@@ -151,6 +188,7 @@ export function initializeReading() {
       const q = el('readingFollow').value.trim(); checkQuestion(q);
       if (!session) throw Error('请先开始解读。');
       const prepared = await prepareReadingTurn(session, q);
+      if(!checkAvailability(prepared))return;
       if (kind === 'api') await request(prepared);
       else { pending = prepared; render(); status('追问提示词已包含本卦与既有问答，请贴回本轮完整回复。'); persist(); }
       el('readingFollow').value = '';

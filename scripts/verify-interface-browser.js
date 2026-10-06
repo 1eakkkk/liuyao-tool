@@ -69,7 +69,7 @@ try {
     await page.locator('#guide .disclosure-trigger').first().click();
     await page.screenshot({ path: `${root}/${width}-guide.png`, fullPage: true });
     await page.locator('[data-tab="ai"]').click();
-    await page.locator('#questionInput').fill('界面验收：仅检查排盘事实');
+    await page.locator('#questionInput').fill('只核对初爻六亲，不预测。');
     await page.locator('#toggleSettingsBtn, #aiSettings[open] #closeSettingsBtn').last().click();
     await page.locator('#advancedSettings > summary').click();
     for (const button of await page.locator('.settings-group.collapsible .disclosure-trigger').all()) await button.click();

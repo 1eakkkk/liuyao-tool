@@ -71,6 +71,8 @@ body .settings-feedback {margin:0;padding:12px 24px;border-top:1px solid var(--u
 body .settings-feedback:empty {display:none;}
 body .settings-feedback[data-type=error] {color:var(--ui-danger);}
 body #ai .reading-panel details {border:0;border-top:1px solid var(--ui-border);border-radius:0;background:transparent;padding:12px 0;}
+body .reading-availability-actions {display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;}
+body .reading-availability ol {padding-left:24px;line-height:1.85;}
 body .plate-cards .plate-card, :root[data-theme=dark] body .plate-cards .plate-card {border:0;border-bottom:1px solid var(--ui-border);border-radius:0;background:transparent;box-shadow:none;padding:16px 0;}
 
 /* Reading controls stay in the text flow, without another enclosing card. */

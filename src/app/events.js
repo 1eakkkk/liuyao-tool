@@ -642,7 +642,7 @@ interpretBtn.addEventListener('click', async (event)=>{
     showToast('传统上卦师不轻断生死寿数，这类问题这里不会生成解读——如果是身体或者情绪上的真实担忧，更建议找医生或者信得过的人聊聊', 'error', 6000);
     return;
   }
-  if(!loadApiKey()){
+  if(!loadApiKey() && !readingSelected()){
     aiSettings.classList.add('open');
     showToast('先在下面"设置"里填一下 DeepSeek API Key', 'error');
     apiKeyInput.focus();
@@ -720,13 +720,14 @@ interpretBtn.addEventListener('click', async (event)=>{
       castBtn.disabled = true; // performCast 结束会解锁摇卦按钮，这里重新锁住直到本次解读完成
     }
 
-    aiStatus.textContent = '正在调用 DeepSeek 生成解卦回复…';
-    showToast('正在调用 DeepSeek 生成解卦回复…');
     if (readingSelected()) {
+      aiStatus.textContent = '正在核对模式支持范围…';
       await startReading(castStore.canonical, 'api', {backgroundSearch});
-      aiStatus.textContent = '结构化解读见下方';
+      aiStatus.textContent = '结构化核对结果见下方';
       return;
     }
+    aiStatus.textContent = '正在调用 DeepSeek 生成解卦回复…';
+    showToast('正在调用 DeepSeek 生成解卦回复…');
     const structuredCast = selectedAiInputMode() === 'structured' ? castStore.canonical : null;
     const castText = structuredCast ? null : formatCastDataForAI(castStore.canonical);
     // 这条历史记录id必须在调用 interpretWithDeepSeek 之前就生成好：interpretWithDeepSeek 内部
@@ -876,7 +877,7 @@ promptBtn.addEventListener('click', async (event)=>{
 
     if (readingSelected()) {
       await startReading(castStore.canonical, 'external', {backgroundSearch});
-      aiStatus.textContent = '结构化提示词见下方';
+      aiStatus.textContent = '结构化核对或提示词见下方';
       return;
     }
     clearReading();

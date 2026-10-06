@@ -22,7 +22,7 @@ try{for(const width of [1280,390,320]){
   }
   const input=JSON.parse(body.messages[1].content);requests.push(input);
   const response={schema_version:SELECTION_VERSION,context_id:input.context_id,answer:"模拟解读，仅作一般建议。",direction:"unclear",main_choice:{basis_id:"none",reason:"一般建议不作取用。"},factors:[{basis_id:input.bases.find(e=>e.id.startsWith("e"))?.id,assessment:"neutral",interpretation:"只展示依据，不推测现实结果。"}],background_usage:input.sources.map(s=>({source_id:s.id,state:"not_applicable",note:"限时玩法不能用于主游戏。"})),timing_candidates:[],uncertainties:["实际条件未知。"]};
-  if(input.conversation.basis_policy===4){
+  if(input.response_schema.properties.factors.maxItems===0){
    response.factors=[];response.main_choice={basis_id:'none',reason:input.response_schema.properties.main_choice.properties.reason.const};
    if(input.response_schema.properties.judgment){delete response.answer;response.main_choice.perspective='none';response.judgment={basis_ids:[],reason:input.response_schema.properties.judgment.properties.reason.const};response.role_tradeoffs=[];response.general_advice=[];}
   }
@@ -38,7 +38,7 @@ try{for(const width of [1280,390,320]){
  await page.locator('[data-tab="caster"]').click();await page.locator('[data-mode="manual"]').click();
  for(let i=0;i<6;i++)await page.locator(`#manualLine${i}`).selectOption(i===0?'6':'8');
  await page.locator('#manualCastBtn').click();await page.locator('[data-tab="ai"]').click();
- await page.locator('#questionInput').fill('如何安排游戏练习？');await page.locator('#readingMode').selectOption('structured');
+ await page.locator('#questionInput').fill('请给两项建议，关于游戏练习，不预测。');await page.locator('#readingMode').selectOption('structured');
  await page.locator('#backgroundCheck > summary').click();
  assert(!(await page.locator('#backgroundConfirmLabel').isVisible()));
  await page.evaluate(()=>localStorage.setItem('liuyao_deepseek_api_key','test-only'));
@@ -58,10 +58,10 @@ try{for(const width of [1280,390,320]){
  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  await page.locator('#backgroundCheck').screenshot({path:`test-results/background-ui/${engine}-${width}.png`});
  // Editing the question invalidates approval; explicit reapproval binds the new question.
- await page.locator('#questionInput').fill('如何安排新的游戏练习？');assert(!(await page.locator('#backgroundConfirm').isChecked()));
+ await page.locator('#questionInput').fill('请给两项建议，关于新的游戏练习，不预测。');assert(!(await page.locator('#backgroundConfirm').isChecked()));
  await page.locator('#backgroundConfirm').check();await page.locator('#interpretBtn').click();
  await page.locator('#confirmCancelBtn').click();
- await page.locator('#readingTurns h2').waitFor();assert.equal(requests.length,1);assert(requests[0].sources.length===0);
+ await page.waitForFunction(()=>document.querySelectorAll('#readingTurns article').length===1);assert(await page.locator('#readingTurns h2').count(),await page.locator('#readingTurns').textContent());assert.equal(requests.length,1);assert(requests[0].sources.length===0);
  assert.equal(await page.locator('#readingTurns .background-result').count(),1);
  const history=await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.includes('history')).map(k=>localStorage.getItem(k)).join(''));
  assert(history.includes('https://example.org/official'));

@@ -1,6 +1,7 @@
 import { validateOutputAnswer } from './parse.js';
 import { collectEvidencePresentation } from './evidence-presentation.js';
 import {renderBackgroundSources} from './background-view.js';
+import {readingAvailability} from './availability.js';
 
 const assessment = { support: '支持因素', oppose: '不利因素', neutral: '中性因素', conditional: '条件因素' };
 const component = { primary: '本爻', changed: '变爻', hidden: '伏神' };
@@ -121,8 +122,14 @@ export function renderOutputResult(container, result, context, { collapseFallbac
   } else {
     validateOutputAnswer(result.answer, context);
     const answer = result.answer;
+    const capability=readingAvailability(context);
+    if(capability.blocked&&answer.factors.length===0){
+      fragment.append(node('h2','模式支持范围'),node('p',capability.message),node('p','这是程序对模式能力的说明，不是 AI 对事情结果的判断。'));
+      const original=node('details');original.className='reading-original';original.append(node('summary','查看此前收到的 AI 回复'),node('pre',answer.answer),node('p',answer.uncertainties.join('\n')));fragment.append(original);
+      container.replaceChildren(fragment);return;
+    }
     const conclusion = node('p', answer.answer); conclusion.className = 'reading-conclusion';
-    fragment.append(node('h2', '解读结论'), conclusion);
+    fragment.append(node('h2', capability.kind==='observation_only'?'条件性观察':'解读结论'), conclusion);
     const characters = [...answer.answer];
     if (characters.length > 400) {
       const preview = characters.slice(0, 240).join('') + '…';
@@ -136,7 +143,7 @@ export function renderOutputResult(container, result, context, { collapseFallbac
       });
       fragment.append(toggle);
     }
-    fragment.append(node('p', `判断倾向：${direction[answer.direction]} · 属于 AI 推论`));
+    fragment.append(node('p', capability.kind==='observation_only'?'观察范围：仅提供条件性解释，不判断事情成败。':`判断倾向：${direction[answer.direction]} · 属于 AI 推论`));
     const overview = node('div'); overview.className = 'reading-factor-overview';
     overview.append(node('h3', '依据速览'));
     const caption = node('p', answer.factors.length > 3

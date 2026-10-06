@@ -18,13 +18,30 @@ try{for(const width of [1280,390,320])for(const mapped of [false,true]){
  await page.route('https://api.deepseek.com/**',async route=>{const body=route.request().postDataJSON(),input=JSON.parse(body.messages[1].content);requests.push(body);assert.equal(input.conversation.basis_policy,4);assert(body.tools[0].function.strict);await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({choices:[{index:0,finish_reason:'tool_calls',message:{role:'assistant',content:null,tool_calls:[{id:'mapping-mock',type:'function',function:{name:'submit_reading',arguments:JSON.stringify(reply(input))}}]}}],usage:{prompt_tokens:20,completion_tokens:30}})});});
  await page.goto(target,{waitUntil:'domcontentloaded'});await page.locator('[data-mode="manual"]').click();
  for(const [i,sum] of (mapped?[7,7,8,8,8,8]:[7,8,7,8,8,9]).entries())await page.locator(`#manualLine${i}`).selectOption(String(sum));await page.locator('#manualCastBtn').click();
- await page.locator('[data-tab="ai"]').click();await page.locator('#questionInput').fill(mapped?'他能否帮助我整理旧书？':'我已部署免费网页，仅供自己和朋友娱乐，是否适合继续维护？');await page.locator('#readingMode').selectOption('structured');await page.locator('#promptBtn').click();
+ await page.locator('[data-tab="ai"]').click();await page.locator('#questionInput').fill(mapped?'他能否帮助我整理旧书？':(width===390?'我今天打了五注双色球，这个彩票中奖的可能大不大？':'我已部署免费网页，仅供自己和朋友娱乐，是否适合继续维护？'));await page.locator('#readingMode').selectOption('structured');await page.locator('#promptBtn').click();
+ if(!mapped){
+  await page.locator('#readingAvailability').waitFor();
+  assert((await page.locator('#readingStatus').textContent()).includes('未调用 AI'));
+  assert.equal(await page.locator('#readingPrompt').inputValue(),'');assert.equal(await page.locator('#readingTurns article').count(),0);
+  assert((await page.locator('#readingAvailability').textContent()).includes(width===390?'不能可靠判断中奖概率':'已经有卦盘'));
+  await page.locator('#readingLocalFacts > summary').click();assert.equal(await page.locator('#readingLocalFacts li').count(),6);
+  assert.equal(requests.length,0,'Unsupported export must not call provider without a Key');
+  await page.locator('#toggleSettingsBtn').click();await page.locator('#apiKeyInput').fill('TEST_ONLY');await page.locator('#saveKeyBtn').click();await page.locator('#closeSettingsBtn').click();
+  await page.locator('#interpretBtn').click();await page.locator('#readingAvailability').waitFor();assert.equal(requests.length,0,'Unsupported API must not call provider with a Key');
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.deepEqual(errors,[]);
+  await page.screenshot({path:`${dir}/${local?'local':'production'}-${engine}-${width}-uncovered.png`});
+  await page.locator('#readingSwitchLegacy').click();assert.equal(await page.locator('#readingMode').inputValue(),'legacy');assert.equal(requests.length,0,'Mode switch must not auto submit');assert((await page.locator('#aiStatus').textContent()).includes('不具备同等'));
+  await page.reload({waitUntil:'domcontentloaded'});assert.equal(await page.locator('#readingAvailability').count(),0);assert.equal(await page.locator('#questionInput').inputValue(),'');
+  reports.push({width,engine,mapped,api:'blocked-before-call',export:'blocked',localFacts:true,explicitSwitch:true,errors});await context.close();continue;
+ }
  const input=extract(await page.locator('#readingPrompt').inputValue());assert.equal(input.conversation.basis_policy,4);assert.equal(input.admitted_mappings.length,mapped?1:0);if(!mapped)assert.deepEqual(input.bases,[]);
  await page.locator('#readingPaste').fill(JSON.stringify(reply(input)));await page.locator('#readingComplete').check();await page.locator('#readingImport').click();
+ assert((await page.locator('#readingTurns h2').first().textContent()).includes('条件性观察'));
  assert((await page.locator('#readingStatus').textContent()).includes('通过'));assert((await page.locator('#readingTurns').textContent()).includes(mapped?'条件尚未确认':'取法覆盖不足'));
  if(mapped){await page.locator('#readingTurns details').first().evaluate(n=>n.open=true);assert((await page.locator('#readingTurns').textContent()).includes('取法来源'));}
  await page.locator('#toggleSettingsBtn').click();await page.locator('#apiKeyInput').fill('TEST_ONLY');await page.locator('#saveKeyBtn').click();await page.locator('#closeSettingsBtn').click();
  await page.locator('#readingFollow').fill(mapped?'他能否帮助我整理旧书？':'我已部署免费网页，仅供自己和朋友娱乐，是否适合继续维护？');await page.locator('#readingFollowApi').click();await page.waitForFunction(()=>document.querySelectorAll('#readingTurns article').length===2);assert.equal(requests.length,1);assert((await page.locator('#readingStatus').textContent()).includes('通过'));
+ await page.locator('#readingFollow').fill('这个网页能火吗？');await page.locator('#readingFollowApi').click();await page.locator('#readingAvailability').waitFor();assert.equal(requests.length,1,'Unsupported followup does not call provider');assert.equal(await page.locator('#readingTurns article').count(),2,'Existing turns remain visible');
  await page.reload({waitUntil:'domcontentloaded'});await page.locator('[data-tab="ai"]').click();await page.locator('#toggleHistoryBtn').click();await page.locator('.history-item-head').first().click();assert((await page.locator('.history-item-body').first().textContent()).includes(mapped?'条件尚未确认':'取法覆盖不足'));
  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.deepEqual(errors,[]);await page.screenshot({path:`${dir}/${local?'local':'production'}-${engine}-${width}-${mapped?'admitted':'uncovered'}.png`});reports.push({width,engine,mapped,api:'mocked',export_import:true,history:true,errors});await context.close();
 }}finally{await browser.close();}

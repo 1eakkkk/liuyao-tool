@@ -118,3 +118,16 @@ test('long factor previews are Unicode-safe and expand complete plain text witho
   expect(container.querySelector('img')).toBeNull();
   toggle.click(); expect(preview.textContent).toBe('🙂'.repeat(160) + '…');
 });
+
+
+test('unsupported historical reply is disclosed as capability status with original response preserved',async()=>{
+ const {createReadingSession,prepareSelectedReadingTurn}=await import('../../src/ai/output/session.js');
+ const {selectionSchema}=await import('../../src/ai/output/selection.js');
+ const p=await prepareSelectedReadingTurn(createReadingSession(canonical),'这个网页能火吗？',{judgmentPolicyVersion:6,basisPolicyVersion:4});
+ const schema=selectionSchema(p.context),a={schema_version:'structured-selection-2',context_id:p.context.context_id,direction:'unclear',main_choice:{basis_id:'none',perspective:'none',reason:schema.properties.main_choice.properties.reason.const},factors:[],judgment:{basis_ids:[],reason:schema.properties.judgment.properties.reason.const},role_tradeoffs:[],general_advice:['这是原有的一般建议。'],background_usage:[],timing_candidates:[],uncertainties:['这是原有的不确定性。']};
+ const result=parseOutputAnswer(JSON.stringify(a),p.context,{completed:true});expect(result.status).toBe('validated');
+ const saved=JSON.stringify(result),container=document.createElement('div');renderOutputResult(container,result,p.context);
+ expect(container.querySelector('h2').textContent).toBe('模式支持范围');expect(container.textContent).not.toContain('属于 AI 推论');
+ expect(container.querySelector('.reading-original').open).toBe(false);expect(container.querySelector('pre').textContent).toBe(result.answer.answer);
+ expect(JSON.stringify(result)).toBe(saved);
+});

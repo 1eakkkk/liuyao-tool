@@ -70,7 +70,7 @@ try {
       assert.equal(await page.locator('#questionInput').inputValue(),'','Successful new cast clears old question');
       assert.equal(await page.evaluate(()=>localStorage.getItem('liuyao_structured_reading_v1')),null);
       await page.locator('[data-tab="ai"]').click();
-      await page.locator('#questionInput').fill('新问题：如何制定学习计划？');
+      await page.locator('#questionInput').fill('请给两项建议，关于学习计划，不预测。');
       await page.locator('#readingMode').selectOption('structured');
       await page.locator('#promptBtn').click();
       await page.locator('#readingPrompt').waitFor();
