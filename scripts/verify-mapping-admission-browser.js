@@ -22,7 +22,7 @@ try{for(const width of [1280,390,320])for(const mapped of [false,true]){
  if(!mapped){
   await page.locator('#readingAvailability').waitFor();
   assert((await page.locator('#readingStatus').textContent()).includes('未调用 AI'));
-  assert.equal(await page.locator('#readingPrompt').inputValue(),'');assert.equal(await page.locator('#readingTurns article').count(),0);
+  assert.equal(await page.locator('#readingPrompt').inputValue(),'');assert.equal(await page.locator('#readingTurns article').count(),0);assert(await page.locator('#readingCopyAll').isHidden());assert(await page.locator('#readingStorageNote').isHidden());
   assert((await page.locator('#readingAvailability').textContent()).includes(width===390?'不能可靠判断中奖概率':'已经有卦盘'));
   await page.locator('#readingLocalFacts > summary').click();assert.equal(await page.locator('#readingLocalFacts li').count(),6);
   assert.equal(requests.length,0,'Unsupported export must not call provider without a Key');
@@ -32,7 +32,12 @@ try{for(const width of [1280,390,320])for(const mapped of [false,true]){
   await page.screenshot({path:`${dir}/${local?'local':'production'}-${engine}-${width}-uncovered.png`});
   await page.locator('#readingSwitchLegacy').click();assert.equal(await page.locator('#readingMode').inputValue(),'legacy');assert.equal(requests.length,0,'Mode switch must not auto submit');assert((await page.locator('#aiStatus').textContent()).includes('不具备同等'));
   await page.reload({waitUntil:'domcontentloaded'});assert.equal(await page.locator('#readingAvailability').count(),0);assert.equal(await page.locator('#questionInput').inputValue(),'');
-  reports.push({width,engine,mapped,api:'blocked-before-call',export:'blocked',localFacts:true,explicitSwitch:true,errors});await context.close();continue;
+  const oldText='当前依据不足，不能据此判断目标能否达成。\n\n当前取法覆盖不足，不能据此判断目标能否达成。未核对的象意假设不参与主判断。\n\n一般建议：原回复 <img src=x>';
+  const oldRecord={id:'old-unavailable',ts:Date.now(),readingMode:'structured',type:'structured',question:'旧问题',turns:[{role:'user',text:'旧问题'},{role:'assistant',text:oldText}]};
+  await page.evaluate(record=>localStorage.setItem('liuyao_interpret_history',JSON.stringify([record])),oldRecord);await page.reload();await page.locator('[data-tab="ai"]').click();await page.locator('#toggleHistoryBtn').click();await page.locator('.history-item-head').first().click();
+  const oldBody=page.locator('.history-item-body').first();assert((await oldBody.textContent()).includes('模式支持范围'));assert.equal(await oldBody.locator('img').count(),0);assert.equal(await oldBody.locator('.history-long-turn').evaluate(n=>n.open),false);
+  await oldBody.locator('.history-long-turn > summary').click();assert((await oldBody.locator('.history-turn-assistant').textContent()).includes(oldText));assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_interpret_history'))[0].turns[1].text),oldText);
+  reports.push({width,engine,mapped,api:'blocked-before-call',export:'blocked',localFacts:true,explicitSwitch:true,oldHistoryPreserved:true,errors});await context.close();continue;
  }
  const input=extract(await page.locator('#readingPrompt').inputValue());assert.equal(input.conversation.basis_policy,4);assert.equal(input.admitted_mappings.length,mapped?1:0);if(!mapped)assert.deepEqual(input.bases,[]);
  await page.locator('#readingPaste').fill(JSON.stringify(reply(input)));await page.locator('#readingComplete').check();await page.locator('#readingImport').click();
