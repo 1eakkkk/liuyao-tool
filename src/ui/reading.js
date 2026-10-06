@@ -31,6 +31,12 @@ function render() {
   if (!session) return;
   const turnsRoot = el('readingTurns');
   if (renderedSession !== session) { turnsRoot.replaceChildren(); renderedSession = session; }
+  // A limited observation that depends on unconfirmed real conditions keeps its notice
+  // visible next to the generated answer, so the gap is never silently dropped.
+  if(availabilityNotice?.kind==='conditions_unconfirmed'&&!el('readingAvailability')){
+    el('readingPanel').hidden=false;
+    el('readingStatus').after(availabilityNotice.element);
+  }
   // Completed turns are immutable. Keep their nodes, disclosure states and focus during followups.
   for (const t of session.turns.slice(turnsRoot.childElementCount)) {
     const block = document.createElement('article');
@@ -71,11 +77,7 @@ export function clearReading() {
   safeRemoveItem(KEY);
   if (el('readingPanel')) { el('readingPanel').hidden = true; el('readingTurns').replaceChildren(); }
 }
-function checkAvailability(prepared){
-  el('readingAvailability')?.remove(); availabilityNotice=null;
-  const capability=readingAvailability(prepared.context);
-  if(!capability.blocked)return true;
-  availabilityNotice=capability;
+function buildAvailabilityNotice(capability,prepared){
   const root=el('readingPanel');root.hidden=false;
   const notice=document.createElement('section');notice.id='readingAvailability';notice.className='reading-availability';
   const heading=document.createElement('h2');heading.textContent=capability.title;
@@ -89,17 +91,41 @@ function checkAvailability(prepared){
     const row=document.createElement('li');row.textContent=`第${line.position}爻：${line.relative} · ${line.branch}${line.element} · ${line.moving?'动爻':'静爻'}${line.is_shi?' · 世爻':''}${line.is_ying?' · 应爻':''}`;list.append(row);
   }
   facts.append(list);
-  const legacy=document.createElement('button');legacy.id='readingSwitchLegacy';legacy.type='button';legacy.className='ai-btn ghost';legacy.textContent='切换普通解读';
-  legacy.addEventListener('click',()=>{el('readingMode').value='legacy';el('readingMode').dispatchEvent(new Event('change'));el('aiStatus').textContent='已切换普通解读。此模式不具备同等取法准入核对，内容仅供参考；点击 AI 解读或输出提示词后才会生成。';el('readingMode').focus();});
-  actions.append(legacy);
-  const note=document.createElement('p');note.className='reading-note';note.textContent='普通解读不具备同等取法准入核对；切换不会自动生成回复。';
-  notice.append(heading,question,body,facts,actions,note);el('readingStatus').after(notice);
-  el('readingExportArea').hidden=true;el('readingPrompt').value='';pending=null;
-  el('readingCopyAll').hidden=!session.turns.length;
-  el('readingStorageNote').hidden=!session.turns.length;
-  status('本次未调用 AI，也未生成外部 AI 提示词；不产生解读调用费用。已有背景查询费用另计。');
-  root.scrollIntoView({block:'nearest'});
-  return false;
+  return {notice,heading,body,question,actions,facts};
+}
+function checkAvailability(prepared){
+  el('readingAvailability')?.remove(); availabilityNotice=null;
+  const capability=readingAvailability(prepared.context);
+  if(!capability.blocked&&capability.kind!=='conditions_unconfirmed')return true;
+  const parts=buildAvailabilityNotice(capability,prepared);
+  // The third gap states what still has to be confirmed instead of asking for a verdict.
+  if(capability.items?.length){
+    const pending=document.createElement('ul');pending.id='readingAvailabilityItems';
+    for(const item of capability.items){const row=document.createElement('li');row.textContent=item;pending.append(row);}
+    parts.notice.append(parts.heading,parts.question,parts.body,pending);
+  }else parts.notice.append(parts.heading,parts.question,parts.body);
+  parts.notice.append(parts.facts,parts.actions);
+  if(capability.blocked){
+    const legacy=document.createElement('button');legacy.id='readingSwitchLegacy';legacy.type='button';legacy.className='ai-btn ghost';legacy.textContent='切换普通解读';
+    legacy.addEventListener('click',()=>{el('readingMode').value='legacy';el('readingMode').dispatchEvent(new Event('change'));el('aiStatus').textContent='已切换普通解读。此模式不具备同等取法准入核对，内容仅供参考；点击 AI 解读或输出提示词后才会生成。';el('readingMode').focus();});
+    parts.actions.append(legacy);
+    const note=document.createElement('p');note.className='reading-note';note.textContent='普通解读不具备同等取法准入核对；切换不会自动生成回复。';
+    parts.notice.append(note);
+  }else{
+    const note=document.createElement('p');note.className='reading-note';note.textContent='本轮仍会生成有限观察；带“待核实”的作用条件不作为确定的支持或阻碍。';
+    parts.notice.append(note);
+  }
+  availabilityNotice=capability.blocked?capability:{...capability,element:parts.notice};
+  el('readingStatus').after(parts.notice);
+  if(capability.blocked){
+    el('readingExportArea').hidden=true;el('readingPrompt').value='';pending=null;
+    el('readingCopyAll').hidden=!session.turns.length;
+    el('readingStorageNote').hidden=!session.turns.length;
+    status('本次未调用 AI，也未生成外部 AI 提示词；不产生解读调用费用。已有背景查询费用另计。');
+    el('readingPanel').scrollIntoView({block:'nearest'});
+    return false;
+  }
+  return true;
 }
 async function exclusive(work) {
   if (busy) return;

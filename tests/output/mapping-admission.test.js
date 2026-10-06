@@ -22,12 +22,19 @@ test('the source card quote and locator are pinned to the supplied transcript, n
  const unit=JSON.parse(fs.readFileSync('knowledge/units/zsby-shiying-scope-001.json'));expect(unit.rule_link_semantics).toBe('association_only');
  expect(REVIEWED_MAPPING.assessments).toEqual(['conditional','neutral']);
 });
-test('the original two unsupported targets have no admitted facts or invented mapping, yet produce a usable insufficient result',async()=>{
- for(const c of old.cases){const p=await prepare(c.canonical,c.question),input=JSON.parse(p.messages[1].content);
-  expect(input.admitted_mappings).toEqual([]);expect(input.bases).toEqual([]);expect(input.response_schema.properties.factors.maxItems).toBe(0);
-  const a=empty(p);expect(parse(p,a).status).toBe('validated');expect(parse(p,a).answer.answer).toContain('取法覆盖不足');
-  a.direction='favorable';expect(parse(p,a).status).toBe('fallback');a.direction='unclear';a.main_choice.basis_id='l1';expect(parse(p,a).status).toBe('fallback');
- }
+test('the original two plan targets are never given the assistance mapping, and each gap is named separately',async()=>{
+ // The peer-help mapping must not leak into a self-directed plan question.
+ for(const c of old.cases)expect(admittedMappings((await prepare(c.canonical,c.question)).context,selectionCatalog((await prepare(c.canonical,c.question)).context).entries)).toEqual([]);
+ const lacking=await prepare(old.cases[0].canonical,old.cases[0].question),lackingInput=JSON.parse(lacking.messages[1].content);
+ // This chart's 世爻 is 静 with no 进/退/回头 and no 日冲, so the method applies but the chart lacks its basis.
+ expect(lackingInput.admitted_mappings).toEqual([]);expect(lackingInput.bases).toEqual([]);expect(lackingInput.response_schema.properties.factors.maxItems).toBe(0);
+ const a=empty(lacking);expect(parse(lacking,a).status).toBe('validated');expect(parse(lacking,a).answer.answer).toContain('取法覆盖不足');
+ a.direction='favorable';expect(parse(lacking,a).status).toBe('fallback');a.direction='unclear';a.main_choice.basis_id='l1';expect(parse(lacking,a).status).toBe('fallback');
+ // This chart's 世爻 does move and is 回头克, so a limited conditional observation exists.
+ const covered=await prepare(old.cases[1].canonical,old.cases[1].question),coveredInput=JSON.parse(covered.messages[1].content);
+ expect(coveredInput.admitted_mappings.map(m=>m.id)).toEqual(['plan-shi-return-control']);
+ expect(coveredInput.admitted_mappings[0].basis_ids).toEqual(['t4']);
+ expect(coveredInput.response_schema.properties.factors.maxItems).toBe(1);
 });
 test('quoted examples, other objectives, AI requests and multiple questions do not admit assistance mapping',()=>{
  for(const q of [old.cases[0].question,old.cases[1].question,'帮我算一下我的朋友是不是喜欢这个网页。','别人说“他能否帮助我整理旧书？”这句话是什么意思？','不要分析他能否帮助我整理旧书。','他能否帮助我整理旧书？我能赚钱吗？','朋友能否帮助我维护项目，还是我能帮他维护？','朋友能否帮助我维护项目还是我帮他维护'])expect(reviewedGoal(q)).toBeNull();

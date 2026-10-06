@@ -129,7 +129,7 @@ export function renderOutputResult(container, result, context, { collapseFallbac
       container.replaceChildren(fragment);return;
     }
     const conclusion = node('p', answer.answer); conclusion.className = 'reading-conclusion';
-    fragment.append(node('h2', capability.kind==='observation_only'?'条件性观察':'解读结论'), conclusion);
+    fragment.append(node('h2', capability.kind==='observation_only'?'条件性观察':capability.kind==='conditions_unconfirmed'?'条件性观察（现实条件待确认）':'解读结论'), conclusion);
     const characters = [...answer.answer];
     if (characters.length > 400) {
       const preview = characters.slice(0, 240).join('') + '…';
@@ -143,7 +143,12 @@ export function renderOutputResult(container, result, context, { collapseFallbac
       });
       fragment.append(toggle);
     }
-    fragment.append(node('p', capability.kind==='observation_only'?'观察范围：仅提供条件性解释，不判断事情成败。':`判断倾向：${direction[answer.direction]} · 属于 AI 推论`));
+    fragment.append(node('p', capability.kind==='observation_only'?'观察范围：仅提供条件性解释，不判断事情成败。':capability.kind==='conditions_unconfirmed'?'观察范围：仅提供条件性解释，不判断事情成败；实际作用前提仍待核实。':`判断倾向：${direction[answer.direction]} · 属于 AI 推论`));
+    if(capability.kind==='conditions_unconfirmed'&&capability.items?.length){
+      const pending=node('ul');pending.className='reading-availability-items';
+      for(const item of capability.items)pending.append(node('li',item));
+      fragment.append(node('p','需要你确认的现实条件：'),pending);
+    }
     const overview = node('div'); overview.className = 'reading-factor-overview';
     overview.append(node('h3', '依据速览'));
     const caption = node('p', answer.factors.length > 3

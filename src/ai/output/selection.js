@@ -1,4 +1,5 @@
-import {hasMappingAdmission,admittedMappings,mappingAdmissionIssue,MAPPING_REGISTRY_VERSION} from './mapping-admission.js';
+import {hasMappingAdmission,mappingAdmissionIssue,MAPPING_REGISTRY_VERSION,reviewedGoal} from './mapping-admission.js';
+import {admittedMappingsFor,planMappingIssue,PLAN_MAPPING_REGISTRY_VERSION,planGoal} from './plan-admission.js';
 import {OUTPUT_VERSION,OutputError,validateOutputShape} from './contract.js';
 import {isOutputContext} from './context.js';
 import {buildElementReference} from './relation-reference.js';
@@ -55,6 +56,8 @@ const adviceOnly=context=>readingTask(context)==='advice';
 const backgroundNeeded=context=>readingTask(context)==='background_needed';
 const focusedContext=context=>context.conversation?.grounding_policy===2&&(adviceOnly(context)||backgroundNeeded(context));
 const grounded=context=>[1,2].includes(context.conversation?.grounding_policy);
+// True only when the reviewed plan family actually produced a mapping for this chart.
+const planAdmitted=context=>hasMappingAdmission(context)&&singleJudgment(context)&&planGoal(context.input.A_user_question)!==null;
 export function selectionCatalog(context){
  if(!isOutputContext(context))throw Error('Trusted context required');
  const entries=[],registry=new Map(context.evidence.map(e=>[e.id,e]));
@@ -102,7 +105,7 @@ export function reportedDeployment(context){
 }
 export function selectionSchema(context){
  const {entries,sources}=selectionCatalog(context),ids=focusedContext(context)?[]:entries.filter(e=>factSelection(context)||!e.target).map(e=>e.id);
- const mappings=hasMappingAdmission(context)&&singleJudgment(context)?admittedMappings(context,entries):[];
+ const mappings=hasMappingAdmission(context)&&singleJudgment(context)?admittedMappingsFor(context,entries):[];
  const schema=object({schema_version:{const:SELECTION_VERSION},context_id:text(80),answer:{...text(2000),description:'只写面向当前问题的结论、取舍和条件；禁止复述任何爻位或卦盘属性，程序另行展示。'},direction:{enum:['favorable','unfavorable','mixed','unclear']},
   main_choice:object({basis_id:{enum:['none',...entries.filter(e=>e.target).map(e=>e.id)]},reason:{...text(500),description:'解释为何选择这个角度，禁止复述目录事实，只称自身、目标、外部条件。'}}),
   factors:list(object({basis_id:{enum:ids},assessment:{enum:effects},interpretation:{...text(700),description:'仅解释这个 basis_id 自己能支持的目标相关象意与限制。禁止爻位、六亲、动静、生克原文；不得借用未选择的其他依据。'}}),factOnly(context)?6:4,0),
@@ -152,7 +155,11 @@ export function selectionSchema(context){
   schema.properties.main_choice.properties.perspective={enum:['none',...new Set(mappings.map(m=>m.perspective))]};
   schema.properties.factors.items.properties.role.properties.basis_id={enum:[...new Set(mappings.flatMap(m=>m.role_ids))]};
   schema.properties.factors.items.properties.assessment={enum:['conditional','neutral']};
-  schema.properties.direction={const:'unclear'};
+  schema.properties.factors.items.properties.assessment.description='取法准入下的因素只能是条件性观察；现实前提未确认时不得写成确定的支持或阻碍。';
+  // Peer-help direction is observation-only, so it stays unclear. A reviewed plan
+  // mechanism may state 主次, because its support/oppose reading is fixed by the
+  // question direction rather than inferred from an unconfirmed real-world premise.
+  schema.properties.direction=planAdmitted(context)?{enum:['favorable','unfavorable','mixed','unclear']}:{const:'unclear'};
   schema.properties.timing_candidates.maxItems=0;
   if(!mappings.length){
    schema.properties.main_choice=object({basis_id:{const:'none'},reason:{const:'当前没有与本题及卦盘同时匹配、已核对适用范围的取法。'},perspective:{const:'none'}});
@@ -214,10 +221,14 @@ export function checkRealityStatements(passages,context){
   }
  }
 }
+// Each family carries its own reviewed applicability; neither may widen the other.
+export function admissionIssue(factor,mappings){
+ return mappings.some(m=>m.goal==='self_plan_advance')?planMappingIssue(factor,mappings):mappingAdmissionIssue(factor,mappings);
+}
 export function decodeSelection(raw,context){
  validateOutputShape(raw,selectionSchema(context));
  if(raw.context_id!==context.context_id)throw new OutputError('context_mismatch');
- const {entries,sources}=selectionCatalog(context),mappings=hasMappingAdmission(context)?admittedMappings(context,selectionCatalog(context).entries):[],byId=new Map(entries.map(e=>[e.id,e]));
+ const {entries,sources}=selectionCatalog(context),mappings=hasMappingAdmission(context)?admittedMappingsFor(context,entries):[],byId=new Map(entries.map(e=>[e.id,e]));
  const passages=[...(typeof raw.answer==='string'?[{text:raw.answer,path:'$.answer'}]:[]),{text:raw.main_choice.reason,path:'$.main_choice.reason'},
   ...(raw.general_advice||[]).map((text,i)=>({text,path:`$.general_advice[${i}]`})),
   ...raw.factors.flatMap((f,i)=>[{text:f.interpretation,path:`$.factors[${i}].interpretation`},...(f.role?[{text:f.role.meaning,path:`$.factors[${i}].role.meaning`}]:[]),...(f.application?[...(hasEffectConditions(context)?f.application.effect_conditions.map((c,j)=>({text:c.condition,path:`$.factors[${i}].application.effect_conditions[${j}].condition`})):[]),{text:f.application.goal_link,path:`$.factors[${i}].application.goal_link`}]:[])]),
@@ -233,7 +244,7 @@ export function decodeSelection(raw,context){
   if(hasBasisScope(context))for(const [i,f] of raw.factors.entries()){
    if(f.application.state!=='proposed')throw new OutputError('unresolved_factor_application',`$.factors[${i}].application.state`);
    if(hasTightBasisScope(context)&&declaresUnresolvedLink(f.application.goal_link))throw new OutputError('unresolved_factor_application',`$.factors[${i}].application.goal_link`);
-   if(hasMappingAdmission(context)){const issue=mappingAdmissionIssue(f,mappings);if(issue)throw new OutputError(issue,`$.factors[${i}].application.mapping_id`);}
+   if(hasMappingAdmission(context)){const issue=admissionIssue(f,mappings);if(issue)throw new OutputError(issue,`$.factors[${i}].application.mapping_id`);}
    if(hasEffectConditions(context)){
     const issue=effectConditionIssue(f.application,f.assessment,context.input.A_user_question);
     if(issue)throw new OutputError(issue,`$.factors[${i}].application.effect_conditions`);
@@ -312,7 +323,7 @@ export function selectionLayout(schema,contextId){
 }
 export function selectionMessages(context){
  const {entries,sources}=selectionCatalog(context);
- const mappings=hasMappingAdmission(context)&&singleJudgment(context)?admittedMappings(context,entries):[];
+ const mappings=hasMappingAdmission(context)&&singleJudgment(context)?admittedMappingsFor(context,entries):[];
  const visibleEntries=hasMappingAdmission(context)&&singleJudgment(context)?entries.filter(e=>mappings.some(m=>[...m.basis_ids,...m.role_ids].includes(e.id))):entries;
  if(singleJudgment(context)){
   const prefs=context.conversation?.response_preferences;
