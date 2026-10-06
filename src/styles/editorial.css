@@ -118,3 +118,13 @@ body :is(.reading-text-toggle,.history-item-head,.history-plate > summary):focus
 .registration-record pre { white-space:pre-wrap; overflow-wrap:anywhere; max-height:320px; overflow:auto; padding-block:12px; }
 .registration-record summary { cursor:pointer; min-height:44px; padding-block:10px; }
 .registration-library input[type=file] { padding:10px; min-width:0; }
+
+/* An optional source link stays after the content, clear of the fixed navigation. */
+body .site-footer {display:flex;flex-direction:column;align-items:center;gap:4px;padding:20px 20px 28px;text-align:center;}
+body .site-footer .note, :root[data-theme=dark] body .site-footer .note {margin:0;padding:0;border:0;border-radius:0;background:transparent;color:var(--ui-muted);font-size:13px;overflow-wrap:anywhere;}
+body .source-link {display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;min-height:44px;padding:4px 8px;color:var(--ui-muted);font-size:13px;text-decoration:none;border-radius:6px;}
+body .source-link svg {width:16px;height:16px;flex:none;}
+body .source-star {color:var(--ui-accent);}
+body .source-link:hover {color:var(--ui-accent);text-decoration:underline;text-underline-offset:4px;}
+body .source-link:focus-visible {outline:3px solid var(--ui-accent);outline-offset:3px;}
+@media(max-width:760px) {body .site-footer {padding-bottom:calc(104px + env(safe-area-inset-bottom));}}
