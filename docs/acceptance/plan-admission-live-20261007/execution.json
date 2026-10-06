@@ -1,0 +1,26 @@
+{
+  "started": "2026-10-06T13:00:05.969Z",
+  "planHash": "35ab9d2e74b58a8149dd7adf39da1e2917cc0c36afb6a036b65f6723985decc8",
+  "sealedSourceCommit": "01d1919eb4f49cb3c67b01d1076d509b7f9a43b5",
+  "headAtRun": "2952e4df708b504ab74197186120abda8a4473bf",
+  "balanceBefore": 22.02,
+  "reservation": {
+    "reserved_cny": 0.2,
+    "remaining_unreserved_cny": 0.2
+  },
+  "automaticRetries": false,
+  "blockedVerified": [
+    {
+      "id": "plan-chart-gap",
+      "kind": "chart_basis_missing",
+      "blocked": true,
+      "calls": 0
+    },
+    {
+      "id": "plan-method-gap",
+      "kind": "method_not_covered",
+      "blocked": true,
+      "calls": 0
+    }
+  ]
+}

@@ -145,6 +145,7 @@ export function selectionSchema(context){
   }
  }
  if(hasMappingAdmission(context)&&singleJudgment(context)){
+  schema.properties.factors.items.properties.interpretation.description='程序已在上方展示本依据的原文方向；此处不要再复述爻位、六亲、动静、生克或月令等盘面属性，只写这个依据对所问目标意味着什么、以及它不能说明什么。';
   const app=schema.properties.factors.items.properties.application;
   app.properties.mapping_id={enum:mappings.map(m=>m.id)};app.required.push('mapping_id');
   schema.properties.factors.items.properties.basis_id={enum:[...new Set(mappings.flatMap(m=>m.basis_ids))]};

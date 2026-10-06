@@ -1,0 +1,78 @@
+{
+  "id": "plan-covered",
+  "status": "fallback",
+  "issues": [
+    {
+      "code": "program_attribute_in_explanation",
+      "path": "$.factors[0].interpretation"
+    }
+  ],
+  "completion": {
+    "transport": "strict_tool",
+    "error": null,
+    "finishReason": "tool_calls",
+    "bodyComplete": true,
+    "envelopeValid": true
+  },
+  "usage": {
+    "prompt_tokens": 6370,
+    "completion_tokens": 858,
+    "total_tokens": 7228,
+    "prompt_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "prompt_cache_hit_tokens": 1792,
+    "prompt_cache_miss_tokens": 4578
+  },
+  "usageOk": true,
+  "conservativePeakCostCny": 0.019604,
+  "availability": {
+    "kind": "conditions_unconfirmed",
+    "title": "可以给出有限的局部观察，现实条件仍待确认",
+    "message": "已经有卦盘，也有适用于这类问题的已核对取法：動變生尅沖合章第十五。以下现实前提尚未确认，所以本轮只作条件性观察，不据此判断计划能否成功。",
+    "items": [
+      "变爻对本位动爻的方向是盘面内关系，现实中对应的条件仍未核实。"
+    ],
+    "blocked": false
+  },
+  "admitted": [
+    {
+      "id": "plan-shi-return-control",
+      "basis_ids": [
+        "t4"
+      ],
+      "role_ids": [
+        "l4"
+      ],
+      "condition": "只按变爻与其本位动爻的五行方向说明回生或回克，不推广到其他爻，也不说明事情成败，并不确认现实条件。",
+      "unconfirmed": [
+        "变爻对本位动爻的方向是盘面内关系，现实中对应的条件仍未核实。"
+      ]
+    }
+  ],
+  "schemaSummary": {
+    "factorsMax": 1,
+    "basisEnum": [
+      "t4"
+    ],
+    "assessmentEnum": [
+      "conditional",
+      "neutral"
+    ],
+    "direction": {
+      "enum": [
+        "favorable",
+        "unfavorable",
+        "mixed",
+        "unclear"
+      ]
+    },
+    "perspectives": [
+      "none",
+      "self"
+    ]
+  },
+  "answer": null,
+  "rawSha256": "568870eaf952043d6623836f8073b803d3b004add9dd5976c8546419ca360f87",
+  "noAutomaticRetries": true
+}
