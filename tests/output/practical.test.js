@@ -39,3 +39,12 @@ test('combined whole-line references display without the legacy twelve-reference
  expect(parsed.status).toBe('validated');expect(parsed.answer.factors[0].evidence_ids.length).toBeGreaterThan(12);
  r.uncertainties=[];expect(parseOutputAnswer(JSON.stringify(r),p.context,{completed:true}).status).toBe('fallback');
 });
+test('all valid catalog references, duplicates and an empty reference list keep the answer visible',async()=>{
+ const p=await prepare('我昨日运势如何？'),catalog=JSON.parse(p.messages[1].content).bases;
+ for(const ids of [catalog.map(b=>b.id),['l1','l2','l3','l4','l5','l6'],['l1','l1'],[]]){
+  const r=reply(p);r.factors[0].basis_ids=ids;
+  const parsed=parseOutputAnswer(JSON.stringify(r),p.context,{completed:true});expect(parsed.status).toBe('validated');expect(parsed.answer.answer).toBe(r.answer);
+  if(!ids.length){expect(parsed.answer.factors[0].evidence_ids).toEqual([]);expect(parsed.answer.factors[0].interpretation).not.toContain('程序依据');}
+ }
+ const bad=reply(p);bad.factors[0].basis_ids=['invented'];expect(parseOutputAnswer(JSON.stringify(bad),p.context,{completed:true}).status).toBe('fallback');
+});

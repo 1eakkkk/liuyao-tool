@@ -8,7 +8,7 @@ export function practicalSchema(context,{entries,sources},task){
  const schema=object({schema_version:{const:'structured-selection-2'},context_id:{const:context.context_id},
   answer:text(4000),direction:{enum:['favorable','unfavorable','mixed','unclear']},
   main_choice:object({basis_id:{enum:['none',...targets]},reason:text(500)}),
-  factors:list(object({basis_ids:list({enum:ids},4,1),assessment:{enum:['support','oppose','conditional','neutral']},interpretation:text(800)}),4),
+  factors:list(object({basis_ids:list({enum:ids},ids.length),assessment:{enum:['support','oppose','conditional','neutral']},interpretation:text(800)}),4),
   background_usage:list(object({source_id:{enum:sources.filter(s=>s.scope_gate!=='limited_unconfirmed').map(s=>s.id)},state:{enum:['not_applicable','context_only']},note:text(400)}),5),
   timing_candidates:list(object({candidate:text(240),basis_id:{enum:ids},reason:text(500)}),2),uncertainties:list(text(500),4,1)});
  if(task==='facts'){schema.properties.direction={const:'unclear'};schema.properties.factors.maxItems=0;schema.properties.main_choice=object({basis_id:{const:'none'},reason:text(500)});}
@@ -28,6 +28,9 @@ uncertainties至少写一条与本题有关的局限，不要把它写成拒绝�
   sources:catalog.sources.filter(s=>s.scope_gate!=='limited_unconfirmed'),response_schema:schema})}];
 }
 export function decodePractical(raw,context,{entries,sources},task){
+ // Repeated valid references are redundant, not a reason to hide the answer.
+ if(Array.isArray(raw?.factors))raw={...raw,factors:raw.factors.map(f=>f&&typeof f==='object'&&Array.isArray(f.basis_ids)
+  ?{...f,basis_ids:[...new Set(f.basis_ids)]}:f)};
  validateOutputShape(raw,practicalSchema(context,{entries,sources},task));
  const byId=new Map(entries.map(e=>[e.id,e])),chosen=byId.get(raw.main_choice.basis_id),lines=context.input.C_canonical_cast.lines;
  const used=new Set();for(const review of raw.background_usage){if(used.has(review.source_id))throw new OutputError('duplicate_background_source');used.add(review.source_id);}
@@ -37,7 +40,7 @@ export function decodePractical(raw,context,{entries,sources},task){
  const refs=ids=>[...new Set(ids.flatMap(id=>byId.get(id).ids))];
  return {schema_version:OUTPUT_VERSION,context_id:context.context_id,answer:raw.answer,direction:raw.direction,
   yongshen_candidates:record?[{relative:record.relative,targets:[chosen.target],reason:raw.main_choice.reason,evidence_ids:chosen.ids}]:[],
-  factors:raw.factors.map(f=>({assessment:f.assessment,interpretation:`程序依据：${f.basis_ids.map(id=>byId.get(id).text).join('；')}。\nAI解释：${f.interpretation}`,evidence_ids:refs(f.basis_ids)})),
+  factors:raw.factors.map(f=>({assessment:f.assessment,interpretation:`${f.basis_ids.length?`程序依据：${f.basis_ids.map(id=>byId.get(id).text).join('；')}。\n`:''}AI解释：${f.interpretation}`,evidence_ids:refs(f.basis_ids)})),
   timing_candidates:(asksTiming?raw.timing_candidates:[]).map(t=>({candidate:t.candidate,reason:t.reason,evidence_ids:byId.get(t.basis_id).ids})),
   uncertainties:[...raw.uncertainties,...raw.background_usage.map(r=>`背景资料「${sources.find(s=>s.id===r.source_id).title}」：${r.state==='context_only'?'仅作现实背景':'不适用'}。${r.note}`)]};
 }

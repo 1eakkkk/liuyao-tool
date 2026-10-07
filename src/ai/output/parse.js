@@ -40,8 +40,8 @@ export function validateOutputAnswer(answer, context) {
   const schema=context.conversation?.output_format==='selection-2'
     ? {...OUTPUT_SCHEMA,properties:{...OUTPUT_SCHEMA.properties,factors:{...OUTPUT_SCHEMA.properties.factors,minItems:0,
       ...(practical?{items:{...OUTPUT_SCHEMA.properties.factors.items,properties:{...OUTPUT_SCHEMA.properties.factors.items.properties,
-        interpretation:{...OUTPUT_SCHEMA.properties.factors.items.properties.interpretation,maxLength:2400},
-        evidence_ids:{...OUTPUT_SCHEMA.properties.factors.items.properties.evidence_ids,maxItems:64}}}}:{})}}}
+        interpretation:{...OUTPUT_SCHEMA.properties.factors.items.properties.interpretation,maxLength:MAX_RESPONSE_CHARS},
+        evidence_ids:{...OUTPUT_SCHEMA.properties.factors.items.properties.evidence_ids,minItems:0,maxItems:context.evidence.length}}}}:{})}}}
     : OUTPUT_SCHEMA;
   validateOutputShape(answer,schema);
   if (answer.context_id !== context.context_id) throw new OutputError('context_mismatch', '$.context_id');

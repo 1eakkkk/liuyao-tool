@@ -4,7 +4,7 @@ import {chromium,webkit} from 'playwright';
 const target=process.argv[2]||'http://127.0.0.1:4338/',engine=process.env.BROWSER_ENGINE||'chromium';
 const browser=await(engine==='webkit'?webkit:chromium).launch({headless:true,...(engine==='chromium'?{channel:'msedge'}:{}),...(process.env.HTTPS_PROXY?{proxy:{server:process.env.HTTPS_PROXY}}:{})});
 const report=[],extract=t=>JSON.parse(t.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
-const reply=i=>({schema_version:'structured-selection-2',context_id:i.context_id,answer:'象意上更适合继续小步推进，主要支持来自当前观察对象的条件。需留意动变与外部牵制，建议先完成一项小目标，再根据实际反馈调整。',direction:'favorable',main_choice:{basis_id:'l1',reason:'选取与当前问题有关的主要观察位置。'},factors:[{basis_ids:['l1'],assessment:'support',interpretation:'这项条件为推进提供一个支持角度，不证明实际结果已发生。'}],background_usage:[],timing_candidates:[],uncertainties:['实际结果取决于后续行动。']});
+const reply=i=>({schema_version:'structured-selection-2',context_id:i.context_id,answer:'象意上更适合继续小步推进，主要支持来自当前观察对象的条件。需留意动变与外部牵制，建议先完成一项小目标，再根据实际反馈调整。',direction:'favorable',main_choice:{basis_id:'l1',reason:'选取与当前问题有关的主要观察位置。'},factors:[{basis_ids:['l1'],assessment:'support',interpretation:'这项条件为推进提供一个支持角度，不证明实际结果已发生。'},{basis_ids:['l1','l2','l3','l4','l5','l6','l1'],assessment:'conditional',interpretation:'组合观察六爻，重复编号只显示一次。'},{basis_ids:[],assessment:'neutral',interpretation:'一般建议不伪装成已引用的程序事实。'}],background_usage:[],timing_candidates:[],uncertainties:['实际结果取决于后续行动。']});
 try{for(const [index,width]of [1280,390,320].entries()){
  const context=await browser.newContext({viewport:{width,height:950}}),page=await context.newPage(),errors=[],calls=[];
  page.on('pageerror',e=>errors.push(e.message));await page.addInitScript(()=>localStorage.setItem('liuyao_deepseek_api_key','TEST_ONLY'));
@@ -17,3 +17,4 @@ try{for(const [index,width]of [1280,390,320].entries()){
  report.push({engine,width,staticChart:true,exportImport:true,api:'mocked',history:true,errors});await context.close();
 }}finally{await browser.close();}
 fs.mkdirSync('test-results/practical-browser',{recursive:true});fs.writeFileSync(`test-results/practical-browser/${new URL(target).hostname==='127.0.0.1'?'local':'production'}-${engine}.json`,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
+
