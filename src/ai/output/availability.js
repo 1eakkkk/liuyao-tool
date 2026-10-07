@@ -23,7 +23,7 @@ export function readingAvailability(context){
     items:pendingConfirmation(mappings)}
   :{blocked:false,kind:'observation_only'};
  if(coveredGoal(question))return {blocked:true,kind:'chart_basis_missing',title:'这类问题有适用取法，但本盘缺少它需要的依据',
-  message:'已经有卦盘，这道题也已有适用于它的已核对取法；但本卦没有该取法要求的依据（如世爻动而化进／化退、回头生克、月合月破、日冲，或对应的世应生克），因此本轮不生成解读。这是本盘依据的缺口，不是对计划成败的判断。',
+  message:'已经有卦盘，这道题也已有适用于它的已核对取法；但本卦没有该取法要求的依据（如世爻动而化进／化退、回头生克、月合月破、日合日冲，或对应的世应生克），因此本轮不生成解读。这是本盘依据的缺口，不是对计划成败的判断。',
   items:['可以重新摇卦后再问这道题。','也可以切换普通解读，保留当前问题和卦盘；普通解读不具备同等取法准入核对。']};
  return {blocked:true,kind:'method_not_covered',title:'当前结构化模式尚不支持这类判断',
   message:'已经有卦盘，但目前尚无适用于这个问题的已核对取法。这是功能覆盖不足，不代表事情没有希望，也不是卦象结论。'};
