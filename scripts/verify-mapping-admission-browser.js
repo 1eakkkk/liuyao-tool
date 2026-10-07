@@ -18,7 +18,7 @@ try{for(const width of [1280,390,320])for(const mapped of [false,true]){
  await page.route('https://api.deepseek.com/**',async route=>{const body=route.request().postDataJSON(),input=JSON.parse(body.messages[1].content);requests.push(body);assert.equal(input.conversation.basis_policy,4);assert(body.tools[0].function.strict);await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({choices:[{index:0,finish_reason:'tool_calls',message:{role:'assistant',content:null,tool_calls:[{id:'mapping-mock',type:'function',function:{name:'submit_reading',arguments:JSON.stringify(reply(input))}}]}}],usage:{prompt_tokens:20,completion_tokens:30}})});});
  await page.goto(target,{waitUntil:'domcontentloaded'});await page.locator('[data-mode="manual"]').click();
  for(const [i,sum] of (mapped?[7,7,8,8,8,8]:[7,8,7,8,8,9]).entries())await page.locator(`#manualLine${i}`).selectOption(String(sum));await page.locator('#manualCastBtn').click();
- await page.locator('[data-tab="ai"]').click();await page.locator('#questionInput').fill(mapped?'他能否帮助我整理旧书？':(width===390?'我今天打了五注双色球，这个彩票中奖的可能大不大？':'我已部署免费网页，仅供自己和朋友娱乐，是否适合继续维护？'));await page.locator('#readingMode').selectOption('structured');await page.locator('#promptBtn').click();
+ await page.locator('[data-tab="ai"]').click();await page.locator('#questionInput').fill(mapped?'他能否帮助我整理旧书？':(width===390?'我今天打了五注双色球，这个彩票中奖的可能大不大？':'这个网页能火吗？'));await page.locator('#readingMode').selectOption('structured');await page.locator('#promptBtn').click();
  if(!mapped){
   await page.locator('#readingAvailability').waitFor();
   assert((await page.locator('#readingStatus').textContent()).includes('未调用 AI'));
