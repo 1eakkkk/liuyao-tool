@@ -36,8 +36,12 @@ function checkMotionClaims(answer, context) {
 }
 export function validateOutputAnswer(answer, context) {
   if (!isOutputContext(context)) throw new OutputError('untrusted_context');
+  const practical=context.conversation?.judgment_policy===7;
   const schema=context.conversation?.output_format==='selection-2'
-    ? {...OUTPUT_SCHEMA,properties:{...OUTPUT_SCHEMA.properties,factors:{...OUTPUT_SCHEMA.properties.factors,minItems:0}}}
+    ? {...OUTPUT_SCHEMA,properties:{...OUTPUT_SCHEMA.properties,factors:{...OUTPUT_SCHEMA.properties.factors,minItems:0,
+      ...(practical?{items:{...OUTPUT_SCHEMA.properties.factors.items,properties:{...OUTPUT_SCHEMA.properties.factors.items.properties,
+        interpretation:{...OUTPUT_SCHEMA.properties.factors.items.properties.interpretation,maxLength:2400},
+        evidence_ids:{...OUTPUT_SCHEMA.properties.factors.items.properties.evidence_ids,maxItems:64}}}}:{})}}}
     : OUTPUT_SCHEMA;
   validateOutputShape(answer,schema);
   if (answer.context_id !== context.context_id) throw new OutputError('context_mismatch', '$.context_id');

@@ -12,9 +12,9 @@ export function readingRequestBody(prepared, model = 'deepseek-flash') {
     response_format: { type: 'json_object' }, stream: true, stream_options: { include_usage: true } };
 }
 const strictCandidate=()=>import.meta.env?.VITE_READING_STRICT_TRANSPORT==='1';
-export async function callReading(prepared, signal, {transport=strictCandidate()&&prepared.context.conversation?.judgment_policy===6?'strict_tool':'json_stream'}={}) {
+export async function callReading(prepared, signal, {transport=strictCandidate()&&[6,7].includes(prepared.context.conversation?.judgment_policy)?'strict_tool':'json_stream'}={}) {
   if(!['json_stream','strict_tool'].includes(transport))throw Error('解读接收方式不兼容');
-  if(transport==='strict_tool'&&(!strictCandidate()||prepared.context.conversation?.judgment_policy!==6))throw Error('严格解读尚未启用或会话版本不兼容。');
+  if(transport==='strict_tool'&&(!strictCandidate()||![6,7].includes(prepared.context.conversation?.judgment_policy)))throw Error('严格解读尚未启用或会话版本不兼容。');
   const key = loadApiKey();
   if (!key) throw Error('请先在设置中填写 DeepSeek API Key。');
   const start = Date.now(), peak = isBeijingPeakHour();

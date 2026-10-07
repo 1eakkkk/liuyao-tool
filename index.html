@@ -410,8 +410,8 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
       <textarea id="questionInput" autocomplete="off" aria-label="想问的问题" maxlength="500" placeholder="想问的问题，比如：最近想跳槽，合不合适"></textarea>
       <div class="char-counter" id="questionCharCounter">0 / 500 字</div>
       <div class="reading-mode"><label for="readingMode">解读方式</label>
-        <select id="readingMode" autocomplete="off"><option value="" selected disabled>选择</option><option value="legacy">普通解读</option><option value="structured">结构化核对（试用）· 有限观察</option></select>
-        <p id="readingModeNote" hidden>可核对卦盘事实、查看有限的条件性观察，目前不支持成败预测。未覆盖的问题会在生成前说明，不调用 AI。</p>
+        <select id="readingMode" autocomplete="off"><option value="" selected disabled>选择</option><option value="legacy">普通解读</option><option value="structured">结构化解读 · 结论与依据</option></select>
+        <p id="readingModeNote" hidden>先看直接回答，再展开主要依据、取用理由与不确定性。API 和提示词使用同一套解读流程。</p>
       </div>
       <details id="backgroundCheck" class="background-check" hidden>
         <summary>核实背景（可选）</summary>

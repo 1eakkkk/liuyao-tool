@@ -12,5 +12,5 @@ const legacy=await preview({build:{outDir:'test-results/legacy-reading-dist'},pr
 try{await run('scripts/verify-legacy-reading-browser.js',legacy.resolvedUrls.local[0]);}
 finally{await new Promise(r=>legacy.httpServer.close(r));}
 const target=process.argv[2];const current=target?null:await preview({preview:{host:'127.0.0.1',port:4337,strictPort:true}});
-try{await run('scripts/verify-mapping-admission-browser.js',target||current.resolvedUrls.local[0]);}
+try{await run('scripts/verify-practical-browser.js',target||current.resolvedUrls.local[0]);}
 finally{if(current)await new Promise(r=>current.httpServer.close(r));}

@@ -26,6 +26,7 @@ try{for(const width of [1280,390,320]){
    response.factors=[];response.main_choice={basis_id:'none',reason:input.response_schema.properties.main_choice.properties.reason.const};
    if(input.response_schema.properties.judgment){delete response.answer;response.main_choice.perspective='none';response.judgment={basis_ids:[],reason:input.response_schema.properties.judgment.properties.reason.const};response.role_tradeoffs=[];response.general_advice=[];}
   }
+  if(input.conversation.judgment_policy===7){response.factors=[];response.main_choice={basis_id:'none',reason:'一般建议不作取用。'};}
   if(body.tools){assert(body.tools[0].function.strict);await route.fulfill({contentType:'application/json',body:JSON.stringify({choices:[{index:0,finish_reason:'tool_calls',message:{role:'assistant',content:null,tool_calls:[{id:'background-mock',type:'function',function:{name:'submit_reading',arguments:JSON.stringify(response)}}]}}],usage:{prompt_tokens:30,completion_tokens:20}})});return;}
   await route.fulfill({contentType:'text/event-stream',body:`data: ${JSON.stringify({choices:[{delta:{content:JSON.stringify(response)},finish_reason:'stop'}],usage:{prompt_tokens:30,completion_tokens:20}})}\n\ndata: [DONE]\n\n`});
  });

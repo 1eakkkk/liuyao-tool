@@ -1,4 +1,5 @@
 import {hasMappingAdmission,mappingAdmissionIssue,MAPPING_REGISTRY_VERSION,reviewedGoal} from './mapping-admission.js';
+import {isPractical,practicalSchema,practicalMessages,decodePractical} from './practical.js';
 import {admittedMappingsFor,planMappingIssue,PLAN_MAPPING_REGISTRY_VERSION,planGoal} from './plan-admission.js';
 import {OUTPUT_VERSION,OutputError,validateOutputShape} from './contract.js';
 import {isOutputContext} from './context.js';
@@ -104,6 +105,7 @@ export function reportedDeployment(context){
  return null;
 }
 export function selectionSchema(context){
+ if(isPractical(context))return practicalSchema(context,selectionCatalog(context),readingTask(context));
  const {entries,sources}=selectionCatalog(context),ids=focusedContext(context)?[]:entries.filter(e=>factSelection(context)||!e.target).map(e=>e.id);
  const mappings=hasMappingAdmission(context)&&singleJudgment(context)?admittedMappingsFor(context,entries):[];
  const schema=object({schema_version:{const:SELECTION_VERSION},context_id:text(80),answer:{...text(2000),description:'只写面向当前问题的结论、取舍和条件；禁止复述任何爻位或卦盘属性，程序另行展示。'},direction:{enum:['favorable','unfavorable','mixed','unclear']},
@@ -227,6 +229,7 @@ export function admissionIssue(factor,mappings){
  return mappings.some(m=>m.goal==='self_plan_advance')?planMappingIssue(factor,mappings):mappingAdmissionIssue(factor,mappings);
 }
 export function decodeSelection(raw,context){
+ if(isPractical(context))return decodePractical(raw,context,selectionCatalog(context),readingTask(context));
  validateOutputShape(raw,selectionSchema(context));
  if(raw.context_id!==context.context_id)throw new OutputError('context_mismatch');
  const {entries,sources}=selectionCatalog(context),mappings=hasMappingAdmission(context)?admittedMappingsFor(context,entries):[],byId=new Map(entries.map(e=>[e.id,e]));
@@ -323,6 +326,7 @@ export function selectionLayout(schema,contextId){
  return visit(schema);
 }
 export function selectionMessages(context){
+ if(isPractical(context))return practicalMessages(context,selectionCatalog(context),readingTask(context),selectionSchema(context));
  const {entries,sources}=selectionCatalog(context);
  const mappings=hasMappingAdmission(context)&&singleJudgment(context)?admittedMappingsFor(context,entries):[];
  const visibleEntries=hasMappingAdmission(context)&&singleJudgment(context)?entries.filter(e=>mappings.some(m=>[...m.basis_ids,...m.role_ids].includes(e.id))):entries;
