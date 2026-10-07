@@ -21,6 +21,11 @@ const lackingChart=(question,castId='plan-admission-gap-fixture')=>buildCanonica
  createdAt:new Date('2026-10-01T22:00:00+08:00').getTime(),castId,
  calendar:{now:new Date('2026-10-01T22:00:00+08:00'),day:JIAZI60.find(day=>day.label==='戊申'),ymh:{yearLabel:'丙午',monthLabel:'丁酉',hourLabel:'癸亥'},dateText:'公历：2026年10月1日'}});
 const lacking=()=>prepare(lackingChart(old.cases[0].question),old.cases[0].question);
+// A chart whose 世爻 is 静 and 日合 (巳申), so 合起 applies and 暗动／日破 does not.
+const dayCombineChart=()=>buildCanonicalCast({
+ lines:[6,7,6,6,7,7].map(value=>lineFromSum(value)),source:'manual',question:'plan-day-combine-fixture',
+ createdAt:new Date('2026-10-01T22:00:00+08:00').getTime(),castId:'plan-day-combine-fixture',
+ calendar:{now:new Date('2026-10-01T22:00:00+08:00'),day:JIAZI60.find(day=>day.label==='戊申'),ymh:{yearLabel:'丙午',monthLabel:'丁酉',hourLabel:'癸亥'},dateText:'公历：2026年10月1日'}});
 
 test('every plan mechanism quote is pinned to the transcript it cites, not to a summary',()=>{
  // Guards the "取法适用" half of acceptance: the quote and its locator must exist verbatim
@@ -29,22 +34,48 @@ test('every plan mechanism quote is pinned to the transcript it cites, not to a 
   .map(name=>JSON.parse(fs.readFileSync(`knowledge/classics/${name}`)));
  for(const mechanism of PLAN_MECHANISMS){
   const matches=segments.filter(segment=>segment.text.includes(mechanism.quote));
-  expect(matches.length,`unpinned quote for ${mechanism.id}`).toBe(1);
-  expect(matches[0].locator.chapter).toBe(mechanism.chapter);
+  // A quote must exist in at least one transcribed segment, and at least one of those
+  // must carry the chapter this mechanism cites. The 進神／退神 pair share one segment.
+  expect(matches.length,`unpinned quote for ${mechanism.id}`).toBeGreaterThan(0);
+  expect(matches.some(segment=>segment.locator.chapter===mechanism.chapter),`chapter mismatch for ${mechanism.id}`).toBe(true);
  }
- expect(PLAN_MECHANISMS.map(m=>m.id)).toHaveLength(6);
+ expect(PLAN_MECHANISMS.map(m=>m.id)).toHaveLength(7);
  // 月合 and 月破 are one usefulness axis read in opposite directions, so neither of the
  // pair may be declared neutral while its sibling is decisive.
  const combine=PLAN_MECHANISMS.find(m=>m.rule_id==='MONTH-COMBINE-001'),clash=PLAN_MECHANISMS.find(m=>m.rule_id==='MONTH-CLASH-001');
  expect(combine.kind).toBe(clash.kind);expect(combine.assessment).toBe('support');expect(clash.assessment).toBe('oppose');
 });
 
+test('only a static 世爻 takes the 日辰 mechanisms, matching what those chapters state',async()=>{
+ // 日辰章 states 暗动／日破 for 静爻, and 六合章第十九 states 合起 for 静爻 while calling a
+ // moving line 合絆 instead. So a moving 世爻 must take neither 日辰 factor.
+ const moving=await covered();
+ const movingIds=admittedPlanMappings(moving.context,selectionCatalog(moving.context).entries).map(m=>m.id);
+ expect(movingIds).toContain('plan-shi-return-control');
+ expect(movingIds).not.toContain('plan-shi-day-clash');expect(movingIds).not.toContain('plan-shi-day-combine');
+ // A static 世爻 that is 日合 does take 合起 as a conditional factor.
+ const sc=await prepare(dayCombineChart(),'我想继续做这个项目，是否适合继续推进？');
+ const scMaps=admittedPlanMappings(sc.context,selectionCatalog(sc.context).entries);
+ expect(scMaps.map(m=>m.id)).toContain('plan-shi-day-combine');
+ expect(scMaps.find(m=>m.id==='plan-shi-day-combine').assessments).toEqual(['conditional','neutral']);
+});
+
 test('only a self-directed affirmative plan question is recognised, and it never becomes an assistance question',()=>{
  for(const q of [old.cases[0].question,old.cases[1].question,'我想整理旧书，是否适合继续推进？'])
   expect(planGoal(q)).toBe('self_plan_advance');
+ // The recogniser must not require the 我想…是否 phrasing: the same category is asked as
+ // 要不要/该不该/值不值得/还能不能/有没有必要, with or without a leading actor.
+ for(const q of ['我要不要继续做这个项目？','这个项目还值得继续做吗？','这个副业值不值得继续做下去？',
+  '我该不该继续投入这个项目？','这个项目还能不能继续做下去？','我想做这个项目，能不能继续推进？',
+  '我适不适合继续推进这个项目？','接下来还要不要继续做这个项目？','这个项目有没有必要继续做？',
+  '这件事我应该继续坚持吗？','这个项目继续做下去合适吗？','这个项目我还应该继续吗？',
+  '要不要继续这个项目？','继续做这个项目好不好？','这个项目适合长期做下去吗？',
+  '我现在还能继续推进这个项目吗？','我想继续推进它，是否合适？'])
+  expect(planGoal(q),q).toBe('self_plan_advance');
  for(const q of ['他能否帮助我整理旧书？','我能否帮助朋友整理旧书？','我想整理旧书，是否适合推进？还是先做别的？',
   '不要分析我想整理旧书是否适合继续推进。','我不想整理旧书，是否适合继续推进？','帮我看看我想做这个项目是否适合推进。',
-  '朋友想整理旧书，是否适合继续推进？','我想做这个项目是否适合推进？我能赚钱吗？','这个网页能火吗？',
+  '朋友想整理旧书，是否适合继续推进？','朋友想继续做这个项目，是否适合继续推进？',
+  '我想做这个项目是否适合推进？我能赚钱吗？','这个网页能火吗？',
   // A negation attached to the advance itself inverts the question, even though the
   // affirmative wording is still present. These four were real bypasses.
   '我想把这套旧书整理完，不打算继续推进，是否适合推进？',

@@ -25,14 +25,23 @@ test('both archived replies are preserved byte for byte and passed with no issue
 
 test('replaying both archived replies still validates, and each stayed inside the reviewed scope',async()=>{
  const boundaries={
-  'plan-recheck':{mappings:['plan-shi-return-control'],factors:1,basis:['t4']},
-  'plan-advance':{mappings:['plan-shi-advance','plan-shi-day-clash'],factors:2,basis:['k7','k6']},
+  'plan-recheck':{mappings:['plan-shi-return-control'],factors:1,basis:['t4'],atCall:['plan-shi-return-control']},
+  // 日冲 was later restricted to 静爻, as the 日辰章 wording requires, so this chart's
+  // moving 世爻 now admits only 化進 and the schema allows one factor instead of two.
+  'plan-advance':{mappings:['plan-shi-advance'],factors:1,basis:['k7','k6'],atCall:['plan-shi-advance','plan-shi-day-clash']},
  };
  for(const c of plan.cases){
   const p=await prepare(c.question,c.canonical);
   const result=parseOutputAnswer(fs.readFileSync(`${dir}/${c.id}-response.txt`,'utf8'),p.context,{completed:true});
-  expect(result.status).toBe('validated');expect(result.issues).toEqual([]);
   const raw=JSON.parse(fs.readFileSync(`${dir}/${c.id}-response.txt`,'utf8')),expectation=boundaries[c.id];
+  if(c.id==='plan-recheck'){expect(result.status).toBe('validated');expect(result.issues).toEqual([]);}
+  else{
+   // The archived reply listed two factors. Only the 日冲 restriction changed that, and it
+   // is recorded rather than papered over: the archived reply is not rewritten.
+   expect(raw.factors).toHaveLength(2);
+   expect(result.status).toBe('fallback');
+   expect(result.issues).toEqual([{code:'invalid_count',path:'$.factors'}]);
+  }
   // A conditional factor with an unconfirmed premise may never be read as a verdict.
   expect(raw.direction).toBe('unclear');
   expect(raw.factors.map(f=>f.assessment)).toEqual(raw.factors.map(()=>'conditional'));
@@ -40,10 +49,11 @@ test('replaying both archived replies still validates, and each stayed inside th
   expect(raw.factors.flatMap(f=>f.application.effect_conditions).every(condition=>condition.status==='unconfirmed')).toBe(true);
   expect(raw.factors.map(f=>f.basis_id)).toEqual(expectation.basis);
   expect(raw.judgment.basis_ids).toEqual(expectation.basis);
-  // The admitted set is exactly what the reviewed mechanisms produced for this chart.
+  // The admitted set recorded at call time stays as it was; the current set is the
+  // reviewed one for the same chart.
   expect(admittedPlanMappings(p.context,selectionCatalog(p.context).entries).map(m=>m.id)).toEqual(expectation.mappings);
-  expect(c.admitted.map(m=>m.id)).toEqual(expectation.mappings);
-  expect(c.schemaSummary.factorsMax).toBe(expectation.factors);
+  expect(c.admitted.map(m=>m.id)).toEqual(expectation.atCall);
+  expect(c.schemaSummary.factorsMax).toBe(c.id==='plan-recheck'?expectation.factors:2);
  }
 });
 
