@@ -28,19 +28,15 @@ uncertainties至少写一条与本题有关的局限，不要把它写成拒绝�
 }
 export function decodePractical(raw,context,{entries,sources},task){
  validateOutputShape(raw,practicalSchema(context,{entries,sources},task));
- if(task==='interpretation'){
-  const required={favorable:['support'],unfavorable:['oppose'],mixed:['support','oppose'],unclear:[]}[raw.direction];
-  if(required.some(effect=>!raw.factors.some(f=>f.assessment===effect)))throw new OutputError('direction_basis_mismatch','$.direction');
- }
  const byId=new Map(entries.map(e=>[e.id,e])),chosen=byId.get(raw.main_choice.basis_id),lines=context.input.C_canonical_cast.lines;
  const used=new Set();for(const review of raw.background_usage){if(used.has(review.source_id))throw new OutputError('duplicate_background_source');used.add(review.source_id);}
  if(used.size!==sources.filter(s=>s.scope_gate!=='limited_unconfirmed').length)throw new OutputError('missing_background_review');
- if(raw.timing_candidates.length&&!/何时|多久|什么时候|日期|哪天|几[天月周]|时间|何日|应期/.test(context.input.A_user_question))throw new OutputError('unexpected_timing');
+ const asksTiming=/何时|多久|什么时候|日期|哪天|几[天月周]|时间|何日|应期/.test(context.input.A_user_question);
  const record=chosen?.target?(chosen.target.component==='primary'?lines[chosen.target.line-1]:lines[chosen.target.line-1][chosen.target.component]):null;
  const refs=ids=>[...new Set(ids.flatMap(id=>byId.get(id).ids))];
  return {schema_version:OUTPUT_VERSION,context_id:context.context_id,answer:raw.answer,direction:raw.direction,
   yongshen_candidates:record?[{relative:record.relative,targets:[chosen.target],reason:raw.main_choice.reason,evidence_ids:chosen.ids}]:[],
   factors:raw.factors.map(f=>({assessment:f.assessment,interpretation:`程序依据：${f.basis_ids.map(id=>byId.get(id).text).join('；')}。\nAI解释：${f.interpretation}`,evidence_ids:refs(f.basis_ids)})),
-  timing_candidates:raw.timing_candidates.map(t=>({candidate:t.candidate,reason:t.reason,evidence_ids:byId.get(t.basis_id).ids})),
+  timing_candidates:(asksTiming?raw.timing_candidates:[]).map(t=>({candidate:t.candidate,reason:t.reason,evidence_ids:byId.get(t.basis_id).ids})),
   uncertainties:[...raw.uncertainties,...raw.background_usage.map(r=>`背景资料「${sources.find(s=>s.id===r.source_id).title}」：${r.state==='context_only'?'仅作现实背景':'不适用'}。${r.note}`)]};
 }

@@ -17,10 +17,15 @@ test('varied goals and static charts receive complete catalog, no admission pref
   expect(parseOutputAnswer(JSON.stringify(reply(p)),p.context,{completed:true}).status).toBe('validated');expect(readingExport(p)).toContain(p.messages[0].content);
  }
 });
-test('bad IDs, mismatched context and unsupported direction labels still fail; valid basic-direction inference is allowed',async()=>{
+test('bad IDs, mismatched context and invalid labels still fail; valid symbolic inference is allowed',async()=>{
  const p=await prepare('这个计划能推进吗？'),a=reply(p);
- for(const mutate of [r=>r.context_id='wrong',r=>r.factors[0].basis_ids=['fake'],r=>r.factors[0].assessment='oppose']){const r=structuredClone(a);mutate(r);expect(parseOutputAnswer(JSON.stringify(r),p.context,{completed:true}).status).toBe('fallback');}
+ for(const mutate of [r=>r.context_id='wrong',r=>r.factors[0].basis_ids=['fake'],r=>r.factors[0].assessment='invalid']){const r=structuredClone(a);mutate(r);expect(parseOutputAnswer(JSON.stringify(r),p.context,{completed:true}).status).toBe('fallback');}
  const input=JSON.parse(p.messages[1].content),relation=input.bases.find(e=>e.id.startsWith('e'));if(relation){a.factors[0].basis_ids=[relation.id];expect(parseOutputAnswer(JSON.stringify(a),p.context,{completed:true}).status).toBe('validated');}
+});
+test('factor label balance does not block the answer; unsolicited timing is not shown',async()=>{
+ const p=await prepare('今晚能出去散步吗？'),r=reply(p);r.direction='mixed';r.factors[0].assessment='conditional';
+ r.timing_candidates=[{candidate:'亥时',basis_id:'l1',reason:'未经用户请求的时间猜测'}];
+ const parsed=parseOutputAnswer(JSON.stringify(r),p.context,{completed:true});expect(parsed.status).toBe('validated');expect(parsed.answer.timing_candidates).toEqual([]);
 });
 test('new API, export and restored history share policy seven; old requests are not changed',async()=>{
  const s=createReadingSession(canonical),p=await prepareSelectedReadingTurn(s,'这个计划能推进吗？',{judgmentPolicyVersion:7,basisPolicyVersion:0});
