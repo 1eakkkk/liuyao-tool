@@ -72,11 +72,13 @@ test('the batch-two blocked expectations are genuine and stay blocked',async()=>
   const p=await prepare(blocked.question,blocked.canonical),availability=readingAvailability(p.context);
   expect(availability.blocked).toBe(true);expect(availability.kind).toBe(blocked.expectKind);
   expect(availability.title).toBe(blocked.availability.title);
-  // The message is frozen in the sealed plan. It was later edited only to name 日合
-  // alongside 日冲 after that mechanism was admitted, so everything before the mechanism
-  // list must still match the sealed text.
-  const frozen=blocked.availability.message,prefix=frozen.slice(0,frozen.indexOf('（'));
-  expect(availability.message.startsWith(prefix)).toBe(true);
-  expect(availability.message).toContain('不是对计划成败的判断');
+  // The messages are frozen in the sealed plan. chart_basis_missing was later edited only
+  // to name 日合 alongside 日冲, so everything before its mechanism list must still match;
+  // method_not_covered is unchanged in full.
+  const frozen=blocked.availability.message;
+  if(blocked.expectKind==='chart_basis_missing'){
+   expect(availability.message.startsWith(frozen.slice(0,frozen.indexOf('（')))).toBe(true);
+   expect(availability.message).toContain('不是对计划成败的判断');
+  }else expect(availability.message).toBe(frozen);
  }
 });
