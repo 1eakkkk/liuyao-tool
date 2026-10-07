@@ -75,7 +75,7 @@ try {
       await page.locator('#promptBtn').click();
       await page.locator('#readingPrompt').waitFor();
       assert(await page.locator('#confirmOverlay').isHidden(),'Fresh cast does not repeat the changed-question confirmation');
-      assert((await page.locator('#readingPrompt').inputValue()).includes('700–800 字'));
+      assert(/700\s*–\s*800\s*字/.test(await page.locator('#readingPrompt').inputValue()),'Deep response preference must be included in the exported prompt');
       assert(await page.locator('#roleSelect').isDisabled()); assert(await page.locator('#effortSelect').isDisabled());
       assert(!(await page.locator('#styleSelect').isDisabled()));
       assert.deepEqual(requests,[]); assert.deepEqual(errors,[]);
