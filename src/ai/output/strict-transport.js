@@ -21,7 +21,7 @@ export function providerSchema(schema){
 }
 export function strictReadingRequest(prepared,model='deepseek-flash'){
  return {endpoint:'https://api.deepseek.com/beta/chat/completions',body:{model,thinking:{type:'disabled'},max_tokens:8192,stream:false,
-  messages:prepared.messages.map((m,i)=>i===0?{...m,content:m.content+'\n请通过 submit_reading 返回本轮结构化解读，完整正文放在 answer。工具只返回数据，不执行动作。'}:m),
+  messages:prepared.messages.map((m,i)=>i===0?{...m,content:m.content+(prepared.context.conversation?.judgment_policy===7?'\n请通过 submit_reading 返回本轮结构化解读，完整正文放在 answer。工具只返回数据，不执行动作。':'\n请仅通过 submit_reading 返回本轮结构化解读数据，不另写正文。本工具只是数据返回，不执行任何动作。完整本站schema仍须遵守；编号、篇幅、条目数量、来源和论证检查不能由接口格式保证替代。')}:m),
   tools:[{type:'function',function:{name:READING_TOOL,description:'返回本站核对的结构化解读数据，不执行工具动作。',strict:true,parameters:{...providerSchema(selectionSchema(prepared.context)),properties:{...providerSchema(selectionSchema(prepared.context)).properties,context_id:{type:'string',enum:[prepared.context.context_id]}}}}}],
   tool_choice:{type:'function',function:{name:READING_TOOL}}}};
 }
