@@ -4,6 +4,7 @@ import { collectEvidencePresentation } from '../ai/output/evidence-presentation.
 import {backgroundText} from '../ai/output/background-view.js';
 
 export function readingHistoryText(turn) {
+  if(turn.result.readable_answer)return `${turn.result.readable_answer}\n\n附带格式或引用尚未完整核对：${outputIssueText(turn.result)}`;
   if (turn.result.status !== 'validated') {const sources=backgroundText(turn.context.input.background_search);return `未完成或未通过格式与引用检查：\n${outputIssueText(turn.result)}\n\n${turn.result.display_text}${sources?'\n\n'+sources:''}`;}
   const answer = turn.result.answer;
   const parts = [answer.answer, `判断倾向：${{favorable:'偏有利',unfavorable:'偏不利',mixed:'利弊并存',unclear:'暂不明确'}[answer.direction]}`, '以下为 AI 判断；格式与引用检查不代表预测正确。规则和其来源事实不重复计为依据。'];

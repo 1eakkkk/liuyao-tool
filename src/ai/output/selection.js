@@ -65,7 +65,7 @@ export function selectionCatalog(context){
  const lines=context.input.C_canonical_cast.lines;
  const add=(id,text,ids,target=null,subjects=[])=>{if(ids.some(i=>!registry.has(i)))throw Error('Missing catalog source');entries.push({id,text,ids:[...new Set(ids)],target,...(linkedJudgment(context)?{subject_ids:[...new Set(subjects.map(roleId))]}:{})});};
  for(const [i,line] of lines.entries()){
-  if(factSelection(context)){
+  if(!isPractical(context)&&factSelection(context)){
    const q=context.input.A_user_question;
    const named=[...q.matchAll(/(?:第)?([一二三四五六1-6])爻/g)].map(m=>'一二三四五六'.includes(m[1])?'一二三四五六'.indexOf(m[1])+1:Number(m[1]));
    if(/初爻/.test(q))named.push(1);if(/上爻/.test(q))named.push(6);
@@ -84,7 +84,7 @@ export function selectionCatalog(context){
   }
  }
  const reference=buildElementReference(context);
- if(!factSelection(context)){
+ if(isPractical(context)||!factSelection(context)){
  for(const row of reference.to_shi.filter(r=>r.from.line!==r.to.line&&!lines[r.from.line-1].is_ying))add(`e${row.from.line}`,row.text+'（基础五行方向，不代表有效助力或吉凶）',row.source_fact_ids,null,[row.from,row.to]);
  for(const row of reference.returning)add(`t${row.to.line}`,row.text+'（变爻对本爻的基础方向）',row.source_fact_ids,null,[row.from,row.to]);
  context.evidence.filter(e=>e.kind==='rule_result'&&!e.rule_id.startsWith('MOVE-RETURN-')).forEach((e,i)=>add(`k${i+1}`,`第${e.target.line}爻${e.target.component==='primary'?'本爻':e.target.component==='changed'?'变爻':'伏神'}：${e.result.label}`, [e.id],null,[e.target,e.result.from,e.result.to].filter(Boolean)));

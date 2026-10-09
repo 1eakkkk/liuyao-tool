@@ -23,7 +23,7 @@ export async function prepareReadingTurn(session, question, { backgroundSearch =
   if (typeof question !== 'string' || !question.trim() || question.length > 500) throw Error('请填写 1～500 字的问题。');
   const canonical = normalizeLegacyCast(structuredClone(session.canonical));
   canonical.question.text = question.trim();
-  const history = session.turns.map(t => ({ question: t.question, answer: t.result.answer ?? (session.prompt === 'reading-production-2' ? t.result.display_text : null),
+  const history = session.turns.map(t => ({ question: t.question, answer: t.result.answer ?? (judgmentPolicyVersion===7?t.result.readable_answer??null:session.prompt === 'reading-production-2' ? t.result.display_text : null),
     checked: t.result.status === 'validated' }));
   const context = await buildOutputContext(canonical, { includeMissingRecords: true, backgroundSearch, conversation: { version: session.prompt,
     initial_question: session.canonical.question.text, turn: session.turns.length + 1, history,
@@ -33,6 +33,12 @@ export async function prepareReadingTurn(session, question, { backgroundSearch =
     ...(outputFormat==='selection-2'&&[1,2].includes(groundingPolicyVersion)?{grounding_policy:groundingPolicyVersion}:{}),
     ...(outputFormat==='selection-2'&&basisPolicyVersion>0?{basis_policy:basisPolicyVersion}:{}),
     ...(session.preferences ? { response_preferences: session.preferences } : {}) } });
+  if(judgmentPolicyVersion===7){
+    if(backgroundSearch!==null){session.pendingBackgroundSearch=context.input.background_search;session.pendingBackgroundQuestion=question.trim();}
+    else{delete session.pendingBackgroundSearch;delete session.pendingBackgroundQuestion;}
+    session.basisPolicyVersion=0;
+    return {context,messages:selectionMessages(context),question:question.trim(),...(backgroundSearch!==null?{backgroundSearch:context.input.background_search}:{})};
+  }
   const messages = buildOutputMessages(context);
   if (session.preferences) {
     const target = {brief: '300–400 字', deep: '700–800 字', custom: '按 response_preferences.custom 中的篇幅与语气偏好'}[session.preferences.style];

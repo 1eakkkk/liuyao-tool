@@ -113,10 +113,16 @@ export function renderOutputResult(container, result, context, { collapseFallbac
   const fragment = doc.createDocumentFragment();
   if(context.input.background_search){const background=node('details');background.className='background-result';background.append(node('summary','查看本轮公开背景与来源'));const body=node('div');renderBackgroundSources(body,context.input.background_search);background.append(body);fragment.append(background);}
   if (result.status !== 'validated') {
-    fragment.append(node('p', outputFailureSummary(result)));
-    const explanation=node('p',outputIssueText(result)); explanation.className='reading-issue'; fragment.append(explanation);
+    if(result.readable_answer){
+      const prose=node('p',result.readable_answer);prose.className='reading-conclusion';
+      fragment.append(node('h2','AI 解读正文'),prose,node('p','正文已显示；附带格式或引用尚未完整核对。'));
+      const check=node('details');check.append(node('summary','查看格式与引用提示'),node('p',outputIssueText(result)));fragment.append(check);
+    }else{
+      fragment.append(node('p', outputFailureSummary(result)));
+      const explanation=node('p',outputIssueText(result)); explanation.className='reading-issue'; fragment.append(explanation);
+    }
     const raw = node('pre', result.display_text);
-    if (collapseFallback) {
+    if (collapseFallback||result.readable_answer) {
       const details = node('details'); details.append(node('summary', '查看未通过检查的原始回复'), raw); fragment.append(details);
     } else fragment.append(raw);
   } else {

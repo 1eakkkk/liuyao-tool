@@ -638,7 +638,7 @@ interpretBtn.addEventListener('click', async (event)=>{
     showToast('先写一下想问的问题', 'error');
     return;
   }
-  if(isLifespanQuestion(question)){
+  if(!readingSelected()&&isLifespanQuestion(question)){
     showToast('传统上卦师不轻断生死寿数，这类问题这里不会生成解读——如果是身体或者情绪上的真实担忧，更建议找医生或者信得过的人聊聊', 'error', 6000);
     return;
   }
@@ -721,7 +721,7 @@ interpretBtn.addEventListener('click', async (event)=>{
     }
 
     if (readingSelected()) {
-      aiStatus.textContent = '正在核对模式支持范围…';
+      aiStatus.textContent = '正在准备结构化解读…';
       await startReading(castStore.canonical, 'api', {backgroundSearch});
       aiStatus.textContent = '结构化核对结果见下方';
       return;
@@ -821,7 +821,7 @@ promptBtn.addEventListener('click', async (event)=>{
     showToast('先写一下想问的问题', 'error');
     return;
   }
-  if(isLifespanQuestion(question)){
+  if(!readingSelected()&&isLifespanQuestion(question)){
     showToast('传统上卦师不轻断生死寿数，这类问题这里不会生成解读——如果是身体或者情绪上的真实担忧，更建议找医生或者信得过的人聊聊', 'error', 6000);
     return;
   }

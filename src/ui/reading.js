@@ -5,7 +5,6 @@ import { castStore } from '../app/cast-store.js';
 import { safeSetItem, safeRemoveItem } from '../storage/local.js';
 import { clearActiveConversationStorage } from '../storage/conversation.js';
 import { copyTextToClipboard } from './helpers.js';
-import { isLifespanQuestion } from '../app/question.js';
 import { state } from '../app/state.js';
 import { loadStyleChoice, loadCustomStyle } from '../storage/settings.js';
 import { archiveReading, readingHistoryText } from '../storage/reading-history.js';
@@ -135,9 +134,6 @@ async function exclusive(work) {
   try { await work(); } catch (e) { el('readingPanel').hidden = false; status(e.message || '操作失败，请稍后重试。'); }
   finally { controls.forEach((n, i) => { n.disabled = previous[i]; }); busy = false; el('readingMode').dispatchEvent(new Event('change')); }
 }
-function checkQuestion(question) {
-  if (isLifespanQuestion(question)) throw Error('这里不解读生死寿数问题；如有真实健康担忧，请寻求专业帮助。');
-}
 async function request(prepared) {
   const activeSession = session, requestEpoch = epoch;
   const controller = new AbortController(); state.activeAbortController = controller;
@@ -149,7 +145,7 @@ async function request(prepared) {
     if (epoch !== requestEpoch || session !== activeSession) return;
     const turn = appendReadingTurn(session, prepared, result.raw, result.completed, 'api', result.usage,{completion:result.completion});
     pending = null; render();
-    status(turn.result.status === 'validated' ? '格式与引用核对通过；解释仍属于 AI 判断。' : '回复未完成或未通过检查，已保留原文；未自动重试。');
+    status(turn.result.status === 'validated' ? '解读已完成，格式与引用已核对。' : turn.result.readable_answer?'正文已显示；附带格式或引用尚未完整核对。':'回复未完整接收或无法读取，已保留原文；未自动重试。');
     persist();
   } finally {
     clearTimeout(timer); state.activeAbortController = null; el('stopGenBtn').style.display = 'none';
@@ -157,7 +153,6 @@ async function request(prepared) {
 }
 export async function startReading(canonical, kind, options={}) {
   await exclusive(async () => {
-    checkQuestion(canonical.question.text);
     const backgroundSearch=Object.hasOwn(options,'backgroundSearch')?options.backgroundSearch:selectedBackground(canonical.question.text);
     clearReading();
     clearActiveConversationStorage(); state.currentConversation = null;
@@ -206,12 +201,12 @@ export function initializeReading() {
     if (!el('readingComplete').checked) throw Error('请确认已复制完整回复；未完成的内容不能视为完整解读。');
     const t = appendReadingTurn(session, pending, el('readingPaste').value, true, 'external',null,{allowEnvelope:true});
     pending = null; render();
-    status(t.result.status === 'validated' ? '格式与引用核对通过。' : '未通过检查，已保留原文；可生成新的提示词继续。'); persist();
+    status(t.result.status === 'validated' ? '格式与引用核对通过。' : t.result.readable_answer?'正文已显示；附带格式或引用尚未完整核对。':'回复未完整接收或无法读取，已保留原文。'); persist();
   }));
   el('readingCancelExport').addEventListener('click', () => { pending = null; render(); persist(); status('已取消等待外部回复。'); });
   for (const [id, kind] of [['readingFollowApi', 'api'], ['readingFollowExport', 'external']]) {
     el(id).addEventListener('click', () => exclusive(async () => {
-      const q = el('readingFollow').value.trim(); checkQuestion(q);
+      const q = el('readingFollow').value.trim();
       if (!session) throw Error('请先开始解读。');
       const prepared = await prepareReadingTurn(session, q);
       if(!checkAvailability(prepared))return;

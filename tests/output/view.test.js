@@ -5,6 +5,7 @@ import { buildOutputContext } from '../../src/ai/output/context.js';
 import { parseOutputAnswer } from '../../src/ai/output/parse.js';
 import { renderOutputResult, outputIssueText } from '../../src/ai/output/view.js';
 import { syntheticOutput } from '../../experiments/structured-output/example.js';
+import {createReadingSession,prepareSelectedReadingTurn} from '../../src/ai/output/session.js';
 
 // jsdom does not expose SubtleCrypto; inject only the platform implementation for this file.
 Object.defineProperty(globalThis, 'crypto', { value: webcrypto, configurable: true });
@@ -29,6 +30,12 @@ test('fallback displays raw text safely and never a validated detail card', () =
   const container = document.createElement('div'); renderOutputResult(container, result, context);
   expect(container.querySelector('pre').textContent).toBe(raw);
   expect(container.querySelector('details')).toBeNull(); expect(container.querySelector('img')).toBeNull();
+});
+test('complete current-round prose displays safely when an accompanying field is invalid',async()=>{
+ const p=await prepareSelectedReadingTurn(createReadingSession(canonical),'想用AI做东西，做什么比较好？',{judgmentPolicyVersion:7,basisPolicyVersion:0});
+ const raw=JSON.stringify({schema_version:'structured-selection-2',context_id:p.context.context_id,answer:'先做一个小工具。<img src=x onerror="bad()">',factors:'bad'});
+ const result=parseOutputAnswer(raw,p.context,{completed:true});const container=document.createElement('div');renderOutputResult(container,result,p.context);
+ expect(result.status).toBe('fallback');expect(container.querySelector('.reading-conclusion').textContent).toContain('先做一个小工具');expect(container.querySelector('img')).toBeNull();expect(container.querySelector('.reading-factor-overview')).toBeNull();expect(container.querySelector('details').open).toBe(false);
 });
 
 test('failed reply explains mismatch versus incompleteness without changing raw text',()=>{

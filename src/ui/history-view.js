@@ -108,7 +108,7 @@ function renderHistory(){
     const restTurnsHtml = turns.slice(1).map((t, turnIndex) => {
       const text = String(t.text || '');
       const label = t.role === 'user' ? '问' : '答';
-      if(isUnavailableHistoryReply(r,t))return `<div class="history-turn"><b>模式支持范围：</b>此前回复显示本模式没有适用取法，未形成结果判断。</div><details class="history-long-turn" data-view="turn-${turnIndex}"><summary>查看此前收到的 AI 回复</summary><div class="history-turn history-turn-assistant">${escapeHtml(text)}</div></details>`;
+      if(isUnavailableHistoryReply(r,t))return `<div class="history-turn"><b>旧版解读记录：</b>当时使用的取法限制已取消。以下保留原回复；不会自动重新生成或收费。</div><details class="history-long-turn" data-view="turn-${turnIndex}"><summary>查看此前收到的 AI 回复</summary><div class="history-turn history-turn-assistant">${escapeHtml(text)}</div></details>`;
       if (text.length <= 300) return `<div class="history-turn history-turn-${t.role}"><b>${label}：</b>${escapeHtml(text)}</div>`;
       const preview = text.replace(/\s+/g, ' ').slice(0, 100);
       return `<details class="history-long-turn" data-view="turn-${turnIndex}"><summary><b>${label}：</b><span class="history-turn-preview">${escapeHtml(preview)}…</span><span class="history-expand-label">展开全文</span><span class="history-collapse-label">收起全文</span></summary><div class="history-turn history-turn-${t.role}">${escapeHtml(text)}</div></details>`;
