@@ -20,7 +20,7 @@
 
 > 历史里程碑通过归档标签和Git历史保留。整套知识库自动注入尚未进入生产；新版允许传统象意解读，不把它冒充经古籍逐条核实或经现实验证的结论。页脚提供低干扰的源码与Star入口。
 
-> 新增核验工具：[本地判断登记](docs/JUDGMENT_REGISTRATION_RELEASE.md)，在结果发生前固定原回答、判断标准和截止日期，随后追加结果；支持[备份恢复与独立列表](docs/JUDGMENT_BACKUP_RELEASE.md)，仅存本机，不代表预测准确率。
+> 新增核验工具：[本地判断登记](https://github.com/1eakkkk/liuyao-tool/blob/b1e2d137bab8e39ab46a601578c4fab3476251aa/docs/JUDGMENT_REGISTRATION_RELEASE.md)，在结果发生前固定原回答、判断标准和截止日期，随后追加结果；支持[备份恢复与独立列表](https://github.com/1eakkkk/liuyao-tool/blob/b1e2d137bab8e39ab46a601578c4fab3476251aa/docs/JUDGMENT_BACKUP_RELEASE.md)，仅存本机，不代表预测准确率。
 
 > 旧版策略与实验记录保留在文档和 Git 历史中。旧会话按原协议读取，新会话采用结构化解读策略 7；旧版取法准入和基础关系判断禁令不再用于新会话。
 
@@ -302,7 +302,7 @@ src/
 └─ styles/       主题、布局与响应式样式
 scripts/         发布检查、浏览器回归及专项评估
 tests/           单元测试、回归样例与冻结基线
-docs/            方案、阶段进度与验收记录
+docs/            当前维护文档与保留的验收证据
 experiments/     离线实验及版本封存，不随稳定站点发布
 knowledge/       文献、现代整理和历史语料版本，不自动注入生产
 public/          随站点发布的静态资源
@@ -312,34 +312,16 @@ wrangler.jsonc   Cloudflare 静态资源配置
 
 | 文档 | 内容 |
 | --- | --- |
-| [项目状态与路线](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/PROJECT_STATUS.md) | 各 Phase 的真实进度、已完成与未完成事项 |
-| [架构说明](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/ARCHITECTURE.md) | 模块组织与演进背景 |
-| [迁移映射](docs/MIGRATION_MAP.md) | 旧单文件逻辑与当前模块的对应关系 |
-| [文档导航](docs/DOCUMENTATION.md) | 当前入口、历史阶段和实验文档的阅读顺序 |
-| [数据结构](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/DATA_SCHEMA.md) | 卦盘数据与迁移约定 |
-| [结构化输出](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/STRUCTURED_OUTPUT.md) | 输出协议与校验设计 |
-| [结构化解读 v3](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/STRUCTURED_READING_V3.md) | 新版行为、真实测试发现与发布验收 |
-| [生产范围](https://github.com/1eakkkk/liuyao-tool/blob/main/docs/PRODUCTION_PLAN.md) | 稳定版与实验功能边界 |
-| [验收资料](https://github.com/1eakkkk/liuyao-tool/tree/main/docs/acceptance) | 各次发布的检查报告 |
-| [知识候选真实试测](docs/SOURCED_READING_LIVE_PILOT.md) | 两次真实接口调用、独立审查与预算边界 |
-| [整理后的真实对照](docs/CLARITY_LIVE_EVALUATION.md) | 四次月合／旬空测试，保留支持与出处问题；尚未满足知识上线验收 |
-| [术语与出处候选](docs/SOURCED_CLARITY_CANDIDATE.md) | 新提示与评价准备，尚不证明模型已改善 |
-| [程序出处绑定候选](docs/BOUND_SOURCE_CANDIDATE.md) | 程序保存完整引文与出处、模型声明实际引用；仅离线，语义尚未验收 |
-| [单条真实引用检查](docs/BOUND_LIVE_EVALUATION.md) | 两名独立审查通过一条月合回答；不代表总体改善或知识可上线 |
-| [判断主次修正](docs/JUDGMENT_CORRECTION.md) | 修正月令摘要，要求新结构化回答说明取用与主次；真实效果仍需验证 |
-| [判断真实复测](docs/JUDGMENT_LIVE_REVIEW.md) | 两条 production4 回答未通过内容验收，保留逐字审查、原始回复及预算核清记录 |
-| [精简判断候选复测](docs/JUDGMENT_COMPACT_REVIEW.md) | 独立冻结两次开发调用；引用与主次问题仍在，候选未上线 |
-| [事实与解释分离 v2](docs/EVIDENCE_LED_LIVE_REVIEW.md) | 六例真实开发检查、费用和双人审查；结构五例通过、一例拒绝，内容仍未通过，尚未发布 |
-| [关键取用来源候选](docs/JUDGMENT_FOCUS_SOURCE_CANDIDATE.md) | 三条已有原典摘录及扫描复核，完整适用条件尚未准入知识库 |
-| [任务分流开发](docs/TASK_LED_REVIEW.md) | 事实核对由程序生成、一般建议不发送卦盘、趋势单独解释，隔离实验尚未上线 |
-| [趋势引用包开发](docs/PACKET_LED_REVIEW.md) | 程序展开来源及参与者；首例真实检查被拒绝并停止，主次单选候选仅离线验收，尚未上线 |
-| [局部依据与解释拆分](docs/PACKET_LOCAL_REVIEW.md) | 只展开所选事实及规则来源，问题解释与现实建议分开；离线候选，内容仍需真实验收 |
-| [局部依据真实开发检查](docs/PACKET_LOCAL_LIVE_REVIEW.md) | 单例真实回复被拒绝；编号混用、覆盖缺漏和混合主次问题保留，尚未上线 |
-| [事实与解释分离原型](docs/EVIDENCE_LED_OFFLINE.md) | 程序展示事实，单独记录主要取用与取舍；只离线验收，未接入正式解读 |
+| [项目状态](docs/PROJECT_STATUS.md) | 当前已上线功能、研究范围和后续方向 |
+| [文档导航](docs/DOCUMENTATION.md) | 当前入口、保留资料及旧报告查阅方法 |
+| [架构说明](docs/ARCHITECTURE.md) | 模块职责、数据流与发布边界 |
+| [部署维护](docs/DEPLOYMENT.md) | 本地运行、检查、Cloudflare 发布与回滚 |
+| [数据结构](docs/DATA_SCHEMA.md) | 统一卦盘数据与迁移约定 |
+| [结构化解读](docs/STRUCTURED_OUTPUT.md) | 当前 API、提示词与正文保留机制 |
+| [最近发布记录](docs/PRACTICAL_READING_RELEASE.md) | 实际版本、验证结果与限制 |
+| [验收资料](docs/acceptance/) | 保留的原始检查与实验资料 |
 
-阶段文档保留了当时的上下文，历史的「未发布」结论不应直接当作当前状态。请结合项目状态和对应版本的发布记录阅读。
-
-根目录 `README.md` 是唯一项目使用说明；实验目录里的 README 解释各自的冻结版本，不是另一份网站说明。旧宣传截图归档在 `docs/archive/legacy-screenshots/`。付费实验记录、预算账本和 Key 不应提交；验收目录只保留经过检查的公开资料。直接删除本机 `test-results/` 可能丢失费用预留与防重跑记录。
+根目录 README 是唯一项目使用说明。实验 README 和冻结材料有独立复现用途；旧过程报告从当前目录清理后，可在[固定历史版本](https://github.com/1eakkkk/liuyao-tool/tree/b1e2d137bab8e39ab46a601578c4fab3476251aa/docs)查阅。测试代码、原始付费资料和预算账本不作为重复说明删除。
 
 ## 常见问题
 

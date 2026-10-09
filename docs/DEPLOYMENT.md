@@ -1,59 +1,47 @@
-# 第一轮部署与验收
+# 部署与维护
 
-> 本文下方保留第一轮历史记录。2026-09-24 的稳定版范围、验收及部署流程以 [生产收尾方案](PRODUCTION_PLAN.md) 和 [发布记录](PRODUCTION_RELEASE.md) 为准；历史“暂不部署／不进入下一阶段”描述不代表本轮状态。
+更新：2026-10-09。源码仓库为 `1eakkkk/liuyao-tool`；Cloudflare Worker `liuyao` 仅托管 `dist/` 静态资源，正式域名 https://gua.1eak.cool/ 。配置以 `wrangler.jsonc` 为准。
 
-## 本地
+## 本地开发
 
-要求 Node 24.15+（本次使用 24.18）。
+要求 Node 24.15+；CI 当前固定 24.18.0。Windows 优先使用 **PowerShell 7（pwsh）**，除非用户指定或兼容任务确实需要 5.1。
 
-```sh
+```powershell
 npm ci
-npm test
 npm run dev
-npm run build
-npm run preview
-npm run test:browser
 ```
 
-浏览器测试默认使用本机 Edge；可设置 `BROWSER_CHANNEL` 使用其他已安装的 Playwright channel。测试只用合成 API Key 与拦截响应，不调用付费接口。
+日常修复先运行受影响的测试；发布代码时运行必要的回归与构建检查：
 
-## Worker 静态构建设置
-
-- 构建命令：`npm run build`
-- 输出目录：`dist`
-- Node 版本：24.18.0
-- 开发分支：`refactor/v2`
-- 生产设置保持不变。
-
-## Cloudflare 当前状态（用户确认）
-
-- Wrangler 已由用户重新登录，账号正常。
-- Dashboard 项目名：`liuyao`，绑定域名：`gua.1eak.cool`。
-- 该项目不在 `wrangler pages project list` 中；用户以前通过 Dashboard 拖动文件部署。
-- 用户现已确认部署类型为 Cloudflare Worker，名称为 `liuyao`，不是 Pages。
-- 用户明确要求本轮跳过 Cloudflare Preview。没有执行 `wrangler pages deploy`，没有覆盖生产环境。
-
-根目录 `wrangler.jsonc` 仅配置 Worker 名称、兼容日期和 `assets.directory: "./dist"`，没有 Worker 后端入口、路由或域名变更。静态资产配置依据 [Cloudflare 官方文档](https://developers.cloudflare.com/workers/static-assets/binding/)。
-
-本轮仅验证，不执行实际部署：
-
-```sh
-npm run build
-npx wrangler deploy --dry-run
+```powershell
+npm test -- --maxWorkers=1
+npm run release:check
+npm run test:browser:reading
 ```
 
-dry-run 通过不代表线上部署或 Preview 验收完成。实际部署仍待单独授权，不直接覆盖现有生产资源。
+整站检查步骤见 [GitHub 工作流](../.github/workflows/verify.yml)。浏览器脚本使用模拟 Key 和请求拦截，不能当作真实模型内容验收。运行 WebKit 检查前需安装相应 Playwright 浏览器；真实付费调用必须另有预算和固定次数，不自动重试。
 
-## 发布前人工验收
+只有文档变化时核对链接、引用和受影响的冻结测试即可，不需要为此调用模型或重新发布 Cloudflare。
 
-- Preview 上实际摇卦、逐次／连续投币、取消、手动修正、日期／时辰选择。
-- 真实 DeepSeek Key 的首次解读、追问、停止、刷新恢复、费用显示。
-- 当前 Android／Windows App 壳加载 Preview，确认资源路径、CSP、ES Module 和联网行为。仓库没有这两个壳的源码，本轮不能据网页测试推断其版本兼容。
-- 与冻结的权威主文件对比；旧 GitHub HTML 不是基线。本轮曾读取方案中的 `liuyao.1eak.cool`，该次源比较不代表新确认的 `gua.1eak.cool` 的生产验收。
-- 用户人工确认后方可考虑后续阶段／合并；本轮不进入 Phase 3。
+## 发布
+
+确认工作区、Git 提交与准备发布的代码一致。在本机需要登录时使用 `npx wrangler login`，不将令牌写入仓库。
+
+```powershell
+npm run release:check
+npx wrangler deploy
+```
+
+构建命令会生成 `test-results/release-manifest.json`，记录源码提交、工作区状态与资源 SHA-256。部署只使用这次检查生成的 `dist/`；不要在检查后换分支、混入实验构建或重建不同配置再直接发布。
+
+部署成功后记录 Worker 版本，检查正式域名、资源哈希、响应头和关键流程。首页应重新验证缓存；已打开的旧页面仍需刷新。最新实际发布证据统一维护在 [PRACTICAL_READING_RELEASE](PRACTICAL_READING_RELEASE.md)。
 
 ## 回滚
 
-权威单文件回滚提交为 `1964881`。原 `v1-baseline` 指向更早 GitHub 页面，不应作为此次功能回退目标。也可逐个 revert 阶段提交。原文件永久保留于 `tests/regression/baseline/index.html`。
+发布前保存上一个已验证的 Worker 版本。必要时通过 Wrangler／Cloudflare 恢复该版本，或从对应 Git 提交重新构建检查后发布。不要把远古的单文件测试基线直接当作最新稳定回滚点，也不要清空用户本地历史。
 
-回滚时不清空 localStorage。新快照保留旧字段，老页面可以继续读取；回到新版本时缺失的 Canonical 会在读取时重新转换。
+## 凭据与资料
+
+密钥、`.env`、真实请求响应及预算账本保存在忽略的本机路径，不上传到静态资源或 GitHub。`tests`、`docs/acceptance` 和冻结资料有复现用途，清理前见 [测试资料说明](TEST_DATA_GUIDE.md)。
+
+本机可能有多个 Git 工作区；先核对 `git status`、当前分支和 `origin/main`，不要把同仓库的另一版本误当重复文件夹清空。网站工程通过不等于 Android／Windows 外壳程序或模型预测准确性通过。

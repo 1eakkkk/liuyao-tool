@@ -46,7 +46,7 @@ Schema 示例见 `canonical-example.json`。回归样例来自原 HTML，不是�
 
 ## Phase 4 的独立 AI Input Schema
 
-Canonical 1.0 的字段与语义保持不变。`buildStructuredAiInput(canonical)` 只读地选择 AI 所需白名单字段，生成独立的 AI Input Schema 1.0。排除 `compatibility`、未知扩展以及 `display.overall_trend_text`，不将投影写回 Canonical。字段清单、缺失值语义和实验协议见 [PHASE_4_REPORT.md](PHASE_4_REPORT.md)。
+Canonical 1.0 的字段与语义保持不变。`buildStructuredAiInput(canonical)` 只读地选择 AI 所需白名单字段，生成独立的 AI Input Schema 1.0。排除 `compatibility`、未知扩展以及 `display.overall_trend_text`，不将投影写回 Canonical。字段清单、缺失值语义和实验协议见 [PHASE_4_REPORT.md](https://github.com/1eakkkk/liuyao-tool/blob/b1e2d137bab8e39ab46a601578c4fab3476251aa/docs/PHASE_4_REPORT.md)。
 
 
 ## Phase 5 的独立 Rule Result / AI Input 1.1
