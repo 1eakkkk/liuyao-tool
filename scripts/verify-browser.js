@@ -43,7 +43,7 @@ try {
       outputs[name] = {};
       const capture = async tab => {
         await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo(0, 0); });
-        outputs[name][tab] = await page.screenshot({ path: `${out}/${width}-${tab}.png`, fullPage: true });
+        outputs[name][tab] = await page.screenshot({ path: `${out}/${width}-${tab}.png`, fullPage: true, animations: 'disabled' });
       };
       if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
       await capture('onboard');
