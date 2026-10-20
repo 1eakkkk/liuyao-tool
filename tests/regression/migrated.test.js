@@ -3,6 +3,10 @@ import fs from 'node:fs';
 import fixtures from './fixtures/casts.json';
 import {overviewPresentation,overviewCastText,overviewPlateHtml,overviewExportPrompt} from './overview-compat.js';
 import { createRequire } from 'node:module';
+// This suite compares plate data and markup; motion is exercised in the browser checks.
+vi.mock('../../src/ui/helpers.js', async importOriginal => ({
+  ...await importOriginal(), replayFadeIn: vi.fn(),
+}));
 const require = createRequire(import.meta.url);
 const { baseline } = require('./harness.cjs');
 let app, castStore;
