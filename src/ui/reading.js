@@ -40,7 +40,8 @@ function render() {
   for (const t of session.turns.slice(turnsRoot.childElementCount)) {
     const block = document.createElement('article');
     const question = document.createElement('h3'); question.textContent = `问：${t.question}`;
-    const result = document.createElement('div'); renderOutputResult(result, t.result, t.context, { collapseFallback: true });
+    const result = document.createElement('div'); result.className = 'reading-body';
+    renderOutputResult(result, t.result, t.context, { collapseFallback: true });
     block.append(question, result);
     if(t.result.status !== 'validated') {
       const copy=document.createElement('button'); copy.type='button'; copy.className='ai-btn ghost'; copy.textContent='复制原始回复';

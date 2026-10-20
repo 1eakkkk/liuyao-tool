@@ -18,7 +18,7 @@ try {
         await page.locator('.theme-picker').evaluate(n=>n.open=true);
         assert(await page.locator('[data-theme-choice-button]').evaluateAll(buttons=>buttons.every(button=>{
           const r=button.getBoundingClientRect();
-          return r.left>=0 && r.right<=innerWidth && r.top>=0 && r.bottom<=innerHeight &&
+          return r.height>=44 && r.left>=0 && r.right<=innerWidth && r.top>=0 && r.bottom<=innerHeight &&
             button.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));
         })), 'Every theme choice must be fully inside viewport and unobscured');
       };
@@ -51,7 +51,7 @@ try {
           await openTheme(); await page.locator(`[data-theme-choice-button=${mode}]`).click();
           assert.equal(await page.locator('#questionInput').inputValue(),'切换主题保留问题');
           assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
-          for(const button of await page.locator('[data-theme-choice-button]').all()) assert((await button.boundingBox()).height>=44);
+          assert(await page.locator('.theme-switch').isHidden());
           await page.screenshot({path:`test-results/theme/${engine}-${width}-${mode}.png`,fullPage:true});
         }
       }

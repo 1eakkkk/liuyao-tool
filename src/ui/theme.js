@@ -14,6 +14,8 @@ document.querySelectorAll('[data-theme-choice-button]').forEach(button => {
     choice = button.dataset.themeChoiceButton;
     try { localStorage.setItem(key, choice); } catch { /* Theme still works without storage. */ }
     apply();
+    picker.open = false;
+    picker.querySelector('summary').focus({preventScroll:true});
   });
 });
 if (system.addEventListener) system.addEventListener('change', apply);

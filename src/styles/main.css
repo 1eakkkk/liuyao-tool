@@ -211,12 +211,8 @@ h1,h2,h3,.serif{font-family:'Noto Serif SC',serif;}
 
 main{max-width:920px;margin:0 auto;padding:44px 20px 100px;}
 .panel{display:none;}
-.panel.active{display:block;animation:fade .35s ease;}
+.panel.active{display:block;}
 @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-/* 通用淡入工具类：跟标签切换/弹窗共用同一条 fade 关键帧，摇卦完排盘表渲染出来时也套这个，
-   动效语言保持统一，不再是硬切出现。JS里每次重新渲染都会先移除、强制回流、再加上这个类，
-   好让同一个元素能重复触发动画（同一个类连续加两次浏览器不会重新播放）。 */
-.fade-in{animation:fade .35s ease;}
 
 section.block{margin-bottom:56px;}
 section.block > h2{

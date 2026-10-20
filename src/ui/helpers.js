@@ -20,14 +20,13 @@ function boldPillarsHtml(text){
 }
 
 
-// 排盘表每次重新渲染（摇卦完成/手动生成/历史记录回看）都要重新播一遍跟标签切换
-// 同款的淡入动效，而不是硬切出现。同一个元素反复扣同一个class浏览器不会重放
-// CSS动画，这里先移除class、强制触发一次回流（读一下offsetWidth），再加回去，
-// 让每次调用都能重新触发 .fade-in 对应的 fade 关键帧。
+// One short entrance for content changes; rapid switching cancels the old motion.
 function replayFadeIn(el){
-  el.classList.remove('fade-in');
-  void el.offsetWidth;
-  el.classList.add('fade-in');
+  el.getAnimations().forEach(animation => animation.cancel());
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  el.animate([{opacity:.65,transform:'translateY(4px)'},{opacity:1,transform:'none'}],{
+    duration:180,easing:getComputedStyle(document.documentElement).getPropertyValue('--ui-ease-out').trim()
+  });
 }
 
 function maskApiKey(k){

@@ -133,8 +133,7 @@ body .tabs { display: flex; flex-wrap: nowrap; align-items: center; justify-cont
 body .tab-icon { width: 18px; height: 18px; }
 :root body .help-fab { position: static; flex: 0 0 44px; width: 44px; height: 44px; transform: none; border-radius: 50%; padding: 0; margin-left: 10px; }
 body main { max-width: 1128px; padding: 36px 24px 80px; }
-body .panel.active { animation: ui-enter .2s ease-out; }
-@keyframes ui-enter { from { opacity: .55; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+body .panel.active { animation:none; }
 
 /* Surfaces and information hierarchy. */
 body section.block { margin-bottom: 36px; }
@@ -419,12 +418,9 @@ body .settings-group-title { margin-bottom:12px; }
 body .hero h1 { font-size:32px; font-weight:750; letter-spacing:.035em; line-height:1.4; }
 body .tab-icon { width:21px; height:21px; }
 body .help-fab svg { display:block; width:21px; height:21px; margin:auto; }
-body .tab-indicator { position:absolute; left:0; top:0; pointer-events:none; border:1px solid var(--ui-border); border-radius:12px; background:var(--ui-accent-soft); transition:transform .34s cubic-bezier(.22,1,.36,1),width .34s cubic-bezier(.22,1,.36,1),height .34s; }
+body .tab-indicator { position:absolute; left:0; top:0; pointer-events:none; border:1px solid var(--ui-border); border-radius:12px; background:var(--ui-accent-soft); transition:transform .2s var(--ui-ease-out); }
 body .tabs .tab-btn { position:relative; z-index:1; }
 :root body .tabs.has-indicator .tab-btn.active { background:transparent; border-color:transparent; }
-body .panel.active { animation:page-enter .36s cubic-bezier(.22,1,.36,1) both; }
-body .panel.active > section:nth-child(2) { animation:page-enter .42s cubic-bezier(.22,1,.36,1) both; }
-@keyframes page-enter { from {opacity:0;transform:translateY(12px)} to {opacity:1;transform:translateY(0)} }
 @keyframes menu-enter { from {opacity:0;transform:translateY(-4px)} to {opacity:1;transform:translateY(0)} }
 body .physics-dialog { --stage-center:#f2f7f4; --stage-edge:#dde9e2; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; }
 :root[data-theme=dark] body .physics-dialog { --stage-center:#354e45; --stage-edge:#24382f; }

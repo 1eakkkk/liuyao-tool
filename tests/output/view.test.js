@@ -74,21 +74,16 @@ test('direct fact plus rule displays the source once with local references, with
   expect(container.querySelector('details').open).toBe(false);
 });
 
-test('long conclusions expand without splitting Unicode, rendering HTML or changing the saved answer', () => {
+test('long conclusions display in full without rendering HTML or changing the saved answer', () => {
   const answer=syntheticOutput(context);
   answer.answer='🙂'.repeat(241)+'<img src=x onerror="bad()">'+'长结论。'.repeat(120);
   const raw=JSON.stringify(answer), result=parseOutputAnswer(raw,context,{completed:true});
   expect(result.status).toBe('validated');
   const container=document.createElement('div'); renderOutputResult(container,result,context);
-  const toggle=container.querySelector('.reading-text-toggle'), conclusion=container.querySelector('.reading-conclusion');
-  expect(conclusion.textContent).toBe('🙂'.repeat(240)+'…');
-  expect(toggle.getAttribute('aria-controls')).toBe(conclusion.id);
-  toggle.click();
-  expect(toggle.getAttribute('aria-expanded')).toBe('true');
+  const conclusion=container.querySelector('.reading-conclusion');
   expect(conclusion.textContent).toBe(answer.answer);
   expect(container.querySelector('img')).toBeNull();
-  toggle.click();
-  expect(toggle.getAttribute('aria-expanded')).toBe('false');
+  expect(container.querySelector('.reading-factor-overview').open).toBe(false);
   expect(JSON.stringify(result.answer)).toBe(raw);
 });
 
@@ -104,7 +99,7 @@ test('factor preview preserves AI order and exposes remaining analysis without c
   expect([...container.querySelectorAll('.reading-factor-excerpt')].map(p => p.textContent))
     .toEqual(answer.factors.slice(0, 3).map(f => f.interpretation));
   expect(container.querySelector('.reading-overview-caption').textContent).toContain('共 4 项');
-  const full = container.querySelector('details');
+  const full = container.querySelector('.reading-analysis');
   expect(full.open).toBe(false);
   expect(full.textContent).toContain(answer.factors[3].interpretation);
   expect(full.querySelectorAll('.reading-evidence-sources')).toHaveLength(4 + answer.yongshen_candidates.length);

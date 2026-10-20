@@ -11,6 +11,16 @@ import { feedbackHtml } from './outcome-feedback.js';
 import { loadFeedback } from '../storage/outcome-feedback.js';
 import {isUnavailableHistoryReply} from './history-scope.js';
 
+let historySearchInput = null;
+let historySearchCount = null;
+function ensureHistorySearchListener(){
+  historySearchInput = document.getElementById('aiHistorySearch');
+  historySearchCount = document.getElementById('aiHistorySearchCount');
+  if(!historySearchInput || historySearchInput.dataset.historySearchBound === 'true') return;
+  historySearchInput.dataset.historySearchBound = 'true';
+  historySearchInput.addEventListener('input', renderHistory);
+}
+
 
 
 // ---- 把排盘快照渲染成历史记录展开后排在最上面的一小块摘要，格式贴近网上解卦博主发帖时
@@ -83,6 +93,7 @@ function renderStats(){
 // 每条历史记录是一整次摇卦对应的会话（首次解读+若干次追问都在同一条里），不是每次AI调用一条平铺记录。
 // 旧版本存的是扁平记录（question/text字段，没有turns），historyTurnsOf已经做了兼容读取，这里不用管新旧格式。
 function renderHistory(){
+  ensureHistorySearchListener();
   const views = new Map([...historyList.querySelectorAll('.history-item')].map(item => [item.dataset.id, {
     expanded: item.classList.contains('expanded'),
     open: [...item.querySelectorAll('details[open]')].map(d => d.dataset.view),
@@ -94,10 +105,15 @@ function renderHistory(){
   const focusId = active?.closest('.history-item')?.dataset.id;
   const focusView = active?.closest('details')?.dataset.view;
   const focusAction = active?.dataset.action;
-  const list = loadHistory().slice().reverse(); // 最新的在最上面
+  const query = historySearchInput?.value.trim().toLocaleLowerCase() || '';
+  const allRecords = loadHistory().slice().reverse(); // 最新的在最上面
+  const list = query ? allRecords.filter(r => String(historyTurnsOf(r)[0]?.text || r.question || '').toLocaleLowerCase().includes(query)) : allRecords;
   const feedback = loadFeedback();
-  historyCount.textContent = list.length;
+  historyCount.textContent = allRecords.length;
+  if(historySearchCount) historySearchCount.textContent = query ? `${list.length} / ${allRecords.length} 条` : `${allRecords.length} 条`;
+  if(historyEmpty.dataset.defaultHtml === undefined) historyEmpty.dataset.defaultHtml = historyEmpty.innerHTML;
   historyEmpty.style.display = list.length ? 'none' : 'flex';
+  historyEmpty.innerHTML = list.length || !query ? historyEmpty.dataset.defaultHtml : '没有找到匹配的问题。';
   historyList.innerHTML = list.map((r, index) => {
     const turns = historyTurnsOf(r);
     const roundCount = turns.filter(t=>t.role==='assistant').length;
@@ -105,13 +121,19 @@ function renderHistory(){
     // 只有一轮，还是AI解读类型有问有答），这里单独摘出来放在展开正文最上面，
     // 问答优先，完整卦盘放在独立的按需展开入口。
     const firstQuestion = turns[0]?.text || r.question || '';
+    const answerExcerpt = turns.find(t => t.role === 'assistant')?.text || '';
+    const plainExcerpt = [...String(answerExcerpt).replace(/<[^>]*>/g, ' ').replace(/[*#`]/g, '').replace(/\s+/g, ' ').trim()].slice(0, 120).join('');
     const restTurnsHtml = turns.slice(1).map((t, turnIndex) => {
       const text = String(t.text || '');
       const label = t.role === 'user' ? '问' : '答';
       if(isUnavailableHistoryReply(r,t))return `<div class="history-turn"><b>旧版解读记录：</b>当时使用的取法限制已取消。以下保留原回复；不会自动重新生成或收费。</div><details class="history-long-turn" data-view="turn-${turnIndex}"><summary>查看此前收到的 AI 回复</summary><div class="history-turn history-turn-assistant">${escapeHtml(text)}</div></details>`;
-      if (text.length <= 300) return `<div class="history-turn history-turn-${t.role}"><b>${label}：</b>${escapeHtml(text)}</div>`;
+      // Split only our own archived metadata marker; never reinterpret AI prose as HTML.
+      const evidenceMarker = '\n\n以下为 AI 判断；格式与引用检查不代表预测正确。规则和其来源事实不重复计为依据。';
+      const evidenceStart = r.readingMode === 'structured' && t.role === 'assistant' ? text.indexOf(evidenceMarker) : -1;
+      if (evidenceStart >= 0) return `<div class="history-turn history-turn-assistant reading-prose">${escapeHtml(text.slice(0, evidenceStart))}</div><details class="history-reading-evidence" data-view="turn-${turnIndex}-evidence"><summary>查看依据与补充说明</summary><div class="reading-prose">${escapeHtml(text.slice(evidenceStart).trim())}</div></details>`;
+      if (text.length <= 300) return `<div class="history-turn history-turn-${t.role}${t.role === 'assistant' ? ' reading-prose' : ''}"><b>${label}：</b>${escapeHtml(text)}</div>`;
       const preview = text.replace(/\s+/g, ' ').slice(0, 100);
-      return `<details class="history-long-turn" data-view="turn-${turnIndex}"><summary><b>${label}：</b><span class="history-turn-preview">${escapeHtml(preview)}…</span><span class="history-expand-label">展开全文</span><span class="history-collapse-label">收起全文</span></summary><div class="history-turn history-turn-${t.role}">${escapeHtml(text)}</div></details>`;
+      return `<details class="history-long-turn" data-view="turn-${turnIndex}"><summary><b>${label}：</b><span class="history-turn-preview">${escapeHtml(preview)}…</span><span class="history-expand-label">展开全文</span><span class="history-collapse-label">收起全文</span></summary><div class="history-turn history-turn-${t.role}${t.role === 'assistant' ? ' reading-prose' : ''}">${escapeHtml(text)}</div></details>`;
     }).join('');
     const isPrompt = r.type === 'prompt';
     const tagHtml = isPrompt
@@ -144,6 +166,7 @@ function renderHistory(){
         <span class="history-item-time">${formatTime(r.ts)}</span>
       </button>
       <div class="history-item-meta">${metaText}</div>
+      ${plainExcerpt ? `<div class="history-preview">${escapeHtml(plainExcerpt)}${plainExcerpt.length >= 120 ? '…' : ''}</div>` : ''}
       <div id="history-body-${index}" class="history-item-body" tabindex="0" role="region" aria-label="历史记录详情，可滚动">${questionHtml}${restTurnsHtml}${customConfigHtml}${feedbackHtml(r, feedback)}${plateHtml}</div>
       <button class="history-item-del" data-action="delete">删除这条</button>
     </div>

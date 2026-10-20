@@ -205,8 +205,8 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 <!-- ===================== TAB 2 ===================== -->
 <div class="panel active" id="caster" role="tabpanel" aria-labelledby="tabbtn-caster" tabindex="0">
   <section class="block">
-    <h2>摇卦 · 自动排盘</h2>
-    <p class="desc">心中想好一件事，开始摇卦；完成后可用 AI 解读或复制提示词。</p>
+    <h2>起卦排盘</h2>
+    <p class="desc">心中想好一件事，摇卦或录入已有结果。</p>
 
     <div class="caster-box">
       <div class="caster-controls">
@@ -240,8 +240,14 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
           <button class="cast-btn" id="manualCastBtn">生成排盘</button>
         </div>
       </div>
-      <div class="plate" id="plateWrap">
-        <div class="placeholder"><div class="empty-lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div><strong>你的卦象将出现在这里</strong><span>点击「开始摇卦」，从初爻逐步生成</span></div>
+      <div class="cast-result">
+        <div class="plate" id="plateWrap" tabindex="-1">
+          <div class="placeholder"><div class="empty-lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div><strong>静心一念，待卦成形</strong><span>从初爻开始，六爻成卦</span></div>
+        </div>
+        <div class="cast-next" id="castNext" hidden>
+          <span>卦已成，带着这一卦继续。</span>
+          <button class="cast-btn" id="gotoAiTabBtn" type="button">解读这一卦<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+        </div>
       </div>
       <div id="factCheckPanel" class="fact-check-panel" hidden></div>
     </div>
@@ -254,12 +260,6 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
     <p class="desc">按传统规矩，一事不问二卦：同一件事只摇一次。上一卦还在时再点"摇卦"/"生成排盘"，会弹窗确认是否要另起新卦——物理模式在完成六爻后替换上一卦，取消则保留原卦；线下模式会清空旧问题后重新生成。短时间内也不建议连续摇太多卦，10 分钟内最多摇 3 次。</p>
     <p class="desc">另外几条老规矩也顺带提一句：别在大喜大怒、心浮气躁的时候乱测，也别单纯当好玩测着玩，念不专卦不应，测出来的参考价值不大；卦是用来"决疑"的，一件事已经拍板定了、没有回旋余地，再占意义也不大。</p>
     </div>
-  </section>
-
-  <section class="block">
-    <h2>下一步：AI 解卦</h2>
-    <p class="desc">排盘生成好之后，去"AI 解卦"标签页写下想问的事情，会自动带着当前这卦一起解读。</p>
-    <button class="cast-btn outline" id="gotoAiTabBtn" type="button">去 AI 解卦 →</button>
   </section>
 
   <section class="block block-collapse">
@@ -399,19 +399,22 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 <div class="panel" id="ai" role="tabpanel" aria-labelledby="tabbtn-ai" tabindex="0">
   <section class="block">
     <h2>AI 解卦</h2>
-    <p class="desc">写下问题，选择 AI 解读或输出提示词。没有排盘时会自动起卦。</p>
+    <p class="desc">写下想问的事，让这一卦有一个方向。没有排盘时会自动起卦。</p>
     <!-- 排盘数据虽然一直存在内存里的 window.lastCastData，但跳转过来之后界面上
          完全看不出来——用户点"AI 解读"之前只能凭记忆或信任系统。这里补一条
          轻量状态提示，有 lastCastData 就渲染当前是哪一卦，没有就不显示，
          成本很低，不用重新实现一份排盘表格。 -->
-    <div class="current-cast-status" id="currentCastStatus" style="display:none;"></div>
+    <div class="current-cast-status" id="currentCastStatus" style="display:none;">
+      <span id="currentCastSummary"></span>
+      <button type="button" class="text-action" id="viewCurrentCastBtn">查看排盘</button>
+    </div>
     <div class="ai-box">
-      <div class="ai-stats" id="aiStats"></div>
+      <label class="question-label" for="questionInput">想问的问题</label>
       <textarea id="questionInput" autocomplete="off" aria-label="想问的问题" maxlength="500" placeholder="想问的问题，比如：最近想跳槽，合不合适"></textarea>
       <div class="char-counter" id="questionCharCounter">0 / 500 字</div>
       <div class="reading-mode"><label for="readingMode">解读方式</label>
         <select id="readingMode" autocomplete="off"><option value="" selected disabled>选择</option><option value="legacy">普通解读</option><option value="structured">结构化解读 · 结论与依据</option></select>
-        <p id="readingModeNote" hidden>先看直接回答，再展开主要依据、取用理由与不确定性。API 和提示词使用同一套解读流程。</p>
+        <p id="readingModeNote" hidden>先看结论，需要时再展开依据。</p>
       </div>
       <details id="backgroundCheck" class="background-check" hidden>
         <summary>核实背景（可选）</summary>
@@ -598,11 +601,18 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
       </dialog>
 
       <div class="history-panel" id="historyPanel">
+        <div class="history-heading"><h3>问卦记录</h3><span>保存在当前浏览器</span></div>
+        <label class="history-search-label" for="aiHistorySearch">查找问过的事</label>
+        <div class="history-search">
+          <input type="search" id="aiHistorySearch" placeholder="输入问题关键词" autocomplete="off">
+          <output id="aiHistorySearchCount" aria-live="polite"></output>
+        </div>
         <div class="history-toolbar">
           <span class="ai-status">共 <span id="historyCount">0</span> 条</span>
           <button class="ai-btn ghost" id="clearHistoryBtn">清空历史</button>
           <button class="ai-btn ghost" id="exportFeedbackBtn">导出登记与反馈</button>
         </div>
+        <details class="history-stats"><summary>累计用量</summary><div class="ai-stats" id="aiStats"></div></details>
         <div class="history-empty" id="historyEmpty">
           <svg class="history-empty-icon" viewBox="0 0 64 64" aria-hidden="true">
             <circle cx="32" cy="32" r="27"/>
@@ -637,13 +647,13 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
           <label><input type="checkbox" id="readingComplete"> 我已复制外部 AI 的完整回复</label>
           <button id="readingImport" class="ai-btn">核对并显示解读</button>
         </div>
+        <div class="ai-row reading-result-actions"><button id="readingCopyAll" class="ai-btn ghost">复制结构化对话</button><button id="readingClear" class="ai-btn ghost">清空结构化解读</button></div>
         <div id="readingFollowArea" hidden>
           <label for="readingFollow">继续追问同一件事</label>
           <textarea id="readingFollow" maxlength="500" rows="3"></textarea>
           <div class="ai-row"><button id="readingFollowApi" class="ai-btn">API 追问</button><button id="readingFollowExport" class="ai-btn ghost">输出追问提示词</button></div>
         </div>
-        <div class="ai-row"><button id="readingCopyAll" class="ai-btn ghost">复制结构化对话</button><button id="readingClear" class="ai-btn ghost">清空结构化解读</button></div>
-        <p id="readingStorageNote" class="reading-note">问答与导出保存在本机历史中；刷新或离开超过 30 分钟后清空当前卦盘和内容。格式与引用核对不代表解释或预测正确。</p>
+        <p id="readingStorageNote" class="reading-note">已保存在本机历史。刷新或离开超过 30 分钟后清空当前卦盘与内容。</p>
       </section>
       <div class="ai-meta" id="aiMeta"></div>
       <div class="ai-row" id="copyRow" style="display:none;margin-top:6px;">

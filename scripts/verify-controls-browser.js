@@ -31,7 +31,7 @@ try {
       assert((await page.locator('#factCheckResult').textContent()).length>10);
       await page.locator('[data-tab=basics]').tap();
       assert.equal(await page.locator('#basics .block-collapse').count(),5);
-      assert.equal(await page.locator('#basics').evaluate(n=>getComputedStyle(n).animationName),'page-enter');
+      assert(await page.locator('#basics').isVisible());
       await page.locator('#basics .disclosure-trigger').first().tap();
       assert.equal(await page.locator('#basics .disclosure-trigger').first().getAttribute('aria-expanded'),'true');
       await page.locator('[data-tab=ai]').tap();

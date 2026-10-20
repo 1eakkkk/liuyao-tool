@@ -19,7 +19,7 @@ import { tabButtons, switchTab } from '../ui/navigation.js';
 import { renderConversation, withThinkingIndicator, renderLive, hidePromptExportBoxes, showStopBtn, hideStopBtn, showPromptOutput } from '../ui/ai-view.js';
 import { updateApiKeyStatus, refreshPriceOverridePlaceholders, fillPriceOverrideInputs, lockApiKeyInput, unlockApiKeyInput } from '../ui/settings.js';
 import { showToast, showConfirm, ONBOARD_KEY, updateOnboardFade, openOnboard, closeOnboard } from '../ui/dialogs.js';
-import { bindCharCounter, copyTextToClipboard } from '../ui/helpers.js';
+import { bindCharCounter, copyTextToClipboard, replayFadeIn } from '../ui/helpers.js';
 import { svg, dayGanzhiSelect, dayLookupDateInput, castBtn, plateWrap, castModeToggle, systemCastPanel, manualCastPanel, manualCastBtn, onboardCloseBtn, helpFab, onboardScroll, questionInput, questionCharCounter, interpretBtn, aiStatus, aiResult, aiMeta, copyRow, copyResultBtn, copyAllBtn, clearResultBtn, promptBtn, promptOutputBox, promptOutputText, copyPromptBtn, closePromptBtn, promptExtraTools, promptExtraToggle, cleanupInputText, cleanupOutputText, cleanupRunBtn, cleanupCopyRow, copyCleanupBtn, followUpExportInput, followUpExportOutput, followUpExportBtn, followUpExportCopyRow, copyFollowUpExportBtn, followUpBox, followUpInput, followUpCharCounter, followUpBtn, followUpStatus, stopGenBtn, toggleSettingsBtn, aiSettings, apiKeyInput, saveKeyBtn, clearKeyBtn, styleSelect, customStyleWrap, customStyleInput, roleSelect, roleHint, customRoleWrap, customRoleInput, effortSelect, modelSelect, priceHit, priceMiss, priceOutput, savePriceOverrideBtn, resetPriceOverrideBtn, gotoAiTabBtn, toggleHistoryBtn, historyPanel, historyList, clearHistoryBtn } from '../ui/dom.js';
 import { interpretWithDeepSeek, followUpWithDeepSeek } from '../ai/interpreter.js';
 import { formatCastDataForAI } from '../ai/formatter.js';
@@ -85,24 +85,21 @@ document.querySelectorAll('.settings-group.collapsible').forEach((group, index)=
   const title = group.querySelector('.settings-group-title');
   bindDisclosure(title, group.querySelector('.settings-group-body'), group, `settings-details-${index}`);
 });
-// 供 AI 面板顶部状态条使用：有 castStore.legacy 就显示"当前排盘：卦名 · 日柱"，
-// 没有（还没摇过卦，或者数据被清空）就隐藏整条，不占位置。挂在 window 上是因为
-// 摇卦/复原历史卦等多处写 castStore.legacy 的代码分散在文件后面，
-// 那几处会直接调用 window.updateCurrentCastStatus() 同步这条状态。
+// Both entry points use the same current cast; navigation never generates another one.
 window.updateCurrentCastStatus = function(){
   const box = document.getElementById('currentCastStatus');
-  if(!box) return;
   const d = castStore.legacy;
+  document.getElementById('castNext').hidden = !d?.guaName;
   if(d && d.guaName){
-    const bianText = d.bianGuaName && d.bianGuaName !== d.guaName ? `（变 ${d.bianGuaName}）` : '';
-    box.innerHTML = `当前排盘：<b>${d.guaName}</b>${bianText} · ${d.ganzhi || ''}日`;
-    box.style.display = 'block';
+    const bianText = d.bianGuaName && d.bianGuaName !== d.guaName ? ` → ${d.bianGuaName}` : '';
+    document.getElementById('currentCastSummary').textContent = `当前排盘：${d.guaName}${bianText}`;
+    box.style.display = 'flex';
   } else {
     box.style.display = 'none';
   }
 };
 tabButtons.forEach((btn, i)=>{
-  btn.addEventListener('click',()=> switchTab(btn.dataset.tab));
+  btn.addEventListener('click',(e)=> switchTab(btn.dataset.tab, {animate:e.detail > 0}));
   // 左右方向键 / Home / End 在标签之间移动焦点并直接切换面板（标准tablist行为，
   // 不需要用户额外按Tab/Enter）；上下方向键留给页面自身滚动，不拦截。
   btn.addEventListener('keydown', (e)=>{
@@ -116,7 +113,7 @@ tabButtons.forEach((btn, i)=>{
     if(targetIndex === null) return;
     e.preventDefault();
     const target = peers[targetIndex];
-    switchTab(target.dataset.tab);
+    switchTab(target.dataset.tab, {animate:false});
     target.focus();
   });
 });
@@ -311,8 +308,16 @@ resetPriceOverrideBtn.addEventListener('click', ()=>{
   showToast('已恢复内置默认单价');
 });
 if(gotoAiTabBtn){
-  gotoAiTabBtn.addEventListener('click', ()=> switchTab('ai'));
+  gotoAiTabBtn.addEventListener('click', ()=>{
+    switchTab('ai');
+    questionInput.focus({preventScroll:true});
+  });
 }
+document.getElementById('viewCurrentCastBtn').addEventListener('click', ()=>{
+  switchTab('caster');
+  plateWrap.focus({preventScroll:true});
+  plateWrap.scrollIntoView({block:'start',behavior:'instant'});
+});
 ['copy','cut','contextmenu'].forEach(evt=>{
   apiKeyInput.addEventListener(evt, e=>{
     if(apiKeyInput.readOnly) e.preventDefault();
@@ -390,10 +395,13 @@ clearKeyBtn.addEventListener('click', ()=>{
   showToast('Key 已清除，可以重新粘贴新的了');
 });
 
-toggleHistoryBtn.addEventListener('click', ()=>{
+toggleHistoryBtn.addEventListener('click', (event)=>{
   historyPanel.classList.toggle('open');
   toggleHistoryBtn.setAttribute('aria-expanded', historyPanel.classList.contains('open') ? 'true' : 'false');
-  if(historyPanel.classList.contains('open')) renderHistory();
+  if(historyPanel.classList.contains('open')) {
+    renderHistory();
+    if (event.detail > 0) replayFadeIn(historyPanel);
+  }
 });
 
 historyList.addEventListener('click', async (e)=>{
@@ -404,6 +412,7 @@ historyList.addEventListener('click', async (e)=>{
   if(actionEl.dataset.action === 'toggle'){
     item.classList.toggle('expanded');
     actionEl.setAttribute('aria-expanded', String(item.classList.contains('expanded')));
+    if (item.classList.contains('expanded') && e.detail > 0) replayFadeIn(item.querySelector('.history-item-body'));
   }else if(actionEl.dataset.action === 'delete'){
     if(!(await showConfirm('删除这条解读记录？删除后无法恢复。已保存的判断登记与结果反馈会保留，可在历史顶部导出。',{title:'删除记录',okText:'删除',cancelText:'保留'}))) return;
     const list = loadHistory().filter(r => String(r.id) !== id);

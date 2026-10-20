@@ -1,7 +1,4 @@
-
-
-
-
+import { replayFadeIn } from './helpers.js';
 /* ---------------- tabs ----------------
    role="tablist"/"tab"/"tabpanel" 用的是标准 ARIA tabs 模式：每次切换要同步
    aria-selected（哪个tab被选中）和"roving tabindex"（tabindex在tab之间挪动，
@@ -11,7 +8,8 @@
    ---------------- */
 const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
 
-function switchTab(tabName){
+function switchTab(tabName, { animate = true } = {}){
+  const previous = document.querySelector('.panel.active');
   tabButtons.forEach(b=>{
     const active = b.dataset.tab === tabName;
     b.classList.toggle('active', active);
@@ -20,6 +18,11 @@ function switchTab(tabName){
     b.tabIndex = !isTab || active ? 0 : -1;
   });
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id === tabName));
+  const current = document.getElementById(tabName);
+  if (current !== previous) {
+    previous?.getAnimations().forEach(animation => animation.cancel());
+    if (animate) replayFadeIn(current);
+  }
   if (!document.querySelector('.tabs .tab-btn.active')) document.querySelector('.tabs .tab-btn').tabIndex=0;
   updateIndicator();
   if(tabName === 'ai') window.updateCurrentCastStatus();
