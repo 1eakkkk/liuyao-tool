@@ -21,6 +21,13 @@ try {for(const engine of [chromium,webkit]) {
   await page.locator('[data-tab=ai]').click();
   assert.equal(await page.locator('#readingMode').inputValue(),'');
   assert.equal(await page.locator('#readingMode-trigger span').textContent(),'选择');
+  assert(await page.locator('#interpretBtn').isVisible());
+  await page.locator('#interpretBtn').click();
+  assert(await page.locator('#aiSettings').isVisible());
+  assert(await page.locator('#apiKeyInput').evaluate(n=>n===document.activeElement));
+  assert.equal(await page.locator('#plateWrap table').count(),0);
+  await page.locator('#closeSettingsBtn').click();
+  assert(await page.locator('#interpretBtn').evaluate(n=>n===document.activeElement));
   await page.locator('#questionInput').fill('临时问题');await page.locator('#promptBtn').click();
   assert((await page.locator('#toastWrap').textContent()).includes('选择解读方式'));
   await page.locator('#readingMode').selectOption('structured');await page.reload();
@@ -41,6 +48,8 @@ try {for(const engine of [chromium,webkit]) {
   await page.reload();
   assert.equal(await page.locator('#plateWrap table').count(),0);
   assert.equal(await page.locator('.empty-lines span').count(),6);
+  assert(await page.locator('#castSummary').isHidden());
+  assert.equal(await page.locator('#castDiagram').textContent(),'');
   await page.locator('[data-tab=ai]').click();
   assert.equal(await page.locator('#questionInput').inputValue(),'');
   assert.equal(await page.locator('#promptOutputText').inputValue(),'');

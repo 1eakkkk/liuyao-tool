@@ -75,6 +75,7 @@ function renderPlate(lines, source='system'){
   const guaNameRowText = `本卦：<b>${guaName}</b>` + (bianGuaName ? `　→　变卦：<b>${bianGuaName}</b>` : '');
   const diagramHtml = buildGuaDiagramHtml(structuredLines.map(structLineToDiagram), guaName, bianGuaName);
   const plateCardsHtml = buildPlateCardsHtml(structuredLines);
+  document.getElementById('castDiagram').innerHTML = diagramHtml || guaNameRowText;
 
   plateWrap.innerHTML = `
     ${PLATE_LEGEND_HTML}
@@ -83,7 +84,7 @@ function renderPlate(lines, source='system'){
       <tbody>${rowsHtml}</tbody>
     </table>
     <div class="plate-cards">${plateCardsHtml}</div>
-    ${diagramHtml}
+    <details class="plate-calendar"><summary>日期、干支与卦盘概览</summary>
     <div class="gua-name-row">
       ${diagramHtml ? '' : `<div>${guaNameRowText}</div>`}
       <div>${palaceText}</div>
@@ -92,7 +93,7 @@ function renderPlate(lines, source='system'){
       <div>${boldPillarsHtml(fourPillarsText)}</div>
       <div>${boldPillarsHtml(kongText)}</div>
       <div class="gua-trend-row">证据速览：${upgradeOverviewText(overallTrendText)}</div>
-    </div>`;
+    </div></details>`;
   replayFadeIn(plateWrap);
 
   // 存一份结构化数据供"AI解卦"区域使用（原有字段与之前完全一致，guaName/bianGuaName不参与AI输入，仅供页面展示；
@@ -184,6 +185,7 @@ function renderPlateFromCastData(castData, question, castTime){
     ? buildGuaDiagramHtml(castData.lines.map(structLineToDiagram), castData.guaName, castData.bianGuaName)
     : '';
   const plateCardsHtml = buildPlateCardsHtml(castData.lines);
+  document.getElementById('castDiagram').innerHTML = diagramHtml || guaNameRowText;
 
   plateWrap.innerHTML = `
     ${PLATE_LEGEND_HTML}
@@ -192,7 +194,7 @@ function renderPlateFromCastData(castData, question, castTime){
       <tbody>${rowsHtml}</tbody>
     </table>
     <div class="plate-cards">${plateCardsHtml}</div>
-    ${diagramHtml}
+    <details class="plate-calendar"><summary>日期、干支与卦盘概览</summary>
     <div class="gua-name-row">
       ${diagramHtml ? '' : `<div>${guaNameRowText}</div>`}
       <div>${castData.palaceText || ''}</div>
@@ -200,8 +202,8 @@ function renderPlateFromCastData(castData, question, castTime){
       ${resumeDateText ? `<div class="gua-date-row">${boldDateHtml(resumeDateText)}</div>` : ''}
       <div>${dayKongHtml}</div>
       ${castData.overallTrendText ? `<div class="gua-trend-row">证据速览：${upgradeOverviewText(castData.overallTrendText)}</div>` : ''}
-    </div>
-    <div class="placeholder" style="padding:10px 0 0;font-size:var(--fs-2);">（以上是刷新前留存的排盘，对应下面正在续接的追问）</div>`;
+    </div></details>
+    <p class="reading-note">当前解读使用的排盘</p>`;
   replayFadeIn(plateWrap);
 
   castStore.canonical = normalizeLegacyCast(castData, { question, createdAt: castTime || Date.now(), castId: priorCanonical?.meta.cast_id });

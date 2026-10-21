@@ -241,12 +241,15 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         </div>
       </div>
       <div class="cast-result">
+        <div class="cast-summary" id="castSummary" tabindex="-1" hidden>
+          <div id="castDiagram"></div>
+          <div class="cast-next" id="castNext" hidden>
+            <span>卦已成，带着这一卦继续。</span>
+            <button class="cast-btn" id="gotoAiTabBtn" type="button">解读这一卦<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+          </div>
+        </div>
         <div class="plate" id="plateWrap" tabindex="-1">
           <div class="placeholder"><div class="empty-lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div><strong>静心一念，待卦成形</strong><span>从初爻开始，六爻成卦</span></div>
-        </div>
-        <div class="cast-next" id="castNext" hidden>
-          <span>卦已成，带着这一卦继续。</span>
-          <button class="cast-btn" id="gotoAiTabBtn" type="button">解读这一卦<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
         </div>
       </div>
       <div id="factCheckPanel" class="fact-check-panel" hidden></div>
@@ -647,7 +650,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
           <label><input type="checkbox" id="readingComplete"> 我已复制外部 AI 的完整回复</label>
           <button id="readingImport" class="ai-btn">核对并显示解读</button>
         </div>
-        <div class="ai-row reading-result-actions"><button id="readingCopyAll" class="ai-btn ghost">复制结构化对话</button><button id="readingClear" class="ai-btn ghost">清空结构化解读</button></div>
+        <div class="ai-row reading-result-actions"><button id="readingCopyAll" class="ai-btn ghost">复制本次对话</button><button id="readingClear" class="ai-btn ghost">清空本次解读</button></div>
         <div id="readingFollowArea" hidden>
           <label for="readingFollow">继续追问同一件事</label>
           <textarea id="readingFollow" maxlength="500" rows="3"></textarea>

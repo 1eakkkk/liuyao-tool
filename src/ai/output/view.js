@@ -6,7 +6,6 @@ import {readingAvailability} from './availability.js';
 const assessment = { support: '支持因素', oppose: '不利因素', neutral: '中性因素', conditional: '条件因素' };
 const component = { primary: '本爻', changed: '变爻', hidden: '伏神' };
 const direction = { favorable: '偏有利', unfavorable: '偏不利', mixed: '利弊并存', unclear: '暂不明确' };
-let conclusionId = 0;
 const transportCodes=new Set(['incomplete_response','response_token_limit','response_filtered','provider_interrupted','stream_not_finished',
  'stream_missing_finish_reason','unexpected_finish_reason','request_timeout','aborted','sse_invalid_utf8','sse_invalid_chunk','sse_malformed_event',
  'sse_after_done','sse_conflicting_finish_reason','sse_event_too_large','sse_stream_too_large','sse_stream_error',
@@ -142,42 +141,10 @@ export function renderOutputResult(container, result, context, { collapseFallbac
       for(const item of capability.items)pending.append(node('li',item));
       fragment.append(node('p','需要你确认的现实条件：'),pending);
     }
-    const overview = node('details'); overview.className = 'reading-factor-overview';
-    overview.append(node('summary', `依据速览 · ${answer.factors.length} 项`));
-    const caption = node('p', answer.factors.length > 3
-      ? `AI 解释 · 按回复顺序显示前 3 项，共 ${answer.factors.length} 项；完整分析见下方`
-      : 'AI 解释 · 按回复顺序显示');
-    caption.className = 'reading-overview-caption'; overview.append(caption);
-    const previews = node('ol'); previews.className = 'reading-factor-previews';
-    for (const factor of answer.factors.slice(0, 3)) {
-      const row = node('li');
-      const label = node('strong', assessment[factor.assessment]);
-      label.className = 'reading-factor-label';
-      const explanation = node('p', factor.interpretation);
-      explanation.className = 'reading-factor-excerpt';
-      row.append(label, explanation);
-      const text = [...factor.interpretation];
-      if (text.length > 180) {
-        const preview = text.slice(0, 160).join('') + '…';
-        explanation.textContent = preview; explanation.id = `reading-factor-${++conclusionId}`;
-        const toggle = node('button', '展开这条解释');
-        toggle.type = 'button'; toggle.className = 'reading-text-toggle';
-        toggle.setAttribute('aria-controls', explanation.id); toggle.setAttribute('aria-expanded', 'false');
-        toggle.addEventListener('click', () => {
-          const open = toggle.getAttribute('aria-expanded') !== 'true';
-          explanation.textContent = open ? factor.interpretation : preview;
-          toggle.setAttribute('aria-expanded', String(open));
-          toggle.textContent = open ? '收起这条解释' : '展开这条解释';
-        });
-        row.append(toggle);
-      }
-      previews.append(row);
-    }
-    overview.append(previews); if(answer.factors.length)fragment.append(overview);
     const details = node('details');
     details.className = 'reading-analysis';
-    details.append(node('summary', answer.timing_candidates.length ? '查看完整分析、来源、应期与不确定性' : '查看完整分析、来源与不确定性'));
-    details.append(node('p', '下列解释由 AI 生成；格式与引用核对不能证明判断正确。规则和其来源事实不重复计为依据。'));
+    details.append(node('summary', `查看依据与补充说明 · ${answer.factors.length} 项`));
+    details.append(node('p', '格式与引用已核对。下列解释由 AI 生成，核对不代表判断正确；规则和其来源事实不重复计为依据。'));
     const item = (title, text, ids) => {
       const section = node('section'); section.append(node('h3', title), node('p', text));
       if (ids?.length) {

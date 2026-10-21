@@ -18,7 +18,10 @@ let renderedSession = null;
 let availabilityNotice = null;
 const el = id => document.getElementById(id);
 export const readingSelected = () => el('readingMode')?.value === 'structured';
-function status(text) { el('readingStatus').textContent = text; }
+function status(text, completed = false) {
+  el('readingStatus').textContent = text;
+  el('readingStatus').classList.toggle('reading-status-complete', completed);
+}
 function persist() {
   if (!session) return;
   if (!safeSetItem(KEY, serializeReadingSession(session, pending?.question ?? null))) status('回复已保留在页面，但本地保存失败；请复制对话留存。');
@@ -53,12 +56,12 @@ function render() {
       const count = [...t.result.answer.answer.replace(/\s/g,'')].length;
       const goal = {brief:'300–400 字',deep:'700–800 字',custom:'自定义篇幅'}[session.preferences.style];
       size.textContent = `正文约 ${count} 字 · 本次目标：${goal}（纯事实核对可简短；不含折叠依据）`;
-      block.append(size);
+      (result.querySelector('.reading-analysis') || block).append(size);
     }
     if (t.usage) {
       const usage = document.createElement('p'); usage.className = 'reading-note';
       usage.textContent = t.usage.total == null ? '用量未收全，费用未知；以 DeepSeek 账单为准。' : `解读调用 ${t.usage.total} tokens · 约 ¥${t.usage.cost.toFixed(4)} · 以 DeepSeek 账单为准${t.context.input.background_search?' · 背景查询费用另计':''}`;
-      block.append(usage);
+      (result.querySelector('.reading-analysis') || block).append(usage);
     }
     turnsRoot.append(block);
   }
@@ -146,7 +149,7 @@ async function request(prepared) {
     if (epoch !== requestEpoch || session !== activeSession) return;
     const turn = appendReadingTurn(session, prepared, result.raw, result.completed, 'api', result.usage,{completion:result.completion});
     pending = null; render();
-    status(turn.result.status === 'validated' ? '解读已完成，格式与引用已核对。' : turn.result.readable_answer?'正文已显示；附带格式或引用尚未完整核对。':'回复未完成或未通过格式与引用核对，已保留原文；未自动重试。');
+    status(turn.result.status === 'validated' ? '解读已完成，格式与引用已核对。' : turn.result.readable_answer?'正文已显示；附带格式或引用尚未完整核对。':'回复未完成或未通过格式与引用核对，已保留原文；未自动重试。', turn.result.status === 'validated');
     persist();
   } finally {
     clearTimeout(timer); state.activeAbortController = null; el('stopGenBtn').style.display = 'none';
@@ -202,7 +205,7 @@ export function initializeReading() {
     if (!el('readingComplete').checked) throw Error('请确认已复制完整回复；未完成的内容不能视为完整解读。');
     const t = appendReadingTurn(session, pending, el('readingPaste').value, true, 'external',null,{allowEnvelope:true});
     pending = null; render();
-    status(t.result.status === 'validated' ? '格式与引用核对通过。' : t.result.readable_answer?'正文已显示；附带格式或引用尚未完整核对。':'回复未完成或未通过格式与引用核对，已保留原文。'); persist();
+    status(t.result.status === 'validated' ? '格式与引用核对通过。' : t.result.readable_answer?'正文已显示；附带格式或引用尚未完整核对。':'回复未完成或未通过格式与引用核对，已保留原文。', t.result.status === 'validated'); persist();
   }));
   el('readingCancelExport').addEventListener('click', () => { pending = null; render(); persist(); status('已取消等待外部回复。'); });
   for (const [id, kind] of [['readingFollowApi', 'api'], ['readingFollowExport', 'external']]) {

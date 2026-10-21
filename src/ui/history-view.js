@@ -89,6 +89,18 @@ function renderStats(){
   aiStats.innerHTML = `累计 <b>${list.length}</b> 卦${breakdown} · 问答共 <b>${totalRounds}</b> 轮 · 共 <b>${lifetime.tokens.toLocaleString()}</b> tokens · 约 <b>¥${lifetime.cost.toFixed(4)}</b>`;
 }
 
+function historyGroupLabel(ts, now = new Date()){
+  const date = new Date(ts);
+  if (!Number.isFinite(date.getTime())) return '更早';
+  const startOfDay = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const today = startOfDay(now);
+  const recordDay = startOfDay(date);
+  if (recordDay.getTime() === today.getTime()) return '今天';
+  const monday = new Date(today);
+  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+  return recordDay >= monday && recordDay < today ? '本周' : '更早';
+}
+
 
 // 每条历史记录是一整次摇卦对应的会话（首次解读+若干次追问都在同一条里），不是每次AI调用一条平铺记录。
 // 旧版本存的是扁平记录（question/text字段，没有turns），historyTurnsOf已经做了兼容读取，这里不用管新旧格式。
@@ -106,7 +118,7 @@ function renderHistory(){
   const focusView = active?.closest('details')?.dataset.view;
   const focusAction = active?.dataset.action;
   const query = historySearchInput?.value.trim().toLocaleLowerCase() || '';
-  const allRecords = loadHistory().slice().reverse(); // 最新的在最上面
+  const allRecords = loadHistory().slice().sort((a, b) => b.ts - a.ts); // 最新的在最上面
   const list = query ? allRecords.filter(r => String(historyTurnsOf(r)[0]?.text || r.question || '').toLocaleLowerCase().includes(query)) : allRecords;
   const feedback = loadFeedback();
   historyCount.textContent = allRecords.length;
@@ -114,6 +126,7 @@ function renderHistory(){
   if(historyEmpty.dataset.defaultHtml === undefined) historyEmpty.dataset.defaultHtml = historyEmpty.innerHTML;
   historyEmpty.style.display = list.length ? 'none' : 'flex';
   historyEmpty.innerHTML = list.length || !query ? historyEmpty.dataset.defaultHtml : '没有找到匹配的问题。';
+  let lastGroup = '';
   historyList.innerHTML = list.map((r, index) => {
     const turns = historyTurnsOf(r);
     const roundCount = turns.filter(t=>t.role==='assistant').length;
@@ -123,22 +136,26 @@ function renderHistory(){
     const firstQuestion = turns[0]?.text || r.question || '';
     const answerExcerpt = turns.find(t => t.role === 'assistant')?.text || '';
     const plainExcerpt = [...String(answerExcerpt).replace(/<[^>]*>/g, ' ').replace(/[*#`]/g, '').replace(/\s+/g, ' ').trim()].slice(0, 120).join('');
+    let followUpNumber = 0;
+    let assistantCount = 0;
     const restTurnsHtml = turns.slice(1).map((t, turnIndex) => {
       const text = String(t.text || '');
-      const label = t.role === 'user' ? '问' : '答';
-      if(isUnavailableHistoryReply(r,t))return `<div class="history-turn"><b>旧版解读记录：</b>当时使用的取法限制已取消。以下保留原回复；不会自动重新生成或收费。</div><details class="history-long-turn" data-view="turn-${turnIndex}"><summary>查看此前收到的 AI 回复</summary><div class="history-turn history-turn-assistant">${escapeHtml(text)}</div></details>`;
+      if (t.role === 'user') followUpNumber++;
+      const label = t.role === 'user' ? `第 ${followUpNumber} 次追问` : (++assistantCount === 1 ? '首次解读' : '回复');
+      const labelHtml = `<span class="history-turn-label">${label}</span>`;
+      if(isUnavailableHistoryReply(r,t))return `<div class="history-turn"><b>旧版解读记录：</b>当时使用的取法限制已取消。以下保留原回复；不会自动重新生成或收费。</div><details class="history-long-turn" data-view="turn-${turnIndex}"><summary>${labelHtml}　查看此前收到的 AI 回复</summary><div class="history-turn history-turn-assistant">${labelHtml}${escapeHtml(text)}</div></details>`;
       // Split only our own archived metadata marker; never reinterpret AI prose as HTML.
       const evidenceMarker = '\n\n以下为 AI 判断；格式与引用检查不代表预测正确。规则和其来源事实不重复计为依据。';
       const evidenceStart = r.readingMode === 'structured' && t.role === 'assistant' ? text.indexOf(evidenceMarker) : -1;
-      if (evidenceStart >= 0) return `<div class="history-turn history-turn-assistant reading-prose">${escapeHtml(text.slice(0, evidenceStart))}</div><details class="history-reading-evidence" data-view="turn-${turnIndex}-evidence"><summary>查看依据与补充说明</summary><div class="reading-prose">${escapeHtml(text.slice(evidenceStart).trim())}</div></details>`;
-      if (text.length <= 300) return `<div class="history-turn history-turn-${t.role}${t.role === 'assistant' ? ' reading-prose' : ''}"><b>${label}：</b>${escapeHtml(text)}</div>`;
+      if (evidenceStart >= 0) return `<div class="history-turn history-turn-assistant reading-prose">${labelHtml}${escapeHtml(text.slice(0, evidenceStart))}</div><details class="history-reading-evidence" data-view="turn-${turnIndex}-evidence"><summary>查看依据与补充说明</summary><div class="reading-prose">${escapeHtml(text.slice(evidenceStart).trim())}</div></details>`;
+      if (text.length <= 300) return `<div class="history-turn history-turn-${t.role}${t.role === 'assistant' ? ' reading-prose' : ''}">${labelHtml}${escapeHtml(text)}</div>`;
       const preview = text.replace(/\s+/g, ' ').slice(0, 100);
-      return `<details class="history-long-turn" data-view="turn-${turnIndex}"><summary><b>${label}：</b><span class="history-turn-preview">${escapeHtml(preview)}…</span><span class="history-expand-label">展开全文</span><span class="history-collapse-label">收起全文</span></summary><div class="history-turn history-turn-${t.role}${t.role === 'assistant' ? ' reading-prose' : ''}">${escapeHtml(text)}</div></details>`;
+      return `<details class="history-long-turn" data-view="turn-${turnIndex}"><summary>${labelHtml}<span class="history-turn-preview">${escapeHtml(preview)}…</span><span class="history-expand-label">展开全文</span><span class="history-collapse-label">收起全文</span></summary><div class="history-turn history-turn-${t.role}${t.role === 'assistant' ? ' reading-prose' : ''}">${labelHtml}${escapeHtml(text)}</div></details>`;
     }).join('');
     const isPrompt = r.type === 'prompt';
     const tagHtml = isPrompt
       ? `<span class="history-item-tag">提示词导出</span>`
-      : (roundCount>1 ? `<span class="history-item-tag">共${roundCount}轮</span>` : '');
+      : `<span class="history-item-tag">首次解读${Math.max(0, roundCount - 1) ? ` · ${roundCount - 1}次追问` : ''}</span>`;
     // roleLabel/styleLabel 是后加的字段，早于这次改动生成的老记录里没有，
     // 这里做兼容：没有就不拼这一截，不显示"undefined · undefined"这种东西。
     const configLabel = r.roleLabel ? `${r.roleLabel}${r.styleLabel ? '·' + r.styleLabel : ''}` : '';
@@ -158,7 +175,10 @@ function renderHistory(){
     const customConfigHtml = customConfigParts.join('');
     const castHtml = historyCastHtml(r.cast, r.ts);
     const plateHtml = castHtml ? `<details class="history-plate" data-view="plate"><summary>查看当时卦盘</summary>${castHtml}</details>` : '';
-    return `
+    const group = historyGroupLabel(r.ts);
+    const groupHeading = group !== lastGroup ? `<h4 class="history-group-title">${group}</h4>` : '';
+    lastGroup = group;
+    return `${groupHeading}
     <div class="history-item" data-id="${escapeHtml(String(r.id))}">
       <button type="button" class="history-item-head" data-action="toggle" aria-expanded="false" aria-controls="history-body-${index}">
         <span class="history-item-q">${escapeHtml(firstQuestion)}</span>

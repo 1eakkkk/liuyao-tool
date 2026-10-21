@@ -89,13 +89,16 @@ document.querySelectorAll('.settings-group.collapsible').forEach((group, index)=
 window.updateCurrentCastStatus = function(){
   const box = document.getElementById('currentCastStatus');
   const d = castStore.legacy;
-  document.getElementById('castNext').hidden = !d?.guaName;
+  const plateReady = !!d?.guaName && !!plateWrap.querySelector('table');
+  document.getElementById('castNext').hidden = !plateReady;
+  document.getElementById('castSummary').hidden = !plateReady;
   if(d && d.guaName){
     const bianText = d.bianGuaName && d.bianGuaName !== d.guaName ? ` → ${d.bianGuaName}` : '';
     document.getElementById('currentCastSummary').textContent = `当前排盘：${d.guaName}${bianText}`;
     box.style.display = 'flex';
   } else {
     box.style.display = 'none';
+    document.getElementById('castDiagram').replaceChildren();
   }
 };
 tabButtons.forEach((btn, i)=>{
@@ -315,8 +318,10 @@ if(gotoAiTabBtn){
 }
 document.getElementById('viewCurrentCastBtn').addEventListener('click', ()=>{
   switchTab('caster');
-  plateWrap.focus({preventScroll:true});
-  plateWrap.scrollIntoView({block:'start',behavior:'instant'});
+  if (!plateWrap.querySelector('table')) renderPlateFromCastData(castStore.legacy, castStore.question, castStore.time);
+  const summary = document.getElementById('castSummary');
+  summary.focus({preventScroll:true});
+  summary.scrollIntoView({block:'start',behavior:'instant'});
 });
 ['copy','cut','contextmenu'].forEach(evt=>{
   apiKeyInput.addEventListener(evt, e=>{
@@ -354,20 +359,25 @@ modelSelect.addEventListener('change', ()=>{
 });
 
 let settingsScrollStyle = '';
-toggleSettingsBtn.addEventListener('click', ()=>{
-  if (aiSettings.open) { aiSettings.close(); return; }
+let settingsTrigger = toggleSettingsBtn;
+function openSettings(trigger = toggleSettingsBtn, focusTarget = document.getElementById('closeSettingsBtn')) {
+  settingsTrigger = trigger;
   settingsScrollStyle = document.documentElement.style.overflow;
   document.documentElement.style.overflow = 'hidden';
   document.getElementById('settingsFeedback').textContent = '';
   aiSettings.showModal();
   toggleSettingsBtn.setAttribute('aria-expanded', 'true');
-  document.getElementById('closeSettingsBtn').focus({preventScroll:true});
+  focusTarget.focus({preventScroll:true});
+}
+toggleSettingsBtn.addEventListener('click', ()=>{
+  if (aiSettings.open) { aiSettings.close(); return; }
+  openSettings();
 });
 document.getElementById('closeSettingsBtn').addEventListener('click', ()=>aiSettings.close());
 aiSettings.addEventListener('close', ()=>{
   document.documentElement.style.overflow = settingsScrollStyle;
   toggleSettingsBtn.setAttribute('aria-expanded', 'false');
-  toggleSettingsBtn.focus({preventScroll:true});
+  settingsTrigger.focus({preventScroll:true});
 });
 aiSettings.addEventListener('click', event=>{
   const rect=aiSettings.getBoundingClientRect();
@@ -640,6 +650,7 @@ copyFollowUpExportBtn.addEventListener('click', ()=>{
 });
 
 interpretBtn.addEventListener('click', async (event)=>{
+  if (!loadApiKey()) { openSettings(interpretBtn, apiKeyInput); return; }
   const physicalInput = castInputFromEvent(event);
   if (!document.getElementById('readingMode').value) { showToast('先选择解读方式', 'error'); return; }
   const question = questionInput.value.trim();
@@ -649,12 +660,6 @@ interpretBtn.addEventListener('click', async (event)=>{
   }
   if(!readingSelected()&&isLifespanQuestion(question)){
     showToast('传统上卦师不轻断生死寿数，这类问题这里不会生成解读——如果是身体或者情绪上的真实担忧，更建议找医生或者信得过的人聊聊', 'error', 6000);
-    return;
-  }
-  if(!loadApiKey() && !readingSelected()){
-    aiSettings.classList.add('open');
-    showToast('先在下面"设置"里填一下 DeepSeek API Key', 'error');
-    apiKeyInput.focus();
     return;
   }
 

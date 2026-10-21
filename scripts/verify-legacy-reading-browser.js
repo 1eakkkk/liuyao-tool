@@ -73,10 +73,10 @@ try {
     await page.locator('#readingTurns h2').waitFor();
     assert.equal(await page.locator('#readingTurns img').count(), 0);
     assert.equal(await page.locator('#readingTurns details[open]').count(), 0);
-    const factorPreview = page.locator('#readingTurns .reading-factor-overview').first();
+    const factorPreview = page.locator('#readingTurns .reading-analysis').first();
     assert(await factorPreview.isVisible());
-    assert.equal(await factorPreview.locator('.reading-factor-excerpt').count(), Math.min(3, answer(input).factors.length));
-    assert((await factorPreview.locator('.reading-factor-excerpt').first().textContent()).includes(answer(input).factors[0].interpretation));
+    assert.equal(await page.locator('#readingTurns .reading-analysis').count(),1);
+    assert((await factorPreview.locator('section > p').first().textContent()).includes(answer(input).factors[0].interpretation));
     assert.equal(await page.locator('#readingTurns .reading-conclusion').first().textContent(),answer(input).answer);
     assert.equal(await factorPreview.evaluate(n=>n.open),false);
     await factorPreview.locator('summary').focus(); await page.keyboard.press('Enter');

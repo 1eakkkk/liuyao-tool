@@ -10,10 +10,11 @@ vi.mock('../../src/ui/helpers.js', async importOriginal => ({
 const require = createRequire(import.meta.url);
 const { baseline } = require('./harness.cjs');
 let app, castStore;
-// Guidance is presentation copy; retain exact comparison of every result element.
+// Presentation moves the diagram first and folds the calendar. Compare every factual
+// result element in a stable order, independent of those layout containers.
 function plateResults(html) {
   const root=document.createElement('div'); root.innerHTML=html;
-  return [...root.children].filter(n=>!n.matches('.plate-legend,.term-guide')).map(n=>n.outerHTML).join('');
+  return ['table','.plate-cards','.gua-diagram','.gua-name-row'].map(selector=>root.querySelector(selector)?.outerHTML || '').join('');
 }
 beforeAll(async () => {
   vi.useFakeTimers();
@@ -40,7 +41,7 @@ for (const fixture of fixtures) {
     const cast = JSON.parse(JSON.stringify(castStore.legacy));
     expect(cast).toEqual(overviewPresentation(expected.cast));
     expect(app.formatCastDataForAI(cast)).toBe(overviewCastText(expected.text));
-    expect(plateResults(document.getElementById('plateWrap').innerHTML)).toBe(plateResults(overviewPlateHtml(expected.plate)));
+    expect(plateResults(document.getElementById('castDiagram').innerHTML + document.getElementById('plateWrap').innerHTML)).toBe(plateResults(overviewPlateHtml(expected.plate)));
     expect(app.buildExportPromptText(input.question, app.formatCastDataForAI(cast))).toBe(overviewExportPrompt(expected.export));
     const snapshot = app.buildHistoryCastSnapshot(castStore.canonical);
     const {canonical, ...legacySnapshot} = JSON.parse(JSON.stringify(snapshot));

@@ -83,11 +83,11 @@ test('long conclusions display in full without rendering HTML or changing the sa
   const conclusion=container.querySelector('.reading-conclusion');
   expect(conclusion.textContent).toBe(answer.answer);
   expect(container.querySelector('img')).toBeNull();
-  expect(container.querySelector('.reading-factor-overview').open).toBe(false);
+  expect(container.querySelector('.reading-analysis').open).toBe(false);
   expect(JSON.stringify(result.answer)).toBe(raw);
 });
 
-test('factor preview preserves AI order and exposes remaining analysis without changing the answer', () => {
+test('one disclosure preserves every factor in AI order without changing the answer', () => {
   const answer = syntheticOutput(context);
   answer.factors = ['support', 'oppose', 'conditional', 'neutral'].map((value, i) => ({
     assessment: value, interpretation: `原回复第 ${i + 1} 项解释`, evidence_ids: answer.factors[0].evidence_ids,
@@ -96,31 +96,24 @@ test('factor preview preserves AI order and exposes remaining analysis without c
   expect(result.status).toBe('validated');
   const saved = JSON.stringify(result.answer);
   const container = document.createElement('div'); renderOutputResult(container, result, context);
-  expect([...container.querySelectorAll('.reading-factor-excerpt')].map(p => p.textContent))
-    .toEqual(answer.factors.slice(0, 3).map(f => f.interpretation));
-  expect(container.querySelector('.reading-overview-caption').textContent).toContain('共 4 项');
+  expect(container.querySelectorAll('.reading-analysis')).toHaveLength(1);
+  expect(container.querySelector('.reading-factor-overview')).toBeNull();
   const full = container.querySelector('.reading-analysis');
   expect(full.open).toBe(false);
+  expect([...full.querySelectorAll('section > p:first-of-type')].slice(0,4).map(p=>p.textContent)).toEqual(answer.factors.map(f=>f.interpretation));
   expect(full.textContent).toContain(answer.factors[3].interpretation);
   expect(full.querySelectorAll('.reading-evidence-sources')).toHaveLength(4 + answer.yongshen_candidates.length);
   expect(JSON.stringify(result.answer)).toBe(saved);
 });
 
-test('long factor previews are Unicode-safe and expand complete plain text without exposing HTML', () => {
+test('full factor explanations preserve Unicode and display plain text inside the disclosure', () => {
   const answer = syntheticOutput(context);
   answer.factors[0].interpretation = '🙂'.repeat(181) + '<img src=x onerror="bad()">';
   const result = parseOutputAnswer(JSON.stringify(answer), context, { completed: true });
   const container = document.createElement('div'); renderOutputResult(container, result, context);
-  const preview = container.querySelector('.reading-factor-excerpt');
-  const toggle = container.querySelector('.reading-factor-overview button');
-  expect(preview.textContent).toBe('🙂'.repeat(160) + '…');
-  expect(toggle.getAttribute('aria-controls')).toBe(preview.id);
-  toggle.click(); expect(preview.textContent).toBe(answer.factors[0].interpretation);
-  expect(toggle.getAttribute('aria-expanded')).toBe('true');
+  expect(container.querySelector('.reading-analysis section > p').textContent).toBe(answer.factors[0].interpretation);
   expect(container.querySelector('img')).toBeNull();
-  toggle.click(); expect(preview.textContent).toBe('🙂'.repeat(160) + '…');
 });
-
 
 test('unsupported historical reply is disclosed as capability status with original response preserved',async()=>{
  const {createReadingSession,prepareSelectedReadingTurn}=await import('../../src/ai/output/session.js');
