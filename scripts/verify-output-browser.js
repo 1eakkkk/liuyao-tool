@@ -20,9 +20,10 @@ try {
     });
     await page.goto(`${server.resolvedUrls.local[0]}experiments/structured-output/`);
     await page.waitForFunction(() => document.querySelector('#status').textContent === '格式与引用核对通过。');
-    assert.equal(await page.locator('#result details').getAttribute('open'), null);
-    await page.locator('#result summary').click();
-    assert(await page.locator('#result details').isVisible());
+    const analysis = page.locator('#result .reading-analysis');
+    assert.equal(await analysis.getAttribute('open'), null);
+    await analysis.locator('summary').click();
+    assert(await analysis.isVisible());
     assert(await page.locator('#result').innerText().then(t => t.includes('不确定性')));
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await page.screenshot({ path: `test-results/structured-output/${width}.png`, fullPage: true });
