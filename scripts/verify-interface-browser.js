@@ -105,7 +105,7 @@ try {
     await page.keyboard.press('Escape'); assert(await page.locator('#onboardOverlay').isHidden());
     // Cloudflare injects its existing analytics beacon on the production domain.
     // Keep every other external request forbidden, including fonts and paid API.
-    const analytics = external.filter(url => target && new URL(target).hostname === 'gua.1eak.cool' && new URL(url).hostname === 'static.cloudflareinsights.com' && new URL(url).pathname.startsWith('/beacon.min.js/'));
+    const analytics = external.filter(url => target && ['gua.1eak.cool', 'gua.1eak.me'].includes(new URL(target).hostname) && new URL(url).hostname === 'static.cloudflareinsights.com' && new URL(url).pathname.startsWith('/beacon.min.js/'));
     assert.deepEqual(errors, []); assert.deepEqual(api, []); assert.deepEqual(external.filter(url => !analytics.includes(url)), [], 'No external fonts or unexpected requests');
     reports.push({ width, forms: 'consistent', keyboard: 'passed', touch_targets: 'passed', overflow: 'none', reduced_motion: true, platform_analytics_requests: analytics.length, errors });
     await context.close();

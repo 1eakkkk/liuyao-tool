@@ -1,6 +1,6 @@
 # 部署与维护
 
-更新：2026-10-09。源码仓库为 `1eakkkk/liuyao-tool`；Cloudflare Worker `liuyao` 仅托管 `dist/` 静态资源，正式域名 https://gua.1eak.cool/ 。配置以 `wrangler.jsonc` 为准。
+更新：2026-10-09。源码仓库为 `1eakkkk/liuyao-tool`；Cloudflare Worker `liuyao` 仅托管 `dist/` 静态资源，正式域名 https://gua.1eak.me/ 。配置以 `wrangler.jsonc` 为准。
 
 ## 本地开发
 

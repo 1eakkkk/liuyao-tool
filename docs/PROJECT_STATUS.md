@@ -4,7 +4,7 @@
 
 ## 产品范围
 
-一念六爻是个人／小圈子非盈利工具。源码在 GitHub `1eakkkk/liuyao-tool`，纯静态前端部署于 Cloudflare Worker `liuyao`，正式域名为 https://gua.1eak.cool/ 。没有自建后端、账户、收费或云端历史数据库。
+一念六爻是个人／小圈子非盈利工具。源码在 GitHub `1eakkkk/liuyao-tool`，纯静态前端部署于 Cloudflare Worker `liuyao`，正式域名为 https://gua.1eak.me/ 。没有自建后端、账户、收费或云端历史数据库。
 
 ## 已可用
 

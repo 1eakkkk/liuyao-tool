@@ -6,7 +6,7 @@
 
 一个面向个人与小圈子使用的非盈利工具。纯静态前端，无需注册；支持 DeepSeek API，也可以导出提示词交给外部 AI。
 
-[打开网站](https://gua.1eak.cool/) · [使用方法](#快速开始) · [本地开发](#本地开发) · [反馈问题](https://github.com/1eakkkk/liuyao-tool/issues)
+[打开网站](https://gua.1eak.me/) · [使用方法](#快速开始) · [本地开发](#本地开发) · [反馈问题](https://github.com/1eakkkk/liuyao-tool/issues)
 
 ![MIT](https://img.shields.io/badge/license-MIT-226859)
 ![Frontend](https://img.shields.io/badge/frontend-Vite%20%2B%20JavaScript-536f83)
@@ -91,7 +91,7 @@
 
 ### 方式一：只摇卦、看排盘
 
-1. 打开 [网站](https://gua.1eak.cool/)，进入「起卦排盘」。
+1. 打开 [网站](https://gua.1eak.me/)，进入「起卦排盘」。
 2. 在「铜钱摇卦」中选择逐爻投掷或连续六爻，点击「开始摇卦」。
 3. 在投掷窗口点击按钮，完成六爻后先查看本卦与变卦，再看逐爻明细；日期和干支可展开。点击“解读这一卦”可带着当前卦进入 AI 页面。
 4. 如果已经在线下摇好卦，切换手动录入，按页面爻位填写六次结果。
@@ -266,7 +266,7 @@ node scripts/capture-readme.js
 | 项目 | 当前配置 |
 | --- | --- |
 | Worker 名称 | `liuyao` |
-| 正式域名 | `gua.1eak.cool` |
+| 正式域名 | `gua.1eak.me` |
 | 配置文件 | `wrangler.jsonc` |
 | 构建输出 | `dist/` |
 | 构建命令 | `npm run release:check` |
