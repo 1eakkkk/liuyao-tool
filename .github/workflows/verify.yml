@@ -40,6 +40,7 @@ jobs:
         env:
           BROWSER_ENGINE: webkit
       - run: node scripts/verify-entry-browser.js
+      - run: npm run test:browser:experience
       - run: node scripts/verify-editorial-browser.js
       - run: npm run test:browser:usability
       - run: npm run test:browser:theme

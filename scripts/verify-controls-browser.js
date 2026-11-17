@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {chromium,webkit} from 'playwright';
 import {preview} from 'vite';
+import {browserEngines,launchBrowser,selectAppPanel} from './browser-test-launch.js';
 const target=process.argv[2], server=target?null:await preview({preview:{port:4343,strictPort:true}});
 const reports=[];fs.mkdirSync('test-results/controls',{recursive:true});
 try {
-  for (const engine of ['chromium','webkit']) {
-    const browser=await (engine==='webkit'?webkit:chromium).launch({headless:true,...(engine==='chromium'?{channel:'msedge'}:{}),...(target&&process.env.HTTPS_PROXY?{proxy:{server:process.env.HTTPS_PROXY}}:{})});
+  for (const engine of browserEngines()) {
+    const browser=await launchBrowser(engine,target);
     try {
       const page=await browser.newPage({viewport:{width:390,height:844},hasTouch:true,isMobile:true});
       const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -29,7 +29,7 @@ try {
       assert.equal(await page.locator('.select-menu [role=option]:focus').count(),1,'Nested labels must not steal menu focus');
       await page.keyboard.press('End'); await page.keyboard.press('Enter');
       assert((await page.locator('#factCheckResult').textContent()).length>10);
-      await page.locator('[data-tab=basics]').tap();
+      await selectAppPanel(page,'basics');
       assert.equal(await page.locator('#basics .block-collapse').count(),5);
       assert(await page.locator('#basics').isVisible());
       await page.locator('#basics .disclosure-trigger').first().tap();
@@ -38,7 +38,7 @@ try {
       for(const width of [320,580,1280]) {
         await page.setViewportSize({width,height:900});
         for(const mode of ['light','dark']) {
-          await page.locator('.theme-picker').evaluate(n=>n.open=true);
+          if(!await page.locator('.theme-picker').evaluate(n=>n.open))await page.locator('.theme-picker > summary').tap();
           await page.locator(`[data-theme-choice-button=${mode}]`).tap();
           await page.locator('#toggleSettingsBtn').tap();
           await page.locator('#styleSelect-trigger').tap();

@@ -25,7 +25,7 @@ function replayFadeIn(el){
   el.getAnimations().forEach(animation => animation.cancel());
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   el.animate([{opacity:.65,transform:'translateY(4px)'},{opacity:1,transform:'none'}],{
-    duration:180,easing:getComputedStyle(document.documentElement).getPropertyValue('--ui-ease-out').trim()
+    duration:240,easing:getComputedStyle(document.documentElement).getPropertyValue('--ui-ease-out').trim() || 'ease-out'
   });
 }
 

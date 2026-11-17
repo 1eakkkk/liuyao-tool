@@ -1,23 +1,25 @@
-import {chromium,webkit} from 'playwright';
 import {preview} from 'vite';
+import {browserEngines,launchBrowser,selectAppPanel,openAppHelp} from './browser-test-launch.js';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const target=process.argv[2],server=target?null:await preview({preview:{port:4358,strictPort:true}});
 fs.mkdirSync('test-results/entry',{recursive:true});
 const report=[];
-try {for(const engine of [chromium,webkit]) {
- const browser=await engine.launch({headless:true,...(engine===chromium?{channel:'msedge'}:{})});
+try {for(const engine of browserEngines()) {
+ const browser=await launchBrowser(engine,target);
  try {for(const width of [320,390,1280]) {
   const page=await browser.newPage({viewport:{width,height:900}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(target||server.resolvedUrls.local[0]);
-  assert.equal(await page.locator('.empty-lines span').count(),6);
+  await page.locator('.oracle-stroke').last().waitFor();
+  assert.equal(await page.locator('.oracle-stroke').count(),6);
   assert(await page.locator('.theme-switch').isHidden());
   await page.locator('.theme-picker > summary').click();
   assert(await page.locator('.theme-switch').isVisible());
   await page.keyboard.press('Escape');
   assert(await page.locator('.theme-switch').isHidden());
   assert.equal(await page.locator('.tabs .tab-btn').count(),2);
-  assert.equal(await page.locator('.header-help #helpFab').count(),1);
+  assert.equal(await page.locator('.header-tools #helpFab').count(),1);
+  if(width<=740){await page.locator('.learning-menu > summary').click();assert(await page.locator('#openHelpMenuBtn').isVisible());await page.keyboard.press('Escape');}
   await page.locator('[data-tab=ai]').click();
   assert.equal(await page.locator('#readingMode').inputValue(),'');
   assert.equal(await page.locator('#readingMode-trigger span').textContent(),'选择');
@@ -47,7 +49,7 @@ try {for(const engine of [chromium,webkit]) {
   assert(historyBefore);
   await page.reload();
   assert.equal(await page.locator('#plateWrap table').count(),0);
-  assert.equal(await page.locator('.empty-lines span').count(),6);
+  await page.locator('.oracle-stroke').last().waitFor();assert.equal(await page.locator('.oracle-stroke').count(),6);
   assert(await page.locator('#castSummary').isHidden());
   assert.equal(await page.locator('#castDiagram').textContent(),'');
   await page.locator('[data-tab=ai]').click();
@@ -72,7 +74,7 @@ try {for(const engine of [chromium,webkit]) {
     Date.now=window.testNow;delete document.visibilityState;
   });
   assert.equal(await page.locator('#plateWrap table').count(),0);
-  assert.equal(await page.locator('.empty-lines span').count(),6);
+  await page.locator('.oracle-stroke').last().waitFor();assert.equal(await page.locator('.oracle-stroke').count(),6);
   // Resetting the workspace must not reset cast quota; clear quota only in this test fixture.
   await page.evaluate(()=>localStorage.removeItem('liuyao_cast_log'));
   for(let i=0;i<6;i++)await page.locator(`#manualLine${i}`).selectOption('8');
@@ -81,14 +83,18 @@ try {for(const engine of [chromium,webkit]) {
   assert(await page.locator('.term-guide p').first().isVisible());await page.locator('[data-mode=system]').click();
   await page.locator('#castBtn').click();await page.locator('.physics-dialog').waitFor();assert(await page.locator('#confirmOverlay').isHidden());
   await page.locator('.physics-close').click();
-  await page.locator('[data-tab=basics]').click();assert(await page.locator('#basics').isVisible());
-  await page.locator('[data-tab=guide]').click();assert(await page.locator('#guide').isVisible());
+  await selectAppPanel(page,'basics');assert(await page.locator('#basics').isVisible());
+  await selectAppPanel(page,'guide');assert(await page.locator('#guide').isVisible());
   await page.locator('[data-tab=caster]').click();
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
-  await page.locator('#helpFab').click();await page.locator('#onboardCloseBtn').click();
+  await openAppHelp(page);await page.locator('#onboardCloseBtn').click();
+  if(width<=740)assert(await page.locator('.learning-menu > summary').evaluate(n=>n===document.activeElement));
+  await page.locator('#openJournalBtn').click();assert(await page.locator('#journalDialog').evaluate(n=>n.matches(':modal')));
+  await page.locator('#closeJournalBtn').click();await page.locator('#journalDialog').waitFor({state:'hidden'});
+  assert(await page.locator('#openJournalBtn').evaluate(n=>n===document.activeElement));
   await page.waitForTimeout(3200);
-  await page.screenshot({path:`test-results/entry/${engine.name()}-${width}.png`,animations:'disabled'});
-  assert.deepEqual(errors,[]);report.push({engine:engine.name(),width,reset:'reload-back-short-visit-and-30-minute-return',emptyRecast:'no-confirmation',navigation:'two-primary',errors});
+  await page.screenshot({path:`test-results/entry/${engine}-${width}.png`,animations:'disabled'});
+  assert.deepEqual(errors,[]);report.push({engine,width,reset:'reload-back-short-visit-and-30-minute-return',emptyRecast:'no-confirmation',navigation:'two-primary-and-learning-menu',journal:'modal-and-focus-return',errors});
   await page.close();
  }}finally{await browser.close();}
 }}finally{await server?.httpServer.close();}

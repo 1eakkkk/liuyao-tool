@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {chromium,webkit} from 'playwright';
 const target=process.argv[2]||'http://127.0.0.1:4338/',engine=process.env.BROWSER_ENGINE||'chromium';
-const browser=await(engine==='webkit'?webkit:chromium).launch({headless:true,...(engine==='chromium'?{channel:'msedge'}:{}),...(process.env.HTTPS_PROXY?{proxy:{server:process.env.HTTPS_PROXY}}:{})});
+const browser=await(engine==='webkit'?webkit:chromium).launch({headless:true,...(engine==='chromium'?(process.env.BROWSER_EXECUTABLE?{executablePath:process.env.BROWSER_EXECUTABLE}:{channel:'msedge'}):{}),...(process.env.HTTPS_PROXY?{proxy:{server:process.env.HTTPS_PROXY}}:{})});
 const report=[],extract=t=>JSON.parse(t.split('【卦盘、问题与历史数据】\n')[1].split('\n\n请返回完整')[0]);
 fs.mkdirSync('test-results/experience',{recursive:true});
 const reply=i=>({schema_version:'structured-selection-2',context_id:i.context_id,answer:'象意上更适合继续小步推进，主要支持来自当前观察对象的条件。需留意动变与外部牵制，建议先完成一项小目标，再根据实际反馈调整。',direction:'favorable',main_choice:{basis_id:'l1',reason:'选取与当前问题有关的主要观察位置。'},factors:[{basis_ids:['l1'],assessment:'support',interpretation:'这项条件为推进提供一个支持角度，不证明实际结果已发生。'},{basis_ids:['l1','l2','l3','l4','l5','l6','l1'],assessment:'conditional',interpretation:'组合观察六爻，重复编号只显示一次。'},{basis_ids:[],assessment:'neutral',interpretation:'一般建议不伪装成已引用的程序事实。'}],background_usage:[],timing_candidates:[],uncertainties:['实际结果取决于后续行动。']});
@@ -68,7 +68,7 @@ try{for(const [index,width]of [1280,390,320].entries()){
    assert.equal(await page.locator('.history-item').count(),3);
    await page.locator('#aiHistorySearch').fill('');
  }
- await page.locator('#toggleHistoryBtn').click();
+ await page.locator('#closeJournalBtn').click();await page.waitForFunction(()=>!document.getElementById('journalDialog').open);
  // Also exercise the initial API button, not only the follow-up route.
  if(index!==0){await page.locator('[data-tab="caster"]').click();await page.locator('[data-mode="manual"]').click();for(let n=0;n<6;n++)await page.locator(`#manualLine${n}`).selectOption('8');await page.locator('#manualCastBtn').click();await page.locator('[data-tab="ai"]').click();}
  await page.locator('#questionInput').fill('我能活多久，我很焦虑');await page.locator('#readingMode').selectOption('structured');await page.locator('#interpretBtn').click();await page.waitForFunction(()=>document.querySelectorAll('#readingTurns article').length===1,{},{timeout:90000});assert.equal(calls.length,3);assert((await page.locator('#readingStatus').textContent()).includes('已完成'));assert.deepEqual(errors,[]);

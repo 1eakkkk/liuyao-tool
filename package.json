@@ -24,6 +24,7 @@
     "test:browser:usability": "node scripts/verify-usability-browser.js",
     "test:browser:controls": "node scripts/verify-controls-browser.js",
     "test:browser:theme": "node scripts/verify-theme-browser.js",
+    "test:browser:experience": "node scripts/verify-experience-browser.js",
     "ab:prepare:rules": "node scripts/phase5-ab.js --prepare",
     "audit:reading": "node scripts/audit-reading-quality.js",
     "knowledge:prepare": "node scripts/knowledge/prepare-reading-pack.js"

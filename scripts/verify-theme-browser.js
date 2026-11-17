@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {chromium,webkit} from 'playwright';
 import {preview} from 'vite';
+import {browserEngines,launchBrowser,openAppHelp} from './browser-test-launch.js';
 const target=process.argv[2];
 const server=target?null:await preview({preview:{port:4342,strictPort:true}});
 const reports=[]; fs.mkdirSync('test-results/theme',{recursive:true});
 try {
-  for(const engine of ['chromium','webkit']) {
-    const browser=await (engine==='webkit'?webkit:chromium).launch({headless:true,...(engine==='chromium'?{channel:process.env.BROWSER_CHANNEL||'msedge'}:{}),...(target&&process.env.HTTPS_PROXY?{proxy:{server:process.env.HTTPS_PROXY}}:{})});
+  for(const engine of browserEngines()) {
+    const browser=await launchBrowser(engine,target);
     try {
       const context=await browser.newContext({viewport:{width:390,height:900},colorScheme:'dark'});
       const page=await context.newPage(), errors=[];
@@ -15,7 +15,7 @@ try {
       await page.goto(target||server.resolvedUrls.local[0]);
       const openTheme=async()=>{
         await page.locator('.theme-picker > summary').scrollIntoViewIfNeeded();
-        await page.locator('.theme-picker').evaluate(n=>n.open=true);
+        if(!await page.locator('.theme-picker').evaluate(n=>n.open))await page.locator('.theme-picker > summary').click();
         assert(await page.locator('[data-theme-choice-button]').evaluateAll(buttons=>buttons.every(button=>{
           const r=button.getBoundingClientRect();
           return r.height>=44 && r.left>=0 && r.right<=innerWidth && r.top>=0 && r.bottom<=innerHeight &&
@@ -55,11 +55,12 @@ try {
           await page.screenshot({path:`test-results/theme/${engine}-${width}-${mode}.png`,fullPage:true});
         }
       }
-      await page.locator('#helpFab').click();
-      assert.equal(await page.locator('.onboard-card').evaluate(n=>getComputedStyle(n).backgroundColor),'rgb(32, 39, 35)');
+      const surface=await page.evaluate(()=>{const sample=document.createElement('div');sample.style.backgroundColor='var(--ui-surface)';document.body.append(sample);const color=getComputedStyle(sample).backgroundColor;sample.remove();return color;});
+      await openAppHelp(page);
+      assert.equal(await page.locator('.onboard-card').evaluate(n=>getComputedStyle(n).backgroundColor),surface,'Help uses the current dark surface');
       await page.locator('#onboardCloseBtn').click(); await page.locator('[data-tab=caster]').click();
       await page.locator('#castBtn').click();
-      assert.equal(await page.locator('.physics-dialog').evaluate(n=>getComputedStyle(n).backgroundColor),'rgb(32, 39, 35)');
+      assert.equal(await page.locator('.physics-dialog').evaluate(n=>getComputedStyle(n).backgroundColor),surface,'Physical casting uses the current dark surface');
       await page.locator('.physics-close').click();
       assert.deepEqual(errors,[]);
       reports.push({engine,systemChanges:'passed',overrideAndPersistence:'passed',widths:[320,580,1280],structuredSettings:'hidden',legacySettings:'available',errors});
