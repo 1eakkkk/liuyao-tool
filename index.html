@@ -9,8 +9,8 @@
 <meta charset="UTF-8">
 <title>一念六爻 · 一事一卦，解读有据</title>
 <meta name="description" content="从三钱起卦、纳甲排盘到 AI 解读，保留当时的判断与依据，回看真实发生的事。无需注册，本机保存。">
-<meta name="theme-color" content="#edf0f7">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='1' width='30' height='30' rx='8' fill='%234256c5'/%3E%3Cpath d='M8 6h16M8 10h6m4 0h6M8 14h16M8 22h16M8 26h6m4 0h6' fill='none' stroke='%23f5f0e5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M8 18h6m4 0h6' fill='none' stroke='%23e2a090' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#faf8f2">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='1' width='30' height='30' rx='8' fill='%239c3e30'/%3E%3Cpath d='M8 6h16M8 10h6m4 0h6M8 14h16M8 22h16M8 26h6m4 0h6' fill='none' stroke='%23f5f0e5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M8 18h6m4 0h6' fill='none' stroke='%23e2a090' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <script>
 /* ==================================================================
@@ -179,24 +179,24 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 <!-- ===================== TAB 2 ===================== -->
 <div class="panel active" id="caster" role="tabpanel" aria-labelledby="tabbtn-caster" tabindex="0">
   <section class="block casting-workspace" aria-label="起卦排盘">
+    <header class="cast-cover">
+      <img class="cover-print" src="./src/assets/mountain-print.webp" width="1536" height="1024" alt="" fetchpriority="high">
+      <div class="cover-inscription">
+        <p class="cover-date"><time id="coverDate"></time></p>
+        <h2 class="casting-title">问一卦<span>。</span></h2>
+        <p class="casting-description">三枚铜钱，六次投掷。<br>把此刻在意的一件事写下来。</p>
+      </div>
+    </header>
     <div class="caster-box">
       <div class="caster-controls">
-        <h2 class="casting-title">一念之间，<br>六爻成象。</h2>
-        <p class="casting-description">把此刻在意的事，认真问一次。<br>从起卦、解读，到后来回看。</p>
-        <div class="cast-question"><label for="castQuestionInput">你想问什么？<span>也可以先在心中默念</span></label><textarea id="castQuestionInput" maxlength="500" rows="2" autocomplete="off" placeholder="一件具体的事，一个想弄清的问题。"></textarea></div>
-
+        <div class="cast-question"><label for="castQuestionInput">所问之事</label><textarea id="castQuestionInput" maxlength="500" rows="2" autocomplete="off" placeholder="写下你的问题，也可以默念后直接摇卦。"></textarea></div>
         <div class="cast-mode-toggle" id="castModeToggle">
-          <button type="button" class="mode-btn active" data-mode="system">铜钱摇卦</button>
-          <button type="button" class="mode-btn" data-mode="manual">手动录入</button>
+          <button type="button" class="mode-btn active" data-mode="system" aria-pressed="true">铜钱摇卦</button>
+          <button type="button" class="mode-btn" data-mode="manual" aria-pressed="false">手动录入</button>
         </div>
 
-        <!-- 摇卦频率配额（10分钟内最多3次）常驻提示：之前只有点击被拦下时才弹toast告知，
-             用户不知道自己还剩几次、容易"莫名其妙"被拦。这里常态显示剩余次数，
-             铜钱摇卦和线下摇卦手动填入共用同一个配额、共用同一处提示。 -->
-        <div class="cast-quota-hint" id="castQuotaHint"></div>
-
         <div id="systemCastPanel">
-          <label for="castPace">起卦节奏</label><select id="castPace"><option value="step">逐爻投掷 · 每次一爻</option><option value="all">一次完成 · 连续六爻</option></select><button class="cast-btn" id="castBtn">开始摇卦</button>
+          <label class="visually-hidden" for="castPace">起卦节奏</label><select id="castPace"><option value="step">逐爻投掷</option><option value="all">连续投六爻</option></select><button class="cast-btn" id="castBtn">开始摇卦</button>
           <div class="coin-log" id="coinLog"></div>
 
         </div>
@@ -205,7 +205,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
           <div class="manual-lines" id="manualLines"></div>
           <button class="cast-btn" id="manualCastBtn">生成排盘</button>
         </div>
-        <details class="calendar-settings"><summary>日期与时间（默认现在）</summary>
+        <details class="calendar-settings"><summary>起卦时间 · 默认此刻</summary>
         <label for="dayGanzhi">起卦日的干支（用于起六神、算空亡）</label>
         <select id="dayGanzhi"></select>
         <div class="day-lookup-row">
@@ -215,6 +215,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 
         <p class="desc" style="font-size:12px;margin:8px 0">按设备本地时间、零点换日，年/月柱按节气。交节时刻为近似计算；仅录入日柱时不推定年月时柱。</p>
         </details>
+        <div class="cast-quota-hint" id="castQuotaHint"></div>
       </div>
       <div class="cast-result">
         <div class="cast-summary" id="castSummary" tabindex="-1" hidden>
@@ -225,7 +226,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
           </div>
         </div>
         <div class="plate" id="plateWrap" tabindex="-1">
-          <div class="placeholder oracle-stage"><div class="oracle-art" id="oracleArt" aria-hidden="true"></div><div class="oracle-caption"><span class="oracle-dot" aria-hidden="true"></span><span>由初至上，六爻成卦</span><span class="oracle-caption-end">阴与阳，动与静</span></div></div>
+          <div class="placeholder" hidden></div>
         </div>
       </div>
       <div id="factCheckPanel" class="fact-check-panel" hidden></div>
@@ -377,7 +378,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 <!-- ===================== TAB 4 ===================== -->
 <div class="panel" id="ai" role="tabpanel" aria-labelledby="tabbtn-ai" tabindex="0">
   <section class="block">
-    <div class="reading-intro"><span class="section-symbol" aria-hidden="true">䷀</span><h2>让这一卦，<br>有据可循。</h2><p class="desc">先读判断，再看它从何而来。<br>同一件事，可以带着原卦继续问。</p></div>
+    <div class="reading-intro"><h2>读这一卦<span>。</span></h2><p class="desc">对照卦盘看判断，留下可以回头核验的依据。</p></div>
     <!-- 排盘数据虽然一直存在内存里的 window.lastCastData，但跳转过来之后界面上
          完全看不出来——用户点"AI 解读"之前只能凭记忆或信任系统。这里补一条
          轻量状态提示，有 lastCastData 就渲染当前是哪一卦，没有就不显示，
@@ -628,7 +629,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
   </a>
 </footer>
 
-<dialog id="journalDialog" class="journal-dialog" aria-labelledby="journalTitle"><header class="journal-header"><div><span>每一次认真问过的事</span><h2 id="journalTitle">我的卦簿</h2></div><button type="button" id="closeJournalBtn" class="settings-close" aria-label="关闭卦簿">✕</button></header><p class="journal-feedback" id="journalFeedback" role="status" aria-live="polite"></p><div class="journal-body">      <div class="history-panel" id="historyPanel">
+<dialog id="journalDialog" class="journal-dialog" aria-labelledby="journalTitle"><header class="journal-header"><div><h2 id="journalTitle">我的卦簿</h2></div><button type="button" id="closeJournalBtn" class="settings-close" aria-label="关闭卦簿">✕</button></header><p class="journal-feedback" id="journalFeedback" role="status" aria-live="polite"></p><div class="journal-body">      <div class="history-panel" id="historyPanel">
         <div class="history-heading"><h3>问卦记录</h3><span>保存在当前浏览器</span></div>
         <label class="history-search-label" for="aiHistorySearch">查找问过的事</label>
         <div class="history-search">

@@ -8,34 +8,6 @@ function entrance(element, frames, duration = 280, delay = 0) {
   return element.animate(frames, {duration, delay, easing:'cubic-bezier(.22,1,.36,1)', fill:'backwards'});
 }
 
-// The six extruded strokes belong to the empty state. They never stand in for
-// a generated cast: renderPlate replaces this node with the actual chart.
-function createOracleArtwork(host) {
-  if (!host) return;
-  const face = (x, y, width) => `<polygon class="oracle-front" points="${x},${y} ${x+width},${y-35} ${x+width},${y-23} ${x},${y+12}"/>
-    <polygon class="oracle-side" points="${x+width},${y-35} ${x+width+58},${y-8} ${x+width+58},${y+4} ${x+width},${y-23}"/>
-    <polygon class="oracle-top" points="${x},${y} ${x+width},${y-35} ${x+width+58},${y-8} ${x+58},${y+27}"/>
-    <polygon class="oracle-front" points="${x},${y} ${x+58},${y+27} ${x+width+58},${y-8} ${x+width+58},${y+4} ${x+58},${y+39} ${x},${y+12}"/>`;
-  const strokes = [true,false,true,false,false,true].map((solid,index) => {
-    const x=126-index*13, y=91+index*47;
-    return `<g class="oracle-stroke">${solid ? face(x,y,250) : face(x,y,106)+face(x+144,y-20,106)}</g>`;
-  }).join('');
-  host.innerHTML = `<svg viewBox="0 0 500 430" xmlns="http://www.w3.org/2000/svg" focusable="false"><defs><linearGradient id="oracle-face" x1="0" y1="0" x2="1" y2="1"><stop stop-color="var(--ui-surface)"/><stop offset=".45" stop-color="var(--sculpture-top)"/><stop offset="1" stop-color="var(--sculpture-edge)"/></linearGradient></defs>${strokes}</svg>`;
-  host.querySelectorAll('.oracle-stroke').forEach((stroke,index) => {
-    entrance(stroke,[{opacity:0,transform:'translateY(32px)'},{opacity:1,transform:'translateY(0)'}],700,index*65);
-  });
-  const pointer = window.matchMedia?.('(hover:hover) and (pointer:fine)') || {matches:false};
-  host.addEventListener('pointermove',event=>{
-    if (!pointer.matches || reducedMotion()) return;
-    const bounds=host.getBoundingClientRect();
-    host.style.setProperty('--oracle-x',`${((event.clientX-bounds.left)/bounds.width-.5)*9}deg`);
-    host.style.setProperty('--oracle-y',`${((event.clientY-bounds.top)/bounds.height-.5)*-7}deg`);
-  });
-  host.addEventListener('pointerleave',()=>{
-    host.style.setProperty('--oracle-x','0deg');host.style.setProperty('--oracle-y','0deg');
-  });
-}
-
 export function initializeExperience() {
   const question=document.getElementById('questionInput');
   const castingQuestion=document.getElementById('castQuestionInput');
@@ -145,12 +117,18 @@ export function initializeExperience() {
 
   const labels={promptOutputText:'生成的提示词',cleanupInputText:'要整理的外部 AI 回复',cleanupOutputText:'整理后的回复',followUpExportInput:'要导出的追问',followUpExportOutput:'生成的追问提示词',followUpInput:'继续追问同一件事'};
   for (const [id,label] of Object.entries(labels)) document.getElementById(id)?.setAttribute('aria-label',label);
-  const ensureArtwork=()=>{
-    const host=document.getElementById('oracleArt');
-    if(host && !host.firstElementChild) createOracleArtwork(host);
-  };
-  // Entry reset intentionally restores the pristine empty-state HTML on
-  // pageshow and after a long absence. Reattach only this disposable artwork.
-  new MutationObserver(ensureArtwork).observe(document.getElementById('plateWrap'),{childList:true});
-  ensureArtwork();
+  const coverDate = document.getElementById('coverDate');
+  const dateFormat = new Intl.DateTimeFormat('zh-CN', {year:'numeric', month:'long', day:'numeric', weekday:'long'});
+  function updateCoverDate() {
+    const today = new Date();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    coverDate.dateTime = `${today.getFullYear()}-${month}-${day}`;
+    coverDate.textContent = dateFormat.format(today);
+  }
+  updateCoverDate();
+  window.addEventListener('pageshow', updateCoverDate);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) updateCoverDate();
+  });
 }

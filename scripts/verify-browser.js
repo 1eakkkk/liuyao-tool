@@ -93,7 +93,7 @@ try {
       // Compare every restored result element; the intentional UI guidance differs from v1.
       outputs[name].restoredPlate = await page.locator('#plateWrap').evaluate(root =>
         [...root.children].filter(n => !n.matches('.plate-legend,.term-guide')).map(n => n.outerHTML).join(''));
-      if (name !== 'baseline') {await page.locator('#plateWrap .oracle-stroke').last().waitFor({state:'attached'});assert.equal(await page.locator('#plateWrap .oracle-stroke').count(), 6);}
+      if (name !== 'baseline') assert(await page.locator('.cast-cover').isVisible());
       outputs[name].restoredConversation = await page.locator('#aiResult').innerHTML();
       outputs[name].requests = requests;
       assert.equal(requests.length, 2);
