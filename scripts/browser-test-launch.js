@@ -19,7 +19,7 @@ export function launchBrowser(engine,target) {
 export async function selectAppPanel(page,name) {
  if(['basics','guide'].includes(name)) {
   const menu=page.locator('.learning-menu');
-  if(!await menu.evaluate(node=>node.open))await menu.locator(':scope > summary').click();
+  if(await menu.count()&&!await menu.evaluate(node=>node.open))await menu.locator(':scope > summary').click();
  }
  await page.locator(`[data-tab="${name}"]`).click();
 }

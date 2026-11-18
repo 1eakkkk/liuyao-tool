@@ -260,6 +260,7 @@ body.experience :is(.registration-filter-status,.registration-filter-note,.regis
 :root body.experience :is(.physics-close,.physics-status,.physics-line-name,.physics-line-number) {color:var(--ui-text);}
 :root body.experience .physics-throw {color:#fff;}
 :root body.experience .toast {border-radius:12px;padding:14px 20px;box-shadow:0 12px 40px #17244520;font-size:14px;}
+body.experience #toastWrap {pointer-events:none;}
 :root body.experience .site-footer {max-width:1180px;margin:0 auto;padding:24px 0 36px;border-top:1px solid var(--ui-border);display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:20px;text-align:left;color:var(--ui-muted);}
 :root body.experience .site-footer .note {margin:0;font-size:12px;background:transparent;border:0;padding:0;}
 :root body.experience .source-link {font-size:12px;padding:0;min-height:40px;color:var(--ui-muted);}

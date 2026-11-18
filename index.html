@@ -42,7 +42,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
   面板切换靠 .panel.active 类 + roving tabindex，逻辑在 script 区 "tabs" 一节。
 ================================================================== -->
 
-<div id="toastWrap"></div>
+<div id="toastWrap" role="status" aria-live="polite"></div>
 
 <div class="onboard-overlay" id="onboardOverlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="onboardTitle">
   <div class="onboard-card">

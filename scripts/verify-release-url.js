@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { chromium } from 'playwright';
+import {browserEngines,launchBrowser,openAppHelp} from './browser-test-launch.js';
 
 const base = new URL(process.argv[2]);
 assert(base.protocol === 'https:', 'Release verification requires HTTPS');
@@ -15,10 +15,8 @@ for (const asset of manifest.artifacts) {
   assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
   assert.equal(response.headers.get('referrer-policy'), 'strict-origin-when-cross-origin');
 }
-const browser = await chromium.launch({
-  channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true,
-  ...(process.env.HTTPS_PROXY ? { proxy: { server: process.env.HTTPS_PROXY } } : {}),
-});
+const [engine]=browserEngines(['chromium']);
+const browser = await launchBrowser(engine,base.href);
 const results = [];
 try {
   for (const width of [1280, 390]) {
@@ -27,7 +25,7 @@ try {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(base.href, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
+    if (!(await page.locator('#onboardCloseBtn').isVisible())) await openAppHelp(page);
     await page.locator('#onboardCloseBtn').click();
     await page.locator('[data-tab="caster"]').click();
     await page.locator('[data-mode="manual"]').click();

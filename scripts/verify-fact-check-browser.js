@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { chromium } from 'playwright';
 import { preview } from 'vite';
+import {browserEngines,launchBrowser,openAppHelp} from './browser-test-launch.js';
 const target = process.argv[2];
 const server = target ? null : await preview({ preview: { port: 4336, strictPort: true } });
 const url = target || server.resolvedUrls.local[0];
-const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true,
-  ...(target && process.env.HTTPS_PROXY ? { proxy: { server: process.env.HTTPS_PROXY } } : {}) });
+const [engine]=browserEngines(['chromium']);
+const browser = await launchBrowser(engine,target);
 const report = [];
 fs.mkdirSync('test-results/fact-check', { recursive: true });
 try {
@@ -15,7 +15,7 @@ try {
     const page = await context.newPage(), errors = [], requests = [];
     page.on('pageerror', e => errors.push(e.message));
     await page.route('https://api.deepseek.com/**', route => { requests.push(route.request().url()); return route.abort(); });
-    await page.goto(url); if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
+    await page.goto(url); if (!(await page.locator('#onboardCloseBtn').isVisible())) await openAppHelp(page);
     await page.locator('#onboardCloseBtn').click();
     await page.locator('[data-tab="caster"]').click(); await page.locator('[data-mode="manual"]').click();
     assert(await page.locator('#factCheckPanel').isHidden());

@@ -53,18 +53,36 @@ export function initializeExperience() {
   const search=document.getElementById('aiHistorySearch');
   const openButton=document.getElementById('openJournalBtn');
   const closeButton=document.getElementById('closeJournalBtn');
-  let journalTrigger=openButton, closeRevision=0;
+  const journalBody=dialog.querySelector('.journal-body');
+  let journalTrigger=openButton, closeRevision=0, journalScroll=0;
+  const readingScroll=new Map();
+  function captureJournalView(){
+    journalScroll=journalBody.scrollTop;
+    panel.querySelectorAll('.history-item[data-id]').forEach(item=>{
+      const body=item.querySelector('.history-item-body');
+      if(body)readingScroll.set(item.dataset.id,body.scrollTop);
+    });
+  }
+  function restoreJournalView(){
+    panel.querySelectorAll('.history-item[data-id]').forEach(item=>{
+      const body=item.querySelector('.history-item-body');
+      if(body&&readingScroll.has(item.dataset.id))body.scrollTop=readingScroll.get(item.dataset.id);
+    });
+    journalBody.scrollTop=journalScroll;
+  }
   function showJournal(trigger) {
     journalTrigger=trigger || journalTrigger;
     closeRevision++;
     panel.classList.add('open');
     toggle.setAttribute('aria-expanded','true');
     if (!dialog.open) dialog.showModal();
+    restoreJournalView();
     document.getElementById('journalFeedback').textContent='';
     entrance(dialog,[{opacity:.4,transform:'translateX(40px)'},{opacity:1,transform:'translateX(0)'}],340);
     search.focus({preventScroll:true});
   }
   async function closeJournal() {
+    captureJournalView();
     const revision=++closeRevision;
     const animation=entrance(dialog,[{opacity:1,transform:'translateX(0)'},{opacity:0,transform:'translateX(28px)'}],180);
     await animation?.finished.catch(()=>{});

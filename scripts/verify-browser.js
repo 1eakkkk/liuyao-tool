@@ -1,5 +1,5 @@
-import { chromium } from 'playwright';
 import { preview, createServer } from 'vite';
+import {browserEngines,launchBrowser,selectAppPanel,openAppHelp} from './browser-test-launch.js';
 import http from 'node:http';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
@@ -16,7 +16,8 @@ await new Promise((resolve, reject) => { baseline.once('error', reject); baselin
 const built = await preview({ preview: { port: 4320, strictPort: true } });
 const dev = await createServer({ server: { port: 4321, strictPort: true } });
 await dev.listen();
-const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true });
+const [engine] = browserEngines(['chromium']);
+const browser = await launchBrowser(engine);
 const report = [];
 try {
   const urls = { baseline: `http://127.0.0.1:${baseline.address().port}`, built: built.resolvedUrls.local[0], dev: dev.resolvedUrls.local[0] };
@@ -42,15 +43,18 @@ try {
       fs.mkdirSync(out, { recursive: true });
       outputs[name] = {};
       const capture = async tab => {
+        // The frozen test clock must advance through real transient-feedback
+        // lifetimes; otherwise a toast blocks the sticky navigation forever.
+        await page.clock.runFor(3600);
         await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo(0, 0); });
         outputs[name][tab] = await page.screenshot({ path: `${out}/${width}-${tab}.png`, fullPage: true, animations: 'disabled' });
       };
-      if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
+      if (!(await page.locator('#onboardCloseBtn').isVisible())) await openAppHelp(page);
       await capture('onboard');
-      if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
-    await page.locator('#onboardCloseBtn').click();
+      if (!(await page.locator('#onboardCloseBtn').isVisible())) await openAppHelp(page);
+      await page.locator('#onboardCloseBtn').click();
       for (const tab of ['basics', 'caster', 'guide', 'ai']) {
-        await page.locator(`[data-tab="${tab}"]`).click();
+        await selectAppPanel(page,tab);
         if (tab === 'caster') {
           await page.locator('[data-mode="manual"]').click();
           for (const [i, sum] of [7, 8, 9, 7, 6, 8].entries()) await page.locator(`#manualLine${i}`).selectOption(String(sum));
@@ -72,10 +76,11 @@ try {
         ];
         await route.fulfill({ status: 200, contentType: 'text/event-stream', body: chunks.map(chunk => `data: ${JSON.stringify(chunk)}\n\n`).join('') + 'data: [DONE]\n\n' });
       });
-      await page.locator('#toggleSettingsBtn, #aiSettings[open] #closeSettingsBtn').last().click();
+      await page.locator('#toggleSettingsBtn').click();
       await page.locator('#apiKeyInput').fill('synthetic-browser-key');
       await page.locator('#saveKeyBtn').click();
-      await page.locator('#toggleSettingsBtn, #aiSettings[open] #closeSettingsBtn').last().click();
+      if(await page.locator('#closeSettingsBtn').isVisible())await page.locator('#closeSettingsBtn').click();
+      else await page.locator('#toggleSettingsBtn').click();
       if (await page.locator('#readingMode').count()) await page.locator('#readingMode').selectOption('legacy'); await page.locator('#interpretBtn').click();
       await page.waitForFunction(() => !document.getElementById('interpretBtn').disabled && document.getElementById('aiResult').textContent.includes('固定流式回复'));
       await page.locator('#followUpInput').fill('固定追问');
@@ -88,7 +93,7 @@ try {
       // Compare every restored result element; the intentional UI guidance differs from v1.
       outputs[name].restoredPlate = await page.locator('#plateWrap').evaluate(root =>
         [...root.children].filter(n => !n.matches('.plate-legend,.term-guide')).map(n => n.outerHTML).join(''));
-      if (name !== 'baseline') assert.equal(await page.locator('#plateWrap .empty-lines span').count(), 6);
+      if (name !== 'baseline') {await page.locator('#plateWrap .oracle-stroke').last().waitFor({state:'attached'});assert.equal(await page.locator('#plateWrap .oracle-stroke').count(), 6);}
       outputs[name].restoredConversation = await page.locator('#aiResult').innerHTML();
       outputs[name].requests = requests;
       assert.equal(requests.length, 2);
