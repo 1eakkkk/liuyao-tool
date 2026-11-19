@@ -117,18 +117,17 @@ export function initializeExperience() {
 
   const labels={promptOutputText:'生成的提示词',cleanupInputText:'要整理的外部 AI 回复',cleanupOutputText:'整理后的回复',followUpExportInput:'要导出的追问',followUpExportOutput:'生成的追问提示词',followUpInput:'继续追问同一件事'};
   for (const [id,label] of Object.entries(labels)) document.getElementById(id)?.setAttribute('aria-label',label);
-  const coverDate = document.getElementById('coverDate');
-  const dateFormat = new Intl.DateTimeFormat('zh-CN', {year:'numeric', month:'long', day:'numeric', weekday:'long'});
-  function updateCoverDate() {
-    const today = new Date();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    coverDate.dateTime = `${today.getFullYear()}-${month}-${day}`;
-    coverDate.textContent = dateFormat.format(today);
+  // Keep the completed chart first in both reading and keyboard order.
+  const plate = document.getElementById('plateWrap');
+  const result = plate.closest('.cast-result');
+  const controls = document.querySelector('.caster-controls');
+  function positionChart() {
+    if (plate.querySelector('table')) {
+      if (result.nextElementSibling !== controls) controls.before(result);
+    } else if (controls.nextElementSibling !== result) {
+      controls.after(result);
+    }
   }
-  updateCoverDate();
-  window.addEventListener('pageshow', updateCoverDate);
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) updateCoverDate();
-  });
+  new MutationObserver(positionChart).observe(plate, {childList:true});
+  positionChart();
 }

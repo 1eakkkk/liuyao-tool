@@ -10,8 +10,8 @@ try {for(const engine of browserEngines()) {
  try {for(const width of [320,390,1280]) {
   const page=await browser.newPage({viewport:{width,height:900}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(target||server.resolvedUrls.local[0]);
-  await page.locator('.cast-cover').waitFor();
-  assert(await page.locator('.cover-print').evaluate(image => image.complete && image.naturalWidth > 0));
+  await page.locator('.question-heading').waitFor();
+  assert(await page.locator('.casting-coins').evaluate(image => image.complete && image.naturalWidth > 0));
   assert(await page.locator('.theme-switch').isHidden());
   await page.locator('.theme-picker > summary').click();
   assert(await page.locator('.theme-switch').isVisible());
@@ -40,7 +40,8 @@ try {for(const engine of browserEngines()) {
   await page.locator('[data-tab=caster]').click();await page.locator('[data-mode=manual]').click();
   for(let i=0;i<6;i++)await page.locator(`#manualLine${i}`).selectOption('8');
   await page.locator('#manualCastBtn').click();
-  assert(await page.locator('.cast-cover').isHidden());
+  assert(await page.locator('.question-heading').isHidden());
+  assert.equal(await page.locator('.caster-box > :first-child').getAttribute('class'), 'cast-result');
   await page.locator('[data-tab=ai]').click();
   await page.locator('#questionInput').fill('刷新前的问题');
   await page.locator('#readingMode').selectOption('legacy');
@@ -50,8 +51,8 @@ try {for(const engine of browserEngines()) {
   assert(historyBefore);
   await page.reload();
   assert.equal(await page.locator('#plateWrap table').count(),0);
-  await page.locator('.cast-cover').waitFor();
-  assert(await page.locator('.cover-print').evaluate(image => image.complete && image.naturalWidth > 0));
+  await page.locator('.question-heading').waitFor();
+  assert(await page.locator('.casting-coins').evaluate(image => image.complete && image.naturalWidth > 0));
   assert(await page.locator('#castSummary').isHidden());
   assert.equal(await page.locator('#castDiagram').textContent(),'');
   await page.locator('[data-tab=ai]').click();
@@ -76,8 +77,8 @@ try {for(const engine of browserEngines()) {
     Date.now=window.testNow;delete document.visibilityState;
   });
   assert.equal(await page.locator('#plateWrap table').count(),0);
-  await page.locator('.cast-cover').waitFor();
-  assert(await page.locator('.cover-print').evaluate(image => image.complete && image.naturalWidth > 0));
+  await page.locator('.question-heading').waitFor();
+  assert(await page.locator('.casting-coins').evaluate(image => image.complete && image.naturalWidth > 0));
   // Resetting the workspace must not reset cast quota; clear quota only in this test fixture.
   await page.evaluate(()=>localStorage.removeItem('liuyao_cast_log'));
   for(let i=0;i<6;i++)await page.locator(`#manualLine${i}`).selectOption('8');

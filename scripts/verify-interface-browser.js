@@ -98,8 +98,12 @@ try {
     assert.deepEqual(smallTargets, [], `Small touch targets at ${width}`);
     await noOverflow();
     if (width <= 740) {
-      const nav = await page.locator('.tabs').boundingBox(),header=await page.locator('.app-header').boundingBox();
-      assert(nav.y>=header.y&&nav.y+nav.height<=header.y+header.height+1,'Primary tabs stay inside the sticky header');
+      const nav = await page.locator('.tabs').boundingBox();
+      assert(Math.abs(nav.y + nav.height - page.viewportSize().height) <= 1, 'Mobile tabs stay at the bottom of the viewport');
+      assert(await page.locator('#tabbtn-caster').evaluate(tab => {
+        const box = tab.getBoundingClientRect();
+        return tab.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2));
+      }), 'Mobile navigation stays reachable after a long reading');
       await selectAppPanel(page,'basics');
       const heading = await page.locator('#basics > section > h2').first().boundingBox(),sticky=await page.locator('.app-header').boundingBox();
       assert(heading.y>=sticky.y+sticky.height-1&&heading.y<450,'Learning navigation keeps the first heading visible below the sticky header');

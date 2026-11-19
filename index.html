@@ -9,8 +9,8 @@
 <meta charset="UTF-8">
 <title>一念六爻 · 一事一卦，解读有据</title>
 <meta name="description" content="从三钱起卦、纳甲排盘到 AI 解读，保留当时的判断与依据，回看真实发生的事。无需注册，本机保存。">
-<meta name="theme-color" content="#faf8f2">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='1' width='30' height='30' rx='8' fill='%239c3e30'/%3E%3Cpath d='M8 6h16M8 10h6m4 0h6M8 14h16M8 22h16M8 26h6m4 0h6' fill='none' stroke='%23f5f0e5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M8 18h6m4 0h6' fill='none' stroke='%23e2a090' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#fafbf9">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='1' width='30' height='30' rx='8' fill='%23233832'/%3E%3Cpath d='M8 6h16M8 10h6m4 0h6M8 14h16M8 22h16M8 26h6m4 0h6' fill='none' stroke='%23f5f0e5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M8 18h6m4 0h6' fill='none' stroke='%23e2a090' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <script>
 /* ==================================================================
@@ -51,6 +51,15 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
       <div class="onboard-step"><div class="num">1</div><div class="txt">想好一件事，点击 <b>摇卦</b>。已有线下结果，可直接录入六爻。</div></div>
       <div class="onboard-step"><div class="num">2</div><div class="txt">到 <b>AI 解卦</b> 写下问题。使用自己的 DeepSeek Key 解读，或复制提示词给其他 AI，再贴回回复。</div></div>
       <div class="onboard-step"><div class="num">3</div><div class="txt">同一件事继续追问，新事另起一卦。<b>历史记录保存在当前浏览器</b>，重要内容请自行复制留存。</div></div>
+  <details class="casting-help"><summary>起卦规矩 · 使用说明</summary>
+    <p class="desc">世应、六亲已按八宫卦生成规则自动推出；空亡按日柱所在的"旬"标出。排盘结果下方还会同时列出年柱、月柱、时柱（按起卦这一刻的系统时间自动算出，不用手动填），方便对照查看。</p>
+    <p class="desc">按传统规矩，一事不问二卦：同一件事只摇一次。上一卦还在时再点"摇卦"/"生成排盘"，会弹窗确认是否要另起新卦——物理模式在完成六爻后替换上一卦，取消则保留原卦；线下模式会清空旧问题后重新生成。短时间内也不建议连续摇太多卦，10 分钟内最多摇 3 次。</p>
+    <p class="desc">另外几条老规矩也顺带提一句：别在大喜大怒、心浮气躁的时候乱测，也别单纯当好玩测着玩，念不专卦不应，测出来的参考价值不大；卦是用来"决疑"的，一件事已经拍板定了、没有回旋余地，再占意义也不大。</p>
+    </details>
+
+  <details class="casting-help"><summary>问卦须知</summary>
+    <p class="desc">传统上占卦师也有条不成文的规矩：不轻断生死寿数——"我还能活多久""什么时候死"这类问题，一是这种判断本身风险极高、容易断错，二是怕给提问的人带来不必要的心理暗示，所以这里也不会生成这类回答。如果这背后是身体健康或者情绪上的真实担忧，更建议找医生或者信得过的人聊聊，比找一个网页工具靠谱。</p>
+    </details>
       <div class="onboard-fade" id="onboardFade" aria-hidden="true"></div>
     </div>
     <div class="onboard-actions">
@@ -179,17 +188,14 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 <!-- ===================== TAB 2 ===================== -->
 <div class="panel active" id="caster" role="tabpanel" aria-labelledby="tabbtn-caster" tabindex="0">
   <section class="block casting-workspace" aria-label="起卦排盘">
-    <header class="cast-cover">
-      <img class="cover-print" src="./src/assets/mountain-print.webp" width="1536" height="1024" alt="" fetchpriority="high">
-      <div class="cover-inscription">
-        <p class="cover-date"><time id="coverDate"></time></p>
-        <h2 class="casting-title">问一卦<span>。</span></h2>
-        <p class="casting-description">三枚铜钱，六次投掷。</p>
-      </div>
-    </header>
     <div class="caster-box">
       <div class="caster-controls">
-        <div class="cast-question"><label for="castQuestionInput">所问之事</label><textarea id="castQuestionInput" maxlength="500" rows="2" autocomplete="off" placeholder="写下问题，或在心中默念。"></textarea></div>
+        <header class="question-heading">
+          <img class="casting-coins" src="./src/assets/casting-coins.webp" alt="" width="420" height="220" fetchpriority="high">
+          <h2 class="casting-title"><label for="castQuestionInput">这一卦，想问什么？</label></h2>
+        </header>
+        <div class="question-composer">
+          <textarea id="castQuestionInput" aria-label="所问之事" maxlength="500" rows="2" autocomplete="off" placeholder="写下此刻在意的一件事，也可以默念…"></textarea>
         <div class="cast-mode-toggle" id="castModeToggle">
           <button type="button" class="mode-btn active" data-mode="system" aria-pressed="true">铜钱摇卦</button>
           <button type="button" class="mode-btn" data-mode="manual" aria-pressed="false">手动录入</button>
@@ -205,6 +211,8 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
           <div class="manual-lines" id="manualLines"></div>
           <button class="cast-btn" id="manualCastBtn">生成排盘</button>
         </div>
+        </div>
+        <div class="cast-context">
         <details class="calendar-settings"><summary>起卦时间 · 默认此刻</summary>
         <label for="dayGanzhi">起卦日的干支（用于起六神、算空亡）</label>
         <select id="dayGanzhi"></select>
@@ -216,6 +224,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         <p class="desc" style="font-size:12px;margin:8px 0">按设备本地时间、零点换日，年/月柱按节气。交节时刻为近似计算；仅录入日柱时不推定年月时柱。</p>
         </details>
         <div class="cast-quota-hint" id="castQuotaHint"></div>
+        </div>
       </div>
       <div class="cast-result">
         <div class="cast-summary" id="castSummary" tabindex="-1" hidden>
@@ -233,21 +242,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
     </div>
   </section>
 
-  <section class="block block-collapse">
-    <h2>起卦规矩 · 使用说明</h2>
-    <div class="block-collapse-body">
-    <p class="desc">世应、六亲已按八宫卦生成规则自动推出；空亡按日柱所在的"旬"标出。排盘结果下方还会同时列出年柱、月柱、时柱（按起卦这一刻的系统时间自动算出，不用手动填），方便对照查看。</p>
-    <p class="desc">按传统规矩，一事不问二卦：同一件事只摇一次。上一卦还在时再点"摇卦"/"生成排盘"，会弹窗确认是否要另起新卦——物理模式在完成六爻后替换上一卦，取消则保留原卦；线下模式会清空旧问题后重新生成。短时间内也不建议连续摇太多卦，10 分钟内最多摇 3 次。</p>
-    <p class="desc">另外几条老规矩也顺带提一句：别在大喜大怒、心浮气躁的时候乱测，也别单纯当好玩测着玩，念不专卦不应，测出来的参考价值不大；卦是用来"决疑"的，一件事已经拍板定了、没有回旋余地，再占意义也不大。</p>
-    </div>
-  </section>
 
-  <section class="block block-collapse">
-    <h2>问卦须知</h2>
-    <div class="block-collapse-body">
-    <p class="desc">传统上占卦师也有条不成文的规矩：不轻断生死寿数——"我还能活多久""什么时候死"这类问题，一是这种判断本身风险极高、容易断错，二是怕给提问的人带来不必要的心理暗示，所以这里也不会生成这类回答。如果这背后是身体健康或者情绪上的真实担忧，更建议找医生或者信得过的人聊聊，比找一个网页工具靠谱。</p>
-    </div>
-  </section>
 </div>
 
 <!-- ===================== TAB 3 ===================== -->
@@ -378,7 +373,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 <!-- ===================== TAB 4 ===================== -->
 <div class="panel" id="ai" role="tabpanel" aria-labelledby="tabbtn-ai" tabindex="0">
   <section class="block">
-    <div class="reading-intro"><h2>读这一卦<span>。</span></h2><p class="desc">对照卦盘看判断，留下可以回头核验的依据。</p></div>
+    <div class="reading-intro"><h2>读这一卦</h2><p class="desc">对照卦盘看判断，留下可以回头核验的依据。</p></div>
     <!-- 排盘数据虽然一直存在内存里的 window.lastCastData，但跳转过来之后界面上
          完全看不出来——用户点"AI 解读"之前只能凭记忆或信任系统。这里补一条
          轻量状态提示，有 lastCastData 就渲染当前是哪一卦，没有就不显示，
@@ -622,10 +617,10 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 
 </main>
 <footer class="site-footer">
-  <p class="note">一事一卦。留住判断，也记得回看。</p>
+  <p class="note">卦簿保存在当前浏览器</p>
   <a class="source-link" href="https://github.com/1eakkkk/liuyao-tool" target="_blank" rel="noopener noreferrer" aria-label="在新标签页查看 GitHub 源码，喜欢的话可点 Star">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-12-2 14"/></svg>
-    <span>源码 · GitHub</span><span class="source-star" aria-hidden="true">☆ Star</span>
+    <span>GitHub</span>
   </a>
 </footer>
 
