@@ -422,6 +422,9 @@ body.experience .coin-log:not(:empty) {flex-basis:100%;}
   :root body.experience .cast-quota-hint {font-size:12px;}
   :root body.experience #caster>section.block-collapse {padding-block:4px;}
 }
+@media (max-width:380px) {
+  body.experience .cover-print {width:61%;mask-image:linear-gradient(90deg,transparent,#000 65%);}
+}
 @media (prefers-reduced-motion:no-preference) {
   body.experience .cover-inscription {animation:ink-inscription-in 420ms var(--ui-ease-out) both;}
   @keyframes ink-inscription-in {from {opacity:0;transform:translateY(6px);} to {opacity:1;transform:none;}}
