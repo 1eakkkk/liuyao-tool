@@ -467,6 +467,7 @@ body.experience .casting-help .desc {font-size:14px;line-height:1.85;}
   body.experience .physics-footer {padding:7px 16px;gap:12px;}
   body.experience .physics-record {padding:10px 16px;}
   body.experience .question-heading {margin:8px 0 14px;}
+  :root body.experience #castQuestionInput {max-height:clamp(76px,21dvh,100px);}
 }
 @media (prefers-reduced-motion:no-preference) {
   body.experience .question-heading {animation:question-arrive .35s var(--ui-ease-out) backwards;}
