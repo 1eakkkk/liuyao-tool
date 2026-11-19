@@ -58,7 +58,18 @@ try {
       await page.screenshot({animations:'disabled',path:`test-results/controls/${engine}-physical.png`});
       assert(Math.abs(close.x+close.width/2-icon.x-icon.width/2)<1);
       assert(Math.abs(close.y+close.height/2-icon.y-icon.height/2)<1);
-      await page.screenshot({animations:'disabled',path:`test-results/controls/${engine}-physical.png`});
+      for (const viewport of [{width:320,height:568}, {width:844,height:390}]) {
+        await page.setViewportSize(viewport);
+        for (const selector of ['.physics-close', '.physics-throw']) {
+          assert(await page.locator(selector).evaluate(button => {
+            const box = button.getBoundingClientRect();
+            return box.top >= 0 && box.bottom <= innerHeight + 1 &&
+              button.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2));
+          }), `Casting control is reachable at ${viewport.width} × ${viewport.height}: ${selector}`);
+        }
+      }
+      await page.setViewportSize({width:390,height:844});
+      await page.emulateMedia({reducedMotion:'reduce'});
       await page.locator('.physics-throw').tap();
       await page.locator('.physics-results .is-done').first().waitFor({timeout:90000});
       assert.equal(await page.locator('.physics-results .is-done').count(),1);
