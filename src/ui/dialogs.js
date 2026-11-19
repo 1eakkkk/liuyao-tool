@@ -11,6 +11,10 @@ function showToast(message, type = 'info', duration = 3200){
     feedback.dataset.type = type;
     return;
   }
+  const journalFeedback=document.getElementById('journalFeedback');
+  if(document.getElementById('journalDialog')?.open && journalFeedback){
+    journalFeedback.textContent=message;journalFeedback.dataset.type=type;return;
+  }
   const el = document.createElement('div');
   el.className = `toast ${type === 'error' ? 'error' : (type === 'success' ? 'success' : '')}`;
   el.textContent = message;
@@ -65,6 +69,11 @@ function showConfirm(message, opts = {}){
   const { title = '确认', okText = '确定', cancelText = '取消' } = opts;
   const run = () => new Promise(resolve=>{
     const previouslyFocused = document.activeElement;
+    const originalParent=confirmOverlay.parentNode, originalNext=confirmOverlay.nextSibling;
+    const modal=previouslyFocused?.closest('dialog[open]') || [...document.querySelectorAll('dialog[open]')].at(-1);
+    // A page overlay cannot receive input behind a native modal's top layer.
+    // Reparent the existing singleton for this confirmation, then restore it.
+    if(modal) modal.append(confirmOverlay);
     confirmTitle.textContent = title;
     confirmMsg.textContent = message;
     confirmOkBtn.textContent = okText;
@@ -76,6 +85,7 @@ function showConfirm(message, opts = {}){
 
     function cleanup(result){
       confirmOverlay.style.display = 'none';
+      if(modal) originalParent.insertBefore(confirmOverlay,originalNext?.parentNode===originalParent?originalNext:null);
       confirmOkBtn.removeEventListener('click', onOk);
       confirmCancelBtn.removeEventListener('click', onCancel);
       confirmOverlay.removeEventListener('click', onOverlayClick);
@@ -89,7 +99,7 @@ function showConfirm(message, opts = {}){
     function onCancel(){ cleanup(false); }
     function onOverlayClick(e){ if(e.target === confirmOverlay) cleanup(false); }
     function onKeydown(e){
-      if(e.key === 'Escape'){ cleanup(false); return; }
+      if(e.key === 'Escape'){ e.preventDefault();cleanup(false); return; }
       trapTabKey(confirmOverlay, e);
     }
 

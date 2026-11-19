@@ -7,9 +7,11 @@
 (()=>{let choice="system";try{const saved=localStorage.getItem("liuyao_theme");if(["light","dark","system"].includes(saved))choice=saved;}catch{}document.documentElement.dataset.themeChoice=choice;document.documentElement.dataset.theme=choice==="system"?(window.matchMedia?.("(prefers-color-scheme: dark)")?.matches?"dark":"light"):choice;})();
 </script>
 <meta charset="UTF-8">
-<title>一念六爻 · 起卦与解读</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='1' width='30' height='30' rx='8' fill='%23226859'/%3E%3Cpath d='M8 6h16M8 10h6m4 0h6M8 14h16M8 22h16M8 26h6m4 0h6' fill='none' stroke='%23f5f0e5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M8 18h6m4 0h6' fill='none' stroke='%23e2a090' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>一念六爻 · 一事一卦，解读有据</title>
+<meta name="description" content="从三钱起卦、纳甲排盘到 AI 解读，保留当时的判断与依据，回看真实发生的事。无需注册，本机保存。">
+<meta name="theme-color" content="#fafbf9">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='1' width='30' height='30' rx='8' fill='%23233832'/%3E%3Cpath d='M8 6h16M8 10h6m4 0h6M8 14h16M8 22h16M8 26h6m4 0h6' fill='none' stroke='%23f5f0e5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M8 18h6m4 0h6' fill='none' stroke='%23e2a090' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
 <script>
 /* ==================================================================
   移动端"打开总是停在半屏（八卦卡片那一带）而不是最顶部"的修复：
@@ -24,8 +26,10 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 <link rel="stylesheet" href="./src/styles/main.css">
 <link rel="stylesheet" href="./src/styles/interface.css">
 <link rel="stylesheet" href="./src/styles/editorial.css">
+<link rel="stylesheet" href="./src/styles/experience.css">
 </head>
-<body>
+<body class="experience">
+<a class="skip-link" href="#mainContent">跳到主要内容</a>
 
 <!-- ==================================================================
   ② 页面结构区地图（按出现顺序）：
@@ -38,7 +42,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
   面板切换靠 .panel.active 类 + roving tabindex，逻辑在 script 区 "tabs" 一节。
 ================================================================== -->
 
-<div id="toastWrap"></div>
+<div id="toastWrap" role="status" aria-live="polite"></div>
 
 <div class="onboard-overlay" id="onboardOverlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="onboardTitle">
   <div class="onboard-card">
@@ -47,6 +51,15 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
       <div class="onboard-step"><div class="num">1</div><div class="txt">想好一件事，点击 <b>摇卦</b>。已有线下结果，可直接录入六爻。</div></div>
       <div class="onboard-step"><div class="num">2</div><div class="txt">到 <b>AI 解卦</b> 写下问题。使用自己的 DeepSeek Key 解读，或复制提示词给其他 AI，再贴回回复。</div></div>
       <div class="onboard-step"><div class="num">3</div><div class="txt">同一件事继续追问，新事另起一卦。<b>历史记录保存在当前浏览器</b>，重要内容请自行复制留存。</div></div>
+  <details class="casting-help"><summary>起卦规矩 · 使用说明</summary>
+    <p class="desc">世应、六亲已按八宫卦生成规则自动推出；空亡按日柱所在的"旬"标出。排盘结果下方还会同时列出年柱、月柱、时柱（按起卦这一刻的系统时间自动算出，不用手动填），方便对照查看。</p>
+    <p class="desc">按传统规矩，一事不问二卦：同一件事只摇一次。上一卦还在时再点"摇卦"/"生成排盘"，会弹窗确认是否要另起新卦——物理模式在完成六爻后替换上一卦，取消则保留原卦；线下模式会清空旧问题后重新生成。短时间内也不建议连续摇太多卦，10 分钟内最多摇 3 次。</p>
+    <p class="desc">另外几条老规矩也顺带提一句：别在大喜大怒、心浮气躁的时候乱测，也别单纯当好玩测着玩，念不专卦不应，测出来的参考价值不大；卦是用来"决疑"的，一件事已经拍板定了、没有回旋余地，再占意义也不大。</p>
+    </details>
+
+  <details class="casting-help"><summary>问卦须知</summary>
+    <p class="desc">传统上占卦师也有条不成文的规矩：不轻断生死寿数——"我还能活多久""什么时候死"这类问题，一是这种判断本身风险极高、容易断错，二是怕给提问的人带来不必要的心理暗示，所以这里也不会生成这类回答。如果这背后是身体健康或者情绪上的真实担忧，更建议找医生或者信得过的人聊聊，比找一个网页工具靠谱。</p>
+    </details>
       <div class="onboard-fade" id="onboardFade" aria-hidden="true"></div>
     </div>
     <div class="onboard-actions">
@@ -66,53 +79,23 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
   </div>
 </div>
 
-<div class="hero">
-  <div class="eyebrow">火珠林 · 京房纳甲</div>
-  <div class="site-brand"><span class="brand-seal" aria-hidden="true">易</span><div><h1>一念六爻</h1><p class="brand-caption">一念起，六爻成</p></div></div>
-  <p class="sub">从阴阳、五行、八卦讲起，到起卦排盘、自动纳甲配六神 —— 一个网页把六爻的骨架搭起来。</p>
-  <div class="header-help">  <button class="help-fab" id="helpFab" title="使用帮助" aria-label="使用帮助"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg></button></div>
-  <nav class="learning-nav" aria-label="学习资料">  <button class="tab-btn" data-tab="basics" role="button" id="tabbtn-basics" aria-pressed="false" aria-controls="basics" tabindex="0"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5C9 3 5 3 3 4v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-2-1-6-1-9 1Zm0 0v15"/></svg>基础知识</button>  <button class="tab-btn" data-tab="guide" role="button" id="tabbtn-guide" aria-pressed="false" aria-controls="guide" tabindex="0"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5Z"/></svg>断卦入门</button></nav>
-  <details class="theme-picker"><summary title="切换主题" aria-label="切换主题"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/></svg><span>主题</span></summary><div class="theme-switch" role="group" aria-label="界面主题"><button type="button" data-theme-choice-button="light" aria-pressed="false">日间</button><button type="button" data-theme-choice-button="dark" aria-pressed="false">夜间</button><button type="button" data-theme-choice-button="system" aria-pressed="true">跟随系统</button></div></details>
-  <div class="bagua-ring" aria-hidden="true">
-    <svg viewBox="0 0 200 200">
-      <circle cx="100" cy="100" r="96" fill="none" stroke="var(--border)" stroke-width="1"/>
-      <g class="badge-spin">
-        <circle cx="100" cy="100" r="86" fill="none" stroke="var(--border-soft)" stroke-width="1" stroke-dasharray="1 5"/>
-        <circle cx="100" cy="100" r="80" fill="none" stroke="var(--border-soft)" stroke-width="1" stroke-dasharray="1 5"/>
-      </g>
-      <g font-family="serif" font-size="21" fill="#b8944f" text-anchor="middle" dominant-baseline="central">
-        <text x="100" y="27">☰</text><text x="152" y="49">☱</text>
-        <text x="174" y="100">☲</text><text x="152" y="151">☳</text>
-        <text x="100" y="173">☷</text><text x="48" y="151">☶</text>
-        <text x="26" y="100">☵</text><text x="48" y="49">☴</text>
-      </g>
-      <g>
-        <circle cx="100" cy="100" r="33" fill="#ece4d0"/>
-        <path d="M100,67 A16.5,16.5 0 0,1 100,100 A16.5,16.5 0 0,0 100,133 A33,33 0 0,0 100,67 Z" fill="#181611"/>
-        <circle cx="100" cy="83.5" r="5" fill="#181611"/>
-        <circle cx="100" cy="116.5" r="5" fill="#ece4d0"/>
-        <circle cx="100" cy="100" r="33" fill="none" stroke="#a8391f" stroke-width="1.4"/>
-      </g>
-    </svg>
+<header class="hero app-header">
+  <a class="site-brand" href="#caster" aria-label="一念六爻首页"><span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i></span><h1>一念六爻</h1></a>
+  <nav class="tabs" role="tablist" aria-label="页面导航">
+    <button class="tab-btn active" data-tab="caster" role="tab" id="tabbtn-caster" aria-selected="true" aria-controls="caster" tabindex="0"><svg class="action-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h6m4 0h6M4 18h16"/></svg>起卦排盘</button>
+    <button class="tab-btn" data-tab="ai" role="tab" id="tabbtn-ai" aria-selected="false" aria-controls="ai" tabindex="-1"><svg class="action-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-2-2-5-2.4-9-2v14c3.8-.4 6.8.2 9 2 2.2-1.8 5.2-2.4 9-2V4c-4-.4-7 0-9 2Zm0 0v14"/></svg>AI 解卦</button>
+  </nav>
+  <div class="header-tools">
+    <button class="header-journal" id="openJournalBtn" type="button" aria-haspopup="dialog">卦簿<span class="journal-count" id="journalBadge" hidden></span></button>
+    <details class="learning-menu"><summary>学习<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary>
+      <nav class="learning-nav" aria-label="学习资料"><button class="tab-btn" data-tab="basics" role="button" id="tabbtn-basics" aria-pressed="false" aria-controls="basics" tabindex="0">基础知识<span>阴阳、五行与八卦</span></button><button class="tab-btn" data-tab="guide" role="button" id="tabbtn-guide" aria-pressed="false" aria-controls="guide" tabindex="0">断卦入门<span>从排盘到理解依据</span></button><button type="button" class="learning-help" id="openHelpMenuBtn">如何使用<span>起卦、解读和数据保存</span></button></nav>
+    </details>
+    <details class="theme-picker"><summary title="切换主题" aria-label="切换主题"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/></svg><span>主题</span></summary><div class="theme-switch" role="group" aria-label="界面主题"><button type="button" data-theme-choice-button="light" aria-pressed="false">日间</button><button type="button" data-theme-choice-button="dark" aria-pressed="false">夜间</button><button type="button" data-theme-choice-button="system" aria-pressed="true">跟随系统</button></div></details>
+    <button class="help-fab" id="helpFab" title="使用帮助" aria-label="使用帮助"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg></button>
   </div>
-</div>
+</header>
 
-<!-- 四个tab之前全靠文字标题区分板块，视觉上比较同质（都是同一种深色按钮堆叠）。
-     这里给每个tab配一个极简线条小图标，只是加一点"这一页跟那一页不一样"的记忆点，
-     不改配色体系——图标stroke都用currentColor，颜色完全跟随文字（含hover/active态）：
-     基础知识=太极两仪线稿，起卦排盘=铜钱纹样（呼应摇卦用的三枚铜钱），
-     断卦入门=蓍草束线稿（呼应古法用蓍草起卦的另一支），AI解卦=一个简单的四角星火花，
-     代表"洞见/解读"。四个svg都加了aria-hidden+focusable="false"，屏幕阅读器和Tab键
-     只会读到/停在按钮本身的文字上，不会把装饰性图标当成一个额外的可交互元素。 -->
-<nav class="tabs" role="tablist" aria-label="页面导航">
-
-  <button class="tab-btn active" data-tab="caster" role="tab" id="tabbtn-caster" aria-selected="true" aria-controls="caster" tabindex="0"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="8" r="6"/><path d="M13 6h4v4h-4z"/><circle cx="9" cy="15" r="7" fill="var(--ui-surface)"/><path d="M7 13h4v4H7z"/></svg>起卦排盘</button>
-
-  <button class="tab-btn" data-tab="ai" role="tab" id="tabbtn-ai" aria-selected="false" aria-controls="ai" tabindex="-1"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v5a3 3 0 0 1-3 3H8l-5 2V6a3 3 0 0 1 3-3h7M7 10h4M7 15h8M18 2v6M15 5h6"/></svg>AI 解卦</button>
-
-</nav>
-
-<main>
+<main id="mainContent">
 
 <!-- ===================== TAB 1 ===================== -->
 <div class="panel" id="basics" role="tabpanel" aria-labelledby="tabbtn-basics" tabindex="0">
@@ -204,13 +187,33 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 
 <!-- ===================== TAB 2 ===================== -->
 <div class="panel active" id="caster" role="tabpanel" aria-labelledby="tabbtn-caster" tabindex="0">
-  <section class="block">
-    <h2>起卦排盘</h2>
-    <p class="desc">心中想好一件事，摇卦或录入已有结果。</p>
-
+  <section class="block casting-workspace" aria-label="起卦排盘">
     <div class="caster-box">
       <div class="caster-controls">
-        <details class="calendar-settings"><summary>日期与时间（默认现在）</summary>
+        <header class="question-heading">
+          <div class="coin-setting" aria-hidden="true"><img class="casting-coins" src="./src/assets/casting-coins.webp" alt="" width="362" height="240" fetchpriority="high"></div>
+          <h2 class="casting-title"><label for="castQuestionInput">这一卦，想问什么？</label></h2>
+        </header>
+        <div class="question-composer">
+          <textarea id="castQuestionInput" aria-label="所问之事" maxlength="500" rows="2" autocomplete="off" placeholder="写下此刻在意的一件事，也可以默念…"></textarea>
+        <div class="cast-mode-toggle" id="castModeToggle">
+          <button type="button" class="mode-btn active" data-mode="system" aria-pressed="true">铜钱摇卦</button>
+          <button type="button" class="mode-btn" data-mode="manual" aria-pressed="false">手动录入</button>
+        </div>
+
+        <div id="systemCastPanel">
+          <label class="visually-hidden" for="castPace">起卦节奏</label><select id="castPace"><option value="step">逐爻投掷</option><option value="all">连续投六爻</option></select><button class="cast-btn" id="castBtn"><svg class="action-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.3"/><path d="M9.7 9.7h4.6v4.6H9.7z"/></svg>开始摇卦</button>
+          <div class="coin-log" id="coinLog"></div>
+
+        </div>
+
+        <div id="manualCastPanel" style="display:none;">
+          <div class="manual-lines" id="manualLines"></div>
+          <button class="cast-btn" id="manualCastBtn">生成排盘</button>
+        </div>
+        </div>
+        <div class="cast-context">
+        <details class="calendar-settings"><summary>起卦时间 · 默认此刻</summary>
         <label for="dayGanzhi">起卦日的干支（用于起六神、算空亡）</label>
         <select id="dayGanzhi"></select>
         <div class="day-lookup-row">
@@ -220,24 +223,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 
         <p class="desc" style="font-size:12px;margin:8px 0">按设备本地时间、零点换日，年/月柱按节气。交节时刻为近似计算；仅录入日柱时不推定年月时柱。</p>
         </details>
-        <div class="cast-mode-toggle" id="castModeToggle">
-          <button type="button" class="mode-btn active" data-mode="system">铜钱摇卦</button>
-          <button type="button" class="mode-btn" data-mode="manual">手动录入</button>
-        </div>
-
-        <!-- 摇卦频率配额（10分钟内最多3次）常驻提示：之前只有点击被拦下时才弹toast告知，
-             用户不知道自己还剩几次、容易"莫名其妙"被拦。这里常态显示剩余次数，
-             铜钱摇卦和线下摇卦手动填入共用同一个配额、共用同一处提示。 -->
         <div class="cast-quota-hint" id="castQuotaHint"></div>
-
-        <div id="systemCastPanel">
-          <label for="castPace">投掷方式</label><select id="castPace"><option value="step">逐爻投掷 · 每次一爻</option><option value="all">一次完成 · 连续六爻</option></select><button class="cast-btn" id="castBtn">开始摇卦</button>
-          <div class="coin-log" id="coinLog"></div>
-        </div>
-
-        <div id="manualCastPanel" style="display:none;">
-          <div class="manual-lines" id="manualLines"></div>
-          <button class="cast-btn" id="manualCastBtn">生成排盘</button>
         </div>
       </div>
       <div class="cast-result">
@@ -249,28 +235,14 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
           </div>
         </div>
         <div class="plate" id="plateWrap" tabindex="-1">
-          <div class="placeholder"><div class="empty-lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div><strong>静心一念，待卦成形</strong><span>从初爻开始，六爻成卦</span></div>
+          <div class="placeholder" hidden></div>
         </div>
       </div>
       <div id="factCheckPanel" class="fact-check-panel" hidden></div>
     </div>
   </section>
 
-  <section class="block block-collapse">
-    <h2>起卦规矩 · 使用说明</h2>
-    <div class="block-collapse-body">
-    <p class="desc">世应、六亲已按八宫卦生成规则自动推出；空亡按日柱所在的"旬"标出。排盘结果下方还会同时列出年柱、月柱、时柱（按起卦这一刻的系统时间自动算出，不用手动填），方便对照查看。</p>
-    <p class="desc">按传统规矩，一事不问二卦：同一件事只摇一次。上一卦还在时再点"摇卦"/"生成排盘"，会弹窗确认是否要另起新卦——物理模式在完成六爻后替换上一卦，取消则保留原卦；线下模式会清空旧问题后重新生成。短时间内也不建议连续摇太多卦，10 分钟内最多摇 3 次。</p>
-    <p class="desc">另外几条老规矩也顺带提一句：别在大喜大怒、心浮气躁的时候乱测，也别单纯当好玩测着玩，念不专卦不应，测出来的参考价值不大；卦是用来"决疑"的，一件事已经拍板定了、没有回旋余地，再占意义也不大。</p>
-    </div>
-  </section>
 
-  <section class="block block-collapse">
-    <h2>问卦须知</h2>
-    <div class="block-collapse-body">
-    <p class="desc">传统上占卦师也有条不成文的规矩：不轻断生死寿数——"我还能活多久""什么时候死"这类问题，一是这种判断本身风险极高、容易断错，二是怕给提问的人带来不必要的心理暗示，所以这里也不会生成这类回答。如果这背后是身体健康或者情绪上的真实担忧，更建议找医生或者信得过的人聊聊，比找一个网页工具靠谱。</p>
-    </div>
-  </section>
 </div>
 
 <!-- ===================== TAB 3 ===================== -->
@@ -401,8 +373,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 <!-- ===================== TAB 4 ===================== -->
 <div class="panel" id="ai" role="tabpanel" aria-labelledby="tabbtn-ai" tabindex="0">
   <section class="block">
-    <h2>AI 解卦</h2>
-    <p class="desc">写下想问的事，让这一卦有一个方向。没有排盘时会自动起卦。</p>
+    <div class="reading-intro"><h2>读这一卦</h2><p class="desc">对照卦盘看判断，留下可以回头核验的依据。</p></div>
     <!-- 排盘数据虽然一直存在内存里的 window.lastCastData，但跳转过来之后界面上
          完全看不出来——用户点"AI 解读"之前只能凭记忆或信任系统。这里补一条
          轻量状态提示，有 lastCastData 就渲染当前是哪一卦，没有就不显示，
@@ -413,7 +384,7 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
     </div>
     <div class="ai-box">
       <label class="question-label" for="questionInput">想问的问题</label>
-      <textarea id="questionInput" autocomplete="off" aria-label="想问的问题" maxlength="500" placeholder="想问的问题，比如：最近想跳槽，合不合适"></textarea>
+      <textarea id="questionInput" autocomplete="off" aria-label="想问的问题" maxlength="500" placeholder="写下你的问题，以及会影响判断的背景。"></textarea>
       <div class="char-counter" id="questionCharCounter">0 / 500 字</div>
       <div class="reading-mode"><label for="readingMode">解读方式</label>
         <select id="readingMode" autocomplete="off"><option value="" selected disabled>选择</option><option value="legacy">普通解读</option><option value="structured">结构化解读 · 结论与依据</option></select>
@@ -431,12 +402,12 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
       </details>
       <div class="ai-row compose-actions">
         <button class="ai-btn" id="interpretBtn">AI 解读</button>
-        <button class="ai-btn ghost" id="promptBtn">输出提示词</button>
+        <button class="ai-btn ghost" id="promptBtn">用其他 AI 解读</button>
         <button class="ai-btn stop" id="stopGenBtn" style="display:none;">停止生成</button>
       </div>
       <div class="ai-row compose-tools">
         <button class="ai-btn ghost" id="toggleSettingsBtn" aria-expanded="false" aria-controls="aiSettings">设置</button>
-        <button class="ai-btn ghost" id="toggleHistoryBtn" aria-expanded="false" aria-controls="historyPanel">历史记录</button>
+        <button class="ai-btn ghost" id="toggleHistoryBtn" aria-expanded="false" aria-controls="historyPanel">问卦记录</button>
         <span class="ai-status" id="aiStatus"></span>
       </div>
 
@@ -603,40 +574,6 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
         <p id="settingsFeedback" class="settings-feedback" role="status" aria-live="polite"></p>
       </dialog>
 
-      <div class="history-panel" id="historyPanel">
-        <div class="history-heading"><h3>问卦记录</h3><span>保存在当前浏览器</span></div>
-        <label class="history-search-label" for="aiHistorySearch">查找问过的事</label>
-        <div class="history-search">
-          <input type="search" id="aiHistorySearch" placeholder="输入问题关键词" autocomplete="off">
-          <output id="aiHistorySearchCount" aria-live="polite"></output>
-        </div>
-        <div class="history-toolbar">
-          <span class="ai-status">共 <span id="historyCount">0</span> 条</span>
-          <button class="ai-btn ghost" id="clearHistoryBtn">清空历史</button>
-          <button class="ai-btn ghost" id="exportFeedbackBtn">导出登记与反馈</button>
-        </div>
-        <details class="history-stats"><summary>累计用量</summary><div class="ai-stats" id="aiStats"></div></details>
-        <div class="history-empty" id="historyEmpty">
-          <svg class="history-empty-icon" viewBox="0 0 64 64" aria-hidden="true">
-            <circle cx="32" cy="32" r="27"/>
-            <path d="M32,5 A13.5,13.5 0 0,1 32,32 A13.5,13.5 0 0,0 32,59"/>
-            <circle class="eye" cx="32" cy="18.5" r="3"/>
-            <circle class="eye" cx="32" cy="45.5" r="3"/>
-          </svg>
-          <div>还没有解读记录</div>
-        </div>
-        <div class="history-list" id="historyList"></div>
-        <details class="history-feedback registration-library" id="registrationLibrary">
-          <summary>判断登记 <span id="registrationCount">0</span></summary>
-          <p class="hint">独立保留原回答与结果。恢复备份不认证文件中的时间或预测。</p>
-          <label>导入判断登记备份<input type="file" id="registrationImportFile" accept=".json,application/json"></label>
-          <p class="hint">支持单条登记或“登记与反馈”备份；只导入判断登记，不恢复普通历史和事后反馈。</p>
-          <p role="status" id="registrationImportStatus"></p>
-          <button type="button" class="ai-btn" id="registrationImportConfirm" hidden>确认合并导入</button>
-          <div id="registrationRecords"></div>
-        </details>
-      </div>
-
       <div class="ai-result" id="aiResult" aria-live="polite"></div>
       <section id="readingPanel" class="reading-panel" hidden aria-label="结构化解读">
         <p id="readingStatus" role="status"></p>
@@ -680,12 +617,48 @@ window.addEventListener('pageshow', ()=>{ window.scrollTo(0,0); });
 
 </main>
 <footer class="site-footer">
-  <p class="note">一念六爻 · 内容整理自传统火珠林纳甲体系，供学习参考</p>
+  <p class="note">卦簿保存在当前浏览器</p>
   <a class="source-link" href="https://github.com/1eakkkk/liuyao-tool" target="_blank" rel="noopener noreferrer" aria-label="在新标签页查看 GitHub 源码，喜欢的话可点 Star">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-12-2 14"/></svg>
-    <span>源码 · GitHub</span><span class="source-star" aria-hidden="true">☆ Star</span>
+    <span>GitHub</span>
   </a>
 </footer>
+
+<dialog id="journalDialog" class="journal-dialog" aria-labelledby="journalTitle"><header class="journal-header"><div><h2 id="journalTitle">我的卦簿</h2></div><button type="button" id="closeJournalBtn" class="settings-close" aria-label="关闭卦簿">✕</button></header><p class="journal-feedback" id="journalFeedback" role="status" aria-live="polite"></p><div class="journal-body">      <div class="history-panel" id="historyPanel">
+        <div class="history-heading"><h3>问卦记录</h3><span>保存在当前浏览器</span></div>
+        <label class="history-search-label" for="aiHistorySearch">查找问过的事</label>
+        <div class="history-search">
+          <input type="search" id="aiHistorySearch" placeholder="输入问题关键词" autocomplete="off">
+          <output id="aiHistorySearchCount" aria-live="polite"></output>
+        </div>
+        <div class="history-toolbar">
+          <span class="ai-status">共 <span id="historyCount">0</span> 条</span>
+          <button class="ai-btn ghost" id="clearHistoryBtn">清空历史</button>
+          <button class="ai-btn ghost" id="exportFeedbackBtn">导出登记与反馈</button>
+        </div>
+        <details class="history-stats"><summary>累计用量</summary><div class="ai-stats" id="aiStats"></div></details>
+        <div class="history-empty" id="historyEmpty">
+          <svg class="history-empty-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="27"/>
+            <path d="M32,5 A13.5,13.5 0 0,1 32,32 A13.5,13.5 0 0,0 32,59"/>
+            <circle class="eye" cx="32" cy="18.5" r="3"/>
+            <circle class="eye" cx="32" cy="45.5" r="3"/>
+          </svg>
+          <div>还没有解读记录</div>
+        </div>
+        <div class="history-list" id="historyList"></div>
+        <details class="history-feedback registration-library" id="registrationLibrary">
+          <summary>判断登记 <span id="registrationCount">0</span></summary>
+          <p class="hint">独立保留原回答与结果。恢复备份不认证文件中的时间或预测。</p>
+          <label>导入判断登记备份<input type="file" id="registrationImportFile" accept=".json,application/json"></label>
+          <p class="hint">支持单条登记或“登记与反馈”备份；只导入判断登记，不恢复普通历史和事后反馈。</p>
+          <p role="status" id="registrationImportStatus"></p>
+          <button type="button" class="ai-btn" id="registrationImportConfirm" hidden>确认合并导入</button>
+          <div id="registrationRecords"></div>
+        </details>
+      </div>
+
+</div></dialog>
 
 <script src="./vendor/cannon.js"></script>
 <script type="module" src="./src/main.js"></script>

@@ -1,5 +1,5 @@
-import { chromium } from 'playwright';
 import { createServer, preview } from 'vite';
+import {browserEngines,launchBrowser,openAppHelp} from './browser-test-launch.js';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { buildRulesAbRecord, buildRulesAiInput } from '../src/ai/rules-input.js';
@@ -7,7 +7,8 @@ import { buildRulesAbRecord, buildRulesAiInput } from '../src/ai/rules-input.js'
 const dev = await createServer({ server: { port: 4324, strictPort: true } });
 await dev.listen();
 const built = await preview({ preview: { port: 4325, strictPort: true } });
-const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true });
+const [engine]=browserEngines(['chromium']);
+const browser = await launchBrowser(engine);
 const report = [], records = [];
 const usage = { prompt_tokens: 100, completion_tokens: 20, total_tokens: 120, prompt_cache_hit_tokens: 0, prompt_cache_miss_tokens: 100 };
 const answer = '固定流式回复，供 Phase 5 链路验证。';
@@ -23,7 +24,7 @@ try {
       await route.fulfill({ status: 200, contentType: 'text/event-stream', body: chunks.map(c => `data: ${JSON.stringify(c)}\n\n`).join('') + 'data: [DONE]\n\n' });
     });
     await page.goto(`${url}?debug=1&ai_input=structured&ai_rules=off`);
-    if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
+    if (!(await page.locator('#onboardCloseBtn').isVisible())) await openAppHelp(page);
     await page.locator('#onboardCloseBtn').click();
     await page.locator('[data-tab="ai"]').click();
     await page.locator('#questionInput').fill('固定 Phase 5 对照问题');

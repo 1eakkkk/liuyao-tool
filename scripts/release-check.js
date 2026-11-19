@@ -24,7 +24,7 @@ await build({ plugins: [{
   },
 }] });
 const files = fs.readdirSync('dist', { recursive: true }).filter(name => fs.statSync(path.join('dist', name)).isFile()).sort();
-const allowed = /^(index\.html|_headers|vendor\/cannon\.js|assets\/[^/]+\.(js|css))$/;
+const allowed = /^(index\.html|_headers|vendor\/cannon\.js|assets\/[^/]+\.(js|css)|assets\/casting-coins-[\w-]+\.webp)$/;
 const artifacts = files.map(name => {
   const relative = name.replaceAll('\\', '/');
   assert(allowed.test(relative), `Unexpected release asset: ${relative}`);

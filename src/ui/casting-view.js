@@ -22,8 +22,8 @@ function renderCastQuota(){
   if(!el) return;
   const remaining = castsRemainingInWindow();
   el.textContent = remaining > 0
-    ? `本窗口（10 分钟）内还可摇 ${remaining} 次`
-    : `已达上限：10 分钟内最多摇 3 次，稍等窗口过去再摇`;
+    ? `10 分钟内还可起 ${remaining} 卦`
+    : `10 分钟内已起 3 卦，请稍后再起`;
   el.classList.toggle('cast-quota-warn', remaining <= 0);
 }
 

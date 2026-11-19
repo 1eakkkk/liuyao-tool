@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
-import { chromium, webkit } from 'playwright';
 import { preview } from 'vite';
+import {browserEngines,launchBrowser} from './browser-test-launch.js';
 import { createReadingSession, serializeReadingSession } from '../src/ai/output/session.js';
 
 const target = process.argv[2];
@@ -13,10 +13,8 @@ const saved = serializeReadingSession(createReadingSession(canonical, {style:'de
 const reports = [];
 fs.mkdirSync('test-results/usability', {recursive:true});
 try {
-  for (const engine of ['chromium','webkit']) {
-    const browser = await (engine === 'webkit' ? webkit : chromium).launch({headless:true,
-      ...(engine === 'chromium' ? {channel:process.env.BROWSER_CHANNEL || 'msedge'} : {}),
-      ...(target && process.env.HTTPS_PROXY ? {proxy:{server:process.env.HTTPS_PROXY}} : {})});
+  for (const engine of browserEngines()) {
+    const browser = await launchBrowser(engine,target);
     try {
       const page = await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
       const errors=[], requests=[];

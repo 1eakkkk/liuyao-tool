@@ -30,7 +30,7 @@ function switchTab(tabName, { animate = true } = {}){
   // down. Keep the header when already at the top; return to content otherwise.
   const main = document.querySelector('main');
   if (main && window.scrollY > main.offsetTop) {
-    const inset = matchMedia('(max-width: 640px)').matches ? 16 : 88;
+    const inset = (document.querySelector('.app-header')?.getBoundingClientRect().height || 72) + 20;
     window.scrollTo({ top: Math.max(0, main.offsetTop - inset), behavior: 'instant' });
   }
 }

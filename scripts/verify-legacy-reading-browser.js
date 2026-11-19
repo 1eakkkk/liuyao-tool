@@ -1,15 +1,13 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
-import { chromium, webkit } from 'playwright';
 import { preview } from 'vite';
+import {browserEngines,launchBrowser,openAppHelp} from './browser-test-launch.js';
 import {hashOutput} from '../src/ai/output/context.js';
 import { SELECTION_VERSION } from '../src/ai/output/selection.js';
 const target = process.argv[2];
 const server = target ? null : await preview({ preview: { port: 4337, strictPort: true } });
-const engine = process.env.BROWSER_ENGINE || 'chromium';
-if (!['chromium', 'webkit'].includes(engine)) throw Error('Unsupported test browser');
-const browser = await (engine === 'webkit' ? webkit : chromium).launch({ ...(engine === 'chromium' ? { channel: process.env.BROWSER_CHANNEL || 'msedge' } : {}), headless: true,
-  ...(target && process.env.HTTPS_PROXY ? { proxy: { server: process.env.HTTPS_PROXY } } : {}) });
+const [engine] = browserEngines(['chromium']);
+const browser = await launchBrowser(engine,target);
 const report = [];
 fs.mkdirSync('test-results/reading', { recursive: true });
 function answer(input) {
@@ -44,7 +42,7 @@ try {
       await route.fulfill({ status: 200, contentType: 'text/event-stream', body: stream });
     });
     await page.goto(target || server.resolvedUrls.local[0], { waitUntil: 'domcontentloaded', timeout: 60000 });
-    if (!(await page.locator('#onboardCloseBtn').isVisible())) await page.locator('#helpFab').click();
+    if (!(await page.locator('#onboardCloseBtn').isVisible())) await openAppHelp(page);
     await page.locator('#onboardCloseBtn').click();
     await page.locator('[data-tab="caster"]').click(); await page.locator('[data-mode="manual"]').click();
     for (let i = 0; i < 6; i++) await page.locator(`#manualLine${i}`).selectOption(i === 0 ? '6' : '8');
@@ -144,8 +142,10 @@ try {
     await page.locator('.history-reading-evidence > summary').first().click();
     await historyBody.evaluate(n=>{n.scrollTop=75;});
     const savedScroll=await historyBody.evaluate(n=>n.scrollTop);
+    await page.locator('#closeJournalBtn').click();await page.locator('#journalDialog').waitFor({state:'hidden'});
     await page.locator('#readingFollow').fill('请继续说明依据'); await page.locator('#readingFollowExport').click();
     assert.equal(await page.locator('#readingTurns details').first().evaluate(n=>n.open),true,'Followup export preserves existing evidence disclosure');
+    await page.locator('#toggleHistoryBtn').click();await page.locator('#journalDialog').waitFor({state:'visible'});
     assert.equal(await historyHead.getAttribute('aria-expanded'),'true','History refresh preserves the selected record');
     assert.equal(await page.locator('.history-reading-evidence').first().evaluate(n=>n.open),true);
     assert.equal(await historyBody.evaluate(n=>n.scrollTop),savedScroll);
@@ -154,7 +154,7 @@ try {
     assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('liuyao_outcome_feedback_v1')).entries[0].snapshotHash),feedbackBefore.snapshotHash);
     await historyHead.focus(); await page.keyboard.press('Space');
     assert.equal(await historyHead.getAttribute('aria-expanded'),'false');
-    await page.locator('#toggleHistoryBtn').click();
+    await page.locator('#closeJournalBtn').click();await page.locator('#journalDialog').waitFor({state:'hidden'});
     const next = extract(await page.locator('#readingPrompt').inputValue());
     assert.notEqual(next.context_id, input.context_id); assert.equal(next.conversation.history.length, 1);
     await page.locator('#readingPaste').fill(JSON.stringify(answer(input)));
@@ -268,6 +268,7 @@ try {
     assert.equal(await page.locator('#registrationRecords article').count(),1);
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
     await page.locator('#registrationLibrary').screenshot({path:'test-results/reading/registration-library-'+engine+'-'+width+'.png'});
+    await page.locator('#closeJournalBtn').click();await page.locator('#journalDialog').waitFor({state:'hidden'});
     await page.locator('[data-tab="caster"]').click(); await page.locator('[data-mode="manual"]').click();
     for(let i=0;i<6;i++)await page.locator(`#manualLine${i}`).selectOption('8');
     await page.locator('#manualCastBtn').click();await page.locator('[data-tab="ai"]').click();

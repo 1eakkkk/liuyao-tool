@@ -50,13 +50,12 @@ async function performBackgroundCast(input, onProgress){
 function physicsCoinSvg(id){
   const ring='M28 0a28 28 0 1 0-56 0a28 28 0 1 0 56 0M-6-6h12v12h-12z';
   return `<g class="physics-coin" data-coin="${id}"><title>字面记二，背面记三</title>
-  <defs><linearGradient id="coin-metal-${id}" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#f7faf8"/><stop offset=".28" stop-color="#c9d8d1"/><stop offset=".52" stop-color="#eff4f0"/><stop offset="1" stop-color="#8caaa0"/></linearGradient></defs>
-  <g class="coin-edge"><path d="${ring}" fill="#637e73" fill-rule="evenodd" stroke="#49645b" stroke-width="1.5"/></g>
-  <g class="coin-face"><path d="${ring}" fill="url(#coin-metal-${id})" fill-rule="evenodd" stroke="#587b6b"/>
-  <circle r="25.5" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.3"/><circle r="23.7" fill="none" stroke="#678c79" stroke-opacity=".55" stroke-width=".6"/>
-  <path d="M-7-7h14v14h-14z" fill="none" stroke="#fafffc" stroke-width="1.3"/>
-  <g class="coin-inscription" fill="#365e4f" font-family="KaiTi,STKaiti,serif" font-size="10.5" font-weight="600" text-anchor="middle"><text y="-11">乾</text><text y="21">隆</text><text x="16" y="4">通</text><text x="-16" y="4">寶</text></g>
-  <g class="coin-reverse" style="display:none" fill="none" stroke="#456e5d" stroke-width="1.3" stroke-linecap="round"><path d="M-18-10v20m4-17v14M18-10v20m-4-17v14M-5-18H5M-5 18H5"/><circle r="20.5" stroke-width=".5"/></g></g></g>`;
+  <g class="coin-edge"><path d="${ring}" fill="#786247" fill-rule="evenodd" stroke="#574936" stroke-width="1.5"/></g>
+  <g class="coin-face"><path d="${ring}" fill="url(#coin-bronze)" fill-rule="evenodd" stroke="#715c3d"/>
+  <circle r="25.5" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.3"/><circle r="23.7" fill="none" stroke="#786649" stroke-opacity=".55" stroke-width=".6"/>
+  <path d="M-7-7h14v14h-14z" fill="none" stroke="#efe4c3" stroke-width="1.3"/>
+  <g class="coin-inscription" fill="#524631" font-family="KaiTi,STKaiti,serif" font-size="10.5" font-weight="600" text-anchor="middle"><text y="-11">乾</text><text y="21">隆</text><text x="16" y="4">通</text><text x="-16" y="4">寶</text></g>
+  <g class="coin-reverse" style="display:none" fill="none" stroke="#605039" stroke-width="1.3" stroke-linecap="round"><path d="M-18-10v20m4-17v14M18-10v20m-4-17v14M-5-18H5M-5 18H5"/><circle r="20.5" stroke-width=".5"/></g></g></g>`;
 }
 
 
@@ -64,14 +63,18 @@ function performCast(options = {}){
   return new Promise((resolve,reject)=>{
     const labels=['初爻','二爻','三爻','四爻','五爻','上爻'];
     const auto=document.getElementById('castPace').value==='all';
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const dialog=document.createElement('dialog');dialog.className='physics-dialog';
     dialog.setAttribute('aria-labelledby','physics-title');dialog.setAttribute('aria-describedby','physics-description');
     dialog.innerHTML=`<header class="physics-header"><h3 id="physics-title">三钱起卦</h3><button type="button" class="physics-close" aria-label="关闭摇卦窗口"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header>
     <div class="physics-body"><section class="physics-table"><div class="physics-table-top"><span><i></i> 三钱起卦</span><span>${auto?'连续六爻':'逐爻投掷'}</span></div>
     <svg class="physics-scene" viewBox="0 0 600 400" role="img" aria-label="铜钱物理投掷桌面">
-    <defs><radialGradient id="table-glow"><stop stop-color="var(--stage-center)"/><stop offset="1" stop-color="var(--stage-edge)"/></radialGradient><linearGradient id="coin-gold" x2="1" y2="1"><stop stop-color="#f1d99c"/><stop offset=".46" stop-color="#c5a360"/><stop offset="1" stop-color="#92703c"/></linearGradient><radialGradient id="coin-shadow"><stop stop-color="#000" stop-opacity=".5"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+    <defs><radialGradient id="table-glow"><stop stop-color="var(--stage-center)"/><stop offset="1" stop-color="var(--stage-edge)"/></radialGradient><linearGradient id="coin-bronze" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#dbcca3"/><stop offset=".46" stop-color="#b69a64"/><stop offset="1" stop-color="#856c46"/></linearGradient><radialGradient id="coin-shadow"><stop stop-color="#000" stop-opacity=".5"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
     <rect width="600" height="400" fill="url(#table-glow)"/>
-    <ellipse cx="300" cy="238" rx="236" ry="136" fill="none" stroke="var(--ui-accent)" stroke-opacity=".1"/>
+    <g fill="none" stroke="var(--ui-accent)" stroke-opacity=".14">
+      <ellipse cx="300" cy="238" rx="236" ry="136"/>
+      <ellipse cx="300" cy="238" rx="244" ry="142" stroke-dasharray="1 9"/>
+    </g>
     <g class="physics-shadows">${[0,1,2].map(i=>`<ellipse data-shadow="${i}" cx="${220+i*80}" cy="250" rx="34" ry="12" fill="url(#coin-shadow)"/>`).join('')}</g><g class="physics-coins">${[0,1,2].map(physicsCoinSvg).join('')}</g>
     </svg><div class="physics-table-caption"><span class="physics-stage-caption">字面记二 · 背面记三</span></div></section>
     <aside class="physics-record"><div class="physics-record-title"><h4>投掷结果</h4><span class="physics-count">00 <small>/ 06</small></span></div><ol class="physics-results" aria-label="六爻投掷结果">${labels.map((name,i)=>`<li data-line="${i}" class="${i===0?'is-current':''}"><span class="physics-line-number">${name}</span><span class="physics-line-glyph"><i></i><i></i></span><span class="physics-line-name">${i===0?'待投':'—'}</span></li>`).reverse().join('')}</ol></aside></div>
@@ -141,7 +144,10 @@ function performCast(options = {}){
             if(auto){launch.disabled=true;nextTimer=setTimeout(begin,550);return;}
           }else if(result?.retry)retry();
         }
-        draw();if(running)frame=requestAnimationFrame(tick);
+        if (running) {
+          if (!motionPreference.matches) draw();
+          frame = requestAnimationFrame(tick);
+        }
       }catch(e){cleanup();reject(e);}
     }
     launch.onclick=(event)=>{if(complete){cleanup();return;}retries=0;input={...castInputFromEvent(event),phase:(event.timeStamp/1000)%(Math.PI*2)};begin();};

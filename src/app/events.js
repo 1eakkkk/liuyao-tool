@@ -225,7 +225,10 @@ castModeToggle.addEventListener('click', (e)=>{
   const btn = e.target.closest('.mode-btn');
   if(!btn) return;
   state.castMode = btn.dataset.mode;
-  [...castModeToggle.querySelectorAll('.mode-btn')].forEach(b => b.classList.toggle('active', b === btn));
+  for(const mode of castModeToggle.querySelectorAll('.mode-btn')) {
+    mode.classList.toggle('active', mode === btn);
+    mode.setAttribute('aria-pressed', String(mode === btn));
+  }
   systemCastPanel.style.display = state.castMode === 'system' ? '' : 'none';
   manualCastPanel.style.display = state.castMode === 'manual' ? '' : 'none';
   // 切到"线下摇卦"时顺手刷新一次预览——但只在右边此刻还没有一份"摇卦/生成排盘"摇出来的

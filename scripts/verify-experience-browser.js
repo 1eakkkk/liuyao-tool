@@ -1,0 +1,148 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {preview} from 'vite';
+import {launchBrowser} from './browser-test-launch.js';
+
+// Exercise the user's work across navigation and overlays; never call a paid API.
+const suppliedTarget=process.argv[2];
+const server=suppliedTarget?null:await preview({preview:{port:4369,strictPort:true}});
+const target=suppliedTarget || server.resolvedUrls.local[0];
+const output=process.env.EXPERIENCE_REPORT_DIR || 'test-results/experience-qa';
+fs.mkdirSync(output,{recursive:true});
+const engine=process.env.BROWSER_ENGINE || 'chromium';
+const browser=await launchBrowser(engine,target);
+const reports=[],failures=[];
+const check=(condition,message,width)=>{if(!condition)failures.push({width,message});};
+try {
+  for(const width of [1280,390,320]) {
+    const context=await browser.newContext({viewport:{width,height:900}});
+    await context.addInitScript(()=>localStorage.setItem('liuyao_interpret_history',JSON.stringify([
+      {id:'experience-qa-history',ts:Date.now(),type:'legacy',question:'学习计划：问卦记录交互验收',text:'固定测试回复，仅用于验证取消和确认操作。'}
+    ])));
+    const page=await context.newPage(),errors=[],apiRequests=[];
+    page.on('pageerror',error=>errors.push(error.message));
+    await page.route('https://api.deepseek.com/**',route=>{apiRequests.push(route.request().url());return route.abort();});
+    await page.goto(target,{waitUntil:'networkidle'});
+    const overflow=()=>page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1);
+    const activeId=()=>page.evaluate(()=>document.activeElement?.id || document.activeElement?.tagName);
+    const screenshot=async name=>{
+      await page.evaluate(async()=>{
+        await Promise.all(document.getAnimations().filter(animation=>animation.playState==='running'&&animation.effect.getComputedTiming().iterations!==Infinity).map(animation=>animation.finished.catch(()=>{})));
+        window.scrollTo({top:0,behavior:'instant'});
+      });
+      await page.screenshot({path:`${output}/${width}-${name}.png`,fullPage:true,animations:'disabled'});
+    };
+    const journal=page.locator('#journalDialog');
+    const question='六周内完成学习计划，需要注意什么？';
+    await page.locator('#castQuestionInput').fill(question);
+    await page.locator('#openJournalBtn').click();
+    check(await journal.isVisible(),'Global journal opens from casting',width);
+    check(await activeId()==='aiHistorySearch','Journal search receives initial focus',width);
+    await screenshot('journal');
+    const journalBox=await journal.boundingBox();
+    check(journalBox.x>=0&&journalBox.x+journalBox.width<=width+1,'Journal stays within viewport after entrance',width);
+    const historyBefore=await page.evaluate(()=>localStorage.getItem('liuyao_interpret_history'));
+    const confirmation=page.locator('#confirmOverlay');
+    await page.locator('#clearHistoryBtn').click();
+    await confirmation.waitFor({state:'visible'});
+    check(await activeId()==='confirmCancelBtn','History confirmation receives focus above the journal',width);
+    await page.locator('#confirmCancelBtn').click();
+    await confirmation.waitFor({state:'hidden'});
+    check(await journal.isVisible(),'Cancelling clear history leaves the journal open',width);
+    check(await page.evaluate(()=>localStorage.getItem('liuyao_interpret_history'))===historyBefore,'Cancel keeps history unchanged',width);
+    check(await activeId()==='clearHistoryBtn','Cancel returns focus to the clear-history trigger',width);
+    await page.locator('#clearHistoryBtn').click();
+    await confirmation.waitFor({state:'visible'});
+    await page.keyboard.press('Escape');
+    await confirmation.waitFor({state:'hidden'});
+    check(await journal.isVisible(),'Escape closes only the confirmation, preserving the journal',width);
+    check(await page.evaluate(()=>localStorage.getItem('liuyao_interpret_history'))===historyBefore,'Escape keeps history unchanged',width);
+    await page.locator('#clearHistoryBtn').click();
+    await confirmation.waitFor({state:'visible'});
+    await page.locator('#confirmOkBtn').click();
+    await confirmation.waitFor({state:'hidden'});
+    await page.waitForFunction(()=>JSON.parse(localStorage.getItem('liuyao_interpret_history')).length===0);
+    check(await page.locator('.history-item').count()===0,'Confirmed clear removes the visible records',width);
+    const journalFeedback=page.locator('#journalFeedback');
+    check(await journalFeedback.isVisible()&&(await journalFeedback.textContent()).includes('历史记录已清空'),'Clear-history success feedback is visible inside the journal',width);
+    check(await journal.isVisible(),'Confirmed clear keeps the journal available',width);
+    await screenshot('journal-feedback');
+    await page.locator('#aiHistorySearch').fill('学习计划');
+    await page.keyboard.press('Escape');
+    await journal.waitFor({state:'hidden'});
+    check(await activeId()==='openJournalBtn','Escape returns focus to global journal trigger',width);
+    check(await page.locator('#castQuestionInput').inputValue()===question,'Journal preserves casting question',width);
+    check(await page.locator('#questionInput').inputValue()===question,'Casting question is available to AI',width);
+    check(!await overflow(),'Casting page fits viewport',width);
+    await screenshot('casting');
+    await page.locator('#openJournalBtn').click();
+    await page.keyboard.press('Escape');await page.keyboard.press('Escape');await page.keyboard.press('Escape');
+    await journal.waitFor({state:'hidden'});
+    check(await activeId()==='openJournalBtn','Repeated Escape during entrance still closes the journal',width);
+    await page.locator('#openJournalBtn').click();
+    await page.mouse.click(2,450);
+    await journal.waitFor({state:'hidden'});
+    check(await activeId()==='openJournalBtn','Backdrop click closes the journal and restores focus',width);
+
+    const learning=page.locator('.learning-menu');
+    await learning.locator('summary').click();
+    const menuBox=await page.locator('.learning-nav').boundingBox();
+    check(menuBox.x>=0 && menuBox.x+menuBox.width<=width+1,'Learning menu fits viewport',width);
+    await page.keyboard.press('Escape');
+    check(!await learning.evaluate(node=>node.open),'Escape closes learning menu',width);
+    check(await learning.locator('summary').evaluate(node=>node===document.activeElement),'Learning Escape returns focus to menu trigger',width);
+    await learning.locator('summary').click();
+    await page.locator('[data-tab=basics]').click();
+    check(await page.locator('#basics').isVisible(),'Learning navigation opens selected page',width);
+    check(!await learning.evaluate(node=>node.open),'Learning menu closes after selection',width);
+    await page.locator('#openJournalBtn').click();
+    check(await page.locator('#aiHistorySearch').inputValue()==='学习计划','Journal preserves search between visits',width);
+    await page.locator('#closeJournalBtn').click();
+    await journal.waitFor({state:'hidden'});
+    check(await page.locator('#basics').isVisible(),'Journal leaves selected learning page intact',width);
+    check(await activeId()==='openJournalBtn','Close button restores journal trigger focus',width);
+
+    await page.locator('.theme-picker > summary').click();
+    await page.locator('[data-theme-choice-button=dark]').click();
+    check(await page.locator('html').getAttribute('data-theme')==='dark','Dark theme applies',width);
+    check(!await overflow(),'Learning page fits in dark theme',width);
+    await screenshot('dark-learning');
+    await page.locator('[data-tab=caster]').click();
+    await page.locator('[data-mode=manual]').click();
+    for(const [index,value] of [7,8,9,7,6,8].entries())await page.locator(`#manualLine${index}`).selectOption(String(value));
+    await page.locator('#manualCastBtn').click();
+    await page.locator('#castSummary').waitFor({state:'visible'});
+    const plate=await page.locator('#plateWrap').textContent();
+    const questionAfterCast=await page.locator('#castQuestionInput').inputValue();
+    await page.locator('#gotoAiTabBtn').click();
+    check(await page.locator('#ai').isVisible(),'Manual cast hands off to AI',width);
+    check(await page.locator('#questionInput').inputValue()===questionAfterCast,'Cast and AI question stay synchronized after generation',width);
+    await page.locator('#questionInput').fill(question+' 先从每天半小时开始。');
+    await page.locator('#toggleHistoryBtn').click();
+    check(await journal.isVisible(),'Inline history opens the same journal',width);
+    await page.keyboard.press('Escape');
+    await journal.waitFor({state:'hidden'});
+    check(await activeId()==='toggleHistoryBtn','Inline journal returns focus to its own trigger',width);
+    check((await page.locator('#questionInput').inputValue()).endsWith('每天半小时开始。'),'Journal preserves AI draft',width);
+    await page.locator('#viewCurrentCastBtn').click();
+    check(await page.locator('#plateWrap').textContent()===plate,'Returning from AI preserves the original plate',width);
+    check((await page.locator('#castQuestionInput').inputValue()).endsWith('每天半小时开始。'),'AI edits follow the question back to casting',width);
+    check(!await overflow(),'Populated plate fits viewport',width);
+    await screenshot('plate');
+
+    await page.emulateMedia({reducedMotion:'reduce'});
+    await page.locator('[data-tab=ai]').click();
+    await page.locator('#openJournalBtn').click();
+    await page.locator('#closeJournalBtn').click();
+    await journal.waitFor({state:'hidden'});
+    check(await page.evaluate(()=>document.getAnimations().filter(animation=>animation.playState==='running').length)===0,'Reduced motion leaves no running transitions',width);
+    check(!await overflow(),'AI page fits viewport with reduced motion',width);
+    check(errors.length===0,`No browser exceptions: ${errors.join('; ')}`,width);
+    check(apiRequests.length===0,'Navigation and journal require no API calls',width);
+    reports.push({engine,width,questionAfterCast,nestedConfirmation:'cancel-escape-confirm',journalFeedback:true,errors,apiRequests:apiRequests.length});
+    await context.close();
+  }
+} finally {await browser.close();if(server)await new Promise(resolve=>server.httpServer.close(resolve));}
+fs.writeFileSync(`${output}/report.json`,JSON.stringify({reports,failures},null,2)+'\n');
+console.log(JSON.stringify({reports,failures},null,2));
+assert.equal(failures.length,0,'Experience checks failed; see report.json');
